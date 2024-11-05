@@ -1,0 +1,93 @@
+apiVersion: v1
+items:
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    annotations:
+      include.release.openshift.io/ibm-cloud-managed: "true"
+      include.release.openshift.io/self-managed-high-availability: "true"
+      include.release.openshift.io/single-node-developer: "true"
+    creationTimestamp: "2023-05-04T21:35:31Z"
+    name: prometheus-k8s
+    namespace: openshift-kube-apiserver-operator
+    ownerReferences:
+    - apiVersion: config.openshift.io/v1
+      kind: ClusterVersion
+      name: version
+      uid: 5d92b52f-9fff-4a6e-b815-398b934115ad
+    resourceVersion: "789"
+    uid: 03cf51c0-9186-4099-9994-f56f73e5433f
+  roleRef:
+    name: prometheus-k8s
+    namespace: openshift-kube-apiserver-operator
+  subjects:
+  - kind: ServiceAccount
+    name: prometheus-k8s
+    namespace: openshift-monitoring
+  userNames:
+  - system:serviceaccount:openshift-monitoring:prometheus-k8s
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/description: Allows deploymentconfigs in this namespace to rollout
+        pods in this namespace.  It is auto-managed by a controller; remove subjects
+        to disable.
+    creationTimestamp: "2023-05-04T21:45:25Z"
+    name: system:deployers
+    namespace: openshift-kube-apiserver-operator
+    resourceVersion: "15144"
+    uid: 4a3e44db-7501-4fa2-b487-ee6faba6ff47
+  roleRef:
+    name: system:deployer
+  subjects:
+  - kind: ServiceAccount
+    name: deployer
+    namespace: openshift-kube-apiserver-operator
+  userNames:
+  - system:serviceaccount:openshift-kube-apiserver-operator:deployer
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/description: Allows builds in this namespace to push images to
+        this namespace.  It is auto-managed by a controller; remove subjects to disable.
+    creationTimestamp: "2023-05-04T21:45:24Z"
+    name: system:image-builders
+    namespace: openshift-kube-apiserver-operator
+    resourceVersion: "15073"
+    uid: af336da8-d627-43c3-8a19-75922d1e5e22
+  roleRef:
+    name: system:image-builder
+  subjects:
+  - kind: ServiceAccount
+    name: builder
+    namespace: openshift-kube-apiserver-operator
+  userNames:
+  - system:serviceaccount:openshift-kube-apiserver-operator:builder
+- apiVersion: authorization.openshift.io/v1
+  groupNames:
+  - system:serviceaccounts:openshift-kube-apiserver-operator
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/description: Allows all pods in this namespace to pull images from
+        this namespace.  It is auto-managed by a controller; remove subjects to disable.
+    creationTimestamp: "2023-05-04T21:45:24Z"
+    name: system:image-pullers
+    namespace: openshift-kube-apiserver-operator
+    resourceVersion: "15017"
+    uid: aaa94bb1-9401-49d9-a3ee-5c201c1092f6
+  roleRef:
+    name: system:image-puller
+  subjects:
+  - kind: SystemGroup
+    name: system:serviceaccounts:openshift-kube-apiserver-operator
+  userNames: null
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

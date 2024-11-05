@@ -1,0 +1,53 @@
+apiVersion: v1
+items:
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: MigStorage
+  metadata:
+    annotations:
+      openshift.io/touch: e1b42e7a-509e-11ef-976b-0a580a8016d6
+    creationTimestamp: "2023-05-17T22:28:48Z"
+    generation: 186
+    name: azure
+    namespace: openshift-migration
+    resourceVersion: "494307060"
+    uid: f7799bcb-ca59-4d6a-90c8-491917fc885c
+  spec:
+    backupStorageConfig:
+      azureResourceGroup: Velero_Backups
+      azureStorageAccount: veleroad4c3da4a6b2
+      azureStorageContainer: velero
+      credsSecretRef:
+        name: azure-hs8l6
+        namespace: openshift-config
+    backupStorageProvider: azure
+    volumeSnapshotConfig:
+      azureApiTimeout: 30s
+      azureResourceGroup: Velero_Backups
+      credsSecretRef:
+        name: azure-hs8l6
+        namespace: openshift-config
+    volumeSnapshotProvider: azure
+  status:
+    conditions:
+    - category: Critical
+      lastTransitionTime: "2024-08-02T07:14:39Z"
+      message: 'The `backupStorageConfig` settings [azure.BearerAuthorizer#WithAuthorization:
+        Failed to refresh the Token for request to https://management.azure.com/subscriptions/3f7ca611-455f-41ca-b1d3-7dc4384d323a/resourceGroups/Velero_Backups/providers/Microsoft.Storage/storageAccounts/veleroad4c3da4a6b2/listKeys?api-version=2018-02-01:
+        StatusCode=401 -- Original Error: adal: Refresh request failed. Status Code
+        = ''401''. Response body: {"error":"invalid_client","error_description":"AADSTS7000222:
+        The provided client secret keys for app ''4978b8eb-145e-47bf-b9b2-35158d055926''
+        are expired. Visit the Azure portal to create new keys for your app: https://aka.ms/NewClientSecret,
+        or consider using certificate credentials for added security: https://aka.ms/certCreds.
+        Trace ID: bfb45d4a-c239-4bed-9f8d-873a898d1400 Correlation ID: 96d97518-5112-47ac-8bee-f6f77c1ce7a1
+        Timestamp: 2024-08-02 07:14:39Z","error_codes":[7000222],"timestamp":"2024-08-02
+        07:14:39Z","trace_id":"bfb45d4a-c239-4bed-9f8d-873a898d1400","correlation_id":"96d97518-5112-47ac-8bee-f6f77c1ce7a1","error_uri":"https://login.microsoftonline.com/error?code=7000222"}
+        Endpoint https://login.microsoftonline.com/2d55c762-c477-4390-bb75-5adbde0a92fc/oauth2/token?api-version=1.0]
+        not provided in secret openshift-config/azure-hs8l6 not valid.'
+      reason: TestFailed
+      status: "True"
+      type: BackupStorageProviderTestFailed
+    observedDigest: 5374ea0c2bbea26bcb8a6b0a272c9c958112f80d8bba6f848666b2888b693171
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

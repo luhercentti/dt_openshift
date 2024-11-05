@@ -1,0 +1,108 @@
+apiVersion: v1
+items:
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "1"
+      kubernetes.io/description: |
+        This deployment deploys the network-check-source pod that performs
+        pod network connectivity checks
+      networkoperator.openshift.io/non-critical: ""
+      release.openshift.io/version: 4.10.53
+    creationTimestamp: "2023-05-04T21:39:44Z"
+    generation: 1
+    name: network-check-source
+    namespace: openshift-network-diagnostics
+    ownerReferences:
+    - apiVersion: operator.openshift.io/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Network
+      name: cluster
+      uid: 5513ebe5-e5fd-4f40-8857-5fcd3d31efca
+    resourceVersion: "472918068"
+    uid: 33270d73-d261-4436-bf3c-fadfe48f8d83
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: network-check-source
+    strategy:
+      type: Recreate
+    template:
+      metadata:
+        annotations:
+          target.workload.openshift.io/management: '{"effect": "PreferredDuringScheduling"}'
+        creationTimestamp: null
+        labels:
+          app: network-check-source
+          kubernetes.io/os: linux
+      spec:
+        containers:
+        - args:
+          - --listen
+          - 0.0.0.0:17698
+          - --namespace
+          - $(POD_NAMESPACE)
+          command:
+          - cluster-network-check-endpoints
+          env:
+          - name: POD_NAME
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.name
+          - name: POD_NAMESPACE
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+          image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:8bc10069f7e6e0ae3fafbef1beba94516ed91a8692de6fee7f17379687adb5cb
+          imagePullPolicy: IfNotPresent
+          name: check-endpoints
+          ports:
+          - containerPort: 17698
+            name: check-endpoints
+            protocol: TCP
+          resources:
+            requests:
+              cpu: 10m
+              memory: 40Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: FallbackToLogsOnError
+        dnsPolicy: ClusterFirst
+        nodeSelector:
+          beta.kubernetes.io/os: linux
+        priorityClassName: openshift-user-critical
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: network-diagnostics
+        serviceAccountName: network-diagnostics
+        terminationGracePeriodSeconds: 30
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2023-05-04T21:39:44Z"
+      lastUpdateTime: "2023-05-04T21:49:21Z"
+      message: ReplicaSet "network-check-source-7786b5887f" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: "2024-07-23T01:24:58Z"
+      lastUpdateTime: "2024-07-23T01:24:58Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

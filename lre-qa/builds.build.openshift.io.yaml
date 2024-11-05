@@ -1,0 +1,313 @@
+apiVersion: v1
+items:
+- apiVersion: build.openshift.io/v1
+  kind: Build
+  metadata:
+    annotations:
+      openshift.io/build-config.name: front-lre
+      openshift.io/build.number: "1"
+      openshift.io/build.pod-name: front-lre-1-build
+    creationTimestamp: "2023-09-01T01:10:32Z"
+    generation: 2
+    labels:
+      app: front-lre
+      buildconfig: front-lre
+      migration.openshift.io/migrated-by-migmigration: e38d34ca-b64b-4f51-8661-6ba7d05484a6
+      migration.openshift.io/migrated-by-migplan: ec0923fa-4d06-4a8b-a67a-a32b23d75ede
+      openshift.io/build-config.name: front-lre
+      openshift.io/build.start-policy: Serial
+      velero.io/backup-name: migration-fc7c1-initial-wskdq
+      velero.io/restore-name: migration-fc7c1-final-6g8n2
+    name: front-lre-1
+    namespace: lre-qa
+    ownerReferences:
+    - apiVersion: build.openshift.io/v1
+      controller: true
+      kind: BuildConfig
+      name: front-lre
+      uid: f1a7539f-2ea9-47a5-970a-9214af20aba3
+    resourceVersion: "95950986"
+    uid: 38a1dec3-12e5-44e9-9b71-6c977ccaf35e
+  spec:
+    nodeSelector: null
+    output:
+      pushSecret:
+        name: builder-dockercfg-5xzqd
+      to:
+        kind: ImageStreamTag
+        name: front-lre:latest
+    postCommit: {}
+    resources: {}
+    revision:
+      git:
+        author:
+          email: ffernandeza@dt.gob.cl
+          name: Fernando Antonio Fernandez Alvarez
+        commit: e57b1df3fe454653bf5071234d796e3de9b91ed6
+        committer:
+          email: ffernandeza@dt.gob.cl
+          name: Fernando Antonio Fernandez Alvarez
+        message: 'Merged PR 12657: se quita rsu'
+      type: Git
+    serviceAccount: builder
+    source:
+      git:
+        ref: develop
+        uri: https://dirtrab.visualstudio.com/Libro%20Remuneraciones%20Electronico/_git/product-lre
+      sourceSecret:
+        name: azure2
+      type: Git
+    strategy:
+      sourceStrategy:
+        from:
+          kind: DockerImage
+          name: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+        pullSecret:
+          name: builder-dockercfg-5xzqd
+      type: Source
+    triggeredBy:
+    - imageChangeBuild:
+        fromRef:
+          kind: ImageStreamTag
+          name: nodejs:10
+          namespace: openshift
+        imageID: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+      message: Image change
+  status:
+    completionTimestamp: "2023-09-01T01:55:58Z"
+    conditions:
+    - lastTransitionTime: "2023-09-01T01:10:32Z"
+      lastUpdateTime: "2023-09-01T01:10:32Z"
+      status: "False"
+      type: New
+    - lastTransitionTime: "2023-09-01T01:10:35Z"
+      lastUpdateTime: "2023-09-01T01:10:35Z"
+      status: "False"
+      type: Pending
+    - lastTransitionTime: "2023-09-01T01:55:58Z"
+      lastUpdateTime: "2023-09-01T01:55:58Z"
+      status: "False"
+      type: Running
+    - lastTransitionTime: "2023-09-01T01:55:58Z"
+      lastUpdateTime: "2023-09-01T01:55:58Z"
+      message: Generic Build failure - check logs for details.
+      reason: GenericBuildFailed
+      status: "True"
+      type: Failed
+    config:
+      kind: BuildConfig
+      name: front-lre
+      namespace: lre-qa
+    duration: 2726000000000
+    logSnippet: |-
+      npm timing npm Completed in 47437ms
+
+      npm ERR! A complete log of this run can be found in:
+      npm ERR!     /opt/app-root/src/.npm/_logs/2023-09-01T01_55_53_117Z-debug.log
+      error: build error: error building at STEP "RUN /usr/libexec/s2i/assemble": error while running runtime: exit status 1
+    message: Generic Build failure - check logs for details.
+    output: {}
+    outputDockerImageReference: image-registry.openshift-image-registry.svc:5000/lre-qa/front-lre:latest
+    phase: Failed
+    reason: GenericBuildFailed
+    stages:
+    - durationMilliseconds: 19240
+      name: FetchInputs
+      startTime: "2023-09-01T01:10:37Z"
+      steps:
+      - durationMilliseconds: 19240
+        name: FetchGitSource
+        startTime: "2023-09-01T01:10:37Z"
+    - durationMilliseconds: 47366
+      name: PullImages
+      startTime: "2023-09-01T01:11:14Z"
+      steps:
+      - durationMilliseconds: 47366
+        name: PullBaseImage
+        startTime: "2023-09-01T01:11:14Z"
+    - durationMilliseconds: 2635918
+      name: Build
+      startTime: "2023-09-01T01:12:02Z"
+      steps:
+      - durationMilliseconds: 2635918
+        name: DockerBuild
+        startTime: "2023-09-01T01:12:02Z"
+    startTimestamp: "2023-09-01T01:10:32Z"
+- apiVersion: build.openshift.io/v1
+  kind: Build
+  metadata:
+    annotations:
+      openshift.io/build-config.name: product-lre
+      openshift.io/build.number: "1"
+      openshift.io/build.pod-name: product-lre-1-build
+    creationTimestamp: "2023-10-17T13:14:07Z"
+    generation: 2
+    labels:
+      build: product-lre
+      buildconfig: product-lre
+      migration.openshift.io/migrated-by-migmigration: e38d34ca-b64b-4f51-8661-6ba7d05484a6
+      migration.openshift.io/migrated-by-migplan: ec0923fa-4d06-4a8b-a67a-a32b23d75ede
+      openshift.io/build-config.name: product-lre
+      openshift.io/build.start-policy: Serial
+      velero.io/backup-name: migration-fc7c1-initial-wskdq
+      velero.io/restore-name: migration-fc7c1-final-6g8n2
+    name: product-lre-1
+    namespace: lre-qa
+    ownerReferences:
+    - apiVersion: build.openshift.io/v1
+      controller: true
+      kind: BuildConfig
+      name: product-lre
+      uid: 2de353a1-e78d-467c-a856-6577be34343a
+    resourceVersion: "137180370"
+    uid: c3322a23-7730-4bf7-8249-f0d04a40650f
+  spec:
+    nodeSelector: null
+    output:
+      pushSecret:
+        name: builder-dockercfg-5xzqd
+      to:
+        kind: ImageStreamTag
+        name: product-lre:latest
+    postCommit: {}
+    resources: {}
+    revision:
+      git:
+        author:
+          email: ffernandeza@dt.gob.cl
+          name: Fernando Fernandez Alvarez
+        commit: a3ea181074e07b9377c7cae0ce39e90bffc3ce0d
+        committer:
+          email: ffernandeza@dt.gob.cl
+          name: Fernando Fernandez Alvarez
+        message: Desarrollo para HU8 sin movimiento
+      type: Git
+    serviceAccount: builder
+    source:
+      binary: {}
+      type: Binary
+    strategy:
+      sourceStrategy:
+        env:
+        - name: REACT_APP_VOLVER_REDIRECT_EMPLEADOR
+          value: /empleador/home
+        - name: REACT_APP_PARENT_DOMAIN
+          value: '*'
+        - name: REACT_APP_LRE_OBTENER_DECLARACIONES
+          value: https://lre-services-live-qa.api.dirtrab.cl/fiscalizacion/remuneracion/declaracion/datosDeclaraciones/empleador
+        - name: REACT_APP_LRE_OBTENER_OBSERVACIONES
+          value: https://lre-services-live-qa.api.dirtrab.cl/fiscalizacion/remuneracion/declaracion/datosDeclaraciones/observaciones/
+        - name: REACT_APP_LRE_CARGAR_DECLARACION
+          value: https://lre-services-live-qa.api.dirtrab.cl/fiscalizacion/remuneracion/declaracion/cargaDeclaracion
+        - name: REACT_APP_LRE_OBTENER_CSV_DECLARACION
+          value: https://lre-services-live-qa.api.dirtrab.cl/fiscalizacion/remuneracion/declaracion/descargaDeclaracion/
+        - name: REACT_APP_LRE_OBTENER_PLANTILLA_EJEMPLO
+          value: https://lre-services-live-qa.api.dirtrab.cl/fiscalizacion/remuneracion/declaracion/descargaDeclaracion/plantilla
+        - name: REACT_APP_LRE_EMPLEADOR
+          value: https://lre-services-live-qa.api.dirtrab.cl/fiscalizacion/remuneracion/validaEmpleador/empleador/
+        - name: REACT_APP_LRE_URL_METADATA
+          value: https://lre-services-live-qa.api.dirtrab.cl/fiscalizacion/remuneracion/bff/metadata/empleador
+        - name: REACT_APP_LRE_URL_GUARDAR_TERMINO_CONDICIONES
+          value: https://lre-services-live-qa.api.dirtrab.cl/fiscalizacion/remuneracion/terminoCondiciones/empleador
+        - name: REACT_APP_PDF_INSTRUCCIONES
+          value: https://static-content.api.dirtrab.cl/dt-docs/lre/lre_instrucciones_de_carga.pdf
+        - name: REACT_APP_PDF_POLITICAS_PRIVACIDAD
+          value: https://static-content.api.dirtrab.cl/dt-docs/lre/lre_politicas_proteccion_datos_personales.pdf
+        - name: REACT_APP_PDF_SUPLEMENTO_LRE
+          value: https://static-content.api.dirtrab.cl/dt-docs/lre/lre_suplemento.pdf
+        - name: REACT_APP_DESCARGAR_CSV
+          value: https://lre-services-live-qa.api.dirtrab.cl/fiscalizacion/remuneracion/declaracion/descargaDeclaracion/
+        - name: REACT_APP_OBTENER_OBSERVACIONES
+          value: https://lre-services-live-qa.api.dirtrab.cl/fiscalizacion/remuneracion/declaracion/datosDeclaraciones/observaciones/
+        - name: REACT_APP_OBTENER_DECLARACIONES
+          value: https://lre-services-live-qa.api.dirtrab.cl/fiscalizacion/remuneracion/declaracion/datosDeclaraciones/empleador
+        - name: REACT_APP_DESCARGAR_DECLARACIONES
+          value: https://lre-services-live-qa.api.dirtrab.cl/fiscalizacion/remuneracion/declaracion/descargaDeclaracion/plantilla
+        - name: REACT_APP_CARGAR_DECLARACIONES_TEST
+          value: https://lre-services-live-qa.api.dirtrab.cl/fiscalizacion/remuneracion/declaracion/cargaDeclaracion/cargaDeclaracion
+        - name: REACT_APP_VALIDAR_EMPLEADOR
+          value: https://lre-services-live-qa.api.dirtrab.cl/fiscalizacion/remuneracion/empleador/validaEmpleador
+        - name: REACT_APP_SEGUNDOS_DE_RECARGA
+          value: "20"
+        - name: REACT_APP_DEFAULT_TIPO_PERFIL
+          value: "3"
+        - name: REACT_APP_METADATA
+          value: https://lre-services-live-qa.api.dirtrab.cl/fiscalizacion/remuneracion/bff/metadata/formulario/estructura/full
+        - name: REACT_APP_METADATA_OPCIONES_FORMULARIO
+          value: https://lre-services-live-qa.api.dirtrab.cl/fiscalizacion/remuneracion/bff/metadata/formulario/full
+        - name: REACT_APP_METADATA_PERSONA
+          value: https://lre-services-live-qa.api.dirtrab.cl/fiscalizacion/remuneracion/bff/metadata/persona
+        - name: REACT_APP_TRABAJADORES
+          value: https://lre-services-live-qa.api.dirtrab.cl/fiscalizacion/remuneracion/adminNominaTrabajadores/nominaTrabajadores
+        - name: REACT_APP_DECLARACIONES_JSON
+          value: https://lre-services-live-qa.api.dirtrab.cl/declaraciones/declaracionesJSON
+        - name: REACT_APP_LRE_ENVIRONMENT
+          value: qa
+        - name: REACT_APP_CERTIFICADO_INCORPORACION
+          value: https://lre-services-live-qa.api.dirtrab.cl/api/certificados/comprobantes/incorporacion/
+        - name: REACT_APP_COMPROBANTE_DECLARACION
+          value: https://lre-services-live-qa.api.dirtrab.cl/api/certificados/comprobantes/comprobante-declaracion/
+        - name: REACT_APP_CARGAR_SIN_MOVIMIENTO
+          value: https://lre-services-live-qa.api.dirtrab.cl/fiscalizacion/remuneracion/declaracion/cargaDeclaracion/cargarDeclaracionSinMovimiento
+        from:
+          kind: DockerImage
+          name: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+        pullSecret:
+          name: builder-dockercfg-5xzqd
+      type: Source
+  status:
+    completionTimestamp: "2023-10-17T13:58:13Z"
+    conditions:
+    - lastTransitionTime: "2023-10-17T13:14:07Z"
+      lastUpdateTime: "2023-10-17T13:14:07Z"
+      status: "False"
+      type: New
+    - lastTransitionTime: "2023-10-17T13:14:10Z"
+      lastUpdateTime: "2023-10-17T13:14:10Z"
+      status: "False"
+      type: Pending
+    - lastTransitionTime: "2023-10-17T13:58:13Z"
+      lastUpdateTime: "2023-10-17T13:58:13Z"
+      status: "False"
+      type: Running
+    - lastTransitionTime: "2023-10-17T13:58:13Z"
+      lastUpdateTime: "2023-10-17T13:58:13Z"
+      status: "True"
+      type: Complete
+    config:
+      kind: BuildConfig
+      name: product-lre
+      namespace: lre-qa
+    duration: 2646000000000
+    output:
+      to:
+        imageDigest: sha256:31bdb1957c631e57b3a7c92018ee1da70150fa1a429baa5aedd35d2a41d20fc8
+    outputDockerImageReference: image-registry.openshift-image-registry.svc:5000/lre-qa/product-lre:latest
+    phase: Complete
+    stages:
+    - durationMilliseconds: 15112
+      name: PullImages
+      startTime: "2023-10-17T13:14:12Z"
+      steps:
+      - durationMilliseconds: 15112
+        name: PullBaseImage
+        startTime: "2023-10-17T13:14:12Z"
+    - durationMilliseconds: 2618742
+      name: Build
+      startTime: "2023-10-17T13:14:27Z"
+      steps:
+      - durationMilliseconds: 2618742
+        name: DockerBuild
+        startTime: "2023-10-17T13:14:27Z"
+    - durationMilliseconds: 3959
+      name: PushImage
+      startTime: "2023-10-17T13:58:06Z"
+      steps:
+      - durationMilliseconds: 3959
+        name: PushImage
+        startTime: "2023-10-17T13:58:06Z"
+    startTimestamp: "2023-10-17T13:14:07Z"
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

@@ -1,0 +1,1228 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.130.17.124"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.130.17.124"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      kubernetes.io/limit-ranger: 'LimitRanger plugin set: cpu, memory request for
+        container amq-broker-operator; cpu, memory limit for container amq-broker-operator'
+      openshift.io/scc: restricted
+    creationTimestamp: "2024-03-28T19:22:55Z"
+    generateName: amq-broker-operator-78cbb94f44-
+    labels:
+      name: amq-broker-operator
+      pod-template-hash: 78cbb94f44
+    name: amq-broker-operator-78cbb94f44-52wwn
+    namespace: lre-dev
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: amq-broker-operator-78cbb94f44
+      uid: 20c9f43b-409d-43b2-8ad6-b1db33bbd21d
+    resourceVersion: "467404233"
+    uid: 66f1857c-8991-4628-9718-f1720082cb34
+  spec:
+    containers:
+    - args:
+      - --zap-level info
+      - --zap-encoder console
+      command:
+      - /home/amq-broker-operator/bin/entrypoint
+      env:
+      - name: OPERATOR_NAME
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: metadata.labels['name']
+      - name: POD_NAME
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: metadata.name
+      - name: WATCH_NAMESPACE
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: metadata.namespace
+      - name: RELATED_IMAGE_ActiveMQ_Artemis_Broker_Init_770
+        value: registry.redhat.io/amq7/amq-broker-init-rhel7@sha256:b194c366a940f34aa86454f84f1a8ec3b2670456033882f4ef7f514da3f290c5
+      - name: RELATED_IMAGE_ActiveMQ_Artemis_Broker_Init_780
+        value: registry.redhat.io/amq7/amq-broker-init-rhel7@sha256:a83f896a0f2f048495b9bd9e5eabb620d450ab525b3ca6125c88a5a541d2653f
+      - name: RELATED_IMAGE_ActiveMQ_Artemis_Broker_Init_781
+        value: registry.redhat.io/amq7/amq-broker-init-rhel7@sha256:16b649b60ab0dcf93e4e0953033337bb651f99c2d1a1f11fff56ae8b93f5fefc
+      - name: RELATED_IMAGE_ActiveMQ_Artemis_Broker_Init_782
+        value: registry.redhat.io/amq7/amq-broker-init-rhel7@sha256:3267f2235f8721366a72a42dbb8ac26e6e296bf269b62bc6ab5339e25fdce817
+      - name: RELATED_IMAGE_ActiveMQ_Artemis_Broker_Init_783
+        value: registry.redhat.io/amq7/amq-broker-init-rhel7@sha256:296a577c87e51b6a51b4603f5ecd9eb757c51301e7154b72ca231a4612db125e
+      - name: RELATED_IMAGE_ActiveMQ_Artemis_Broker_Init_784
+        value: registry.redhat.io/amq7/amq-broker-init-rhel7@sha256:832f3fc92f0a643e62c70190862c953e19e37559704ef9330e5049d25214635e
+      - name: RELATED_IMAGE_ActiveMQ_Artemis_Broker_Init_785
+        value: registry.redhat.io/amq7/amq-broker-init-rhel7@sha256:856749a6512bd100e1ff297c055dac14323224c007e11869dbebddfd89b28d7f
+      - name: RELATED_IMAGE_ActiveMQ_Artemis_Broker_Init_786
+        value: registry.redhat.io/amq7/amq-broker-init-rhel7@sha256:8fd83a3951640295586ea4e4dda1783fd2be2d1ec48e39e0536c68acd9edafa2
+      - name: RELATED_IMAGE_ActiveMQ_Artemis_Broker_Kubernetes_770
+        value: registry.redhat.io/amq7/amq-broker@sha256:6cdd36d43872146e852daadae6882370f657a60a3b1e88318767fa9641f5e882
+      - name: RELATED_IMAGE_ActiveMQ_Artemis_Broker_Kubernetes_780
+        value: registry.redhat.io/amq7/amq-broker@sha256:a6a2fd548f4e89151a8e7d4bacb7380d0076bbd1b1f5bc5555f2e95e19e1441f
+      - name: RELATED_IMAGE_ActiveMQ_Artemis_Broker_Kubernetes_781
+        value: registry.redhat.io/amq7/amq-broker@sha256:836b70b8a1d1c855d2dbb843e667fae94da639e352d344327f298015c2404d98
+      - name: RELATED_IMAGE_ActiveMQ_Artemis_Broker_Kubernetes_782
+        value: registry.redhat.io/amq7/amq-broker@sha256:5dc83278496e1c0401aab5dafdc266b94e5458e47125c455b7edc74f9ee4e816
+      - name: RELATED_IMAGE_ActiveMQ_Artemis_Broker_Kubernetes_783
+        value: registry.redhat.io/amq7/amq-broker@sha256:69651fe3b101ae6d20290c2a54e0f8eb373d145c52a5c57b35a6bcf059872c3a
+      - name: RELATED_IMAGE_ActiveMQ_Artemis_Broker_Kubernetes_784
+        value: registry.redhat.io/amq7/amq-broker@sha256:c3914b565bd1802f90721c86692a214d01dc629d2bd9038cefc14784a44a4b5b
+      - name: RELATED_IMAGE_ActiveMQ_Artemis_Broker_Kubernetes_785
+        value: registry.redhat.io/amq7/amq-broker@sha256:e034d06de88e06fe5164851dcce75dbd3b713cc47903eee45275a7fd8dc63ebc
+      - name: RELATED_IMAGE_ActiveMQ_Artemis_Broker_Kubernetes_786
+        value: registry.redhat.io/amq7/amq-broker@sha256:b3999dc888e8038d0736275c615f5dd3f0a71382ef3d4d7b63720760dc9540a5
+      image: registry.redhat.io/amq7/amq-broker-rhel7-operator@sha256:166425c902bb481eddab8757cbe4308a3a69d865a167eb9c8927785feaee0b04
+      imagePullPolicy: IfNotPresent
+      name: amq-broker-operator
+      resources:
+        limits:
+          cpu: "2"
+          memory: 2000Mi
+        requests:
+          cpu: 200m
+          memory: 100Mi
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000340000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-lntwc
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: amq-broker-operator-dockercfg-54w8h
+    nodeName: ocp4azu-sj2sl-worker-noprod-qa-brazilsouth2-rglbf
+    nodeSelector:
+      ambientes.dt.cl/noprod: "true"
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000340000
+      seLinuxOptions:
+        level: s0:c18,c17
+    serviceAccount: amq-broker-operator
+    serviceAccountName: amq-broker-operator
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoSchedule
+      key: node.kubernetes.io/memory-pressure
+      operator: Exists
+    volumes:
+    - name: kube-api-access-lntwc
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2024-03-28T19:22:55Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2024-03-28T19:23:09Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2024-03-28T19:23:09Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2024-03-28T19:22:55Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://5853c57046be413f2f9950ee89967fc3ae5ffeef863d2bb669ee9634f9f58de1
+      image: registry.redhat.io/amq7/amq-broker-rhel7-operator@sha256:166425c902bb481eddab8757cbe4308a3a69d865a167eb9c8927785feaee0b04
+      imageID: registry.redhat.io/amq7/amq-broker-rhel7-operator@sha256:166425c902bb481eddab8757cbe4308a3a69d865a167eb9c8927785feaee0b04
+      lastState: {}
+      name: amq-broker-operator
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2024-03-28T19:23:09Z"
+    hostIP: 10.80.80.22
+    phase: Running
+    podIP: 10.130.17.124
+    podIPs:
+    - ip: 10.130.17.124
+    qosClass: Burstable
+    startTime: "2024-03-28T19:22:55Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.130.20.153"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.130.20.153"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/deployment-config.latest-version: "3"
+      openshift.io/deployment-config.name: api-integracion
+      openshift.io/deployment.name: api-integracion-3
+      openshift.io/scc: restricted
+    creationTimestamp: "2024-03-28T19:22:55Z"
+    generateName: api-integracion-3-
+    labels:
+      app: api-integracion
+      deployment: api-integracion-3
+      deploymentconfig: api-integracion
+    name: api-integracion-3-726v6
+    namespace: lre-dev
+    ownerReferences:
+    - apiVersion: v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicationController
+      name: api-integracion-3
+      uid: 42c71ec0-c712-4ff6-a0a5-67af3b4bde2e
+    resourceVersion: "476624952"
+    uid: f60f815e-585d-4514-a400-cfab0f9a11a2
+  spec:
+    containers:
+    - env:
+      - name: TZ
+        value: America/Santiago
+      - name: CorsConfig
+        value: '{"PolicyOrigin": "*"}'
+      image: image-registry.openshift-image-registry.svc:5000/lre-dev/api-integracion@sha256:e14172b1dcdd9faf01a0b5c2517f11720ad695cc3faabdb4f16d847135d411c0
+      imagePullPolicy: Always
+      name: api-integracion
+      ports:
+      - containerPort: 8080
+        protocol: TCP
+      resources:
+        limits:
+          cpu: 500m
+          memory: 600Mi
+        requests:
+          cpu: 200m
+          memory: 100Mi
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000340000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-hg5mk
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: default-dockercfg-q5896
+    - name: amqservice-pull-secret
+    nodeName: ocp4azu-sj2sl-worker-noprod-dev-brazilsouth1-vlxcp
+    nodeSelector:
+      ambientes.dt.cl/noprod: "true"
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000340000
+      seLinuxOptions:
+        level: s0:c18,c17
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoSchedule
+      key: node.kubernetes.io/memory-pressure
+      operator: Exists
+    volumes:
+    - name: kube-api-access-hg5mk
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2024-03-28T19:33:51Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2024-03-28T19:33:55Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2024-03-28T19:33:55Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2024-03-28T19:33:49Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://200f853d544c48339f768272c0d5833f673ccf635b9caaf6de1d527017e5beaf
+      image: image-registry.openshift-image-registry.svc:5000/lre-dev/api-integracion@sha256:e14172b1dcdd9faf01a0b5c2517f11720ad695cc3faabdb4f16d847135d411c0
+      imageID: image-registry.openshift-image-registry.svc:5000/lre-dev/api-integracion@sha256:e14172b1dcdd9faf01a0b5c2517f11720ad695cc3faabdb4f16d847135d411c0
+      lastState: {}
+      name: api-integracion
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2024-03-28T19:33:54Z"
+    hostIP: 10.80.80.5
+    phase: Running
+    podIP: 10.130.20.153
+    podIPs:
+    - ip: 10.130.20.153
+    qosClass: Burstable
+    startTime: "2024-03-28T19:33:51Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.129.16.146"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.129.16.146"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      kubernetes.io/limit-ranger: 'LimitRanger plugin set: cpu, memory request for
+        container sti-build; cpu, memory limit for container sti-build; cpu, memory
+        request for init container git-clone; cpu, memory limit for init container
+        git-clone; cpu, memory request for init container manage-dockerfile; cpu,
+        memory limit for init container manage-dockerfile'
+      openshift.io/build.name: lre-front-1
+      openshift.io/scc: privileged
+    creationTimestamp: "2023-09-01T01:10:35Z"
+    labels:
+      openshift.io/build.name: lre-front-1
+    name: lre-front-1-build
+    namespace: lre-dev
+    ownerReferences:
+    - apiVersion: build.openshift.io/v1
+      controller: true
+      kind: Build
+      name: lre-front-1
+      uid: 0b0a6d2d-c4a7-4732-adb5-7703a8c91869
+    resourceVersion: "95950458"
+    uid: 5188ab27-e59f-4bd6-a635-b366003602e5
+  spec:
+    activeDeadlineSeconds: 604800
+    containers:
+    - args:
+      - openshift-sti-build
+      - --v=0
+      env:
+      - name: BUILD
+        value: |
+          {"kind":"Build","apiVersion":"build.openshift.io/v1","metadata":{"name":"lre-front-1","namespace":"lre-dev","uid":"0b0a6d2d-c4a7-4732-adb5-7703a8c91869","resourceVersion":"95923202","generation":1,"creationTimestamp":"2023-09-01T01:10:33Z","labels":{"app":"lre-front","buildconfig":"lre-front","migration.openshift.io/migrated-by-migmigration":"c3ea9ecb-e90b-490b-b3d5-a4a3ca470138","migration.openshift.io/migrated-by-migplan":"09dc99a3-20c0-4d89-88a2-c81cce3ef81b","openshift.io/build-config.name":"lre-front","openshift.io/build.start-policy":"Serial","velero.io/backup-name":"migration-f9156-initial-ff7x9","velero.io/restore-name":"migration-f9156-final-jccsn"},"annotations":{"openshift.io/build-config.name":"lre-front","openshift.io/build.number":"1"},"ownerReferences":[{"apiVersion":"build.openshift.io/v1","kind":"BuildConfig","name":"lre-front","uid":"f7ed2939-5b0d-45a0-a1bb-68c60afab044","controller":true}],"managedFields":[{"manager":"Go-http-client","operation":"Update","apiVersion":"build.openshift.io/v1","time":"2023-09-01T01:10:33Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{".":{},"f:openshift.io/build-config.name":{},"f:openshift.io/build.number":{}},"f:labels":{".":{},"f:app":{},"f:buildconfig":{},"f:migration.openshift.io/migrated-by-migmigration":{},"f:migration.openshift.io/migrated-by-migplan":{},"f:openshift.io/build-config.name":{},"f:openshift.io/build.start-policy":{},"f:velero.io/backup-name":{},"f:velero.io/restore-name":{}},"f:ownerReferences":{".":{},"k:{\"uid\":\"f7ed2939-5b0d-45a0-a1bb-68c60afab044\"}":{}}},"f:spec":{"f:output":{"f:to":{}},"f:serviceAccount":{},"f:source":{"f:git":{".":{},"f:ref":{},"f:uri":{}},"f:sourceSecret":{},"f:type":{}},"f:strategy":{"f:sourceStrategy":{".":{},"f:from":{},"f:pullSecret":{}},"f:type":{}},"f:triggeredBy":{}},"f:status":{"f:conditions":{".":{},"k:{\"type\":\"New\"}":{".":{},"f:lastTransitionTime":{},"f:lastUpdateTime":{},"f:status":{},"f:type":{}}},"f:config":{},"f:phase":{}}}}]},"spec":{"serviceAccount":"builder","source":{"type":"Git","git":{"uri":"https://dirtrab.visualstudio.com/Libro%20Remuneraciones%20Electronico/_git/product-lre","ref":"develop"},"sourceSecret":{"name":"product-lre"}},"strategy":{"type":"Source","sourceStrategy":{"from":{"kind":"DockerImage","name":"image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc"},"pullSecret":{"name":"builder-dockercfg-jmbrj"}}},"output":{"to":{"kind":"DockerImage","name":"image-registry.openshift-image-registry.svc:5000/lre-dev/lre-front:latest"},"pushSecret":{"name":"builder-dockercfg-jmbrj"}},"resources":{},"postCommit":{},"nodeSelector":null,"triggeredBy":[{"message":"Image change","imageChangeBuild":{"imageID":"image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc","fromRef":{"kind":"ImageStreamTag","namespace":"openshift","name":"nodejs:10"}}}]},"status":{"phase":"New","outputDockerImageReference":"image-registry.openshift-image-registry.svc:5000/lre-dev/lre-front:latest","config":{"kind":"BuildConfig","namespace":"lre-dev","name":"lre-front"},"output":{},"conditions":[{"type":"New","status":"True","lastUpdateTime":"2023-09-01T01:10:33Z","lastTransitionTime":"2023-09-01T01:10:33Z"}]}}
+      - name: LANG
+        value: C.utf8
+      - name: SOURCE_REPOSITORY
+        value: https://dirtrab.visualstudio.com/Libro%20Remuneraciones%20Electronico/_git/product-lre
+      - name: SOURCE_URI
+        value: https://dirtrab.visualstudio.com/Libro%20Remuneraciones%20Electronico/_git/product-lre
+      - name: SOURCE_REF
+        value: develop
+      - name: ALLOWED_UIDS
+        value: 1-
+      - name: DROP_CAPS
+        value: KILL,MKNOD,SETGID,SETUID
+      - name: PUSH_DOCKERCFG_PATH
+        value: /var/run/secrets/openshift.io/push
+      - name: PULL_DOCKERCFG_PATH
+        value: /var/run/secrets/openshift.io/pull
+      - name: BUILD_REGISTRIES_CONF_PATH
+        value: /var/run/configs/openshift.io/build-system/registries.conf
+      - name: BUILD_REGISTRIES_DIR_PATH
+        value: /var/run/configs/openshift.io/build-system/registries.d
+      - name: BUILD_SIGNATURE_POLICY_PATH
+        value: /var/run/configs/openshift.io/build-system/policy.json
+      - name: BUILD_STORAGE_CONF_PATH
+        value: /var/run/configs/openshift.io/build-system/storage.conf
+      - name: BUILD_STORAGE_DRIVER
+        value: overlay
+      - name: BUILD_BLOBCACHE_DIR
+        value: /var/cache/blobs
+      - name: HTTP_PROXY
+      - name: HTTPS_PROXY
+      - name: NO_PROXY
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:77b002b5a7064083d734a8e53fae7a8cd12c80eb286d1d935962064c863a18d1
+      imagePullPolicy: IfNotPresent
+      name: sti-build
+      resources:
+        limits:
+          cpu: "2"
+          memory: 2000Mi
+        requests:
+          cpu: 200m
+          memory: 100Mi
+      securityContext:
+        privileged: true
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: FallbackToLogsOnError
+      volumeMounts:
+      - mountPath: /var/lib/kubelet/config.json
+        name: node-pullsecrets
+      - mountPath: /tmp/build
+        name: buildworkdir
+      - mountPath: /var/lib/containers/cache
+        name: buildcachedir
+      - mountPath: /var/run/secrets/openshift.io/push
+        name: builder-dockercfg-jmbrj-push
+        readOnly: true
+      - mountPath: /var/run/secrets/openshift.io/pull
+        name: builder-dockercfg-jmbrj-pull
+        readOnly: true
+      - mountPath: /var/run/configs/openshift.io/build-system
+        name: build-system-configs
+        readOnly: true
+      - mountPath: /var/run/configs/openshift.io/certs
+        name: build-ca-bundles
+      - mountPath: /var/run/configs/openshift.io/pki
+        name: build-proxy-ca-bundles
+      - mountPath: /var/lib/containers/storage
+        name: container-storage-root
+      - mountPath: /var/cache/blobs
+        name: build-blob-cache
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-gmgxq
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: builder-dockercfg-jmbrj
+    - name: amqservice-pull-secret
+    initContainers:
+    - args:
+      - openshift-git-clone
+      - --v=0
+      env:
+      - name: BUILD
+        value: |
+          {"kind":"Build","apiVersion":"build.openshift.io/v1","metadata":{"name":"lre-front-1","namespace":"lre-dev","uid":"0b0a6d2d-c4a7-4732-adb5-7703a8c91869","resourceVersion":"95923202","generation":1,"creationTimestamp":"2023-09-01T01:10:33Z","labels":{"app":"lre-front","buildconfig":"lre-front","migration.openshift.io/migrated-by-migmigration":"c3ea9ecb-e90b-490b-b3d5-a4a3ca470138","migration.openshift.io/migrated-by-migplan":"09dc99a3-20c0-4d89-88a2-c81cce3ef81b","openshift.io/build-config.name":"lre-front","openshift.io/build.start-policy":"Serial","velero.io/backup-name":"migration-f9156-initial-ff7x9","velero.io/restore-name":"migration-f9156-final-jccsn"},"annotations":{"openshift.io/build-config.name":"lre-front","openshift.io/build.number":"1"},"ownerReferences":[{"apiVersion":"build.openshift.io/v1","kind":"BuildConfig","name":"lre-front","uid":"f7ed2939-5b0d-45a0-a1bb-68c60afab044","controller":true}],"managedFields":[{"manager":"Go-http-client","operation":"Update","apiVersion":"build.openshift.io/v1","time":"2023-09-01T01:10:33Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{".":{},"f:openshift.io/build-config.name":{},"f:openshift.io/build.number":{}},"f:labels":{".":{},"f:app":{},"f:buildconfig":{},"f:migration.openshift.io/migrated-by-migmigration":{},"f:migration.openshift.io/migrated-by-migplan":{},"f:openshift.io/build-config.name":{},"f:openshift.io/build.start-policy":{},"f:velero.io/backup-name":{},"f:velero.io/restore-name":{}},"f:ownerReferences":{".":{},"k:{\"uid\":\"f7ed2939-5b0d-45a0-a1bb-68c60afab044\"}":{}}},"f:spec":{"f:output":{"f:to":{}},"f:serviceAccount":{},"f:source":{"f:git":{".":{},"f:ref":{},"f:uri":{}},"f:sourceSecret":{},"f:type":{}},"f:strategy":{"f:sourceStrategy":{".":{},"f:from":{},"f:pullSecret":{}},"f:type":{}},"f:triggeredBy":{}},"f:status":{"f:conditions":{".":{},"k:{\"type\":\"New\"}":{".":{},"f:lastTransitionTime":{},"f:lastUpdateTime":{},"f:status":{},"f:type":{}}},"f:config":{},"f:phase":{}}}}]},"spec":{"serviceAccount":"builder","source":{"type":"Git","git":{"uri":"https://dirtrab.visualstudio.com/Libro%20Remuneraciones%20Electronico/_git/product-lre","ref":"develop"},"sourceSecret":{"name":"product-lre"}},"strategy":{"type":"Source","sourceStrategy":{"from":{"kind":"DockerImage","name":"image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc"},"pullSecret":{"name":"builder-dockercfg-jmbrj"}}},"output":{"to":{"kind":"DockerImage","name":"image-registry.openshift-image-registry.svc:5000/lre-dev/lre-front:latest"},"pushSecret":{"name":"builder-dockercfg-jmbrj"}},"resources":{},"postCommit":{},"nodeSelector":null,"triggeredBy":[{"message":"Image change","imageChangeBuild":{"imageID":"image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc","fromRef":{"kind":"ImageStreamTag","namespace":"openshift","name":"nodejs:10"}}}]},"status":{"phase":"New","outputDockerImageReference":"image-registry.openshift-image-registry.svc:5000/lre-dev/lre-front:latest","config":{"kind":"BuildConfig","namespace":"lre-dev","name":"lre-front"},"output":{},"conditions":[{"type":"New","status":"True","lastUpdateTime":"2023-09-01T01:10:33Z","lastTransitionTime":"2023-09-01T01:10:33Z"}]}}
+      - name: LANG
+        value: C.utf8
+      - name: SOURCE_REPOSITORY
+        value: https://dirtrab.visualstudio.com/Libro%20Remuneraciones%20Electronico/_git/product-lre
+      - name: SOURCE_URI
+        value: https://dirtrab.visualstudio.com/Libro%20Remuneraciones%20Electronico/_git/product-lre
+      - name: SOURCE_REF
+        value: develop
+      - name: ALLOWED_UIDS
+        value: 1-
+      - name: DROP_CAPS
+        value: KILL,MKNOD,SETGID,SETUID
+      - name: SOURCE_SECRET_PATH
+        value: /var/run/secrets/openshift.io/source
+      - name: BUILD_REGISTRIES_CONF_PATH
+        value: /var/run/configs/openshift.io/build-system/registries.conf
+      - name: BUILD_REGISTRIES_DIR_PATH
+        value: /var/run/configs/openshift.io/build-system/registries.d
+      - name: BUILD_SIGNATURE_POLICY_PATH
+        value: /var/run/configs/openshift.io/build-system/policy.json
+      - name: BUILD_STORAGE_CONF_PATH
+        value: /var/run/configs/openshift.io/build-system/storage.conf
+      - name: BUILD_BLOBCACHE_DIR
+        value: /var/cache/blobs
+      - name: HTTP_PROXY
+      - name: HTTPS_PROXY
+      - name: NO_PROXY
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:77b002b5a7064083d734a8e53fae7a8cd12c80eb286d1d935962064c863a18d1
+      imagePullPolicy: IfNotPresent
+      name: git-clone
+      resources:
+        limits:
+          cpu: "2"
+          memory: 2000Mi
+        requests:
+          cpu: 200m
+          memory: 100Mi
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: FallbackToLogsOnError
+      volumeMounts:
+      - mountPath: /tmp/build
+        name: buildworkdir
+      - mountPath: /var/run/secrets/openshift.io/source
+        name: product-lre-source
+        readOnly: true
+      - mountPath: /var/run/configs/openshift.io/build-system
+        name: build-system-configs
+        readOnly: true
+      - mountPath: /var/run/configs/openshift.io/certs
+        name: build-ca-bundles
+      - mountPath: /var/run/configs/openshift.io/pki
+        name: build-proxy-ca-bundles
+      - mountPath: /var/cache/blobs
+        name: build-blob-cache
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-gmgxq
+        readOnly: true
+    - args:
+      - openshift-manage-dockerfile
+      - --v=0
+      env:
+      - name: BUILD
+        value: |
+          {"kind":"Build","apiVersion":"build.openshift.io/v1","metadata":{"name":"lre-front-1","namespace":"lre-dev","uid":"0b0a6d2d-c4a7-4732-adb5-7703a8c91869","resourceVersion":"95923202","generation":1,"creationTimestamp":"2023-09-01T01:10:33Z","labels":{"app":"lre-front","buildconfig":"lre-front","migration.openshift.io/migrated-by-migmigration":"c3ea9ecb-e90b-490b-b3d5-a4a3ca470138","migration.openshift.io/migrated-by-migplan":"09dc99a3-20c0-4d89-88a2-c81cce3ef81b","openshift.io/build-config.name":"lre-front","openshift.io/build.start-policy":"Serial","velero.io/backup-name":"migration-f9156-initial-ff7x9","velero.io/restore-name":"migration-f9156-final-jccsn"},"annotations":{"openshift.io/build-config.name":"lre-front","openshift.io/build.number":"1"},"ownerReferences":[{"apiVersion":"build.openshift.io/v1","kind":"BuildConfig","name":"lre-front","uid":"f7ed2939-5b0d-45a0-a1bb-68c60afab044","controller":true}],"managedFields":[{"manager":"Go-http-client","operation":"Update","apiVersion":"build.openshift.io/v1","time":"2023-09-01T01:10:33Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{".":{},"f:openshift.io/build-config.name":{},"f:openshift.io/build.number":{}},"f:labels":{".":{},"f:app":{},"f:buildconfig":{},"f:migration.openshift.io/migrated-by-migmigration":{},"f:migration.openshift.io/migrated-by-migplan":{},"f:openshift.io/build-config.name":{},"f:openshift.io/build.start-policy":{},"f:velero.io/backup-name":{},"f:velero.io/restore-name":{}},"f:ownerReferences":{".":{},"k:{\"uid\":\"f7ed2939-5b0d-45a0-a1bb-68c60afab044\"}":{}}},"f:spec":{"f:output":{"f:to":{}},"f:serviceAccount":{},"f:source":{"f:git":{".":{},"f:ref":{},"f:uri":{}},"f:sourceSecret":{},"f:type":{}},"f:strategy":{"f:sourceStrategy":{".":{},"f:from":{},"f:pullSecret":{}},"f:type":{}},"f:triggeredBy":{}},"f:status":{"f:conditions":{".":{},"k:{\"type\":\"New\"}":{".":{},"f:lastTransitionTime":{},"f:lastUpdateTime":{},"f:status":{},"f:type":{}}},"f:config":{},"f:phase":{}}}}]},"spec":{"serviceAccount":"builder","source":{"type":"Git","git":{"uri":"https://dirtrab.visualstudio.com/Libro%20Remuneraciones%20Electronico/_git/product-lre","ref":"develop"},"sourceSecret":{"name":"product-lre"}},"strategy":{"type":"Source","sourceStrategy":{"from":{"kind":"DockerImage","name":"image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc"},"pullSecret":{"name":"builder-dockercfg-jmbrj"}}},"output":{"to":{"kind":"DockerImage","name":"image-registry.openshift-image-registry.svc:5000/lre-dev/lre-front:latest"},"pushSecret":{"name":"builder-dockercfg-jmbrj"}},"resources":{},"postCommit":{},"nodeSelector":null,"triggeredBy":[{"message":"Image change","imageChangeBuild":{"imageID":"image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc","fromRef":{"kind":"ImageStreamTag","namespace":"openshift","name":"nodejs:10"}}}]},"status":{"phase":"New","outputDockerImageReference":"image-registry.openshift-image-registry.svc:5000/lre-dev/lre-front:latest","config":{"kind":"BuildConfig","namespace":"lre-dev","name":"lre-front"},"output":{},"conditions":[{"type":"New","status":"True","lastUpdateTime":"2023-09-01T01:10:33Z","lastTransitionTime":"2023-09-01T01:10:33Z"}]}}
+      - name: LANG
+        value: C.utf8
+      - name: SOURCE_REPOSITORY
+        value: https://dirtrab.visualstudio.com/Libro%20Remuneraciones%20Electronico/_git/product-lre
+      - name: SOURCE_URI
+        value: https://dirtrab.visualstudio.com/Libro%20Remuneraciones%20Electronico/_git/product-lre
+      - name: SOURCE_REF
+        value: develop
+      - name: ALLOWED_UIDS
+        value: 1-
+      - name: DROP_CAPS
+        value: KILL,MKNOD,SETGID,SETUID
+      - name: BUILD_REGISTRIES_CONF_PATH
+        value: /var/run/configs/openshift.io/build-system/registries.conf
+      - name: BUILD_REGISTRIES_DIR_PATH
+        value: /var/run/configs/openshift.io/build-system/registries.d
+      - name: BUILD_SIGNATURE_POLICY_PATH
+        value: /var/run/configs/openshift.io/build-system/policy.json
+      - name: BUILD_STORAGE_CONF_PATH
+        value: /var/run/configs/openshift.io/build-system/storage.conf
+      - name: BUILD_BLOBCACHE_DIR
+        value: /var/cache/blobs
+      - name: HTTP_PROXY
+      - name: HTTPS_PROXY
+      - name: NO_PROXY
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:77b002b5a7064083d734a8e53fae7a8cd12c80eb286d1d935962064c863a18d1
+      imagePullPolicy: IfNotPresent
+      name: manage-dockerfile
+      resources:
+        limits:
+          cpu: "2"
+          memory: 2000Mi
+        requests:
+          cpu: 200m
+          memory: 100Mi
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: FallbackToLogsOnError
+      volumeMounts:
+      - mountPath: /tmp/build
+        name: buildworkdir
+      - mountPath: /var/run/configs/openshift.io/build-system
+        name: build-system-configs
+        readOnly: true
+      - mountPath: /var/run/configs/openshift.io/certs
+        name: build-ca-bundles
+      - mountPath: /var/run/configs/openshift.io/pki
+        name: build-proxy-ca-bundles
+      - mountPath: /var/cache/blobs
+        name: build-blob-cache
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-gmgxq
+        readOnly: true
+    nodeName: ocp4azu-sj2sl-worker-noprod-qa-brazilsouth1-2s77x
+    nodeSelector:
+      ambientes.dt.cl/noprod: "true"
+      kubernetes.io/os: linux
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Never
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: builder
+    serviceAccountName: builder
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoSchedule
+      key: node.kubernetes.io/memory-pressure
+      operator: Exists
+    volumes:
+    - hostPath:
+        path: /var/lib/kubelet/config.json
+        type: File
+      name: node-pullsecrets
+    - hostPath:
+        path: /var/lib/containers/cache
+        type: ""
+      name: buildcachedir
+    - emptyDir: {}
+      name: buildworkdir
+    - name: product-lre-source
+      secret:
+        defaultMode: 384
+        secretName: product-lre
+    - name: builder-dockercfg-jmbrj-push
+      secret:
+        defaultMode: 384
+        secretName: builder-dockercfg-jmbrj
+    - name: builder-dockercfg-jmbrj-pull
+      secret:
+        defaultMode: 384
+        secretName: builder-dockercfg-jmbrj
+    - configMap:
+        defaultMode: 420
+        name: lre-front-1-sys-config
+      name: build-system-configs
+    - configMap:
+        defaultMode: 420
+        items:
+        - key: service-ca.crt
+          path: certs.d/image-registry.openshift-image-registry.svc:5000/ca.crt
+        name: lre-front-1-ca
+      name: build-ca-bundles
+    - configMap:
+        defaultMode: 420
+        items:
+        - key: ca-bundle.crt
+          path: tls-ca-bundle.pem
+        name: lre-front-1-global-ca
+      name: build-proxy-ca-bundles
+    - emptyDir: {}
+      name: container-storage-root
+    - emptyDir: {}
+      name: build-blob-cache
+    - name: kube-api-access-gmgxq
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-09-01T01:11:02Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2023-09-01T01:55:08Z"
+      reason: PodFailed
+      status: "False"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2023-09-01T01:55:08Z"
+      reason: PodFailed
+      status: "False"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-09-01T01:10:35Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://7900cd1bd3cd6b0f549cd109dfd2411dbaaca5b7b52f078a394ab62c6bb35f8f
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:77b002b5a7064083d734a8e53fae7a8cd12c80eb286d1d935962064c863a18d1
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:77b002b5a7064083d734a8e53fae7a8cd12c80eb286d1d935962064c863a18d1
+      lastState: {}
+      name: sti-build
+      ready: false
+      restartCount: 0
+      started: false
+      state:
+        terminated:
+          containerID: cri-o://7900cd1bd3cd6b0f549cd109dfd2411dbaaca5b7b52f078a394ab62c6bb35f8f
+          exitCode: 1
+          finishedAt: "2023-09-01T01:55:07Z"
+          message: "es/fsevents):\nnpm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported
+            platform for fsevents@1.2.11: wanted {\"os\":\"darwin\",\"arch\":\"any\"}
+            (current: {\"os\":\"linux\",\"arch\":\"x64\"})\nnpm WARN optional SKIPPING
+            OPTIONAL DEPENDENCY: fsevents@2.1.2 (node_modules/fsevents):\nnpm WARN
+            notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@2.1.2:
+            wanted {\"os\":\"darwin\",\"arch\":\"any\"} (current: {\"os\":\"linux\",\"arch\":\"x64\"})\n\nadded
+            2089 packages from 1121 contributors and audited 2296 packages in 2530.303s\nfound
+            666 vulnerabilities (5 low, 294 moderate, 294 high, 73 critical)\n  run
+            `npm audit fix` to fix them, or `npm audit` for details\nnpm timing npm
+            Completed in 2534151ms\nnpm info ok \n---> Building in production mode\nnpm
+            info it worked if it ends with ok\nnpm info using npm@6.9.0\nnpm info
+            using node@v10.16.3\nnpm info lifecycle lre-frontproject@0.1.0~prebuild:
+            lre-frontproject@0.1.0\nnpm info lifecycle lre-frontproject@0.1.0~build:
+            lre-frontproject@0.1.0\n\n> lre-frontproject@0.1.0 build /opt/app-root/src\n>
+            GENERATE_SOURCEMAP=false react-scripts build\n\nCreating an optimized
+            production build...\nBrowserslist: caniuse-lite is outdated. Please run
+            the following command: `npm update`\nFailed to compile.\n\n./src/components/FormularioDescuentos/index.js\n
+            \ Line 88:29:  'rsu' is not defined  no-undef\n\nSearch for the keywords
+            to learn more about each error.\n\n\nnpm info lifecycle lre-frontproject@0.1.0~build:
+            Failed to exec build script\nnpm ERR! code ELIFECYCLE\nnpm ERR! errno
+            1\nnpm ERR! lre-frontproject@0.1.0 build: `GENERATE_SOURCEMAP=false react-scripts
+            build`\nnpm ERR! Exit status 1\nnpm ERR! \nnpm ERR! Failed at the lre-frontproject@0.1.0
+            build script.\nnpm ERR! This is probably not a problem with npm. There
+            is likely additional logging output above.\nnpm timing npm Completed in
+            55252ms\n\nnpm ERR! A complete log of this run can be found in:\nnpm ERR!
+            \    /opt/app-root/src/.npm/_logs/2023-09-01T01_55_01_359Z-debug.log\nerror:
+            build error: error building at STEP \"RUN /usr/libexec/s2i/assemble\":
+            error while running runtime: exit status 1\n"
+          reason: Error
+          startedAt: "2023-09-01T01:11:05Z"
+    hostIP: 10.80.80.28
+    initContainerStatuses:
+    - containerID: cri-o://3f62cfdb9b7ece8a746a4b5be927a30cb4fabc91acde7c1f841755bcdbf40695
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:77b002b5a7064083d734a8e53fae7a8cd12c80eb286d1d935962064c863a18d1
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:77b002b5a7064083d734a8e53fae7a8cd12c80eb286d1d935962064c863a18d1
+      lastState: {}
+      name: git-clone
+      ready: true
+      restartCount: 0
+      state:
+        terminated:
+          containerID: cri-o://3f62cfdb9b7ece8a746a4b5be927a30cb4fabc91acde7c1f841755bcdbf40695
+          exitCode: 0
+          finishedAt: "2023-09-01T01:10:56Z"
+          reason: Completed
+          startedAt: "2023-09-01T01:10:38Z"
+    - containerID: cri-o://3c324fcf7106de1a15b0600345de894b8fa6bd6664bb1bfacda915e0ebd3e952
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:77b002b5a7064083d734a8e53fae7a8cd12c80eb286d1d935962064c863a18d1
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:77b002b5a7064083d734a8e53fae7a8cd12c80eb286d1d935962064c863a18d1
+      lastState: {}
+      name: manage-dockerfile
+      ready: true
+      restartCount: 0
+      state:
+        terminated:
+          containerID: cri-o://3c324fcf7106de1a15b0600345de894b8fa6bd6664bb1bfacda915e0ebd3e952
+          exitCode: 0
+          finishedAt: "2023-09-01T01:11:02Z"
+          reason: Completed
+          startedAt: "2023-09-01T01:11:01Z"
+    phase: Failed
+    podIP: 10.129.16.146
+    podIPs:
+    - ip: 10.129.16.146
+    qosClass: Burstable
+    startTime: "2023-09-01T01:10:35Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.129.16.115"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.129.16.115"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/deployment-config.latest-version: "7"
+      openshift.io/deployment-config.name: lre-front
+      openshift.io/deployment.name: lre-front-7
+      openshift.io/scc: restricted
+    creationTimestamp: "2023-06-04T07:45:37Z"
+    generateName: lre-front-7-
+    labels:
+      app: lre-front
+      deployment: lre-front-7
+      deploymentconfig: lre-front
+    name: lre-front-7-2thsq
+    namespace: lre-dev
+    ownerReferences:
+    - apiVersion: v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicationController
+      name: lre-front-7
+      uid: b1737463-b7a1-4873-bbdb-d6100de47b8b
+    resourceVersion: "472917997"
+    uid: 44bab40b-530f-4135-9bbf-36ee85bed611
+  spec:
+    containers:
+    - env:
+      - name: TZ
+        value: America/Santiago
+      - name: REACT_APP_VOLVER_REDIRECT_EMPLEADOR
+        value: https://lre-services-live-dev.api.dirtrab.cl/fiscalizacion/remuneracion
+      - name: REACT_APP_PARENT_DOMAIN
+        value: '*'
+      - name: REACT_APP_OBTENER_DECLARACIONES
+        value: https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/declaracion/datosDeclaraciones/empleador/
+      - name: REACT_APP_OBTENER_OBSERVACIONES
+        value: https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/declaracion/datosDeclaraciones/observaciones/
+      - name: REACT_APP_CARGAR_DECLARACIONES_TEST
+        value: https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/declaracion/cargaDeclaracion
+      - name: REACT_APP_DESCARGAR_CSV
+        value: https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/declaracion/descargaDeclaracion/
+      - name: REACT_APP_DESCARGAR_DECLARACIONES
+        value: https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/declaracion/descargaDeclaracion/plantilla
+      - name: REACT_APP_VALIDAR_EMPLEADOR
+        value: https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/validaEmpleador/empleador/
+      - name: REACT_APP_LRE_URL_METADATA
+        value: https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/bff/metadata/empleador
+      - name: REACT_APP_LRE_URL_GUARDAR_TERMINO_CONDICIONES
+        value: https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/empleador/terminoCondiciones
+      - name: REACT_APP_PDF_INSTRUCCIONES
+        value: https://static-content-dev.api.dirtrab.cl/dt-docs/lre/lre_instrucciones_de_carga.pdf
+      - name: REACT_APP_PDF_POLITICAS_PRIVACIDAD
+        value: https://static-content-dev.api.dirtrab.cl/dt-docs/lre/lre_politicas_proteccion_datos_personales.pdf
+      - name: REACT_APP_PDF_SUPLEMENTO_LRE
+        value: https://static-content-dev.api.dirtrab.cl/dt-docs/lre/lre_suplemento.pdf
+      - name: REACT_APP_SEGUNDOS_DE_RECARGA
+        value: "20"
+      image: image-registry.openshift-image-registry.svc:5000/lre-dev/lre-front@sha256:a49eff66df5e36f15840a29ce6344b28e744fc4650438d51f60d6ab9cf89b360
+      imagePullPolicy: Always
+      name: lre-front
+      ports:
+      - containerPort: 3000
+        protocol: TCP
+      resources:
+        limits:
+          cpu: 500m
+          memory: 600Mi
+        requests:
+          cpu: 200m
+          memory: 100Mi
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000340000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-b2csz
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: default-dockercfg-q5896
+    - name: amqservice-pull-secret
+    nodeName: ocp4azu-sj2sl-worker-noprod-qa-brazilsouth1-2s77x
+    nodeSelector:
+      ambientes.dt.cl/noprod: "true"
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000340000
+      seLinuxOptions:
+        level: s0:c18,c17
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoSchedule
+      key: node.kubernetes.io/memory-pressure
+      operator: Exists
+    volumes:
+    - name: kube-api-access-b2csz
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-06-04T07:45:37Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2023-06-04T07:45:54Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2023-06-04T07:45:54Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-06-04T07:45:37Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://794b556d794ac52a2da3915c166f21c9325d2777ab6f956e4b991f4e9f578f58
+      image: image-registry.openshift-image-registry.svc:5000/lre-dev/lre-front@sha256:a49eff66df5e36f15840a29ce6344b28e744fc4650438d51f60d6ab9cf89b360
+      imageID: image-registry.openshift-image-registry.svc:5000/lre-dev/lre-front@sha256:a49eff66df5e36f15840a29ce6344b28e744fc4650438d51f60d6ab9cf89b360
+      lastState: {}
+      name: lre-front
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2023-06-04T07:45:53Z"
+    hostIP: 10.80.80.28
+    phase: Running
+    podIP: 10.129.16.115
+    podIPs:
+    - ip: 10.129.16.115
+    qosClass: Burstable
+    startTime: "2023-06-04T07:45:37Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.130.16.108"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.130.16.108"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/deployment-config.latest-version: "1"
+      openshift.io/deployment-config.name: product-lre
+      openshift.io/deployment.name: product-lre-1
+      openshift.io/generated-by: OpenShiftNewApp
+      openshift.io/scc: restricted
+    creationTimestamp: "2023-06-05T17:51:11Z"
+    generateName: product-lre-1-
+    labels:
+      app: product-lre
+      deployment: product-lre-1
+      deploymentconfig: product-lre
+    name: product-lre-1-78dll
+    namespace: lre-dev
+    ownerReferences:
+    - apiVersion: v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicationController
+      name: product-lre-1
+      uid: e9859f49-ab08-4138-9dee-1c630d2988e4
+    resourceVersion: "467404301"
+    uid: 60d491f1-a7db-43ee-bae2-7d07821f1c75
+  spec:
+    containers:
+    - env:
+      - name: REACT_APP_VOLVER_REDIRECT_EMPLEADOR
+        value: /empleador/home
+      - name: REACT_APP_PARENT_DOMAIN
+        value: '*'
+      - name: REACT_APP_LRE_OBTENER_DECLARACIONES
+        value: https://lre-services-live-qa.api.dirtrab.cl/fiscalizacion/remuneracion/declaracion/datosDeclaraciones/empleador/
+      - name: REACT_APP_LRE_OBTENER_OBSERVACIONES
+        value: https://lre-services-live-qa.api.dirtrab.cl/fiscalizacion/remuneracion/declaracion/datosDeclaraciones/observaciones/
+      - name: REACT_APP_LRE_CARGAR_DECLARACION
+        value: https://lre-services-live-qa.api.dirtrab.cl/fiscalizacion/remuneracion/declaracion/cargaDeclaracion
+      - name: REACT_APP_LRE_OBTENER_CSV_DECLARACION
+        value: https://lre-services-live-qa.api.dirtrab.cl/fiscalizacion/remuneracion/declaracion/descargaDeclaracion/
+      - name: REACT_APP_LRE_OBTENER_PLANTILLA_EJEMPLO
+        value: https://lre-services-live-qa.api.dirtrab.cl/fiscalizacion/remuneracion/declaracion/descargaDeclaracion/plantilla
+      - name: REACT_APP_LRE_EMPLEADOR
+        value: https://lre-services-live-qa.api.dirtrab.cl/fiscalizacion/remuneracion/validaEmpleador/empleador/
+      - name: REACT_APP_LRE_URL_METADATA
+        value: https://lre-services-live-qa.api.dirtrab.cl/fiscalizacion/remuneracion/bff/metadata/empleador/
+      - name: REACT_APP_LRE_URL_GUARDAR_TERMINO_CONDICIONES
+        value: https://lre-services-live-qa.api.dirtrab.cl/fiscalizacion/remuneracion/terminoCondiciones/empleador/
+      - name: REACT_APP_PDF_INSTRUCCIONES
+        value: https://static-content.api.dirtrab.cl/dt-docs/lre/lre_instrucciones_de_carga.pdf
+      - name: REACT_APP_PDF_POLITICAS_PRIVACIDAD
+        value: https://static-content.api.dirtrab.cl/dt-docs/lre/lre_politicas_proteccion_datos_personales.pdf
+      - name: REACT_APP_PDF_SUPLEMENTO_LRE
+        value: https://static-content.api.dirtrab.cl/dt-docs/lre/lre_suplemento.pdf
+      image: image-registry.openshift-image-registry.svc:5000/lre-dev/product-lre@sha256:60fbe25035b0491ee432f88807d3e2eb14aca0b0b45677b2bbaa9aba04cec41e
+      imagePullPolicy: Always
+      name: product-lre
+      ports:
+      - containerPort: 8080
+        protocol: TCP
+      resources:
+        limits:
+          cpu: 500m
+          memory: 600Mi
+        requests:
+          cpu: 200m
+          memory: 100Mi
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000340000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-f49zs
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: default-dockercfg-q5896
+    - name: amqservice-pull-secret
+    nodeName: ocp4azu-sj2sl-worker-noprod-qa-brazilsouth2-rglbf
+    nodeSelector:
+      ambientes.dt.cl/noprod: "true"
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000340000
+      seLinuxOptions:
+        level: s0:c18,c17
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoSchedule
+      key: node.kubernetes.io/memory-pressure
+      operator: Exists
+    volumes:
+    - name: kube-api-access-f49zs
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-06-05T17:51:11Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2023-06-05T17:51:25Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2023-06-05T17:51:25Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-06-05T17:51:11Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://6d7b18ef0e15a115a26893c9eb9bb8307ca3c20d4ec5c42c8a3aef81465aee88
+      image: image-registry.openshift-image-registry.svc:5000/lre-dev/product-lre@sha256:60fbe25035b0491ee432f88807d3e2eb14aca0b0b45677b2bbaa9aba04cec41e
+      imageID: image-registry.openshift-image-registry.svc:5000/lre-dev/product-lre@sha256:60fbe25035b0491ee432f88807d3e2eb14aca0b0b45677b2bbaa9aba04cec41e
+      lastState: {}
+      name: product-lre
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2023-06-05T17:51:25Z"
+    hostIP: 10.80.80.22
+    phase: Running
+    podIP: 10.130.16.108
+    podIPs:
+    - ip: 10.130.16.108
+    qosClass: Burstable
+    startTime: "2023-06-05T17:51:11Z"
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

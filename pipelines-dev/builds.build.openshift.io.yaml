@@ -1,0 +1,1677 @@
+apiVersion: v1
+items:
+- apiVersion: build.openshift.io/v1
+  kind: Build
+  metadata:
+    annotations:
+      openshift.io/jenkins-blueocean-log-url: /http://jenkins-cicd.api-cloud.dirtrab.cl/blue/organizations/jenkins/pipelines-dev%2Fpipelines-dev-prox0001-registralibrorem/detail/pipelines-dev-prox0001-registralibrorem/22/
+      openshift.io/jenkins-build-uri: http://jenkins-cicd.api-cloud.dirtrab.cl/job/pipelines-dev/job/pipelines-dev-prox0001-registralibrorem/22/
+      openshift.io/jenkins-console-log-url: http://jenkins-cicd.api-cloud.dirtrab.cl/job/pipelines-dev/job/pipelines-dev-prox0001-registralibrorem/22/console
+      openshift.io/jenkins-log-url: http://jenkins-cicd.api-cloud.dirtrab.cl/job/pipelines-dev/job/pipelines-dev-prox0001-registralibrorem/22/consoleText
+      openshift.io/jenkins-status-json: '{"_links":{"self":{"href":"http://jenkins-cicd.api-cloud.dirtrab.cl/job/pipelines-dev/job/pipelines-dev-prox0001-registralibrorem/22/wfapi/describe"}},"id":"22","name":"#22","status":"NOT_EXECUTED","startTimeMillis":1697637599179,"endTimeMillis":1697637599262,"durationMillis":83,"queueDurationMillis":12,"pauseDurationMillis":0,"stages":[]}'
+    creationTimestamp: "2023-10-18T13:59:59Z"
+    generation: 1
+    labels:
+      app: cicd-pipeline
+      buildconfig: prox0001-registralibrorem
+      group: cicd
+      migration.openshift.io/migrated-by-migmigration: 8b3a2baf-eb1a-48bd-bffd-893d945b704f
+      migration.openshift.io/migrated-by-migplan: a3ccd4bb-657f-47a9-a0e5-d29a23a06ca1
+      name: cicd-pipeline
+      openshift.io/build-config.name: prox0001-registralibrorem
+      openshift.io/build.start-policy: Serial
+      template: cicd
+      velero.io/backup-name: migration-95b26-initial-gqjc6
+      velero.io/restore-name: migration-95b26-final-9knq9
+    name: prox0001-registralibrorem-14
+    namespace: pipelines-dev
+    ownerReferences:
+    - apiVersion: build.openshift.io/v1
+      controller: true
+      kind: BuildConfig
+      name: prox0001-registralibrorem
+      uid: d48d2755-3b2b-4bf2-b35e-90fc81536849
+    resourceVersion: "138020397"
+    uid: 79a4f3a3-b587-4439-9f97-5beb73b58780
+  spec:
+    nodeSelector: {}
+    output: {}
+    postCommit: {}
+    resources: {}
+    serviceAccount: builder
+    source:
+      type: None
+    strategy:
+      jenkinsPipelineStrategy:
+        env:
+        - name: DEV_PROJECT
+          value: api-fiscalizacion-dev
+        - name: QA_PROJECT
+          value: api-fiscalizacion-qa
+        - name: ENABLE_QUAY
+          value: "false"
+        jenkinsfile: "pipeline {\n  agent {\n    label 'maven'\n  }\n  stages {\n
+          \   stage('Limpiar cache') {\n        sh \"mvn clean install -DskipTests\"\n
+          \   }\n    stage('Clonando repo y Compilando') {\n        steps {\n            git([url:
+          'https://dirtrab.visualstudio.com/Libro%20Remuneraciones%20Electronico/_git/PRX0001-RegistraLibroRemumeracion',\n
+          \           branch: 'prueba_develop',\n            credentialsId: 'azure_credenciales_id'])\n
+          \       script {\n            def pom = readMavenPom file: 'pom.xml'\n            version
+          = pom.version\n        }\n        sh \"mvn -s configuration/settings.xml
+          install -DskipTests=true\"\n      }\n    }\n    stage('Analisis sonarqube')
+          {\n        steps {\n            script {\n                  sh \"mvn sonar:sonar
+          -Dsonar.host.url=http://sonarqube-sonarqube.cicd.svc.cluster.local:9000
+          -DskipTests=true\"\n                }\n            }\n        }\n    stage('Creando
+          Image Builder') {\n      when {\n        expression {\n          openshift.withCluster()
+          {\n            openshift.withProject(env.DEV_PROJECT) {\n              return
+          !openshift.selector(\"bc\", \"prox0001-registralibrore\").exists();\n            }\n
+          \         }\n        }\n      }\n      steps {\n        script {\n          openshift.withCluster()
+          {\n            openshift.withProject(env.DEV_PROJECT) {\n              openshift.newBuild(\"--name=prox0001-registralibrore\",
+          \"--image-stream=fuse7-java-openshift:1.3\", \"--binary=true\")\n            }\n
+          \         }\n        }\n      }\n    }\n    stage('Construyendo imagen')
+          {\n      steps {\n        sh \"rm -rf oc-build && mkdir -p oc-build/deployments\"\n
+          \       sh \"cp target/PRX0001-RegistraLibroRemumeracion-1.0.jar oc-build/deployments/PRX0001-RegistraLibroRemumeracion.jar\"\n\n
+          \       script {\n          openshift.withCluster() {\n            openshift.withProject(env.DEV_PROJECT)
+          {\n              openshift.selector(\"bc\", \"prox0001-registralibrore\").startBuild(\"--from-dir=oc-build\",
+          \"--wait=true\")\n            }\n          }\n        }\n        sh \"sleep
+          15\"                \n      }\n    }\n    stage('Creando en DEV') {\n      when
+          {\n        expression {\n          openshift.withCluster() {\n            openshift.withProject(env.DEV_PROJECT)
+          {\n              return !openshift.selector('dc', 'prox0001-registralibrore').exists()\n
+          \           }\n          }\n        }\n      }\n      steps {\n        script
+          {\n          openshift.withCluster() {\n            openshift.withProject(env.DEV_PROJECT)
+          {\n              def app = openshift.newApp(\"prox0001-registralibrore:latest\")\n
+          \             app.narrow(\"svc\").expose();\n              def dc = openshift.selector(\"dc\",
+          \"prox0001-registralibrore\")\n              while (dc.object().spec.replicas
+          != dc.object().status.availableReplicas) {\n                  sleep 10\n
+          \             }\n              openshift.set(\"triggers\", \"dc/prox0001-registralibrore\",
+          \"--manual\")\n            }\n          }\n        }\n      }\n    }\n    stage('Desplegando
+          en DEV') {\n      steps {\n        script {\n          openshift.withCluster()
+          {\n            openshift.withProject(env.DEV_PROJECT) {\n              openshift.selector(\"dc\",
+          \"prox0001-registralibrore\").rollout().latest();\n            }\n           sh
+          \"sleep 35\"\n          }\n        }\n      }\n    }\n   stage('Promocionar
+          a QA') {\n        steps {\n          timeout(time:30, unit:'MINUTES') {\n
+          \             input message: \"Promover a QA?\", ok: \"Promote\"\n          }\n
+          \         script {\n            openshift.withCluster() {\n              openshift.tag(\"${env.DEV_PROJECT}/prox0001-registralibrore:latest\",
+          \"${env.QA_PROJECT}/prox0001-registralibrore:latest\")\n            }\n
+          \         }\n        sh \"sleep 30\"\n        }\n      }\n    stage('Desplegando
+          en QA') {\n        steps {\n          script {\n            openshift.withCluster()
+          {\n              openshift.withProject(env.QA_PROJECT){\n                  if
+          (openshift.selector('dc', 'prox0001-registralibrore').exists()) {\n                  openshift.selector('dc',
+          'prox0001-registralibrore').rollout().latest();\n                } else
+          {\n                  openshift.newApp(\"prox0001-registralibrore:latest\").narrow(\"svc\").expose();\n
+          \               }\n              }\n            }\n          }\n        }\n
+          \     }\n  }\n}\n"
+      type: JenkinsPipeline
+    triggeredBy:
+    - message: Triggered by Jenkins job at http://jenkins-cicd.api-cloud.dirtrab.cl/job/pipelines-dev/job/pipelines-dev-prox0001-registralibrorem/
+  status:
+    completionTimestamp: "2023-10-18T13:59:59Z"
+    conditions:
+    - lastTransitionTime: "2023-10-18T13:59:59Z"
+      lastUpdateTime: "2023-10-18T13:59:59Z"
+      status: "False"
+      type: New
+    - lastTransitionTime: "2023-10-18T13:59:59Z"
+      lastUpdateTime: "2023-10-18T13:59:59Z"
+      status: "False"
+      type: Pending
+    - lastTransitionTime: "2023-10-18T13:59:59Z"
+      lastUpdateTime: "2023-10-18T13:59:59Z"
+      status: "True"
+      type: Failed
+    config:
+      kind: BuildConfig
+      name: prox0001-registralibrorem
+      namespace: pipelines-dev
+    output: {}
+    phase: Failed
+    startTimestamp: "2023-10-18T13:59:59Z"
+- apiVersion: build.openshift.io/v1
+  kind: Build
+  metadata:
+    annotations:
+      openshift.io/jenkins-blueocean-log-url: /http://jenkins-cicd.api-cloud.dirtrab.cl/blue/organizations/jenkins/pipelines-dev%2Fpipelines-dev-prox0001-registralibrorem/detail/pipelines-dev-prox0001-registralibrorem/23/
+      openshift.io/jenkins-build-uri: http://jenkins-cicd.api-cloud.dirtrab.cl/job/pipelines-dev/job/pipelines-dev-prox0001-registralibrorem/23/
+      openshift.io/jenkins-console-log-url: http://jenkins-cicd.api-cloud.dirtrab.cl/job/pipelines-dev/job/pipelines-dev-prox0001-registralibrorem/23/console
+      openshift.io/jenkins-log-url: http://jenkins-cicd.api-cloud.dirtrab.cl/job/pipelines-dev/job/pipelines-dev-prox0001-registralibrorem/23/consoleText
+      openshift.io/jenkins-status-json: '{"_links":{"self":{"href":"http://jenkins-cicd.api-cloud.dirtrab.cl/job/pipelines-dev/job/pipelines-dev-prox0001-registralibrorem/23/wfapi/describe"}},"id":"23","name":"#23","status":"FAILED","startTimeMillis":1697637669676,"endTimeMillis":1697637687875,"durationMillis":18199,"queueDurationMillis":6,"pauseDurationMillis":0,"stages":[{"_links":{"self":{"href":"http://jenkins-cicd.api-cloud.dirtrab.cl/job/pipelines-dev/job/pipelines-dev-prox0001-registralibrorem/23/execution/node/6/wfapi/describe"}},"id":"6","name":"Limpiar
+        cache","execNode":"","status":"FAILED","error":{"message":"script returned
+        exit code 1","type":"hudson.AbortException"},"startTimeMillis":1697637681992,"durationMillis":5077,"pauseDurationMillis":0}]}'
+    creationTimestamp: "2023-10-18T14:01:09Z"
+    generation: 1
+    labels:
+      app: cicd-pipeline
+      buildconfig: prox0001-registralibrorem
+      group: cicd
+      migration.openshift.io/migrated-by-migmigration: 8b3a2baf-eb1a-48bd-bffd-893d945b704f
+      migration.openshift.io/migrated-by-migplan: a3ccd4bb-657f-47a9-a0e5-d29a23a06ca1
+      name: cicd-pipeline
+      openshift.io/build-config.name: prox0001-registralibrorem
+      openshift.io/build.start-policy: Serial
+      template: cicd
+      velero.io/backup-name: migration-95b26-initial-gqjc6
+      velero.io/restore-name: migration-95b26-final-9knq9
+    name: prox0001-registralibrorem-15
+    namespace: pipelines-dev
+    ownerReferences:
+    - apiVersion: build.openshift.io/v1
+      controller: true
+      kind: BuildConfig
+      name: prox0001-registralibrorem
+      uid: d48d2755-3b2b-4bf2-b35e-90fc81536849
+    resourceVersion: "138021453"
+    uid: 66557a7e-f82b-4bb6-b24d-8936b7608544
+  spec:
+    nodeSelector: {}
+    output: {}
+    postCommit: {}
+    resources: {}
+    serviceAccount: builder
+    source:
+      type: None
+    strategy:
+      jenkinsPipelineStrategy:
+        env:
+        - name: DEV_PROJECT
+          value: api-fiscalizacion-dev
+        - name: QA_PROJECT
+          value: api-fiscalizacion-qa
+        - name: ENABLE_QUAY
+          value: "false"
+        jenkinsfile: "pipeline {\n  agent {\n    label 'maven'\n  }\n  stages {\n
+          \   stage('Limpiar cache') {\n        steps {\n            sh \"mvn clean
+          install -DskipTests\"\n        }\n    }\n    stage('Clonando repo y Compilando')
+          {\n        steps {\n            git([url: 'https://dirtrab.visualstudio.com/Libro%20Remuneraciones%20Electronico/_git/PRX0001-RegistraLibroRemumeracion',\n
+          \           branch: 'prueba_develop',\n            credentialsId: 'azure_credenciales_id'])\n
+          \       script {\n            def pom = readMavenPom file: 'pom.xml'\n            version
+          = pom.version\n        }\n        sh \"mvn -s configuration/settings.xml
+          install -DskipTests=true\"\n      }\n    }\n    stage('Analisis sonarqube')
+          {\n        steps {\n            script {\n                  sh \"mvn sonar:sonar
+          -Dsonar.host.url=http://sonarqube-sonarqube.cicd.svc.cluster.local:9000
+          -DskipTests=true\"\n                }\n            }\n        }\n    stage('Creando
+          Image Builder') {\n      when {\n        expression {\n          openshift.withCluster()
+          {\n            openshift.withProject(env.DEV_PROJECT) {\n              return
+          !openshift.selector(\"bc\", \"prox0001-registralibrore\").exists();\n            }\n
+          \         }\n        }\n      }\n      steps {\n        script {\n          openshift.withCluster()
+          {\n            openshift.withProject(env.DEV_PROJECT) {\n              openshift.newBuild(\"--name=prox0001-registralibrore\",
+          \"--image-stream=fuse7-java-openshift:1.3\", \"--binary=true\")\n            }\n
+          \         }\n        }\n      }\n    }\n    stage('Construyendo imagen')
+          {\n      steps {\n        sh \"rm -rf oc-build && mkdir -p oc-build/deployments\"\n
+          \       sh \"cp target/PRX0001-RegistraLibroRemumeracion-1.0.jar oc-build/deployments/PRX0001-RegistraLibroRemumeracion.jar\"\n\n
+          \       script {\n          openshift.withCluster() {\n            openshift.withProject(env.DEV_PROJECT)
+          {\n              openshift.selector(\"bc\", \"prox0001-registralibrore\").startBuild(\"--from-dir=oc-build\",
+          \"--wait=true\")\n            }\n          }\n        }\n        sh \"sleep
+          15\"                \n      }\n    }\n    stage('Creando en DEV') {\n      when
+          {\n        expression {\n          openshift.withCluster() {\n            openshift.withProject(env.DEV_PROJECT)
+          {\n              return !openshift.selector('dc', 'prox0001-registralibrore').exists()\n
+          \           }\n          }\n        }\n      }\n      steps {\n        script
+          {\n          openshift.withCluster() {\n            openshift.withProject(env.DEV_PROJECT)
+          {\n              def app = openshift.newApp(\"prox0001-registralibrore:latest\")\n
+          \             app.narrow(\"svc\").expose();\n              def dc = openshift.selector(\"dc\",
+          \"prox0001-registralibrore\")\n              while (dc.object().spec.replicas
+          != dc.object().status.availableReplicas) {\n                  sleep 10\n
+          \             }\n              openshift.set(\"triggers\", \"dc/prox0001-registralibrore\",
+          \"--manual\")\n            }\n          }\n        }\n      }\n    }\n    stage('Desplegando
+          en DEV') {\n      steps {\n        script {\n          openshift.withCluster()
+          {\n            openshift.withProject(env.DEV_PROJECT) {\n              openshift.selector(\"dc\",
+          \"prox0001-registralibrore\").rollout().latest();\n            }\n           sh
+          \"sleep 35\"\n          }\n        }\n      }\n    }\n   stage('Promocionar
+          a QA') {\n        steps {\n          timeout(time:30, unit:'MINUTES') {\n
+          \             input message: \"Promover a QA?\", ok: \"Promote\"\n          }\n
+          \         script {\n            openshift.withCluster() {\n              openshift.tag(\"${env.DEV_PROJECT}/prox0001-registralibrore:latest\",
+          \"${env.QA_PROJECT}/prox0001-registralibrore:latest\")\n            }\n
+          \         }\n        sh \"sleep 30\"\n        }\n      }\n    stage('Desplegando
+          en QA') {\n        steps {\n          script {\n            openshift.withCluster()
+          {\n              openshift.withProject(env.QA_PROJECT){\n                  if
+          (openshift.selector('dc', 'prox0001-registralibrore').exists()) {\n                  openshift.selector('dc',
+          'prox0001-registralibrore').rollout().latest();\n                } else
+          {\n                  openshift.newApp(\"prox0001-registralibrore:latest\").narrow(\"svc\").expose();\n
+          \               }\n              }\n            }\n          }\n        }\n
+          \     }\n  }\n}\n"
+      type: JenkinsPipeline
+    triggeredBy:
+    - message: Triggered by Jenkins job at http://jenkins-cicd.api-cloud.dirtrab.cl/job/pipelines-dev/job/pipelines-dev-prox0001-registralibrorem/
+  status:
+    completionTimestamp: "2023-10-18T14:01:27Z"
+    conditions:
+    - lastTransitionTime: "2023-10-18T14:01:09Z"
+      lastUpdateTime: "2023-10-18T14:01:09Z"
+      status: "False"
+      type: New
+    - lastTransitionTime: "2023-10-18T14:01:14Z"
+      lastUpdateTime: "2023-10-18T14:01:14Z"
+      status: "False"
+      type: Pending
+    - lastTransitionTime: "2023-10-18T14:01:27Z"
+      lastUpdateTime: "2023-10-18T14:01:27Z"
+      status: "False"
+      type: Running
+    - lastTransitionTime: "2023-10-18T14:01:27Z"
+      lastUpdateTime: "2023-10-18T14:01:27Z"
+      status: "True"
+      type: Failed
+    config:
+      kind: BuildConfig
+      name: prox0001-registralibrorem
+      namespace: pipelines-dev
+    output: {}
+    phase: Failed
+    startTimestamp: "2023-10-18T14:01:09Z"
+- apiVersion: build.openshift.io/v1
+  kind: Build
+  metadata:
+    annotations:
+      openshift.io/jenkins-blueocean-log-url: /http://jenkins-cicd.api-cloud.dirtrab.cl/blue/organizations/jenkins/pipelines-dev%2Fpipelines-dev-prox0001-registralibrorem/detail/pipelines-dev-prox0001-registralibrorem/24/
+      openshift.io/jenkins-build-uri: http://jenkins-cicd.api-cloud.dirtrab.cl/job/pipelines-dev/job/pipelines-dev-prox0001-registralibrorem/24/
+      openshift.io/jenkins-console-log-url: http://jenkins-cicd.api-cloud.dirtrab.cl/job/pipelines-dev/job/pipelines-dev-prox0001-registralibrorem/24/console
+      openshift.io/jenkins-log-url: http://jenkins-cicd.api-cloud.dirtrab.cl/job/pipelines-dev/job/pipelines-dev-prox0001-registralibrorem/24/consoleText
+      openshift.io/jenkins-status-json: '{"_links":{"self":{"href":"http://jenkins-cicd.api-cloud.dirtrab.cl/job/pipelines-dev/job/pipelines-dev-prox0001-registralibrorem/24/wfapi/describe"}},"id":"24","name":"#24","status":"FAILED","startTimeMillis":1697639617855,"endTimeMillis":1697639638586,"durationMillis":20731,"queueDurationMillis":24,"pauseDurationMillis":0,"stages":[{"_links":{"self":{"href":"http://jenkins-cicd.api-cloud.dirtrab.cl/job/pipelines-dev/job/pipelines-dev-prox0001-registralibrorem/24/execution/node/6/wfapi/describe"}},"id":"6","name":"Limpiar
+        cache","execNode":"","status":"FAILED","error":{"message":"script returned
+        exit code 1","type":"hudson.AbortException"},"startTimeMillis":1697639633035,"durationMillis":4738,"pauseDurationMillis":0}]}'
+    creationTimestamp: "2023-10-18T14:33:37Z"
+    generation: 1
+    labels:
+      app: cicd-pipeline
+      buildconfig: prox0001-registralibrorem
+      group: cicd
+      migration.openshift.io/migrated-by-migmigration: 8b3a2baf-eb1a-48bd-bffd-893d945b704f
+      migration.openshift.io/migrated-by-migplan: a3ccd4bb-657f-47a9-a0e5-d29a23a06ca1
+      name: cicd-pipeline
+      openshift.io/build-config.name: prox0001-registralibrorem
+      openshift.io/build.start-policy: Serial
+      template: cicd
+      velero.io/backup-name: migration-95b26-initial-gqjc6
+      velero.io/restore-name: migration-95b26-final-9knq9
+    name: prox0001-registralibrorem-16
+    namespace: pipelines-dev
+    ownerReferences:
+    - apiVersion: build.openshift.io/v1
+      controller: true
+      kind: BuildConfig
+      name: prox0001-registralibrorem
+      uid: d48d2755-3b2b-4bf2-b35e-90fc81536849
+    resourceVersion: "138040268"
+    uid: 3fbe8c07-60cb-4b7d-a05f-027d38196524
+  spec:
+    nodeSelector: {}
+    output: {}
+    postCommit: {}
+    resources: {}
+    serviceAccount: builder
+    source:
+      type: None
+    strategy:
+      jenkinsPipelineStrategy:
+        env:
+        - name: DEV_PROJECT
+          value: api-fiscalizacion-dev
+        - name: QA_PROJECT
+          value: api-fiscalizacion-qa
+        - name: ENABLE_QUAY
+          value: "false"
+        jenkinsfile: "pipeline {\n  agent {\n    label 'maven'\n  }\n  stages {\n
+          \   stage('Limpiar cache') {\n        steps {\n            sh \"mvn clean
+          install -DskipTests\"\n        }\n    }\n    stage('Clonando repo y Compilando')
+          {\n        steps {\n            git([url: 'https://dirtrab.visualstudio.com/Libro%20Remuneraciones%20Electronico/_git/PRX0001-RegistraLibroRemumeracion',\n
+          \           branch: 'prueba_develop',\n            credentialsId: 'azure_credenciales_id'])\n
+          \       script {\n            def pom = readMavenPom file: 'pom.xml'\n            version
+          = pom.version\n        }\n        sh \"mvn -s configuration/settings.xml
+          install -DskipTests=true\"\n      }\n    }\n    stage('Analisis sonarqube')
+          {\n        steps {\n            script {\n                  sh \"mvn sonar:sonar
+          -Dsonar.host.url=http://sonarqube-sonarqube.cicd.svc.cluster.local:9000
+          -DskipTests=true\"\n                }\n            }\n        }\n    stage('Creando
+          Image Builder') {\n      when {\n        expression {\n          openshift.withCluster()
+          {\n            openshift.withProject(env.DEV_PROJECT) {\n              return
+          !openshift.selector(\"bc\", \"prox0001-registralibrore\").exists();\n            }\n
+          \         }\n        }\n      }\n      steps {\n        script {\n          openshift.withCluster()
+          {\n            openshift.withProject(env.DEV_PROJECT) {\n              openshift.newBuild(\"--name=prox0001-registralibrore\",
+          \"--image-stream=fuse7-java-openshift:1.3\", \"--binary=true\")\n            }\n
+          \         }\n        }\n      }\n    }\n    stage('Construyendo imagen')
+          {\n      steps {\n        sh \"rm -rf oc-build && mkdir -p oc-build/deployments\"\n
+          \       sh \"cp target/PRX0001-RegistraLibroRemumeracion-1.0.jar oc-build/deployments/PRX0001-RegistraLibroRemumeracion.jar\"\n\n
+          \       script {\n          openshift.withCluster() {\n            openshift.withProject(env.DEV_PROJECT)
+          {\n              openshift.selector(\"bc\", \"prox0001-registralibrore\").startBuild(\"--from-dir=oc-build\",
+          \"--wait=true\")\n            }\n          }\n        }\n        sh \"sleep
+          15\"                \n      }\n    }\n    stage('Creando en DEV') {\n      when
+          {\n        expression {\n          openshift.withCluster() {\n            openshift.withProject(env.DEV_PROJECT)
+          {\n              return !openshift.selector('dc', 'prox0001-registralibrore').exists()\n
+          \           }\n          }\n        }\n      }\n      steps {\n        script
+          {\n          openshift.withCluster() {\n            openshift.withProject(env.DEV_PROJECT)
+          {\n              def app = openshift.newApp(\"prox0001-registralibrore:latest\")\n
+          \             app.narrow(\"svc\").expose();\n              def dc = openshift.selector(\"dc\",
+          \"prox0001-registralibrore\")\n              while (dc.object().spec.replicas
+          != dc.object().status.availableReplicas) {\n                  sleep 10\n
+          \             }\n              openshift.set(\"triggers\", \"dc/prox0001-registralibrore\",
+          \"--manual\")\n            }\n          }\n        }\n      }\n    }\n    stage('Desplegando
+          en DEV') {\n      steps {\n        script {\n          openshift.withCluster()
+          {\n            openshift.withProject(env.DEV_PROJECT) {\n              openshift.selector(\"dc\",
+          \"prox0001-registralibrore\").rollout().latest();\n            }\n           sh
+          \"sleep 35\"\n          }\n        }\n      }\n    }\n   stage('Promocionar
+          a QA') {\n        steps {\n          timeout(time:30, unit:'MINUTES') {\n
+          \             input message: \"Promover a QA?\", ok: \"Promote\"\n          }\n
+          \         script {\n            openshift.withCluster() {\n              openshift.tag(\"${env.DEV_PROJECT}/prox0001-registralibrore:latest\",
+          \"${env.QA_PROJECT}/prox0001-registralibrore:latest\")\n            }\n
+          \         }\n        sh \"sleep 30\"\n        }\n      }\n    stage('Desplegando
+          en QA') {\n        steps {\n          script {\n            openshift.withCluster()
+          {\n              openshift.withProject(env.QA_PROJECT){\n                  if
+          (openshift.selector('dc', 'prox0001-registralibrore').exists()) {\n                  openshift.selector('dc',
+          'prox0001-registralibrore').rollout().latest();\n                } else
+          {\n                  openshift.newApp(\"prox0001-registralibrore:latest\").narrow(\"svc\").expose();\n
+          \               }\n              }\n            }\n          }\n        }\n
+          \     }\n  }\n}\n"
+      type: JenkinsPipeline
+    triggeredBy:
+    - message: Triggered by Jenkins job at http://jenkins-cicd.api-cloud.dirtrab.cl/job/pipelines-dev/job/pipelines-dev-prox0001-registralibrorem/
+  status:
+    completionTimestamp: "2023-10-18T14:33:58Z"
+    conditions:
+    - lastTransitionTime: "2023-10-18T14:33:37Z"
+      lastUpdateTime: "2023-10-18T14:33:37Z"
+      status: "False"
+      type: New
+    - lastTransitionTime: "2023-10-18T14:33:39Z"
+      lastUpdateTime: "2023-10-18T14:33:39Z"
+      status: "False"
+      type: Pending
+    - lastTransitionTime: "2023-10-18T14:33:58Z"
+      lastUpdateTime: "2023-10-18T14:33:58Z"
+      status: "False"
+      type: Running
+    - lastTransitionTime: "2023-10-18T14:33:58Z"
+      lastUpdateTime: "2023-10-18T14:33:58Z"
+      status: "True"
+      type: Failed
+    config:
+      kind: BuildConfig
+      name: prox0001-registralibrorem
+      namespace: pipelines-dev
+    output: {}
+    phase: Failed
+    startTimestamp: "2023-10-18T14:33:37Z"
+- apiVersion: build.openshift.io/v1
+  kind: Build
+  metadata:
+    annotations:
+      openshift.io/jenkins-blueocean-log-url: /http://jenkins-cicd.api-cloud.dirtrab.cl/blue/organizations/jenkins/pipelines-dev%2Fpipelines-dev-prox0001-registralibrorem/detail/pipelines-dev-prox0001-registralibrorem/25/
+      openshift.io/jenkins-build-uri: http://jenkins-cicd.api-cloud.dirtrab.cl/job/pipelines-dev/job/pipelines-dev-prox0001-registralibrorem/25/
+      openshift.io/jenkins-console-log-url: http://jenkins-cicd.api-cloud.dirtrab.cl/job/pipelines-dev/job/pipelines-dev-prox0001-registralibrorem/25/console
+      openshift.io/jenkins-log-url: http://jenkins-cicd.api-cloud.dirtrab.cl/job/pipelines-dev/job/pipelines-dev-prox0001-registralibrorem/25/consoleText
+      openshift.io/jenkins-status-json: '{"_links":{"self":{"href":"http://jenkins-cicd.api-cloud.dirtrab.cl/job/pipelines-dev/job/pipelines-dev-prox0001-registralibrorem/25/wfapi/describe"}},"id":"25","name":"#25","status":"FAILED","startTimeMillis":1697639698090,"endTimeMillis":1697639822635,"durationMillis":124545,"queueDurationMillis":10,"pauseDurationMillis":0,"stages":[{"_links":{"self":{"href":"http://jenkins-cicd.api-cloud.dirtrab.cl/job/pipelines-dev/job/pipelines-dev-prox0001-registralibrorem/25/execution/node/6/wfapi/describe"}},"id":"6","name":"Clonando
+        repo y Compilando","execNode":"","status":"FAILED","error":{"message":"script
+        returned exit code 1","type":"hudson.AbortException"},"startTimeMillis":1697639714462,"durationMillis":107393,"pauseDurationMillis":0}]}'
+    creationTimestamp: "2023-10-18T14:34:58Z"
+    generation: 1
+    labels:
+      app: cicd-pipeline
+      buildconfig: prox0001-registralibrorem
+      group: cicd
+      migration.openshift.io/migrated-by-migmigration: 8b3a2baf-eb1a-48bd-bffd-893d945b704f
+      migration.openshift.io/migrated-by-migplan: a3ccd4bb-657f-47a9-a0e5-d29a23a06ca1
+      name: cicd-pipeline
+      openshift.io/build-config.name: prox0001-registralibrorem
+      openshift.io/build.start-policy: Serial
+      template: cicd
+      velero.io/backup-name: migration-95b26-initial-gqjc6
+      velero.io/restore-name: migration-95b26-final-9knq9
+    name: prox0001-registralibrorem-17
+    namespace: pipelines-dev
+    ownerReferences:
+    - apiVersion: build.openshift.io/v1
+      controller: true
+      kind: BuildConfig
+      name: prox0001-registralibrorem
+      uid: d48d2755-3b2b-4bf2-b35e-90fc81536849
+    resourceVersion: "138042095"
+    uid: 1090f2f0-534f-44bf-a2ef-c9472d71fe8f
+  spec:
+    nodeSelector: {}
+    output: {}
+    postCommit: {}
+    resources: {}
+    serviceAccount: builder
+    source:
+      type: None
+    strategy:
+      jenkinsPipelineStrategy:
+        env:
+        - name: DEV_PROJECT
+          value: api-fiscalizacion-dev
+        - name: QA_PROJECT
+          value: api-fiscalizacion-qa
+        - name: ENABLE_QUAY
+          value: "false"
+        jenkinsfile: "pipeline {\n  agent {\n    label 'maven'\n  }\n  stages {\n
+          \   stage('Clonando repo y Compilando') {\n        steps {\n            git([url:
+          'https://dirtrab.visualstudio.com/Libro%20Remuneraciones%20Electronico/_git/PRX0001-RegistraLibroRemumeracion',\n
+          \           branch: 'prueba_develop',\n            credentialsId: 'azure_credenciales_id'])\n
+          \       script {\n            def pom = readMavenPom file: 'pom.xml'\n            version
+          = pom.version\n        }\n        sh \"mvn clean install -DskipTests\"\n
+          \       sh \"mvn -s configuration/settings.xml install -DskipTests=true\"\n
+          \     }\n    }\n    stage('Analisis sonarqube') {\n        steps {\n            script
+          {\n                  sh \"mvn sonar:sonar -Dsonar.host.url=http://sonarqube-sonarqube.cicd.svc.cluster.local:9000
+          -DskipTests=true\"\n                }\n            }\n        }\n    stage('Creando
+          Image Builder') {\n      when {\n        expression {\n          openshift.withCluster()
+          {\n            openshift.withProject(env.DEV_PROJECT) {\n              return
+          !openshift.selector(\"bc\", \"prox0001-registralibrore\").exists();\n            }\n
+          \         }\n        }\n      }\n      steps {\n        script {\n          openshift.withCluster()
+          {\n            openshift.withProject(env.DEV_PROJECT) {\n              openshift.newBuild(\"--name=prox0001-registralibrore\",
+          \"--image-stream=fuse7-java-openshift:1.3\", \"--binary=true\")\n            }\n
+          \         }\n        }\n      }\n    }\n    stage('Construyendo imagen')
+          {\n      steps {\n        sh \"rm -rf oc-build && mkdir -p oc-build/deployments\"\n
+          \       sh \"cp target/PRX0001-RegistraLibroRemumeracion-1.0.jar oc-build/deployments/PRX0001-RegistraLibroRemumeracion.jar\"\n\n
+          \       script {\n          openshift.withCluster() {\n            openshift.withProject(env.DEV_PROJECT)
+          {\n              openshift.selector(\"bc\", \"prox0001-registralibrore\").startBuild(\"--from-dir=oc-build\",
+          \"--wait=true\")\n            }\n          }\n        }\n        sh \"sleep
+          15\"                \n      }\n    }\n    stage('Creando en DEV') {\n      when
+          {\n        expression {\n          openshift.withCluster() {\n            openshift.withProject(env.DEV_PROJECT)
+          {\n              return !openshift.selector('dc', 'prox0001-registralibrore').exists()\n
+          \           }\n          }\n        }\n      }\n      steps {\n        script
+          {\n          openshift.withCluster() {\n            openshift.withProject(env.DEV_PROJECT)
+          {\n              def app = openshift.newApp(\"prox0001-registralibrore:latest\")\n
+          \             app.narrow(\"svc\").expose();\n              def dc = openshift.selector(\"dc\",
+          \"prox0001-registralibrore\")\n              while (dc.object().spec.replicas
+          != dc.object().status.availableReplicas) {\n                  sleep 10\n
+          \             }\n              openshift.set(\"triggers\", \"dc/prox0001-registralibrore\",
+          \"--manual\")\n            }\n          }\n        }\n      }\n    }\n    stage('Desplegando
+          en DEV') {\n      steps {\n        script {\n          openshift.withCluster()
+          {\n            openshift.withProject(env.DEV_PROJECT) {\n              openshift.selector(\"dc\",
+          \"prox0001-registralibrore\").rollout().latest();\n            }\n           sh
+          \"sleep 35\"\n          }\n        }\n      }\n    }\n   stage('Promocionar
+          a QA') {\n        steps {\n          timeout(time:30, unit:'MINUTES') {\n
+          \             input message: \"Promover a QA?\", ok: \"Promote\"\n          }\n
+          \         script {\n            openshift.withCluster() {\n              openshift.tag(\"${env.DEV_PROJECT}/prox0001-registralibrore:latest\",
+          \"${env.QA_PROJECT}/prox0001-registralibrore:latest\")\n            }\n
+          \         }\n        sh \"sleep 30\"\n        }\n      }\n    stage('Desplegando
+          en QA') {\n        steps {\n          script {\n            openshift.withCluster()
+          {\n              openshift.withProject(env.QA_PROJECT){\n                  if
+          (openshift.selector('dc', 'prox0001-registralibrore').exists()) {\n                  openshift.selector('dc',
+          'prox0001-registralibrore').rollout().latest();\n                } else
+          {\n                  openshift.newApp(\"prox0001-registralibrore:latest\").narrow(\"svc\").expose();\n
+          \               }\n              }\n            }\n          }\n        }\n
+          \     }\n  }\n}\n"
+      type: JenkinsPipeline
+    triggeredBy:
+    - message: Triggered by Jenkins job at http://jenkins-cicd.api-cloud.dirtrab.cl/job/pipelines-dev/job/pipelines-dev-prox0001-registralibrorem/
+  status:
+    completionTimestamp: "2023-10-18T14:37:02Z"
+    conditions:
+    - lastTransitionTime: "2023-10-18T14:34:58Z"
+      lastUpdateTime: "2023-10-18T14:34:58Z"
+      status: "False"
+      type: New
+    - lastTransitionTime: "2023-10-18T14:34:59Z"
+      lastUpdateTime: "2023-10-18T14:34:59Z"
+      status: "False"
+      type: Pending
+    - lastTransitionTime: "2023-10-18T14:37:02Z"
+      lastUpdateTime: "2023-10-18T14:37:02Z"
+      status: "False"
+      type: Running
+    - lastTransitionTime: "2023-10-18T14:37:02Z"
+      lastUpdateTime: "2023-10-18T14:37:02Z"
+      status: "True"
+      type: Failed
+    config:
+      kind: BuildConfig
+      name: prox0001-registralibrorem
+      namespace: pipelines-dev
+    output: {}
+    phase: Failed
+    startTimestamp: "2023-10-18T14:34:58Z"
+- apiVersion: build.openshift.io/v1
+  kind: Build
+  metadata:
+    annotations:
+      openshift.io/jenkins-blueocean-log-url: /http://jenkins-cicd.api-cloud.dirtrab.cl/blue/organizations/jenkins/pipelines-dev%2Fpipelines-dev-prox0001-registralibrorem/detail/pipelines-dev-prox0001-registralibrorem/26/
+      openshift.io/jenkins-build-uri: http://jenkins-cicd.api-cloud.dirtrab.cl/job/pipelines-dev/job/pipelines-dev-prox0001-registralibrorem/26/
+      openshift.io/jenkins-console-log-url: http://jenkins-cicd.api-cloud.dirtrab.cl/job/pipelines-dev/job/pipelines-dev-prox0001-registralibrorem/26/console
+      openshift.io/jenkins-log-url: http://jenkins-cicd.api-cloud.dirtrab.cl/job/pipelines-dev/job/pipelines-dev-prox0001-registralibrorem/26/consoleText
+      openshift.io/jenkins-status-json: '{"_links":{"self":{"href":"http://jenkins-cicd.api-cloud.dirtrab.cl/job/pipelines-dev/job/pipelines-dev-prox0001-registralibrorem/26/wfapi/describe"},"changesets":{"href":"/job/pipelines-dev/job/pipelines-dev-prox0001-registralibrorem/26/wfapi/changesets"}},"id":"26","name":"#26","status":"ABORTED","startTimeMillis":1697641068934,"endTimeMillis":1697643218802,"durationMillis":2149868,"queueDurationMillis":5,"pauseDurationMillis":0,"stages":[{"_links":{"self":{"href":"http://jenkins-cicd.api-cloud.dirtrab.cl/job/pipelines-dev/job/pipelines-dev-prox0001-registralibrorem/26/execution/node/6/wfapi/describe"}},"id":"6","name":"Clonando
+        repo y Compilando","execNode":"","status":"SUCCESS","startTimeMillis":1697641082327,"durationMillis":200250,"pauseDurationMillis":0},{"_links":{"self":{"href":"http://jenkins-cicd.api-cloud.dirtrab.cl/job/pipelines-dev/job/pipelines-dev-prox0001-registralibrorem/26/execution/node/18/wfapi/describe"}},"id":"18","name":"Analisis
+        sonarqube","execNode":"","status":"SUCCESS","startTimeMillis":1697641282609,"durationMillis":30806,"pauseDurationMillis":0},{"_links":{"self":{"href":"http://jenkins-cicd.api-cloud.dirtrab.cl/job/pipelines-dev/job/pipelines-dev-prox0001-registralibrorem/26/execution/node/38/wfapi/describe"}},"id":"38","name":"Construyendo
+        imagen","execNode":"","status":"SUCCESS","startTimeMillis":1697641315339,"durationMillis":63058,"pauseDurationMillis":0},{"_links":{"self":{"href":"http://jenkins-cicd.api-cloud.dirtrab.cl/job/pipelines-dev/job/pipelines-dev-prox0001-registralibrorem/26/execution/node/61/wfapi/describe"}},"id":"61","name":"Desplegando
+        en DEV","execNode":"","status":"SUCCESS","startTimeMillis":1697641378784,"durationMillis":39569,"pauseDurationMillis":0},{"_links":{"self":{"href":"http://jenkins-cicd.api-cloud.dirtrab.cl/job/pipelines-dev/job/pipelines-dev-prox0001-registralibrorem/26/execution/node/74/wfapi/describe"}},"id":"74","name":"Promocionar
+        a QA","execNode":"","status":"ABORTED","error":{"message":null,"type":"org.jenkinsci.plugins.workflow.steps.FlowInterruptedException"},"startTimeMillis":1697641418387,"durationMillis":1800192,"pauseDurationMillis":1799975}]}'
+    creationTimestamp: "2023-10-18T14:57:48Z"
+    generation: 1
+    labels:
+      app: cicd-pipeline
+      buildconfig: prox0001-registralibrorem
+      group: cicd
+      migration.openshift.io/migrated-by-migmigration: 8b3a2baf-eb1a-48bd-bffd-893d945b704f
+      migration.openshift.io/migrated-by-migplan: a3ccd4bb-657f-47a9-a0e5-d29a23a06ca1
+      name: cicd-pipeline
+      openshift.io/build-config.name: prox0001-registralibrorem
+      openshift.io/build.start-policy: Serial
+      template: cicd
+      velero.io/backup-name: migration-95b26-initial-gqjc6
+      velero.io/restore-name: migration-95b26-final-9knq9
+    name: prox0001-registralibrorem-18
+    namespace: pipelines-dev
+    ownerReferences:
+    - apiVersion: build.openshift.io/v1
+      controller: true
+      kind: BuildConfig
+      name: prox0001-registralibrorem
+      uid: d48d2755-3b2b-4bf2-b35e-90fc81536849
+    resourceVersion: "138075261"
+    uid: 935eb6e1-bd07-4020-8970-79315fffd21a
+  spec:
+    nodeSelector: {}
+    output: {}
+    postCommit: {}
+    resources: {}
+    serviceAccount: builder
+    source:
+      type: None
+    strategy:
+      jenkinsPipelineStrategy:
+        env:
+        - name: DEV_PROJECT
+          value: api-fiscalizacion-dev
+        - name: QA_PROJECT
+          value: api-fiscalizacion-qa
+        - name: ENABLE_QUAY
+          value: "false"
+        jenkinsfile: "pipeline {\n  agent {\n    label 'maven'\n  }\n  stages {\n
+          \   stage('Clonando repo y Compilando') {\n        steps {\n            git([url:
+          'https://dirtrab.visualstudio.com/Libro%20Remuneraciones%20Electronico/_git/PRX0001-RegistraLibroRemumeracion',\n
+          \           branch: 'prueba_develop',\n            credentialsId: 'azure_credenciales_id'])\n
+          \       script {\n            def pom = readMavenPom file: 'pom.xml'\n            version
+          = pom.version\n        }\n        sh \"mvn clean install -DskipTests\"\n
+          \       sh \"mvn -s configuration/settings.xml install -DskipTests=true\"\n
+          \     }\n    }\n    stage('Analisis sonarqube') {\n        steps {\n            script
+          {\n                  sh \"mvn sonar:sonar -Dsonar.host.url=http://sonarqube-sonarqube.cicd.svc.cluster.local:9000
+          -DskipTests=true\"\n                }\n            }\n        }\n    stage('Creando
+          Image Builder') {\n      when {\n        expression {\n          openshift.withCluster()
+          {\n            openshift.withProject(env.DEV_PROJECT) {\n              return
+          !openshift.selector(\"bc\", \"prox0001-registralibrore\").exists();\n            }\n
+          \         }\n        }\n      }\n      steps {\n        script {\n          openshift.withCluster()
+          {\n            openshift.withProject(env.DEV_PROJECT) {\n              openshift.newBuild(\"--name=prox0001-registralibrore\",
+          \"--image-stream=fuse7-java-openshift:1.3\", \"--binary=true\")\n            }\n
+          \         }\n        }\n      }\n    }\n    stage('Construyendo imagen')
+          {\n      steps {\n        sh \"rm -rf oc-build && mkdir -p oc-build/deployments\"\n
+          \       sh \"cp target/PRX0001-RegistraLibroRemumeracion-1.0.jar oc-build/deployments/PRX0001-RegistraLibroRemumeracion.jar\"\n\n
+          \       script {\n          openshift.withCluster() {\n            openshift.withProject(env.DEV_PROJECT)
+          {\n              openshift.selector(\"bc\", \"prox0001-registralibrore\").startBuild(\"--from-dir=oc-build\",
+          \"--wait=true\")\n            }\n          }\n        }\n        sh \"sleep
+          15\"                \n      }\n    }\n    stage('Creando en DEV') {\n      when
+          {\n        expression {\n          openshift.withCluster() {\n            openshift.withProject(env.DEV_PROJECT)
+          {\n              return !openshift.selector('dc', 'prox0001-registralibrore').exists()\n
+          \           }\n          }\n        }\n      }\n      steps {\n        script
+          {\n          openshift.withCluster() {\n            openshift.withProject(env.DEV_PROJECT)
+          {\n              def app = openshift.newApp(\"prox0001-registralibrore:latest\")\n
+          \             app.narrow(\"svc\").expose();\n              def dc = openshift.selector(\"dc\",
+          \"prox0001-registralibrore\")\n              while (dc.object().spec.replicas
+          != dc.object().status.availableReplicas) {\n                  sleep 10\n
+          \             }\n              openshift.set(\"triggers\", \"dc/prox0001-registralibrore\",
+          \"--manual\")\n            }\n          }\n        }\n      }\n    }\n    stage('Desplegando
+          en DEV') {\n      steps {\n        script {\n          openshift.withCluster()
+          {\n            openshift.withProject(env.DEV_PROJECT) {\n              openshift.selector(\"dc\",
+          \"prox0001-registralibrore\").rollout().latest();\n            }\n           sh
+          \"sleep 35\"\n          }\n        }\n      }\n    }\n   stage('Promocionar
+          a QA') {\n        steps {\n          timeout(time:30, unit:'MINUTES') {\n
+          \             input message: \"Promover a QA?\", ok: \"Promote\"\n          }\n
+          \         script {\n            openshift.withCluster() {\n              openshift.tag(\"${env.DEV_PROJECT}/prox0001-registralibrore:latest\",
+          \"${env.QA_PROJECT}/prox0001-registralibrore:latest\")\n            }\n
+          \         }\n        sh \"sleep 30\"\n        }\n      }\n    stage('Desplegando
+          en QA') {\n        steps {\n          script {\n            openshift.withCluster()
+          {\n              openshift.withProject(env.QA_PROJECT){\n                  if
+          (openshift.selector('dc', 'prox0001-registralibrore').exists()) {\n                  openshift.selector('dc',
+          'prox0001-registralibrore').rollout().latest();\n                } else
+          {\n                  openshift.newApp(\"prox0001-registralibrore:latest\").narrow(\"svc\").expose();\n
+          \               }\n              }\n            }\n          }\n        }\n
+          \     }\n  }\n}\n"
+      type: JenkinsPipeline
+    triggeredBy:
+    - message: Triggered by Jenkins job at http://jenkins-cicd.api-cloud.dirtrab.cl/job/pipelines-dev/job/pipelines-dev-prox0001-registralibrorem/
+  status:
+    completionTimestamp: "2023-10-18T15:33:38Z"
+    conditions:
+    - lastTransitionTime: "2023-10-18T14:57:48Z"
+      lastUpdateTime: "2023-10-18T14:57:48Z"
+      status: "False"
+      type: New
+    - lastTransitionTime: "2023-10-18T14:57:49Z"
+      lastUpdateTime: "2023-10-18T14:57:49Z"
+      status: "False"
+      type: Pending
+    - lastTransitionTime: "2023-10-18T15:33:38Z"
+      lastUpdateTime: "2023-10-18T15:33:38Z"
+      status: "False"
+      type: Running
+    - lastTransitionTime: "2023-10-18T15:33:38Z"
+      lastUpdateTime: "2023-10-18T15:33:38Z"
+      status: "True"
+      type: Cancelled
+    config:
+      kind: BuildConfig
+      name: prox0001-registralibrorem
+      namespace: pipelines-dev
+    output: {}
+    phase: Cancelled
+    startTimestamp: "2023-10-18T14:57:48Z"
+- apiVersion: build.openshift.io/v1
+  kind: Build
+  metadata:
+    annotations:
+      openshift.io/jenkins-blueocean-log-url: /http://jenkins-cicd.api-cloud.dirtrab.cl/blue/organizations/jenkins/pipelines-dev%2Fpipelines-dev-srv0003-empleadores/detail/pipelines-dev-srv0003-empleadores/22/
+      openshift.io/jenkins-build-uri: http://jenkins-cicd.api-cloud.dirtrab.cl/job/pipelines-dev/job/pipelines-dev-srv0003-empleadores/22/
+      openshift.io/jenkins-console-log-url: http://jenkins-cicd.api-cloud.dirtrab.cl/job/pipelines-dev/job/pipelines-dev-srv0003-empleadores/22/console
+      openshift.io/jenkins-log-url: http://jenkins-cicd.api-cloud.dirtrab.cl/job/pipelines-dev/job/pipelines-dev-srv0003-empleadores/22/consoleText
+      openshift.io/jenkins-status-json: '{"_links":{"self":{"href":"http://jenkins-cicd.api-cloud.dirtrab.cl/job/pipelines-dev/job/pipelines-dev-srv0003-empleadores/22/wfapi/describe"}},"id":"22","name":"#22","status":"ABORTED","startTimeMillis":1693840235102,"endTimeMillis":1693840497495,"durationMillis":262393,"queueDurationMillis":7,"pauseDurationMillis":0,"stages":[]}'
+    creationTimestamp: "2023-09-04T15:10:34Z"
+    generation: 1
+    labels:
+      app: cicd-pipeline
+      buildconfig: srv0003-empleadores
+      group: cicd
+      migration.openshift.io/migrated-by-migmigration: 8b3a2baf-eb1a-48bd-bffd-893d945b704f
+      migration.openshift.io/migrated-by-migplan: a3ccd4bb-657f-47a9-a0e5-d29a23a06ca1
+      name: cicd-pipeline
+      openshift.io/build-config.name: srv0003-empleadores
+      openshift.io/build.start-policy: Serial
+      template: cicd
+      velero.io/backup-name: migration-95b26-initial-gqjc6
+      velero.io/restore-name: migration-95b26-final-9knq9
+    name: srv0003-empleadores-1
+    namespace: pipelines-dev
+    ownerReferences:
+    - apiVersion: build.openshift.io/v1
+      controller: true
+      kind: BuildConfig
+      name: srv0003-empleadores
+      uid: 475bac9c-6142-4892-8774-e49892e67d27
+    resourceVersion: "98917964"
+    uid: d2b5175c-4f9c-4cbb-9b68-f916d0ee38cf
+  spec:
+    nodeSelector: {}
+    output: {}
+    postCommit: {}
+    resources: {}
+    serviceAccount: builder
+    source:
+      type: None
+    strategy:
+      jenkinsPipelineStrategy:
+        env:
+        - name: DEV_PROJECT
+          value: api-fiscalizacion-dev
+        - name: QA_PROJECT
+          value: api-fiscalizacion-qa
+        - name: ENABLE_QUAY
+          value: "false"
+        jenkinsfile: "pipeline {\n  agent {\n    label 'maven'\n  }\n  stages {\n
+          \   stage('Clonando repo y Compilando') {\n        steps {\n            git([url:
+          'https://dirtrab.visualstudio.com/Libro%20Remuneraciones%20Electronico/_git/SRV0003-Empleadores',\n
+          \           branch: 'feature/amq',\n            credentialsId: 'azure_credenciales_id'])\n
+          \       script {\n            def pom = readMavenPom file: 'pom.xml'\n            version
+          = pom.version\n        }\n        sh \"mvn -s configuration/settings.xml
+          install -DskipTests=true\"\n      }\n    }\n    stage('Analisis sonarqube')
+          {\n        steps {\n            script {\n                  sh \"mvn sonar:sonar
+          -Dsonar.host.url=http://sonarqube-sonarqube.cicd.svc.cluster.local:9000
+          -DskipTests=true\"\n                }\n            }\n        }\n    stage('Creando
+          Image Builder') {\n      when {\n        expression {\n          openshift.withCluster()
+          {\n            openshift.withProject(env.DEV_PROJECT) {\n              return
+          !openshift.selector(\"bc\", \"srv0003\").exists();\n            }\n          }\n
+          \       }\n      }\n      steps {\n        script {\n          openshift.withCluster()
+          {\n            openshift.withProject(env.DEV_PROJECT) {\n              openshift.newBuild(\"--name=srv0003\",
+          \"--image-stream=redhat-openjdk18-openshift:1.4\", \"--binary=true\")\n
+          \           }\n          }\n        }\n      }\n    }\n    stage('Construyendo
+          imagen') {\n      steps {\n        sh \"rm -rf oc-build && mkdir -p oc-build/deployments\"\n
+          \       sh \"cp target/SRV0003-Empleadores-1.0.jar oc-build/deployments/SRV0003-Empleadores.jar\"\n\n
+          \       script {\n          openshift.withCluster() {\n            openshift.withProject(env.DEV_PROJECT)
+          {\n              openshift.selector(\"bc\", \"srv0003\").startBuild(\"--from-dir=oc-build\",
+          \"--wait=true\")\n            }\n          }\n        }\n        sh \"sleep
+          15\"                \n      }\n    }\n    stage('Creando en DEV') {\n      when
+          {\n        expression {\n          openshift.withCluster() {\n            openshift.withProject(env.DEV_PROJECT)
+          {\n              return !openshift.selector('dc', 'srv0003').exists()\n
+          \           }\n          }\n        }\n      }\n      steps {\n        script
+          {\n          openshift.withCluster() {\n            openshift.withProject(env.DEV_PROJECT)
+          {\n              def app = openshift.newApp(\"srv0003:latest\")\n              app.narrow(\"svc\").expose();\n
+          \             def dc = openshift.selector(\"dc\", \"srv0003\")\n              while
+          (dc.object().spec.replicas != dc.object().status.availableReplicas) {\n
+          \                 sleep 10\n              }\n              openshift.set(\"triggers\",
+          \"dc/srv0003\", \"--manual\")\n            }\n          }\n        }\n      }\n
+          \   }\n    stage('Desplegando en DEV') {\n      steps {\n        script
+          {\n          openshift.withCluster() {\n            openshift.withProject(env.DEV_PROJECT)
+          {\n              openshift.selector(\"dc\", \"srv0003\").rollout().latest();\n
+          \           }\n           sh \"sleep 35\"\n          }\n        }\n      }\n
+          \   }\n   stage('Promocionar a QA') {\n        steps {\n          timeout(time:30,
+          unit:'MINUTES') {\n              input message: \"Promover a QA?\", ok:
+          \"Promote\"\n          }\n          script {\n            openshift.withCluster()
+          {\n              openshift.tag(\"${env.DEV_PROJECT}/srv0003:latest\", \"${env.QA_PROJECT}/srv0003:latest\")\n
+          \           }\n          }\n        sh \"sleep 30\"\n        }\n      }\n
+          \   stage('Desplegando en QA') {\n        steps {\n          script {\n
+          \           openshift.withCluster() {\n              openshift.withProject(env.QA_PROJECT){\n
+          \                 if (openshift.selector('dc', 'srv0003').exists()) {\n
+          \                 openshift.selector('dc', 'srv0003').rollout().latest();\n
+          \               } else {\n                  openshift.newApp(\"srv0003:latest\").narrow(\"svc\").expose();\n
+          \               }\n              }\n            }\n          }\n        }\n
+          \     }\n  }\n}\n"
+      type: JenkinsPipeline
+    triggeredBy:
+    - message: Triggered by Jenkins job at http://jenkins-cicd.api-cloud.dirtrab.cl/job/pipelines-dev/job/pipelines-dev-srv0003-empleadores/
+  status:
+    completionTimestamp: "2023-09-04T15:14:57Z"
+    conditions:
+    - lastTransitionTime: "2023-09-04T15:10:35Z"
+      lastUpdateTime: "2023-09-04T15:10:35Z"
+      status: "False"
+      type: New
+    - lastTransitionTime: "2023-09-04T15:10:36Z"
+      lastUpdateTime: "2023-09-04T15:10:36Z"
+      status: "False"
+      type: Pending
+    - lastTransitionTime: "2023-09-04T15:14:57Z"
+      lastUpdateTime: "2023-09-04T15:14:57Z"
+      status: "False"
+      type: Running
+    - lastTransitionTime: "2023-09-04T15:14:57Z"
+      lastUpdateTime: "2023-09-04T15:14:57Z"
+      status: "True"
+      type: Cancelled
+    config:
+      kind: BuildConfig
+      name: srv0003-empleadores
+      namespace: pipelines-dev
+    output: {}
+    phase: Cancelled
+    startTimestamp: "2023-09-04T15:10:35Z"
+- apiVersion: build.openshift.io/v1
+  kind: Build
+  metadata:
+    annotations:
+      openshift.io/jenkins-blueocean-log-url: /http://jenkins-cicd.api-cloud.dirtrab.cl/blue/organizations/jenkins/pipelines-dev%2Fpipelines-dev-srv0003-empleadores/detail/pipelines-dev-srv0003-empleadores/23/
+      openshift.io/jenkins-build-uri: http://jenkins-cicd.api-cloud.dirtrab.cl/job/pipelines-dev/job/pipelines-dev-srv0003-empleadores/23/
+      openshift.io/jenkins-console-log-url: http://jenkins-cicd.api-cloud.dirtrab.cl/job/pipelines-dev/job/pipelines-dev-srv0003-empleadores/23/console
+      openshift.io/jenkins-log-url: http://jenkins-cicd.api-cloud.dirtrab.cl/job/pipelines-dev/job/pipelines-dev-srv0003-empleadores/23/consoleText
+      openshift.io/jenkins-status-json: '{"_links":{"self":{"href":"http://jenkins-cicd.api-cloud.dirtrab.cl/job/pipelines-dev/job/pipelines-dev-srv0003-empleadores/23/wfapi/describe"}},"id":"23","name":"#23","status":"ABORTED","startTimeMillis":1693922254603,"endTimeMillis":1693922517067,"durationMillis":262464,"queueDurationMillis":5,"pauseDurationMillis":0,"stages":[]}'
+    creationTimestamp: "2023-09-05T13:57:34Z"
+    generation: 1
+    labels:
+      app: cicd-pipeline
+      buildconfig: srv0003-empleadores
+      group: cicd
+      migration.openshift.io/migrated-by-migmigration: 8b3a2baf-eb1a-48bd-bffd-893d945b704f
+      migration.openshift.io/migrated-by-migplan: a3ccd4bb-657f-47a9-a0e5-d29a23a06ca1
+      name: cicd-pipeline
+      openshift.io/build-config.name: srv0003-empleadores
+      openshift.io/build.start-policy: Serial
+      template: cicd
+      velero.io/backup-name: migration-95b26-initial-gqjc6
+      velero.io/restore-name: migration-95b26-final-9knq9
+    name: srv0003-empleadores-2
+    namespace: pipelines-dev
+    ownerReferences:
+    - apiVersion: build.openshift.io/v1
+      controller: true
+      kind: BuildConfig
+      name: srv0003-empleadores
+      uid: 475bac9c-6142-4892-8774-e49892e67d27
+    resourceVersion: "99704204"
+    uid: 7d6c88d4-4399-459e-92fd-1d4cab1cb9d8
+  spec:
+    nodeSelector: {}
+    output: {}
+    postCommit: {}
+    resources: {}
+    serviceAccount: builder
+    source:
+      type: None
+    strategy:
+      jenkinsPipelineStrategy:
+        env:
+        - name: DEV_PROJECT
+          value: api-fiscalizacion-dev
+        - name: QA_PROJECT
+          value: api-fiscalizacion-qa
+        - name: ENABLE_QUAY
+          value: "false"
+        jenkinsfile: "pipeline {\n  agent {\n    label 'maven'\n  }\n  stages {\n
+          \   stage('Clonando repo y Compilando') {\n        steps {\n            git([url:
+          'https://dirtrab.visualstudio.com/Libro%20Remuneraciones%20Electronico/_git/SRV0003-Empleadores',\n
+          \           branch: 'feature/amq',\n            credentialsId: 'azure_credenciales_id'])\n
+          \       script {\n            def pom = readMavenPom file: 'pom.xml'\n            version
+          = pom.version\n        }\n        sh \"mvn -s configuration/settings.xml
+          install -DskipTests=true\"\n      }\n    }\n    stage('Analisis sonarqube')
+          {\n        steps {\n            script {\n                  sh \"mvn sonar:sonar
+          -Dsonar.host.url=http://sonarqube-sonarqube.cicd.svc.cluster.local:9000
+          -DskipTests=true\"\n                }\n            }\n        }\n    stage('Creando
+          Image Builder') {\n      when {\n        expression {\n          openshift.withCluster()
+          {\n            openshift.withProject(env.DEV_PROJECT) {\n              return
+          !openshift.selector(\"bc\", \"srv0003\").exists();\n            }\n          }\n
+          \       }\n      }\n      steps {\n        script {\n          openshift.withCluster()
+          {\n            openshift.withProject(env.DEV_PROJECT) {\n              openshift.newBuild(\"--name=srv0003\",
+          \"--image-stream=redhat-openjdk18-openshift:1.4\", \"--binary=true\")\n
+          \           }\n          }\n        }\n      }\n    }\n    stage('Construyendo
+          imagen') {\n      steps {\n        sh \"rm -rf oc-build && mkdir -p oc-build/deployments\"\n
+          \       sh \"cp target/SRV0003-Empleadores-1.0.jar oc-build/deployments/SRV0003-Empleadores.jar\"\n\n
+          \       script {\n          openshift.withCluster() {\n            openshift.withProject(env.DEV_PROJECT)
+          {\n              openshift.selector(\"bc\", \"srv0003\").startBuild(\"--from-dir=oc-build\",
+          \"--wait=true\")\n            }\n          }\n        }\n        sh \"sleep
+          15\"                \n      }\n    }\n    stage('Creando en DEV') {\n      when
+          {\n        expression {\n          openshift.withCluster() {\n            openshift.withProject(env.DEV_PROJECT)
+          {\n              return !openshift.selector('dc', 'srv0003').exists()\n
+          \           }\n          }\n        }\n      }\n      steps {\n        script
+          {\n          openshift.withCluster() {\n            openshift.withProject(env.DEV_PROJECT)
+          {\n              def app = openshift.newApp(\"srv0003:latest\")\n              app.narrow(\"svc\").expose();\n
+          \             def dc = openshift.selector(\"dc\", \"srv0003\")\n              while
+          (dc.object().spec.replicas != dc.object().status.availableReplicas) {\n
+          \                 sleep 10\n              }\n              openshift.set(\"triggers\",
+          \"dc/srv0003\", \"--manual\")\n            }\n          }\n        }\n      }\n
+          \   }\n    stage('Desplegando en DEV') {\n      steps {\n        script
+          {\n          openshift.withCluster() {\n            openshift.withProject(env.DEV_PROJECT)
+          {\n              openshift.selector(\"dc\", \"srv0003\").rollout().latest();\n
+          \           }\n           sh \"sleep 35\"\n          }\n        }\n      }\n
+          \   }\n   stage('Promocionar a QA') {\n        steps {\n          timeout(time:30,
+          unit:'MINUTES') {\n              input message: \"Promover a QA?\", ok:
+          \"Promote\"\n          }\n          script {\n            openshift.withCluster()
+          {\n              openshift.tag(\"${env.DEV_PROJECT}/srv0003:latest\", \"${env.QA_PROJECT}/srv0003:latest\")\n
+          \           }\n          }\n        sh \"sleep 30\"\n        }\n      }\n
+          \   stage('Desplegando en QA') {\n        steps {\n          script {\n
+          \           openshift.withCluster() {\n              openshift.withProject(env.QA_PROJECT){\n
+          \                 if (openshift.selector('dc', 'srv0003').exists()) {\n
+          \                 openshift.selector('dc', 'srv0003').rollout().latest();\n
+          \               } else {\n                  openshift.newApp(\"srv0003:latest\").narrow(\"svc\").expose();\n
+          \               }\n              }\n            }\n          }\n        }\n
+          \     }\n  }\n}\n"
+      type: JenkinsPipeline
+    triggeredBy:
+    - message: Triggered by Jenkins job at http://jenkins-cicd.api-cloud.dirtrab.cl/job/pipelines-dev/job/pipelines-dev-srv0003-empleadores/
+  status:
+    completionTimestamp: "2023-09-05T14:01:57Z"
+    conditions:
+    - lastTransitionTime: "2023-09-05T13:57:34Z"
+      lastUpdateTime: "2023-09-05T13:57:34Z"
+      status: "False"
+      type: New
+    - lastTransitionTime: "2023-09-05T13:57:36Z"
+      lastUpdateTime: "2023-09-05T13:57:36Z"
+      status: "False"
+      type: Pending
+    - lastTransitionTime: "2023-09-05T14:01:57Z"
+      lastUpdateTime: "2023-09-05T14:01:57Z"
+      status: "False"
+      type: Running
+    - lastTransitionTime: "2023-09-05T14:01:57Z"
+      lastUpdateTime: "2023-09-05T14:01:57Z"
+      status: "True"
+      type: Cancelled
+    config:
+      kind: BuildConfig
+      name: srv0003-empleadores
+      namespace: pipelines-dev
+    output: {}
+    phase: Cancelled
+    startTimestamp: "2023-09-05T13:57:34Z"
+- apiVersion: build.openshift.io/v1
+  kind: Build
+  metadata:
+    annotations:
+      openshift.io/jenkins-blueocean-log-url: /http://jenkins-cicd.api-cloud.dirtrab.cl/blue/organizations/jenkins/pipelines-dev%2Fpipelines-dev-srv0003-empleadores/detail/pipelines-dev-srv0003-empleadores/24/
+      openshift.io/jenkins-build-uri: http://jenkins-cicd.api-cloud.dirtrab.cl/job/pipelines-dev/job/pipelines-dev-srv0003-empleadores/24/
+      openshift.io/jenkins-console-log-url: http://jenkins-cicd.api-cloud.dirtrab.cl/job/pipelines-dev/job/pipelines-dev-srv0003-empleadores/24/console
+      openshift.io/jenkins-log-url: http://jenkins-cicd.api-cloud.dirtrab.cl/job/pipelines-dev/job/pipelines-dev-srv0003-empleadores/24/consoleText
+      openshift.io/jenkins-status-json: '{"_links":{"self":{"href":"http://jenkins-cicd.api-cloud.dirtrab.cl/job/pipelines-dev/job/pipelines-dev-srv0003-empleadores/24/wfapi/describe"}},"id":"24","name":"#24","status":"FAILED","startTimeMillis":1693922795720,"endTimeMillis":1697225295061,"durationMillis":3302499341,"queueDurationMillis":23,"pauseDurationMillis":0,"stages":[]}'
+    creationTimestamp: "2023-09-05T14:06:35Z"
+    generation: 1
+    labels:
+      app: cicd-pipeline
+      buildconfig: srv0003-empleadores
+      group: cicd
+      migration.openshift.io/migrated-by-migmigration: 8b3a2baf-eb1a-48bd-bffd-893d945b704f
+      migration.openshift.io/migrated-by-migplan: a3ccd4bb-657f-47a9-a0e5-d29a23a06ca1
+      name: cicd-pipeline
+      openshift.io/build-config.name: srv0003-empleadores
+      openshift.io/build.start-policy: Serial
+      template: cicd
+      velero.io/backup-name: migration-95b26-initial-gqjc6
+      velero.io/restore-name: migration-95b26-final-9knq9
+    name: srv0003-empleadores-3
+    namespace: pipelines-dev
+    ownerReferences:
+    - apiVersion: build.openshift.io/v1
+      controller: true
+      kind: BuildConfig
+      name: srv0003-empleadores
+      uid: 475bac9c-6142-4892-8774-e49892e67d27
+    resourceVersion: "133998096"
+    uid: 6a9fbe18-7ca5-44cf-9551-1ebb17837528
+  spec:
+    nodeSelector: {}
+    output: {}
+    postCommit: {}
+    resources: {}
+    serviceAccount: builder
+    source:
+      type: None
+    strategy:
+      jenkinsPipelineStrategy:
+        env:
+        - name: DEV_PROJECT
+          value: api-fiscalizacion-dev
+        - name: QA_PROJECT
+          value: api-fiscalizacion-qa
+        - name: ENABLE_QUAY
+          value: "false"
+        jenkinsfile: "pipeline {\n  agent {\n    label 'maven'\n  }\n  stages {\n
+          \   stage('Clonando repo y Compilando') {\n        steps {\n            git([url:
+          'https://dirtrab.visualstudio.com/Libro%20Remuneraciones%20Electronico/_git/SRV0003-Empleadores',\n
+          \           branch: 'feature/amq',\n            credentialsId: 'azure_credenciales_id'])\n
+          \       script {\n            def pom = readMavenPom file: 'pom.xml'\n            version
+          = pom.version\n        }\n        sh \"mvn -s configuration/settings.xml
+          install -DskipTests=true\"\n      }\n    }\n    stage('Analisis sonarqube')
+          {\n        steps {\n            script {\n                  sh \"mvn sonar:sonar
+          -Dsonar.host.url=http://sonarqube-sonarqube.cicd.svc.cluster.local:9000
+          -DskipTests=true\"\n                }\n            }\n        }\n    stage('Creando
+          Image Builder') {\n      when {\n        expression {\n          openshift.withCluster()
+          {\n            openshift.withProject(env.DEV_PROJECT) {\n              return
+          !openshift.selector(\"bc\", \"srv0003\").exists();\n            }\n          }\n
+          \       }\n      }\n      steps {\n        script {\n          openshift.withCluster()
+          {\n            openshift.withProject(env.DEV_PROJECT) {\n              openshift.newBuild(\"--name=srv0003\",
+          \"--image-stream=redhat-openjdk18-openshift:1.4\", \"--binary=true\")\n
+          \           }\n          }\n        }\n      }\n    }\n    stage('Construyendo
+          imagen') {\n      steps {\n        sh \"rm -rf oc-build && mkdir -p oc-build/deployments\"\n
+          \       sh \"cp target/SRV0003-Empleadores-1.0.jar oc-build/deployments/SRV0003-Empleadores.jar\"\n\n
+          \       script {\n          openshift.withCluster() {\n            openshift.withProject(env.DEV_PROJECT)
+          {\n              openshift.selector(\"bc\", \"srv0003\").startBuild(\"--from-dir=oc-build\",
+          \"--wait=true\")\n            }\n          }\n        }\n        sh \"sleep
+          15\"                \n      }\n    }\n    stage('Creando en DEV') {\n      when
+          {\n        expression {\n          openshift.withCluster() {\n            openshift.withProject(env.DEV_PROJECT)
+          {\n              return !openshift.selector('dc', 'srv0003').exists()\n
+          \           }\n          }\n        }\n      }\n      steps {\n        script
+          {\n          openshift.withCluster() {\n            openshift.withProject(env.DEV_PROJECT)
+          {\n              def app = openshift.newApp(\"srv0003:latest\")\n              app.narrow(\"svc\").expose();\n
+          \             def dc = openshift.selector(\"dc\", \"srv0003\")\n              while
+          (dc.object().spec.replicas != dc.object().status.availableReplicas) {\n
+          \                 sleep 10\n              }\n              openshift.set(\"triggers\",
+          \"dc/srv0003\", \"--manual\")\n            }\n          }\n        }\n      }\n
+          \   }\n    stage('Desplegando en DEV') {\n      steps {\n        script
+          {\n          openshift.withCluster() {\n            openshift.withProject(env.DEV_PROJECT)
+          {\n              openshift.selector(\"dc\", \"srv0003\").rollout().latest();\n
+          \           }\n           sh \"sleep 35\"\n          }\n        }\n      }\n
+          \   }\n   stage('Promocionar a QA') {\n        steps {\n          timeout(time:30,
+          unit:'MINUTES') {\n              input message: \"Promover a QA?\", ok:
+          \"Promote\"\n          }\n          script {\n            openshift.withCluster()
+          {\n              openshift.tag(\"${env.DEV_PROJECT}/srv0003:latest\", \"${env.QA_PROJECT}/srv0003:latest\")\n
+          \           }\n          }\n        sh \"sleep 30\"\n        }\n      }\n
+          \   stage('Desplegando en QA') {\n        steps {\n          script {\n
+          \           openshift.withCluster() {\n              openshift.withProject(env.QA_PROJECT){\n
+          \                 if (openshift.selector('dc', 'srv0003').exists()) {\n
+          \                 openshift.selector('dc', 'srv0003').rollout().latest();\n
+          \               } else {\n                  openshift.newApp(\"srv0003:latest\").narrow(\"svc\").expose();\n
+          \               }\n              }\n            }\n          }\n        }\n
+          \     }\n  }\n}\n"
+      type: JenkinsPipeline
+    triggeredBy:
+    - message: Triggered by Jenkins job at http://jenkins-cicd.api-cloud.dirtrab.cl/job/pipelines-dev/job/pipelines-dev-srv0003-empleadores/
+  status:
+    completionTimestamp: "2023-10-13T19:28:15Z"
+    conditions:
+    - lastTransitionTime: "2023-09-05T14:06:35Z"
+      lastUpdateTime: "2023-09-05T14:06:35Z"
+      status: "False"
+      type: New
+    - lastTransitionTime: "2023-09-05T14:06:36Z"
+      lastUpdateTime: "2023-09-05T14:06:36Z"
+      status: "False"
+      type: Pending
+    - lastTransitionTime: "2023-10-13T19:28:16Z"
+      lastUpdateTime: "2023-10-13T19:28:16Z"
+      status: "False"
+      type: Running
+    - lastTransitionTime: "2023-10-13T19:28:16Z"
+      lastUpdateTime: "2023-10-13T19:28:16Z"
+      status: "True"
+      type: Failed
+    config:
+      kind: BuildConfig
+      name: srv0003-empleadores
+      namespace: pipelines-dev
+    output: {}
+    phase: Failed
+    startTimestamp: "2023-09-05T14:06:35Z"
+- apiVersion: build.openshift.io/v1
+  kind: Build
+  metadata:
+    annotations:
+      openshift.io/jenkins-blueocean-log-url: /http://jenkins-cicd.api-cloud.dirtrab.cl/blue/organizations/jenkins/pipelines-dev%2Fpipelines-dev-srv0006-apimetadata/detail/pipelines-dev-srv0006-apimetadata/23/
+      openshift.io/jenkins-build-uri: http://jenkins-cicd.api-cloud.dirtrab.cl/job/pipelines-dev/job/pipelines-dev-srv0006-apimetadata/23/
+      openshift.io/jenkins-console-log-url: http://jenkins-cicd.api-cloud.dirtrab.cl/job/pipelines-dev/job/pipelines-dev-srv0006-apimetadata/23/console
+      openshift.io/jenkins-log-url: http://jenkins-cicd.api-cloud.dirtrab.cl/job/pipelines-dev/job/pipelines-dev-srv0006-apimetadata/23/consoleText
+      openshift.io/jenkins-status-json: '{"_links":{"self":{"href":"http://jenkins-cicd.api-cloud.dirtrab.cl/job/pipelines-dev/job/pipelines-dev-srv0006-apimetadata/23/wfapi/describe"}},"id":"23","name":"#23","status":"ABORTED","startTimeMillis":1697114084167,"endTimeMillis":1697114576138,"durationMillis":491971,"queueDurationMillis":5,"pauseDurationMillis":0,"stages":[]}'
+    creationTimestamp: "2023-10-12T12:34:44Z"
+    generation: 1
+    labels:
+      app: cicd-pipeline
+      buildconfig: srv0006-apimetadata
+      group: cicd
+      migration.openshift.io/migrated-by-migmigration: 8b3a2baf-eb1a-48bd-bffd-893d945b704f
+      migration.openshift.io/migrated-by-migplan: a3ccd4bb-657f-47a9-a0e5-d29a23a06ca1
+      name: cicd-pipeline
+      openshift.io/build-config.name: srv0006-apimetadata
+      openshift.io/build.start-policy: Serial
+      template: cicd
+      velero.io/backup-name: migration-95b26-initial-gqjc6
+      velero.io/restore-name: migration-95b26-final-9knq9
+    name: srv0006-apimetadata-1
+    namespace: pipelines-dev
+    ownerReferences:
+    - apiVersion: build.openshift.io/v1
+      controller: true
+      kind: BuildConfig
+      name: srv0006-apimetadata
+      uid: 348ed410-422d-4fa5-9c11-fb1b7372b243
+    resourceVersion: "132761654"
+    uid: 5079bd14-3a3b-4bf4-ba69-d4bd9a10a1d5
+  spec:
+    nodeSelector: {}
+    output: {}
+    postCommit: {}
+    resources: {}
+    serviceAccount: builder
+    source:
+      type: None
+    strategy:
+      jenkinsPipelineStrategy:
+        env:
+        - name: DEV_PROJECT
+          value: api-fiscalizacion-dev
+        - name: QA_PROJECT
+          value: api-fiscalizacion-qa
+        - name: ENABLE_QUAY
+          value: "false"
+        jenkinsfile: "pipeline {\n  agent {\n    label 'maven'\n  }\n  stages {\n
+          \   stage('Clonando repo y Compilando') {\n        steps {\n            git([url:
+          'https://dirtrab.visualstudio.com/Libro%20Remuneraciones%20Electronico/_git/SRV0006-ApiMetadata',\n
+          \           branch: 'feature/amq',\n            credentialsId: 'azure_credenciales_id'])\n
+          \       script {\n            def pom = readMavenPom file: 'pom.xml'\n            version
+          = pom.version\n        }\n        sh \"mvn -s configuration/settings.xml
+          install -DskipTests=true\"\n      }\n    }\n    stage('Analisis sonarqube')
+          {\n        steps {\n            script {\n                  sh \"mvn sonar:sonar
+          -Dsonar.host.url=http://sonarqube-sonarqube.cicd.svc.cluster.local:9000
+          -DskipTests=true\"\n                }\n            }\n        }\n    stage('Creando
+          Image Builder') {\n      when {\n        expression {\n          openshift.withCluster()
+          {\n            openshift.withProject(env.DEV_PROJECT) {\n              return
+          !openshift.selector(\"bc\", \"srv0006-apimetadata\").exists();\n            }\n
+          \         }\n        }\n      }\n      steps {\n        script {\n          openshift.withCluster()
+          {\n            openshift.withProject(env.DEV_PROJECT) {\n              openshift.newBuild(\"--name=srv0006-apimetadata\",
+          \"--image-stream=redhat-openjdk18-openshift:1.4\", \"--binary=true\")\n
+          \           }\n          }\n        }\n      }\n    }\n    stage('Construyendo
+          imagen') {\n      steps {\n        sh \"rm -rf oc-build && mkdir -p oc-build/deployments\"\n
+          \       sh \"cp target/SRV0006-ApiMetadata-1.0.jar oc-build/deployments/SRV0006-ApiMetadata.jar\"\n
+          \       \n        script {\n          openshift.withCluster() {\n            openshift.withProject(env.DEV_PROJECT)
+          {\n              openshift.selector(\"bc\", \"srv0006-apimetadata\").startBuild(\"--from-dir=oc-build\",
+          \"--wait=true\")\n            }\n          }\n        }\n        sh \"sleep
+          15\"                \n      }\n    }\n    stage('Creando en DEV') {\n      when
+          {\n        expression {\n          openshift.withCluster() {\n            openshift.withProject(env.DEV_PROJECT)
+          {\n              return !openshift.selector('dc', 'srv0006-apimetadata').exists()\n
+          \           }\n          }\n        }\n      }\n      steps {\n        script
+          {\n          openshift.withCluster() {\n            openshift.withProject(env.DEV_PROJECT)
+          {\n              def app = openshift.newApp(\"srv0006-apimetadata:latest\")\n
+          \             app.narrow(\"svc\").expose();\n              def dc = openshift.selector(\"dc\",
+          \"srv0006-apimetadata\")\n              while (dc.object().spec.replicas
+          != dc.object().status.availableReplicas) {\n                  sleep 10\n
+          \             }\n              openshift.set(\"triggers\", \"dc/srv0006-apimetadata\",
+          \"--manual\")\n            }\n          }\n        }\n      }\n    }\n    stage('Desplegando
+          en DEV') {\n      steps {\n        script {\n          openshift.withCluster()
+          {\n            openshift.withProject(env.DEV_PROJECT) {\n              openshift.selector(\"dc\",
+          \"srv0006-apimetadata\").rollout().latest();\n            }\n           sh
+          \"sleep 35\"\n          }\n        }\n      }\n    }\n   stage('Promocionar
+          a QA') {\n        steps {\n          timeout(time:30, unit:'MINUTES') {\n
+          \             input message: \"Promover a QA?\", ok: \"Promote\"\n          }\n
+          \         script {\n            openshift.withCluster() {\n              openshift.tag(\"${env.DEV_PROJECT}/srv0006-apimetadata:latest\",
+          \"${env.QA_PROJECT}/srv0006-apimetadata:latest\")\n            }\n          }\n
+          \       sh \"sleep 30\"\n        }\n      }\n    stage('Desplegando en QA')
+          {\n        steps {\n          script {\n            openshift.withCluster()
+          {\n              openshift.withProject(env.QA_PROJECT){\n                  if
+          (openshift.selector('dc', 'srv0006-apimetadata').exists()) {\n                  openshift.selector('dc',
+          'srv0006-apimetadata').rollout().latest();\n                } else {\n                  openshift.newApp(\"srv0006-apimetadata:latest\").narrow(\"svc\").expose();\n
+          \               }\n              }\n            }\n          }\n        }\n
+          \     }\n  }\n}\n"
+      type: JenkinsPipeline
+    triggeredBy:
+    - message: Triggered by Jenkins job at http://jenkins-cicd.api-cloud.dirtrab.cl/job/pipelines-dev/job/pipelines-dev-srv0006-apimetadata/
+  status:
+    completionTimestamp: "2023-10-12T12:42:56Z"
+    conditions:
+    - lastTransitionTime: "2023-10-12T12:34:46Z"
+      lastUpdateTime: "2023-10-12T12:34:46Z"
+      status: "False"
+      type: New
+    - lastTransitionTime: "2023-10-12T12:34:46Z"
+      lastUpdateTime: "2023-10-12T12:34:46Z"
+      status: "False"
+      type: Pending
+    - lastTransitionTime: "2023-10-12T12:42:56Z"
+      lastUpdateTime: "2023-10-12T12:42:56Z"
+      status: "False"
+      type: Running
+    - lastTransitionTime: "2023-10-12T12:42:56Z"
+      lastUpdateTime: "2023-10-12T12:42:56Z"
+      status: "True"
+      type: Cancelled
+    config:
+      kind: BuildConfig
+      name: srv0006-apimetadata
+      namespace: pipelines-dev
+    output: {}
+    phase: Cancelled
+    startTimestamp: "2023-10-12T12:34:44Z"
+- apiVersion: build.openshift.io/v1
+  kind: Build
+  metadata:
+    annotations:
+      openshift.io/jenkins-blueocean-log-url: /http://jenkins-cicd.api-cloud.dirtrab.cl/blue/organizations/jenkins/pipelines-dev%2Fpipelines-dev-srv0006-apimetadata/detail/pipelines-dev-srv0006-apimetadata/24/
+      openshift.io/jenkins-build-uri: http://jenkins-cicd.api-cloud.dirtrab.cl/job/pipelines-dev/job/pipelines-dev-srv0006-apimetadata/24/
+      openshift.io/jenkins-console-log-url: http://jenkins-cicd.api-cloud.dirtrab.cl/job/pipelines-dev/job/pipelines-dev-srv0006-apimetadata/24/console
+      openshift.io/jenkins-log-url: http://jenkins-cicd.api-cloud.dirtrab.cl/job/pipelines-dev/job/pipelines-dev-srv0006-apimetadata/24/consoleText
+      openshift.io/jenkins-status-json: '{"_links":{"self":{"href":"http://jenkins-cicd.api-cloud.dirtrab.cl/job/pipelines-dev/job/pipelines-dev-srv0006-apimetadata/24/wfapi/describe"}},"id":"24","name":"#24","status":"ABORTED","startTimeMillis":1697225370946,"endTimeMillis":1697225444185,"durationMillis":73239,"queueDurationMillis":8,"pauseDurationMillis":0,"stages":[]}'
+    creationTimestamp: "2023-10-13T19:29:30Z"
+    generation: 1
+    labels:
+      app: cicd-pipeline
+      buildconfig: srv0006-apimetadata
+      group: cicd
+      migration.openshift.io/migrated-by-migmigration: 8b3a2baf-eb1a-48bd-bffd-893d945b704f
+      migration.openshift.io/migrated-by-migplan: a3ccd4bb-657f-47a9-a0e5-d29a23a06ca1
+      name: cicd-pipeline
+      openshift.io/build-config.name: srv0006-apimetadata
+      openshift.io/build.start-policy: Serial
+      template: cicd
+      velero.io/backup-name: migration-95b26-initial-gqjc6
+      velero.io/restore-name: migration-95b26-final-9knq9
+    name: srv0006-apimetadata-2
+    namespace: pipelines-dev
+    ownerReferences:
+    - apiVersion: build.openshift.io/v1
+      controller: true
+      kind: BuildConfig
+      name: srv0006-apimetadata
+      uid: 348ed410-422d-4fa5-9c11-fb1b7372b243
+    resourceVersion: "133999670"
+    uid: 0a5e5bea-5e0c-4aca-adc4-af767bd9f35e
+  spec:
+    nodeSelector: {}
+    output: {}
+    postCommit: {}
+    resources: {}
+    serviceAccount: builder
+    source:
+      type: None
+    strategy:
+      jenkinsPipelineStrategy:
+        env:
+        - name: DEV_PROJECT
+          value: api-fiscalizacion-dev
+        - name: QA_PROJECT
+          value: api-fiscalizacion-qa
+        - name: ENABLE_QUAY
+          value: "false"
+        jenkinsfile: "pipeline {\n  agent {\n    label 'maven'\n  }\n  stages {\n
+          \   stage('Clonando repo y Compilando') {\n        steps {\n            git([url:
+          'https://dirtrab.visualstudio.com/Libro%20Remuneraciones%20Electronico/_git/SRV0006-ApiMetadata',\n
+          \           branch: 'feature/amq',\n            credentialsId: 'azure_credenciales_id'])\n
+          \       script {\n            def pom = readMavenPom file: 'pom.xml'\n            version
+          = pom.version\n        }\n        sh \"mvn -s configuration/settings.xml
+          install -DskipTests=true\"\n      }\n    }\n    stage('Analisis sonarqube')
+          {\n        steps {\n            script {\n                  sh \"mvn sonar:sonar
+          -Dsonar.host.url=http://sonarqube-sonarqube.cicd.svc.cluster.local:9000
+          -DskipTests=true\"\n                }\n            }\n        }\n    stage('Creando
+          Image Builder') {\n      when {\n        expression {\n          openshift.withCluster()
+          {\n            openshift.withProject(env.DEV_PROJECT) {\n              return
+          !openshift.selector(\"bc\", \"srv0006-apimetadata\").exists();\n            }\n
+          \         }\n        }\n      }\n      steps {\n        script {\n          openshift.withCluster()
+          {\n            openshift.withProject(env.DEV_PROJECT) {\n              openshift.newBuild(\"--name=srv0006-apimetadata\",
+          \"--image-stream=redhat-openjdk18-openshift:1.4\", \"--binary=true\")\n
+          \           }\n          }\n        }\n      }\n    }\n    stage('Construyendo
+          imagen') {\n      steps {\n        sh \"rm -rf oc-build && mkdir -p oc-build/deployments\"\n
+          \       sh \"cp target/SRV0006-ApiMetadata-1.0.jar oc-build/deployments/SRV0006-ApiMetadata.jar\"\n
+          \       \n        script {\n          openshift.withCluster() {\n            openshift.withProject(env.DEV_PROJECT)
+          {\n              openshift.selector(\"bc\", \"srv0006-apimetadata\").startBuild(\"--from-dir=oc-build\",
+          \"--wait=true\")\n            }\n          }\n        }\n        sh \"sleep
+          15\"                \n      }\n    }\n    stage('Creando en DEV') {\n      when
+          {\n        expression {\n          openshift.withCluster() {\n            openshift.withProject(env.DEV_PROJECT)
+          {\n              return !openshift.selector('dc', 'srv0006-apimetadata').exists()\n
+          \           }\n          }\n        }\n      }\n      steps {\n        script
+          {\n          openshift.withCluster() {\n            openshift.withProject(env.DEV_PROJECT)
+          {\n              def app = openshift.newApp(\"srv0006-apimetadata:latest\")\n
+          \             app.narrow(\"svc\").expose();\n              def dc = openshift.selector(\"dc\",
+          \"srv0006-apimetadata\")\n              while (dc.object().spec.replicas
+          != dc.object().status.availableReplicas) {\n                  sleep 10\n
+          \             }\n              openshift.set(\"triggers\", \"dc/srv0006-apimetadata\",
+          \"--manual\")\n            }\n          }\n        }\n      }\n    }\n    stage('Desplegando
+          en DEV') {\n      steps {\n        script {\n          openshift.withCluster()
+          {\n            openshift.withProject(env.DEV_PROJECT) {\n              openshift.selector(\"dc\",
+          \"srv0006-apimetadata\").rollout().latest();\n            }\n           sh
+          \"sleep 35\"\n          }\n        }\n      }\n    }\n   stage('Promocionar
+          a QA') {\n        steps {\n          timeout(time:30, unit:'MINUTES') {\n
+          \             input message: \"Promover a QA?\", ok: \"Promote\"\n          }\n
+          \         script {\n            openshift.withCluster() {\n              openshift.tag(\"${env.DEV_PROJECT}/srv0006-apimetadata:latest\",
+          \"${env.QA_PROJECT}/srv0006-apimetadata:latest\")\n            }\n          }\n
+          \       sh \"sleep 30\"\n        }\n      }\n    stage('Desplegando en QA')
+          {\n        steps {\n          script {\n            openshift.withCluster()
+          {\n              openshift.withProject(env.QA_PROJECT){\n                  if
+          (openshift.selector('dc', 'srv0006-apimetadata').exists()) {\n                  openshift.selector('dc',
+          'srv0006-apimetadata').rollout().latest();\n                } else {\n                  openshift.newApp(\"srv0006-apimetadata:latest\").narrow(\"svc\").expose();\n
+          \               }\n              }\n            }\n          }\n        }\n
+          \     }\n  }\n}\n"
+      type: JenkinsPipeline
+    triggeredBy:
+    - message: Triggered by Jenkins job at http://jenkins-cicd.api-cloud.dirtrab.cl/job/pipelines-dev/job/pipelines-dev-srv0006-apimetadata/
+  status:
+    completionTimestamp: "2023-10-13T19:30:44Z"
+    conditions:
+    - lastTransitionTime: "2023-10-13T19:29:30Z"
+      lastUpdateTime: "2023-10-13T19:29:30Z"
+      status: "False"
+      type: New
+    - lastTransitionTime: "2023-10-13T19:29:32Z"
+      lastUpdateTime: "2023-10-13T19:29:32Z"
+      status: "False"
+      type: Pending
+    - lastTransitionTime: "2023-10-13T19:30:44Z"
+      lastUpdateTime: "2023-10-13T19:30:44Z"
+      status: "False"
+      type: Running
+    - lastTransitionTime: "2023-10-13T19:30:44Z"
+      lastUpdateTime: "2023-10-13T19:30:44Z"
+      status: "True"
+      type: Cancelled
+    config:
+      kind: BuildConfig
+      name: srv0006-apimetadata
+      namespace: pipelines-dev
+    output: {}
+    phase: Cancelled
+    startTimestamp: "2023-10-13T19:29:30Z"
+- apiVersion: build.openshift.io/v1
+  kind: Build
+  metadata:
+    annotations:
+      openshift.io/jenkins-blueocean-log-url: /http://jenkins-cicd.api-cloud.dirtrab.cl/blue/organizations/jenkins/pipelines-dev%2Fpipelines-dev-srv0006-apimetadata/detail/pipelines-dev-srv0006-apimetadata/25/
+      openshift.io/jenkins-build-uri: http://jenkins-cicd.api-cloud.dirtrab.cl/job/pipelines-dev/job/pipelines-dev-srv0006-apimetadata/25/
+      openshift.io/jenkins-console-log-url: http://jenkins-cicd.api-cloud.dirtrab.cl/job/pipelines-dev/job/pipelines-dev-srv0006-apimetadata/25/console
+      openshift.io/jenkins-log-url: http://jenkins-cicd.api-cloud.dirtrab.cl/job/pipelines-dev/job/pipelines-dev-srv0006-apimetadata/25/consoleText
+      openshift.io/jenkins-status-json: '{"_links":{"self":{"href":"http://jenkins-cicd.api-cloud.dirtrab.cl/job/pipelines-dev/job/pipelines-dev-srv0006-apimetadata/25/wfapi/describe"}},"id":"25","name":"#25","status":"ABORTED","startTimeMillis":1697226556648,"endTimeMillis":1697227857255,"durationMillis":1300607,"queueDurationMillis":6,"pauseDurationMillis":0,"stages":[]}'
+    creationTimestamp: "2023-10-13T19:49:16Z"
+    generation: 1
+    labels:
+      app: cicd-pipeline
+      buildconfig: srv0006-apimetadata
+      group: cicd
+      migration.openshift.io/migrated-by-migmigration: 8b3a2baf-eb1a-48bd-bffd-893d945b704f
+      migration.openshift.io/migrated-by-migplan: a3ccd4bb-657f-47a9-a0e5-d29a23a06ca1
+      name: cicd-pipeline
+      openshift.io/build-config.name: srv0006-apimetadata
+      openshift.io/build.start-policy: Serial
+      template: cicd
+      velero.io/backup-name: migration-95b26-initial-gqjc6
+      velero.io/restore-name: migration-95b26-final-9knq9
+    name: srv0006-apimetadata-3
+    namespace: pipelines-dev
+    ownerReferences:
+    - apiVersion: build.openshift.io/v1
+      controller: true
+      kind: BuildConfig
+      name: srv0006-apimetadata
+      uid: 348ed410-422d-4fa5-9c11-fb1b7372b243
+    resourceVersion: "134024104"
+    uid: 274a65a8-8c9f-4820-bbbc-f6e0c1034652
+  spec:
+    nodeSelector: {}
+    output: {}
+    postCommit: {}
+    resources: {}
+    serviceAccount: builder
+    source:
+      type: None
+    strategy:
+      jenkinsPipelineStrategy:
+        env:
+        - name: DEV_PROJECT
+          value: api-fiscalizacion-dev
+        - name: QA_PROJECT
+          value: api-fiscalizacion-qa
+        - name: ENABLE_QUAY
+          value: "false"
+        jenkinsfile: "pipeline {\n  agent {\n    label 'maven'\n  }\n  stages {\n
+          \   stage('Clonando repo y Compilando') {\n        steps {\n            git([url:
+          'https://dirtrab.visualstudio.com/Libro%20Remuneraciones%20Electronico/_git/SRV0006-ApiMetadata',\n
+          \           branch: 'feature/amq',\n            credentialsId: 'azure_credenciales_id'])\n
+          \       script {\n            def pom = readMavenPom file: 'pom.xml'\n            version
+          = pom.version\n        }\n        sh \"mvn -s configuration/settings.xml
+          install -DskipTests=true\"\n      }\n    }\n    stage('Analisis sonarqube')
+          {\n        steps {\n            script {\n                  sh \"mvn sonar:sonar
+          -Dsonar.host.url=http://sonarqube-sonarqube.cicd.svc.cluster.local:9000
+          -DskipTests=true\"\n                }\n            }\n        }\n    stage('Creando
+          Image Builder') {\n      when {\n        expression {\n          openshift.withCluster()
+          {\n            openshift.withProject(env.DEV_PROJECT) {\n              return
+          !openshift.selector(\"bc\", \"srv0006-apimetadata\").exists();\n            }\n
+          \         }\n        }\n      }\n      steps {\n        script {\n          openshift.withCluster()
+          {\n            openshift.withProject(env.DEV_PROJECT) {\n              openshift.newBuild(\"--name=srv0006-apimetadata\",
+          \"--image-stream=redhat-openjdk18-openshift:1.4\", \"--binary=true\")\n
+          \           }\n          }\n        }\n      }\n    }\n    stage('Construyendo
+          imagen') {\n      steps {\n        sh \"rm -rf oc-build && mkdir -p oc-build/deployments\"\n
+          \       sh \"cp target/SRV0006-ApiMetadata-1.0.jar oc-build/deployments/SRV0006-ApiMetadata.jar\"\n
+          \       \n        script {\n          openshift.withCluster() {\n            openshift.withProject(env.DEV_PROJECT)
+          {\n              openshift.selector(\"bc\", \"srv0006-apimetadata\").startBuild(\"--from-dir=oc-build\",
+          \"--wait=true\")\n            }\n          }\n        }\n        sh \"sleep
+          15\"                \n      }\n    }\n    stage('Creando en DEV') {\n      when
+          {\n        expression {\n          openshift.withCluster() {\n            openshift.withProject(env.DEV_PROJECT)
+          {\n              return !openshift.selector('dc', 'srv0006-apimetadata').exists()\n
+          \           }\n          }\n        }\n      }\n      steps {\n        script
+          {\n          openshift.withCluster() {\n            openshift.withProject(env.DEV_PROJECT)
+          {\n              def app = openshift.newApp(\"srv0006-apimetadata:latest\")\n
+          \             app.narrow(\"svc\").expose();\n              def dc = openshift.selector(\"dc\",
+          \"srv0006-apimetadata\")\n              while (dc.object().spec.replicas
+          != dc.object().status.availableReplicas) {\n                  sleep 10\n
+          \             }\n              openshift.set(\"triggers\", \"dc/srv0006-apimetadata\",
+          \"--manual\")\n            }\n          }\n        }\n      }\n    }\n    stage('Desplegando
+          en DEV') {\n      steps {\n        script {\n          openshift.withCluster()
+          {\n            openshift.withProject(env.DEV_PROJECT) {\n              openshift.selector(\"dc\",
+          \"srv0006-apimetadata\").rollout().latest();\n            }\n           sh
+          \"sleep 35\"\n          }\n        }\n      }\n    }\n   stage('Promocionar
+          a QA') {\n        steps {\n          timeout(time:30, unit:'MINUTES') {\n
+          \             input message: \"Promover a QA?\", ok: \"Promote\"\n          }\n
+          \         script {\n            openshift.withCluster() {\n              openshift.tag(\"${env.DEV_PROJECT}/srv0006-apimetadata:latest\",
+          \"${env.QA_PROJECT}/srv0006-apimetadata:latest\")\n            }\n          }\n
+          \       sh \"sleep 30\"\n        }\n      }\n    stage('Desplegando en QA')
+          {\n        steps {\n          script {\n            openshift.withCluster()
+          {\n              openshift.withProject(env.QA_PROJECT){\n                  if
+          (openshift.selector('dc', 'srv0006-apimetadata').exists()) {\n                  openshift.selector('dc',
+          'srv0006-apimetadata').rollout().latest();\n                } else {\n                  openshift.newApp(\"srv0006-apimetadata:latest\").narrow(\"svc\").expose();\n
+          \               }\n              }\n            }\n          }\n        }\n
+          \     }\n  }\n}\n"
+      type: JenkinsPipeline
+    triggeredBy:
+    - message: Triggered by Jenkins job at http://jenkins-cicd.api-cloud.dirtrab.cl/job/pipelines-dev/job/pipelines-dev-srv0006-apimetadata/
+  status:
+    completionTimestamp: "2023-10-13T20:10:57Z"
+    conditions:
+    - lastTransitionTime: "2023-10-13T19:49:16Z"
+      lastUpdateTime: "2023-10-13T19:49:16Z"
+      status: "False"
+      type: New
+    - lastTransitionTime: "2023-10-13T19:49:17Z"
+      lastUpdateTime: "2023-10-13T19:49:17Z"
+      status: "False"
+      type: Pending
+    - lastTransitionTime: "2023-10-13T20:10:57Z"
+      lastUpdateTime: "2023-10-13T20:10:57Z"
+      status: "False"
+      type: Running
+    - lastTransitionTime: "2023-10-13T20:10:57Z"
+      lastUpdateTime: "2023-10-13T20:10:57Z"
+      status: "True"
+      type: Cancelled
+    config:
+      kind: BuildConfig
+      name: srv0006-apimetadata
+      namespace: pipelines-dev
+    output: {}
+    phase: Cancelled
+    startTimestamp: "2023-10-13T19:49:16Z"
+- apiVersion: build.openshift.io/v1
+  kind: Build
+  metadata:
+    annotations:
+      openshift.io/jenkins-blueocean-log-url: /http://jenkins-cicd.api-cloud.dirtrab.cl/blue/organizations/jenkins/pipelines-dev%2Fpipelines-dev-srv0006-apimetadata/detail/pipelines-dev-srv0006-apimetadata/26/
+      openshift.io/jenkins-build-uri: http://jenkins-cicd.api-cloud.dirtrab.cl/job/pipelines-dev/job/pipelines-dev-srv0006-apimetadata/26/
+      openshift.io/jenkins-console-log-url: http://jenkins-cicd.api-cloud.dirtrab.cl/job/pipelines-dev/job/pipelines-dev-srv0006-apimetadata/26/console
+      openshift.io/jenkins-log-url: http://jenkins-cicd.api-cloud.dirtrab.cl/job/pipelines-dev/job/pipelines-dev-srv0006-apimetadata/26/consoleText
+      openshift.io/jenkins-status-json: '{"_links":{"self":{"href":"http://jenkins-cicd.api-cloud.dirtrab.cl/job/pipelines-dev/job/pipelines-dev-srv0006-apimetadata/26/wfapi/describe"}},"id":"26","name":"#26","status":"ABORTED","startTimeMillis":1697229583054,"endTimeMillis":1697230004413,"durationMillis":421359,"queueDurationMillis":12,"pauseDurationMillis":0,"stages":[]}'
+    creationTimestamp: "2023-10-13T20:39:42Z"
+    generation: 1
+    labels:
+      app: cicd-pipeline
+      buildconfig: srv0006-apimetadata
+      group: cicd
+      migration.openshift.io/migrated-by-migmigration: 8b3a2baf-eb1a-48bd-bffd-893d945b704f
+      migration.openshift.io/migrated-by-migplan: a3ccd4bb-657f-47a9-a0e5-d29a23a06ca1
+      name: cicd-pipeline
+      openshift.io/build-config.name: srv0006-apimetadata
+      openshift.io/build.start-policy: Serial
+      template: cicd
+      velero.io/backup-name: migration-95b26-initial-gqjc6
+      velero.io/restore-name: migration-95b26-final-9knq9
+    name: srv0006-apimetadata-4
+    namespace: pipelines-dev
+    ownerReferences:
+    - apiVersion: build.openshift.io/v1
+      controller: true
+      kind: BuildConfig
+      name: srv0006-apimetadata
+      uid: 348ed410-422d-4fa5-9c11-fb1b7372b243
+    resourceVersion: "134045112"
+    uid: 96c2f79f-6edf-4361-b75c-9ba0cdb485a0
+  spec:
+    nodeSelector: {}
+    output: {}
+    postCommit: {}
+    resources: {}
+    serviceAccount: builder
+    source:
+      type: None
+    strategy:
+      jenkinsPipelineStrategy:
+        env:
+        - name: DEV_PROJECT
+          value: api-fiscalizacion-dev
+        - name: QA_PROJECT
+          value: api-fiscalizacion-qa
+        - name: ENABLE_QUAY
+          value: "false"
+        jenkinsfile: "pipeline {\n  agent {\n    label 'maven'\n  }\n  stages {\n
+          \   stage('Clonando repo y Compilando') {\n        steps {\n            git([url:
+          'https://dirtrab.visualstudio.com/Libro%20Remuneraciones%20Electronico/_git/SRV0006-ApiMetadata',\n
+          \           branch: 'feature/amq',\n            credentialsId: 'azure_credenciales_id'])\n
+          \       script {\n            def pom = readMavenPom file: 'pom.xml'\n            version
+          = pom.version\n        }\n        sh \"mvn -s configuration/settings.xml
+          install -DskipTests=true\"\n      }\n    }\n    stage('Analisis sonarqube')
+          {\n        steps {\n            script {\n                  sh \"mvn sonar:sonar
+          -Dsonar.host.url=http://sonarqube-sonarqube.cicd.svc.cluster.local:9000
+          -DskipTests=true\"\n                }\n            }\n        }\n    stage('Creando
+          Image Builder') {\n      when {\n        expression {\n          openshift.withCluster()
+          {\n            openshift.withProject(env.DEV_PROJECT) {\n              return
+          !openshift.selector(\"bc\", \"srv0006-apimetadata\").exists();\n            }\n
+          \         }\n        }\n      }\n      steps {\n        script {\n          openshift.withCluster()
+          {\n            openshift.withProject(env.DEV_PROJECT) {\n              openshift.newBuild(\"--name=srv0006-apimetadata\",
+          \"--image-stream=redhat-openjdk18-openshift:1.4\", \"--binary=true\")\n
+          \           }\n          }\n        }\n      }\n    }\n    stage('Construyendo
+          imagen') {\n      steps {\n        sh \"rm -rf oc-build && mkdir -p oc-build/deployments\"\n
+          \       sh \"cp target/SRV0006-ApiMetadata-1.0.jar oc-build/deployments/SRV0006-ApiMetadata.jar\"\n
+          \       \n        script {\n          openshift.withCluster() {\n            openshift.withProject(env.DEV_PROJECT)
+          {\n              openshift.selector(\"bc\", \"srv0006-apimetadata\").startBuild(\"--from-dir=oc-build\",
+          \"--wait=true\")\n            }\n          }\n        }\n        sh \"sleep
+          15\"                \n      }\n    }\n    stage('Creando en DEV') {\n      when
+          {\n        expression {\n          openshift.withCluster() {\n            openshift.withProject(env.DEV_PROJECT)
+          {\n              return !openshift.selector('dc', 'srv0006-apimetadata').exists()\n
+          \           }\n          }\n        }\n      }\n      steps {\n        script
+          {\n          openshift.withCluster() {\n            openshift.withProject(env.DEV_PROJECT)
+          {\n              def app = openshift.newApp(\"srv0006-apimetadata:latest\")\n
+          \             app.narrow(\"svc\").expose();\n              def dc = openshift.selector(\"dc\",
+          \"srv0006-apimetadata\")\n              while (dc.object().spec.replicas
+          != dc.object().status.availableReplicas) {\n                  sleep 10\n
+          \             }\n              openshift.set(\"triggers\", \"dc/srv0006-apimetadata\",
+          \"--manual\")\n            }\n          }\n        }\n      }\n    }\n    stage('Desplegando
+          en DEV') {\n      steps {\n        script {\n          openshift.withCluster()
+          {\n            openshift.withProject(env.DEV_PROJECT) {\n              openshift.selector(\"dc\",
+          \"srv0006-apimetadata\").rollout().latest();\n            }\n           sh
+          \"sleep 35\"\n          }\n        }\n      }\n    }\n   stage('Promocionar
+          a QA') {\n        steps {\n          timeout(time:30, unit:'MINUTES') {\n
+          \             input message: \"Promover a QA?\", ok: \"Promote\"\n          }\n
+          \         script {\n            openshift.withCluster() {\n              openshift.tag(\"${env.DEV_PROJECT}/srv0006-apimetadata:latest\",
+          \"${env.QA_PROJECT}/srv0006-apimetadata:latest\")\n            }\n          }\n
+          \       sh \"sleep 30\"\n        }\n      }\n    stage('Desplegando en QA')
+          {\n        steps {\n          script {\n            openshift.withCluster()
+          {\n              openshift.withProject(env.QA_PROJECT){\n                  if
+          (openshift.selector('dc', 'srv0006-apimetadata').exists()) {\n                  openshift.selector('dc',
+          'srv0006-apimetadata').rollout().latest();\n                } else {\n                  openshift.newApp(\"srv0006-apimetadata:latest\").narrow(\"svc\").expose();\n
+          \               }\n              }\n            }\n          }\n        }\n
+          \     }\n  }\n}\n"
+      type: JenkinsPipeline
+    triggeredBy:
+    - message: Triggered by Jenkins job at http://jenkins-cicd.api-cloud.dirtrab.cl/job/pipelines-dev/job/pipelines-dev-srv0006-apimetadata/
+  status:
+    completionTimestamp: "2023-10-13T20:46:44Z"
+    conditions:
+    - lastTransitionTime: "2023-10-13T20:39:43Z"
+      lastUpdateTime: "2023-10-13T20:39:43Z"
+      status: "False"
+      type: New
+    - lastTransitionTime: "2023-10-13T20:39:44Z"
+      lastUpdateTime: "2023-10-13T20:39:44Z"
+      status: "False"
+      type: Pending
+    - lastTransitionTime: "2023-10-13T20:46:44Z"
+      lastUpdateTime: "2023-10-13T20:46:44Z"
+      status: "False"
+      type: Running
+    - lastTransitionTime: "2023-10-13T20:46:44Z"
+      lastUpdateTime: "2023-10-13T20:46:44Z"
+      status: "True"
+      type: Cancelled
+    config:
+      kind: BuildConfig
+      name: srv0006-apimetadata
+      namespace: pipelines-dev
+    output: {}
+    phase: Cancelled
+    startTimestamp: "2023-10-13T20:39:43Z"
+- apiVersion: build.openshift.io/v1
+  kind: Build
+  metadata:
+    annotations:
+      openshift.io/jenkins-blueocean-log-url: /http://jenkins-cicd.api-cloud.dirtrab.cl/blue/organizations/jenkins/pipelines-dev%2Fpipelines-dev-srv0006-apimetadata/detail/pipelines-dev-srv0006-apimetadata/27/
+      openshift.io/jenkins-build-uri: http://jenkins-cicd.api-cloud.dirtrab.cl/job/pipelines-dev/job/pipelines-dev-srv0006-apimetadata/27/
+      openshift.io/jenkins-console-log-url: http://jenkins-cicd.api-cloud.dirtrab.cl/job/pipelines-dev/job/pipelines-dev-srv0006-apimetadata/27/console
+      openshift.io/jenkins-log-url: http://jenkins-cicd.api-cloud.dirtrab.cl/job/pipelines-dev/job/pipelines-dev-srv0006-apimetadata/27/consoleText
+      openshift.io/jenkins-status-json: '{"_links":{"self":{"href":"http://jenkins-cicd.api-cloud.dirtrab.cl/job/pipelines-dev/job/pipelines-dev-srv0006-apimetadata/27/wfapi/describe"}},"id":"27","name":"#27","status":"ABORTED","startTimeMillis":1697230474790,"endTimeMillis":1697232643403,"durationMillis":2168613,"queueDurationMillis":21,"pauseDurationMillis":0,"stages":[{"_links":{"self":{"href":"http://jenkins-cicd.api-cloud.dirtrab.cl/job/pipelines-dev/job/pipelines-dev-srv0006-apimetadata/27/execution/node/6/wfapi/describe"}},"id":"6","name":"Clonando
+        repo y Compilando","execNode":"","status":"SUCCESS","startTimeMillis":1697230515944,"durationMillis":152576,"pauseDurationMillis":0},{"_links":{"self":{"href":"http://jenkins-cicd.api-cloud.dirtrab.cl/job/pipelines-dev/job/pipelines-dev-srv0006-apimetadata/27/execution/node/17/wfapi/describe"}},"id":"17","name":"Analisis
+        sonarqube","execNode":"","status":"SUCCESS","startTimeMillis":1697230668551,"durationMillis":71252,"pauseDurationMillis":0},{"_links":{"self":{"href":"http://jenkins-cicd.api-cloud.dirtrab.cl/job/pipelines-dev/job/pipelines-dev-srv0006-apimetadata/27/execution/node/37/wfapi/describe"}},"id":"37","name":"Construyendo
+        imagen","execNode":"","status":"SUCCESS","startTimeMillis":1697230744414,"durationMillis":58170,"pauseDurationMillis":0},{"_links":{"self":{"href":"http://jenkins-cicd.api-cloud.dirtrab.cl/job/pipelines-dev/job/pipelines-dev-srv0006-apimetadata/27/execution/node/60/wfapi/describe"}},"id":"60","name":"Desplegando
+        en DEV","execNode":"","status":"SUCCESS","startTimeMillis":1697230803131,"durationMillis":39717,"pauseDurationMillis":0},{"_links":{"self":{"href":"http://jenkins-cicd.api-cloud.dirtrab.cl/job/pipelines-dev/job/pipelines-dev-srv0006-apimetadata/27/execution/node/73/wfapi/describe"}},"id":"73","name":"Promocionar
+        a QA","execNode":"","status":"ABORTED","error":{"message":null,"type":"org.jenkinsci.plugins.workflow.steps.FlowInterruptedException"},"startTimeMillis":1697230842877,"durationMillis":1800256,"pauseDurationMillis":1799908}]}'
+    creationTimestamp: "2023-10-13T20:54:34Z"
+    generation: 1
+    labels:
+      app: cicd-pipeline
+      buildconfig: srv0006-apimetadata
+      group: cicd
+      migration.openshift.io/migrated-by-migmigration: 8b3a2baf-eb1a-48bd-bffd-893d945b704f
+      migration.openshift.io/migrated-by-migplan: a3ccd4bb-657f-47a9-a0e5-d29a23a06ca1
+      name: cicd-pipeline
+      openshift.io/build-config.name: srv0006-apimetadata
+      openshift.io/build.start-policy: Serial
+      template: cicd
+      velero.io/backup-name: migration-95b26-initial-gqjc6
+      velero.io/restore-name: migration-95b26-final-9knq9
+    name: srv0006-apimetadata-5
+    namespace: pipelines-dev
+    ownerReferences:
+    - apiVersion: build.openshift.io/v1
+      controller: true
+      kind: BuildConfig
+      name: srv0006-apimetadata
+      uid: 348ed410-422d-4fa5-9c11-fb1b7372b243
+    resourceVersion: "134070605"
+    uid: 3666592f-9419-4521-9cba-e338326ac66a
+  spec:
+    nodeSelector: {}
+    output: {}
+    postCommit: {}
+    resources: {}
+    serviceAccount: builder
+    source:
+      type: None
+    strategy:
+      jenkinsPipelineStrategy:
+        env:
+        - name: DEV_PROJECT
+          value: api-fiscalizacion-dev
+        - name: QA_PROJECT
+          value: api-fiscalizacion-qa
+        - name: ENABLE_QUAY
+          value: "false"
+        jenkinsfile: "pipeline {\n  agent {\n    label 'maven'\n  }\n  stages {\n
+          \   stage('Clonando repo y Compilando') {\n        steps {\n            git([url:
+          'https://dirtrab.visualstudio.com/Libro%20Remuneraciones%20Electronico/_git/SRV0006-ApiMetadata',\n
+          \           branch: 'feature/amq',\n            credentialsId: 'azure_credenciales_id'])\n
+          \       script {\n            def pom = readMavenPom file: 'pom.xml'\n            version
+          = pom.version\n        }\n        sh \"mvn -s configuration/settings.xml
+          install -DskipTests=true\"\n      }\n    }\n    stage('Analisis sonarqube')
+          {\n        steps {\n            script {\n                  sh \"mvn sonar:sonar
+          -Dsonar.host.url=http://sonarqube-sonarqube.cicd.svc.cluster.local:9000
+          -DskipTests=true\"\n                }\n            }\n        }\n    stage('Creando
+          Image Builder') {\n      when {\n        expression {\n          openshift.withCluster()
+          {\n            openshift.withProject(env.DEV_PROJECT) {\n              return
+          !openshift.selector(\"bc\", \"srv0006-apimetadata\").exists();\n            }\n
+          \         }\n        }\n      }\n      steps {\n        script {\n          openshift.withCluster()
+          {\n            openshift.withProject(env.DEV_PROJECT) {\n              openshift.newBuild(\"--name=srv0006-apimetadata\",
+          \"--image-stream=redhat-openjdk18-openshift:1.4\", \"--binary=true\")\n
+          \           }\n          }\n        }\n      }\n    }\n    stage('Construyendo
+          imagen') {\n      steps {\n        sh \"rm -rf oc-build && mkdir -p oc-build/deployments\"\n
+          \       sh \"cp target/SRV0006-ApiMetadata-1.0.jar oc-build/deployments/SRV0006-ApiMetadata.jar\"\n
+          \       \n        script {\n          openshift.withCluster() {\n            openshift.withProject(env.DEV_PROJECT)
+          {\n              openshift.selector(\"bc\", \"srv0006-apimetadata\").startBuild(\"--from-dir=oc-build\",
+          \"--wait=true\")\n            }\n          }\n        }\n        sh \"sleep
+          15\"                \n      }\n    }\n    stage('Creando en DEV') {\n      when
+          {\n        expression {\n          openshift.withCluster() {\n            openshift.withProject(env.DEV_PROJECT)
+          {\n              return !openshift.selector('dc', 'srv0006-apimetadata').exists()\n
+          \           }\n          }\n        }\n      }\n      steps {\n        script
+          {\n          openshift.withCluster() {\n            openshift.withProject(env.DEV_PROJECT)
+          {\n              def app = openshift.newApp(\"srv0006-apimetadata:latest\")\n
+          \             app.narrow(\"svc\").expose();\n              def dc = openshift.selector(\"dc\",
+          \"srv0006-apimetadata\")\n              while (dc.object().spec.replicas
+          != dc.object().status.availableReplicas) {\n                  sleep 10\n
+          \             }\n              openshift.set(\"triggers\", \"dc/srv0006-apimetadata\",
+          \"--manual\")\n            }\n          }\n        }\n      }\n    }\n    stage('Desplegando
+          en DEV') {\n      steps {\n        script {\n          openshift.withCluster()
+          {\n            openshift.withProject(env.DEV_PROJECT) {\n              openshift.selector(\"dc\",
+          \"srv0006-apimetadata\").rollout().latest();\n            }\n           sh
+          \"sleep 35\"\n          }\n        }\n      }\n    }\n   stage('Promocionar
+          a QA') {\n        steps {\n          timeout(time:30, unit:'MINUTES') {\n
+          \             input message: \"Promover a QA?\", ok: \"Promote\"\n          }\n
+          \         script {\n            openshift.withCluster() {\n              openshift.tag(\"${env.DEV_PROJECT}/srv0006-apimetadata:latest\",
+          \"${env.QA_PROJECT}/srv0006-apimetadata:latest\")\n            }\n          }\n
+          \       sh \"sleep 30\"\n        }\n      }\n    stage('Desplegando en QA')
+          {\n        steps {\n          script {\n            openshift.withCluster()
+          {\n              openshift.withProject(env.QA_PROJECT){\n                  if
+          (openshift.selector('dc', 'srv0006-apimetadata').exists()) {\n                  openshift.selector('dc',
+          'srv0006-apimetadata').rollout().latest();\n                } else {\n                  openshift.newApp(\"srv0006-apimetadata:latest\").narrow(\"svc\").expose();\n
+          \               }\n              }\n            }\n          }\n        }\n
+          \     }\n  }\n}\n"
+      type: JenkinsPipeline
+    triggeredBy:
+    - message: Triggered by Jenkins job at http://jenkins-cicd.api-cloud.dirtrab.cl/job/pipelines-dev/job/pipelines-dev-srv0006-apimetadata/
+  status:
+    completionTimestamp: "2023-10-13T21:30:43Z"
+    conditions:
+    - lastTransitionTime: "2023-10-13T20:54:34Z"
+      lastUpdateTime: "2023-10-13T20:54:34Z"
+      status: "False"
+      type: New
+    - lastTransitionTime: "2023-10-13T20:54:39Z"
+      lastUpdateTime: "2023-10-13T20:54:39Z"
+      status: "False"
+      type: Pending
+    - lastTransitionTime: "2023-10-13T21:30:43Z"
+      lastUpdateTime: "2023-10-13T21:30:43Z"
+      status: "False"
+      type: Running
+    - lastTransitionTime: "2023-10-13T21:30:43Z"
+      lastUpdateTime: "2023-10-13T21:30:43Z"
+      status: "True"
+      type: Cancelled
+    config:
+      kind: BuildConfig
+      name: srv0006-apimetadata
+      namespace: pipelines-dev
+    output: {}
+    phase: Cancelled
+    startTimestamp: "2023-10-13T20:54:34Z"
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

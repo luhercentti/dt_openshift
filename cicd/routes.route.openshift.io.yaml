@@ -1,0 +1,327 @@
+apiVersion: v1
+items:
+- apiVersion: route.openshift.io/v1
+  kind: Route
+  metadata:
+    annotations:
+      description: Route for application's http service.
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: "2023-06-03T20:16:48Z"
+    labels:
+      app: gogs
+      migration.openshift.io/migrated-by-migmigration: 4066e18a-7c09-4930-a1fd-19e7058b887b
+      migration.openshift.io/migrated-by-migplan: adcc6565-a1ee-4eee-a8d6-19a7e8841033
+      velero.io/backup-name: migration-85fa4-initial-h496m
+      velero.io/restore-name: migration-85fa4-final-wmd58
+    name: gogs
+    namespace: cicd
+    resourceVersion: "19235100"
+    uid: 383cf11b-23c6-4604-ae41-1496be6e3519
+  spec:
+    host: gogs-cicd.api-cloud.dirtrab.cl
+    port:
+      targetPort: 3000-tcp
+    to:
+      kind: Service
+      name: gogs
+      weight: 100
+    wildcardPolicy: None
+  status:
+    ingress:
+    - conditions:
+      - lastTransitionTime: "2023-06-03T20:16:49Z"
+        status: "True"
+        type: Admitted
+      host: gogs-cicd.api-cloud.dirtrab.cl
+      routerCanonicalHostname: router-default.apps.ocp4azu.dirtrab.cl
+      routerName: default
+      wildcardPolicy: None
+- apiVersion: route.openshift.io/v1
+  kind: Route
+  metadata:
+    creationTimestamp: "2023-10-11T15:14:30Z"
+    labels:
+      app: gogs
+      migration.openshift.io/migrated-by-migmigration: 4066e18a-7c09-4930-a1fd-19e7058b887b
+      migration.openshift.io/migrated-by-migplan: adcc6565-a1ee-4eee-a8d6-19a7e8841033
+      velero.io/backup-name: migration-85fa4-initial-h496m
+      velero.io/restore-name: migration-85fa4-final-wmd58
+    name: gogs-2
+    namespace: cicd
+    resourceVersion: "131892165"
+    uid: cf452f16-9a8a-4d6b-9255-2bafb4f44bc3
+  spec:
+    host: gogs-cicd.apps.ocp4azu.dirtrab.cl
+    port:
+      targetPort: 3000-tcp
+    to:
+      kind: Service
+      name: gogs
+      weight: 100
+    wildcardPolicy: None
+  status:
+    ingress:
+    - conditions:
+      - lastTransitionTime: "2023-10-11T15:14:30Z"
+        status: "True"
+        type: Admitted
+      host: gogs-cicd.apps.ocp4azu.dirtrab.cl
+      routerCanonicalHostname: router-default.apps.ocp4azu.dirtrab.cl
+      routerName: default
+      wildcardPolicy: None
+- apiVersion: route.openshift.io/v1
+  kind: Route
+  metadata:
+    annotations:
+      description: Route for application's ssh service.
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: "2023-06-03T20:16:48Z"
+    labels:
+      app: gogs
+      migration.openshift.io/migrated-by-migmigration: 4066e18a-7c09-4930-a1fd-19e7058b887b
+      migration.openshift.io/migrated-by-migplan: adcc6565-a1ee-4eee-a8d6-19a7e8841033
+      velero.io/backup-name: migration-85fa4-initial-h496m
+      velero.io/restore-name: migration-85fa4-final-wmd58
+    name: gogs-ssh
+    namespace: cicd
+    resourceVersion: "19235095"
+    uid: 8eb12364-da2a-4332-ba6b-729716521d3e
+  spec:
+    host: securegogs-cicd.api-cloud.dirtrab.cl
+    port:
+      targetPort: 10022-tcp
+    to:
+      kind: Service
+      name: gogs
+      weight: 100
+    wildcardPolicy: None
+  status:
+    ingress:
+    - conditions:
+      - lastTransitionTime: "2023-06-03T20:16:48Z"
+        status: "True"
+        type: Admitted
+      host: securegogs-cicd.api-cloud.dirtrab.cl
+      routerCanonicalHostname: router-default.apps.ocp4azu.dirtrab.cl
+      routerName: default
+      wildcardPolicy: None
+- apiVersion: route.openshift.io/v1
+  kind: Route
+  metadata:
+    creationTimestamp: "2023-08-30T21:04:56Z"
+    labels:
+      app: jenkins-persistent
+      migration.openshift.io/migrated-by-migmigration: 4066e18a-7c09-4930-a1fd-19e7058b887b
+      migration.openshift.io/migrated-by-migplan: adcc6565-a1ee-4eee-a8d6-19a7e8841033
+      template: jenkins-persistent-template
+      template.openshift.io/template-instance-owner: f8bb2d3d-5894-11ea-bff7-000d3ac052bc
+      velero.io/backup-name: migration-85fa4-initial-h496m
+      velero.io/restore-name: migration-85fa4-final-wmd58
+    name: jenkins
+    namespace: cicd
+    resourceVersion: "94926255"
+    uid: c375d73d-2857-4972-b78f-f07d27e3db34
+  spec:
+    host: jenkins-cicd.api-cloud.dirtrab.cl
+    port:
+      targetPort: web
+    tls:
+      certificate: |-
+        -----BEGIN CERTIFICATE-----
+        MIIHFTCCBf2gAwIBAgIQJ69/oxneMulfHYlPCI6XLjANBgkqhkiG9w0BAQsFADCB
+        lTELMAkGA1UEBhMCR0IxGzAZBgNVBAgTEkdyZWF0ZXIgTWFuY2hlc3RlcjEQMA4G
+        A1UEBxMHU2FsZm9yZDEYMBYGA1UEChMPU2VjdGlnbyBMaW1pdGVkMT0wOwYDVQQD
+        EzRTZWN0aWdvIFJTQSBPcmdhbml6YXRpb24gVmFsaWRhdGlvbiBTZWN1cmUgU2Vy
+        dmVyIENBMB4XDTIzMDgxNzAwMDAwMFoXDTI0MDkxNjIzNTk1OVowgYIxCzAJBgNV
+        BAYTAkNMMSowKAYDVQQIDCFSZWdpw7NuIE1ldHJvcG9saXRhbmEgZGUgU2FudGlh
+        Z28xJjAkBgNVBAoTHURpcmVjY2lvbiBHZW5lcmFsIGRlbCBUcmFiYWpvMR8wHQYD
+        VQQDDBYqLmFwaS1jbG91ZC5kaXJ0cmFiLmNsMIIBIjANBgkqhkiG9w0BAQEFAAOC
+        AQ8AMIIBCgKCAQEAqjxsFT81Fi/wC4xyY03glJAqGMUlOdKkzSi+Yi351+rLfpsW
+        calslaVH9Ywb+b0EPth/0c7h/e9++F/qra+oNqb88JjEqICwBiJ1ANuWt8DLNTJT
+        TgZiAK61BACsxYXzxL6x2EahVy8e68j6FTf1sfYnEX/qEdT2ZIKJk50jsfmX+7+p
+        TB913MmdrbWUbfhIF4D1ouVu8F00FuzRf509jE/I6xV/O2wWgFPMqc5NIvjs/D/e
+        GqZDtFaAa46+3ciaGUqhh+QlKBnC6TfIJlWKwf+phuVns4Ntn3bU6tzRQpu/8OhH
+        PH4q0YuHtKYMGO5OmD4TTh555EWaK8N7z/Ps4QIDAQABo4IDcDCCA2wwHwYDVR0j
+        BBgwFoAUF9nWJSdn+THCSUPZMDZEjGypT+swHQYDVR0OBBYEFKq5k2C8G4C5zwNl
+        qWUBfFtpqsaaMA4GA1UdDwEB/wQEAwIFoDAMBgNVHRMBAf8EAjAAMB0GA1UdJQQW
+        MBQGCCsGAQUFBwMBBggrBgEFBQcDAjBKBgNVHSAEQzBBMDUGDCsGAQQBsjEBAgED
+        BDAlMCMGCCsGAQUFBwIBFhdodHRwczovL3NlY3RpZ28uY29tL0NQUzAIBgZngQwB
+        AgIwWgYDVR0fBFMwUTBPoE2gS4ZJaHR0cDovL2NybC5zZWN0aWdvLmNvbS9TZWN0
+        aWdvUlNBT3JnYW5pemF0aW9uVmFsaWRhdGlvblNlY3VyZVNlcnZlckNBLmNybDCB
+        igYIKwYBBQUHAQEEfjB8MFUGCCsGAQUFBzAChklodHRwOi8vY3J0LnNlY3RpZ28u
+        Y29tL1NlY3RpZ29SU0FPcmdhbml6YXRpb25WYWxpZGF0aW9uU2VjdXJlU2VydmVy
+        Q0EuY3J0MCMGCCsGAQUFBzABhhdodHRwOi8vb2NzcC5zZWN0aWdvLmNvbTA3BgNV
+        HREEMDAughYqLmFwaS1jbG91ZC5kaXJ0cmFiLmNsghRhcGktY2xvdWQuZGlydHJh
+        Yi5jbDCCAX0GCisGAQQB1nkCBAIEggFtBIIBaQFnAHUAdv+IPwq2+5VRwmHM9Ye6
+        NLSkzbsp3GhCCp/mZ0xaOnQAAAGKBBDvPgAABAMARjBEAiAq2aANd/QCL5moJJeg
+        RMQrQFgF2xvdgC79flWkCmJVzwIgGtiwePIELMdSNPBtABbxByOECY5sm+548hKU
+        JQW0dT8AdwDatr9rP7W2Ip+bwrtca+hwkXFsu1GEhTS9pD0wSNf7qwAAAYoEEO+T
+        AAAEAwBIMEYCIQCZtvRCbbyIorpMrmfj3hzQzqP02P3MabHV2ScsmVIfEgIhAOjI
+        Wn05CnI4VIRUmGr5G7hcZzY7XZIvvz6jg48g8l54AHUA7s3QZNXbGs7FXLedtM0T
+        ojKHRny87N7DUUhZRnEftZsAAAGKBBDvvAAABAMARjBEAiAQDlL4JRZz20u7PdCF
+        VjgnLrv59s/MoQ/HzXSEQBhsQwIgRV49Mi8oQbPhrOVRORZ7ObSmq2RdacT5sgOF
+        7pfVUq4wDQYJKoZIhvcNAQELBQADggEBADAnQa1rx1PQ1kOiy9KOMcccifmHOm9e
+        4BVJVPIWk8klGbqMRW1TgViPSDWeWCyA1wizekQySn8kIuHiNEDxVmcw/BaLGuoh
+        IzJ7gzWlB7QIaDZsz5JfbOGOJeWO3/L6Pcvf5ZNKGBY8PkvbWpFqD2yTuSUYrncG
+        u5OH758718LqShTQYW31tHd9LDUN5xzHTxwlGSK6HfD1pZw/WsdZVoCsy+Mgb5Qw
+        azfibYov0Q2TJr/FPki/ltFL/aa1C21RVIbTZpUqJBWsODzI5bMmyEbSwypflgkG
+        D4X8GvQ/H6dqdtRx7fLRWJO0qg+U5uQOo/DeZEzg7LGJzpxsGazQj9k=
+        -----END CERTIFICATE-----
+      insecureEdgeTerminationPolicy: Redirect
+      key: |-
+        -----BEGIN RSA PRIVATE KEY-----
+        MIIEpAIBAAKCAQEAqjxsFT81Fi/wC4xyY03glJAqGMUlOdKkzSi+Yi351+rLfpsW
+        calslaVH9Ywb+b0EPth/0c7h/e9++F/qra+oNqb88JjEqICwBiJ1ANuWt8DLNTJT
+        TgZiAK61BACsxYXzxL6x2EahVy8e68j6FTf1sfYnEX/qEdT2ZIKJk50jsfmX+7+p
+        TB913MmdrbWUbfhIF4D1ouVu8F00FuzRf509jE/I6xV/O2wWgFPMqc5NIvjs/D/e
+        GqZDtFaAa46+3ciaGUqhh+QlKBnC6TfIJlWKwf+phuVns4Ntn3bU6tzRQpu/8OhH
+        PH4q0YuHtKYMGO5OmD4TTh555EWaK8N7z/Ps4QIDAQABAoIBAB7wglhON5DDv6Xp
+        rbR8p+94UB5WXlCnBwq+d/OSFZF3e+qTtz2LJFACTRTElSULhGUDph90sUAcsf/k
+        NtvATBs6uEfmC//v+43x3z/7qOXWpVgSwG8y28bx+bYzhTMVCFveqKX9GD+nMcB6
+        s3D9zaq9aRZWIC2DfhCAZQ6uBZnHzQ9crTKPI95an8BC4dt1VeDST17uKn/ECXeW
+        Q1iK5E3loEmxTxOwTMs2014g4JJICf/ruOV0qQY0OsP2JvU5c0rc94w6mXn8ORUJ
+        I3pf2MAfj2dvoracBB88P2RDUoIMKudXxAN7oGF8oVILovOYEEcFTLVQdN00T7Tu
+        3ZLJGAECgYEA+XnuAM8KStD254zxgfdK6fTXXiM1dbBilWE+kOpeSzIew47KaIVa
+        vBPPUd2F1aluAr9AtaBNtJ+Qh/t7+fKW5PH+npWe+5R6a1+u6QbNGqjrut7NB24A
+        yfX54tfmdoltsEOBqb69nkgYUdC545/M+d0vk0pFpJ78qurmKW7vFKECgYEArrAI
+        teUfLLDE7q2HnEoIXFke+yJKN8CUe0E3oqMVBISpolutvs5TMlQyJmWg5O8Sw7lh
+        k8mOY02ovbGrwZnK2pDMl/6KEw+p2baUJOup/EC0K7eytlK78djkonQ5HaIPiufe
+        QfLELyYGPxifpN5A0hMUGBAdpiT0v9tMjqxxsEECgYEA68LMpzsB8P5VtzE9MqNu
+        ynY16aLAbL4KDD1gETdLcSimZgzVP712p/LYo/cC+Y4qhrITBxG9HYsF3VxOJ0GY
+        VDhVdazUF9CTeFFuTI2+2wjz7R+NBw5v9GxegH+kLjVl0YOaT74QGDrtsLPeWDy2
+        SxM6WKmB8zbEdQmUBWfuzMECgYEAoxvZNkYW4rq3VwkOq57wyZGpfOJanE4kFiYi
+        FajishJQ9jlWNOggBMla/kE8hya3xast8jlry0sy+NSRxDaek5BKiM1yDTQ96vww
+        vXySfufHk1517wm3Va2oZgvRXNr6WkAAZmGQT1nY0UdjoSSpL74CsCk0FfNB2Hai
+        uEFJ8kECgYA5jgfJNYOoXudfr14GQ6V2ZtIGEjC6b+uhBxa6sKpTQ7394LT3Zb7g
+        VncTYUIJ7IIoK0kYOaOsxQtw7EYvSthjDVQX0HMUlb48aUCJqEtJQKxRJVqiRJFj
+        SmQiouDNzC1tIHffaYSaR1ohR+EFDixr6GNHuugNM++F/0iO3rKnMA==
+        -----END RSA PRIVATE KEY-----
+      termination: edge
+    to:
+      kind: Service
+      name: jenkins
+      weight: 100
+    wildcardPolicy: None
+  status:
+    ingress:
+    - conditions:
+      - lastTransitionTime: "2023-08-30T21:04:56Z"
+        status: "True"
+        type: Admitted
+      host: jenkins-cicd.api-cloud.dirtrab.cl
+      routerCanonicalHostname: router-default.apps.ocp4azu.dirtrab.cl
+      routerName: default
+      wildcardPolicy: None
+- apiVersion: route.openshift.io/v1
+  kind: Route
+  metadata:
+    creationTimestamp: "2023-07-04T21:20:14Z"
+    labels:
+      app: jenkins-persistent
+      migration.openshift.io/migrated-by-migmigration: 4066e18a-7c09-4930-a1fd-19e7058b887b
+      migration.openshift.io/migrated-by-migplan: adcc6565-a1ee-4eee-a8d6-19a7e8841033
+      template: jenkins-persistent-template
+      template.openshift.io/template-instance-owner: f8bb2d3d-5894-11ea-bff7-000d3ac052bc
+      velero.io/backup-name: migration-85fa4-initial-h496m
+      velero.io/restore-name: migration-85fa4-final-wmd58
+    name: jenkins-ocp4
+    namespace: cicd
+    resourceVersion: "45912466"
+    uid: 9955e4f7-d334-489e-bda3-50ede3c1d320
+  spec:
+    host: jenkins-cicd.apps.ocp4azu.dirtrab.cl
+    port:
+      targetPort: web
+    tls:
+      insecureEdgeTerminationPolicy: Redirect
+      termination: edge
+    to:
+      kind: Service
+      name: jenkins
+      weight: 100
+    wildcardPolicy: None
+  status:
+    ingress:
+    - conditions:
+      - lastTransitionTime: "2023-07-04T21:20:14Z"
+        status: "True"
+        type: Admitted
+      host: jenkins-cicd.apps.ocp4azu.dirtrab.cl
+      routerCanonicalHostname: router-default.apps.ocp4azu.dirtrab.cl
+      routerName: default
+      wildcardPolicy: None
+- apiVersion: route.openshift.io/v1
+  kind: Route
+  metadata:
+    annotations:
+      openshift.io/host.generated: "true"
+    creationTimestamp: "2023-10-17T13:11:59Z"
+    labels:
+      app: nexus
+      migration.openshift.io/migrated-by-migmigration: 4066e18a-7c09-4930-a1fd-19e7058b887b
+      migration.openshift.io/migrated-by-migplan: adcc6565-a1ee-4eee-a8d6-19a7e8841033
+      velero.io/backup-name: migration-85fa4-initial-h496m
+      velero.io/restore-name: migration-85fa4-final-wmd58
+    name: nexus-tmp
+    namespace: cicd
+    resourceVersion: "137153591"
+    uid: 209a3ae3-6125-408b-9480-d0285e9d0231
+  spec:
+    host: nexus-tmp-cicd.api-cloud.dirtrab.cl
+    port:
+      targetPort: 8081-tcp
+    to:
+      kind: Service
+      name: nexus
+      weight: 100
+    wildcardPolicy: None
+  status:
+    ingress:
+    - conditions:
+      - lastTransitionTime: "2023-10-17T13:11:59Z"
+        status: "True"
+        type: Admitted
+      host: nexus-tmp-cicd.api-cloud.dirtrab.cl
+      routerCanonicalHostname: router-default.apps.ocp4azu.dirtrab.cl
+      routerName: default
+      wildcardPolicy: None
+- apiVersion: route.openshift.io/v1
+  kind: Route
+  metadata:
+    creationTimestamp: "2023-06-03T20:16:49Z"
+    labels:
+      app: sonarqube
+      chart: sonarqube-4.0.1
+      heritage: Helm
+      migration.openshift.io/migrated-by-migmigration: 4066e18a-7c09-4930-a1fd-19e7058b887b
+      migration.openshift.io/migrated-by-migplan: adcc6565-a1ee-4eee-a8d6-19a7e8841033
+      release: sonarqube
+      velero.io/backup-name: migration-85fa4-initial-h496m
+      velero.io/restore-name: migration-85fa4-final-wmd58
+    name: sonarqube-sonarqube
+    namespace: cicd
+    resourceVersion: "19235109"
+    uid: 09fd0c8a-3b7b-4544-9bcf-c0d75f69e100
+  spec:
+    host: sonarqube-cicd.api-cloud.dirtrab.cl
+    port:
+      targetPort: http
+    to:
+      kind: Service
+      name: sonarqube-sonarqube
+      weight: 100
+    wildcardPolicy: None
+  status:
+    ingress:
+    - conditions:
+      - lastTransitionTime: "2023-06-03T20:16:49Z"
+        status: "True"
+        type: Admitted
+      host: sonarqube-cicd.api-cloud.dirtrab.cl
+      routerCanonicalHostname: router-default.apps.ocp4azu.dirtrab.cl
+      routerName: default
+      wildcardPolicy: None
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

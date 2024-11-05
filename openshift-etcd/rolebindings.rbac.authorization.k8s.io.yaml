@@ -1,0 +1,86 @@
+apiVersion: v1
+items:
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: RoleBinding
+  metadata:
+    creationTimestamp: "2023-05-04T21:49:26Z"
+    labels:
+      app.kubernetes.io/component: prometheus
+      app.kubernetes.io/instance: k8s
+      app.kubernetes.io/name: prometheus
+      app.kubernetes.io/part-of: openshift-monitoring
+      app.kubernetes.io/version: 2.32.1
+    name: prometheus-k8s
+    namespace: openshift-etcd
+    resourceVersion: "21598"
+    uid: 8825987a-e5de-42f6-b98b-08fe5d1a8b5b
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: Role
+    name: prometheus-k8s
+  subjects:
+  - kind: ServiceAccount
+    name: prometheus-k8s
+    namespace: openshift-monitoring
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/description: Allows deploymentconfigs in this namespace to rollout
+        pods in this namespace.  It is auto-managed by a controller; remove subjects
+        to disable.
+    creationTimestamp: "2023-05-04T21:45:24Z"
+    name: system:deployers
+    namespace: openshift-etcd
+    resourceVersion: "14968"
+    uid: be14369b-8210-40d3-acac-066768d1cf17
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: ClusterRole
+    name: system:deployer
+  subjects:
+  - kind: ServiceAccount
+    name: deployer
+    namespace: openshift-etcd
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/description: Allows builds in this namespace to push images to
+        this namespace.  It is auto-managed by a controller; remove subjects to disable.
+    creationTimestamp: "2023-05-04T21:45:23Z"
+    name: system:image-builders
+    namespace: openshift-etcd
+    resourceVersion: "14916"
+    uid: f3935a75-53bf-439a-8aab-10b01c4a3f55
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: ClusterRole
+    name: system:image-builder
+  subjects:
+  - kind: ServiceAccount
+    name: builder
+    namespace: openshift-etcd
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/description: Allows all pods in this namespace to pull images from
+        this namespace.  It is auto-managed by a controller; remove subjects to disable.
+    creationTimestamp: "2023-05-04T21:45:23Z"
+    name: system:image-pullers
+    namespace: openshift-etcd
+    resourceVersion: "14868"
+    uid: eececf31-e51a-43aa-8b29-e27a7936e6e3
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: ClusterRole
+    name: system:image-puller
+  subjects:
+  - apiGroup: rbac.authorization.k8s.io
+    kind: Group
+    name: system:serviceaccounts:openshift-etcd
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

@@ -1,0 +1,62 @@
+apiVersion: v1
+items:
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: "2023-06-14T14:20:32Z"
+    generation: 8
+    labels:
+      app: trackdt
+    name: trackdt
+    namespace: arquitectura-test
+    resourceVersion: "28555325"
+    uid: 127d8cc0-e131-4991-9b47-3b49e52c50ea
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: trackdt:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      contextDir: /
+      git:
+        uri: https://dirtrab@dev.azure.com/dirtrab/OperacionUtilities/_git/TrackDTI-API
+      sourceSecret:
+        name: azuredevops
+      type: Git
+    strategy:
+      sourceStrategy:
+        from:
+          kind: ImageStreamTag
+          name: nodejs:16-ubi8
+          namespace: openshift
+      type: Source
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - github:
+        secret: Q6yGLfoyYPuB_Ooo31Yg
+      type: GitHub
+    - generic:
+        secret: VQ9qFZWefU9JCX9PidY9
+      type: Generic
+    - type: ConfigChange
+    - imageChange: {}
+      type: ImageChange
+  status:
+    imageChangeTriggers:
+    - from:
+        name: nodejs:16-ubi8
+        namespace: openshift
+      lastTriggerTime: null
+      lastTriggeredImageID: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:4fe08ab3bd1f7cccfba21e509bc0751f1b68d4db8e8782b35610f33ca97f6d98
+    lastVersion: 3
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

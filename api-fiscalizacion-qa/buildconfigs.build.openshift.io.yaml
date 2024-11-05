@@ -1,0 +1,2173 @@
+apiVersion: v1
+items:
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftWebConsole
+      openshift.io/migration-registry: 172.30.114.175:5000
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-24T16:46:55Z"
+    generation: 2
+    labels:
+      app: api-lre-externa
+      migration.openshift.io/migrated-by-migmigration: 7403c997-3617-4c43-a005-e473ceb26445
+      migration.openshift.io/migrated-by-migplan: 2a8299ac-1423-4ceb-93a5-de572a0f44a9
+      velero.io/backup-name: migration-9db42-initial-5kc64
+      velero.io/restore-name: migration-9db42-final-cpc2b
+    name: api-lre-externa
+    namespace: api-fiscalizacion-qa
+    resourceVersion: "95923163"
+    uid: 9c5ae1ec-a8de-4d3c-a92b-ee8256cb8d1b
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: api-lre-externa:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      git:
+        ref: develop
+        uri: https://dirtrab.visualstudio.com/Libro%20Remuneraciones%20Electronico/_git/API-LRE-Externa
+      sourceSecret:
+        name: azure2
+      type: Git
+    strategy:
+      sourceStrategy:
+        from:
+          kind: ImageStreamTag
+          name: nodejs:10
+          namespace: openshift
+      type: Source
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - generic:
+        secret: 8c0bdf19a134cebe
+      type: Generic
+    - github:
+        secret: ac74f2b4550e0439
+      type: GitHub
+    - imageChange:
+        lastTriggeredImageID: docker-registry.default.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+      type: ImageChange
+    - type: ConfigChange
+  status:
+    imageChangeTriggers:
+    - from:
+        name: nodejs:10
+        namespace: openshift
+      lastTriggerTime: "2023-09-01T01:10:33Z"
+      lastTriggeredImageID: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+    lastVersion: 1
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftNewBuild
+      openshift.io/migration-registry: 172.30.114.175:5000
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-24T16:46:55Z"
+    generation: 1
+    labels:
+      build: cron0001-notificacionrec
+      migration.openshift.io/migrated-by-migmigration: 7403c997-3617-4c43-a005-e473ceb26445
+      migration.openshift.io/migrated-by-migplan: 2a8299ac-1423-4ceb-93a5-de572a0f44a9
+      velero.io/backup-name: migration-9db42-initial-5kc64
+      velero.io/restore-name: migration-9db42-final-cpc2b
+    name: cron0001-notificacionrec
+    namespace: api-fiscalizacion-qa
+    resourceVersion: "10672868"
+    uid: 1ec82f85-9c29-411e-8532-581193629cb6
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: cron0001-notificacionrec:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      binary: {}
+      type: Binary
+    strategy:
+      sourceStrategy:
+        from:
+          kind: ImageStreamTag
+          name: redhat-openjdk18-openshift:1.4
+          namespace: openshift
+      type: Source
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - github:
+        secret: 1DQBj5TRFM9NJwiP_bA9
+      type: GitHub
+    - generic:
+        secret: OnO-JN_W7ka4bmLtucgz
+      type: Generic
+  status:
+    lastVersion: 0
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftWebConsole
+      openshift.io/migration-registry: 172.30.114.175:5000
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-24T16:46:55Z"
+    generation: 2
+    labels:
+      app: cron0002-actdatostrab
+      migration.openshift.io/migrated-by-migmigration: 7403c997-3617-4c43-a005-e473ceb26445
+      migration.openshift.io/migrated-by-migplan: 2a8299ac-1423-4ceb-93a5-de572a0f44a9
+      velero.io/backup-name: migration-9db42-initial-5kc64
+      velero.io/restore-name: migration-9db42-final-cpc2b
+    name: cron0002-actdatostrab
+    namespace: api-fiscalizacion-qa
+    resourceVersion: "95923047"
+    uid: bfad6dc2-a6f8-45ef-a758-965894bf89f2
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: cron0002-actdatostrab:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      git:
+        ref: develop
+        uri: https://dirtrab.visualstudio.com/Libro%20Remuneraciones%20Electronico/_git/CRON0002-ActualizarDatosTrabajador
+      sourceSecret:
+        name: azure2
+      type: Git
+    strategy:
+      sourceStrategy:
+        from:
+          kind: ImageStreamTag
+          name: nodejs:10
+          namespace: openshift
+      type: Source
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - generic:
+        secret: 19d5097de9ec8dcc
+      type: Generic
+    - github:
+        secret: f3678293ca21e65e
+      type: GitHub
+    - imageChange:
+        lastTriggeredImageID: docker-registry.default.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+      type: ImageChange
+    - type: ConfigChange
+  status:
+    imageChangeTriggers:
+    - from:
+        name: nodejs:10
+        namespace: openshift
+      lastTriggerTime: "2023-09-01T01:10:32Z"
+      lastTriggeredImageID: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+    lastVersion: 1
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftNewBuild
+      openshift.io/migration-registry: 172.30.114.175:5000
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-24T16:46:55Z"
+    generation: 1
+    labels:
+      build: cron0005-cargarutdatagrid
+      migration.openshift.io/migrated-by-migmigration: 7403c997-3617-4c43-a005-e473ceb26445
+      migration.openshift.io/migrated-by-migplan: 2a8299ac-1423-4ceb-93a5-de572a0f44a9
+      velero.io/backup-name: migration-9db42-initial-5kc64
+      velero.io/restore-name: migration-9db42-final-cpc2b
+    name: cron0005-cargarutdatagrid
+    namespace: api-fiscalizacion-qa
+    resourceVersion: "10672877"
+    uid: b3fa3623-64ad-482a-9534-39fdec14b4cd
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: cron0005-cargarutdatagrid:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      binary: {}
+      type: Binary
+    strategy:
+      sourceStrategy:
+        from:
+          kind: ImageStreamTag
+          name: redhat-openjdk18-openshift:1.4
+          namespace: openshift
+      type: Source
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - github:
+        secret: 18JsEsn3OSiWkWm-BD_9
+      type: GitHub
+    - generic:
+        secret: j2XArLUHsz1lDIbgOG9O
+      type: Generic
+  status:
+    lastVersion: 0
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftWebConsole
+      openshift.io/migration-registry: 172.30.114.175:5000
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-24T16:46:55Z"
+    generation: 7
+    labels:
+      app: cron003-enviospendientes
+      migration.openshift.io/migrated-by-migmigration: 7403c997-3617-4c43-a005-e473ceb26445
+      migration.openshift.io/migrated-by-migplan: 2a8299ac-1423-4ceb-93a5-de572a0f44a9
+      velero.io/backup-name: migration-9db42-initial-5kc64
+      velero.io/restore-name: migration-9db42-final-cpc2b
+    name: cron003-enviospendientes
+    namespace: api-fiscalizacion-qa
+    resourceVersion: "133848538"
+    uid: d7052067-b0ff-47f4-97cc-1a7c82b51ed4
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: cron003-enviospendientes:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      git:
+        ref: feature/desarrollo_2022
+        uri: https://dirtrab.visualstudio.com/Libro%20Remuneraciones%20Electronico/_git/CRON0003-EnviosPendientesLRESII
+      sourceSecret:
+        name: cron003
+      type: Git
+    strategy:
+      sourceStrategy:
+        from:
+          kind: ImageStreamTag
+          name: nodejs:10
+          namespace: openshift
+      type: Source
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - type: ConfigChange
+    - imageChange: {}
+      type: ImageChange
+    - generic:
+        secret: 2c37bce515f38a4b
+      type: Generic
+    - github:
+        secret: 17a284bcb67cf718
+      type: GitHub
+  status:
+    imageChangeTriggers:
+    - from:
+        name: nodejs:10
+        namespace: openshift
+      lastTriggerTime: null
+      lastTriggeredImageID: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+    lastVersion: 4
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftWebConsole
+      openshift.io/migration-registry: 172.30.114.175:5000
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-24T16:46:55Z"
+    generation: 2
+    labels:
+      app: cron004-actestfinalizado
+      migration.openshift.io/migrated-by-migmigration: 7403c997-3617-4c43-a005-e473ceb26445
+      migration.openshift.io/migrated-by-migplan: 2a8299ac-1423-4ceb-93a5-de572a0f44a9
+      velero.io/backup-name: migration-9db42-initial-5kc64
+      velero.io/restore-name: migration-9db42-final-cpc2b
+    name: cron004-actestfinalizado
+    namespace: api-fiscalizacion-qa
+    resourceVersion: "95923136"
+    uid: 88a88dd8-2cb8-44ad-aaf8-c498f8c7377b
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: cron004-actestfinalizado:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      git:
+        ref: develop
+        uri: https://dirtrab.visualstudio.com/Libro%20Remuneraciones%20Electronico/_git/CRON0004-ActualizarEstadoFinalizado
+      sourceSecret:
+        name: azure2
+      type: Git
+    strategy:
+      sourceStrategy:
+        from:
+          kind: ImageStreamTag
+          name: nodejs:10
+          namespace: openshift
+      type: Source
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - generic:
+        secret: 5b1983f501bad61e
+      type: Generic
+    - github:
+        secret: 0cdb229a248860b6
+      type: GitHub
+    - imageChange:
+        lastTriggeredImageID: docker-registry.default.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+      type: ImageChange
+    - type: ConfigChange
+  status:
+    imageChangeTriggers:
+    - from:
+        name: nodejs:10
+        namespace: openshift
+      lastTriggerTime: "2023-09-01T01:10:32Z"
+      lastTriggeredImageID: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+    lastVersion: 1
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftNewBuild
+      openshift.io/migration-registry: 172.30.114.175:5000
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-24T16:46:55Z"
+    generation: 1
+    labels:
+      build: csr0001-validacionesfond
+      migration.openshift.io/migrated-by-migmigration: 7403c997-3617-4c43-a005-e473ceb26445
+      migration.openshift.io/migrated-by-migplan: 2a8299ac-1423-4ceb-93a5-de572a0f44a9
+      velero.io/backup-name: migration-9db42-initial-5kc64
+      velero.io/restore-name: migration-9db42-final-cpc2b
+    name: csr0001-validacionesfond
+    namespace: api-fiscalizacion-qa
+    resourceVersion: "10672891"
+    uid: 4e1c8108-787c-4e27-86f8-996cd005cec6
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: csr0001-validacionesfond:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      binary: {}
+      type: Binary
+    strategy:
+      sourceStrategy:
+        from:
+          kind: ImageStreamTag
+          name: redhat-openjdk18-openshift:1.4
+          namespace: openshift
+      type: Source
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - github:
+        secret: j_feFqKg2VWzIaWQq84i
+      type: GitHub
+    - generic:
+        secret: DYOMLeHFwIMESaI-hYOV
+      type: Generic
+  status:
+    lastVersion: 0
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftNewBuild
+      openshift.io/migration-registry: 172.30.114.175:5000
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-24T16:46:55Z"
+    generation: 1
+    labels:
+      build: csr0001-validacionesfondo-v2
+      migration.openshift.io/migrated-by-migmigration: 7403c997-3617-4c43-a005-e473ceb26445
+      migration.openshift.io/migrated-by-migplan: 2a8299ac-1423-4ceb-93a5-de572a0f44a9
+      velero.io/backup-name: migration-9db42-initial-5kc64
+      velero.io/restore-name: migration-9db42-final-cpc2b
+    name: csr0001-validacionesfondo-v2
+    namespace: api-fiscalizacion-qa
+    resourceVersion: "10672900"
+    uid: 73db554b-01e2-45d5-82f3-9bb4ef50c4e5
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: csr0001-validacionesfondo-v2:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      binary: {}
+      type: Binary
+    strategy:
+      sourceStrategy:
+        from:
+          kind: ImageStreamTag
+          name: redhat-openjdk18-openshift:1.4
+          namespace: openshift
+      type: Source
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - github:
+        secret: 8U7wOcfDvQnryP9tL0cL
+      type: GitHub
+    - generic:
+        secret: bQ_NSEZQzREeyeAaK-Ta
+      type: Generic
+  status:
+    lastVersion: 0
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftNewBuild
+      openshift.io/migration-registry: 172.30.114.175:5000
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-24T16:46:56Z"
+    generation: 2
+    labels:
+      build: csr0001-validacionesfondoextra
+      migration.openshift.io/migrated-by-migmigration: 7403c997-3617-4c43-a005-e473ceb26445
+      migration.openshift.io/migrated-by-migplan: 2a8299ac-1423-4ceb-93a5-de572a0f44a9
+      velero.io/backup-name: migration-9db42-initial-5kc64
+      velero.io/restore-name: migration-9db42-final-cpc2b
+    name: csr0001-validacionesfondoextra
+    namespace: api-fiscalizacion-qa
+    resourceVersion: "136549901"
+    uid: 30fbdbbc-e342-44e7-8038-a27053f38637
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: csr0001-validacionesfondoextra:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      binary: {}
+      type: Binary
+    strategy:
+      sourceStrategy:
+        from:
+          kind: ImageStreamTag
+          name: redhat-openjdk18-openshift:1.4
+          namespace: openshift
+      type: Source
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - github:
+        secret: RvOmPAh2flFq0GVIkxcN
+      type: GitHub
+    - generic:
+        secret: CK-flawudf8-5hCv-BdO
+      type: Generic
+  status:
+    lastVersion: 1
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftNewBuild
+      openshift.io/migration-registry: 172.30.114.175:5000
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-24T16:46:56Z"
+    generation: 2
+    labels:
+      build: csr0001-validacionesfondolarge
+      migration.openshift.io/migrated-by-migmigration: 7403c997-3617-4c43-a005-e473ceb26445
+      migration.openshift.io/migrated-by-migplan: 2a8299ac-1423-4ceb-93a5-de572a0f44a9
+      velero.io/backup-name: migration-9db42-initial-5kc64
+      velero.io/restore-name: migration-9db42-final-cpc2b
+    name: csr0001-validacionesfondolarge
+    namespace: api-fiscalizacion-qa
+    resourceVersion: "136545178"
+    uid: edfd1060-4757-4fe1-94a7-559fb42bc45c
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: csr0001-validacionesfondolarge:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      binary: {}
+      type: Binary
+    strategy:
+      sourceStrategy:
+        from:
+          kind: ImageStreamTag
+          name: redhat-openjdk18-openshift:1.4
+          namespace: openshift
+      type: Source
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - github:
+        secret: P-L8iBjBzRsKSQ65IgLp
+      type: GitHub
+    - generic:
+        secret: RK0AqTmZtEP5ActZ9Bjb
+      type: Generic
+  status:
+    lastVersion: 1
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftNewBuild
+      openshift.io/migration-registry: 172.30.114.175:5000
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-24T16:46:56Z"
+    generation: 2
+    labels:
+      build: csr0001-validacionesfondomedium
+      migration.openshift.io/migrated-by-migmigration: 7403c997-3617-4c43-a005-e473ceb26445
+      migration.openshift.io/migrated-by-migplan: 2a8299ac-1423-4ceb-93a5-de572a0f44a9
+      velero.io/backup-name: migration-9db42-initial-5kc64
+      velero.io/restore-name: migration-9db42-final-cpc2b
+    name: csr0001-validacionesfondomedium
+    namespace: api-fiscalizacion-qa
+    resourceVersion: "136541266"
+    uid: 514198a0-b5c0-4074-984d-5c3fb2ed89d9
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: csr0001-validacionesfondomedium:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      binary: {}
+      type: Binary
+    strategy:
+      sourceStrategy:
+        from:
+          kind: ImageStreamTag
+          name: redhat-openjdk18-openshift:1.4
+          namespace: openshift
+      type: Source
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - github:
+        secret: UC4IBZYojHkxhFKNsPOn
+      type: GitHub
+    - generic:
+        secret: 5pzXjTBk494YrVoywsms
+      type: Generic
+  status:
+    lastVersion: 1
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftNewBuild
+      openshift.io/migration-registry: 172.30.114.175:5000
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-24T16:46:56Z"
+    generation: 2
+    labels:
+      build: csr0001-validacionesfondosmall
+      migration.openshift.io/migrated-by-migmigration: 7403c997-3617-4c43-a005-e473ceb26445
+      migration.openshift.io/migrated-by-migplan: 2a8299ac-1423-4ceb-93a5-de572a0f44a9
+      velero.io/backup-name: migration-9db42-initial-5kc64
+      velero.io/restore-name: migration-9db42-final-cpc2b
+    name: csr0001-validacionesfondosmall
+    namespace: api-fiscalizacion-qa
+    resourceVersion: "136496241"
+    uid: fbdbbcad-5e16-4a9d-a61e-7d274b9c3d02
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: csr0001-validacionesfondosmall:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      binary: {}
+      type: Binary
+    strategy:
+      sourceStrategy:
+        from:
+          kind: ImageStreamTag
+          name: redhat-openjdk18-openshift:1.4
+          namespace: openshift
+      type: Source
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - github:
+        secret: RD0F6xB80IIBW_Z1Bpos
+      type: GitHub
+    - generic:
+        secret: lVQxRJ2TlKfO-9F-aTKW
+      type: Generic
+  status:
+    lastVersion: 1
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftNewBuild
+      openshift.io/migration-registry: 172.30.114.175:5000
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-24T16:46:56Z"
+    generation: 1
+    labels:
+      build: csr0002-cargaarchivodecl
+      migration.openshift.io/migrated-by-migmigration: 7403c997-3617-4c43-a005-e473ceb26445
+      migration.openshift.io/migrated-by-migplan: 2a8299ac-1423-4ceb-93a5-de572a0f44a9
+      velero.io/backup-name: migration-9db42-initial-5kc64
+      velero.io/restore-name: migration-9db42-final-cpc2b
+    name: csr0002-cargaarchivodecl
+    namespace: api-fiscalizacion-qa
+    resourceVersion: "10672920"
+    uid: 0e11c1a8-27e4-4621-9150-93b6826cf0e8
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: csr0002-cargaarchivodecl:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      binary: {}
+      type: Binary
+    strategy:
+      sourceStrategy:
+        from:
+          kind: ImageStreamTag
+          name: redhat-openjdk18-openshift:1.4
+          namespace: openshift
+      type: Source
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - github:
+        secret: oHbN9ax-QYUj5VecT3q4
+      type: GitHub
+    - generic:
+        secret: UPWNjchfZvuo7kUrDACt
+      type: Generic
+  status:
+    lastVersion: 0
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftNewBuild
+      openshift.io/migration-registry: 172.30.114.175:5000
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-24T16:46:56Z"
+    generation: 2
+    labels:
+      build: csr0002-cargaarchivoextra
+      migration.openshift.io/migrated-by-migmigration: 7403c997-3617-4c43-a005-e473ceb26445
+      migration.openshift.io/migrated-by-migplan: 2a8299ac-1423-4ceb-93a5-de572a0f44a9
+      velero.io/backup-name: migration-9db42-initial-5kc64
+      velero.io/restore-name: migration-9db42-final-cpc2b
+    name: csr0002-cargaarchivoextra
+    namespace: api-fiscalizacion-qa
+    resourceVersion: "136565366"
+    uid: fb10c4db-1754-4f3d-b129-0b7806265aab
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: csr0002-cargaarchivoextra:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      binary: {}
+      type: Binary
+    strategy:
+      sourceStrategy:
+        from:
+          kind: ImageStreamTag
+          name: redhat-openjdk18-openshift:1.4
+          namespace: openshift
+      type: Source
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - github:
+        secret: DKBk9e79Avm2S3kBQOb0
+      type: GitHub
+    - generic:
+        secret: M6XCOwhYvT1uB0G2Cqyg
+      type: Generic
+  status:
+    lastVersion: 1
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftNewBuild
+      openshift.io/migration-registry: 172.30.114.175:5000
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-24T16:46:56Z"
+    generation: 2
+    labels:
+      build: csr0002-cargaarchivolarge
+      migration.openshift.io/migrated-by-migmigration: 7403c997-3617-4c43-a005-e473ceb26445
+      migration.openshift.io/migrated-by-migplan: 2a8299ac-1423-4ceb-93a5-de572a0f44a9
+      velero.io/backup-name: migration-9db42-initial-5kc64
+      velero.io/restore-name: migration-9db42-final-cpc2b
+    name: csr0002-cargaarchivolarge
+    namespace: api-fiscalizacion-qa
+    resourceVersion: "136562473"
+    uid: 0a810f23-4c4f-4ac8-b278-6d725c453c58
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: csr0002-cargaarchivolarge:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      binary: {}
+      type: Binary
+    strategy:
+      sourceStrategy:
+        from:
+          kind: ImageStreamTag
+          name: redhat-openjdk18-openshift:1.4
+          namespace: openshift
+      type: Source
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - github:
+        secret: n6T85x0rzShi7NNTYrnx
+      type: GitHub
+    - generic:
+        secret: b44cWHe-OCTlMKE5WLkx
+      type: Generic
+  status:
+    lastVersion: 1
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftNewBuild
+      openshift.io/migration-registry: 172.30.114.175:5000
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-24T16:46:56Z"
+    generation: 2
+    labels:
+      build: csr0002-cargaarchivomedium
+      migration.openshift.io/migrated-by-migmigration: 7403c997-3617-4c43-a005-e473ceb26445
+      migration.openshift.io/migrated-by-migplan: 2a8299ac-1423-4ceb-93a5-de572a0f44a9
+      velero.io/backup-name: migration-9db42-initial-5kc64
+      velero.io/restore-name: migration-9db42-final-cpc2b
+    name: csr0002-cargaarchivomedium
+    namespace: api-fiscalizacion-qa
+    resourceVersion: "136555990"
+    uid: 7ce26a85-b1cc-49aa-99ec-203ab44898dc
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: csr0002-cargaarchivomedium:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      binary: {}
+      type: Binary
+    strategy:
+      sourceStrategy:
+        from:
+          kind: ImageStreamTag
+          name: redhat-openjdk18-openshift:1.4
+          namespace: openshift
+      type: Source
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - github:
+        secret: Zl58GZhnKTBfBi_NP7qG
+      type: GitHub
+    - generic:
+        secret: Dkk_s9KGj_xuGaJlBBD3
+      type: Generic
+  status:
+    lastVersion: 1
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftNewBuild
+      openshift.io/migration-registry: 172.30.114.175:5000
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-24T16:46:56Z"
+    generation: 2
+    labels:
+      build: csr0002-cargaarchivosmall
+      migration.openshift.io/migrated-by-migmigration: 7403c997-3617-4c43-a005-e473ceb26445
+      migration.openshift.io/migrated-by-migplan: 2a8299ac-1423-4ceb-93a5-de572a0f44a9
+      velero.io/backup-name: migration-9db42-initial-5kc64
+      velero.io/restore-name: migration-9db42-final-cpc2b
+    name: csr0002-cargaarchivosmall
+    namespace: api-fiscalizacion-qa
+    resourceVersion: "136553242"
+    uid: cb160003-1cbe-4d32-86ad-7eb65781fc13
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: csr0002-cargaarchivosmall:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      binary: {}
+      type: Binary
+    strategy:
+      sourceStrategy:
+        from:
+          kind: ImageStreamTag
+          name: redhat-openjdk18-openshift:1.4
+          namespace: openshift
+      type: Source
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - github:
+        secret: Kod_fYkprQ3dNspM0Lac
+      type: GitHub
+    - generic:
+        secret: jd5QSEotH4BXd4CLJVPp
+      type: Generic
+  status:
+    lastVersion: 1
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftNewBuild
+      openshift.io/migration-registry: 172.30.114.175:5000
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-24T16:46:57Z"
+    generation: 2
+    labels:
+      build: csr0003-envioarchivodecl
+      migration.openshift.io/migrated-by-migmigration: 7403c997-3617-4c43-a005-e473ceb26445
+      migration.openshift.io/migrated-by-migplan: 2a8299ac-1423-4ceb-93a5-de572a0f44a9
+      velero.io/backup-name: migration-9db42-initial-5kc64
+      velero.io/restore-name: migration-9db42-final-cpc2b
+    name: csr0003-envioarchivodecl
+    namespace: api-fiscalizacion-qa
+    resourceVersion: "136568378"
+    uid: 61438610-ba6c-4032-8f14-d327809fe330
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: csr0003-envioarchivodecl:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      binary: {}
+      type: Binary
+    strategy:
+      sourceStrategy:
+        from:
+          kind: ImageStreamTag
+          name: redhat-openjdk18-openshift:1.4
+          namespace: openshift
+      type: Source
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - github:
+        secret: ui2oH6l8fxXuQPQDjv2D
+      type: GitHub
+    - generic:
+        secret: 09uotQYWNaVFNpO1u2mj
+      type: Generic
+  status:
+    lastVersion: 1
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftNewBuild
+      openshift.io/migration-registry: 172.30.114.175:5000
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-24T16:46:57Z"
+    generation: 2
+    labels:
+      build: csr0004-notificacioniter
+      migration.openshift.io/migrated-by-migmigration: 7403c997-3617-4c43-a005-e473ceb26445
+      migration.openshift.io/migrated-by-migplan: 2a8299ac-1423-4ceb-93a5-de572a0f44a9
+      velero.io/backup-name: migration-9db42-initial-5kc64
+      velero.io/restore-name: migration-9db42-final-cpc2b
+    name: csr0004-notificacioniter
+    namespace: api-fiscalizacion-qa
+    resourceVersion: "136577342"
+    uid: 7d5cb108-2a0e-4bec-abc6-35c67f78744d
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: csr0004-notificacioniter:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      binary: {}
+      type: Binary
+    strategy:
+      sourceStrategy:
+        from:
+          kind: ImageStreamTag
+          name: redhat-openjdk18-openshift:1.4
+          namespace: openshift
+      type: Source
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - github:
+        secret: mvOFadP96UawJ0z5s9Xv
+      type: GitHub
+    - generic:
+        secret: eE7iZdlfEiRrp93rxm--
+      type: Generic
+  status:
+    lastVersion: 1
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftNewBuild
+      openshift.io/migration-registry: 172.30.114.175:5000
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-24T16:46:57Z"
+    generation: 2
+    labels:
+      build: csr0005-manager
+      migration.openshift.io/migrated-by-migmigration: 7403c997-3617-4c43-a005-e473ceb26445
+      migration.openshift.io/migrated-by-migplan: 2a8299ac-1423-4ceb-93a5-de572a0f44a9
+      velero.io/backup-name: migration-9db42-initial-5kc64
+      velero.io/restore-name: migration-9db42-final-cpc2b
+    name: csr0005-manager
+    namespace: api-fiscalizacion-qa
+    resourceVersion: "136574334"
+    uid: 857663e3-c14c-4a85-85b2-42b1010a61af
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: csr0005-manager:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      binary: {}
+      type: Binary
+    strategy:
+      sourceStrategy:
+        from:
+          kind: ImageStreamTag
+          name: redhat-openjdk18-openshift:1.4
+          namespace: openshift
+      type: Source
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - github:
+        secret: JhpvAW80u5W_d6sT1Iv-
+      type: GitHub
+    - generic:
+        secret: Ah7T3UUY_Ih3bVdsNOfi
+      type: Generic
+  status:
+    lastVersion: 1
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftNewBuild
+      openshift.io/migration-registry: 172.30.114.175:5000
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-24T16:46:57Z"
+    generation: 2
+    labels:
+      build: csr0006-excepciones
+      migration.openshift.io/migrated-by-migmigration: 7403c997-3617-4c43-a005-e473ceb26445
+      migration.openshift.io/migrated-by-migplan: 2a8299ac-1423-4ceb-93a5-de572a0f44a9
+      velero.io/backup-name: migration-9db42-initial-5kc64
+      velero.io/restore-name: migration-9db42-final-cpc2b
+    name: csr0006-excepciones
+    namespace: api-fiscalizacion-qa
+    resourceVersion: "136571757"
+    uid: 6fad2ab7-ac1f-448c-83e8-171595759395
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: csr0006-excepciones:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      binary: {}
+      type: Binary
+    strategy:
+      sourceStrategy:
+        from:
+          kind: ImageStreamTag
+          name: redhat-openjdk18-openshift:1.4
+          namespace: openshift
+      type: Source
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - github:
+        secret: bbTRiT8xNMT2gHX-t1tP
+      type: GitHub
+    - generic:
+        secret: A3P95Pj05KxCoGZXKRm1
+      type: Generic
+  status:
+    lastVersion: 1
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftNewBuild
+      openshift.io/migration-registry: 172.30.114.175:5000
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-24T16:46:57Z"
+    generation: 1
+    labels:
+      build: prox0001-registralibrore
+      migration.openshift.io/migrated-by-migmigration: 7403c997-3617-4c43-a005-e473ceb26445
+      migration.openshift.io/migrated-by-migplan: 2a8299ac-1423-4ceb-93a5-de572a0f44a9
+      velero.io/backup-name: migration-9db42-initial-5kc64
+      velero.io/restore-name: migration-9db42-final-cpc2b
+    name: prox0001-registralibrore
+    namespace: api-fiscalizacion-qa
+    resourceVersion: "10672961"
+    uid: 44a83931-136a-400a-863d-1b26e388340f
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: prox0001-registralibrore:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      binary: {}
+      type: Binary
+    strategy:
+      sourceStrategy:
+        from:
+          kind: ImageStreamTag
+          name: fuse7-java-openshift:1.3
+          namespace: openshift
+      type: Source
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - github:
+        secret: cIxgOBH1Ms7Oievrw7SE
+      type: GitHub
+    - generic:
+        secret: b3vwJB4vDs5DSonmcb94
+      type: Generic
+  status:
+    lastVersion: 0
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftNewBuild
+      openshift.io/migration-registry: 172.30.114.175:5000
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-24T16:46:58Z"
+    generation: 2
+    labels:
+      build: prx0002-validareglas
+      migration.openshift.io/migrated-by-migmigration: 7403c997-3617-4c43-a005-e473ceb26445
+      migration.openshift.io/migrated-by-migplan: 2a8299ac-1423-4ceb-93a5-de572a0f44a9
+      velero.io/backup-name: migration-9db42-initial-5kc64
+      velero.io/restore-name: migration-9db42-final-cpc2b
+    name: prx0002-validareglas
+    namespace: api-fiscalizacion-qa
+    resourceVersion: "136505527"
+    uid: 986e77f3-72c2-4735-99b5-74b864d45250
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: prx0002-validareglas:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      binary: {}
+      type: Binary
+    strategy:
+      sourceStrategy:
+        from:
+          kind: ImageStreamTag
+          name: fuse7-java-openshift:1.3
+          namespace: openshift
+      type: Source
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - github:
+        secret: yPl6BeC_uNuN3uTlpKRB
+      type: GitHub
+    - generic:
+        secret: FMjLHDw4Yn89C2h2TvFp
+      type: Generic
+  status:
+    lastVersion: 1
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftNewBuild
+      openshift.io/migration-registry: 172.30.114.175:5000
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-24T16:46:58Z"
+    generation: 2
+    labels:
+      build: prx0003-datosperson
+      migration.openshift.io/migrated-by-migmigration: 7403c997-3617-4c43-a005-e473ceb26445
+      migration.openshift.io/migrated-by-migplan: 2a8299ac-1423-4ceb-93a5-de572a0f44a9
+      velero.io/backup-name: migration-9db42-initial-5kc64
+      velero.io/restore-name: migration-9db42-final-cpc2b
+    name: prx0003-datosperson
+    namespace: api-fiscalizacion-qa
+    resourceVersion: "136535521"
+    uid: a878c8c9-4273-468e-9ed0-7f0c04499498
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: prx0003-datosperson:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      binary: {}
+      type: Binary
+    strategy:
+      sourceStrategy:
+        from:
+          kind: ImageStreamTag
+          name: fuse7-java-openshift:1.3
+          namespace: openshift
+      type: Source
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - github:
+        secret: QsJNRxVUvHNWg2yxtepE
+      type: GitHub
+    - generic:
+        secret: s-4DKDGB5S9lGdywofiX
+      type: Generic
+  status:
+    lastVersion: 1
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftNewBuild
+      openshift.io/migration-registry: 172.30.114.175:5000
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-24T16:46:58Z"
+    generation: 2
+    labels:
+      build: prx0003-datospersona-datagrid
+      migration.openshift.io/migrated-by-migmigration: 7403c997-3617-4c43-a005-e473ceb26445
+      migration.openshift.io/migrated-by-migplan: 2a8299ac-1423-4ceb-93a5-de572a0f44a9
+      velero.io/backup-name: migration-9db42-initial-5kc64
+      velero.io/restore-name: migration-9db42-final-cpc2b
+    name: prx0003-datospersona-datagrid
+    namespace: api-fiscalizacion-qa
+    resourceVersion: "136531648"
+    uid: 4a9b439b-8e7f-4221-9b03-18544121de89
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: prx0003-datospersona-datagrid:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      binary: {}
+      type: Binary
+    strategy:
+      sourceStrategy:
+        from:
+          kind: ImageStreamTag
+          name: fuse7-java-openshift:1.3
+          namespace: openshift
+      type: Source
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - github:
+        secret: A7sHkcEVWRelTyquUBZb
+      type: GitHub
+    - generic:
+        secret: mdwHJIwG5UKztTLXMPp7
+      type: Generic
+  status:
+    lastVersion: 1
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftNewBuild
+      openshift.io/migration-registry: 172.30.114.175:5000
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-24T16:46:58Z"
+    generation: 1
+    labels:
+      build: prx0004-enviarnotificaci
+      migration.openshift.io/migrated-by-migmigration: 7403c997-3617-4c43-a005-e473ceb26445
+      migration.openshift.io/migrated-by-migplan: 2a8299ac-1423-4ceb-93a5-de572a0f44a9
+      velero.io/backup-name: migration-9db42-initial-5kc64
+      velero.io/restore-name: migration-9db42-final-cpc2b
+    name: prx0004-enviarnotificaci
+    namespace: api-fiscalizacion-qa
+    resourceVersion: "10672976"
+    uid: eaf0a76a-7983-4e2f-abb2-ce92d1aa01b8
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: prx0004-enviarnotificaci:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      binary: {}
+      type: Binary
+    strategy:
+      sourceStrategy:
+        from:
+          kind: ImageStreamTag
+          name: fuse7-java-openshift:1.3
+          namespace: openshift
+      type: Source
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - github:
+        secret: XCazqvDVT7498X61v1EM
+      type: GitHub
+    - generic:
+        secret: xnoRl1Bjs1MtUNg5o3Gc
+      type: Generic
+  status:
+    lastVersion: 0
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftNewBuild
+      openshift.io/migration-registry: 172.30.114.175:5000
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-24T16:46:58Z"
+    generation: 2
+    labels:
+      build: prx0005-validartoken
+      migration.openshift.io/migrated-by-migmigration: 7403c997-3617-4c43-a005-e473ceb26445
+      migration.openshift.io/migrated-by-migplan: 2a8299ac-1423-4ceb-93a5-de572a0f44a9
+      velero.io/backup-name: migration-9db42-initial-5kc64
+      velero.io/restore-name: migration-9db42-final-cpc2b
+    name: prx0005-validartoken
+    namespace: api-fiscalizacion-qa
+    resourceVersion: "137178079"
+    uid: 0b90d053-22bb-4388-8e5e-380705d9aed9
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: prx0005-validartoken:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      binary: {}
+      type: Binary
+    strategy:
+      sourceStrategy:
+        from:
+          kind: ImageStreamTag
+          name: fuse7-java-openshift:1.3
+          namespace: openshift
+      type: Source
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - github:
+        secret: Gc2PnQsVnIdkBwuEWRy4
+      type: GitHub
+    - generic:
+        secret: -MeR3v6EGDWg5ONs86kx
+      type: Generic
+  status:
+    lastVersion: 1
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftNewBuild
+      openshift.io/migration-registry: 172.30.114.175:5000
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-24T16:46:59Z"
+    generation: 2
+    labels:
+      build: srv0001-v2
+      migration.openshift.io/migrated-by-migmigration: 7403c997-3617-4c43-a005-e473ceb26445
+      migration.openshift.io/migrated-by-migplan: 2a8299ac-1423-4ceb-93a5-de572a0f44a9
+      velero.io/backup-name: migration-9db42-initial-5kc64
+      velero.io/restore-name: migration-9db42-final-cpc2b
+    name: srv0001-v2
+    namespace: api-fiscalizacion-qa
+    resourceVersion: "136502574"
+    uid: 26c61d5a-ee12-4f54-b6fd-f9ed2d933f1f
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: srv0001-v2:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      binary: {}
+      type: Binary
+    strategy:
+      sourceStrategy:
+        from:
+          kind: ImageStreamTag
+          name: redhat-openjdk18-openshift:1.4
+          namespace: openshift
+      type: Source
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - github:
+        secret: 9cY1CNVgVpjdSIGUAzGA
+      type: GitHub
+    - generic:
+        secret: s30kXO8WJBMk7jJqoUen
+      type: Generic
+  status:
+    lastVersion: 1
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftNewBuild
+      openshift.io/migration-registry: 172.30.114.175:5000
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-24T16:46:59Z"
+    generation: 2
+    labels:
+      build: srv0002
+      migration.openshift.io/migrated-by-migmigration: 7403c997-3617-4c43-a005-e473ceb26445
+      migration.openshift.io/migrated-by-migplan: 2a8299ac-1423-4ceb-93a5-de572a0f44a9
+      velero.io/backup-name: migration-9db42-initial-5kc64
+      velero.io/restore-name: migration-9db42-final-cpc2b
+    name: srv0002
+    namespace: api-fiscalizacion-qa
+    resourceVersion: "136509878"
+    uid: a0f41989-4024-4e25-8f0f-9d320e3edbaf
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: srv0002:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      binary: {}
+      type: Binary
+    strategy:
+      sourceStrategy:
+        from:
+          kind: ImageStreamTag
+          name: redhat-openjdk18-openshift:1.4
+          namespace: openshift
+      type: Source
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - github:
+        secret: 1C5EA883hTm9MiTlomGe
+      type: GitHub
+    - generic:
+        secret: tWkORAlulq2jkFPngqOq
+      type: Generic
+  status:
+    lastVersion: 1
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftNewBuild
+      openshift.io/migration-registry: 172.30.114.175:5000
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-24T16:46:59Z"
+    generation: 2
+    labels:
+      build: srv0003
+      migration.openshift.io/migrated-by-migmigration: 7403c997-3617-4c43-a005-e473ceb26445
+      migration.openshift.io/migrated-by-migplan: 2a8299ac-1423-4ceb-93a5-de572a0f44a9
+      velero.io/backup-name: migration-9db42-initial-5kc64
+      velero.io/restore-name: migration-9db42-final-cpc2b
+    name: srv0003
+    namespace: api-fiscalizacion-qa
+    resourceVersion: "136513261"
+    uid: b6beb4f9-c747-451b-b9f5-e035422d6662
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: srv0003:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      binary: {}
+      type: Binary
+    strategy:
+      sourceStrategy:
+        from:
+          kind: ImageStreamTag
+          name: redhat-openjdk18-openshift:1.4
+          namespace: openshift
+      type: Source
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - github:
+        secret: 3pF3Are_uj453bHqDQSL
+      type: GitHub
+    - generic:
+        secret: DA5WDAjnB0dK1r_RWnjD
+      type: Generic
+  status:
+    lastVersion: 1
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftNewBuild
+      openshift.io/migration-registry: 172.30.114.175:5000
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-24T16:46:59Z"
+    generation: 2
+    labels:
+      build: srv0004-declaraciontrans
+      migration.openshift.io/migrated-by-migmigration: 7403c997-3617-4c43-a005-e473ceb26445
+      migration.openshift.io/migrated-by-migplan: 2a8299ac-1423-4ceb-93a5-de572a0f44a9
+      velero.io/backup-name: migration-9db42-initial-5kc64
+      velero.io/restore-name: migration-9db42-final-cpc2b
+    name: srv0004-declaraciontrans
+    namespace: api-fiscalizacion-qa
+    resourceVersion: "136516902"
+    uid: c13e7239-a3a1-4c5e-853e-e27b5115b0f7
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: srv0004-declaraciontrans:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      binary: {}
+      type: Binary
+    strategy:
+      sourceStrategy:
+        from:
+          kind: ImageStreamTag
+          name: redhat-openjdk18-openshift:1.4
+          namespace: openshift
+      type: Source
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - github:
+        secret: P_0czuKlk8GenbP-CDqs
+      type: GitHub
+    - generic:
+        secret: ysdERAQzYULsqzIafs6h
+      type: Generic
+  status:
+    lastVersion: 1
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftNewBuild
+      openshift.io/migration-registry: 172.30.114.175:5000
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-24T16:46:59Z"
+    generation: 2
+    labels:
+      build: srv0005-descargalre
+      migration.openshift.io/migrated-by-migmigration: 7403c997-3617-4c43-a005-e473ceb26445
+      migration.openshift.io/migrated-by-migplan: 2a8299ac-1423-4ceb-93a5-de572a0f44a9
+      velero.io/backup-name: migration-9db42-initial-5kc64
+      velero.io/restore-name: migration-9db42-final-cpc2b
+    name: srv0005-descargalre
+    namespace: api-fiscalizacion-qa
+    resourceVersion: "136519791"
+    uid: a492b7ff-fb81-4dff-901f-e301bb617471
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: srv0005-descargalre:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      binary: {}
+      type: Binary
+    strategy:
+      sourceStrategy:
+        from:
+          kind: ImageStreamTag
+          name: redhat-openjdk18-openshift:1.4
+          namespace: openshift
+      type: Source
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - github:
+        secret: 9hDl8-0GjD3ghL1YEG3E
+      type: GitHub
+    - generic:
+        secret: LH2ldUclvi1eLMp_icZm
+      type: Generic
+  status:
+    lastVersion: 1
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftNewBuild
+      openshift.io/migration-registry: 172.30.114.175:5000
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-24T16:47:00Z"
+    generation: 2
+    labels:
+      build: srv0006-apimetadata
+      migration.openshift.io/migrated-by-migmigration: 7403c997-3617-4c43-a005-e473ceb26445
+      migration.openshift.io/migrated-by-migplan: 2a8299ac-1423-4ceb-93a5-de572a0f44a9
+      velero.io/backup-name: migration-9db42-initial-5kc64
+      velero.io/restore-name: migration-9db42-final-cpc2b
+    name: srv0006-apimetadata
+    namespace: api-fiscalizacion-qa
+    resourceVersion: "136522770"
+    uid: 92e2ab52-51f0-4f94-9a96-091c3dbbac8f
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: srv0006-apimetadata:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      binary: {}
+      type: Binary
+    strategy:
+      sourceStrategy:
+        from:
+          kind: ImageStreamTag
+          name: redhat-openjdk18-openshift:1.4
+          namespace: openshift
+      type: Source
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - github:
+        secret: 4-lwP_WSJwypFs9dSCdG
+      type: GitHub
+    - generic:
+        secret: FT0h8eHfommuGyy44Eyq
+      type: Generic
+  status:
+    lastVersion: 1
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftWebConsole
+      openshift.io/migration-registry: 172.30.114.175:5000
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-24T16:47:00Z"
+    generation: 3
+    labels:
+      app: srv0007-bff
+      migration.openshift.io/migrated-by-migmigration: 7403c997-3617-4c43-a005-e473ceb26445
+      migration.openshift.io/migrated-by-migplan: 2a8299ac-1423-4ceb-93a5-de572a0f44a9
+      velero.io/backup-name: migration-9db42-initial-5kc64
+      velero.io/restore-name: migration-9db42-final-cpc2b
+    name: srv0007-bff
+    namespace: api-fiscalizacion-qa
+    resourceVersion: "136524291"
+    uid: dffea353-831f-48cd-8079-42725ac6970b
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: srv0007-bff:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      git:
+        ref: develop
+        uri: https://dirtrab.visualstudio.com/Libro%20Remuneraciones%20Electronico/_git/SRV0007-BFF
+      sourceSecret:
+        name: serv0007-bff
+      type: Git
+    strategy:
+      sourceStrategy:
+        from:
+          kind: ImageStreamTag
+          name: nodejs:10
+          namespace: openshift
+      type: Source
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - imageChange:
+        lastTriggeredImageID: docker-registry.default.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+      type: ImageChange
+    - type: ConfigChange
+    - generic:
+        secret: f05f80a246b8b07c
+      type: Generic
+    - github:
+        secret: 3184217dd19ad8e7
+      type: GitHub
+  status:
+    imageChangeTriggers:
+    - from:
+        name: nodejs:10
+        namespace: openshift
+      lastTriggerTime: null
+      lastTriggeredImageID: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+    lastVersion: 2
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftWebConsole
+      openshift.io/migration-registry: 172.30.114.175:5000
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-24T16:47:00Z"
+    generation: 3
+    labels:
+      app: srv0008-validaciones
+      migration.openshift.io/migrated-by-migmigration: 7403c997-3617-4c43-a005-e473ceb26445
+      migration.openshift.io/migrated-by-migplan: 2a8299ac-1423-4ceb-93a5-de572a0f44a9
+      velero.io/backup-name: migration-9db42-initial-5kc64
+      velero.io/restore-name: migration-9db42-final-cpc2b
+    name: srv0008-validaciones
+    namespace: api-fiscalizacion-qa
+    resourceVersion: "136526395"
+    uid: a03faebf-e9ce-408a-a3b5-e3b423f277d6
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: srv0008-validaciones:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      git:
+        ref: develop
+        uri: https://dirtrab.visualstudio.com/Libro%20Remuneraciones%20Electronico/_git/SRV0008-ValidacionesUsuario
+      sourceSecret:
+        name: serv0007-bff
+      type: Git
+    strategy:
+      sourceStrategy:
+        from:
+          kind: ImageStreamTag
+          name: nodejs:10
+          namespace: openshift
+      type: Source
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - imageChange:
+        lastTriggeredImageID: docker-registry.default.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+      type: ImageChange
+    - type: ConfigChange
+    - generic:
+        secret: b457616b6de91a04
+      type: Generic
+    - github:
+        secret: 6f869a5d9701e6b0
+      type: GitHub
+  status:
+    imageChangeTriggers:
+    - from:
+        name: nodejs:10
+        namespace: openshift
+      lastTriggerTime: null
+      lastTriggeredImageID: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+    lastVersion: 2
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftWebConsole
+      openshift.io/migration-registry: 172.30.114.175:5000
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-24T16:47:00Z"
+    generation: 2
+    labels:
+      app: srv0009-admnominatrabaj
+      migration.openshift.io/migrated-by-migmigration: 7403c997-3617-4c43-a005-e473ceb26445
+      migration.openshift.io/migrated-by-migplan: 2a8299ac-1423-4ceb-93a5-de572a0f44a9
+      velero.io/backup-name: migration-9db42-initial-5kc64
+      velero.io/restore-name: migration-9db42-final-cpc2b
+    name: srv0009-admnominatrabaj
+    namespace: api-fiscalizacion-qa
+    resourceVersion: "95922992"
+    uid: 0290aa27-6186-48de-aa8a-1e0be13a3048
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: srv0009-admnominatrabaj:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      git:
+        ref: develop
+        uri: https://dirtrab.visualstudio.com/Libro%20Remuneraciones%20Electronico/_git/SRV0009-AdministracionNominaTrabajadores
+      sourceSecret:
+        name: azure2
+      type: Git
+    strategy:
+      sourceStrategy:
+        from:
+          kind: ImageStreamTag
+          name: nodejs:10
+          namespace: openshift
+      type: Source
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - generic:
+        secret: 39f2be8a32a19204
+      type: Generic
+    - github:
+        secret: 4b05b43b0f6f53a1
+      type: GitHub
+    - imageChange:
+        lastTriggeredImageID: docker-registry.default.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+      type: ImageChange
+    - type: ConfigChange
+  status:
+    imageChangeTriggers:
+    - from:
+        name: nodejs:10
+        namespace: openshift
+      lastTriggerTime: "2023-09-01T01:10:32Z"
+      lastTriggeredImageID: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+    lastVersion: 1
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftWebConsole
+      openshift.io/migration-registry: 172.30.114.175:5000
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-24T16:47:00Z"
+    generation: 2
+    labels:
+      app: srv0010-decljson
+      migration.openshift.io/migrated-by-migmigration: 7403c997-3617-4c43-a005-e473ceb26445
+      migration.openshift.io/migrated-by-migplan: 2a8299ac-1423-4ceb-93a5-de572a0f44a9
+      velero.io/backup-name: migration-9db42-initial-5kc64
+      velero.io/restore-name: migration-9db42-final-cpc2b
+    name: srv0010-decljson
+    namespace: api-fiscalizacion-qa
+    resourceVersion: "95922976"
+    uid: cb61e13c-8bbe-4080-921e-02f2b43b6b54
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: srv0010-decljson:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      git:
+        ref: feature/cambio_monto_12_digitos
+        uri: https://dirtrab.visualstudio.com/Libro%20Remuneraciones%20Electronico/_git/SRV0010-DeclaracionesJSON
+      sourceSecret:
+        name: srv0010
+      type: Git
+    strategy:
+      sourceStrategy:
+        from:
+          kind: ImageStreamTag
+          name: nodejs:10
+          namespace: openshift
+      type: Source
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - imageChange:
+        lastTriggeredImageID: docker-registry.default.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+      type: ImageChange
+    - type: ConfigChange
+    - generic:
+        secret: a10a6e4f87a10c64
+      type: Generic
+    - github:
+        secret: 97bb14b2265f9384
+      type: GitHub
+  status:
+    imageChangeTriggers:
+    - from:
+        name: nodejs:10
+        namespace: openshift
+      lastTriggerTime: "2023-09-01T01:10:32Z"
+      lastTriggeredImageID: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+    lastVersion: 1
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftWebConsole
+      openshift.io/migration-registry: 172.30.114.175:5000
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-24T16:47:01Z"
+    generation: 2
+    labels:
+      app: srv0012-ctrleveventos
+      migration.openshift.io/migrated-by-migmigration: 7403c997-3617-4c43-a005-e473ceb26445
+      migration.openshift.io/migrated-by-migplan: 2a8299ac-1423-4ceb-93a5-de572a0f44a9
+      velero.io/backup-name: migration-9db42-initial-5kc64
+      velero.io/restore-name: migration-9db42-final-cpc2b
+    name: srv0012-ctrleveventos
+    namespace: api-fiscalizacion-qa
+    resourceVersion: "95923171"
+    uid: 1c97b6fb-2fb4-42a5-b4cf-f37db642efd8
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: srv0012-ctrleveventos:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      git:
+        ref: develop
+        uri: https://dev.azure.com/dirtrab/Libro%20Remuneraciones%20Electronico/_git/SRV0012-ControlEventosLRE
+      sourceSecret:
+        name: azure2
+      type: Git
+    strategy:
+      sourceStrategy:
+        from:
+          kind: ImageStreamTag
+          name: nodejs:10
+          namespace: openshift
+      type: Source
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - generic:
+        secret: ef02fe7e994ebb0d
+      type: Generic
+    - github:
+        secret: 4b436385fdc7dde3
+      type: GitHub
+    - imageChange:
+        lastTriggeredImageID: docker-registry.default.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+      type: ImageChange
+    - type: ConfigChange
+  status:
+    imageChangeTriggers:
+    - from:
+        name: nodejs:10
+        namespace: openshift
+      lastTriggerTime: "2023-09-01T01:10:33Z"
+      lastTriggeredImageID: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+    lastVersion: 1
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftWebConsole
+      openshift.io/migration-registry: 172.30.114.175:5000
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-24T16:47:01Z"
+    generation: 2
+    labels:
+      app: srv0013-certificados-lre
+      migration.openshift.io/migrated-by-migmigration: 7403c997-3617-4c43-a005-e473ceb26445
+      migration.openshift.io/migrated-by-migplan: 2a8299ac-1423-4ceb-93a5-de572a0f44a9
+      velero.io/backup-name: migration-9db42-initial-5kc64
+      velero.io/restore-name: migration-9db42-final-cpc2b
+    name: srv0013-certificados-lre
+    namespace: api-fiscalizacion-qa
+    resourceVersion: "95922998"
+    uid: d623e692-cb3c-40ba-8dd1-c8c656cfc2c1
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: srv0013-certificados-lre:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      git:
+        ref: feature/desarrollo_2022
+        uri: https://dirtrab.visualstudio.com/Libro%20Remuneraciones%20Electronico/_git/SRV0013-CertificadosLRE
+      sourceSecret:
+        name: srv0013
+      type: Git
+    strategy:
+      sourceStrategy:
+        from:
+          kind: ImageStreamTag
+          name: nodejs:10
+          namespace: openshift
+      type: Source
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - imageChange:
+        lastTriggeredImageID: docker-registry.default.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+      type: ImageChange
+    - type: ConfigChange
+    - generic:
+        secret: 1a7a457713676472
+      type: Generic
+    - github:
+        secret: 9f7338b03c854e26
+      type: GitHub
+  status:
+    imageChangeTriggers:
+    - from:
+        name: nodejs:10
+        namespace: openshift
+      lastTriggerTime: "2023-09-01T01:10:32Z"
+      lastTriggeredImageID: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+    lastVersion: 1
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

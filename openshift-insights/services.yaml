@@ -1,0 +1,47 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      exclude.release.openshift.io/internal-openshift-hosted: "true"
+      include.release.openshift.io/self-managed-high-availability: "true"
+      include.release.openshift.io/single-node-developer: "true"
+      service.alpha.openshift.io/serving-cert-secret-name: openshift-insights-serving-cert
+      service.alpha.openshift.io/serving-cert-signed-by: openshift-service-serving-signer@1683236429
+      service.beta.openshift.io/serving-cert-signed-by: openshift-service-serving-signer@1683236429
+    creationTimestamp: "2023-05-04T21:36:19Z"
+    labels:
+      app: insights-operator
+    name: metrics
+    namespace: openshift-insights
+    ownerReferences:
+    - apiVersion: config.openshift.io/v1
+      kind: ClusterVersion
+      name: version
+      uid: 5d92b52f-9fff-4a6e-b815-398b934115ad
+    resourceVersion: "6475"
+    uid: 213092b2-dc68-4ba3-b30a-0fa6efe31d19
+  spec:
+    clusterIP: 172.30.23.55
+    clusterIPs:
+    - 172.30.23.55
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: https
+      port: 443
+      protocol: TCP
+      targetPort: 8443
+    selector:
+      app: insights-operator
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

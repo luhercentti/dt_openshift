@@ -1,0 +1,382 @@
+apiVersion: v1
+items:
+- apiVersion: build.openshift.io/v1
+  kind: Build
+  metadata:
+    annotations:
+      openshift.io/build-config.name: consumerampq
+      openshift.io/build.number: "1"
+      openshift.io/build.pod-name: consumerampq-1-build
+    creationTimestamp: "2023-05-25T13:37:37Z"
+    generation: 2
+    labels:
+      app: consumerampq
+      buildconfig: consumerampq
+      migration.openshift.io/migrated-by-migmigration: c3ea9ecb-e90b-490b-b3d5-a4a3ca470138
+      migration.openshift.io/migrated-by-migplan: 09dc99a3-20c0-4d89-88a2-c81cce3ef81b
+      openshift.io/build-config.name: consumerampq
+      openshift.io/build.start-policy: Serial
+      velero.io/backup-name: migration-f9156-initial-ff7x9
+      velero.io/restore-name: migration-f9156-final-jccsn
+    name: consumerampq-1
+    namespace: lre-dev
+    ownerReferences:
+    - apiVersion: build.openshift.io/v1
+      controller: true
+      kind: BuildConfig
+      name: consumerampq
+      uid: cc31525f-2891-4c20-8349-c3e2c7fdd9a6
+    resourceVersion: "11409572"
+    uid: 4b96b068-2765-498f-b4c4-e81d64544b57
+  spec:
+    nodeSelector: null
+    output:
+      pushSecret:
+        name: builder-dockercfg-jmbrj
+      to:
+        kind: ImageStreamTag
+        name: consumerampq:latest
+    postCommit: {}
+    resources: {}
+    serviceAccount: builder
+    source:
+      contextDir: /CONSUMER0001-ValidacionesFondoAMQP
+      git:
+        ref: feature/validacion-forma
+        uri: https://dirtrab.visualstudio.com/Libro%20Remuneraciones%20Electronico/_git/api-remuneraciones-declaracion
+      sourceSecret:
+        name: lolivero
+      type: Git
+    strategy:
+      sourceStrategy:
+        forcePull: true
+        from:
+          kind: DockerImage
+          name: image-registry.openshift-image-registry.svc:5000/openshift/redhat-openjdk18-openshift@sha256:dc84fed0f6f40975a2277c126438c8aa15c70eeac75981dbaa4b6b853eff61a6
+        pullSecret:
+          name: builder-dockercfg-jmbrj
+      type: Source
+    triggeredBy:
+    - message: Build configuration change
+  status:
+    completionTimestamp: "2023-05-25T13:37:51Z"
+    conditions:
+    - lastTransitionTime: "2023-05-25T13:37:37Z"
+      lastUpdateTime: "2023-05-25T13:37:37Z"
+      status: "False"
+      type: New
+    - lastTransitionTime: "2023-05-25T13:37:50Z"
+      lastUpdateTime: "2023-05-25T13:37:50Z"
+      status: "False"
+      type: Pending
+    - lastTransitionTime: "2023-05-25T13:37:51Z"
+      lastUpdateTime: "2023-05-25T13:37:51Z"
+      status: "False"
+      type: Running
+    - lastTransitionTime: "2023-05-25T13:37:51Z"
+      lastUpdateTime: "2023-05-25T13:37:51Z"
+      message: Failed to fetch the input source.
+      reason: FetchSourceFailed
+      status: "True"
+      type: Failed
+    config:
+      kind: BuildConfig
+      name: consumerampq
+      namespace: lre-dev
+    duration: 14000000000
+    logSnippet: |-
+      Cloning "https://dirtrab.visualstudio.com/Libro%20Remuneraciones%20Electronico/_git/api-remuneraciones-declaracion" ...
+      error: failed to fetch requested repository "https://dirtr...t/api-remuneraciones-declaracion" with provided credentials
+    message: Failed to fetch the input source.
+    output: {}
+    outputDockerImageReference: image-registry.openshift-image-registry.svc:5000/lre-dev/consumerampq:latest
+    phase: Failed
+    reason: FetchSourceFailed
+    startTimestamp: "2023-05-25T13:37:37Z"
+- apiVersion: build.openshift.io/v1
+  kind: Build
+  metadata:
+    annotations:
+      openshift.io/build-config.name: lre-front
+      openshift.io/build.number: "1"
+      openshift.io/build.pod-name: lre-front-1-build
+    creationTimestamp: "2023-09-01T01:10:33Z"
+    generation: 2
+    labels:
+      app: lre-front
+      buildconfig: lre-front
+      migration.openshift.io/migrated-by-migmigration: c3ea9ecb-e90b-490b-b3d5-a4a3ca470138
+      migration.openshift.io/migrated-by-migplan: 09dc99a3-20c0-4d89-88a2-c81cce3ef81b
+      openshift.io/build-config.name: lre-front
+      openshift.io/build.start-policy: Serial
+      velero.io/backup-name: migration-f9156-initial-ff7x9
+      velero.io/restore-name: migration-f9156-final-jccsn
+    name: lre-front-1
+    namespace: lre-dev
+    ownerReferences:
+    - apiVersion: build.openshift.io/v1
+      controller: true
+      kind: BuildConfig
+      name: lre-front
+      uid: f7ed2939-5b0d-45a0-a1bb-68c60afab044
+    resourceVersion: "95950410"
+    uid: 0b0a6d2d-c4a7-4732-adb5-7703a8c91869
+  spec:
+    nodeSelector: null
+    output:
+      pushSecret:
+        name: builder-dockercfg-jmbrj
+      to:
+        kind: ImageStreamTag
+        name: lre-front:latest
+    postCommit: {}
+    resources: {}
+    revision:
+      git:
+        author:
+          email: ffernandeza@dt.gob.cl
+          name: Fernando Antonio Fernandez Alvarez
+        commit: e57b1df3fe454653bf5071234d796e3de9b91ed6
+        committer:
+          email: ffernandeza@dt.gob.cl
+          name: Fernando Antonio Fernandez Alvarez
+        message: 'Merged PR 12657: se quita rsu'
+      type: Git
+    serviceAccount: builder
+    source:
+      git:
+        ref: develop
+        uri: https://dirtrab.visualstudio.com/Libro%20Remuneraciones%20Electronico/_git/product-lre
+      sourceSecret:
+        name: product-lre
+      type: Git
+    strategy:
+      sourceStrategy:
+        from:
+          kind: DockerImage
+          name: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+        pullSecret:
+          name: builder-dockercfg-jmbrj
+      type: Source
+    triggeredBy:
+    - imageChangeBuild:
+        fromRef:
+          kind: ImageStreamTag
+          name: nodejs:10
+          namespace: openshift
+        imageID: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+      message: Image change
+  status:
+    completionTimestamp: "2023-09-01T01:55:07Z"
+    conditions:
+    - lastTransitionTime: "2023-09-01T01:10:35Z"
+      lastUpdateTime: "2023-09-01T01:10:35Z"
+      status: "False"
+      type: New
+    - lastTransitionTime: "2023-09-01T01:10:38Z"
+      lastUpdateTime: "2023-09-01T01:10:38Z"
+      status: "False"
+      type: Pending
+    - lastTransitionTime: "2023-09-01T01:55:07Z"
+      lastUpdateTime: "2023-09-01T01:55:07Z"
+      status: "False"
+      type: Running
+    - lastTransitionTime: "2023-09-01T01:55:07Z"
+      lastUpdateTime: "2023-09-01T01:55:07Z"
+      message: Generic Build failure - check logs for details.
+      reason: GenericBuildFailed
+      status: "True"
+      type: Failed
+    config:
+      kind: BuildConfig
+      name: lre-front
+      namespace: lre-dev
+    duration: 2672000000000
+    logSnippet: |-
+      npm timing npm Completed in 55252ms
+
+      npm ERR! A complete log of this run can be found in:
+      npm ERR!     /opt/app-root/src/.npm/_logs/2023-09-01T01_55_01_359Z-debug.log
+      error: build error: error building at STEP "RUN /usr/libexec/s2i/assemble": error while running runtime: exit status 1
+    message: Generic Build failure - check logs for details.
+    output: {}
+    outputDockerImageReference: image-registry.openshift-image-registry.svc:5000/lre-dev/lre-front:latest
+    phase: Failed
+    reason: GenericBuildFailed
+    stages:
+    - durationMilliseconds: 16833
+      name: FetchInputs
+      startTime: "2023-09-01T01:10:39Z"
+      steps:
+      - durationMilliseconds: 16833
+        name: FetchGitSource
+        startTime: "2023-09-01T01:10:39Z"
+    - durationMilliseconds: 32127
+      name: PullImages
+      startTime: "2023-09-01T01:11:07Z"
+      steps:
+      - durationMilliseconds: 32127
+        name: PullBaseImage
+        startTime: "2023-09-01T01:11:07Z"
+    - durationMilliseconds: 2607918
+      name: Build
+      startTime: "2023-09-01T01:11:39Z"
+      steps:
+      - durationMilliseconds: 2607918
+        name: DockerBuild
+        startTime: "2023-09-01T01:11:39Z"
+    startTimestamp: "2023-09-01T01:10:35Z"
+- apiVersion: build.openshift.io/v1
+  kind: Build
+  metadata:
+    annotations:
+      openshift.io/build-config.name: pocdatagrid
+      openshift.io/build.number: "1"
+    creationTimestamp: "2023-05-25T13:37:37Z"
+    generation: 1
+    labels:
+      app: pocdatagrid
+      buildconfig: pocdatagrid
+      migration.openshift.io/migrated-by-migmigration: c3ea9ecb-e90b-490b-b3d5-a4a3ca470138
+      migration.openshift.io/migrated-by-migplan: 09dc99a3-20c0-4d89-88a2-c81cce3ef81b
+      openshift.io/build-config.name: pocdatagrid
+      openshift.io/build.start-policy: Serial
+      velero.io/backup-name: migration-f9156-initial-ff7x9
+      velero.io/restore-name: migration-f9156-final-jccsn
+    name: pocdatagrid-1
+    namespace: lre-dev
+    ownerReferences:
+    - apiVersion: build.openshift.io/v1
+      controller: true
+      kind: BuildConfig
+      name: pocdatagrid
+      uid: df473da3-d880-4f5d-a23c-1ae3f9ce736b
+    resourceVersion: "11409096"
+    uid: 01aa2a06-e630-47fc-bfb3-6bb9fa5ec28a
+  spec:
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: pocdatagrid:latest
+    postCommit: {}
+    resources: {}
+    serviceAccount: builder
+    source:
+      contextDir: /pocdatagridupload
+      git:
+        ref: master
+        uri: https://dirtrab.visualstudio.com/Libro%20Remuneraciones%20Electronico/_git/lre-poc
+      sourceSecret:
+        name: lolivero
+      type: Git
+    strategy:
+      sourceStrategy:
+        from:
+          kind: DockerImage
+          name: image-registry.openshift-image-registry.svc:5000/openshift/java@sha256:11ed9be8643f914f9740f782a2e6ed8055e2fd9f53eee3bb25a563e374be0054
+        pullSecret:
+          name: builder-dockercfg-jmbrj
+      type: Source
+    triggeredBy:
+    - imageChangeBuild:
+        fromRef:
+          kind: ImageStreamTag
+          name: java:8
+          namespace: openshift
+        imageID: image-registry.openshift-image-registry.svc:5000/openshift/java@sha256:11ed9be8643f914f9740f782a2e6ed8055e2fd9f53eee3bb25a563e374be0054
+      message: Image change
+  status:
+    conditions:
+    - lastTransitionTime: "2023-05-25T13:37:37Z"
+      lastUpdateTime: "2023-05-25T13:37:37Z"
+      message: Output image could not be resolved.
+      reason: InvalidOutputReference
+      status: "True"
+      type: New
+    config:
+      kind: BuildConfig
+      name: pocdatagrid
+      namespace: lre-dev
+    message: Output image could not be resolved.
+    output: {}
+    phase: New
+    reason: InvalidOutputReference
+- apiVersion: build.openshift.io/v1
+  kind: Build
+  metadata:
+    annotations:
+      openshift.io/build-config.name: pocdatagrird
+      openshift.io/build.number: "1"
+    creationTimestamp: "2023-05-25T13:37:37Z"
+    generation: 1
+    labels:
+      app: pocdatagrird
+      buildconfig: pocdatagrird
+      migration.openshift.io/migrated-by-migmigration: c3ea9ecb-e90b-490b-b3d5-a4a3ca470138
+      migration.openshift.io/migrated-by-migplan: 09dc99a3-20c0-4d89-88a2-c81cce3ef81b
+      openshift.io/build-config.name: pocdatagrird
+      openshift.io/build.start-policy: Serial
+      velero.io/backup-name: migration-f9156-initial-ff7x9
+      velero.io/restore-name: migration-f9156-final-jccsn
+    name: pocdatagrird-1
+    namespace: lre-dev
+    ownerReferences:
+    - apiVersion: build.openshift.io/v1
+      controller: true
+      kind: BuildConfig
+      name: pocdatagrird
+      uid: 97101b9e-4ee5-4760-bfcf-37fd7b9cd957
+    resourceVersion: "11409101"
+    uid: 2fd70196-ee73-439f-aef9-b506308fe8bd
+  spec:
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: pocdatagrird:latest
+    postCommit: {}
+    resources: {}
+    serviceAccount: builder
+    source:
+      contextDir: undertow-servlet
+      git:
+        ref: master
+        uri: https://github.com/jboss-openshift/openshift-quickstarts
+      type: Git
+    strategy:
+      sourceStrategy:
+        from:
+          kind: DockerImage
+          name: image-registry.openshift-image-registry.svc:5000/openshift/java@sha256:11ed9be8643f914f9740f782a2e6ed8055e2fd9f53eee3bb25a563e374be0054
+        pullSecret:
+          name: builder-dockercfg-jmbrj
+      type: Source
+    triggeredBy:
+    - imageChangeBuild:
+        fromRef:
+          kind: ImageStreamTag
+          name: java:8
+          namespace: openshift
+        imageID: image-registry.openshift-image-registry.svc:5000/openshift/java@sha256:11ed9be8643f914f9740f782a2e6ed8055e2fd9f53eee3bb25a563e374be0054
+      message: Image change
+  status:
+    conditions:
+    - lastTransitionTime: "2023-05-25T13:37:37Z"
+      lastUpdateTime: "2023-05-25T13:37:37Z"
+      message: Output image could not be resolved.
+      reason: InvalidOutputReference
+      status: "True"
+      type: New
+    config:
+      kind: BuildConfig
+      name: pocdatagrird
+      namespace: lre-dev
+    message: Output image could not be resolved.
+    output: {}
+    phase: New
+    reason: InvalidOutputReference
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

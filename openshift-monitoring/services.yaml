@@ -1,0 +1,591 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      service.alpha.openshift.io/serving-cert-signed-by: openshift-service-serving-signer@1683236429
+      service.beta.openshift.io/serving-cert-secret-name: alertmanager-main-tls
+      service.beta.openshift.io/serving-cert-signed-by: openshift-service-serving-signer@1683236429
+    creationTimestamp: "2023-05-04T21:49:24Z"
+    labels:
+      app.kubernetes.io/component: alert-router
+      app.kubernetes.io/instance: main
+      app.kubernetes.io/name: alertmanager
+      app.kubernetes.io/part-of: openshift-monitoring
+      app.kubernetes.io/version: 0.23.0
+    name: alertmanager-main
+    namespace: openshift-monitoring
+    resourceVersion: "21470"
+    uid: 47e60489-c1ac-4d81-8b44-4572afaed265
+  spec:
+    clusterIP: 172.30.91.176
+    clusterIPs:
+    - 172.30.91.176
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: web
+      port: 9094
+      protocol: TCP
+      targetPort: web
+    - name: tenancy
+      port: 9092
+      protocol: TCP
+      targetPort: tenancy
+    - name: metrics
+      port: 9097
+      protocol: TCP
+      targetPort: metrics
+    selector:
+      app.kubernetes.io/component: alert-router
+      app.kubernetes.io/instance: main
+      app.kubernetes.io/name: alertmanager
+      app.kubernetes.io/part-of: openshift-monitoring
+    sessionAffinity: ClientIP
+    sessionAffinityConfig:
+      clientIP:
+        timeoutSeconds: 10800
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    creationTimestamp: "2023-05-04T21:49:29Z"
+    labels:
+      operated-alertmanager: "true"
+    name: alertmanager-operated
+    namespace: openshift-monitoring
+    ownerReferences:
+    - apiVersion: monitoring.coreos.com/v1
+      kind: Alertmanager
+      name: main
+      uid: d6de2f7e-3032-4f32-af51-51c22aef0657
+    resourceVersion: "21842"
+    uid: b85c78d9-b9c7-4613-9202-8f46c0853fc9
+  spec:
+    clusterIP: None
+    clusterIPs:
+    - None
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: web
+      port: 9093
+      protocol: TCP
+      targetPort: web
+    - name: tcp-mesh
+      port: 9094
+      protocol: TCP
+      targetPort: 9094
+    - name: udp-mesh
+      port: 9094
+      protocol: UDP
+      targetPort: 9094
+    selector:
+      app.kubernetes.io/name: alertmanager
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      include.release.openshift.io/ibm-cloud-managed: "true"
+      include.release.openshift.io/self-managed-high-availability: "true"
+      include.release.openshift.io/single-node-developer: "true"
+      service.alpha.openshift.io/serving-cert-signed-by: openshift-service-serving-signer@1683236429
+      service.beta.openshift.io/serving-cert-secret-name: cluster-monitoring-operator-tls
+      service.beta.openshift.io/serving-cert-signed-by: openshift-service-serving-signer@1683236429
+    creationTimestamp: "2023-05-04T21:36:08Z"
+    labels:
+      app: cluster-monitoring-operator
+    name: cluster-monitoring-operator
+    namespace: openshift-monitoring
+    ownerReferences:
+    - apiVersion: config.openshift.io/v1
+      kind: ClusterVersion
+      name: version
+      uid: 5d92b52f-9fff-4a6e-b815-398b934115ad
+    resourceVersion: "6423"
+    uid: 0e90f056-d1a5-47bd-b060-dc1bddc649a9
+  spec:
+    clusterIP: None
+    clusterIPs:
+    - None
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: https
+      port: 8443
+      protocol: TCP
+      targetPort: https
+    selector:
+      app: cluster-monitoring-operator
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      service.alpha.openshift.io/serving-cert-signed-by: openshift-service-serving-signer@1683236429
+      service.beta.openshift.io/serving-cert-secret-name: grafana-tls
+      service.beta.openshift.io/serving-cert-signed-by: openshift-service-serving-signer@1683236429
+    creationTimestamp: "2023-05-04T21:49:24Z"
+    labels:
+      app.kubernetes.io/component: grafana
+      app.kubernetes.io/name: grafana
+      app.kubernetes.io/part-of: openshift-monitoring
+      app.kubernetes.io/version: 8.3.4
+    name: grafana
+    namespace: openshift-monitoring
+    resourceVersion: "21500"
+    uid: 33226869-7ceb-4962-994e-a44b754c68ef
+  spec:
+    clusterIP: 172.30.192.227
+    clusterIPs:
+    - 172.30.192.227
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: https
+      port: 3000
+      protocol: TCP
+      targetPort: https
+    - name: metrics
+      port: 3002
+      protocol: TCP
+      targetPort: metrics
+    selector:
+      app.kubernetes.io/component: grafana
+      app.kubernetes.io/name: grafana
+      app.kubernetes.io/part-of: openshift-monitoring
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      service.alpha.openshift.io/serving-cert-signed-by: openshift-service-serving-signer@1683236429
+      service.beta.openshift.io/serving-cert-secret-name: kube-state-metrics-tls
+      service.beta.openshift.io/serving-cert-signed-by: openshift-service-serving-signer@1683236429
+    creationTimestamp: "2023-05-04T21:41:43Z"
+    labels:
+      app.kubernetes.io/component: exporter
+      app.kubernetes.io/name: kube-state-metrics
+      app.kubernetes.io/part-of: openshift-monitoring
+      app.kubernetes.io/version: 2.3.0
+    name: kube-state-metrics
+    namespace: openshift-monitoring
+    resourceVersion: "8772"
+    uid: 6b8d8997-d86e-41c4-be75-0e5fe52e1896
+  spec:
+    clusterIP: None
+    clusterIPs:
+    - None
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: https-main
+      port: 8443
+      protocol: TCP
+      targetPort: https-main
+    - name: https-self
+      port: 9443
+      protocol: TCP
+      targetPort: https-self
+    selector:
+      app.kubernetes.io/component: exporter
+      app.kubernetes.io/name: kube-state-metrics
+      app.kubernetes.io/part-of: openshift-monitoring
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      service.alpha.openshift.io/serving-cert-signed-by: openshift-service-serving-signer@1683236429
+      service.beta.openshift.io/serving-cert-secret-name: node-exporter-tls
+      service.beta.openshift.io/serving-cert-signed-by: openshift-service-serving-signer@1683236429
+    creationTimestamp: "2023-05-04T21:41:43Z"
+    labels:
+      app.kubernetes.io/component: exporter
+      app.kubernetes.io/name: node-exporter
+      app.kubernetes.io/part-of: openshift-monitoring
+      app.kubernetes.io/version: 1.3.1
+    name: node-exporter
+    namespace: openshift-monitoring
+    resourceVersion: "8763"
+    uid: e7f255f1-0d51-4ec5-8f96-a3cceb7135ad
+  spec:
+    clusterIP: None
+    clusterIPs:
+    - None
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: https
+      port: 9100
+      protocol: TCP
+      targetPort: https
+    selector:
+      app.kubernetes.io/component: exporter
+      app.kubernetes.io/name: node-exporter
+      app.kubernetes.io/part-of: openshift-monitoring
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      service.alpha.openshift.io/serving-cert-secret-name: openshift-state-metrics-tls
+      service.alpha.openshift.io/serving-cert-signed-by: openshift-service-serving-signer@1683236429
+      service.beta.openshift.io/serving-cert-signed-by: openshift-service-serving-signer@1683236429
+    creationTimestamp: "2023-05-04T21:41:43Z"
+    labels:
+      k8s-app: openshift-state-metrics
+    name: openshift-state-metrics
+    namespace: openshift-monitoring
+    resourceVersion: "8764"
+    uid: c24e18bc-cb73-48c8-ba09-447e8cc36a22
+  spec:
+    clusterIP: None
+    clusterIPs:
+    - None
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: https-main
+      port: 8443
+      protocol: TCP
+      targetPort: https-main
+    - name: https-self
+      port: 9443
+      protocol: TCP
+      targetPort: https-self
+    selector:
+      app.kubernetes.io/component: exporter
+      app.kubernetes.io/name: openshift-state-metrics
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      service.alpha.openshift.io/serving-cert-signed-by: openshift-service-serving-signer@1683236429
+      service.beta.openshift.io/serving-cert-secret-name: prometheus-adapter-tls
+      service.beta.openshift.io/serving-cert-signed-by: openshift-service-serving-signer@1683236429
+    creationTimestamp: "2023-05-04T21:41:44Z"
+    labels:
+      app.kubernetes.io/component: metrics-adapter
+      app.kubernetes.io/name: prometheus-adapter
+      app.kubernetes.io/part-of: openshift-monitoring
+      app.kubernetes.io/version: 0.9.1
+    name: prometheus-adapter
+    namespace: openshift-monitoring
+    resourceVersion: "8885"
+    uid: 1ac0170f-0c1a-4cbc-88b7-5bed8a2af0d5
+  spec:
+    clusterIP: 172.30.176.67
+    clusterIPs:
+    - 172.30.176.67
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: https
+      port: 443
+      protocol: TCP
+      targetPort: 6443
+    selector:
+      app.kubernetes.io/component: metrics-adapter
+      app.kubernetes.io/name: prometheus-adapter
+      app.kubernetes.io/part-of: openshift-monitoring
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      service.alpha.openshift.io/serving-cert-signed-by: openshift-service-serving-signer@1683236429
+      service.beta.openshift.io/serving-cert-secret-name: prometheus-k8s-tls
+      service.beta.openshift.io/serving-cert-signed-by: openshift-service-serving-signer@1683236429
+    creationTimestamp: "2023-05-04T21:49:26Z"
+    labels:
+      app.kubernetes.io/component: prometheus
+      app.kubernetes.io/instance: k8s
+      app.kubernetes.io/name: prometheus
+      app.kubernetes.io/part-of: openshift-monitoring
+      app.kubernetes.io/version: 2.32.1
+    name: prometheus-k8s
+    namespace: openshift-monitoring
+    resourceVersion: "21620"
+    uid: 84bb23fd-f8d7-422c-8879-83546d283297
+  spec:
+    clusterIP: 172.30.134.103
+    clusterIPs:
+    - 172.30.134.103
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: web
+      port: 9091
+      protocol: TCP
+      targetPort: web
+    - name: metrics
+      port: 9092
+      protocol: TCP
+      targetPort: metrics
+    selector:
+      app.kubernetes.io/component: prometheus
+      app.kubernetes.io/instance: k8s
+      app.kubernetes.io/name: prometheus
+      app.kubernetes.io/part-of: openshift-monitoring
+    sessionAffinity: ClientIP
+    sessionAffinityConfig:
+      clientIP:
+        timeoutSeconds: 10800
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      service.alpha.openshift.io/serving-cert-signed-by: openshift-service-serving-signer@1683236429
+      service.beta.openshift.io/serving-cert-secret-name: prometheus-k8s-thanos-sidecar-tls
+      service.beta.openshift.io/serving-cert-signed-by: openshift-service-serving-signer@1683236429
+    creationTimestamp: "2023-05-04T21:49:26Z"
+    labels:
+      app.kubernetes.io/component: thanos-sidecar
+      app.kubernetes.io/instance: k8s
+      app.kubernetes.io/name: prometheus
+      app.kubernetes.io/part-of: openshift-monitoring
+      app.kubernetes.io/version: 2.32.1
+    name: prometheus-k8s-thanos-sidecar
+    namespace: openshift-monitoring
+    resourceVersion: "21613"
+    uid: e349079f-ac53-4046-9a2f-d84023005e70
+  spec:
+    clusterIP: None
+    clusterIPs:
+    - None
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: thanos-proxy
+      port: 10902
+      protocol: TCP
+      targetPort: thanos-proxy
+    selector:
+      app.kubernetes.io/component: prometheus
+      app.kubernetes.io/instance: k8s
+      app.kubernetes.io/name: prometheus
+      app.kubernetes.io/part-of: openshift-monitoring
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    creationTimestamp: "2023-05-04T21:49:34Z"
+    labels:
+      operated-prometheus: "true"
+    name: prometheus-operated
+    namespace: openshift-monitoring
+    ownerReferences:
+    - apiVersion: monitoring.coreos.com/v1
+      kind: Prometheus
+      name: k8s
+      uid: ff321bb8-77dc-498d-a6c3-b6e26fef2a33
+    resourceVersion: "22106"
+    uid: 1f00a8d7-401a-4b2c-91c6-81da0ce20b73
+  spec:
+    clusterIP: None
+    clusterIPs:
+    - None
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: web
+      port: 9090
+      protocol: TCP
+      targetPort: web
+    - name: grpc
+      port: 10901
+      protocol: TCP
+      targetPort: grpc
+    selector:
+      app.kubernetes.io/name: prometheus
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      service.alpha.openshift.io/serving-cert-signed-by: openshift-service-serving-signer@1683236429
+      service.beta.openshift.io/serving-cert-secret-name: prometheus-operator-tls
+      service.beta.openshift.io/serving-cert-signed-by: openshift-service-serving-signer@1683236429
+    creationTimestamp: "2023-05-04T21:41:26Z"
+    labels:
+      app.kubernetes.io/component: controller
+      app.kubernetes.io/name: prometheus-operator
+      app.kubernetes.io/part-of: openshift-monitoring
+      app.kubernetes.io/version: 0.53.1
+    name: prometheus-operator
+    namespace: openshift-monitoring
+    resourceVersion: "7799"
+    uid: 23eda7f7-b9e5-452f-adcc-de9084d5b3e0
+  spec:
+    clusterIP: None
+    clusterIPs:
+    - None
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: https
+      port: 8443
+      protocol: TCP
+      targetPort: https
+    - name: web
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    selector:
+      app.kubernetes.io/component: controller
+      app.kubernetes.io/name: prometheus-operator
+      app.kubernetes.io/part-of: openshift-monitoring
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      service.alpha.openshift.io/serving-cert-secret-name: telemeter-client-tls
+      service.alpha.openshift.io/serving-cert-signed-by: openshift-service-serving-signer@1683236429
+      service.beta.openshift.io/serving-cert-signed-by: openshift-service-serving-signer@1683236429
+    creationTimestamp: "2023-05-04T21:48:14Z"
+    labels:
+      k8s-app: telemeter-client
+    name: telemeter-client
+    namespace: openshift-monitoring
+    resourceVersion: "17954"
+    uid: eb53ea9e-f21e-489f-ba57-8d382fd1dc52
+  spec:
+    clusterIP: None
+    clusterIPs:
+    - None
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: https
+      port: 8443
+      protocol: TCP
+      targetPort: https
+    selector:
+      app.kubernetes.io/component: telemetry-metrics-collector
+      app.kubernetes.io/name: telemeter-client
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      service.alpha.openshift.io/serving-cert-signed-by: openshift-service-serving-signer@1683236429
+      service.beta.openshift.io/serving-cert-secret-name: thanos-querier-tls
+      service.beta.openshift.io/serving-cert-signed-by: openshift-service-serving-signer@1683236429
+    creationTimestamp: "2023-05-04T21:41:43Z"
+    labels:
+      app.kubernetes.io/component: query-layer
+      app.kubernetes.io/instance: thanos-querier
+      app.kubernetes.io/name: thanos-query
+      app.kubernetes.io/part-of: openshift-monitoring
+      app.kubernetes.io/version: 0.23.2
+    name: thanos-querier
+    namespace: openshift-monitoring
+    resourceVersion: "8742"
+    uid: f72d00e0-b2c6-439c-b673-89d761a0d976
+  spec:
+    clusterIP: 172.30.26.113
+    clusterIPs:
+    - 172.30.26.113
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: web
+      port: 9091
+      protocol: TCP
+      targetPort: web
+    - name: tenancy
+      port: 9092
+      protocol: TCP
+      targetPort: tenancy
+    - name: tenancy-rules
+      port: 9093
+      protocol: TCP
+      targetPort: tenancy-rules
+    - name: metrics
+      port: 9094
+      protocol: TCP
+      targetPort: metrics
+    selector:
+      app.kubernetes.io/component: query-layer
+      app.kubernetes.io/instance: thanos-querier
+      app.kubernetes.io/name: thanos-query
+      app.kubernetes.io/part-of: openshift-monitoring
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

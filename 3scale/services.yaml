@@ -1,0 +1,493 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: "2023-06-04T23:50:46Z"
+    labels:
+      app: 3scale-api-management
+      migration.openshift.io/migrated-by-migmigration: d260e821-c8d9-409f-9013-a81dd35264d4
+      migration.openshift.io/migrated-by-migplan: 49357516-407e-4d22-8a38-498daa6ef155
+      threescale_component: apicast
+      threescale_component_element: production
+      velero.io/backup-name: migration-05da4-initial-s7jkt
+      velero.io/restore-name: migration-05da4-final-h89cb
+    name: apicast-production
+    namespace: 3scale
+    resourceVersion: "20279636"
+    uid: 01d4de9b-0ebd-4a37-b4c7-fd3f94c4bb1e
+  spec:
+    clusterIP: 172.30.47.159
+    clusterIPs:
+    - 172.30.47.159
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: gateway
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    - name: management
+      port: 8090
+      protocol: TCP
+      targetPort: 8090
+    selector:
+      deploymentConfig: apicast-production
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: "2023-06-04T23:50:46Z"
+    labels:
+      app: 3scale-api-management
+      migration.openshift.io/migrated-by-migmigration: d260e821-c8d9-409f-9013-a81dd35264d4
+      migration.openshift.io/migrated-by-migplan: 49357516-407e-4d22-8a38-498daa6ef155
+      threescale_component: apicast
+      threescale_component_element: staging
+      velero.io/backup-name: migration-05da4-initial-s7jkt
+      velero.io/restore-name: migration-05da4-final-h89cb
+    name: apicast-staging
+    namespace: 3scale
+    resourceVersion: "20279640"
+    uid: 5bc9298a-01f8-466d-88b1-0800b5ab987a
+  spec:
+    clusterIP: 172.30.22.172
+    clusterIPs:
+    - 172.30.22.172
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: gateway
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    - name: management
+      port: 8090
+      protocol: TCP
+      targetPort: 8090
+    selector:
+      deploymentConfig: apicast-staging
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: "2023-06-04T23:50:46Z"
+    labels:
+      app: 3scale-api-management
+      migration.openshift.io/migrated-by-migmigration: d260e821-c8d9-409f-9013-a81dd35264d4
+      migration.openshift.io/migrated-by-migplan: 49357516-407e-4d22-8a38-498daa6ef155
+      threescale_component: backend
+      threescale_component_element: listener
+      velero.io/backup-name: migration-05da4-initial-s7jkt
+      velero.io/restore-name: migration-05da4-final-h89cb
+    name: backend-listener
+    namespace: 3scale
+    resourceVersion: "20279647"
+    uid: 311efc08-3f59-48df-bee3-8f0cc9e43783
+  spec:
+    clusterIP: 172.30.205.138
+    clusterIPs:
+    - 172.30.205.138
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: http
+      port: 3000
+      protocol: TCP
+      targetPort: 3000
+    selector:
+      deploymentConfig: backend-listener
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: "2023-06-04T23:50:46Z"
+    labels:
+      app: 3scale-api-management
+      migration.openshift.io/migrated-by-migmigration: d260e821-c8d9-409f-9013-a81dd35264d4
+      migration.openshift.io/migrated-by-migplan: 49357516-407e-4d22-8a38-498daa6ef155
+      threescale_component: backend
+      threescale_component_element: redis
+      velero.io/backup-name: migration-05da4-initial-s7jkt
+      velero.io/restore-name: migration-05da4-final-h89cb
+    name: backend-redis
+    namespace: 3scale
+    resourceVersion: "20279658"
+    uid: 3df4a311-cd73-4a82-8683-b8b6c3feb814
+  spec:
+    clusterIP: 172.30.170.117
+    clusterIPs:
+    - 172.30.170.117
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - port: 6379
+      protocol: TCP
+      targetPort: 6379
+    selector:
+      deploymentConfig: backend-redis
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: "2023-06-04T23:50:46Z"
+    labels:
+      app: 3scale-api-management
+      migration.openshift.io/migrated-by-migmigration: d260e821-c8d9-409f-9013-a81dd35264d4
+      migration.openshift.io/migrated-by-migplan: 49357516-407e-4d22-8a38-498daa6ef155
+      threescale_component: system
+      threescale_component_element: developer-ui
+      velero.io/backup-name: migration-05da4-initial-s7jkt
+      velero.io/restore-name: migration-05da4-final-h89cb
+    name: system-developer
+    namespace: 3scale
+    resourceVersion: "20279672"
+    uid: 3ca39230-f88b-4db4-91a1-a7e0307715b0
+  spec:
+    clusterIP: 172.30.78.133
+    clusterIPs:
+    - 172.30.78.133
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: http
+      port: 3000
+      protocol: TCP
+      targetPort: developer
+    selector:
+      deploymentConfig: system-app
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: "2023-06-04T23:50:46Z"
+    labels:
+      app: 3scale-api-management
+      migration.openshift.io/migrated-by-migmigration: d260e821-c8d9-409f-9013-a81dd35264d4
+      migration.openshift.io/migrated-by-migplan: 49357516-407e-4d22-8a38-498daa6ef155
+      threescale_component: system
+      threescale_component_element: master-ui
+      velero.io/backup-name: migration-05da4-initial-s7jkt
+      velero.io/restore-name: migration-05da4-final-h89cb
+    name: system-master
+    namespace: 3scale
+    resourceVersion: "20279682"
+    uid: c51ed8bd-7dd2-4d25-9703-7e258f1fa591
+  spec:
+    clusterIP: 172.30.154.175
+    clusterIPs:
+    - 172.30.154.175
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: http
+      port: 3000
+      protocol: TCP
+      targetPort: master
+    selector:
+      deploymentConfig: system-app
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: "2023-06-04T23:50:46Z"
+    labels:
+      app: 3scale-api-management
+      migration.openshift.io/migrated-by-migmigration: d260e821-c8d9-409f-9013-a81dd35264d4
+      migration.openshift.io/migrated-by-migplan: 49357516-407e-4d22-8a38-498daa6ef155
+      threescale_component: system
+      threescale_component_element: memcache
+      velero.io/backup-name: migration-05da4-initial-s7jkt
+      velero.io/restore-name: migration-05da4-final-h89cb
+    name: system-memcache
+    namespace: 3scale
+    resourceVersion: "20279688"
+    uid: eb92cbe5-da10-47c5-a447-0475216ba34d
+  spec:
+    clusterIP: 172.30.187.165
+    clusterIPs:
+    - 172.30.187.165
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: memcache
+      port: 11211
+      protocol: TCP
+      targetPort: 11211
+    selector:
+      deploymentConfig: system-memcache
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: "2023-06-04T23:50:46Z"
+    labels:
+      app: 3scale-api-management
+      migration.openshift.io/migrated-by-migmigration: d260e821-c8d9-409f-9013-a81dd35264d4
+      migration.openshift.io/migrated-by-migplan: 49357516-407e-4d22-8a38-498daa6ef155
+      threescale_component: system
+      threescale_component_element: mysql
+      velero.io/backup-name: migration-05da4-initial-s7jkt
+      velero.io/restore-name: migration-05da4-final-h89cb
+    name: system-mysql
+    namespace: 3scale
+    resourceVersion: "20279696"
+    uid: 4d77b91e-4b39-473e-9185-446dc676902a
+  spec:
+    clusterIP: 172.30.180.63
+    clusterIPs:
+    - 172.30.180.63
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: system-mysql
+      port: 3306
+      protocol: TCP
+      targetPort: 3306
+    selector:
+      deploymentConfig: system-mysql
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: "2023-06-04T23:50:46Z"
+    labels:
+      app: 3scale-api-management
+      migration.openshift.io/migrated-by-migmigration: d260e821-c8d9-409f-9013-a81dd35264d4
+      migration.openshift.io/migrated-by-migplan: 49357516-407e-4d22-8a38-498daa6ef155
+      threescale_component: system
+      threescale_component_element: provider-ui
+      velero.io/backup-name: migration-05da4-initial-s7jkt
+      velero.io/restore-name: migration-05da4-final-h89cb
+    name: system-provider
+    namespace: 3scale
+    resourceVersion: "20279708"
+    uid: 9ef4b1c1-754b-439c-902e-1b78259cb140
+  spec:
+    clusterIP: 172.30.37.36
+    clusterIPs:
+    - 172.30.37.36
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: http
+      port: 3000
+      protocol: TCP
+      targetPort: provider
+    selector:
+      deploymentConfig: system-app
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: "2023-06-04T23:50:46Z"
+    labels:
+      app: 3scale-api-management
+      migration.openshift.io/migrated-by-migmigration: d260e821-c8d9-409f-9013-a81dd35264d4
+      migration.openshift.io/migrated-by-migplan: 49357516-407e-4d22-8a38-498daa6ef155
+      threescale_component: system
+      threescale_component_element: redis
+      velero.io/backup-name: migration-05da4-initial-s7jkt
+      velero.io/restore-name: migration-05da4-final-h89cb
+    name: system-redis
+    namespace: 3scale
+    resourceVersion: "20279719"
+    uid: 2ff51070-1015-4c25-abd1-4c4942ac2cb4
+  spec:
+    clusterIP: 172.30.104.63
+    clusterIPs:
+    - 172.30.104.63
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: redis
+      port: 6379
+      protocol: TCP
+      targetPort: 6379
+    selector:
+      deploymentConfig: system-redis
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: "2023-06-04T23:50:46Z"
+    labels:
+      app: 3scale-api-management
+      migration.openshift.io/migrated-by-migmigration: d260e821-c8d9-409f-9013-a81dd35264d4
+      migration.openshift.io/migrated-by-migplan: 49357516-407e-4d22-8a38-498daa6ef155
+      threescale_component: system
+      threescale_component_element: sphinx
+      velero.io/backup-name: migration-05da4-initial-s7jkt
+      velero.io/restore-name: migration-05da4-final-h89cb
+    name: system-sphinx
+    namespace: 3scale
+    resourceVersion: "20279733"
+    uid: 5033b9f0-5528-4d97-8dee-5b12f3877074
+  spec:
+    clusterIP: 172.30.186.116
+    clusterIPs:
+    - 172.30.186.116
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: sphinx
+      port: 9306
+      protocol: TCP
+      targetPort: 9306
+    selector:
+      deploymentConfig: system-sphinx
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: "2023-06-04T23:50:46Z"
+    labels:
+      app: 3scale-api-management
+      migration.openshift.io/migrated-by-migmigration: d260e821-c8d9-409f-9013-a81dd35264d4
+      migration.openshift.io/migrated-by-migplan: 49357516-407e-4d22-8a38-498daa6ef155
+      threescale_component: zync
+      velero.io/backup-name: migration-05da4-initial-s7jkt
+      velero.io/restore-name: migration-05da4-final-h89cb
+    name: zync
+    namespace: 3scale
+    resourceVersion: "20279745"
+    uid: f8d4528c-4607-404b-a5c2-9c2f6e9f8b9e
+  spec:
+    clusterIP: 172.30.86.100
+    clusterIPs:
+    - 172.30.86.100
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: 8080-tcp
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    selector:
+      deploymentConfig: zync
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: "2023-06-04T23:50:46Z"
+    labels:
+      app: 3scale-api-management
+      migration.openshift.io/migrated-by-migmigration: d260e821-c8d9-409f-9013-a81dd35264d4
+      migration.openshift.io/migrated-by-migplan: 49357516-407e-4d22-8a38-498daa6ef155
+      threescale_component: zync
+      threescale_component_element: database
+      velero.io/backup-name: migration-05da4-initial-s7jkt
+      velero.io/restore-name: migration-05da4-final-h89cb
+    name: zync-database
+    namespace: 3scale
+    resourceVersion: "20279741"
+    uid: c445dca6-6ebe-4884-9db2-ccfdec0cebc7
+  spec:
+    clusterIP: 172.30.197.230
+    clusterIPs:
+    - 172.30.197.230
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: postgresql
+      port: 5432
+      protocol: TCP
+      targetPort: 5432
+    selector:
+      deploymentConfig: zync-database
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

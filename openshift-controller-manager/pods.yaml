@@ -1,0 +1,588 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.130.1.103"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.130.1.103"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/scc: restricted
+      operator.openshift.io/force: 96b73cac-db73-4699-af9c-0a2c5ef4b264
+    creationTimestamp: "2024-07-30T04:34:23Z"
+    generateName: controller-manager-
+    labels:
+      app: openshift-controller-manager
+      controller-manager: "true"
+      controller-revision-hash: 5864c85b87
+      pod-template-generation: "202"
+    name: controller-manager-j8ssm
+    namespace: openshift-controller-manager
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DaemonSet
+      name: controller-manager
+      uid: 3b2a5a15-ac02-42f0-9fc7-a2c80477f398
+    resourceVersion: "487812174"
+    uid: 98815b47-c244-468c-80d6-8424c0500e1f
+  spec:
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchFields:
+            - key: metadata.name
+              operator: In
+              values:
+              - ocp4azu-sj2sl-master-1
+    containers:
+    - args:
+      - --config=/var/run/configmaps/config/config.yaml
+      - -v=2
+      command:
+      - openshift-controller-manager
+      - start
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:91a53833b4bd4cbad006cd0b249dc31784d00d342a209b192c63e08f86b99630
+      imagePullPolicy: IfNotPresent
+      name: controller-manager
+      ports:
+      - containerPort: 8443
+        protocol: TCP
+      resources:
+        requests:
+          cpu: 100m
+          memory: 100Mi
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000530000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: FallbackToLogsOnError
+      volumeMounts:
+      - mountPath: /var/run/configmaps/config
+        name: config
+      - mountPath: /var/run/configmaps/client-ca
+        name: client-ca
+      - mountPath: /var/run/secrets/serving-cert
+        name: serving-cert
+      - mountPath: /etc/pki/ca-trust/extracted/pem
+        name: proxy-ca-bundles
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-mmjfl
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: openshift-controller-manager-sa-dockercfg-pvk8p
+    nodeName: ocp4azu-sj2sl-master-1
+    nodeSelector:
+      node-role.kubernetes.io/master: ""
+    preemptionPolicy: PreemptLowerPriority
+    priority: 2000001000
+    priorityClassName: system-node-critical
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000530000
+      seLinuxOptions:
+        level: s0:c23,c12
+    serviceAccount: openshift-controller-manager-sa
+    serviceAccountName: openshift-controller-manager-sa
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - operator: Exists
+    volumes:
+    - configMap:
+        defaultMode: 420
+        name: config
+      name: config
+    - configMap:
+        defaultMode: 420
+        name: client-ca
+      name: client-ca
+    - name: serving-cert
+      secret:
+        defaultMode: 420
+        secretName: serving-cert
+    - configMap:
+        defaultMode: 420
+        items:
+        - key: ca-bundle.crt
+          path: tls-ca-bundle.pem
+        name: openshift-global-ca
+      name: proxy-ca-bundles
+    - name: kube-api-access-mmjfl
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-30T04:34:24Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-30T04:34:26Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-30T04:34:26Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-30T04:34:24Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://20855c6d91977634e401baeb5c4b46946b5948d583d88386391d376dfc5e6403
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:91a53833b4bd4cbad006cd0b249dc31784d00d342a209b192c63e08f86b99630
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:91a53833b4bd4cbad006cd0b249dc31784d00d342a209b192c63e08f86b99630
+      lastState: {}
+      name: controller-manager
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2024-07-30T04:34:26Z"
+    hostIP: 10.80.80.8
+    phase: Running
+    podIP: 10.130.1.103
+    podIPs:
+    - ip: 10.130.1.103
+    qosClass: Burstable
+    startTime: "2024-07-30T04:34:24Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.128.1.110"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.128.1.110"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/scc: restricted
+      operator.openshift.io/force: 96b73cac-db73-4699-af9c-0a2c5ef4b264
+    creationTimestamp: "2024-07-30T04:34:23Z"
+    generateName: controller-manager-
+    labels:
+      app: openshift-controller-manager
+      controller-manager: "true"
+      controller-revision-hash: 5864c85b87
+      pod-template-generation: "202"
+    name: controller-manager-nbwml
+    namespace: openshift-controller-manager
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DaemonSet
+      name: controller-manager
+      uid: 3b2a5a15-ac02-42f0-9fc7-a2c80477f398
+    resourceVersion: "487812131"
+    uid: c06a0d63-24f8-4f12-bce6-759b2c05d260
+  spec:
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchFields:
+            - key: metadata.name
+              operator: In
+              values:
+              - ocp4azu-sj2sl-master-2
+    containers:
+    - args:
+      - --config=/var/run/configmaps/config/config.yaml
+      - -v=2
+      command:
+      - openshift-controller-manager
+      - start
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:91a53833b4bd4cbad006cd0b249dc31784d00d342a209b192c63e08f86b99630
+      imagePullPolicy: IfNotPresent
+      name: controller-manager
+      ports:
+      - containerPort: 8443
+        protocol: TCP
+      resources:
+        requests:
+          cpu: 100m
+          memory: 100Mi
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000530000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: FallbackToLogsOnError
+      volumeMounts:
+      - mountPath: /var/run/configmaps/config
+        name: config
+      - mountPath: /var/run/configmaps/client-ca
+        name: client-ca
+      - mountPath: /var/run/secrets/serving-cert
+        name: serving-cert
+      - mountPath: /etc/pki/ca-trust/extracted/pem
+        name: proxy-ca-bundles
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-4wzcs
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: openshift-controller-manager-sa-dockercfg-pvk8p
+    nodeName: ocp4azu-sj2sl-master-2
+    nodeSelector:
+      node-role.kubernetes.io/master: ""
+    preemptionPolicy: PreemptLowerPriority
+    priority: 2000001000
+    priorityClassName: system-node-critical
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000530000
+      seLinuxOptions:
+        level: s0:c23,c12
+    serviceAccount: openshift-controller-manager-sa
+    serviceAccountName: openshift-controller-manager-sa
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - operator: Exists
+    volumes:
+    - configMap:
+        defaultMode: 420
+        name: config
+      name: config
+    - configMap:
+        defaultMode: 420
+        name: client-ca
+      name: client-ca
+    - name: serving-cert
+      secret:
+        defaultMode: 420
+        secretName: serving-cert
+    - configMap:
+        defaultMode: 420
+        items:
+        - key: ca-bundle.crt
+          path: tls-ca-bundle.pem
+        name: openshift-global-ca
+      name: proxy-ca-bundles
+    - name: kube-api-access-4wzcs
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-30T04:34:23Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-30T04:34:25Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-30T04:34:25Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-30T04:34:23Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://b387ab020e9de8ba1b47fe1b91c89350baa6f66638baae4f6df2902d3f6748bc
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:91a53833b4bd4cbad006cd0b249dc31784d00d342a209b192c63e08f86b99630
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:91a53833b4bd4cbad006cd0b249dc31784d00d342a209b192c63e08f86b99630
+      lastState: {}
+      name: controller-manager
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2024-07-30T04:34:25Z"
+    hostIP: 10.80.80.7
+    phase: Running
+    podIP: 10.128.1.110
+    podIPs:
+    - ip: 10.128.1.110
+    qosClass: Burstable
+    startTime: "2024-07-30T04:34:23Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.129.0.64"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.129.0.64"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/scc: restricted
+      operator.openshift.io/force: 96b73cac-db73-4699-af9c-0a2c5ef4b264
+    creationTimestamp: "2024-07-30T04:34:23Z"
+    generateName: controller-manager-
+    labels:
+      app: openshift-controller-manager
+      controller-manager: "true"
+      controller-revision-hash: 5864c85b87
+      pod-template-generation: "202"
+    name: controller-manager-wrr62
+    namespace: openshift-controller-manager
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DaemonSet
+      name: controller-manager
+      uid: 3b2a5a15-ac02-42f0-9fc7-a2c80477f398
+    resourceVersion: "487812163"
+    uid: d425a602-0fa0-4128-9d26-e6f2c0c9e9dd
+  spec:
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchFields:
+            - key: metadata.name
+              operator: In
+              values:
+              - ocp4azu-sj2sl-master-0
+    containers:
+    - args:
+      - --config=/var/run/configmaps/config/config.yaml
+      - -v=2
+      command:
+      - openshift-controller-manager
+      - start
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:91a53833b4bd4cbad006cd0b249dc31784d00d342a209b192c63e08f86b99630
+      imagePullPolicy: IfNotPresent
+      name: controller-manager
+      ports:
+      - containerPort: 8443
+        protocol: TCP
+      resources:
+        requests:
+          cpu: 100m
+          memory: 100Mi
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000530000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: FallbackToLogsOnError
+      volumeMounts:
+      - mountPath: /var/run/configmaps/config
+        name: config
+      - mountPath: /var/run/configmaps/client-ca
+        name: client-ca
+      - mountPath: /var/run/secrets/serving-cert
+        name: serving-cert
+      - mountPath: /etc/pki/ca-trust/extracted/pem
+        name: proxy-ca-bundles
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-8d78n
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: openshift-controller-manager-sa-dockercfg-pvk8p
+    nodeName: ocp4azu-sj2sl-master-0
+    nodeSelector:
+      node-role.kubernetes.io/master: ""
+    preemptionPolicy: PreemptLowerPriority
+    priority: 2000001000
+    priorityClassName: system-node-critical
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000530000
+      seLinuxOptions:
+        level: s0:c23,c12
+    serviceAccount: openshift-controller-manager-sa
+    serviceAccountName: openshift-controller-manager-sa
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - operator: Exists
+    volumes:
+    - configMap:
+        defaultMode: 420
+        name: config
+      name: config
+    - configMap:
+        defaultMode: 420
+        name: client-ca
+      name: client-ca
+    - name: serving-cert
+      secret:
+        defaultMode: 420
+        secretName: serving-cert
+    - configMap:
+        defaultMode: 420
+        items:
+        - key: ca-bundle.crt
+          path: tls-ca-bundle.pem
+        name: openshift-global-ca
+      name: proxy-ca-bundles
+    - name: kube-api-access-8d78n
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-30T04:34:23Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-30T04:34:26Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-30T04:34:26Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-30T04:34:23Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://cd8965f87c490316e76557f67108101e7072abd970fcd7187fe8d6dc4c7a741c
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:91a53833b4bd4cbad006cd0b249dc31784d00d342a209b192c63e08f86b99630
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:91a53833b4bd4cbad006cd0b249dc31784d00d342a209b192c63e08f86b99630
+      lastState: {}
+      name: controller-manager
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2024-07-30T04:34:26Z"
+    hostIP: 10.80.80.6
+    phase: Running
+    podIP: 10.129.0.64
+    podIPs:
+    - ip: 10.129.0.64
+    qosClass: Burstable
+    startTime: "2024-07-30T04:34:23Z"
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

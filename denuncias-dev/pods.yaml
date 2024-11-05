@@ -1,0 +1,560 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.130.20.108"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.130.20.108"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/deployment-config.latest-version: "1"
+      openshift.io/deployment-config.name: dptc-serv002-bff
+      openshift.io/deployment.name: dptc-serv002-bff-1
+      openshift.io/scc: restricted
+    creationTimestamp: "2024-05-02T14:16:53Z"
+    generateName: dptc-serv002-bff-1-
+    labels:
+      app: dptc-serv002-bff
+      deployment: dptc-serv002-bff-1
+      deploymentconfig: dptc-serv002-bff
+    name: dptc-serv002-bff-1-spnfd
+    namespace: denuncias-dev
+    ownerReferences:
+    - apiVersion: v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicationController
+      name: dptc-serv002-bff-1
+      uid: b930226b-fd63-4226-8a89-b3c101f7118b
+    resourceVersion: "494752379"
+    uid: 021c8b71-cd5e-4975-8943-2e83877c164b
+  spec:
+    containers:
+    - env:
+      - name: TZ
+        value: America/Santiago
+      - name: DATABASE_HOST
+        value: sql-bd-dtdesa
+      - name: DATABASE_PORT
+        value: "1433"
+      - name: DATABASE_DATABASE
+        value: DenunciaTerminoContrato
+      - name: DATABASE_USERNAME
+        value: UserDenunciaTerminoContrato
+      - name: DATABASE_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            key: DATABASE_PASSWORD
+            name: denuncia-termino-contrato-bd-password-dev
+      - name: PROXY_TIMEOUT
+        value: "30000"
+      - name: PROXY_MAX_REDIRECTS
+        value: "5"
+      - name: DESACTIVAR_VALIDACION_RUT_TOKEN
+        value: "true"
+      - name: URL_ENDPOINT_COMUNAS
+        value: http://proxy001-serv-externos.denuncias-dev.svc:8080/api/metadata/distribucionTerritorial/Comunas
+      - name: URL_ENDPOINT_COMUNASREGION
+        value: http://proxy001-serv-externos.denuncias-dev.svc:8080/api/metadata/distribucionTerritorial/RegionProvinciaComunas
+      - name: URL_ENDPOINT_REGIONES
+        value: http://proxy001-serv-externos.denuncias-dev.svc:8080/api/metadata/distribucionTerritorial/Regiones
+      - name: URL_ENDPOINT_AFP
+        value: http://proxy001-serv-externos.denuncias-dev.svc:8080/api/metadata/publico/afp
+      - name: URL_ENDPOINT_ISAPRES
+        value: http://proxy001-serv-externos.denuncias-dev.svc:8080/api/metadata/publico/isapres
+      - name: URL_ENDPOINT_NACIONALIDADES
+        value: http://proxy001-serv-externos.denuncias-dev.svc:8080/api/metadata/publico/nacionalidades
+      - name: URL_ENDPOINT_EMPLEADOR
+        value: http://proxy001-serv-externos.denuncias-dev.svc:8080/api/metadata/maestroEmpresa/empleador?rut=
+      - name: URL_ENDPOINT_PERSONA
+        value: http://proxy001-serv-externos.denuncias-dev.svc:8080/api/metadata/registroCivil/persona?rut=
+      - name: CACHE_TTL_SECONDS_DEFAULT
+        value: "3600"
+      - name: CACHE_MAX_ITEMS
+        value: "10"
+      image: image-registry.openshift-image-registry.svc:5000/denuncias-dev/dptc-serv002-bff@sha256:918d8478a015e1d2441ed6e591fe725dc3b7153b017d6b7d9697346ab390fb71
+      imagePullPolicy: Always
+      name: dptc-serv002-bff
+      ports:
+      - containerPort: 8080
+        protocol: TCP
+      resources:
+        limits:
+          cpu: 100m
+          memory: 300Mi
+        requests:
+          cpu: 10m
+          memory: 100Mi
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000180000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-w7mp2
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: default-dockercfg-6w7wb
+    nodeName: ocp4azu-sj2sl-worker-noprod-dev-brazilsouth1-vlxcp
+    nodeSelector:
+      environment: development
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000180000
+      seLinuxOptions:
+        level: s0:c13,c12
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoSchedule
+      key: node.kubernetes.io/memory-pressure
+      operator: Exists
+    volumes:
+    - name: kube-api-access-w7mp2
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2024-05-02T14:16:53Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2024-08-02T12:19:53Z"
+      message: 'containers with unready status: [dptc-serv002-bff]'
+      reason: ContainersNotReady
+      status: "False"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2024-08-02T12:19:53Z"
+      message: 'containers with unready status: [dptc-serv002-bff]'
+      reason: ContainersNotReady
+      status: "False"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2024-05-02T14:16:53Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://017327083c032812a337ddc22e960462fdb39c2452d4212527fa380ef9416677
+      image: image-registry.openshift-image-registry.svc:5000/denuncias-dev/dptc-serv002-bff@sha256:918d8478a015e1d2441ed6e591fe725dc3b7153b017d6b7d9697346ab390fb71
+      imageID: image-registry.openshift-image-registry.svc:5000/denuncias-dev/dptc-serv002-bff@sha256:918d8478a015e1d2441ed6e591fe725dc3b7153b017d6b7d9697346ab390fb71
+      lastState:
+        terminated:
+          containerID: cri-o://017327083c032812a337ddc22e960462fdb39c2452d4212527fa380ef9416677
+          exitCode: 1
+          finishedAt: "2024-08-02T12:19:52Z"
+          reason: Error
+          startedAt: "2024-08-02T12:18:59Z"
+      name: dptc-serv002-bff
+      ready: false
+      restartCount: 22104
+      started: false
+      state:
+        waiting:
+          message: back-off 5m0s restarting failed container=dptc-serv002-bff pod=dptc-serv002-bff-1-spnfd_denuncias-dev(021c8b71-cd5e-4975-8943-2e83877c164b)
+          reason: CrashLoopBackOff
+    hostIP: 10.80.80.5
+    phase: Running
+    podIP: 10.130.20.108
+    podIPs:
+    - ip: 10.130.20.108
+    qosClass: Burstable
+    startTime: "2024-05-02T14:16:53Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.130.20.106"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.130.20.106"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/deployment-config.latest-version: "1"
+      openshift.io/deployment-config.name: front001-denuncias
+      openshift.io/deployment.name: front001-denuncias-1
+      openshift.io/scc: restricted
+    creationTimestamp: "2024-05-02T14:16:53Z"
+    generateName: front001-denuncias-1-
+    labels:
+      app: front001-denuncias
+      deployment: front001-denuncias-1
+      deploymentconfig: front001-denuncias
+    name: front001-denuncias-1-sclc6
+    namespace: denuncias-dev
+    ownerReferences:
+    - apiVersion: v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicationController
+      name: front001-denuncias-1
+      uid: 4fe05170-3c2c-447b-9b0c-04f9d9849e18
+    resourceVersion: "476624831"
+    uid: 30a3ff9e-5e92-435c-a46c-ec43656fc34e
+  spec:
+    containers:
+    - env:
+      - name: TZ
+        value: America/Santiago
+      image: image-registry.openshift-image-registry.svc:5000/denuncias-dev/front001-denuncias@sha256:7b4fc30f1510da95816bf5e047066d3d9a42c7264b6f6bb14da16963df0ec5a3
+      imagePullPolicy: Always
+      name: front001-denuncias
+      ports:
+      - containerPort: 8080
+        protocol: TCP
+      resources:
+        limits:
+          cpu: 100m
+          memory: 100Mi
+        requests:
+          cpu: 10m
+          memory: 10Mi
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000180000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-mb2xg
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: default-dockercfg-6w7wb
+    nodeName: ocp4azu-sj2sl-worker-noprod-dev-brazilsouth1-vlxcp
+    nodeSelector:
+      environment: development
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000180000
+      seLinuxOptions:
+        level: s0:c13,c12
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoSchedule
+      key: node.kubernetes.io/memory-pressure
+      operator: Exists
+    volumes:
+    - name: kube-api-access-mb2xg
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2024-05-02T14:16:53Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2024-05-02T14:17:00Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2024-05-02T14:17:00Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2024-05-02T14:16:53Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://34c6c8c9949f76495bac18a7e5ce37020f7884dcbdb64502644d93676c14b3f3
+      image: image-registry.openshift-image-registry.svc:5000/denuncias-dev/front001-denuncias@sha256:7b4fc30f1510da95816bf5e047066d3d9a42c7264b6f6bb14da16963df0ec5a3
+      imageID: image-registry.openshift-image-registry.svc:5000/denuncias-dev/front001-denuncias@sha256:7b4fc30f1510da95816bf5e047066d3d9a42c7264b6f6bb14da16963df0ec5a3
+      lastState: {}
+      name: front001-denuncias
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2024-05-02T14:16:58Z"
+    hostIP: 10.80.80.5
+    phase: Running
+    podIP: 10.130.20.106
+    podIPs:
+    - ip: 10.130.20.106
+    qosClass: Burstable
+    startTime: "2024-05-02T14:16:53Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.130.20.105"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.130.20.105"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/deployment-config.latest-version: "1"
+      openshift.io/deployment-config.name: proxy001-serv-externos
+      openshift.io/deployment.name: proxy001-serv-externos-1
+      openshift.io/scc: restricted
+    creationTimestamp: "2024-05-02T14:16:53Z"
+    generateName: proxy001-serv-externos-1-
+    labels:
+      app: proxy001-serv-externos
+      deployment: proxy001-serv-externos-1
+      deploymentconfig: proxy001-serv-externos
+    name: proxy001-serv-externos-1-gz2z4
+    namespace: denuncias-dev
+    ownerReferences:
+    - apiVersion: v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicationController
+      name: proxy001-serv-externos-1
+      uid: 796a0a3f-90f1-4116-86eb-8349dedc71f2
+    resourceVersion: "476624827"
+    uid: 84d8d54b-d39a-45ff-aa3b-4cd1129f80f9
+  spec:
+    containers:
+    - env:
+      - name: TZ
+        value: America/Santiago
+      image: image-registry.openshift-image-registry.svc:5000/denuncias-dev/proxy001-serv-externos@sha256:7271013933bc42283da2b7b98d40e8d48535cf884d24583789fb62bdfe0daefa
+      imagePullPolicy: Always
+      name: proxy001-serv-externos
+      ports:
+      - containerPort: 8080
+        protocol: TCP
+      resources:
+        limits:
+          cpu: 100m
+          memory: 300Mi
+        requests:
+          cpu: 50m
+          memory: 50Mi
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000180000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-9pq9q
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: default-dockercfg-6w7wb
+    nodeName: ocp4azu-sj2sl-worker-noprod-dev-brazilsouth1-vlxcp
+    nodeSelector:
+      environment: development
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000180000
+      seLinuxOptions:
+        level: s0:c13,c12
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoSchedule
+      key: node.kubernetes.io/memory-pressure
+      operator: Exists
+    volumes:
+    - name: kube-api-access-9pq9q
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2024-05-02T14:16:53Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2024-05-02T14:17:00Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2024-05-02T14:17:00Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2024-05-02T14:16:53Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://e233adffb671017f3b930bed9a21e52f63801bdc86370c3c5c96169b0568fbca
+      image: image-registry.openshift-image-registry.svc:5000/denuncias-dev/proxy001-serv-externos@sha256:7271013933bc42283da2b7b98d40e8d48535cf884d24583789fb62bdfe0daefa
+      imageID: image-registry.openshift-image-registry.svc:5000/denuncias-dev/proxy001-serv-externos@sha256:7271013933bc42283da2b7b98d40e8d48535cf884d24583789fb62bdfe0daefa
+      lastState: {}
+      name: proxy001-serv-externos
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2024-05-02T14:16:58Z"
+    hostIP: 10.80.80.5
+    phase: Running
+    podIP: 10.130.20.105
+    podIPs:
+    - ip: 10.130.20.105
+    qosClass: Burstable
+    startTime: "2024-05-02T14:16:53Z"
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

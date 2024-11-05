@@ -1,0 +1,201 @@
+apiVersion: v1
+items:
+- apiVersion: apps/v1
+  data:
+    spec:
+      template:
+        $patch: replace
+        metadata:
+          annotations:
+            target.workload.openshift.io/management: '{"effect": "PreferredDuringScheduling"}'
+          creationTimestamp: null
+          labels:
+            k8s-app: machine-config-daemon
+          name: machine-config-daemon
+        spec:
+          containers:
+          - args:
+            - start
+            command:
+            - /usr/bin/machine-config-daemon
+            env:
+            - name: NODE_NAME
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: spec.nodeName
+            image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:79d5795925dd513ab2e5710b72bfdc51e289cf67fe2f4508bda85647233446d9
+            imagePullPolicy: IfNotPresent
+            name: machine-config-daemon
+            resources:
+              requests:
+                cpu: 20m
+                memory: 50Mi
+            securityContext:
+              privileged: true
+            terminationMessagePath: /dev/termination-log
+            terminationMessagePolicy: FallbackToLogsOnError
+            volumeMounts:
+            - mountPath: /rootfs
+              name: rootfs
+          - args:
+            - --https-address=:9001
+            - --provider=openshift
+            - --openshift-service-account=machine-config-daemon
+            - --upstream=http://127.0.0.1:8797
+            - --tls-cert=/etc/tls/private/tls.crt
+            - --tls-key=/etc/tls/private/tls.key
+            - --cookie-secret-file=/etc/tls/cookie-secret/cookie-secret
+            - '--openshift-sar={"resource": "namespaces", "verb": "get"}'
+            - '--openshift-delegate-urls={"/": {"resource": "namespaces", "verb":
+              "get"}}'
+            image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:65234696ad55f1c997665762491e05c2137898dcd595180cc5337e268bc5fc3c
+            imagePullPolicy: IfNotPresent
+            name: oauth-proxy
+            ports:
+            - containerPort: 9001
+              hostPort: 9001
+              name: metrics
+              protocol: TCP
+            resources:
+              requests:
+                cpu: 20m
+                memory: 50Mi
+            terminationMessagePath: /dev/termination-log
+            terminationMessagePolicy: File
+            volumeMounts:
+            - mountPath: /etc/tls/private
+              name: proxy-tls
+            - mountPath: /etc/tls/cookie-secret
+              name: cookie-secret
+          dnsPolicy: ClusterFirst
+          hostNetwork: true
+          hostPID: true
+          nodeSelector:
+            kubernetes.io/os: linux
+          priorityClassName: system-node-critical
+          restartPolicy: Always
+          schedulerName: default-scheduler
+          securityContext: {}
+          serviceAccount: machine-config-daemon
+          serviceAccountName: machine-config-daemon
+          terminationGracePeriodSeconds: 600
+          tolerations:
+          - operator: Exists
+          volumes:
+          - hostPath:
+              path: /
+              type: ""
+            name: rootfs
+          - name: proxy-tls
+            secret:
+              defaultMode: 420
+              secretName: proxy-tls
+          - name: cookie-secret
+            secret:
+              defaultMode: 420
+              secretName: cookie-secret
+  kind: ControllerRevision
+  metadata:
+    annotations:
+      deprecated.daemonset.template.generation: "1"
+    creationTimestamp: "2023-05-04T21:40:30Z"
+    labels:
+      controller-revision-hash: 5bb44df779
+      k8s-app: machine-config-daemon
+    name: machine-config-daemon-5bb44df779
+    namespace: openshift-machine-config-operator
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DaemonSet
+      name: machine-config-daemon
+      uid: 62b02da1-7fd8-4f5c-aef6-282c6f2cbc55
+    resourceVersion: "4787"
+    uid: f299cf8a-6bfe-4d6d-8cb5-c19fc41fec57
+  revision: 1
+- apiVersion: apps/v1
+  data:
+    spec:
+      template:
+        $patch: replace
+        metadata:
+          annotations:
+            target.workload.openshift.io/management: '{"effect": "PreferredDuringScheduling"}'
+          creationTimestamp: null
+          labels:
+            k8s-app: machine-config-server
+          name: machine-config-server
+        spec:
+          containers:
+          - args:
+            - start
+            - --apiserver-url=https://api-int.ocp4azu.dirtrab.cl:6443
+            command:
+            - /usr/bin/machine-config-server
+            image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:79d5795925dd513ab2e5710b72bfdc51e289cf67fe2f4508bda85647233446d9
+            imagePullPolicy: IfNotPresent
+            name: machine-config-server
+            resources:
+              requests:
+                cpu: 20m
+                memory: 50Mi
+            terminationMessagePath: /dev/termination-log
+            terminationMessagePolicy: FallbackToLogsOnError
+            volumeMounts:
+            - mountPath: /etc/ssl/mcs
+              name: certs
+            - mountPath: /etc/mcs/bootstrap-token
+              name: node-bootstrap-token
+          dnsPolicy: ClusterFirst
+          hostNetwork: true
+          nodeSelector:
+            node-role.kubernetes.io/master: ""
+          priorityClassName: system-cluster-critical
+          restartPolicy: Always
+          schedulerName: default-scheduler
+          securityContext: {}
+          serviceAccount: machine-config-server
+          serviceAccountName: machine-config-server
+          terminationGracePeriodSeconds: 30
+          tolerations:
+          - effect: NoSchedule
+            key: node-role.kubernetes.io/master
+            operator: Exists
+          - effect: NoSchedule
+            key: node-role.kubernetes.io/etcd
+            operator: Exists
+          volumes:
+          - name: node-bootstrap-token
+            secret:
+              defaultMode: 420
+              secretName: node-bootstrapper-token
+          - name: certs
+            secret:
+              defaultMode: 420
+              secretName: machine-config-server-tls
+  kind: ControllerRevision
+  metadata:
+    annotations:
+      deprecated.daemonset.template.generation: "1"
+    creationTimestamp: "2023-05-04T21:41:15Z"
+    labels:
+      controller-revision-hash: 67cc947f59
+      k8s-app: machine-config-server
+    name: machine-config-server-67cc947f59
+    namespace: openshift-machine-config-operator
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DaemonSet
+      name: machine-config-server
+      uid: 9a5823f6-dab2-42d8-91a0-178609b11330
+    resourceVersion: "7364"
+    uid: b8eeb08e-eae0-4fb3-8519-cd43ec3964e7
+  revision: 1
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

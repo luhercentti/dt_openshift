@@ -1,0 +1,64 @@
+apiVersion: v1
+items:
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/description: Allows deploymentconfigs in this namespace to rollout
+        pods in this namespace.  It is auto-managed by a controller; remove subjects
+        to disable.
+    creationTimestamp: "2023-05-04T21:48:20Z"
+    name: system:deployers
+    namespace: openshift-ingress-canary
+    resourceVersion: "17952"
+    uid: dfd45d35-5bce-4736-a85a-8d2a49f0910d
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: ClusterRole
+    name: system:deployer
+  subjects:
+  - kind: ServiceAccount
+    name: deployer
+    namespace: openshift-ingress-canary
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/description: Allows builds in this namespace to push images to
+        this namespace.  It is auto-managed by a controller; remove subjects to disable.
+    creationTimestamp: "2023-05-04T21:48:20Z"
+    name: system:image-builders
+    namespace: openshift-ingress-canary
+    resourceVersion: "17951"
+    uid: cea60fd9-8399-4e35-b52d-d38c7355603d
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: ClusterRole
+    name: system:image-builder
+  subjects:
+  - kind: ServiceAccount
+    name: builder
+    namespace: openshift-ingress-canary
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/description: Allows all pods in this namespace to pull images from
+        this namespace.  It is auto-managed by a controller; remove subjects to disable.
+    creationTimestamp: "2023-05-04T21:48:20Z"
+    name: system:image-pullers
+    namespace: openshift-ingress-canary
+    resourceVersion: "17950"
+    uid: b8ba6c7b-d6d5-4b4e-96f8-33a6bbc6e632
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: ClusterRole
+    name: system:image-puller
+  subjects:
+  - apiGroup: rbac.authorization.k8s.io
+    kind: Group
+    name: system:serviceaccounts:openshift-ingress-canary
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

@@ -1,0 +1,197 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      openshift.io/scc: hostaccess
+    creationTimestamp: "2024-06-30T06:24:39Z"
+    generateName: cluster-version-operator-58d6c78f5d-
+    labels:
+      k8s-app: cluster-version-operator
+      pod-template-hash: 58d6c78f5d
+    name: cluster-version-operator-58d6c78f5d-w2fw7
+    namespace: openshift-cluster-version
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: cluster-version-operator-58d6c78f5d
+      uid: 982047b2-6df9-4c94-b87a-0fc3c6960a80
+    resourceVersion: "425754426"
+    uid: 4a719f1e-cb3a-4e98-820d-83c970f0ba9d
+  spec:
+    automountServiceAccountToken: false
+    containers:
+    - args:
+      - start
+      - --release-image=quay.io/openshift-release-dev/ocp-release@sha256:0f683cf611bd6f2d3ab045b52df0fcda8adefa086e6ee80c5551275e5692cd8c
+      - --enable-auto-update=false
+      - --enable-default-cluster-version=true
+      - --listen=0.0.0.0:9099
+      - --serving-cert-file=/etc/tls/serving-cert/tls.crt
+      - --serving-key-file=/etc/tls/serving-cert/tls.key
+      - --v=2
+      env:
+      - name: KUBERNETES_SERVICE_PORT
+        value: "6443"
+      - name: KUBERNETES_SERVICE_HOST
+        value: 127.0.0.1
+      - name: NODE_NAME
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: spec.nodeName
+      - name: CLUSTER_PROFILE
+        value: self-managed-high-availability
+      image: quay.io/openshift-release-dev/ocp-release@sha256:0f683cf611bd6f2d3ab045b52df0fcda8adefa086e6ee80c5551275e5692cd8c
+      imagePullPolicy: IfNotPresent
+      name: cluster-version-operator
+      resources:
+        requests:
+          cpu: 20m
+          memory: 50Mi
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000050000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: FallbackToLogsOnError
+      volumeMounts:
+      - mountPath: /etc/ssl/certs
+        name: etc-ssl-certs
+        readOnly: true
+      - mountPath: /etc/cvo/updatepayloads
+        name: etc-cvo-updatepayloads
+        readOnly: true
+      - mountPath: /etc/tls/serving-cert
+        name: serving-cert
+        readOnly: true
+      - mountPath: /etc/tls/service-ca
+        name: service-ca
+        readOnly: true
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access
+        readOnly: true
+    dnsPolicy: ClusterFirstWithHostNet
+    enableServiceLinks: true
+    hostNetwork: true
+    imagePullSecrets:
+    - name: default-dockercfg-btj4w
+    nodeName: ocp4azu-sj2sl-master-0
+    nodeSelector:
+      node-role.kubernetes.io/master: ""
+    preemptionPolicy: PreemptLowerPriority
+    priority: 2000000000
+    priorityClassName: system-cluster-critical
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000050000
+      seLinuxOptions:
+        level: s0:c7,c4
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 130
+    tolerations:
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/master
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/network-unavailable
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 120
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 120
+    - effect: NoSchedule
+      key: node.kubernetes.io/memory-pressure
+      operator: Exists
+    volumes:
+    - hostPath:
+        path: /etc/ssl/certs
+        type: ""
+      name: etc-ssl-certs
+    - hostPath:
+        path: /etc/cvo/updatepayloads
+        type: ""
+      name: etc-cvo-updatepayloads
+    - name: serving-cert
+      secret:
+        defaultMode: 420
+        secretName: cluster-version-operator-serving-cert
+    - configMap:
+        defaultMode: 420
+        name: openshift-service-ca.crt
+      name: service-ca
+    - name: kube-api-access
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3600
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2024-06-30T06:24:39Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2024-06-30T06:24:47Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2024-06-30T06:24:47Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2024-06-30T06:24:39Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://9c33ba8e63ada4f6c2bf4abcca381d29d010e58860ceb6c0a00f7bc4c9577001
+      image: quay.io/openshift-release-dev/ocp-release@sha256:0f683cf611bd6f2d3ab045b52df0fcda8adefa086e6ee80c5551275e5692cd8c
+      imageID: quay.io/openshift-release-dev/ocp-release@sha256:0f683cf611bd6f2d3ab045b52df0fcda8adefa086e6ee80c5551275e5692cd8c
+      lastState: {}
+      name: cluster-version-operator
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2024-06-30T06:24:46Z"
+    hostIP: 10.80.80.6
+    phase: Running
+    podIP: 10.80.80.6
+    podIPs:
+    - ip: 10.80.80.6
+    qosClass: Burstable
+    startTime: "2024-06-30T06:24:39Z"
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

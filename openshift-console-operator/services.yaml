@@ -1,0 +1,47 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      include.release.openshift.io/ibm-cloud-managed: "true"
+      include.release.openshift.io/self-managed-high-availability: "true"
+      include.release.openshift.io/single-node-developer: "true"
+      service.alpha.openshift.io/serving-cert-signed-by: openshift-service-serving-signer@1683236429
+      service.beta.openshift.io/serving-cert-secret-name: serving-cert
+      service.beta.openshift.io/serving-cert-signed-by: openshift-service-serving-signer@1683236429
+    creationTimestamp: "2023-05-04T21:53:22Z"
+    labels:
+      name: console-operator
+    name: metrics
+    namespace: openshift-console-operator
+    ownerReferences:
+    - apiVersion: config.openshift.io/v1
+      kind: ClusterVersion
+      name: version
+      uid: 5d92b52f-9fff-4a6e-b815-398b934115ad
+    resourceVersion: "25792"
+    uid: 1b8e993d-754f-448f-8108-18c914d0cb55
+  spec:
+    clusterIP: 172.30.45.151
+    clusterIPs:
+    - 172.30.45.151
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: https
+      port: 443
+      protocol: TCP
+      targetPort: 8443
+    selector:
+      name: console-operator
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

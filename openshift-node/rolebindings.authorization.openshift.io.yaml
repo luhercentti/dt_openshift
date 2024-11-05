@@ -1,0 +1,85 @@
+apiVersion: v1
+items:
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/description: Allows deploymentconfigs in this namespace to rollout
+        pods in this namespace.  It is auto-managed by a controller; remove subjects
+        to disable.
+    creationTimestamp: "2023-05-04T21:45:25Z"
+    name: system:deployers
+    namespace: openshift-node
+    resourceVersion: "15164"
+    uid: 10f43721-b401-4c0d-8782-7396bc15ef60
+  roleRef:
+    name: system:deployer
+  subjects:
+  - kind: ServiceAccount
+    name: deployer
+    namespace: openshift-node
+  userNames:
+  - system:serviceaccount:openshift-node:deployer
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/description: Allows builds in this namespace to push images to
+        this namespace.  It is auto-managed by a controller; remove subjects to disable.
+    creationTimestamp: "2023-05-04T21:45:24Z"
+    name: system:image-builders
+    namespace: openshift-node
+    resourceVersion: "15091"
+    uid: 837f0090-bcd4-49d4-96a2-c31b2e0c5eed
+  roleRef:
+    name: system:image-builder
+  subjects:
+  - kind: ServiceAccount
+    name: builder
+    namespace: openshift-node
+  userNames:
+  - system:serviceaccount:openshift-node:builder
+- apiVersion: authorization.openshift.io/v1
+  groupNames:
+  - system:serviceaccounts:openshift-node
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/description: Allows all pods in this namespace to pull images from
+        this namespace.  It is auto-managed by a controller; remove subjects to disable.
+    creationTimestamp: "2023-05-04T21:45:24Z"
+    name: system:image-pullers
+    namespace: openshift-node
+    resourceVersion: "15036"
+    uid: c8f9c927-88e8-42dc-aed8-227573889733
+  roleRef:
+    name: system:image-puller
+  subjects:
+  - kind: SystemGroup
+    name: system:serviceaccounts:openshift-node
+  userNames: null
+- apiVersion: authorization.openshift.io/v1
+  groupNames:
+  - system:nodes
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/reconcile-protect: "false"
+    creationTimestamp: "2023-05-04T21:43:18Z"
+    name: system:node-config-reader
+    namespace: openshift-node
+    resourceVersion: "11267"
+    uid: befd19e7-00cd-4b6d-9fdd-97c87802eb7c
+  roleRef:
+    name: system:node-config-reader
+    namespace: openshift-node
+  subjects:
+  - kind: SystemGroup
+    name: system:nodes
+  userNames: null
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

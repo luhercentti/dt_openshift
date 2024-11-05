@@ -1,0 +1,1221 @@
+apiVersion: v1
+items:
+- apiVersion: build.openshift.io/v1
+  kind: Build
+  metadata:
+    annotations:
+      openshift.io/build-config.name: dptc-cron001-report-prod
+      openshift.io/build.number: "1"
+      openshift.io/build.pod-name: dptc-cron001-report-prod-1-build
+    creationTimestamp: "2023-09-01T01:10:32Z"
+    generation: 2
+    labels:
+      app: dptc-cron001-report-prod
+      buildconfig: dptc-cron001-report-prod
+      migration.openshift.io/migrated-by-migmigration: 6ff14eb9-893c-41c2-b14c-e7a903b73093
+      migration.openshift.io/migrated-by-migplan: 00366fb0-8e8e-4301-948a-980b177c294d
+      openshift.io/build-config.name: dptc-cron001-report-prod
+      openshift.io/build.start-policy: Serial
+      velero.io/backup-name: migration-6bbf3-initial-4mzmx
+      velero.io/restore-name: migration-6bbf3-final-zvlf7
+    name: dptc-cron001-report-prod-1
+    namespace: denuncias-dev
+    ownerReferences:
+    - apiVersion: build.openshift.io/v1
+      controller: true
+      kind: BuildConfig
+      name: dptc-cron001-report-prod
+      uid: 2424fcd4-5973-467f-8ee2-014ff7f5b7fb
+    resourceVersion: "95923803"
+    uid: 82839698-8ec7-431d-8027-28c3be1d52c6
+  spec:
+    nodeSelector: null
+    output:
+      pushSecret:
+        name: builder-dockercfg-4rqn4
+      to:
+        kind: ImageStreamTag
+        name: dptc-cron001-report-prod:latest
+    postCommit: {}
+    resources: {}
+    serviceAccount: builder
+    source:
+      git:
+        ref: master
+        uri: https://dirtrab.visualstudio.com/Denuncia%20Posterior%20Termino%20Contrato/_git/dptc-cron001-reportes
+      sourceSecret:
+        name: vsts
+      type: Git
+    strategy:
+      sourceStrategy:
+        from:
+          kind: DockerImage
+          name: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+        pullSecret:
+          name: builder-dockercfg-4rqn4
+      type: Source
+    triggeredBy:
+    - imageChangeBuild:
+        fromRef:
+          kind: ImageStreamTag
+          name: nodejs:10
+          namespace: openshift
+        imageID: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+      message: Image change
+  status:
+    completionTimestamp: "2023-09-01T01:10:37Z"
+    conditions:
+    - lastTransitionTime: "2023-09-01T01:10:33Z"
+      lastUpdateTime: "2023-09-01T01:10:33Z"
+      status: "False"
+      type: New
+    - lastTransitionTime: "2023-09-01T01:10:37Z"
+      lastUpdateTime: "2023-09-01T01:10:37Z"
+      status: "False"
+      type: Pending
+    - lastTransitionTime: "2023-09-01T01:10:37Z"
+      lastUpdateTime: "2023-09-01T01:10:37Z"
+      status: "False"
+      type: Running
+    - lastTransitionTime: "2023-09-01T01:10:37Z"
+      lastUpdateTime: "2023-09-01T01:10:37Z"
+      message: Failed to fetch the input source.
+      reason: FetchSourceFailed
+      status: "True"
+      type: Failed
+    config:
+      kind: BuildConfig
+      name: dptc-cron001-report-prod
+      namespace: denuncias-dev
+    duration: 5000000000
+    logSnippet: |-
+      Cloning "https://dirtrab.visualstudio.com/Denuncia%20Posterior%20Termino%20Contrato/_git/dptc-cron001-reportes" ...
+      error: failed to fetch requested repository "https://dirtr...trato/_git/dptc-cron001-reportes" with provided credentials
+    message: Failed to fetch the input source.
+    output: {}
+    outputDockerImageReference: image-registry.openshift-image-registry.svc:5000/denuncias-dev/dptc-cron001-report-prod:latest
+    phase: Failed
+    reason: FetchSourceFailed
+    startTimestamp: "2023-09-01T01:10:32Z"
+- apiVersion: build.openshift.io/v1
+  kind: Build
+  metadata:
+    annotations:
+      openshift.io/build-config.name: dptc-cron001-reportes
+      openshift.io/build.number: "1"
+      openshift.io/build.pod-name: dptc-cron001-reportes-1-build
+    creationTimestamp: "2023-09-01T01:10:32Z"
+    generation: 2
+    labels:
+      app: dptc-cron001-reportes
+      buildconfig: dptc-cron001-reportes
+      migration.openshift.io/migrated-by-migmigration: 6ff14eb9-893c-41c2-b14c-e7a903b73093
+      migration.openshift.io/migrated-by-migplan: 00366fb0-8e8e-4301-948a-980b177c294d
+      openshift.io/build-config.name: dptc-cron001-reportes
+      openshift.io/build.start-policy: Serial
+      velero.io/backup-name: migration-6bbf3-initial-4mzmx
+      velero.io/restore-name: migration-6bbf3-final-zvlf7
+    name: dptc-cron001-reportes-1
+    namespace: denuncias-dev
+    ownerReferences:
+    - apiVersion: build.openshift.io/v1
+      controller: true
+      kind: BuildConfig
+      name: dptc-cron001-reportes
+      uid: 78206f43-bc59-4027-979b-0fa2342c6840
+    resourceVersion: "95923706"
+    uid: 7f0f8941-3c43-4292-989d-9cec5ff6758b
+  spec:
+    nodeSelector: null
+    output:
+      pushSecret:
+        name: builder-dockercfg-4rqn4
+      to:
+        kind: ImageStreamTag
+        name: dptc-cron001-reportes:latest
+    postCommit: {}
+    resources: {}
+    serviceAccount: builder
+    source:
+      git:
+        ref: develop
+        uri: https://dirtrab.visualstudio.com/Denuncia%20Posterior%20Termino%20Contrato/_git/dptc-cron001-reportes
+      sourceSecret:
+        name: vsts
+      type: Git
+    strategy:
+      sourceStrategy:
+        from:
+          kind: DockerImage
+          name: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+        pullSecret:
+          name: builder-dockercfg-4rqn4
+      type: Source
+    triggeredBy:
+    - imageChangeBuild:
+        fromRef:
+          kind: ImageStreamTag
+          name: nodejs:10
+          namespace: openshift
+        imageID: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+      message: Image change
+  status:
+    completionTimestamp: "2023-09-01T01:10:36Z"
+    conditions:
+    - lastTransitionTime: "2023-09-01T01:10:32Z"
+      lastUpdateTime: "2023-09-01T01:10:32Z"
+      status: "False"
+      type: New
+    - lastTransitionTime: "2023-09-01T01:10:35Z"
+      lastUpdateTime: "2023-09-01T01:10:35Z"
+      status: "False"
+      type: Pending
+    - lastTransitionTime: "2023-09-01T01:10:36Z"
+      lastUpdateTime: "2023-09-01T01:10:36Z"
+      status: "False"
+      type: Running
+    - lastTransitionTime: "2023-09-01T01:10:36Z"
+      lastUpdateTime: "2023-09-01T01:10:36Z"
+      message: Failed to fetch the input source.
+      reason: FetchSourceFailed
+      status: "True"
+      type: Failed
+    config:
+      kind: BuildConfig
+      name: dptc-cron001-reportes
+      namespace: denuncias-dev
+    duration: 4000000000
+    logSnippet: |-
+      Cloning "https://dirtrab.visualstudio.com/Denuncia%20Posterior%20Termino%20Contrato/_git/dptc-cron001-reportes" ...
+      error: failed to fetch requested repository "https://dirtr...trato/_git/dptc-cron001-reportes" with provided credentials
+    message: Failed to fetch the input source.
+    output: {}
+    outputDockerImageReference: image-registry.openshift-image-registry.svc:5000/denuncias-dev/dptc-cron001-reportes:latest
+    phase: Failed
+    reason: FetchSourceFailed
+    startTimestamp: "2023-09-01T01:10:32Z"
+- apiVersion: build.openshift.io/v1
+  kind: Build
+  metadata:
+    annotations:
+      openshift.io/build-config.name: dptc-cron001-reportes-qa
+      openshift.io/build.number: "1"
+      openshift.io/build.pod-name: dptc-cron001-reportes-qa-1-build
+    creationTimestamp: "2023-09-01T01:10:32Z"
+    generation: 2
+    labels:
+      app: dptc-cron001-reportes-qa
+      buildconfig: dptc-cron001-reportes-qa
+      migration.openshift.io/migrated-by-migmigration: 6ff14eb9-893c-41c2-b14c-e7a903b73093
+      migration.openshift.io/migrated-by-migplan: 00366fb0-8e8e-4301-948a-980b177c294d
+      openshift.io/build-config.name: dptc-cron001-reportes-qa
+      openshift.io/build.start-policy: Serial
+      velero.io/backup-name: migration-6bbf3-initial-4mzmx
+      velero.io/restore-name: migration-6bbf3-final-zvlf7
+    name: dptc-cron001-reportes-qa-1
+    namespace: denuncias-dev
+    ownerReferences:
+    - apiVersion: build.openshift.io/v1
+      controller: true
+      kind: BuildConfig
+      name: dptc-cron001-reportes-qa
+      uid: 476f9fe8-af78-4b1c-8e3f-a6308ef5f3f0
+    resourceVersion: "95923928"
+    uid: a74dfcd5-3805-4132-92eb-3f3ba3430267
+  spec:
+    nodeSelector: null
+    output:
+      pushSecret:
+        name: builder-dockercfg-4rqn4
+      to:
+        kind: ImageStreamTag
+        name: dptc-cron001-reportes-qa:latest
+    postCommit: {}
+    resources: {}
+    serviceAccount: builder
+    source:
+      git:
+        ref: develop
+        uri: https://dirtrab.visualstudio.com/Denuncia%20Posterior%20Termino%20Contrato/_git/dptc-cron001-reportes
+      sourceSecret:
+        name: vsts
+      type: Git
+    strategy:
+      sourceStrategy:
+        from:
+          kind: DockerImage
+          name: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+        pullSecret:
+          name: builder-dockercfg-4rqn4
+      type: Source
+    triggeredBy:
+    - imageChangeBuild:
+        fromRef:
+          kind: ImageStreamTag
+          name: nodejs:10
+          namespace: openshift
+        imageID: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+      message: Image change
+  status:
+    completionTimestamp: "2023-09-01T01:10:38Z"
+    conditions:
+    - lastTransitionTime: "2023-09-01T01:10:34Z"
+      lastUpdateTime: "2023-09-01T01:10:34Z"
+      status: "False"
+      type: New
+    - lastTransitionTime: "2023-09-01T01:10:37Z"
+      lastUpdateTime: "2023-09-01T01:10:37Z"
+      status: "False"
+      type: Pending
+    - lastTransitionTime: "2023-09-01T01:10:38Z"
+      lastUpdateTime: "2023-09-01T01:10:38Z"
+      status: "False"
+      type: Running
+    - lastTransitionTime: "2023-09-01T01:10:38Z"
+      lastUpdateTime: "2023-09-01T01:10:38Z"
+      message: Failed to fetch the input source.
+      reason: FetchSourceFailed
+      status: "True"
+      type: Failed
+    config:
+      kind: BuildConfig
+      name: dptc-cron001-reportes-qa
+      namespace: denuncias-dev
+    duration: 5000000000
+    logSnippet: |-
+      Cloning "https://dirtrab.visualstudio.com/Denuncia%20Posterior%20Termino%20Contrato/_git/dptc-cron001-reportes" ...
+      error: failed to fetch requested repository "https://dirtr...trato/_git/dptc-cron001-reportes" with provided credentials
+    message: Failed to fetch the input source.
+    output: {}
+    outputDockerImageReference: image-registry.openshift-image-registry.svc:5000/denuncias-dev/dptc-cron001-reportes-qa:latest
+    phase: Failed
+    reason: FetchSourceFailed
+    startTimestamp: "2023-09-01T01:10:33Z"
+- apiVersion: build.openshift.io/v1
+  kind: Build
+  metadata:
+    annotations:
+      openshift.io/build-config.name: dptc-serv001-den-prod
+      openshift.io/build.number: "1"
+      openshift.io/build.pod-name: dptc-serv001-den-prod-1-build
+    creationTimestamp: "2023-09-01T01:10:33Z"
+    generation: 2
+    labels:
+      app: dptc-serv001-den-prod
+      buildconfig: dptc-serv001-den-prod
+      migration.openshift.io/migrated-by-migmigration: 6ff14eb9-893c-41c2-b14c-e7a903b73093
+      migration.openshift.io/migrated-by-migplan: 00366fb0-8e8e-4301-948a-980b177c294d
+      openshift.io/build-config.name: dptc-serv001-den-prod
+      openshift.io/build.start-policy: Serial
+      velero.io/backup-name: migration-6bbf3-initial-4mzmx
+      velero.io/restore-name: migration-6bbf3-final-zvlf7
+    name: dptc-serv001-den-prod-1
+    namespace: denuncias-dev
+    ownerReferences:
+    - apiVersion: build.openshift.io/v1
+      controller: true
+      kind: BuildConfig
+      name: dptc-serv001-den-prod
+      uid: 09f9a2a5-2a78-45ae-8f52-4b7f1c23297c
+    resourceVersion: "95923963"
+    uid: a52f7359-f20e-41e6-b048-275ae65282f8
+  spec:
+    nodeSelector: null
+    output:
+      pushSecret:
+        name: builder-dockercfg-4rqn4
+      to:
+        kind: ImageStreamTag
+        name: dptc-serv001-den-prod:latest
+    postCommit: {}
+    resources: {}
+    serviceAccount: builder
+    source:
+      git:
+        ref: master
+        uri: https://dirtrab.visualstudio.com/Denuncia%20Posterior%20Termino%20Contrato/_git/dptc-serv001-denuncia
+      sourceSecret:
+        name: vsts
+      type: Git
+    strategy:
+      sourceStrategy:
+        from:
+          kind: DockerImage
+          name: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+        pullSecret:
+          name: builder-dockercfg-4rqn4
+      type: Source
+    triggeredBy:
+    - imageChangeBuild:
+        fromRef:
+          kind: ImageStreamTag
+          name: nodejs:10
+          namespace: openshift
+        imageID: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+      message: Image change
+  status:
+    completionTimestamp: "2023-09-01T01:10:38Z"
+    conditions:
+    - lastTransitionTime: "2023-09-01T01:10:34Z"
+      lastUpdateTime: "2023-09-01T01:10:34Z"
+      status: "False"
+      type: New
+    - lastTransitionTime: "2023-09-01T01:10:37Z"
+      lastUpdateTime: "2023-09-01T01:10:37Z"
+      status: "False"
+      type: Pending
+    - lastTransitionTime: "2023-09-01T01:10:38Z"
+      lastUpdateTime: "2023-09-01T01:10:38Z"
+      status: "False"
+      type: Running
+    - lastTransitionTime: "2023-09-01T01:10:38Z"
+      lastUpdateTime: "2023-09-01T01:10:38Z"
+      message: Failed to fetch the input source.
+      reason: FetchSourceFailed
+      status: "True"
+      type: Failed
+    config:
+      kind: BuildConfig
+      name: dptc-serv001-den-prod
+      namespace: denuncias-dev
+    duration: 4000000000
+    logSnippet: |-
+      Cloning "https://dirtrab.visualstudio.com/Denuncia%20Posterior%20Termino%20Contrato/_git/dptc-serv001-denuncia" ...
+      error: failed to fetch requested repository "https://dirtr...trato/_git/dptc-serv001-denuncia" with provided credentials
+    message: Failed to fetch the input source.
+    output: {}
+    outputDockerImageReference: image-registry.openshift-image-registry.svc:5000/denuncias-dev/dptc-serv001-den-prod:latest
+    phase: Failed
+    reason: FetchSourceFailed
+    startTimestamp: "2023-09-01T01:10:34Z"
+- apiVersion: build.openshift.io/v1
+  kind: Build
+  metadata:
+    annotations:
+      openshift.io/build-config.name: dptc-serv001-denuncia
+      openshift.io/build.number: "1"
+      openshift.io/build.pod-name: dptc-serv001-denuncia-1-build
+    creationTimestamp: "2023-09-01T01:10:33Z"
+    generation: 2
+    labels:
+      app: dptc-serv001-denuncia
+      buildconfig: dptc-serv001-denuncia
+      migration.openshift.io/migrated-by-migmigration: 6ff14eb9-893c-41c2-b14c-e7a903b73093
+      migration.openshift.io/migrated-by-migplan: 00366fb0-8e8e-4301-948a-980b177c294d
+      openshift.io/build-config.name: dptc-serv001-denuncia
+      openshift.io/build.start-policy: Serial
+      velero.io/backup-name: migration-6bbf3-initial-4mzmx
+      velero.io/restore-name: migration-6bbf3-final-zvlf7
+    name: dptc-serv001-denuncia-1
+    namespace: denuncias-dev
+    ownerReferences:
+    - apiVersion: build.openshift.io/v1
+      controller: true
+      kind: BuildConfig
+      name: dptc-serv001-denuncia
+      uid: 1e4c9008-cd3f-4948-80bd-6302bdf2b3df
+    resourceVersion: "95924064"
+    uid: 8448032c-659e-4de0-88d1-4610735a4bd0
+  spec:
+    nodeSelector: null
+    output:
+      pushSecret:
+        name: builder-dockercfg-4rqn4
+      to:
+        kind: ImageStreamTag
+        name: dptc-serv001-denuncia:latest
+    postCommit: {}
+    resources: {}
+    serviceAccount: builder
+    source:
+      git:
+        ref: develop
+        uri: https://dirtrab.visualstudio.com/Denuncia%20Posterior%20Termino%20Contrato/_git/dptc-serv001-denuncia
+      sourceSecret:
+        name: vsts
+      type: Git
+    strategy:
+      sourceStrategy:
+        from:
+          kind: DockerImage
+          name: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+        pullSecret:
+          name: builder-dockercfg-4rqn4
+      type: Source
+    triggeredBy:
+    - imageChangeBuild:
+        fromRef:
+          kind: ImageStreamTag
+          name: nodejs:10
+          namespace: openshift
+        imageID: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+      message: Image change
+  status:
+    completionTimestamp: "2023-09-01T01:10:40Z"
+    conditions:
+    - lastTransitionTime: "2023-09-01T01:10:35Z"
+      lastUpdateTime: "2023-09-01T01:10:35Z"
+      status: "False"
+      type: New
+    - lastTransitionTime: "2023-09-01T01:10:40Z"
+      lastUpdateTime: "2023-09-01T01:10:40Z"
+      status: "False"
+      type: Pending
+    - lastTransitionTime: "2023-09-01T01:10:40Z"
+      lastUpdateTime: "2023-09-01T01:10:40Z"
+      status: "False"
+      type: Running
+    - lastTransitionTime: "2023-09-01T01:10:40Z"
+      lastUpdateTime: "2023-09-01T01:10:40Z"
+      message: Failed to fetch the input source.
+      reason: FetchSourceFailed
+      status: "True"
+      type: Failed
+    config:
+      kind: BuildConfig
+      name: dptc-serv001-denuncia
+      namespace: denuncias-dev
+    duration: 5000000000
+    logSnippet: |-
+      Cloning "https://dirtrab.visualstudio.com/Denuncia%20Posterior%20Termino%20Contrato/_git/dptc-serv001-denuncia" ...
+      error: failed to fetch requested repository "https://dirtr...trato/_git/dptc-serv001-denuncia" with provided credentials
+    message: Failed to fetch the input source.
+    output: {}
+    outputDockerImageReference: image-registry.openshift-image-registry.svc:5000/denuncias-dev/dptc-serv001-denuncia:latest
+    phase: Failed
+    reason: FetchSourceFailed
+    startTimestamp: "2023-09-01T01:10:35Z"
+- apiVersion: build.openshift.io/v1
+  kind: Build
+  metadata:
+    annotations:
+      openshift.io/build-config.name: dptc-serv001-denuncia-qa
+      openshift.io/build.number: "1"
+      openshift.io/build.pod-name: dptc-serv001-denuncia-qa-1-build
+    creationTimestamp: "2023-09-01T01:10:32Z"
+    generation: 2
+    labels:
+      app: dptc-serv001-denuncia-qa
+      buildconfig: dptc-serv001-denuncia-qa
+      migration.openshift.io/migrated-by-migmigration: 6ff14eb9-893c-41c2-b14c-e7a903b73093
+      migration.openshift.io/migrated-by-migplan: 00366fb0-8e8e-4301-948a-980b177c294d
+      openshift.io/build-config.name: dptc-serv001-denuncia-qa
+      openshift.io/build.start-policy: Serial
+      velero.io/backup-name: migration-6bbf3-initial-4mzmx
+      velero.io/restore-name: migration-6bbf3-final-zvlf7
+    name: dptc-serv001-denuncia-qa-1
+    namespace: denuncias-dev
+    ownerReferences:
+    - apiVersion: build.openshift.io/v1
+      controller: true
+      kind: BuildConfig
+      name: dptc-serv001-denuncia-qa
+      uid: 514acd07-0460-4f36-853a-bc737d1a564f
+    resourceVersion: "95923760"
+    uid: f3b946fd-6da2-434b-a36f-0f285fc1788c
+  spec:
+    nodeSelector: null
+    output:
+      pushSecret:
+        name: builder-dockercfg-4rqn4
+      to:
+        kind: ImageStreamTag
+        name: dptc-serv001-denuncia-qa:latest
+    postCommit: {}
+    resources: {}
+    serviceAccount: builder
+    source:
+      git:
+        ref: develop
+        uri: https://dirtrab.visualstudio.com/Denuncia%20Posterior%20Termino%20Contrato/_git/dptc-serv001-denuncia
+      sourceSecret:
+        name: vsts
+      type: Git
+    strategy:
+      sourceStrategy:
+        from:
+          kind: DockerImage
+          name: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+        pullSecret:
+          name: builder-dockercfg-4rqn4
+      type: Source
+    triggeredBy:
+    - imageChangeBuild:
+        fromRef:
+          kind: ImageStreamTag
+          name: nodejs:10
+          namespace: openshift
+        imageID: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+      message: Image change
+  status:
+    completionTimestamp: "2023-09-01T01:10:36Z"
+    conditions:
+    - lastTransitionTime: "2023-09-01T01:10:32Z"
+      lastUpdateTime: "2023-09-01T01:10:32Z"
+      status: "False"
+      type: New
+    - lastTransitionTime: "2023-09-01T01:10:36Z"
+      lastUpdateTime: "2023-09-01T01:10:36Z"
+      status: "False"
+      type: Pending
+    - lastTransitionTime: "2023-09-01T01:10:36Z"
+      lastUpdateTime: "2023-09-01T01:10:36Z"
+      status: "False"
+      type: Running
+    - lastTransitionTime: "2023-09-01T01:10:36Z"
+      lastUpdateTime: "2023-09-01T01:10:36Z"
+      message: Failed to fetch the input source.
+      reason: FetchSourceFailed
+      status: "True"
+      type: Failed
+    config:
+      kind: BuildConfig
+      name: dptc-serv001-denuncia-qa
+      namespace: denuncias-dev
+    duration: 4000000000
+    logSnippet: |-
+      Cloning "https://dirtrab.visualstudio.com/Denuncia%20Posterior%20Termino%20Contrato/_git/dptc-serv001-denuncia" ...
+      error: failed to fetch requested repository "https://dirtr...trato/_git/dptc-serv001-denuncia" with provided credentials
+    message: Failed to fetch the input source.
+    output: {}
+    outputDockerImageReference: image-registry.openshift-image-registry.svc:5000/denuncias-dev/dptc-serv001-denuncia-qa:latest
+    phase: Failed
+    reason: FetchSourceFailed
+    startTimestamp: "2023-09-01T01:10:32Z"
+- apiVersion: build.openshift.io/v1
+  kind: Build
+  metadata:
+    annotations:
+      openshift.io/build-config.name: dptc-serv002-bff
+      openshift.io/build.number: "1"
+      openshift.io/build.pod-name: dptc-serv002-bff-1-build
+    creationTimestamp: "2023-09-01T01:10:33Z"
+    generation: 2
+    labels:
+      app: dptc-serv002-bff
+      buildconfig: dptc-serv002-bff
+      migration.openshift.io/migrated-by-migmigration: 6ff14eb9-893c-41c2-b14c-e7a903b73093
+      migration.openshift.io/migrated-by-migplan: 00366fb0-8e8e-4301-948a-980b177c294d
+      openshift.io/build-config.name: dptc-serv002-bff
+      openshift.io/build.start-policy: Serial
+      velero.io/backup-name: migration-6bbf3-initial-4mzmx
+      velero.io/restore-name: migration-6bbf3-final-zvlf7
+    name: dptc-serv002-bff-1
+    namespace: denuncias-dev
+    ownerReferences:
+    - apiVersion: build.openshift.io/v1
+      controller: true
+      kind: BuildConfig
+      name: dptc-serv002-bff
+      uid: 52de0c78-3be4-4823-8e99-9c6bab77e1ca
+    resourceVersion: "95923919"
+    uid: 9ff240ff-419f-47f6-b03f-cecc48ab05d9
+  spec:
+    nodeSelector: null
+    output:
+      pushSecret:
+        name: builder-dockercfg-4rqn4
+      to:
+        kind: ImageStreamTag
+        name: dptc-serv002-bff:latest
+    postCommit: {}
+    resources: {}
+    serviceAccount: builder
+    source:
+      git:
+        ref: develop
+        uri: https://dirtrab.visualstudio.com/Denuncia%20Posterior%20Termino%20Contrato/_git/dptc-serv002-bff
+      sourceSecret:
+        name: vsts
+      type: Git
+    strategy:
+      sourceStrategy:
+        from:
+          kind: DockerImage
+          name: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+        pullSecret:
+          name: builder-dockercfg-4rqn4
+      type: Source
+    triggeredBy:
+    - imageChangeBuild:
+        fromRef:
+          kind: ImageStreamTag
+          name: nodejs:10
+          namespace: openshift
+        imageID: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+      message: Image change
+  status:
+    completionTimestamp: "2023-09-01T01:10:38Z"
+    conditions:
+    - lastTransitionTime: "2023-09-01T01:10:34Z"
+      lastUpdateTime: "2023-09-01T01:10:34Z"
+      status: "False"
+      type: New
+    - lastTransitionTime: "2023-09-01T01:10:36Z"
+      lastUpdateTime: "2023-09-01T01:10:36Z"
+      status: "False"
+      type: Pending
+    - lastTransitionTime: "2023-09-01T01:10:38Z"
+      lastUpdateTime: "2023-09-01T01:10:38Z"
+      status: "False"
+      type: Running
+    - lastTransitionTime: "2023-09-01T01:10:38Z"
+      lastUpdateTime: "2023-09-01T01:10:38Z"
+      message: Failed to fetch the input source.
+      reason: FetchSourceFailed
+      status: "True"
+      type: Failed
+    config:
+      kind: BuildConfig
+      name: dptc-serv002-bff
+      namespace: denuncias-dev
+    duration: 5000000000
+    logSnippet: |-
+      Cloning "https://dirtrab.visualstudio.com/Denuncia%20Posterior%20Termino%20Contrato/_git/dptc-serv002-bff" ...
+      error: failed to fetch requested repository "https://dirtr...20Contrato/_git/dptc-serv002-bff" with provided credentials
+    message: Failed to fetch the input source.
+    output: {}
+    outputDockerImageReference: image-registry.openshift-image-registry.svc:5000/denuncias-dev/dptc-serv002-bff:latest
+    phase: Failed
+    reason: FetchSourceFailed
+    startTimestamp: "2023-09-01T01:10:33Z"
+- apiVersion: build.openshift.io/v1
+  kind: Build
+  metadata:
+    annotations:
+      openshift.io/build-config.name: dptc-serv002-bff-prod
+      openshift.io/build.number: "1"
+      openshift.io/build.pod-name: dptc-serv002-bff-prod-1-build
+    creationTimestamp: "2023-09-01T01:10:32Z"
+    generation: 2
+    labels:
+      app: dptc-serv002-bff-prod
+      buildconfig: dptc-serv002-bff-prod
+      migration.openshift.io/migrated-by-migmigration: 6ff14eb9-893c-41c2-b14c-e7a903b73093
+      migration.openshift.io/migrated-by-migplan: 00366fb0-8e8e-4301-948a-980b177c294d
+      openshift.io/build-config.name: dptc-serv002-bff-prod
+      openshift.io/build.start-policy: Serial
+      velero.io/backup-name: migration-6bbf3-initial-4mzmx
+      velero.io/restore-name: migration-6bbf3-final-zvlf7
+    name: dptc-serv002-bff-prod-1
+    namespace: denuncias-dev
+    ownerReferences:
+    - apiVersion: build.openshift.io/v1
+      controller: true
+      kind: BuildConfig
+      name: dptc-serv002-bff-prod
+      uid: 7ace358e-0052-4d7b-9e10-32e9dbfbf811
+    resourceVersion: "95923877"
+    uid: dd612d95-6442-4db3-8de6-41531f45c854
+  spec:
+    nodeSelector: null
+    output:
+      pushSecret:
+        name: builder-dockercfg-4rqn4
+      to:
+        kind: ImageStreamTag
+        name: dptc-serv002-bff-prod:latest
+    postCommit: {}
+    resources: {}
+    serviceAccount: builder
+    source:
+      git:
+        ref: master
+        uri: https://dirtrab.visualstudio.com/Denuncia%20Posterior%20Termino%20Contrato/_git/dptc-serv002-bff
+      sourceSecret:
+        name: vsts
+      type: Git
+    strategy:
+      sourceStrategy:
+        from:
+          kind: DockerImage
+          name: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+        pullSecret:
+          name: builder-dockercfg-4rqn4
+      type: Source
+    triggeredBy:
+    - imageChangeBuild:
+        fromRef:
+          kind: ImageStreamTag
+          name: nodejs:10
+          namespace: openshift
+        imageID: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+      message: Image change
+  status:
+    completionTimestamp: "2023-09-01T01:10:38Z"
+    conditions:
+    - lastTransitionTime: "2023-09-01T01:10:33Z"
+      lastUpdateTime: "2023-09-01T01:10:33Z"
+      status: "False"
+      type: New
+    - lastTransitionTime: "2023-09-01T01:10:37Z"
+      lastUpdateTime: "2023-09-01T01:10:37Z"
+      status: "False"
+      type: Pending
+    - lastTransitionTime: "2023-09-01T01:10:38Z"
+      lastUpdateTime: "2023-09-01T01:10:38Z"
+      status: "False"
+      type: Running
+    - lastTransitionTime: "2023-09-01T01:10:38Z"
+      lastUpdateTime: "2023-09-01T01:10:38Z"
+      message: Failed to fetch the input source.
+      reason: FetchSourceFailed
+      status: "True"
+      type: Failed
+    config:
+      kind: BuildConfig
+      name: dptc-serv002-bff-prod
+      namespace: denuncias-dev
+    duration: 5000000000
+    logSnippet: |-
+      Cloning "https://dirtrab.visualstudio.com/Denuncia%20Posterior%20Termino%20Contrato/_git/dptc-serv002-bff" ...
+      error: failed to fetch requested repository "https://dirtr...20Contrato/_git/dptc-serv002-bff" with provided credentials
+    message: Failed to fetch the input source.
+    output: {}
+    outputDockerImageReference: image-registry.openshift-image-registry.svc:5000/denuncias-dev/dptc-serv002-bff-prod:latest
+    phase: Failed
+    reason: FetchSourceFailed
+    startTimestamp: "2023-09-01T01:10:33Z"
+- apiVersion: build.openshift.io/v1
+  kind: Build
+  metadata:
+    annotations:
+      openshift.io/build-config.name: dptc-serv002-bff-qa
+      openshift.io/build.number: "1"
+      openshift.io/build.pod-name: dptc-serv002-bff-qa-1-build
+    creationTimestamp: "2023-09-01T01:10:32Z"
+    generation: 2
+    labels:
+      app: dptc-serv002-bff-qa
+      buildconfig: dptc-serv002-bff-qa
+      migration.openshift.io/migrated-by-migmigration: 6ff14eb9-893c-41c2-b14c-e7a903b73093
+      migration.openshift.io/migrated-by-migplan: 00366fb0-8e8e-4301-948a-980b177c294d
+      openshift.io/build-config.name: dptc-serv002-bff-qa
+      openshift.io/build.start-policy: Serial
+      velero.io/backup-name: migration-6bbf3-initial-4mzmx
+      velero.io/restore-name: migration-6bbf3-final-zvlf7
+    name: dptc-serv002-bff-qa-1
+    namespace: denuncias-dev
+    ownerReferences:
+    - apiVersion: build.openshift.io/v1
+      controller: true
+      kind: BuildConfig
+      name: dptc-serv002-bff-qa
+      uid: 1924bdbf-ca2f-4510-860d-ff9cbbe269de
+    resourceVersion: "95923800"
+    uid: a0a350d2-cbb0-474b-81ea-01355c81df96
+  spec:
+    nodeSelector: null
+    output:
+      pushSecret:
+        name: builder-dockercfg-4rqn4
+      to:
+        kind: ImageStreamTag
+        name: dptc-serv002-bff-qa:latest
+    postCommit: {}
+    resources: {}
+    serviceAccount: builder
+    source:
+      git:
+        ref: develop
+        uri: https://dirtrab.visualstudio.com/Denuncia%20Posterior%20Termino%20Contrato/_git/dptc-serv002-bff
+      sourceSecret:
+        name: vsts
+      type: Git
+    strategy:
+      sourceStrategy:
+        from:
+          kind: DockerImage
+          name: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+        pullSecret:
+          name: builder-dockercfg-4rqn4
+      type: Source
+    triggeredBy:
+    - imageChangeBuild:
+        fromRef:
+          kind: ImageStreamTag
+          name: nodejs:10
+          namespace: openshift
+        imageID: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+      message: Image change
+  status:
+    completionTimestamp: "2023-09-01T01:10:37Z"
+    conditions:
+    - lastTransitionTime: "2023-09-01T01:10:33Z"
+      lastUpdateTime: "2023-09-01T01:10:33Z"
+      status: "False"
+      type: New
+    - lastTransitionTime: "2023-09-01T01:10:35Z"
+      lastUpdateTime: "2023-09-01T01:10:35Z"
+      status: "False"
+      type: Pending
+    - lastTransitionTime: "2023-09-01T01:10:37Z"
+      lastUpdateTime: "2023-09-01T01:10:37Z"
+      status: "False"
+      type: Running
+    - lastTransitionTime: "2023-09-01T01:10:37Z"
+      lastUpdateTime: "2023-09-01T01:10:37Z"
+      message: Failed to fetch the input source.
+      reason: FetchSourceFailed
+      status: "True"
+      type: Failed
+    config:
+      kind: BuildConfig
+      name: dptc-serv002-bff-qa
+      namespace: denuncias-dev
+    duration: 5000000000
+    logSnippet: |-
+      Cloning "https://dirtrab.visualstudio.com/Denuncia%20Posterior%20Termino%20Contrato/_git/dptc-serv002-bff" ...
+      error: failed to fetch requested repository "https://dirtr...20Contrato/_git/dptc-serv002-bff" with provided credentials
+    message: Failed to fetch the input source.
+    output: {}
+    outputDockerImageReference: image-registry.openshift-image-registry.svc:5000/denuncias-dev/dptc-serv002-bff-qa:latest
+    phase: Failed
+    reason: FetchSourceFailed
+    startTimestamp: "2023-09-01T01:10:32Z"
+- apiVersion: build.openshift.io/v1
+  kind: Build
+  metadata:
+    annotations:
+      openshift.io/build-config.name: front001-denuncias
+      openshift.io/build.number: "1"
+      openshift.io/build.pod-name: front001-denuncias-1-build
+    creationTimestamp: "2023-09-01T01:10:33Z"
+    generation: 2
+    labels:
+      app: front001-denuncias
+      buildconfig: front001-denuncias
+      migration.openshift.io/migrated-by-migmigration: 6ff14eb9-893c-41c2-b14c-e7a903b73093
+      migration.openshift.io/migrated-by-migplan: 00366fb0-8e8e-4301-948a-980b177c294d
+      openshift.io/build-config.name: front001-denuncias
+      openshift.io/build.start-policy: Serial
+      velero.io/backup-name: migration-6bbf3-initial-4mzmx
+      velero.io/restore-name: migration-6bbf3-final-zvlf7
+    name: front001-denuncias-1
+    namespace: denuncias-dev
+    ownerReferences:
+    - apiVersion: build.openshift.io/v1
+      controller: true
+      kind: BuildConfig
+      name: front001-denuncias
+      uid: 8704d00d-6f9f-41c0-b60a-dc75aab84973
+    resourceVersion: "95924031"
+    uid: 71ffc3b3-813b-4ccb-a7c7-5551378df804
+  spec:
+    nodeSelector: null
+    output:
+      pushSecret:
+        name: builder-dockercfg-4rqn4
+      to:
+        kind: ImageStreamTag
+        name: front001-denuncias:latest
+    postCommit: {}
+    resources: {}
+    serviceAccount: builder
+    source:
+      git:
+        ref: develop
+        uri: https://dirtrab.visualstudio.com/Denuncia%20Posterior%20Termino%20Contrato/_git/front001-denuncias
+      sourceSecret:
+        name: vsts
+      type: Git
+    strategy:
+      sourceStrategy:
+        env:
+        - name: GENERATE_SOURCEMAP
+          value: "false"
+        - name: REACT_APP_DPTC_URL_METADATA
+          value: http://api-integracion-denuncias-dev.api-cloud.dirtrab.cl/api/metadata/formulario/full
+        - name: REACT_APP_DPTC_URL_TRABAJADOR
+          value: http://api-integracion-denuncias-dev.api-cloud.dirtrab.cl/api/metadata/personas/
+        - name: REACT_APP_DPTC_URL_EMPLEADOR
+          value: http://api-integracion-denuncias-dev.api-cloud.dirtrab.cl/api/metadata/empleadores
+        - name: REACT_APP_DPTC_URL_FORMULARIO
+          value: http://api-integracion-denuncias-dev.api-cloud.dirtrab.cl/api/form/denuncias/terminoContrato/personas/
+        - name: REACT_APP_VALIDA_TOKEN
+          value: http://proxy-portalinstitucional-dev.api.dirtrab.cl/api/Autenticacion/token/validar
+        - name: REACT_APP_REDIRECT
+          value: https://midt.dirtrab.cl/
+        - name: REACT_APP_VOLVER_REDIRECT
+          value: /trabajador/home
+        from:
+          kind: DockerImage
+          name: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+        pullSecret:
+          name: builder-dockercfg-4rqn4
+      type: Source
+    triggeredBy:
+    - imageChangeBuild:
+        fromRef:
+          kind: ImageStreamTag
+          name: nodejs:10
+          namespace: openshift
+        imageID: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+      message: Image change
+  status:
+    completionTimestamp: "2023-09-01T01:10:39Z"
+    conditions:
+    - lastTransitionTime: "2023-09-01T01:10:35Z"
+      lastUpdateTime: "2023-09-01T01:10:35Z"
+      status: "False"
+      type: New
+    - lastTransitionTime: "2023-09-01T01:10:38Z"
+      lastUpdateTime: "2023-09-01T01:10:38Z"
+      status: "False"
+      type: Pending
+    - lastTransitionTime: "2023-09-01T01:10:39Z"
+      lastUpdateTime: "2023-09-01T01:10:39Z"
+      status: "False"
+      type: Running
+    - lastTransitionTime: "2023-09-01T01:10:39Z"
+      lastUpdateTime: "2023-09-01T01:10:39Z"
+      message: Failed to fetch the input source.
+      reason: FetchSourceFailed
+      status: "True"
+      type: Failed
+    config:
+      kind: BuildConfig
+      name: front001-denuncias
+      namespace: denuncias-dev
+    duration: 5000000000
+    logSnippet: |-
+      Cloning "https://dirtrab.visualstudio.com/Denuncia%20Posterior%20Termino%20Contrato/_git/front001-denuncias" ...
+      error: failed to fetch requested repository "https://dirtr...Contrato/_git/front001-denuncias" with provided credentials
+    message: Failed to fetch the input source.
+    output: {}
+    outputDockerImageReference: image-registry.openshift-image-registry.svc:5000/denuncias-dev/front001-denuncias:latest
+    phase: Failed
+    reason: FetchSourceFailed
+    startTimestamp: "2023-09-01T01:10:34Z"
+- apiVersion: build.openshift.io/v1
+  kind: Build
+  metadata:
+    annotations:
+      openshift.io/build-config.name: front001-denuncias-prod
+      openshift.io/build.number: "1"
+      openshift.io/build.pod-name: front001-denuncias-prod-1-build
+    creationTimestamp: "2023-09-01T01:10:33Z"
+    generation: 2
+    labels:
+      app: front001-denuncias-prod
+      buildconfig: front001-denuncias-prod
+      migration.openshift.io/migrated-by-migmigration: 6ff14eb9-893c-41c2-b14c-e7a903b73093
+      migration.openshift.io/migrated-by-migplan: 00366fb0-8e8e-4301-948a-980b177c294d
+      openshift.io/build-config.name: front001-denuncias-prod
+      openshift.io/build.start-policy: Serial
+      velero.io/backup-name: migration-6bbf3-initial-4mzmx
+      velero.io/restore-name: migration-6bbf3-final-zvlf7
+    name: front001-denuncias-prod-1
+    namespace: denuncias-dev
+    ownerReferences:
+    - apiVersion: build.openshift.io/v1
+      controller: true
+      kind: BuildConfig
+      name: front001-denuncias-prod
+      uid: aa8bcf5f-2381-4d97-bbf1-e33fa5e9a156
+    resourceVersion: "95924008"
+    uid: a3aaaea5-ebeb-43c8-ab33-4de46d91dd12
+  spec:
+    nodeSelector: null
+    output:
+      pushSecret:
+        name: builder-dockercfg-4rqn4
+      to:
+        kind: ImageStreamTag
+        name: front001-denuncias-prod:latest
+    postCommit: {}
+    resources: {}
+    serviceAccount: builder
+    source:
+      git:
+        ref: master
+        uri: https://dirtrab.visualstudio.com/Denuncia%20Posterior%20Termino%20Contrato/_git/front001-denuncias
+      sourceSecret:
+        name: vsts
+      type: Git
+    strategy:
+      sourceStrategy:
+        env:
+        - name: GENERATE_SOURCEMAP
+          value: "false"
+        - name: REACT_APP_DPTC_URL_METADATA
+          value: https://api-integracion-denuncias.api-cloud.dirtrab.cl/api/metadata/formulario/full
+        - name: REACT_APP_DPTC_URL_TRABAJADOR
+          value: https://api-integracion-denuncias.api-cloud.dirtrab.cl/api/metadata/personas/
+        - name: REACT_APP_DPTC_URL_EMPLEADOR
+          value: https://api-integracion-denuncias.api-cloud.dirtrab.cl/api/metadata/empleadores
+        - name: REACT_APP_DPTC_URL_FORMULARIO
+          value: https://api-integracion-denuncias.api-cloud.dirtrab.cl/api/form/denuncias/terminoContrato/personas/
+        - name: REACT_APP_VALIDA_TOKEN
+          value: https://proxy-portalinstitucional.api.dirtrab.cl/api/Autenticacion/token/validar
+        - name: REACT_APP_REDIRECT
+          value: https://midt.dirtrab.cl/
+        - name: REACT_APP_VOLVER_REDIRECT
+          value: /trabajador/home
+        from:
+          kind: DockerImage
+          name: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+        pullSecret:
+          name: builder-dockercfg-4rqn4
+      type: Source
+    triggeredBy:
+    - imageChangeBuild:
+        fromRef:
+          kind: ImageStreamTag
+          name: nodejs:10
+          namespace: openshift
+        imageID: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+      message: Image change
+  status:
+    completionTimestamp: "2023-09-01T01:10:38Z"
+    conditions:
+    - lastTransitionTime: "2023-09-01T01:10:34Z"
+      lastUpdateTime: "2023-09-01T01:10:34Z"
+      status: "False"
+      type: New
+    - lastTransitionTime: "2023-09-01T01:10:38Z"
+      lastUpdateTime: "2023-09-01T01:10:38Z"
+      status: "False"
+      type: Pending
+    - lastTransitionTime: "2023-09-01T01:10:38Z"
+      lastUpdateTime: "2023-09-01T01:10:38Z"
+      status: "False"
+      type: Running
+    - lastTransitionTime: "2023-09-01T01:10:38Z"
+      lastUpdateTime: "2023-09-01T01:10:38Z"
+      message: Failed to fetch the input source.
+      reason: FetchSourceFailed
+      status: "True"
+      type: Failed
+    config:
+      kind: BuildConfig
+      name: front001-denuncias-prod
+      namespace: denuncias-dev
+    duration: 4000000000
+    logSnippet: |-
+      Cloning "https://dirtrab.visualstudio.com/Denuncia%20Posterior%20Termino%20Contrato/_git/front001-denuncias" ...
+      error: failed to fetch requested repository "https://dirtr...Contrato/_git/front001-denuncias" with provided credentials
+    message: Failed to fetch the input source.
+    output: {}
+    outputDockerImageReference: image-registry.openshift-image-registry.svc:5000/denuncias-dev/front001-denuncias-prod:latest
+    phase: Failed
+    reason: FetchSourceFailed
+    startTimestamp: "2023-09-01T01:10:34Z"
+- apiVersion: build.openshift.io/v1
+  kind: Build
+  metadata:
+    annotations:
+      openshift.io/build-config.name: front001-denuncias-qa
+      openshift.io/build.number: "1"
+      openshift.io/build.pod-name: front001-denuncias-qa-1-build
+    creationTimestamp: "2023-09-01T01:10:32Z"
+    generation: 2
+    labels:
+      app: front001-denuncias-qa
+      buildconfig: front001-denuncias-qa
+      migration.openshift.io/migrated-by-migmigration: 6ff14eb9-893c-41c2-b14c-e7a903b73093
+      migration.openshift.io/migrated-by-migplan: 00366fb0-8e8e-4301-948a-980b177c294d
+      openshift.io/build-config.name: front001-denuncias-qa
+      openshift.io/build.start-policy: Serial
+      velero.io/backup-name: migration-6bbf3-initial-4mzmx
+      velero.io/restore-name: migration-6bbf3-final-zvlf7
+    name: front001-denuncias-qa-1
+    namespace: denuncias-dev
+    ownerReferences:
+    - apiVersion: build.openshift.io/v1
+      controller: true
+      kind: BuildConfig
+      name: front001-denuncias-qa
+      uid: 904bb5d6-2454-4f8b-96aa-a4ae7ff44d54
+    resourceVersion: "95923868"
+    uid: 88ba41e1-6521-4e8b-b662-7fc48b269a68
+  spec:
+    nodeSelector: null
+    output:
+      pushSecret:
+        name: builder-dockercfg-4rqn4
+      to:
+        kind: ImageStreamTag
+        name: front001-denuncias-qa:latest
+    postCommit: {}
+    resources: {}
+    serviceAccount: builder
+    source:
+      git:
+        ref: develop
+        uri: https://dirtrab.visualstudio.com/Denuncia%20Posterior%20Termino%20Contrato/_git/front001-denuncias
+      sourceSecret:
+        name: vsts
+      type: Git
+    strategy:
+      sourceStrategy:
+        env:
+        - name: GENERATE_SOURCEMAP
+          value: "false"
+        - name: REACT_APP_DPTC_URL_METADATA
+          value: http://api-integracion-denuncias-qa.api-cloud.dirtrab.cl/api/metadata/formulario/full
+        - name: REACT_APP_DPTC_URL_TRABAJADOR
+          value: http://api-integracion-denuncias-qa.api-cloud.dirtrab.cl/api/metadata/personas/
+        - name: REACT_APP_DPTC_URL_EMPLEADOR
+          value: http://api-integracion-denuncias-qa.api-cloud.dirtrab.cl/api/metadata/empleadores
+        - name: REACT_APP_DPTC_URL_FORMULARIO
+          value: http://api-integracion-denuncias-qa.api-cloud.dirtrab.cl/api/form/denuncias/terminoContrato/personas/
+        - name: REACT_APP_VALIDA_TOKEN
+          value: http://proxy-portalinstitucional-dev.api.dirtrab.cl/api/Autenticacion/token/validar
+        - name: REACT_APP_REDIRECT
+          value: https://midt.dirtrab.cl/
+        - name: REACT_APP_VOLVER_REDIRECT
+          value: /trabajador/home
+        from:
+          kind: DockerImage
+          name: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+        pullSecret:
+          name: builder-dockercfg-4rqn4
+      type: Source
+    triggeredBy:
+    - imageChangeBuild:
+        fromRef:
+          kind: ImageStreamTag
+          name: nodejs:10
+          namespace: openshift
+        imageID: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+      message: Image change
+  status:
+    completionTimestamp: "2023-09-01T01:10:38Z"
+    conditions:
+    - lastTransitionTime: "2023-09-01T01:10:33Z"
+      lastUpdateTime: "2023-09-01T01:10:33Z"
+      status: "False"
+      type: New
+    - lastTransitionTime: "2023-09-01T01:10:37Z"
+      lastUpdateTime: "2023-09-01T01:10:37Z"
+      status: "False"
+      type: Pending
+    - lastTransitionTime: "2023-09-01T01:10:38Z"
+      lastUpdateTime: "2023-09-01T01:10:38Z"
+      status: "False"
+      type: Running
+    - lastTransitionTime: "2023-09-01T01:10:38Z"
+      lastUpdateTime: "2023-09-01T01:10:38Z"
+      message: Failed to fetch the input source.
+      reason: FetchSourceFailed
+      status: "True"
+      type: Failed
+    config:
+      kind: BuildConfig
+      name: front001-denuncias-qa
+      namespace: denuncias-dev
+    duration: 5000000000
+    logSnippet: |-
+      Cloning "https://dirtrab.visualstudio.com/Denuncia%20Posterior%20Termino%20Contrato/_git/front001-denuncias" ...
+      error: failed to fetch requested repository "https://dirtr...Contrato/_git/front001-denuncias" with provided credentials
+    message: Failed to fetch the input source.
+    output: {}
+    outputDockerImageReference: image-registry.openshift-image-registry.svc:5000/denuncias-dev/front001-denuncias-qa:latest
+    phase: Failed
+    reason: FetchSourceFailed
+    startTimestamp: "2023-09-01T01:10:33Z"
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

@@ -1,0 +1,35 @@
+apiVersion: v1
+items:
+- apiVersion: authorization.openshift.io/v1
+  kind: Role
+  metadata:
+    annotations:
+      include.release.openshift.io/ibm-cloud-managed: "true"
+      include.release.openshift.io/self-managed-high-availability: "true"
+      include.release.openshift.io/single-node-developer: "true"
+    creationTimestamp: "2023-05-04T21:35:49Z"
+    name: prometheus-k8s
+    namespace: openshift-config-operator
+    ownerReferences:
+    - apiVersion: config.openshift.io/v1
+      kind: ClusterVersion
+      name: version
+      uid: 5d92b52f-9fff-4a6e-b815-398b934115ad
+    resourceVersion: "1430"
+    uid: 6dd0c53d-e3b1-4871-8248-0e0740373598
+  rules:
+  - apiGroups:
+    - ""
+    attributeRestrictions: null
+    resources:
+    - endpoints
+    - pods
+    - services
+    verbs:
+    - get
+    - list
+    - watch
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

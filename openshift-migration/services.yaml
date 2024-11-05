@@ -1,0 +1,229 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Service
+  metadata:
+    creationTimestamp: "2023-05-12T20:25:58Z"
+    labels:
+      control-plane: controller-manager
+      controller-tools.k8s.io: "1.0"
+    name: controller-manager-service
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: migration.openshift.io/v1alpha1
+      kind: MigrationController
+      name: migration-controller
+      uid: 6c83ac9d-343f-4bbd-82b5-65232ad8f08e
+    resourceVersion: "2281099"
+    uid: 378b8b19-f92a-4a63-9e1d-69105e1b4827
+  spec:
+    clusterIP: 172.30.246.168
+    clusterIPs:
+    - 172.30.246.168
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - port: 443
+      protocol: TCP
+      targetPort: 443
+    selector:
+      control-plane: controller-manager
+      controller-tools.k8s.io: "1.0"
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    creationTimestamp: "2023-05-12T20:25:50Z"
+    labels:
+      app.kubernetes.io/part-of: openshift-migration
+      control-plane: controller-manager
+      controller-tools.k8s.io: "1.0"
+    name: discovery
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: migration.openshift.io/v1alpha1
+      kind: MigrationController
+      name: migration-controller
+      uid: 6c83ac9d-343f-4bbd-82b5-65232ad8f08e
+    resourceVersion: "2281023"
+    uid: cb4ab181-ae28-4bc9-9fbc-ded354d616a1
+  spec:
+    clusterIP: 172.30.180.146
+    clusterIPs:
+    - 172.30.180.146
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 8080
+    selector:
+      control-plane: controller-manager
+      controller-tools.k8s.io: "1.0"
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    creationTimestamp: "2023-05-12T20:25:44Z"
+    labels:
+      app: mig-controller
+    name: mig-controller-metrics
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: migration.openshift.io/v1alpha1
+      kind: MigrationController
+      name: migration-controller
+      uid: 6c83ac9d-343f-4bbd-82b5-65232ad8f08e
+    resourceVersion: "2280941"
+    uid: 0f1979c5-aa92-4b44-b2f8-cda0f5cd23be
+  spec:
+    clusterIP: None
+    clusterIPs:
+    - None
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: metrics
+      port: 2112
+      protocol: TCP
+      targetPort: 2112
+    selector:
+      app: migration
+      control-plane: controller-manager
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    creationTimestamp: "2023-05-12T20:26:10Z"
+    labels:
+      app: migration
+      service: migration-ui
+    name: migration-ui
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: migration.openshift.io/v1alpha1
+      kind: MigrationController
+      name: migration-controller
+      uid: 6c83ac9d-343f-4bbd-82b5-65232ad8f08e
+    resourceVersion: "2281275"
+    uid: fd63dfbe-3352-48a0-b4c7-22395fa00a7d
+  spec:
+    clusterIP: 172.30.225.216
+    clusterIPs:
+    - 172.30.225.216
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: port-9000
+      port: 9000
+      protocol: TCP
+      targetPort: 9000
+    selector:
+      app: migration
+      service: migration-ui
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    creationTimestamp: "2023-05-06T12:20:18Z"
+    labels:
+      control-plane: controller-manager
+      operators.coreos.com/redhat-oadp-operator.openshift-migration: ""
+    name: openshift-adp-controller-manager-metrics-service
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: operators.coreos.com/v1alpha1
+      blockOwnerDeletion: false
+      controller: false
+      kind: ClusterServiceVersion
+      name: oadp-operator.v1.0.16
+      uid: 5f287fe9-f79a-466a-b87f-e751cf75fac3
+    resourceVersion: "449089682"
+    uid: 9a081f7f-d81d-44ab-a1bf-4bdb0a7bd864
+  spec:
+    clusterIP: 172.30.239.112
+    clusterIPs:
+    - 172.30.239.112
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: https
+      port: 8443
+      protocol: TCP
+      targetPort: https
+    selector:
+      control-plane: controller-manager
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    creationTimestamp: "2023-05-12T20:25:40Z"
+    labels:
+      app.kubernetes.io/component: server
+      app.kubernetes.io/instance: velero
+      app.kubernetes.io/managed-by: oadp-operator
+      app.kubernetes.io/name: velero
+      openshift.io/oadp: "True"
+    name: openshift-adp-velero-metrics-svc
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: oadp.openshift.io/v1alpha1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DataProtectionApplication
+      name: velero
+      uid: 2243f0dc-d566-45ae-9332-0148894804c0
+    resourceVersion: "2280856"
+    uid: 6555c84e-9da4-4465-9f8d-2e0e1919184a
+  spec:
+    clusterIP: 172.30.100.4
+    clusterIPs:
+    - 172.30.100.4
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: monitoring
+      port: 8085
+      protocol: TCP
+      targetPort: 8085
+    selector:
+      app.kubernetes.io/component: server
+      app.kubernetes.io/instance: velero
+      app.kubernetes.io/managed-by: oadp-operator
+      app.kubernetes.io/name: velero
+      openshift.io/oadp: "True"
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

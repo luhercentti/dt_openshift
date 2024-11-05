@@ -1,0 +1,1663 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: ReplicationController
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/desired-replicas: "1"
+      openshift.io/deployer-pod.completed-at: 2023-06-03 20:26:51 +0000 UTC
+      openshift.io/deployer-pod.created-at: 2023-06-03 20:16:47 +0000 UTC
+      openshift.io/deployer-pod.name: gogs-1-deploy
+      openshift.io/deployment-config.latest-version: "1"
+      openshift.io/deployment-config.name: gogs
+      openshift.io/deployment.phase: Failed
+      openshift.io/deployment.replicas: "0"
+      openshift.io/deployment.status-reason: config change
+      openshift.io/encoded-deployment-config: |
+        {"kind":"DeploymentConfig","apiVersion":"apps.openshift.io/v1","metadata":{"name":"gogs","namespace":"cicd","uid":"b636c717-ef68-4c86-b7b6-f762f0d1826a","resourceVersion":"19235021","generation":2,"creationTimestamp":"2023-06-03T20:16:44Z","labels":{"app":"gogs","migration.openshift.io/migrated-by-migmigration":"4066e18a-7c09-4930-a1fd-19e7058b887b","migration.openshift.io/migrated-by-migplan":"adcc6565-a1ee-4eee-a8d6-19a7e8841033","velero.io/backup-name":"migration-85fa4-initial-h496m","velero.io/restore-name":"migration-85fa4-final-wmd58"},"annotations":{"openshift.io/backup-registry-hostname":"docker-registry.default.svc:5000","openshift.io/backup-server-version":"1.11","openshift.io/generated-by":"OpenShiftNewApp","openshift.io/migration-registry":"172.30.245.25:5000","openshift.io/restore-registry-hostname":"image-registry.openshift-image-registry.svc:5000","openshift.io/restore-server-version":"1.23"},"managedFields":[{"manager":"velero-server","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-06-03T20:16:44Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{".":{},"f:openshift.io/backup-registry-hostname":{},"f:openshift.io/backup-server-version":{},"f:openshift.io/generated-by":{},"f:openshift.io/migration-registry":{},"f:openshift.io/restore-registry-hostname":{},"f:openshift.io/restore-server-version":{}},"f:labels":{".":{},"f:app":{},"f:migration.openshift.io/migrated-by-migmigration":{},"f:migration.openshift.io/migrated-by-migplan":{},"f:velero.io/backup-name":{},"f:velero.io/restore-name":{}}},"f:spec":{"f:replicas":{},"f:revisionHistoryLimit":{},"f:selector":{".":{},"f:app":{},"f:deploymentconfig":{}},"f:strategy":{"f:activeDeadlineSeconds":{},"f:rollingParams":{".":{},"f:intervalSeconds":{},"f:maxSurge":{},"f:maxUnavailable":{},"f:timeoutSeconds":{},"f:updatePeriodSeconds":{}},"f:type":{}},"f:template":{".":{},"f:metadata":{".":{},"f:annotations":{".":{},"f:openshift.io/generated-by":{}},"f:creationTimestamp":{},"f:labels":{".":{},"f:app":{},"f:deploymentconfig":{}}},"f:spec":{".":{},"f:containers":{".":{},"k:{\"name\":\"gogs\"}":{".":{},"f:image":{},"f:imagePullPolicy":{},"f:livenessProbe":{".":{},"f:failureThreshold":{},"f:httpGet":{".":{},"f:path":{},"f:port":{},"f:scheme":{}},"f:initialDelaySeconds":{},"f:periodSeconds":{},"f:successThreshold":{},"f:timeoutSeconds":{}},"f:name":{},"f:ports":{".":{},"k:{\"containerPort\":3000,\"protocol\":\"TCP\"}":{".":{},"f:containerPort":{},"f:protocol":{}},"k:{\"containerPort\":10022,\"protocol\":\"TCP\"}":{".":{},"f:containerPort":{},"f:protocol":{}}},"f:readinessProbe":{".":{},"f:failureThreshold":{},"f:httpGet":{".":{},"f:path":{},"f:port":{},"f:scheme":{}},"f:initialDelaySeconds":{},"f:periodSeconds":{},"f:successThreshold":{},"f:timeoutSeconds":{}},"f:resources":{".":{},"f:limits":{".":{},"f:cpu":{},"f:memory":{}},"f:requests":{".":{},"f:cpu":{},"f:memory":{}}},"f:terminationMessagePath":{},"f:terminationMessagePolicy":{},"f:volumeMounts":{".":{},"k:{\"mountPath\":\"/etc/gogs/conf\"}":{".":{},"f:mountPath":{},"f:name":{}},"k:{\"mountPath\":\"/opt/gogs/data\"}":{".":{},"f:mountPath":{},"f:name":{}}}}},"f:dnsPolicy":{},"f:restartPolicy":{},"f:schedulerName":{},"f:securityContext":{},"f:serviceAccount":{},"f:serviceAccountName":{},"f:terminationGracePeriodSeconds":{},"f:volumes":{".":{},"k:{\"name\":\"gogs-config\"}":{".":{},"f:configMap":{".":{},"f:defaultMode":{},"f:items":{},"f:name":{}},"f:name":{}},"k:{\"name\":\"gogs-data\"}":{".":{},"f:emptyDir":{},"f:name":{}}}}}}}},{"manager":"openshift-controller-manager","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-06-03T20:16:47Z","fieldsType":"FieldsV1","fieldsV1":{"f:spec":{"f:triggers":{}}}},{"manager":"openshift-controller-manager","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-06-03T20:16:47Z","fieldsType":"FieldsV1","fieldsV1":{"f:status":{"f:conditions":{".":{},"k:{\"type\":\"Available\"}":{".":{},"f:lastTransitionTime":{},"f:lastUpdateTime":{},"f:message":{},"f:status":{},"f:type":{}}},"f:details":{".":{},"f:causes":{},"f:message":{}},"f:latestVersion":{},"f:observedGeneration":{}}},"subresource":"status"}]},"spec":{"strategy":{"type":"Rolling","rollingParams":{"updatePeriodSeconds":1,"intervalSeconds":1,"timeoutSeconds":600,"maxUnavailable":"25%","maxSurge":"25%"},"resources":{},"activeDeadlineSeconds":21600},"triggers":[{"type":"ConfigChange"},{"type":"ImageChange","imageChangeParams":{"automatic":true,"containerNames":["gogs"],"from":{"kind":"ImageStreamTag","namespace":"cicd","name":"gogs:0.11.34"},"lastTriggeredImage":"docker.io/openshiftdemos/gogs@sha256:ca56061043c21500f587e938321d4f0ae38a74d4a9dd50ae70f8b628d19e0f32"}}],"replicas":1,"revisionHistoryLimit":10,"test":false,"selector":{"app":"gogs","deploymentconfig":"gogs"},"template":{"metadata":{"creationTimestamp":null,"labels":{"app":"gogs","deploymentconfig":"gogs"},"annotations":{"openshift.io/generated-by":"OpenShiftNewApp"}},"spec":{"volumes":[{"name":"gogs-data","emptyDir":{}},{"name":"gogs-config","configMap":{"name":"gogs-config","items":[{"key":"app.ini","path":"app.ini"}],"defaultMode":420}}],"containers":[{"name":"gogs","image":"docker.io/openshiftdemos/gogs@sha256:ca56061043c21500f587e938321d4f0ae38a74d4a9dd50ae70f8b628d19e0f32","ports":[{"containerPort":3000,"protocol":"TCP"},{"containerPort":10022,"protocol":"TCP"}],"resources":{"limits":{"cpu":"800m","memory":"1400Mi"},"requests":{"cpu":"100m","memory":"100Mi"}},"volumeMounts":[{"name":"gogs-data","mountPath":"/opt/gogs/data"},{"name":"gogs-config","mountPath":"/etc/gogs/conf"}],"livenessProbe":{"httpGet":{"path":"/","port":3000,"scheme":"HTTP"},"initialDelaySeconds":3,"timeoutSeconds":1,"periodSeconds":10,"successThreshold":1,"failureThreshold":3},"readinessProbe":{"httpGet":{"path":"/","port":3000,"scheme":"HTTP"},"initialDelaySeconds":3,"timeoutSeconds":1,"periodSeconds":20,"successThreshold":1,"failureThreshold":3},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File","imagePullPolicy":"Always"}],"restartPolicy":"Always","terminationGracePeriodSeconds":30,"dnsPolicy":"ClusterFirst","serviceAccountName":"gogs","serviceAccount":"gogs","securityContext":{},"schedulerName":"default-scheduler"}}},"status":{"latestVersion":1,"observedGeneration":1,"replicas":0,"updatedReplicas":0,"availableReplicas":0,"unavailableReplicas":0,"details":{"message":"config change","causes":[{"type":"ConfigChange"}]},"conditions":[{"type":"Available","status":"False","lastUpdateTime":"2023-06-03T20:16:44Z","lastTransitionTime":"2023-06-03T20:16:44Z","message":"Deployment config does not have minimum availability."}]}}
+    creationTimestamp: "2023-06-03T20:16:47Z"
+    generation: 3
+    labels:
+      app: gogs
+      migration.openshift.io/migrated-by-migmigration: 4066e18a-7c09-4930-a1fd-19e7058b887b
+      migration.openshift.io/migrated-by-migplan: adcc6565-a1ee-4eee-a8d6-19a7e8841033
+      openshift.io/deployment-config.name: gogs
+      velero.io/backup-name: migration-85fa4-initial-h496m
+      velero.io/restore-name: migration-85fa4-final-wmd58
+    name: gogs-1
+    namespace: cicd
+    ownerReferences:
+    - apiVersion: apps.openshift.io/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DeploymentConfig
+      name: gogs
+      uid: b636c717-ef68-4c86-b7b6-f762f0d1826a
+    resourceVersion: "19241094"
+    uid: ba7b5187-3382-45c6-b1a8-4ac46e8030df
+  spec:
+    replicas: 0
+    selector:
+      app: gogs
+      deployment: gogs-1
+      deploymentconfig: gogs
+    template:
+      metadata:
+        annotations:
+          openshift.io/deployment-config.latest-version: "1"
+          openshift.io/deployment-config.name: gogs
+          openshift.io/deployment.name: gogs-1
+          openshift.io/generated-by: OpenShiftNewApp
+        creationTimestamp: null
+        labels:
+          app: gogs
+          deployment: gogs-1
+          deploymentconfig: gogs
+      spec:
+        containers:
+        - image: docker.io/openshiftdemos/gogs@sha256:ca56061043c21500f587e938321d4f0ae38a74d4a9dd50ae70f8b628d19e0f32
+          imagePullPolicy: Always
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /
+              port: 3000
+              scheme: HTTP
+            initialDelaySeconds: 3
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          name: gogs
+          ports:
+          - containerPort: 3000
+            protocol: TCP
+          - containerPort: 10022
+            protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /
+              port: 3000
+              scheme: HTTP
+            initialDelaySeconds: 3
+            periodSeconds: 20
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources:
+            limits:
+              cpu: 800m
+              memory: 1400Mi
+            requests:
+              cpu: 100m
+              memory: 100Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /opt/gogs/data
+            name: gogs-data
+          - mountPath: /etc/gogs/conf
+            name: gogs-config
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: gogs
+        serviceAccountName: gogs
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - emptyDir: {}
+          name: gogs-data
+        - configMap:
+            defaultMode: 420
+            items:
+            - key: app.ini
+              path: app.ini
+            name: gogs-config
+          name: gogs-config
+  status:
+    observedGeneration: 3
+    replicas: 0
+- apiVersion: v1
+  kind: ReplicationController
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/desired-replicas: "1"
+      openshift.io/deployer-pod.completed-at: 2023-06-05 18:20:58 +0000 UTC
+      openshift.io/deployer-pod.created-at: 2023-06-05 18:10:55 +0000 UTC
+      openshift.io/deployer-pod.name: gogs-2-deploy
+      openshift.io/deployment-config.latest-version: "2"
+      openshift.io/deployment-config.name: gogs
+      openshift.io/deployment.phase: Failed
+      openshift.io/deployment.replicas: "0"
+      openshift.io/deployment.status-reason: manual change
+      openshift.io/encoded-deployment-config: |
+        {"kind":"DeploymentConfig","apiVersion":"apps.openshift.io/v1","metadata":{"name":"gogs","namespace":"cicd","uid":"b636c717-ef68-4c86-b7b6-f762f0d1826a","resourceVersion":"20944083","generation":3,"creationTimestamp":"2023-06-03T20:16:44Z","labels":{"app":"gogs","migration.openshift.io/migrated-by-migmigration":"4066e18a-7c09-4930-a1fd-19e7058b887b","migration.openshift.io/migrated-by-migplan":"adcc6565-a1ee-4eee-a8d6-19a7e8841033","velero.io/backup-name":"migration-85fa4-initial-h496m","velero.io/restore-name":"migration-85fa4-final-wmd58"},"annotations":{"openshift.io/backup-registry-hostname":"docker-registry.default.svc:5000","openshift.io/backup-server-version":"1.11","openshift.io/generated-by":"OpenShiftNewApp","openshift.io/migration-registry":"172.30.245.25:5000","openshift.io/restore-registry-hostname":"image-registry.openshift-image-registry.svc:5000","openshift.io/restore-server-version":"1.23"},"managedFields":[{"manager":"velero-server","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-06-03T20:16:44Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{".":{},"f:openshift.io/backup-registry-hostname":{},"f:openshift.io/backup-server-version":{},"f:openshift.io/generated-by":{},"f:openshift.io/migration-registry":{},"f:openshift.io/restore-registry-hostname":{},"f:openshift.io/restore-server-version":{}},"f:labels":{".":{},"f:app":{},"f:migration.openshift.io/migrated-by-migmigration":{},"f:migration.openshift.io/migrated-by-migplan":{},"f:velero.io/backup-name":{},"f:velero.io/restore-name":{}}},"f:spec":{"f:replicas":{},"f:revisionHistoryLimit":{},"f:selector":{".":{},"f:app":{},"f:deploymentconfig":{}},"f:strategy":{"f:activeDeadlineSeconds":{},"f:rollingParams":{".":{},"f:intervalSeconds":{},"f:maxSurge":{},"f:maxUnavailable":{},"f:timeoutSeconds":{},"f:updatePeriodSeconds":{}},"f:type":{}},"f:template":{".":{},"f:metadata":{".":{},"f:annotations":{".":{},"f:openshift.io/generated-by":{}},"f:creationTimestamp":{},"f:labels":{".":{},"f:app":{},"f:deploymentconfig":{}}},"f:spec":{".":{},"f:containers":{".":{},"k:{\"name\":\"gogs\"}":{".":{},"f:image":{},"f:imagePullPolicy":{},"f:livenessProbe":{".":{},"f:failureThreshold":{},"f:httpGet":{".":{},"f:path":{},"f:port":{},"f:scheme":{}},"f:initialDelaySeconds":{},"f:periodSeconds":{},"f:successThreshold":{},"f:timeoutSeconds":{}},"f:name":{},"f:ports":{".":{},"k:{\"containerPort\":3000,\"protocol\":\"TCP\"}":{".":{},"f:containerPort":{},"f:protocol":{}},"k:{\"containerPort\":10022,\"protocol\":\"TCP\"}":{".":{},"f:containerPort":{},"f:protocol":{}}},"f:readinessProbe":{".":{},"f:failureThreshold":{},"f:httpGet":{".":{},"f:path":{},"f:port":{},"f:scheme":{}},"f:initialDelaySeconds":{},"f:periodSeconds":{},"f:successThreshold":{},"f:timeoutSeconds":{}},"f:resources":{".":{},"f:limits":{".":{},"f:cpu":{},"f:memory":{}},"f:requests":{".":{},"f:cpu":{},"f:memory":{}}},"f:terminationMessagePath":{},"f:terminationMessagePolicy":{},"f:volumeMounts":{".":{},"k:{\"mountPath\":\"/etc/gogs/conf\"}":{".":{},"f:mountPath":{},"f:name":{}},"k:{\"mountPath\":\"/opt/gogs/data\"}":{".":{},"f:mountPath":{},"f:name":{}}}}},"f:dnsPolicy":{},"f:restartPolicy":{},"f:schedulerName":{},"f:securityContext":{},"f:serviceAccount":{},"f:serviceAccountName":{},"f:terminationGracePeriodSeconds":{},"f:volumes":{".":{},"k:{\"name\":\"gogs-config\"}":{".":{},"f:configMap":{".":{},"f:defaultMode":{},"f:items":{},"f:name":{}},"f:name":{}},"k:{\"name\":\"gogs-data\"}":{".":{},"f:emptyDir":{},"f:name":{}}}}}}}},{"manager":"openshift-controller-manager","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-06-03T20:16:47Z","fieldsType":"FieldsV1","fieldsV1":{"f:spec":{"f:triggers":{}}}},{"manager":"openshift-controller-manager","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-06-03T20:16:50Z","fieldsType":"FieldsV1","fieldsV1":{"f:status":{"f:conditions":{".":{},"k:{\"type\":\"Available\"}":{".":{},"f:lastTransitionTime":{},"f:lastUpdateTime":{},"f:message":{},"f:status":{},"f:type":{}},"k:{\"type\":\"Progressing\"}":{".":{},"f:lastTransitionTime":{},"f:lastUpdateTime":{},"f:message":{},"f:reason":{},"f:status":{},"f:type":{}}},"f:details":{".":{},"f:causes":{},"f:message":{}},"f:latestVersion":{},"f:observedGeneration":{},"f:replicas":{},"f:unavailableReplicas":{},"f:updatedReplicas":{}}},"subresource":"status"}]},"spec":{"strategy":{"type":"Rolling","rollingParams":{"updatePeriodSeconds":1,"intervalSeconds":1,"timeoutSeconds":600,"maxUnavailable":"25%","maxSurge":"25%"},"resources":{},"activeDeadlineSeconds":21600},"triggers":[{"type":"ConfigChange"},{"type":"ImageChange","imageChangeParams":{"automatic":true,"containerNames":["gogs"],"from":{"kind":"ImageStreamTag","namespace":"cicd","name":"gogs:0.11.34"},"lastTriggeredImage":"docker.io/openshiftdemos/gogs@sha256:ca56061043c21500f587e938321d4f0ae38a74d4a9dd50ae70f8b628d19e0f32"}}],"replicas":1,"revisionHistoryLimit":10,"test":false,"selector":{"app":"gogs","deploymentconfig":"gogs"},"template":{"metadata":{"creationTimestamp":null,"labels":{"app":"gogs","deploymentconfig":"gogs"},"annotations":{"openshift.io/generated-by":"OpenShiftNewApp"}},"spec":{"volumes":[{"name":"gogs-data","emptyDir":{}},{"name":"gogs-config","configMap":{"name":"gogs-config","items":[{"key":"app.ini","path":"app.ini"}],"defaultMode":420}}],"containers":[{"name":"gogs","image":"docker.io/openshiftdemos/gogs@sha256:ca56061043c21500f587e938321d4f0ae38a74d4a9dd50ae70f8b628d19e0f32","ports":[{"containerPort":3000,"protocol":"TCP"},{"containerPort":10022,"protocol":"TCP"}],"resources":{"limits":{"cpu":"800m","memory":"1400Mi"},"requests":{"cpu":"100m","memory":"100Mi"}},"volumeMounts":[{"name":"gogs-data","mountPath":"/opt/gogs/data"},{"name":"gogs-config","mountPath":"/etc/gogs/conf"}],"livenessProbe":{"httpGet":{"path":"/","port":3000,"scheme":"HTTP"},"initialDelaySeconds":3,"timeoutSeconds":1,"periodSeconds":10,"successThreshold":1,"failureThreshold":3},"readinessProbe":{"httpGet":{"path":"/","port":3000,"scheme":"HTTP"},"initialDelaySeconds":3,"timeoutSeconds":1,"periodSeconds":20,"successThreshold":1,"failureThreshold":3},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File","imagePullPolicy":"Always"}],"restartPolicy":"Always","terminationGracePeriodSeconds":30,"dnsPolicy":"ClusterFirst","serviceAccountName":"gogs","serviceAccount":"gogs","securityContext":{},"schedulerName":"default-scheduler"}}},"status":{"latestVersion":2,"observedGeneration":2,"replicas":0,"updatedReplicas":0,"availableReplicas":0,"unavailableReplicas":0,"details":{"message":"manual change","causes":[{"type":"Manual"}]},"conditions":[{"type":"Available","status":"False","lastUpdateTime":"2023-06-03T20:16:44Z","lastTransitionTime":"2023-06-03T20:16:44Z","message":"Deployment config does not have minimum availability."},{"type":"Progressing","status":"False","lastUpdateTime":"2023-06-03T20:26:53Z","lastTransitionTime":"2023-06-03T20:26:53Z","reason":"ProgressDeadlineExceeded","message":"replication controller \"gogs-1\" has failed progressing"}]}}
+    creationTimestamp: "2023-06-05T18:10:55Z"
+    generation: 3
+    labels:
+      app: gogs
+      migration.openshift.io/migrated-by-migmigration: 4066e18a-7c09-4930-a1fd-19e7058b887b
+      migration.openshift.io/migrated-by-migplan: adcc6565-a1ee-4eee-a8d6-19a7e8841033
+      openshift.io/deployment-config.name: gogs
+      velero.io/backup-name: migration-85fa4-initial-h496m
+      velero.io/restore-name: migration-85fa4-final-wmd58
+    name: gogs-2
+    namespace: cicd
+    ownerReferences:
+    - apiVersion: apps.openshift.io/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DeploymentConfig
+      name: gogs
+      uid: b636c717-ef68-4c86-b7b6-f762f0d1826a
+    resourceVersion: "20950192"
+    uid: 8a30e2a4-bc42-4108-8557-046152b254a8
+  spec:
+    replicas: 0
+    selector:
+      app: gogs
+      deployment: gogs-2
+      deploymentconfig: gogs
+    template:
+      metadata:
+        annotations:
+          openshift.io/deployment-config.latest-version: "2"
+          openshift.io/deployment-config.name: gogs
+          openshift.io/deployment.name: gogs-2
+          openshift.io/generated-by: OpenShiftNewApp
+        creationTimestamp: null
+        labels:
+          app: gogs
+          deployment: gogs-2
+          deploymentconfig: gogs
+      spec:
+        containers:
+        - image: docker.io/openshiftdemos/gogs@sha256:ca56061043c21500f587e938321d4f0ae38a74d4a9dd50ae70f8b628d19e0f32
+          imagePullPolicy: Always
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /
+              port: 3000
+              scheme: HTTP
+            initialDelaySeconds: 3
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          name: gogs
+          ports:
+          - containerPort: 3000
+            protocol: TCP
+          - containerPort: 10022
+            protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /
+              port: 3000
+              scheme: HTTP
+            initialDelaySeconds: 3
+            periodSeconds: 20
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources:
+            limits:
+              cpu: 800m
+              memory: 1400Mi
+            requests:
+              cpu: 100m
+              memory: 100Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /opt/gogs/data
+            name: gogs-data
+          - mountPath: /etc/gogs/conf
+            name: gogs-config
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: gogs
+        serviceAccountName: gogs
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - emptyDir: {}
+          name: gogs-data
+        - configMap:
+            defaultMode: 420
+            items:
+            - key: app.ini
+              path: app.ini
+            name: gogs-config
+          name: gogs-config
+  status:
+    observedGeneration: 3
+    replicas: 0
+- apiVersion: v1
+  kind: ReplicationController
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/desired-replicas: "1"
+      openshift.io/deployer-pod.completed-at: 2023-06-06 17:04:47 +0000 UTC
+      openshift.io/deployer-pod.created-at: 2023-06-06 16:54:44 +0000 UTC
+      openshift.io/deployer-pod.name: gogs-3-deploy
+      openshift.io/deployment-config.latest-version: "3"
+      openshift.io/deployment-config.name: gogs
+      openshift.io/deployment.phase: Failed
+      openshift.io/deployment.replicas: "0"
+      openshift.io/deployment.status-reason: manual change
+      openshift.io/encoded-deployment-config: |
+        {"kind":"DeploymentConfig","apiVersion":"apps.openshift.io/v1","metadata":{"name":"gogs","namespace":"cicd","uid":"b636c717-ef68-4c86-b7b6-f762f0d1826a","resourceVersion":"21764292","generation":4,"creationTimestamp":"2023-06-03T20:16:44Z","labels":{"app":"gogs","migration.openshift.io/migrated-by-migmigration":"4066e18a-7c09-4930-a1fd-19e7058b887b","migration.openshift.io/migrated-by-migplan":"adcc6565-a1ee-4eee-a8d6-19a7e8841033","velero.io/backup-name":"migration-85fa4-initial-h496m","velero.io/restore-name":"migration-85fa4-final-wmd58"},"annotations":{"openshift.io/backup-registry-hostname":"docker-registry.default.svc:5000","openshift.io/backup-server-version":"1.11","openshift.io/generated-by":"OpenShiftNewApp","openshift.io/migration-registry":"172.30.245.25:5000","openshift.io/restore-registry-hostname":"image-registry.openshift-image-registry.svc:5000","openshift.io/restore-server-version":"1.23"},"managedFields":[{"manager":"velero-server","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-06-03T20:16:44Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{".":{},"f:openshift.io/backup-registry-hostname":{},"f:openshift.io/backup-server-version":{},"f:openshift.io/generated-by":{},"f:openshift.io/migration-registry":{},"f:openshift.io/restore-registry-hostname":{},"f:openshift.io/restore-server-version":{}},"f:labels":{".":{},"f:app":{},"f:migration.openshift.io/migrated-by-migmigration":{},"f:migration.openshift.io/migrated-by-migplan":{},"f:velero.io/backup-name":{},"f:velero.io/restore-name":{}}},"f:spec":{"f:replicas":{},"f:revisionHistoryLimit":{},"f:selector":{".":{},"f:app":{},"f:deploymentconfig":{}},"f:strategy":{"f:activeDeadlineSeconds":{},"f:rollingParams":{".":{},"f:intervalSeconds":{},"f:maxSurge":{},"f:maxUnavailable":{},"f:timeoutSeconds":{},"f:updatePeriodSeconds":{}},"f:type":{}},"f:template":{".":{},"f:metadata":{".":{},"f:annotations":{".":{},"f:openshift.io/generated-by":{}},"f:creationTimestamp":{},"f:labels":{".":{},"f:app":{},"f:deploymentconfig":{}}},"f:spec":{".":{},"f:containers":{".":{},"k:{\"name\":\"gogs\"}":{".":{},"f:image":{},"f:imagePullPolicy":{},"f:livenessProbe":{".":{},"f:failureThreshold":{},"f:httpGet":{".":{},"f:path":{},"f:port":{},"f:scheme":{}},"f:initialDelaySeconds":{},"f:periodSeconds":{},"f:successThreshold":{},"f:timeoutSeconds":{}},"f:name":{},"f:ports":{".":{},"k:{\"containerPort\":3000,\"protocol\":\"TCP\"}":{".":{},"f:containerPort":{},"f:protocol":{}},"k:{\"containerPort\":10022,\"protocol\":\"TCP\"}":{".":{},"f:containerPort":{},"f:protocol":{}}},"f:readinessProbe":{".":{},"f:failureThreshold":{},"f:httpGet":{".":{},"f:path":{},"f:port":{},"f:scheme":{}},"f:initialDelaySeconds":{},"f:periodSeconds":{},"f:successThreshold":{},"f:timeoutSeconds":{}},"f:resources":{".":{},"f:limits":{".":{},"f:cpu":{},"f:memory":{}},"f:requests":{".":{},"f:cpu":{},"f:memory":{}}},"f:terminationMessagePath":{},"f:terminationMessagePolicy":{},"f:volumeMounts":{".":{},"k:{\"mountPath\":\"/etc/gogs/conf\"}":{".":{},"f:mountPath":{},"f:name":{}},"k:{\"mountPath\":\"/opt/gogs/data\"}":{".":{},"f:mountPath":{},"f:name":{}}}}},"f:dnsPolicy":{},"f:restartPolicy":{},"f:schedulerName":{},"f:securityContext":{},"f:serviceAccount":{},"f:serviceAccountName":{},"f:terminationGracePeriodSeconds":{},"f:volumes":{".":{},"k:{\"name\":\"gogs-config\"}":{".":{},"f:configMap":{".":{},"f:defaultMode":{},"f:items":{},"f:name":{}},"f:name":{}},"k:{\"name\":\"gogs-data\"}":{".":{},"f:emptyDir":{},"f:name":{}}}}}}}},{"manager":"openshift-controller-manager","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-06-03T20:16:47Z","fieldsType":"FieldsV1","fieldsV1":{"f:spec":{"f:triggers":{}}}},{"manager":"openshift-controller-manager","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-06-05T18:21:01Z","fieldsType":"FieldsV1","fieldsV1":{"f:status":{"f:conditions":{".":{},"k:{\"type\":\"Available\"}":{".":{},"f:lastTransitionTime":{},"f:lastUpdateTime":{},"f:message":{},"f:status":{},"f:type":{}},"k:{\"type\":\"Progressing\"}":{".":{},"f:lastTransitionTime":{},"f:lastUpdateTime":{},"f:message":{},"f:reason":{},"f:status":{},"f:type":{}}},"f:details":{".":{},"f:causes":{},"f:message":{}},"f:latestVersion":{},"f:observedGeneration":{},"f:replicas":{},"f:unavailableReplicas":{},"f:updatedReplicas":{}}},"subresource":"status"}]},"spec":{"strategy":{"type":"Rolling","rollingParams":{"updatePeriodSeconds":1,"intervalSeconds":1,"timeoutSeconds":600,"maxUnavailable":"25%","maxSurge":"25%"},"resources":{},"activeDeadlineSeconds":21600},"triggers":[{"type":"ConfigChange"},{"type":"ImageChange","imageChangeParams":{"automatic":true,"containerNames":["gogs"],"from":{"kind":"ImageStreamTag","namespace":"cicd","name":"gogs:0.11.34"},"lastTriggeredImage":"docker.io/openshiftdemos/gogs@sha256:ca56061043c21500f587e938321d4f0ae38a74d4a9dd50ae70f8b628d19e0f32"}}],"replicas":1,"revisionHistoryLimit":10,"test":false,"selector":{"app":"gogs","deploymentconfig":"gogs"},"template":{"metadata":{"creationTimestamp":null,"labels":{"app":"gogs","deploymentconfig":"gogs"},"annotations":{"openshift.io/generated-by":"OpenShiftNewApp"}},"spec":{"volumes":[{"name":"gogs-data","emptyDir":{}},{"name":"gogs-config","configMap":{"name":"gogs-config","items":[{"key":"app.ini","path":"app.ini"}],"defaultMode":420}}],"containers":[{"name":"gogs","image":"docker.io/openshiftdemos/gogs@sha256:ca56061043c21500f587e938321d4f0ae38a74d4a9dd50ae70f8b628d19e0f32","ports":[{"containerPort":3000,"protocol":"TCP"},{"containerPort":10022,"protocol":"TCP"}],"resources":{"limits":{"cpu":"800m","memory":"1400Mi"},"requests":{"cpu":"100m","memory":"100Mi"}},"volumeMounts":[{"name":"gogs-data","mountPath":"/opt/gogs/data"},{"name":"gogs-config","mountPath":"/etc/gogs/conf"}],"livenessProbe":{"httpGet":{"path":"/","port":3000,"scheme":"HTTP"},"initialDelaySeconds":3,"timeoutSeconds":1,"periodSeconds":10,"successThreshold":1,"failureThreshold":3},"readinessProbe":{"httpGet":{"path":"/","port":3000,"scheme":"HTTP"},"initialDelaySeconds":3,"timeoutSeconds":1,"periodSeconds":20,"successThreshold":1,"failureThreshold":3},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File","imagePullPolicy":"Always"}],"restartPolicy":"Always","terminationGracePeriodSeconds":30,"dnsPolicy":"ClusterFirst","serviceAccountName":"gogs","serviceAccount":"gogs","securityContext":{},"schedulerName":"default-scheduler"}}},"status":{"latestVersion":3,"observedGeneration":3,"replicas":0,"updatedReplicas":0,"availableReplicas":0,"unavailableReplicas":0,"details":{"message":"manual change","causes":[{"type":"Manual"}]},"conditions":[{"type":"Available","status":"False","lastUpdateTime":"2023-06-03T20:16:44Z","lastTransitionTime":"2023-06-03T20:16:44Z","message":"Deployment config does not have minimum availability."},{"type":"Progressing","status":"False","lastUpdateTime":"2023-06-05T18:21:01Z","lastTransitionTime":"2023-06-05T18:21:01Z","reason":"ProgressDeadlineExceeded","message":"replication controller \"gogs-2\" has failed progressing"}]}}
+    creationTimestamp: "2023-06-06T16:54:44Z"
+    generation: 3
+    labels:
+      app: gogs
+      migration.openshift.io/migrated-by-migmigration: 4066e18a-7c09-4930-a1fd-19e7058b887b
+      migration.openshift.io/migrated-by-migplan: adcc6565-a1ee-4eee-a8d6-19a7e8841033
+      openshift.io/deployment-config.name: gogs
+      velero.io/backup-name: migration-85fa4-initial-h496m
+      velero.io/restore-name: migration-85fa4-final-wmd58
+    name: gogs-3
+    namespace: cicd
+    ownerReferences:
+    - apiVersion: apps.openshift.io/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DeploymentConfig
+      name: gogs
+      uid: b636c717-ef68-4c86-b7b6-f762f0d1826a
+    resourceVersion: "21770500"
+    uid: 7d3890ba-de89-485f-817e-17f35b167a90
+  spec:
+    replicas: 0
+    selector:
+      app: gogs
+      deployment: gogs-3
+      deploymentconfig: gogs
+    template:
+      metadata:
+        annotations:
+          openshift.io/deployment-config.latest-version: "3"
+          openshift.io/deployment-config.name: gogs
+          openshift.io/deployment.name: gogs-3
+          openshift.io/generated-by: OpenShiftNewApp
+        creationTimestamp: null
+        labels:
+          app: gogs
+          deployment: gogs-3
+          deploymentconfig: gogs
+      spec:
+        containers:
+        - image: docker.io/openshiftdemos/gogs@sha256:ca56061043c21500f587e938321d4f0ae38a74d4a9dd50ae70f8b628d19e0f32
+          imagePullPolicy: Always
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /
+              port: 3000
+              scheme: HTTP
+            initialDelaySeconds: 3
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          name: gogs
+          ports:
+          - containerPort: 3000
+            protocol: TCP
+          - containerPort: 10022
+            protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /
+              port: 3000
+              scheme: HTTP
+            initialDelaySeconds: 3
+            periodSeconds: 20
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources:
+            limits:
+              cpu: 800m
+              memory: 1400Mi
+            requests:
+              cpu: 100m
+              memory: 100Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /opt/gogs/data
+            name: gogs-data
+          - mountPath: /etc/gogs/conf
+            name: gogs-config
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: gogs
+        serviceAccountName: gogs
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - emptyDir: {}
+          name: gogs-data
+        - configMap:
+            defaultMode: 420
+            items:
+            - key: app.ini
+              path: app.ini
+            name: gogs-config
+          name: gogs-config
+  status:
+    observedGeneration: 3
+    replicas: 0
+- apiVersion: v1
+  kind: ReplicationController
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/desired-replicas: "1"
+      openshift.io/deployer-pod.completed-at: 2023-09-04 16:18:56 +0000 UTC
+      openshift.io/deployer-pod.created-at: 2023-09-04 16:08:53 +0000 UTC
+      openshift.io/deployer-pod.name: gogs-4-deploy
+      openshift.io/deployment-config.latest-version: "4"
+      openshift.io/deployment-config.name: gogs
+      openshift.io/deployment.phase: Failed
+      openshift.io/deployment.replicas: "0"
+      openshift.io/deployment.status-reason: manual change
+      openshift.io/encoded-deployment-config: |
+        {"kind":"DeploymentConfig","apiVersion":"apps.openshift.io/v1","metadata":{"name":"gogs","namespace":"cicd","uid":"b636c717-ef68-4c86-b7b6-f762f0d1826a","resourceVersion":"98949082","generation":11,"creationTimestamp":"2023-06-03T20:16:44Z","labels":{"app":"gogs","migration.openshift.io/migrated-by-migmigration":"4066e18a-7c09-4930-a1fd-19e7058b887b","migration.openshift.io/migrated-by-migplan":"adcc6565-a1ee-4eee-a8d6-19a7e8841033","velero.io/backup-name":"migration-85fa4-initial-h496m","velero.io/restore-name":"migration-85fa4-final-wmd58"},"annotations":{"openshift.io/backup-registry-hostname":"docker-registry.default.svc:5000","openshift.io/backup-server-version":"1.11","openshift.io/generated-by":"OpenShiftNewApp","openshift.io/migration-registry":"172.30.245.25:5000","openshift.io/restore-registry-hostname":"image-registry.openshift-image-registry.svc:5000","openshift.io/restore-server-version":"1.23"},"managedFields":[{"manager":"velero-server","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-06-03T20:16:44Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{".":{},"f:openshift.io/backup-registry-hostname":{},"f:openshift.io/backup-server-version":{},"f:openshift.io/generated-by":{},"f:openshift.io/migration-registry":{},"f:openshift.io/restore-registry-hostname":{},"f:openshift.io/restore-server-version":{}},"f:labels":{".":{},"f:app":{},"f:migration.openshift.io/migrated-by-migmigration":{},"f:migration.openshift.io/migrated-by-migplan":{},"f:velero.io/backup-name":{},"f:velero.io/restore-name":{}}},"f:spec":{"f:replicas":{},"f:revisionHistoryLimit":{},"f:selector":{".":{},"f:app":{},"f:deploymentconfig":{}},"f:strategy":{"f:activeDeadlineSeconds":{},"f:rollingParams":{".":{},"f:intervalSeconds":{},"f:maxSurge":{},"f:maxUnavailable":{},"f:timeoutSeconds":{},"f:updatePeriodSeconds":{}},"f:type":{}},"f:template":{".":{},"f:metadata":{".":{},"f:annotations":{".":{},"f:openshift.io/generated-by":{}},"f:creationTimestamp":{},"f:labels":{".":{},"f:app":{},"f:deploymentconfig":{}}},"f:spec":{".":{},"f:containers":{".":{},"k:{\"name\":\"gogs\"}":{".":{},"f:image":{},"f:imagePullPolicy":{},"f:livenessProbe":{".":{},"f:failureThreshold":{},"f:httpGet":{".":{},"f:path":{},"f:port":{},"f:scheme":{}},"f:initialDelaySeconds":{},"f:periodSeconds":{},"f:successThreshold":{},"f:timeoutSeconds":{}},"f:name":{},"f:ports":{".":{},"k:{\"containerPort\":3000,\"protocol\":\"TCP\"}":{".":{},"f:containerPort":{},"f:protocol":{}},"k:{\"containerPort\":10022,\"protocol\":\"TCP\"}":{".":{},"f:containerPort":{},"f:protocol":{}}},"f:readinessProbe":{".":{},"f:failureThreshold":{},"f:httpGet":{".":{},"f:path":{},"f:port":{},"f:scheme":{}},"f:initialDelaySeconds":{},"f:periodSeconds":{},"f:successThreshold":{},"f:timeoutSeconds":{}},"f:resources":{".":{},"f:limits":{".":{},"f:cpu":{},"f:memory":{}},"f:requests":{".":{},"f:cpu":{},"f:memory":{}}},"f:terminationMessagePath":{},"f:terminationMessagePolicy":{},"f:volumeMounts":{".":{},"k:{\"mountPath\":\"/etc/gogs/conf\"}":{".":{},"f:mountPath":{},"f:name":{}},"k:{\"mountPath\":\"/opt/gogs/data\"}":{".":{},"f:mountPath":{},"f:name":{}}}}},"f:dnsPolicy":{},"f:restartPolicy":{},"f:schedulerName":{},"f:securityContext":{},"f:serviceAccount":{},"f:serviceAccountName":{},"f:terminationGracePeriodSeconds":{},"f:volumes":{".":{},"k:{\"name\":\"gogs-config\"}":{".":{},"f:configMap":{".":{},"f:defaultMode":{},"f:items":{},"f:name":{}},"f:name":{}},"k:{\"name\":\"gogs-data\"}":{".":{},"f:emptyDir":{},"f:name":{}}}}}}}},{"manager":"openshift-controller-manager","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-06-03T20:16:47Z","fieldsType":"FieldsV1","fieldsV1":{"f:spec":{"f:triggers":{}}}},{"manager":"openshift-controller-manager","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-06-06T17:04:50Z","fieldsType":"FieldsV1","fieldsV1":{"f:status":{"f:conditions":{".":{},"k:{\"type\":\"Available\"}":{".":{},"f:lastTransitionTime":{},"f:lastUpdateTime":{},"f:message":{},"f:status":{},"f:type":{}},"k:{\"type\":\"Progressing\"}":{".":{},"f:lastTransitionTime":{},"f:lastUpdateTime":{},"f:message":{},"f:reason":{},"f:status":{},"f:type":{}}},"f:details":{".":{},"f:causes":{},"f:message":{}},"f:latestVersion":{},"f:observedGeneration":{},"f:replicas":{},"f:unavailableReplicas":{},"f:updatedReplicas":{}}},"subresource":"status"}]},"spec":{"strategy":{"type":"Rolling","rollingParams":{"updatePeriodSeconds":1,"intervalSeconds":1,"timeoutSeconds":600,"maxUnavailable":"25%","maxSurge":"25%"},"resources":{},"activeDeadlineSeconds":21600},"triggers":[{"type":"ConfigChange"},{"type":"ImageChange","imageChangeParams":{"automatic":true,"containerNames":["gogs"],"from":{"kind":"ImageStreamTag","namespace":"cicd","name":"gogs:0.11.34"},"lastTriggeredImage":"docker.io/openshiftdemos/gogs@sha256:ca56061043c21500f587e938321d4f0ae38a74d4a9dd50ae70f8b628d19e0f32"}}],"replicas":1,"revisionHistoryLimit":10,"test":false,"selector":{"app":"gogs","deploymentconfig":"gogs"},"template":{"metadata":{"creationTimestamp":null,"labels":{"app":"gogs","deploymentconfig":"gogs"},"annotations":{"openshift.io/generated-by":"OpenShiftNewApp"}},"spec":{"volumes":[{"name":"gogs-data","emptyDir":{}},{"name":"gogs-config","configMap":{"name":"gogs-config","items":[{"key":"app.ini","path":"app.ini"}],"defaultMode":420}}],"containers":[{"name":"gogs","image":"docker.io/openshiftdemos/gogs@sha256:ca56061043c21500f587e938321d4f0ae38a74d4a9dd50ae70f8b628d19e0f32","ports":[{"containerPort":3000,"protocol":"TCP"},{"containerPort":10022,"protocol":"TCP"}],"resources":{"limits":{"cpu":"800m","memory":"1400Mi"},"requests":{"cpu":"100m","memory":"100Mi"}},"volumeMounts":[{"name":"gogs-data","mountPath":"/opt/gogs/data"},{"name":"gogs-config","mountPath":"/etc/gogs/conf"}],"livenessProbe":{"httpGet":{"path":"/","port":3000,"scheme":"HTTP"},"initialDelaySeconds":3,"timeoutSeconds":1,"periodSeconds":10,"successThreshold":1,"failureThreshold":3},"readinessProbe":{"httpGet":{"path":"/","port":3000,"scheme":"HTTP"},"initialDelaySeconds":3,"timeoutSeconds":1,"periodSeconds":20,"successThreshold":1,"failureThreshold":3},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File","imagePullPolicy":"Always"}],"restartPolicy":"Always","terminationGracePeriodSeconds":30,"dnsPolicy":"ClusterFirst","serviceAccountName":"gogs","serviceAccount":"gogs","securityContext":{},"schedulerName":"default-scheduler"}}},"status":{"latestVersion":4,"observedGeneration":10,"replicas":0,"updatedReplicas":0,"availableReplicas":0,"unavailableReplicas":0,"details":{"message":"manual change","causes":[{"type":"Manual"}]},"conditions":[{"type":"Available","status":"False","lastUpdateTime":"2023-06-03T20:16:44Z","lastTransitionTime":"2023-06-03T20:16:44Z","message":"Deployment config does not have minimum availability."},{"type":"Progressing","status":"False","lastUpdateTime":"2023-06-06T17:04:50Z","lastTransitionTime":"2023-06-06T17:04:50Z","reason":"ProgressDeadlineExceeded","message":"replication controller \"gogs-3\" has failed progressing"}]}}
+    creationTimestamp: "2023-09-04T16:08:53Z"
+    generation: 3
+    labels:
+      app: gogs
+      migration.openshift.io/migrated-by-migmigration: 4066e18a-7c09-4930-a1fd-19e7058b887b
+      migration.openshift.io/migrated-by-migplan: adcc6565-a1ee-4eee-a8d6-19a7e8841033
+      openshift.io/deployment-config.name: gogs
+      velero.io/backup-name: migration-85fa4-initial-h496m
+      velero.io/restore-name: migration-85fa4-final-wmd58
+    name: gogs-4
+    namespace: cicd
+    ownerReferences:
+    - apiVersion: apps.openshift.io/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DeploymentConfig
+      name: gogs
+      uid: b636c717-ef68-4c86-b7b6-f762f0d1826a
+    resourceVersion: "98954952"
+    uid: b10e8c0c-99a4-43b8-9565-e11a167e250c
+  spec:
+    replicas: 0
+    selector:
+      app: gogs
+      deployment: gogs-4
+      deploymentconfig: gogs
+    template:
+      metadata:
+        annotations:
+          openshift.io/deployment-config.latest-version: "4"
+          openshift.io/deployment-config.name: gogs
+          openshift.io/deployment.name: gogs-4
+          openshift.io/generated-by: OpenShiftNewApp
+        creationTimestamp: null
+        labels:
+          app: gogs
+          deployment: gogs-4
+          deploymentconfig: gogs
+      spec:
+        containers:
+        - image: docker.io/openshiftdemos/gogs@sha256:ca56061043c21500f587e938321d4f0ae38a74d4a9dd50ae70f8b628d19e0f32
+          imagePullPolicy: Always
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /
+              port: 3000
+              scheme: HTTP
+            initialDelaySeconds: 3
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          name: gogs
+          ports:
+          - containerPort: 3000
+            protocol: TCP
+          - containerPort: 10022
+            protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /
+              port: 3000
+              scheme: HTTP
+            initialDelaySeconds: 3
+            periodSeconds: 20
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources:
+            limits:
+              cpu: 800m
+              memory: 1400Mi
+            requests:
+              cpu: 100m
+              memory: 100Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /opt/gogs/data
+            name: gogs-data
+          - mountPath: /etc/gogs/conf
+            name: gogs-config
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: gogs
+        serviceAccountName: gogs
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - emptyDir: {}
+          name: gogs-data
+        - configMap:
+            defaultMode: 420
+            items:
+            - key: app.ini
+              path: app.ini
+            name: gogs-config
+          name: gogs-config
+  status:
+    observedGeneration: 3
+    replicas: 0
+- apiVersion: v1
+  kind: ReplicationController
+  metadata:
+    annotations:
+      openshift.io/deployer-pod.completed-at: 2023-10-02 17:51:12 +0000 UTC
+      openshift.io/deployer-pod.created-at: 2023-10-02 17:51:10 +0000 UTC
+      openshift.io/deployer-pod.name: gogs-5-deploy
+      openshift.io/deployment-config.latest-version: "5"
+      openshift.io/deployment-config.name: gogs
+      openshift.io/deployment.phase: Complete
+      openshift.io/deployment.replicas: "0"
+      openshift.io/deployment.status-reason: manual change
+      openshift.io/encoded-deployment-config: |
+        {"kind":"DeploymentConfig","apiVersion":"apps.openshift.io/v1","metadata":{"name":"gogs","namespace":"cicd","uid":"b636c717-ef68-4c86-b7b6-f762f0d1826a","resourceVersion":"123188876","generation":15,"creationTimestamp":"2023-06-03T20:16:44Z","labels":{"app":"gogs","migration.openshift.io/migrated-by-migmigration":"4066e18a-7c09-4930-a1fd-19e7058b887b","migration.openshift.io/migrated-by-migplan":"adcc6565-a1ee-4eee-a8d6-19a7e8841033","velero.io/backup-name":"migration-85fa4-initial-h496m","velero.io/restore-name":"migration-85fa4-final-wmd58"},"annotations":{"openshift.io/backup-registry-hostname":"docker-registry.default.svc:5000","openshift.io/backup-server-version":"1.11","openshift.io/generated-by":"OpenShiftNewApp","openshift.io/migration-registry":"172.30.245.25:5000","openshift.io/restore-registry-hostname":"image-registry.openshift-image-registry.svc:5000","openshift.io/restore-server-version":"1.23"},"managedFields":[{"manager":"velero-server","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-06-03T20:16:44Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{".":{},"f:openshift.io/backup-registry-hostname":{},"f:openshift.io/backup-server-version":{},"f:openshift.io/generated-by":{},"f:openshift.io/migration-registry":{},"f:openshift.io/restore-registry-hostname":{},"f:openshift.io/restore-server-version":{}},"f:labels":{".":{},"f:app":{},"f:migration.openshift.io/migrated-by-migmigration":{},"f:migration.openshift.io/migrated-by-migplan":{},"f:velero.io/backup-name":{},"f:velero.io/restore-name":{}}},"f:spec":{"f:replicas":{},"f:revisionHistoryLimit":{},"f:selector":{".":{},"f:app":{},"f:deploymentconfig":{}},"f:strategy":{"f:activeDeadlineSeconds":{},"f:rollingParams":{".":{},"f:intervalSeconds":{},"f:maxSurge":{},"f:maxUnavailable":{},"f:timeoutSeconds":{},"f:updatePeriodSeconds":{}},"f:type":{}},"f:template":{".":{},"f:metadata":{".":{},"f:annotations":{".":{},"f:openshift.io/generated-by":{}},"f:creationTimestamp":{},"f:labels":{".":{},"f:app":{},"f:deploymentconfig":{}}},"f:spec":{".":{},"f:containers":{".":{},"k:{\"name\":\"gogs\"}":{".":{},"f:image":{},"f:imagePullPolicy":{},"f:livenessProbe":{".":{},"f:failureThreshold":{},"f:httpGet":{".":{},"f:path":{},"f:port":{},"f:scheme":{}},"f:initialDelaySeconds":{},"f:periodSeconds":{},"f:successThreshold":{},"f:timeoutSeconds":{}},"f:name":{},"f:ports":{".":{},"k:{\"containerPort\":3000,\"protocol\":\"TCP\"}":{".":{},"f:containerPort":{},"f:protocol":{}},"k:{\"containerPort\":10022,\"protocol\":\"TCP\"}":{".":{},"f:containerPort":{},"f:protocol":{}}},"f:readinessProbe":{".":{},"f:failureThreshold":{},"f:httpGet":{".":{},"f:path":{},"f:port":{},"f:scheme":{}},"f:initialDelaySeconds":{},"f:periodSeconds":{},"f:successThreshold":{},"f:timeoutSeconds":{}},"f:resources":{".":{},"f:limits":{".":{},"f:cpu":{},"f:memory":{}},"f:requests":{".":{},"f:cpu":{},"f:memory":{}}},"f:terminationMessagePath":{},"f:terminationMessagePolicy":{},"f:volumeMounts":{".":{},"k:{\"mountPath\":\"/etc/gogs/conf\"}":{".":{},"f:mountPath":{},"f:name":{}},"k:{\"mountPath\":\"/opt/gogs/data\"}":{".":{},"f:mountPath":{},"f:name":{}}}}},"f:dnsPolicy":{},"f:restartPolicy":{},"f:schedulerName":{},"f:securityContext":{},"f:serviceAccount":{},"f:serviceAccountName":{},"f:terminationGracePeriodSeconds":{},"f:volumes":{".":{},"k:{\"name\":\"gogs-config\"}":{".":{},"f:configMap":{".":{},"f:defaultMode":{},"f:items":{},"f:name":{}},"f:name":{}},"k:{\"name\":\"gogs-data\"}":{".":{},"f:emptyDir":{},"f:name":{}}}}}}}},{"manager":"openshift-controller-manager","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-06-03T20:16:47Z","fieldsType":"FieldsV1","fieldsV1":{"f:spec":{"f:triggers":{}}}},{"manager":"openshift-controller-manager","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-09-04T16:18:59Z","fieldsType":"FieldsV1","fieldsV1":{"f:status":{"f:conditions":{".":{},"k:{\"type\":\"Available\"}":{".":{},"f:lastTransitionTime":{},"f:lastUpdateTime":{},"f:message":{},"f:status":{},"f:type":{}},"k:{\"type\":\"Progressing\"}":{".":{},"f:lastTransitionTime":{},"f:lastUpdateTime":{},"f:message":{},"f:reason":{},"f:status":{},"f:type":{}}},"f:details":{".":{},"f:causes":{},"f:message":{}},"f:latestVersion":{},"f:observedGeneration":{},"f:replicas":{},"f:unavailableReplicas":{},"f:updatedReplicas":{}}},"subresource":"status"}]},"spec":{"strategy":{"type":"Rolling","rollingParams":{"updatePeriodSeconds":1,"intervalSeconds":1,"timeoutSeconds":600,"maxUnavailable":"25%","maxSurge":"25%"},"resources":{},"activeDeadlineSeconds":21600},"triggers":[{"type":"ConfigChange"},{"type":"ImageChange","imageChangeParams":{"automatic":true,"containerNames":["gogs"],"from":{"kind":"ImageStreamTag","namespace":"cicd","name":"gogs:0.11.34"},"lastTriggeredImage":"docker.io/openshiftdemos/gogs@sha256:ca56061043c21500f587e938321d4f0ae38a74d4a9dd50ae70f8b628d19e0f32"}}],"replicas":0,"revisionHistoryLimit":10,"test":false,"selector":{"app":"gogs","deploymentconfig":"gogs"},"template":{"metadata":{"creationTimestamp":null,"labels":{"app":"gogs","deploymentconfig":"gogs"},"annotations":{"openshift.io/generated-by":"OpenShiftNewApp"}},"spec":{"volumes":[{"name":"gogs-data","emptyDir":{}},{"name":"gogs-config","configMap":{"name":"gogs-config","items":[{"key":"app.ini","path":"app.ini"}],"defaultMode":420}}],"containers":[{"name":"gogs","image":"docker.io/openshiftdemos/gogs@sha256:ca56061043c21500f587e938321d4f0ae38a74d4a9dd50ae70f8b628d19e0f32","ports":[{"containerPort":3000,"protocol":"TCP"},{"containerPort":10022,"protocol":"TCP"}],"resources":{"limits":{"cpu":"800m","memory":"1400Mi"},"requests":{"cpu":"100m","memory":"100Mi"}},"volumeMounts":[{"name":"gogs-data","mountPath":"/opt/gogs/data"},{"name":"gogs-config","mountPath":"/etc/gogs/conf"}],"livenessProbe":{"httpGet":{"path":"/","port":3000,"scheme":"HTTP"},"initialDelaySeconds":3,"timeoutSeconds":1,"periodSeconds":10,"successThreshold":1,"failureThreshold":3},"readinessProbe":{"httpGet":{"path":"/","port":3000,"scheme":"HTTP"},"initialDelaySeconds":3,"timeoutSeconds":1,"periodSeconds":20,"successThreshold":1,"failureThreshold":3},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File","imagePullPolicy":"Always"}],"restartPolicy":"Always","terminationGracePeriodSeconds":30,"dnsPolicy":"ClusterFirst","serviceAccountName":"gogs","serviceAccount":"gogs","securityContext":{},"schedulerName":"default-scheduler"}}},"status":{"latestVersion":5,"observedGeneration":14,"replicas":0,"updatedReplicas":0,"availableReplicas":0,"unavailableReplicas":0,"details":{"message":"manual change","causes":[{"type":"Manual"}]},"conditions":[{"type":"Available","status":"False","lastUpdateTime":"2023-06-03T20:16:44Z","lastTransitionTime":"2023-06-03T20:16:44Z","message":"Deployment config does not have minimum availability."},{"type":"Progressing","status":"False","lastUpdateTime":"2023-09-04T16:18:59Z","lastTransitionTime":"2023-09-04T16:18:59Z","reason":"ProgressDeadlineExceeded","message":"replication controller \"gogs-4\" has failed progressing"}]}}
+    creationTimestamp: "2023-10-02T17:51:10Z"
+    generation: 4
+    labels:
+      app: gogs
+      migration.openshift.io/migrated-by-migmigration: 4066e18a-7c09-4930-a1fd-19e7058b887b
+      migration.openshift.io/migrated-by-migplan: adcc6565-a1ee-4eee-a8d6-19a7e8841033
+      openshift.io/deployment-config.name: gogs
+      velero.io/backup-name: migration-85fa4-initial-h496m
+      velero.io/restore-name: migration-85fa4-final-wmd58
+    name: gogs-5
+    namespace: cicd
+    ownerReferences:
+    - apiVersion: apps.openshift.io/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DeploymentConfig
+      name: gogs
+      uid: b636c717-ef68-4c86-b7b6-f762f0d1826a
+    resourceVersion: "472917946"
+    uid: c50e59e9-900c-4f8d-910f-dacde65d2a98
+  spec:
+    replicas: 1
+    selector:
+      app: gogs
+      deployment: gogs-5
+      deploymentconfig: gogs
+    template:
+      metadata:
+        annotations:
+          openshift.io/deployment-config.latest-version: "5"
+          openshift.io/deployment-config.name: gogs
+          openshift.io/deployment.name: gogs-5
+          openshift.io/generated-by: OpenShiftNewApp
+        creationTimestamp: null
+        labels:
+          app: gogs
+          deployment: gogs-5
+          deploymentconfig: gogs
+      spec:
+        containers:
+        - image: docker.io/openshiftdemos/gogs@sha256:ca56061043c21500f587e938321d4f0ae38a74d4a9dd50ae70f8b628d19e0f32
+          imagePullPolicy: Always
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /
+              port: 3000
+              scheme: HTTP
+            initialDelaySeconds: 3
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          name: gogs
+          ports:
+          - containerPort: 3000
+            protocol: TCP
+          - containerPort: 10022
+            protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /
+              port: 3000
+              scheme: HTTP
+            initialDelaySeconds: 3
+            periodSeconds: 20
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources:
+            limits:
+              cpu: 800m
+              memory: 1400Mi
+            requests:
+              cpu: 100m
+              memory: 100Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /opt/gogs/data
+            name: gogs-data
+          - mountPath: /etc/gogs/conf
+            name: gogs-config
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: gogs
+        serviceAccountName: gogs
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - emptyDir: {}
+          name: gogs-data
+        - configMap:
+            defaultMode: 420
+            items:
+            - key: app.ini
+              path: app.ini
+            name: gogs-config
+          name: gogs-config
+  status:
+    availableReplicas: 1
+    fullyLabeledReplicas: 1
+    observedGeneration: 4
+    readyReplicas: 1
+    replicas: 1
+- apiVersion: v1
+  kind: ReplicationController
+  metadata:
+    annotations:
+      openshift.io/deployer-pod.completed-at: 2023-10-11 14:55:28 +0000 UTC
+      openshift.io/deployer-pod.created-at: 2023-10-11 14:55:25 +0000 UTC
+      openshift.io/deployer-pod.name: gogs-postgresql-1-deploy
+      openshift.io/deployment-config.latest-version: "1"
+      openshift.io/deployment-config.name: gogs-postgresql
+      openshift.io/deployment.phase: Complete
+      openshift.io/deployment.replicas: "0"
+      openshift.io/deployment.status-reason: config change
+      openshift.io/encoded-deployment-config: |
+        {"kind":"DeploymentConfig","apiVersion":"apps.openshift.io/v1","metadata":{"name":"gogs-postgresql","namespace":"cicd","uid":"c3b05d94-d2bf-479b-b3da-38d577e9955c","resourceVersion":"131879643","generation":16,"creationTimestamp":"2023-06-03T20:16:44Z","labels":{"app":"gogs","migration.openshift.io/migrated-by-migmigration":"4066e18a-7c09-4930-a1fd-19e7058b887b","migration.openshift.io/migrated-by-migplan":"adcc6565-a1ee-4eee-a8d6-19a7e8841033","velero.io/backup-name":"migration-85fa4-initial-h496m","velero.io/restore-name":"migration-85fa4-final-wmd58"},"annotations":{"description":"Defines how to deploy the database","openshift.io/backup-registry-hostname":"docker-registry.default.svc:5000","openshift.io/backup-server-version":"1.11","openshift.io/generated-by":"OpenShiftNewApp","openshift.io/migration-registry":"172.30.245.25:5000","openshift.io/restore-registry-hostname":"image-registry.openshift-image-registry.svc:5000","openshift.io/restore-server-version":"1.23"},"managedFields":[{"manager":"velero-server","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-06-03T20:16:44Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{".":{},"f:description":{},"f:openshift.io/backup-registry-hostname":{},"f:openshift.io/backup-server-version":{},"f:openshift.io/generated-by":{},"f:openshift.io/migration-registry":{},"f:openshift.io/restore-registry-hostname":{},"f:openshift.io/restore-server-version":{}},"f:labels":{".":{},"f:app":{},"f:migration.openshift.io/migrated-by-migmigration":{},"f:migration.openshift.io/migrated-by-migplan":{},"f:velero.io/backup-name":{},"f:velero.io/restore-name":{}}},"f:spec":{"f:replicas":{},"f:revisionHistoryLimit":{},"f:selector":{".":{},"f:name":{}},"f:strategy":{"f:activeDeadlineSeconds":{},"f:recreateParams":{".":{},"f:timeoutSeconds":{}},"f:type":{}},"f:template":{".":{},"f:metadata":{".":{},"f:annotations":{".":{},"f:openshift.io/generated-by":{}},"f:creationTimestamp":{},"f:labels":{".":{},"f:name":{}},"f:name":{}},"f:spec":{".":{},"f:containers":{".":{},"k:{\"name\":\"postgresql\"}":{".":{},"f:env":{".":{},"k:{\"name\":\"POSTGRESQL_ADMIN_PASSWORD\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"POSTGRESQL_DATABASE\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"POSTGRESQL_MAX_CONNECTIONS\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"POSTGRESQL_PASSWORD\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"POSTGRESQL_SHARED_BUFFERS\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"POSTGRESQL_USER\"}":{".":{},"f:name":{},"f:value":{}}},"f:imagePullPolicy":{},"f:livenessProbe":{".":{},"f:failureThreshold":{},"f:initialDelaySeconds":{},"f:periodSeconds":{},"f:successThreshold":{},"f:tcpSocket":{".":{},"f:port":{}},"f:timeoutSeconds":{}},"f:name":{},"f:ports":{".":{},"k:{\"containerPort\":5432,\"protocol\":\"TCP\"}":{".":{},"f:containerPort":{},"f:protocol":{}}},"f:readinessProbe":{".":{},"f:exec":{".":{},"f:command":{}},"f:failureThreshold":{},"f:initialDelaySeconds":{},"f:periodSeconds":{},"f:successThreshold":{},"f:timeoutSeconds":{}},"f:resources":{".":{},"f:limits":{".":{},"f:cpu":{},"f:memory":{}},"f:requests":{".":{},"f:cpu":{},"f:memory":{}}},"f:terminationMessagePath":{},"f:terminationMessagePolicy":{},"f:volumeMounts":{".":{},"k:{\"mountPath\":\"/var/lib/pgsql/data\"}":{".":{},"f:mountPath":{},"f:name":{}}}}},"f:dnsPolicy":{},"f:restartPolicy":{},"f:schedulerName":{},"f:securityContext":{},"f:serviceAccount":{},"f:serviceAccountName":{},"f:terminationGracePeriodSeconds":{},"f:volumes":{".":{},"k:{\"name\":\"gogs-postgres-data\"}":{".":{},"f:emptyDir":{},"f:name":{}}}}}}}},{"manager":"Mozilla","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-10-11T14:55:24Z","fieldsType":"FieldsV1","fieldsV1":{"f:spec":{"f:template":{"f:spec":{"f:containers":{"k:{\"name\":\"postgresql\"}":{"f:image":{}}}}}}}},{"manager":"openshift-controller-manager","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-10-11T14:55:25Z","fieldsType":"FieldsV1","fieldsV1":{"f:spec":{"f:triggers":{}}}},{"manager":"openshift-controller-manager","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-10-11T14:55:25Z","fieldsType":"FieldsV1","fieldsV1":{"f:status":{"f:conditions":{".":{},"k:{\"type\":\"Available\"}":{".":{},"f:lastTransitionTime":{},"f:lastUpdateTime":{},"f:message":{},"f:status":{},"f:type":{}}},"f:details":{".":{},"f:causes":{},"f:message":{}},"f:latestVersion":{},"f:observedGeneration":{}}},"subresource":"status"}]},"spec":{"strategy":{"type":"Recreate","recreateParams":{"timeoutSeconds":600},"resources":{},"activeDeadlineSeconds":21600},"triggers":[{"type":"ImageChange","imageChangeParams":{"automatic":true,"containerNames":["postgresql"],"from":{"kind":"ImageStreamTag","namespace":"openshift","name":"postgresql:10"},"lastTriggeredImage":"image-registry.openshift-image-registry.svc:5000/openshift/postgresql@sha256:e32991664f0efc3bf63e9b429ab3f95f626265af4463321f30e50bf91d057f1c"}},{"type":"ConfigChange"}],"replicas":0,"revisionHistoryLimit":10,"test":false,"selector":{"name":"gogs-postgresql"},"template":{"metadata":{"name":"gogs-postgresql","creationTimestamp":null,"labels":{"name":"gogs-postgresql"},"annotations":{"openshift.io/generated-by":"OpenShiftNewApp"}},"spec":{"volumes":[{"name":"gogs-postgres-data","emptyDir":{}}],"containers":[{"name":"postgresql","image":"image-registry.openshift-image-registry.svc:5000/openshift/postgresql@sha256:e32991664f0efc3bf63e9b429ab3f95f626265af4463321f30e50bf91d057f1c","ports":[{"containerPort":5432,"protocol":"TCP"}],"env":[{"name":"POSTGRESQL_USER","value":"gogs"},{"name":"POSTGRESQL_PASSWORD","value":"gogs"},{"name":"POSTGRESQL_DATABASE","value":"gogs"},{"name":"POSTGRESQL_MAX_CONNECTIONS","value":"100"},{"name":"POSTGRESQL_SHARED_BUFFERS","value":"12MB"},{"name":"POSTGRESQL_ADMIN_PASSWORD","value":"8InGDmuA"}],"resources":{"limits":{"cpu":"100m","memory":"512Mi"},"requests":{"cpu":"10m","memory":"100Mi"}},"volumeMounts":[{"name":"gogs-postgres-data","mountPath":"/var/lib/pgsql/data"}],"livenessProbe":{"tcpSocket":{"port":5432},"initialDelaySeconds":30,"timeoutSeconds":1,"periodSeconds":10,"successThreshold":1,"failureThreshold":3},"readinessProbe":{"exec":{"command":["/bin/sh","-i","-c","psql -h 127.0.0.1 -U ${POSTGRESQL_USER} -q -d ${POSTGRESQL_DATABASE} -c 'SELECT 1'"]},"initialDelaySeconds":5,"timeoutSeconds":1,"periodSeconds":10,"successThreshold":1,"failureThreshold":3},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File","imagePullPolicy":"IfNotPresent"}],"restartPolicy":"Always","terminationGracePeriodSeconds":30,"dnsPolicy":"ClusterFirst","serviceAccountName":"gogs","serviceAccount":"gogs","securityContext":{},"schedulerName":"default-scheduler"}}},"status":{"latestVersion":1,"observedGeneration":15,"replicas":0,"updatedReplicas":0,"availableReplicas":0,"unavailableReplicas":0,"details":{"message":"config change","causes":[{"type":"ConfigChange"}]},"conditions":[{"type":"Available","status":"False","lastUpdateTime":"2023-06-03T20:16:44Z","lastTransitionTime":"2023-06-03T20:16:44Z","message":"Deployment config does not have minimum availability."}]}}
+    creationTimestamp: "2023-10-11T14:55:25Z"
+    generation: 1
+    labels:
+      app: gogs
+      migration.openshift.io/migrated-by-migmigration: 4066e18a-7c09-4930-a1fd-19e7058b887b
+      migration.openshift.io/migrated-by-migplan: adcc6565-a1ee-4eee-a8d6-19a7e8841033
+      openshift.io/deployment-config.name: gogs-postgresql
+      velero.io/backup-name: migration-85fa4-initial-h496m
+      velero.io/restore-name: migration-85fa4-final-wmd58
+    name: gogs-postgresql-1
+    namespace: cicd
+    ownerReferences:
+    - apiVersion: apps.openshift.io/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DeploymentConfig
+      name: gogs-postgresql
+      uid: c3b05d94-d2bf-479b-b3da-38d577e9955c
+    resourceVersion: "131879714"
+    uid: e87cdd6a-7cf9-4e7a-b350-bff34e59c1b0
+  spec:
+    replicas: 0
+    selector:
+      deployment: gogs-postgresql-1
+      deploymentconfig: gogs-postgresql
+      name: gogs-postgresql
+    template:
+      metadata:
+        annotations:
+          openshift.io/deployment-config.latest-version: "1"
+          openshift.io/deployment-config.name: gogs-postgresql
+          openshift.io/deployment.name: gogs-postgresql-1
+          openshift.io/generated-by: OpenShiftNewApp
+        creationTimestamp: null
+        labels:
+          deployment: gogs-postgresql-1
+          deploymentconfig: gogs-postgresql
+          name: gogs-postgresql
+      spec:
+        containers:
+        - env:
+          - name: POSTGRESQL_USER
+            value: gogs
+          - name: POSTGRESQL_PASSWORD
+            value: gogs
+          - name: POSTGRESQL_DATABASE
+            value: gogs
+          - name: POSTGRESQL_MAX_CONNECTIONS
+            value: "100"
+          - name: POSTGRESQL_SHARED_BUFFERS
+            value: 12MB
+          - name: POSTGRESQL_ADMIN_PASSWORD
+            value: 8InGDmuA
+          image: image-registry.openshift-image-registry.svc:5000/openshift/postgresql@sha256:e32991664f0efc3bf63e9b429ab3f95f626265af4463321f30e50bf91d057f1c
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            failureThreshold: 3
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            successThreshold: 1
+            tcpSocket:
+              port: 5432
+            timeoutSeconds: 1
+          name: postgresql
+          ports:
+          - containerPort: 5432
+            protocol: TCP
+          readinessProbe:
+            exec:
+              command:
+              - /bin/sh
+              - -i
+              - -c
+              - psql -h 127.0.0.1 -U ${POSTGRESQL_USER} -q -d ${POSTGRESQL_DATABASE}
+                -c 'SELECT 1'
+            failureThreshold: 3
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources:
+            limits:
+              cpu: 100m
+              memory: 512Mi
+            requests:
+              cpu: 10m
+              memory: 100Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/lib/pgsql/data
+            name: gogs-postgres-data
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: gogs
+        serviceAccountName: gogs
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - emptyDir: {}
+          name: gogs-postgres-data
+  status:
+    observedGeneration: 1
+    replicas: 0
+- apiVersion: v1
+  kind: ReplicationController
+  metadata:
+    annotations:
+      openshift.io/deployer-pod.completed-at: 2023-10-11 14:55:39 +0000 UTC
+      openshift.io/deployer-pod.created-at: 2023-10-11 14:55:37 +0000 UTC
+      openshift.io/deployer-pod.name: gogs-postgresql-2-deploy
+      openshift.io/deployment-config.latest-version: "2"
+      openshift.io/deployment-config.name: gogs-postgresql
+      openshift.io/deployment.phase: Complete
+      openshift.io/deployment.replicas: "0"
+      openshift.io/deployment.status-reason: manual change
+      openshift.io/encoded-deployment-config: |
+        {"kind":"DeploymentConfig","apiVersion":"apps.openshift.io/v1","metadata":{"name":"gogs-postgresql","namespace":"cicd","uid":"c3b05d94-d2bf-479b-b3da-38d577e9955c","resourceVersion":"131879780","generation":17,"creationTimestamp":"2023-06-03T20:16:44Z","labels":{"app":"gogs","migration.openshift.io/migrated-by-migmigration":"4066e18a-7c09-4930-a1fd-19e7058b887b","migration.openshift.io/migrated-by-migplan":"adcc6565-a1ee-4eee-a8d6-19a7e8841033","velero.io/backup-name":"migration-85fa4-initial-h496m","velero.io/restore-name":"migration-85fa4-final-wmd58"},"annotations":{"description":"Defines how to deploy the database","openshift.io/backup-registry-hostname":"docker-registry.default.svc:5000","openshift.io/backup-server-version":"1.11","openshift.io/generated-by":"OpenShiftNewApp","openshift.io/migration-registry":"172.30.245.25:5000","openshift.io/restore-registry-hostname":"image-registry.openshift-image-registry.svc:5000","openshift.io/restore-server-version":"1.23"},"managedFields":[{"manager":"velero-server","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-06-03T20:16:44Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{".":{},"f:description":{},"f:openshift.io/backup-registry-hostname":{},"f:openshift.io/backup-server-version":{},"f:openshift.io/generated-by":{},"f:openshift.io/migration-registry":{},"f:openshift.io/restore-registry-hostname":{},"f:openshift.io/restore-server-version":{}},"f:labels":{".":{},"f:app":{},"f:migration.openshift.io/migrated-by-migmigration":{},"f:migration.openshift.io/migrated-by-migplan":{},"f:velero.io/backup-name":{},"f:velero.io/restore-name":{}}},"f:spec":{"f:replicas":{},"f:revisionHistoryLimit":{},"f:selector":{".":{},"f:name":{}},"f:strategy":{"f:activeDeadlineSeconds":{},"f:recreateParams":{".":{},"f:timeoutSeconds":{}},"f:type":{}},"f:template":{".":{},"f:metadata":{".":{},"f:annotations":{".":{},"f:openshift.io/generated-by":{}},"f:creationTimestamp":{},"f:labels":{".":{},"f:name":{}},"f:name":{}},"f:spec":{".":{},"f:containers":{".":{},"k:{\"name\":\"postgresql\"}":{".":{},"f:env":{".":{},"k:{\"name\":\"POSTGRESQL_ADMIN_PASSWORD\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"POSTGRESQL_DATABASE\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"POSTGRESQL_MAX_CONNECTIONS\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"POSTGRESQL_PASSWORD\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"POSTGRESQL_SHARED_BUFFERS\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"POSTGRESQL_USER\"}":{".":{},"f:name":{},"f:value":{}}},"f:imagePullPolicy":{},"f:livenessProbe":{".":{},"f:failureThreshold":{},"f:initialDelaySeconds":{},"f:periodSeconds":{},"f:successThreshold":{},"f:tcpSocket":{".":{},"f:port":{}},"f:timeoutSeconds":{}},"f:name":{},"f:ports":{".":{},"k:{\"containerPort\":5432,\"protocol\":\"TCP\"}":{".":{},"f:containerPort":{},"f:protocol":{}}},"f:readinessProbe":{".":{},"f:exec":{".":{},"f:command":{}},"f:failureThreshold":{},"f:initialDelaySeconds":{},"f:periodSeconds":{},"f:successThreshold":{},"f:timeoutSeconds":{}},"f:resources":{".":{},"f:limits":{".":{},"f:cpu":{},"f:memory":{}},"f:requests":{".":{},"f:cpu":{},"f:memory":{}}},"f:terminationMessagePath":{},"f:terminationMessagePolicy":{},"f:volumeMounts":{".":{},"k:{\"mountPath\":\"/var/lib/pgsql/data\"}":{".":{},"f:mountPath":{},"f:name":{}}}}},"f:dnsPolicy":{},"f:restartPolicy":{},"f:schedulerName":{},"f:securityContext":{},"f:serviceAccount":{},"f:serviceAccountName":{},"f:terminationGracePeriodSeconds":{},"f:volumes":{".":{},"k:{\"name\":\"gogs-postgres-data\"}":{".":{},"f:emptyDir":{},"f:name":{}}}}}}}},{"manager":"Mozilla","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-10-11T14:55:24Z","fieldsType":"FieldsV1","fieldsV1":{"f:spec":{"f:template":{"f:spec":{"f:containers":{"k:{\"name\":\"postgresql\"}":{"f:image":{}}}}}}}},{"manager":"openshift-controller-manager","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-10-11T14:55:25Z","fieldsType":"FieldsV1","fieldsV1":{"f:spec":{"f:triggers":{}}}},{"manager":"openshift-controller-manager","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-10-11T14:55:31Z","fieldsType":"FieldsV1","fieldsV1":{"f:status":{"f:conditions":{".":{},"k:{\"type\":\"Available\"}":{".":{},"f:lastTransitionTime":{},"f:lastUpdateTime":{},"f:message":{},"f:status":{},"f:type":{}},"k:{\"type\":\"Progressing\"}":{".":{},"f:lastTransitionTime":{},"f:lastUpdateTime":{},"f:message":{},"f:reason":{},"f:status":{},"f:type":{}}},"f:details":{".":{},"f:causes":{},"f:message":{}},"f:latestVersion":{},"f:observedGeneration":{}}},"subresource":"status"}]},"spec":{"strategy":{"type":"Recreate","recreateParams":{"timeoutSeconds":600},"resources":{},"activeDeadlineSeconds":21600},"triggers":[{"type":"ImageChange","imageChangeParams":{"automatic":true,"containerNames":["postgresql"],"from":{"kind":"ImageStreamTag","namespace":"openshift","name":"postgresql:10"},"lastTriggeredImage":"image-registry.openshift-image-registry.svc:5000/openshift/postgresql@sha256:e32991664f0efc3bf63e9b429ab3f95f626265af4463321f30e50bf91d057f1c"}},{"type":"ConfigChange"}],"replicas":0,"revisionHistoryLimit":10,"test":false,"selector":{"name":"gogs-postgresql"},"template":{"metadata":{"name":"gogs-postgresql","creationTimestamp":null,"labels":{"name":"gogs-postgresql"},"annotations":{"openshift.io/generated-by":"OpenShiftNewApp"}},"spec":{"volumes":[{"name":"gogs-postgres-data","emptyDir":{}}],"containers":[{"name":"postgresql","image":"image-registry.openshift-image-registry.svc:5000/openshift/postgresql@sha256:e32991664f0efc3bf63e9b429ab3f95f626265af4463321f30e50bf91d057f1c","ports":[{"containerPort":5432,"protocol":"TCP"}],"env":[{"name":"POSTGRESQL_USER","value":"gogs"},{"name":"POSTGRESQL_PASSWORD","value":"gogs"},{"name":"POSTGRESQL_DATABASE","value":"gogs"},{"name":"POSTGRESQL_MAX_CONNECTIONS","value":"100"},{"name":"POSTGRESQL_SHARED_BUFFERS","value":"12MB"},{"name":"POSTGRESQL_ADMIN_PASSWORD","value":"8InGDmuA"}],"resources":{"limits":{"cpu":"100m","memory":"512Mi"},"requests":{"cpu":"10m","memory":"100Mi"}},"volumeMounts":[{"name":"gogs-postgres-data","mountPath":"/var/lib/pgsql/data"}],"livenessProbe":{"tcpSocket":{"port":5432},"initialDelaySeconds":30,"timeoutSeconds":1,"periodSeconds":10,"successThreshold":1,"failureThreshold":3},"readinessProbe":{"exec":{"command":["/bin/sh","-i","-c","psql -h 127.0.0.1 -U ${POSTGRESQL_USER} -q -d ${POSTGRESQL_DATABASE} -c 'SELECT 1'"]},"initialDelaySeconds":5,"timeoutSeconds":1,"periodSeconds":10,"successThreshold":1,"failureThreshold":3},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File","imagePullPolicy":"IfNotPresent"}],"restartPolicy":"Always","terminationGracePeriodSeconds":30,"dnsPolicy":"ClusterFirst","serviceAccountName":"gogs","serviceAccount":"gogs","securityContext":{},"schedulerName":"default-scheduler"}}},"status":{"latestVersion":2,"observedGeneration":16,"replicas":0,"updatedReplicas":0,"availableReplicas":0,"unavailableReplicas":0,"details":{"message":"manual change","causes":[{"type":"Manual"}]},"conditions":[{"type":"Available","status":"False","lastUpdateTime":"2023-06-03T20:16:44Z","lastTransitionTime":"2023-06-03T20:16:44Z","message":"Deployment config does not have minimum availability."},{"type":"Progressing","status":"True","lastUpdateTime":"2023-10-11T14:55:31Z","lastTransitionTime":"2023-10-11T14:55:31Z","reason":"NewReplicationControllerAvailable","message":"replication controller \"gogs-postgresql-1\" successfully rolled out"}]}}
+    creationTimestamp: "2023-10-11T14:55:37Z"
+    generation: 2
+    labels:
+      app: gogs
+      migration.openshift.io/migrated-by-migmigration: 4066e18a-7c09-4930-a1fd-19e7058b887b
+      migration.openshift.io/migrated-by-migplan: adcc6565-a1ee-4eee-a8d6-19a7e8841033
+      openshift.io/deployment-config.name: gogs-postgresql
+      velero.io/backup-name: migration-85fa4-initial-h496m
+      velero.io/restore-name: migration-85fa4-final-wmd58
+    name: gogs-postgresql-2
+    namespace: cicd
+    ownerReferences:
+    - apiVersion: apps.openshift.io/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DeploymentConfig
+      name: gogs-postgresql
+      uid: c3b05d94-d2bf-479b-b3da-38d577e9955c
+    resourceVersion: "472917916"
+    uid: 8f889c4c-f93a-4e4a-8b4e-b42ff09da05a
+  spec:
+    replicas: 1
+    selector:
+      deployment: gogs-postgresql-2
+      deploymentconfig: gogs-postgresql
+      name: gogs-postgresql
+    template:
+      metadata:
+        annotations:
+          openshift.io/deployment-config.latest-version: "2"
+          openshift.io/deployment-config.name: gogs-postgresql
+          openshift.io/deployment.name: gogs-postgresql-2
+          openshift.io/generated-by: OpenShiftNewApp
+        creationTimestamp: null
+        labels:
+          deployment: gogs-postgresql-2
+          deploymentconfig: gogs-postgresql
+          name: gogs-postgresql
+      spec:
+        containers:
+        - env:
+          - name: POSTGRESQL_USER
+            value: gogs
+          - name: POSTGRESQL_PASSWORD
+            value: gogs
+          - name: POSTGRESQL_DATABASE
+            value: gogs
+          - name: POSTGRESQL_MAX_CONNECTIONS
+            value: "100"
+          - name: POSTGRESQL_SHARED_BUFFERS
+            value: 12MB
+          - name: POSTGRESQL_ADMIN_PASSWORD
+            value: 8InGDmuA
+          image: image-registry.openshift-image-registry.svc:5000/openshift/postgresql@sha256:e32991664f0efc3bf63e9b429ab3f95f626265af4463321f30e50bf91d057f1c
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            failureThreshold: 3
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            successThreshold: 1
+            tcpSocket:
+              port: 5432
+            timeoutSeconds: 1
+          name: postgresql
+          ports:
+          - containerPort: 5432
+            protocol: TCP
+          readinessProbe:
+            exec:
+              command:
+              - /bin/sh
+              - -i
+              - -c
+              - psql -h 127.0.0.1 -U ${POSTGRESQL_USER} -q -d ${POSTGRESQL_DATABASE}
+                -c 'SELECT 1'
+            failureThreshold: 3
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources:
+            limits:
+              cpu: 100m
+              memory: 512Mi
+            requests:
+              cpu: 10m
+              memory: 100Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/lib/pgsql/data
+            name: gogs-postgres-data
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: gogs
+        serviceAccountName: gogs
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - emptyDir: {}
+          name: gogs-postgres-data
+  status:
+    availableReplicas: 1
+    fullyLabeledReplicas: 1
+    observedGeneration: 2
+    readyReplicas: 1
+    replicas: 1
+- apiVersion: v1
+  kind: ReplicationController
+  metadata:
+    annotations:
+      openshift.io/deployer-pod.completed-at: 2023-06-03 20:18:37 +0000 UTC
+      openshift.io/deployer-pod.created-at: 2023-06-03 20:16:45 +0000 UTC
+      openshift.io/deployer-pod.name: jenkins-1-deploy
+      openshift.io/deployment-config.latest-version: "1"
+      openshift.io/deployment-config.name: jenkins
+      openshift.io/deployment.phase: Complete
+      openshift.io/deployment.replicas: "1"
+      openshift.io/deployment.status-reason: config change
+      openshift.io/encoded-deployment-config: |
+        {"kind":"DeploymentConfig","apiVersion":"apps.openshift.io/v1","metadata":{"name":"jenkins","namespace":"cicd","uid":"9dd9eef6-3f4d-44fd-a711-3ee1d74da976","resourceVersion":"19234958","generation":2,"creationTimestamp":"2023-06-03T20:16:44Z","labels":{"app":"jenkins-persistent","migration.openshift.io/migrated-by-migmigration":"4066e18a-7c09-4930-a1fd-19e7058b887b","migration.openshift.io/migrated-by-migplan":"adcc6565-a1ee-4eee-a8d6-19a7e8841033","template":"jenkins-persistent-template","template.openshift.io/template-instance-owner":"f8bb2d3d-5894-11ea-bff7-000d3ac052bc","velero.io/backup-name":"migration-85fa4-initial-h496m","velero.io/restore-name":"migration-85fa4-final-wmd58"},"annotations":{"openshift.io/backup-registry-hostname":"docker-registry.default.svc:5000","openshift.io/backup-server-version":"1.11","openshift.io/migration-registry":"172.30.245.25:5000","openshift.io/restore-registry-hostname":"image-registry.openshift-image-registry.svc:5000","openshift.io/restore-server-version":"1.23","template.alpha.openshift.io/wait-for-ready":"true"},"managedFields":[{"manager":"velero-server","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-06-03T20:16:44Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{".":{},"f:openshift.io/backup-registry-hostname":{},"f:openshift.io/backup-server-version":{},"f:openshift.io/migration-registry":{},"f:openshift.io/restore-registry-hostname":{},"f:openshift.io/restore-server-version":{},"f:template.alpha.openshift.io/wait-for-ready":{}},"f:labels":{".":{},"f:app":{},"f:migration.openshift.io/migrated-by-migmigration":{},"f:migration.openshift.io/migrated-by-migplan":{},"f:template":{},"f:template.openshift.io/template-instance-owner":{},"f:velero.io/backup-name":{},"f:velero.io/restore-name":{}}},"f:spec":{"f:replicas":{},"f:revisionHistoryLimit":{},"f:selector":{".":{},"f:name":{}},"f:strategy":{"f:activeDeadlineSeconds":{},"f:recreateParams":{".":{},"f:timeoutSeconds":{}},"f:type":{}},"f:template":{".":{},"f:metadata":{".":{},"f:creationTimestamp":{},"f:labels":{".":{},"f:name":{}}},"f:spec":{".":{},"f:containers":{".":{},"k:{\"name\":\"jenkins\"}":{".":{},"f:env":{".":{},"k:{\"name\":\"DISABLE_ADMINISTRATIVE_MONITORS\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"ENABLE_FATAL_ERROR_LOG_FILE\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"JENKINS_SERVICE_NAME\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"JNLP_SERVICE_NAME\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"KUBERNETES_MASTER\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"KUBERNETES_TRUST_CERTIFICATES\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"OPENSHIFT_ENABLE_OAUTH\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"OPENSHIFT_ENABLE_REDIRECT_PROMPT\"}":{".":{},"f:name":{},"f:value":{}}},"f:imagePullPolicy":{},"f:livenessProbe":{".":{},"f:failureThreshold":{},"f:httpGet":{".":{},"f:path":{},"f:port":{},"f:scheme":{}},"f:initialDelaySeconds":{},"f:periodSeconds":{},"f:successThreshold":{},"f:timeoutSeconds":{}},"f:name":{},"f:readinessProbe":{".":{},"f:failureThreshold":{},"f:httpGet":{".":{},"f:path":{},"f:port":{},"f:scheme":{}},"f:initialDelaySeconds":{},"f:periodSeconds":{},"f:successThreshold":{},"f:timeoutSeconds":{}},"f:resources":{".":{},"f:limits":{".":{},"f:cpu":{},"f:memory":{}},"f:requests":{".":{},"f:cpu":{},"f:memory":{}}},"f:securityContext":{".":{},"f:capabilities":{},"f:privileged":{}},"f:terminationMessagePath":{},"f:terminationMessagePolicy":{},"f:volumeMounts":{".":{},"k:{\"mountPath\":\"/var/lib/jenkins\"}":{".":{},"f:mountPath":{},"f:name":{}}}}},"f:dnsPolicy":{},"f:restartPolicy":{},"f:schedulerName":{},"f:securityContext":{},"f:serviceAccount":{},"f:serviceAccountName":{},"f:terminationGracePeriodSeconds":{},"f:volumes":{".":{},"k:{\"name\":\"jenkins-data\"}":{".":{},"f:name":{},"f:persistentVolumeClaim":{".":{},"f:claimName":{}}}}}}}}},{"manager":"openshift-controller-manager","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-06-03T20:16:45Z","fieldsType":"FieldsV1","fieldsV1":{"f:spec":{"f:template":{"f:spec":{"f:containers":{"k:{\"name\":\"jenkins\"}":{"f:image":{}}}}},"f:triggers":{}}}},{"manager":"openshift-controller-manager","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-06-03T20:16:45Z","fieldsType":"FieldsV1","fieldsV1":{"f:status":{"f:conditions":{".":{},"k:{\"type\":\"Available\"}":{".":{},"f:lastTransitionTime":{},"f:lastUpdateTime":{},"f:message":{},"f:status":{},"f:type":{}}},"f:details":{".":{},"f:causes":{},"f:message":{}},"f:latestVersion":{},"f:observedGeneration":{}}},"subresource":"status"}]},"spec":{"strategy":{"type":"Recreate","recreateParams":{"timeoutSeconds":600},"resources":{},"activeDeadlineSeconds":21600},"triggers":[{"type":"ImageChange","imageChangeParams":{"automatic":true,"containerNames":["jenkins"],"from":{"kind":"ImageStreamTag","namespace":"openshift","name":"jenkins:2"},"lastTriggeredImage":"image-registry.openshift-image-registry.svc:5000/openshift/jenkins@sha256:902246da403bf7ff1f6f3cf531dce445c0289d3b2b01a26f6008926ec2068077"}},{"type":"ConfigChange"}],"replicas":1,"revisionHistoryLimit":10,"test":false,"selector":{"name":"jenkins"},"template":{"metadata":{"creationTimestamp":null,"labels":{"name":"jenkins"}},"spec":{"volumes":[{"name":"jenkins-data","persistentVolumeClaim":{"claimName":"jenkins"}}],"containers":[{"name":"jenkins","image":"image-registry.openshift-image-registry.svc:5000/openshift/jenkins@sha256:902246da403bf7ff1f6f3cf531dce445c0289d3b2b01a26f6008926ec2068077","env":[{"name":"OPENSHIFT_ENABLE_OAUTH","value":"true"},{"name":"OPENSHIFT_ENABLE_REDIRECT_PROMPT","value":"true"},{"name":"DISABLE_ADMINISTRATIVE_MONITORS","value":"false"},{"name":"KUBERNETES_MASTER","value":"https://kubernetes.default:443"},{"name":"KUBERNETES_TRUST_CERTIFICATES","value":"true"},{"name":"JENKINS_SERVICE_NAME","value":"jenkins"},{"name":"JNLP_SERVICE_NAME","value":"jenkins-jnlp"},{"name":"ENABLE_FATAL_ERROR_LOG_FILE","value":"false"}],"resources":{"limits":{"cpu":"800m","memory":"1Gi"},"requests":{"cpu":"100m","memory":"100Mi"}},"volumeMounts":[{"name":"jenkins-data","mountPath":"/var/lib/jenkins"}],"livenessProbe":{"httpGet":{"path":"/login","port":8080,"scheme":"HTTP"},"initialDelaySeconds":420,"timeoutSeconds":240,"periodSeconds":360,"successThreshold":1,"failureThreshold":2},"readinessProbe":{"httpGet":{"path":"/login","port":8080,"scheme":"HTTP"},"initialDelaySeconds":3,"timeoutSeconds":240,"periodSeconds":10,"successThreshold":1,"failureThreshold":3},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File","imagePullPolicy":"IfNotPresent","securityContext":{"capabilities":{},"privileged":false}}],"restartPolicy":"Always","terminationGracePeriodSeconds":30,"dnsPolicy":"ClusterFirst","serviceAccountName":"jenkins","serviceAccount":"jenkins","securityContext":{},"schedulerName":"default-scheduler"}}},"status":{"latestVersion":1,"observedGeneration":1,"replicas":0,"updatedReplicas":0,"availableReplicas":0,"unavailableReplicas":0,"details":{"message":"config change","causes":[{"type":"ConfigChange"}]},"conditions":[{"type":"Available","status":"False","lastUpdateTime":"2023-06-03T20:16:44Z","lastTransitionTime":"2023-06-03T20:16:44Z","message":"Deployment config does not have minimum availability."}]}}
+    creationTimestamp: "2023-06-03T20:16:45Z"
+    generation: 7
+    labels:
+      app: jenkins-persistent
+      migration.openshift.io/migrated-by-migmigration: 4066e18a-7c09-4930-a1fd-19e7058b887b
+      migration.openshift.io/migrated-by-migplan: adcc6565-a1ee-4eee-a8d6-19a7e8841033
+      openshift.io/deployment-config.name: jenkins
+      template: jenkins-persistent-template
+      template.openshift.io/template-instance-owner: f8bb2d3d-5894-11ea-bff7-000d3ac052bc
+      velero.io/backup-name: migration-85fa4-initial-h496m
+      velero.io/restore-name: migration-85fa4-final-wmd58
+    name: jenkins-1
+    namespace: cicd
+    ownerReferences:
+    - apiVersion: apps.openshift.io/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DeploymentConfig
+      name: jenkins
+      uid: 9dd9eef6-3f4d-44fd-a711-3ee1d74da976
+    resourceVersion: "131886495"
+    uid: 193721f8-aed4-4240-add8-2ce869d2599f
+  spec:
+    replicas: 0
+    selector:
+      deployment: jenkins-1
+      deploymentconfig: jenkins
+      name: jenkins
+    template:
+      metadata:
+        annotations:
+          openshift.io/deployment-config.latest-version: "1"
+          openshift.io/deployment-config.name: jenkins
+          openshift.io/deployment.name: jenkins-1
+        creationTimestamp: null
+        labels:
+          deployment: jenkins-1
+          deploymentconfig: jenkins
+          name: jenkins
+      spec:
+        containers:
+        - env:
+          - name: OPENSHIFT_ENABLE_OAUTH
+            value: "true"
+          - name: OPENSHIFT_ENABLE_REDIRECT_PROMPT
+            value: "true"
+          - name: DISABLE_ADMINISTRATIVE_MONITORS
+            value: "false"
+          - name: KUBERNETES_MASTER
+            value: https://kubernetes.default:443
+          - name: KUBERNETES_TRUST_CERTIFICATES
+            value: "true"
+          - name: JENKINS_SERVICE_NAME
+            value: jenkins
+          - name: JNLP_SERVICE_NAME
+            value: jenkins-jnlp
+          - name: ENABLE_FATAL_ERROR_LOG_FILE
+            value: "false"
+          image: image-registry.openshift-image-registry.svc:5000/openshift/jenkins@sha256:902246da403bf7ff1f6f3cf531dce445c0289d3b2b01a26f6008926ec2068077
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            failureThreshold: 2
+            httpGet:
+              path: /login
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 420
+            periodSeconds: 360
+            successThreshold: 1
+            timeoutSeconds: 240
+          name: jenkins
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /login
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 3
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 240
+          resources:
+            limits:
+              cpu: 800m
+              memory: 1Gi
+            requests:
+              cpu: 100m
+              memory: 100Mi
+          securityContext:
+            capabilities: {}
+            privileged: false
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/lib/jenkins
+            name: jenkins-data
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: jenkins
+        serviceAccountName: jenkins
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - name: jenkins-data
+          persistentVolumeClaim:
+            claimName: jenkins
+  status:
+    observedGeneration: 7
+    replicas: 0
+- apiVersion: v1
+  kind: ReplicationController
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/desired-replicas: "1"
+      openshift.io/deployer-pod.completed-at: 2023-10-11 15:08:19 +0000 UTC
+      openshift.io/deployer-pod.created-at: 2023-10-11 15:05:11 +0000 UTC
+      openshift.io/deployer-pod.name: jenkins-2-deploy
+      openshift.io/deployment-config.latest-version: "2"
+      openshift.io/deployment-config.name: jenkins
+      openshift.io/deployment.cancelled: "true"
+      openshift.io/deployment.phase: Failed
+      openshift.io/deployment.replicas: "0"
+      openshift.io/deployment.status-reason: newer deployment was found running
+      openshift.io/encoded-deployment-config: |
+        {"kind":"DeploymentConfig","apiVersion":"apps.openshift.io/v1","metadata":{"name":"jenkins","namespace":"cicd","uid":"9dd9eef6-3f4d-44fd-a711-3ee1d74da976","resourceVersion":"131886446","generation":7,"creationTimestamp":"2023-06-03T20:16:44Z","labels":{"app":"jenkins-persistent","migration.openshift.io/migrated-by-migmigration":"4066e18a-7c09-4930-a1fd-19e7058b887b","migration.openshift.io/migrated-by-migplan":"adcc6565-a1ee-4eee-a8d6-19a7e8841033","template":"jenkins-persistent-template","template.openshift.io/template-instance-owner":"f8bb2d3d-5894-11ea-bff7-000d3ac052bc","velero.io/backup-name":"migration-85fa4-initial-h496m","velero.io/restore-name":"migration-85fa4-final-wmd58"},"annotations":{"openshift.io/backup-registry-hostname":"docker-registry.default.svc:5000","openshift.io/backup-server-version":"1.11","openshift.io/migration-registry":"172.30.245.25:5000","openshift.io/restore-registry-hostname":"image-registry.openshift-image-registry.svc:5000","openshift.io/restore-server-version":"1.23","template.alpha.openshift.io/wait-for-ready":"true"},"managedFields":[{"manager":"velero-server","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-06-03T20:16:44Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{".":{},"f:openshift.io/backup-registry-hostname":{},"f:openshift.io/backup-server-version":{},"f:openshift.io/migration-registry":{},"f:openshift.io/restore-registry-hostname":{},"f:openshift.io/restore-server-version":{},"f:template.alpha.openshift.io/wait-for-ready":{}},"f:labels":{".":{},"f:app":{},"f:migration.openshift.io/migrated-by-migmigration":{},"f:migration.openshift.io/migrated-by-migplan":{},"f:template":{},"f:template.openshift.io/template-instance-owner":{},"f:velero.io/backup-name":{},"f:velero.io/restore-name":{}}},"f:spec":{"f:replicas":{},"f:revisionHistoryLimit":{},"f:selector":{".":{},"f:name":{}},"f:strategy":{"f:activeDeadlineSeconds":{},"f:recreateParams":{".":{},"f:timeoutSeconds":{}},"f:type":{}},"f:template":{".":{},"f:metadata":{".":{},"f:creationTimestamp":{},"f:labels":{".":{},"f:name":{}}},"f:spec":{".":{},"f:containers":{".":{},"k:{\"name\":\"jenkins\"}":{".":{},"f:env":{".":{},"k:{\"name\":\"DISABLE_ADMINISTRATIVE_MONITORS\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"ENABLE_FATAL_ERROR_LOG_FILE\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"JENKINS_SERVICE_NAME\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"JNLP_SERVICE_NAME\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"KUBERNETES_MASTER\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"KUBERNETES_TRUST_CERTIFICATES\"}":{".":{},"f:name":{}},"k:{\"name\":\"OPENSHIFT_ENABLE_OAUTH\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"OPENSHIFT_ENABLE_REDIRECT_PROMPT\"}":{".":{},"f:name":{},"f:value":{}}},"f:imagePullPolicy":{},"f:livenessProbe":{".":{},"f:failureThreshold":{},"f:httpGet":{".":{},"f:path":{},"f:port":{},"f:scheme":{}},"f:initialDelaySeconds":{},"f:periodSeconds":{},"f:successThreshold":{},"f:timeoutSeconds":{}},"f:name":{},"f:readinessProbe":{".":{},"f:failureThreshold":{},"f:httpGet":{".":{},"f:path":{},"f:port":{},"f:scheme":{}},"f:initialDelaySeconds":{},"f:periodSeconds":{},"f:successThreshold":{},"f:timeoutSeconds":{}},"f:resources":{".":{},"f:limits":{".":{},"f:cpu":{},"f:memory":{}},"f:requests":{".":{},"f:cpu":{},"f:memory":{}}},"f:securityContext":{".":{},"f:capabilities":{},"f:privileged":{}},"f:terminationMessagePath":{},"f:terminationMessagePolicy":{},"f:volumeMounts":{".":{},"k:{\"mountPath\":\"/var/lib/jenkins\"}":{".":{},"f:mountPath":{},"f:name":{}}}}},"f:dnsPolicy":{},"f:restartPolicy":{},"f:schedulerName":{},"f:securityContext":{},"f:serviceAccount":{},"f:serviceAccountName":{},"f:terminationGracePeriodSeconds":{},"f:volumes":{".":{},"k:{\"name\":\"jenkins-data\"}":{".":{},"f:name":{},"f:persistentVolumeClaim":{".":{},"f:claimName":{}}}}}}}}},{"manager":"openshift-controller-manager","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-06-03T20:16:45Z","fieldsType":"FieldsV1","fieldsV1":{"f:spec":{"f:template":{"f:spec":{"f:containers":{"k:{\"name\":\"jenkins\"}":{"f:image":{}}}}},"f:triggers":{}}}},{"manager":"openshift-controller-manager","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-10-02T18:02:22Z","fieldsType":"FieldsV1","fieldsV1":{"f:status":{"f:availableReplicas":{},"f:conditions":{".":{},"k:{\"type\":\"Available\"}":{".":{},"f:lastTransitionTime":{},"f:lastUpdateTime":{},"f:message":{},"f:status":{},"f:type":{}},"k:{\"type\":\"Progressing\"}":{".":{},"f:lastTransitionTime":{},"f:lastUpdateTime":{},"f:message":{},"f:reason":{},"f:status":{},"f:type":{}}},"f:details":{".":{},"f:causes":{},"f:message":{}},"f:latestVersion":{},"f:observedGeneration":{},"f:readyReplicas":{},"f:replicas":{},"f:unavailableReplicas":{},"f:updatedReplicas":{}}},"subresource":"status"},{"manager":"Mozilla","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-10-11T15:05:11Z","fieldsType":"FieldsV1","fieldsV1":{"f:spec":{"f:template":{"f:spec":{"f:containers":{"k:{\"name\":\"jenkins\"}":{"f:env":{"k:{\"name\":\"KUBERNETES_TRUST_CERTIFICATES\"}":{"f:value":{}}}}}}}}}}]},"spec":{"strategy":{"type":"Recreate","recreateParams":{"timeoutSeconds":600},"resources":{},"activeDeadlineSeconds":21600},"triggers":[{"type":"ImageChange","imageChangeParams":{"automatic":true,"containerNames":["jenkins"],"from":{"kind":"ImageStreamTag","namespace":"openshift","name":"jenkins:2"},"lastTriggeredImage":"image-registry.openshift-image-registry.svc:5000/openshift/jenkins@sha256:902246da403bf7ff1f6f3cf531dce445c0289d3b2b01a26f6008926ec2068077"}},{"type":"ConfigChange"}],"replicas":1,"revisionHistoryLimit":10,"test":false,"selector":{"name":"jenkins"},"template":{"metadata":{"creationTimestamp":null,"labels":{"name":"jenkins"}},"spec":{"volumes":[{"name":"jenkins-data","persistentVolumeClaim":{"claimName":"jenkins"}}],"containers":[{"name":"jenkins","image":"image-registry.openshift-image-registry.svc:5000/openshift/jenkins@sha256:902246da403bf7ff1f6f3cf531dce445c0289d3b2b01a26f6008926ec2068077","env":[{"name":"OPENSHIFT_ENABLE_OAUTH","value":"true"},{"name":"OPENSHIFT_ENABLE_REDIRECT_PROMPT","value":"true"},{"name":"DISABLE_ADMINISTRATIVE_MONITORS","value":"false"},{"name":"KUBERNETES_MASTER","value":"https://kubernetes.default:443"},{"name":"KUBERNETES_TRUST_CERTIFICATES","value":"false"},{"name":"JENKINS_SERVICE_NAME","value":"jenkins"},{"name":"JNLP_SERVICE_NAME","value":"jenkins-jnlp"},{"name":"ENABLE_FATAL_ERROR_LOG_FILE","value":"false"}],"resources":{"limits":{"cpu":"800m","memory":"1Gi"},"requests":{"cpu":"100m","memory":"100Mi"}},"volumeMounts":[{"name":"jenkins-data","mountPath":"/var/lib/jenkins"}],"livenessProbe":{"httpGet":{"path":"/login","port":8080,"scheme":"HTTP"},"initialDelaySeconds":420,"timeoutSeconds":240,"periodSeconds":360,"successThreshold":1,"failureThreshold":2},"readinessProbe":{"httpGet":{"path":"/login","port":8080,"scheme":"HTTP"},"initialDelaySeconds":3,"timeoutSeconds":240,"periodSeconds":10,"successThreshold":1,"failureThreshold":3},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File","imagePullPolicy":"IfNotPresent","securityContext":{"capabilities":{},"privileged":false}}],"restartPolicy":"Always","terminationGracePeriodSeconds":30,"dnsPolicy":"ClusterFirst","serviceAccountName":"jenkins","serviceAccount":"jenkins","securityContext":{},"schedulerName":"default-scheduler"}}},"status":{"latestVersion":2,"observedGeneration":6,"replicas":1,"updatedReplicas":1,"availableReplicas":1,"unavailableReplicas":0,"details":{"message":"config change","causes":[{"type":"ConfigChange"}]},"conditions":[{"type":"Progressing","status":"True","lastUpdateTime":"2023-06-03T20:18:40Z","lastTransitionTime":"2023-06-03T20:18:40Z","reason":"NewReplicationControllerAvailable","message":"replication controller \"jenkins-1\" successfully rolled out"},{"type":"Available","status":"True","lastUpdateTime":"2023-10-02T18:02:22Z","lastTransitionTime":"2023-10-02T18:02:22Z","message":"Deployment config has minimum availability."}],"readyReplicas":1}}
+    creationTimestamp: "2023-10-11T15:05:11Z"
+    generation: 3
+    labels:
+      app: jenkins-persistent
+      migration.openshift.io/migrated-by-migmigration: 4066e18a-7c09-4930-a1fd-19e7058b887b
+      migration.openshift.io/migrated-by-migplan: adcc6565-a1ee-4eee-a8d6-19a7e8841033
+      openshift.io/deployment-config.name: jenkins
+      template: jenkins-persistent-template
+      template.openshift.io/template-instance-owner: f8bb2d3d-5894-11ea-bff7-000d3ac052bc
+      velero.io/backup-name: migration-85fa4-initial-h496m
+      velero.io/restore-name: migration-85fa4-final-wmd58
+    name: jenkins-2
+    namespace: cicd
+    ownerReferences:
+    - apiVersion: apps.openshift.io/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DeploymentConfig
+      name: jenkins
+      uid: 9dd9eef6-3f4d-44fd-a711-3ee1d74da976
+    resourceVersion: "131888501"
+    uid: 6cbbf127-723e-4520-8275-a046c6bec4ab
+  spec:
+    replicas: 0
+    selector:
+      deployment: jenkins-2
+      deploymentconfig: jenkins
+      name: jenkins
+    template:
+      metadata:
+        annotations:
+          openshift.io/deployment-config.latest-version: "2"
+          openshift.io/deployment-config.name: jenkins
+          openshift.io/deployment.name: jenkins-2
+        creationTimestamp: null
+        labels:
+          deployment: jenkins-2
+          deploymentconfig: jenkins
+          name: jenkins
+      spec:
+        containers:
+        - env:
+          - name: OPENSHIFT_ENABLE_OAUTH
+            value: "true"
+          - name: OPENSHIFT_ENABLE_REDIRECT_PROMPT
+            value: "true"
+          - name: DISABLE_ADMINISTRATIVE_MONITORS
+            value: "false"
+          - name: KUBERNETES_MASTER
+            value: https://kubernetes.default:443
+          - name: KUBERNETES_TRUST_CERTIFICATES
+            value: "false"
+          - name: JENKINS_SERVICE_NAME
+            value: jenkins
+          - name: JNLP_SERVICE_NAME
+            value: jenkins-jnlp
+          - name: ENABLE_FATAL_ERROR_LOG_FILE
+            value: "false"
+          image: image-registry.openshift-image-registry.svc:5000/openshift/jenkins@sha256:902246da403bf7ff1f6f3cf531dce445c0289d3b2b01a26f6008926ec2068077
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            failureThreshold: 2
+            httpGet:
+              path: /login
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 420
+            periodSeconds: 360
+            successThreshold: 1
+            timeoutSeconds: 240
+          name: jenkins
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /login
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 3
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 240
+          resources:
+            limits:
+              cpu: 800m
+              memory: 1Gi
+            requests:
+              cpu: 100m
+              memory: 100Mi
+          securityContext:
+            capabilities: {}
+            privileged: false
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/lib/jenkins
+            name: jenkins-data
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: jenkins
+        serviceAccountName: jenkins
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - name: jenkins-data
+          persistentVolumeClaim:
+            claimName: jenkins
+  status:
+    observedGeneration: 3
+    replicas: 0
+- apiVersion: v1
+  kind: ReplicationController
+  metadata:
+    annotations:
+      openshift.io/deployer-pod.completed-at: 2023-10-11 15:13:42 +0000 UTC
+      openshift.io/deployer-pod.created-at: 2023-10-11 15:08:20 +0000 UTC
+      openshift.io/deployer-pod.name: jenkins-3-deploy
+      openshift.io/deployment-config.latest-version: "3"
+      openshift.io/deployment-config.name: jenkins
+      openshift.io/deployment.phase: Complete
+      openshift.io/deployment.replicas: "1"
+      openshift.io/deployment.status-reason: config change
+      openshift.io/encoded-deployment-config: |
+        {"kind":"DeploymentConfig","apiVersion":"apps.openshift.io/v1","metadata":{"name":"jenkins","namespace":"cicd","uid":"9dd9eef6-3f4d-44fd-a711-3ee1d74da976","resourceVersion":"131888427","generation":8,"creationTimestamp":"2023-06-03T20:16:44Z","labels":{"app":"jenkins-persistent","migration.openshift.io/migrated-by-migmigration":"4066e18a-7c09-4930-a1fd-19e7058b887b","migration.openshift.io/migrated-by-migplan":"adcc6565-a1ee-4eee-a8d6-19a7e8841033","template":"jenkins-persistent-template","template.openshift.io/template-instance-owner":"f8bb2d3d-5894-11ea-bff7-000d3ac052bc","velero.io/backup-name":"migration-85fa4-initial-h496m","velero.io/restore-name":"migration-85fa4-final-wmd58"},"annotations":{"openshift.io/backup-registry-hostname":"docker-registry.default.svc:5000","openshift.io/backup-server-version":"1.11","openshift.io/migration-registry":"172.30.245.25:5000","openshift.io/restore-registry-hostname":"image-registry.openshift-image-registry.svc:5000","openshift.io/restore-server-version":"1.23","template.alpha.openshift.io/wait-for-ready":"true"},"managedFields":[{"manager":"velero-server","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-06-03T20:16:44Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{".":{},"f:openshift.io/backup-registry-hostname":{},"f:openshift.io/backup-server-version":{},"f:openshift.io/migration-registry":{},"f:openshift.io/restore-registry-hostname":{},"f:openshift.io/restore-server-version":{},"f:template.alpha.openshift.io/wait-for-ready":{}},"f:labels":{".":{},"f:app":{},"f:migration.openshift.io/migrated-by-migmigration":{},"f:migration.openshift.io/migrated-by-migplan":{},"f:template":{},"f:template.openshift.io/template-instance-owner":{},"f:velero.io/backup-name":{},"f:velero.io/restore-name":{}}},"f:spec":{"f:replicas":{},"f:revisionHistoryLimit":{},"f:selector":{".":{},"f:name":{}},"f:strategy":{"f:activeDeadlineSeconds":{},"f:recreateParams":{".":{},"f:timeoutSeconds":{}},"f:type":{}},"f:template":{".":{},"f:metadata":{".":{},"f:creationTimestamp":{},"f:labels":{".":{},"f:name":{}}},"f:spec":{".":{},"f:containers":{".":{},"k:{\"name\":\"jenkins\"}":{".":{},"f:env":{".":{},"k:{\"name\":\"DISABLE_ADMINISTRATIVE_MONITORS\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"ENABLE_FATAL_ERROR_LOG_FILE\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"JENKINS_SERVICE_NAME\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"JNLP_SERVICE_NAME\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"KUBERNETES_MASTER\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"KUBERNETES_TRUST_CERTIFICATES\"}":{".":{},"f:name":{}},"k:{\"name\":\"OPENSHIFT_ENABLE_OAUTH\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"OPENSHIFT_ENABLE_REDIRECT_PROMPT\"}":{".":{},"f:name":{},"f:value":{}}},"f:imagePullPolicy":{},"f:livenessProbe":{".":{},"f:failureThreshold":{},"f:httpGet":{".":{},"f:path":{},"f:port":{},"f:scheme":{}},"f:initialDelaySeconds":{},"f:periodSeconds":{},"f:successThreshold":{},"f:timeoutSeconds":{}},"f:name":{},"f:readinessProbe":{".":{},"f:failureThreshold":{},"f:httpGet":{".":{},"f:path":{},"f:port":{},"f:scheme":{}},"f:initialDelaySeconds":{},"f:periodSeconds":{},"f:successThreshold":{},"f:timeoutSeconds":{}},"f:resources":{".":{},"f:limits":{".":{},"f:cpu":{},"f:memory":{}},"f:requests":{".":{},"f:cpu":{},"f:memory":{}}},"f:securityContext":{".":{},"f:capabilities":{},"f:privileged":{}},"f:terminationMessagePath":{},"f:terminationMessagePolicy":{},"f:volumeMounts":{".":{},"k:{\"mountPath\":\"/var/lib/jenkins\"}":{".":{},"f:mountPath":{},"f:name":{}}}}},"f:dnsPolicy":{},"f:restartPolicy":{},"f:schedulerName":{},"f:securityContext":{},"f:serviceAccount":{},"f:serviceAccountName":{},"f:terminationGracePeriodSeconds":{},"f:volumes":{".":{},"k:{\"name\":\"jenkins-data\"}":{".":{},"f:name":{},"f:persistentVolumeClaim":{".":{},"f:claimName":{}}}}}}}}},{"manager":"openshift-controller-manager","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-06-03T20:16:45Z","fieldsType":"FieldsV1","fieldsV1":{"f:spec":{"f:template":{"f:spec":{"f:containers":{"k:{\"name\":\"jenkins\"}":{"f:image":{}}}}}}}},{"manager":"openshift-controller-manager","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-10-11T15:05:16Z","fieldsType":"FieldsV1","fieldsV1":{"f:status":{"f:availableReplicas":{},"f:conditions":{".":{},"k:{\"type\":\"Available\"}":{".":{},"f:lastTransitionTime":{},"f:lastUpdateTime":{},"f:message":{},"f:status":{},"f:type":{}},"k:{\"type\":\"Progressing\"}":{".":{},"f:lastTransitionTime":{},"f:lastUpdateTime":{},"f:message":{},"f:reason":{},"f:status":{},"f:type":{}}},"f:details":{".":{},"f:causes":{},"f:message":{}},"f:latestVersion":{},"f:observedGeneration":{},"f:replicas":{},"f:unavailableReplicas":{},"f:updatedReplicas":{}}},"subresource":"status"},{"manager":"Mozilla","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-10-11T15:08:19Z","fieldsType":"FieldsV1","fieldsV1":{"f:spec":{"f:template":{"f:spec":{"f:containers":{"k:{\"name\":\"jenkins\"}":{"f:env":{"k:{\"name\":\"KUBERNETES_TRUST_CERTIFICATES\"}":{"f:value":{}}}}}}},"f:triggers":{}}}}]},"spec":{"strategy":{"type":"Recreate","recreateParams":{"timeoutSeconds":600},"resources":{},"activeDeadlineSeconds":21600},"triggers":[{"type":"ImageChange","imageChangeParams":{"automatic":true,"containerNames":["jenkins"],"from":{"kind":"ImageStreamTag","namespace":"openshift","name":"jenkins:2"}}},{"type":"ConfigChange"}],"replicas":1,"revisionHistoryLimit":10,"test":false,"selector":{"name":"jenkins"},"template":{"metadata":{"creationTimestamp":null,"labels":{"name":"jenkins"}},"spec":{"volumes":[{"name":"jenkins-data","persistentVolumeClaim":{"claimName":"jenkins"}}],"containers":[{"name":"jenkins","image":"image-registry.openshift-image-registry.svc:5000/openshift/jenkins@sha256:902246da403bf7ff1f6f3cf531dce445c0289d3b2b01a26f6008926ec2068077","env":[{"name":"OPENSHIFT_ENABLE_OAUTH","value":"true"},{"name":"OPENSHIFT_ENABLE_REDIRECT_PROMPT","value":"true"},{"name":"DISABLE_ADMINISTRATIVE_MONITORS","value":"false"},{"name":"KUBERNETES_MASTER","value":"https://kubernetes.default:443"},{"name":"KUBERNETES_TRUST_CERTIFICATES","value":"true"},{"name":"JENKINS_SERVICE_NAME","value":"jenkins"},{"name":"JNLP_SERVICE_NAME","value":"jenkins-jnlp"},{"name":"ENABLE_FATAL_ERROR_LOG_FILE","value":"false"}],"resources":{"limits":{"cpu":"800m","memory":"1Gi"},"requests":{"cpu":"100m","memory":"100Mi"}},"volumeMounts":[{"name":"jenkins-data","mountPath":"/var/lib/jenkins"}],"livenessProbe":{"httpGet":{"path":"/login","port":8080,"scheme":"HTTP"},"initialDelaySeconds":420,"timeoutSeconds":240,"periodSeconds":360,"successThreshold":1,"failureThreshold":2},"readinessProbe":{"httpGet":{"path":"/login","port":8080,"scheme":"HTTP"},"initialDelaySeconds":3,"timeoutSeconds":240,"periodSeconds":10,"successThreshold":1,"failureThreshold":3},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File","imagePullPolicy":"IfNotPresent","securityContext":{"capabilities":{},"privileged":false}}],"restartPolicy":"Always","terminationGracePeriodSeconds":30,"dnsPolicy":"ClusterFirst","serviceAccountName":"jenkins","serviceAccount":"jenkins","securityContext":{},"schedulerName":"default-scheduler"}}},"status":{"latestVersion":3,"observedGeneration":7,"replicas":1,"updatedReplicas":1,"availableReplicas":0,"unavailableReplicas":1,"details":{"message":"config change","causes":[{"type":"ConfigChange"}]},"conditions":[{"type":"Available","status":"False","lastUpdateTime":"2023-10-11T15:05:13Z","lastTransitionTime":"2023-10-11T15:05:13Z","message":"Deployment config does not have minimum availability."},{"type":"Progressing","status":"True","lastUpdateTime":"2023-10-11T15:05:16Z","lastTransitionTime":"2023-10-11T15:05:16Z","reason":"ReplicationControllerUpdated","message":"replication controller \"jenkins-2\" is progressing"}]}}
+    creationTimestamp: "2023-10-11T15:08:20Z"
+    generation: 5
+    labels:
+      app: jenkins-persistent
+      migration.openshift.io/migrated-by-migmigration: 4066e18a-7c09-4930-a1fd-19e7058b887b
+      migration.openshift.io/migrated-by-migplan: adcc6565-a1ee-4eee-a8d6-19a7e8841033
+      openshift.io/deployment-config.name: jenkins
+      template: jenkins-persistent-template
+      template.openshift.io/template-instance-owner: f8bb2d3d-5894-11ea-bff7-000d3ac052bc
+      velero.io/backup-name: migration-85fa4-initial-h496m
+      velero.io/restore-name: migration-85fa4-final-wmd58
+    name: jenkins-3
+    namespace: cicd
+    ownerReferences:
+    - apiVersion: apps.openshift.io/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DeploymentConfig
+      name: jenkins
+      uid: 9dd9eef6-3f4d-44fd-a711-3ee1d74da976
+    resourceVersion: "134027722"
+    uid: 2ba4691e-34bc-4d3c-b498-3bf4ffb1360b
+  spec:
+    replicas: 0
+    selector:
+      deployment: jenkins-3
+      deploymentconfig: jenkins
+      name: jenkins
+    template:
+      metadata:
+        annotations:
+          openshift.io/deployment-config.latest-version: "3"
+          openshift.io/deployment-config.name: jenkins
+          openshift.io/deployment.name: jenkins-3
+        creationTimestamp: null
+        labels:
+          deployment: jenkins-3
+          deploymentconfig: jenkins
+          name: jenkins
+      spec:
+        containers:
+        - env:
+          - name: OPENSHIFT_ENABLE_OAUTH
+            value: "true"
+          - name: OPENSHIFT_ENABLE_REDIRECT_PROMPT
+            value: "true"
+          - name: DISABLE_ADMINISTRATIVE_MONITORS
+            value: "false"
+          - name: KUBERNETES_MASTER
+            value: https://kubernetes.default:443
+          - name: KUBERNETES_TRUST_CERTIFICATES
+            value: "true"
+          - name: JENKINS_SERVICE_NAME
+            value: jenkins
+          - name: JNLP_SERVICE_NAME
+            value: jenkins-jnlp
+          - name: ENABLE_FATAL_ERROR_LOG_FILE
+            value: "false"
+          image: image-registry.openshift-image-registry.svc:5000/openshift/jenkins@sha256:902246da403bf7ff1f6f3cf531dce445c0289d3b2b01a26f6008926ec2068077
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            failureThreshold: 2
+            httpGet:
+              path: /login
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 420
+            periodSeconds: 360
+            successThreshold: 1
+            timeoutSeconds: 240
+          name: jenkins
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /login
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 3
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 240
+          resources:
+            limits:
+              cpu: 800m
+              memory: 1Gi
+            requests:
+              cpu: 100m
+              memory: 100Mi
+          securityContext:
+            capabilities: {}
+            privileged: false
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/lib/jenkins
+            name: jenkins-data
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: jenkins
+        serviceAccountName: jenkins
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - name: jenkins-data
+          persistentVolumeClaim:
+            claimName: jenkins
+  status:
+    observedGeneration: 5
+    replicas: 0
+- apiVersion: v1
+  kind: ReplicationController
+  metadata:
+    annotations:
+      openshift.io/deployer-pod.completed-at: 2023-10-13 20:20:27 +0000 UTC
+      openshift.io/deployer-pod.created-at: 2023-10-13 20:17:13 +0000 UTC
+      openshift.io/deployer-pod.name: jenkins-4-deploy
+      openshift.io/deployment-config.latest-version: "4"
+      openshift.io/deployment-config.name: jenkins
+      openshift.io/deployment.phase: Complete
+      openshift.io/deployment.replicas: "1"
+      openshift.io/deployment.status-reason: image change
+      openshift.io/encoded-deployment-config: |
+        {"kind":"DeploymentConfig","apiVersion":"apps.openshift.io/v1","metadata":{"name":"jenkins","namespace":"cicd","uid":"9dd9eef6-3f4d-44fd-a711-3ee1d74da976","resourceVersion":"134027672","generation":12,"creationTimestamp":"2023-06-03T20:16:44Z","labels":{"app":"jenkins-persistent","migration.openshift.io/migrated-by-migmigration":"4066e18a-7c09-4930-a1fd-19e7058b887b","migration.openshift.io/migrated-by-migplan":"adcc6565-a1ee-4eee-a8d6-19a7e8841033","template":"jenkins-persistent-template","template.openshift.io/template-instance-owner":"f8bb2d3d-5894-11ea-bff7-000d3ac052bc","velero.io/backup-name":"migration-85fa4-initial-h496m","velero.io/restore-name":"migration-85fa4-final-wmd58"},"annotations":{"openshift.io/backup-registry-hostname":"docker-registry.default.svc:5000","openshift.io/backup-server-version":"1.11","openshift.io/migration-registry":"172.30.245.25:5000","openshift.io/restore-registry-hostname":"image-registry.openshift-image-registry.svc:5000","openshift.io/restore-server-version":"1.23","template.alpha.openshift.io/wait-for-ready":"true"},"managedFields":[{"manager":"velero-server","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-06-03T20:16:44Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{".":{},"f:openshift.io/backup-registry-hostname":{},"f:openshift.io/backup-server-version":{},"f:openshift.io/migration-registry":{},"f:openshift.io/restore-registry-hostname":{},"f:openshift.io/restore-server-version":{},"f:template.alpha.openshift.io/wait-for-ready":{}},"f:labels":{".":{},"f:app":{},"f:migration.openshift.io/migrated-by-migmigration":{},"f:migration.openshift.io/migrated-by-migplan":{},"f:template":{},"f:template.openshift.io/template-instance-owner":{},"f:velero.io/backup-name":{},"f:velero.io/restore-name":{}}},"f:spec":{"f:replicas":{},"f:revisionHistoryLimit":{},"f:selector":{".":{},"f:name":{}},"f:strategy":{"f:activeDeadlineSeconds":{},"f:recreateParams":{".":{},"f:timeoutSeconds":{}},"f:type":{}},"f:template":{".":{},"f:metadata":{".":{},"f:creationTimestamp":{},"f:labels":{".":{},"f:name":{}}},"f:spec":{".":{},"f:containers":{".":{},"k:{\"name\":\"jenkins\"}":{".":{},"f:env":{".":{},"k:{\"name\":\"DISABLE_ADMINISTRATIVE_MONITORS\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"ENABLE_FATAL_ERROR_LOG_FILE\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"JENKINS_SERVICE_NAME\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"JNLP_SERVICE_NAME\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"KUBERNETES_MASTER\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"KUBERNETES_TRUST_CERTIFICATES\"}":{".":{},"f:name":{}},"k:{\"name\":\"OPENSHIFT_ENABLE_OAUTH\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"OPENSHIFT_ENABLE_REDIRECT_PROMPT\"}":{".":{},"f:name":{},"f:value":{}}},"f:imagePullPolicy":{},"f:livenessProbe":{".":{},"f:failureThreshold":{},"f:httpGet":{".":{},"f:path":{},"f:port":{},"f:scheme":{}},"f:initialDelaySeconds":{},"f:periodSeconds":{},"f:successThreshold":{},"f:timeoutSeconds":{}},"f:name":{},"f:readinessProbe":{".":{},"f:failureThreshold":{},"f:httpGet":{".":{},"f:path":{},"f:port":{},"f:scheme":{}},"f:initialDelaySeconds":{},"f:periodSeconds":{},"f:successThreshold":{},"f:timeoutSeconds":{}},"f:resources":{".":{},"f:limits":{".":{},"f:cpu":{},"f:memory":{}},"f:requests":{".":{},"f:cpu":{},"f:memory":{}}},"f:securityContext":{".":{},"f:capabilities":{},"f:privileged":{}},"f:terminationMessagePath":{},"f:terminationMessagePolicy":{},"f:volumeMounts":{".":{},"k:{\"mountPath\":\"/var/lib/jenkins\"}":{".":{},"f:mountPath":{},"f:name":{}}}}},"f:dnsPolicy":{},"f:restartPolicy":{},"f:schedulerName":{},"f:securityContext":{},"f:serviceAccount":{},"f:serviceAccountName":{},"f:terminationGracePeriodSeconds":{},"f:volumes":{".":{},"k:{\"name\":\"jenkins-data\"}":{".":{},"f:name":{},"f:persistentVolumeClaim":{".":{},"f:claimName":{}}}}}}}}},{"manager":"Mozilla","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-10-11T15:08:19Z","fieldsType":"FieldsV1","fieldsV1":{"f:spec":{"f:template":{"f:spec":{"f:containers":{"k:{\"name\":\"jenkins\"}":{"f:env":{"k:{\"name\":\"KUBERNETES_TRUST_CERTIFICATES\"}":{"f:value":{}}}}}}}}}},{"manager":"openshift-controller-manager","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-10-11T15:08:20Z","fieldsType":"FieldsV1","fieldsV1":{"f:spec":{"f:template":{"f:spec":{"f:containers":{"k:{\"name\":\"jenkins\"}":{"f:image":{}}}}},"f:triggers":{}}}},{"manager":"openshift-controller-manager","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-10-13T13:50:40Z","fieldsType":"FieldsV1","fieldsV1":{"f:status":{"f:availableReplicas":{},"f:conditions":{".":{},"k:{\"type\":\"Available\"}":{".":{},"f:lastTransitionTime":{},"f:lastUpdateTime":{},"f:message":{},"f:status":{},"f:type":{}},"k:{\"type\":\"Progressing\"}":{".":{},"f:lastTransitionTime":{},"f:lastUpdateTime":{},"f:message":{},"f:reason":{},"f:status":{},"f:type":{}}},"f:details":{".":{},"f:causes":{},"f:message":{}},"f:latestVersion":{},"f:observedGeneration":{},"f:readyReplicas":{},"f:replicas":{},"f:unavailableReplicas":{},"f:updatedReplicas":{}}},"subresource":"status"}]},"spec":{"strategy":{"type":"Recreate","recreateParams":{"timeoutSeconds":600},"resources":{},"activeDeadlineSeconds":21600},"triggers":[{"type":"ImageChange","imageChangeParams":{"automatic":true,"containerNames":["jenkins"],"from":{"kind":"ImageStreamTag","namespace":"openshift","name":"jenkins:2"},"lastTriggeredImage":"image-registry.openshift-image-registry.svc:5000/openshift/jenkins@sha256:629b092d1af0e6081f6c46644027f24fd57fd4be29a04a93e176c3181e4bfa0d"}},{"type":"ConfigChange"}],"replicas":1,"revisionHistoryLimit":10,"test":false,"selector":{"name":"jenkins"},"template":{"metadata":{"creationTimestamp":null,"labels":{"name":"jenkins"}},"spec":{"volumes":[{"name":"jenkins-data","persistentVolumeClaim":{"claimName":"jenkins"}}],"containers":[{"name":"jenkins","image":"image-registry.openshift-image-registry.svc:5000/openshift/jenkins@sha256:629b092d1af0e6081f6c46644027f24fd57fd4be29a04a93e176c3181e4bfa0d","env":[{"name":"OPENSHIFT_ENABLE_OAUTH","value":"true"},{"name":"OPENSHIFT_ENABLE_REDIRECT_PROMPT","value":"true"},{"name":"DISABLE_ADMINISTRATIVE_MONITORS","value":"false"},{"name":"KUBERNETES_MASTER","value":"https://kubernetes.default:443"},{"name":"KUBERNETES_TRUST_CERTIFICATES","value":"true"},{"name":"JENKINS_SERVICE_NAME","value":"jenkins"},{"name":"JNLP_SERVICE_NAME","value":"jenkins-jnlp"},{"name":"ENABLE_FATAL_ERROR_LOG_FILE","value":"false"}],"resources":{"limits":{"cpu":"800m","memory":"1Gi"},"requests":{"cpu":"100m","memory":"100Mi"}},"volumeMounts":[{"name":"jenkins-data","mountPath":"/var/lib/jenkins"}],"livenessProbe":{"httpGet":{"path":"/login","port":8080,"scheme":"HTTP"},"initialDelaySeconds":420,"timeoutSeconds":240,"periodSeconds":360,"successThreshold":1,"failureThreshold":2},"readinessProbe":{"httpGet":{"path":"/login","port":8080,"scheme":"HTTP"},"initialDelaySeconds":3,"timeoutSeconds":240,"periodSeconds":10,"successThreshold":1,"failureThreshold":3},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File","imagePullPolicy":"IfNotPresent","securityContext":{"capabilities":{},"privileged":false}}],"restartPolicy":"Always","terminationGracePeriodSeconds":30,"dnsPolicy":"ClusterFirst","serviceAccountName":"jenkins","serviceAccount":"jenkins","securityContext":{},"schedulerName":"default-scheduler"}}},"status":{"latestVersion":4,"observedGeneration":11,"replicas":1,"updatedReplicas":1,"availableReplicas":1,"unavailableReplicas":0,"details":{"message":"image change","causes":[{"type":"ImageChange","imageTrigger":{"from":{"kind":"DockerImage","name":"image-registry.openshift-image-registry.svc:5000/openshift/jenkins@sha256:629b092d1af0e6081f6c46644027f24fd57fd4be29a04a93e176c3181e4bfa0d"}}}]},"conditions":[{"type":"Progressing","status":"True","lastUpdateTime":"2023-10-11T15:13:45Z","lastTransitionTime":"2023-10-11T15:08:24Z","reason":"NewReplicationControllerAvailable","message":"replication controller \"jenkins-3\" successfully rolled out"},{"type":"Available","status":"True","lastUpdateTime":"2023-10-13T13:50:40Z","lastTransitionTime":"2023-10-13T13:50:40Z","message":"Deployment config has minimum availability."}],"readyReplicas":1}}
+    creationTimestamp: "2023-10-13T20:17:13Z"
+    generation: 3
+    labels:
+      app: jenkins-persistent
+      migration.openshift.io/migrated-by-migmigration: 4066e18a-7c09-4930-a1fd-19e7058b887b
+      migration.openshift.io/migrated-by-migplan: adcc6565-a1ee-4eee-a8d6-19a7e8841033
+      openshift.io/deployment-config.name: jenkins
+      template: jenkins-persistent-template
+      template.openshift.io/template-instance-owner: f8bb2d3d-5894-11ea-bff7-000d3ac052bc
+      velero.io/backup-name: migration-85fa4-initial-h496m
+      velero.io/restore-name: migration-85fa4-final-wmd58
+    name: jenkins-4
+    namespace: cicd
+    ownerReferences:
+    - apiVersion: apps.openshift.io/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DeploymentConfig
+      name: jenkins
+      uid: 9dd9eef6-3f4d-44fd-a711-3ee1d74da976
+    resourceVersion: "134033509"
+    uid: de88d383-2a88-4c80-9e88-0684ad080135
+  spec:
+    replicas: 0
+    selector:
+      deployment: jenkins-4
+      deploymentconfig: jenkins
+      name: jenkins
+    template:
+      metadata:
+        annotations:
+          openshift.io/deployment-config.latest-version: "4"
+          openshift.io/deployment-config.name: jenkins
+          openshift.io/deployment.name: jenkins-4
+        creationTimestamp: null
+        labels:
+          deployment: jenkins-4
+          deploymentconfig: jenkins
+          name: jenkins
+      spec:
+        containers:
+        - env:
+          - name: OPENSHIFT_ENABLE_OAUTH
+            value: "true"
+          - name: OPENSHIFT_ENABLE_REDIRECT_PROMPT
+            value: "true"
+          - name: DISABLE_ADMINISTRATIVE_MONITORS
+            value: "false"
+          - name: KUBERNETES_MASTER
+            value: https://kubernetes.default:443
+          - name: KUBERNETES_TRUST_CERTIFICATES
+            value: "true"
+          - name: JENKINS_SERVICE_NAME
+            value: jenkins
+          - name: JNLP_SERVICE_NAME
+            value: jenkins-jnlp
+          - name: ENABLE_FATAL_ERROR_LOG_FILE
+            value: "false"
+          image: image-registry.openshift-image-registry.svc:5000/openshift/jenkins@sha256:629b092d1af0e6081f6c46644027f24fd57fd4be29a04a93e176c3181e4bfa0d
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            failureThreshold: 2
+            httpGet:
+              path: /login
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 420
+            periodSeconds: 360
+            successThreshold: 1
+            timeoutSeconds: 240
+          name: jenkins
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /login
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 3
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 240
+          resources:
+            limits:
+              cpu: 800m
+              memory: 1Gi
+            requests:
+              cpu: 100m
+              memory: 100Mi
+          securityContext:
+            capabilities: {}
+            privileged: false
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/lib/jenkins
+            name: jenkins-data
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: jenkins
+        serviceAccountName: jenkins
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - name: jenkins-data
+          persistentVolumeClaim:
+            claimName: jenkins
+  status:
+    observedGeneration: 3
+    replicas: 0
+- apiVersion: v1
+  kind: ReplicationController
+  metadata:
+    annotations:
+      openshift.io/deployer-pod.completed-at: 2023-10-13 20:29:54 +0000 UTC
+      openshift.io/deployer-pod.created-at: 2023-10-13 20:27:22 +0000 UTC
+      openshift.io/deployer-pod.name: jenkins-5-deploy
+      openshift.io/deployment-config.latest-version: "5"
+      openshift.io/deployment-config.name: jenkins
+      openshift.io/deployment.phase: Complete
+      openshift.io/deployment.replicas: "1"
+      openshift.io/deployment.status-reason: image change
+      openshift.io/encoded-deployment-config: |
+        {"kind":"DeploymentConfig","apiVersion":"apps.openshift.io/v1","metadata":{"name":"jenkins","namespace":"cicd","uid":"9dd9eef6-3f4d-44fd-a711-3ee1d74da976","resourceVersion":"134033459","generation":13,"creationTimestamp":"2023-06-03T20:16:44Z","labels":{"app":"jenkins-persistent","migration.openshift.io/migrated-by-migmigration":"4066e18a-7c09-4930-a1fd-19e7058b887b","migration.openshift.io/migrated-by-migplan":"adcc6565-a1ee-4eee-a8d6-19a7e8841033","template":"jenkins-persistent-template","template.openshift.io/template-instance-owner":"f8bb2d3d-5894-11ea-bff7-000d3ac052bc","velero.io/backup-name":"migration-85fa4-initial-h496m","velero.io/restore-name":"migration-85fa4-final-wmd58"},"annotations":{"openshift.io/backup-registry-hostname":"docker-registry.default.svc:5000","openshift.io/backup-server-version":"1.11","openshift.io/migration-registry":"172.30.245.25:5000","openshift.io/restore-registry-hostname":"image-registry.openshift-image-registry.svc:5000","openshift.io/restore-server-version":"1.23","template.alpha.openshift.io/wait-for-ready":"true"},"managedFields":[{"manager":"velero-server","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-06-03T20:16:44Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{".":{},"f:openshift.io/backup-registry-hostname":{},"f:openshift.io/backup-server-version":{},"f:openshift.io/migration-registry":{},"f:openshift.io/restore-registry-hostname":{},"f:openshift.io/restore-server-version":{},"f:template.alpha.openshift.io/wait-for-ready":{}},"f:labels":{".":{},"f:app":{},"f:migration.openshift.io/migrated-by-migmigration":{},"f:migration.openshift.io/migrated-by-migplan":{},"f:template":{},"f:template.openshift.io/template-instance-owner":{},"f:velero.io/backup-name":{},"f:velero.io/restore-name":{}}},"f:spec":{"f:replicas":{},"f:revisionHistoryLimit":{},"f:selector":{".":{},"f:name":{}},"f:strategy":{"f:activeDeadlineSeconds":{},"f:recreateParams":{".":{},"f:timeoutSeconds":{}},"f:type":{}},"f:template":{".":{},"f:metadata":{".":{},"f:creationTimestamp":{},"f:labels":{".":{},"f:name":{}}},"f:spec":{".":{},"f:containers":{".":{},"k:{\"name\":\"jenkins\"}":{".":{},"f:env":{".":{},"k:{\"name\":\"DISABLE_ADMINISTRATIVE_MONITORS\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"ENABLE_FATAL_ERROR_LOG_FILE\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"JENKINS_SERVICE_NAME\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"JNLP_SERVICE_NAME\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"KUBERNETES_MASTER\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"KUBERNETES_TRUST_CERTIFICATES\"}":{".":{},"f:name":{}},"k:{\"name\":\"OPENSHIFT_ENABLE_OAUTH\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"OPENSHIFT_ENABLE_REDIRECT_PROMPT\"}":{".":{},"f:name":{},"f:value":{}}},"f:imagePullPolicy":{},"f:livenessProbe":{".":{},"f:failureThreshold":{},"f:httpGet":{".":{},"f:path":{},"f:port":{},"f:scheme":{}},"f:initialDelaySeconds":{},"f:periodSeconds":{},"f:successThreshold":{},"f:timeoutSeconds":{}},"f:name":{},"f:readinessProbe":{".":{},"f:failureThreshold":{},"f:httpGet":{".":{},"f:path":{},"f:port":{},"f:scheme":{}},"f:initialDelaySeconds":{},"f:periodSeconds":{},"f:successThreshold":{},"f:timeoutSeconds":{}},"f:resources":{".":{},"f:limits":{".":{},"f:cpu":{},"f:memory":{}},"f:requests":{".":{},"f:cpu":{},"f:memory":{}}},"f:securityContext":{".":{},"f:capabilities":{},"f:privileged":{}},"f:terminationMessagePath":{},"f:terminationMessagePolicy":{},"f:volumeMounts":{".":{},"k:{\"mountPath\":\"/var/lib/jenkins\"}":{".":{},"f:mountPath":{},"f:name":{}}}}},"f:dnsPolicy":{},"f:restartPolicy":{},"f:schedulerName":{},"f:securityContext":{},"f:serviceAccount":{},"f:serviceAccountName":{},"f:terminationGracePeriodSeconds":{},"f:volumes":{".":{},"k:{\"name\":\"jenkins-data\"}":{".":{},"f:name":{},"f:persistentVolumeClaim":{".":{},"f:claimName":{}}}}}}}}},{"manager":"Mozilla","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-10-11T15:08:19Z","fieldsType":"FieldsV1","fieldsV1":{"f:spec":{"f:template":{"f:spec":{"f:containers":{"k:{\"name\":\"jenkins\"}":{"f:env":{"k:{\"name\":\"KUBERNETES_TRUST_CERTIFICATES\"}":{"f:value":{}}}}}}}}}},{"manager":"openshift-controller-manager","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-10-11T15:08:20Z","fieldsType":"FieldsV1","fieldsV1":{"f:spec":{"f:template":{"f:spec":{"f:containers":{"k:{\"name\":\"jenkins\"}":{"f:image":{}}}}},"f:triggers":{}}}},{"manager":"openshift-controller-manager","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-10-13T20:24:57Z","fieldsType":"FieldsV1","fieldsV1":{"f:status":{"f:availableReplicas":{},"f:conditions":{".":{},"k:{\"type\":\"Available\"}":{".":{},"f:lastTransitionTime":{},"f:lastUpdateTime":{},"f:message":{},"f:status":{},"f:type":{}},"k:{\"type\":\"Progressing\"}":{".":{},"f:lastTransitionTime":{},"f:lastUpdateTime":{},"f:message":{},"f:reason":{},"f:status":{},"f:type":{}}},"f:details":{".":{},"f:causes":{},"f:message":{}},"f:latestVersion":{},"f:observedGeneration":{},"f:readyReplicas":{},"f:replicas":{},"f:unavailableReplicas":{},"f:updatedReplicas":{}}},"subresource":"status"}]},"spec":{"strategy":{"type":"Recreate","recreateParams":{"timeoutSeconds":600},"resources":{},"activeDeadlineSeconds":21600},"triggers":[{"type":"ImageChange","imageChangeParams":{"automatic":true,"containerNames":["jenkins"],"from":{"kind":"ImageStreamTag","namespace":"openshift","name":"jenkins:2"},"lastTriggeredImage":"image-registry.openshift-image-registry.svc:5000/openshift/jenkins@sha256:902246da403bf7ff1f6f3cf531dce445c0289d3b2b01a26f6008926ec2068077"}},{"type":"ConfigChange"}],"replicas":1,"revisionHistoryLimit":10,"test":false,"selector":{"name":"jenkins"},"template":{"metadata":{"creationTimestamp":null,"labels":{"name":"jenkins"}},"spec":{"volumes":[{"name":"jenkins-data","persistentVolumeClaim":{"claimName":"jenkins"}}],"containers":[{"name":"jenkins","image":"image-registry.openshift-image-registry.svc:5000/openshift/jenkins@sha256:902246da403bf7ff1f6f3cf531dce445c0289d3b2b01a26f6008926ec2068077","env":[{"name":"OPENSHIFT_ENABLE_OAUTH","value":"true"},{"name":"OPENSHIFT_ENABLE_REDIRECT_PROMPT","value":"true"},{"name":"DISABLE_ADMINISTRATIVE_MONITORS","value":"false"},{"name":"KUBERNETES_MASTER","value":"https://kubernetes.default:443"},{"name":"KUBERNETES_TRUST_CERTIFICATES","value":"true"},{"name":"JENKINS_SERVICE_NAME","value":"jenkins"},{"name":"JNLP_SERVICE_NAME","value":"jenkins-jnlp"},{"name":"ENABLE_FATAL_ERROR_LOG_FILE","value":"false"}],"resources":{"limits":{"cpu":"800m","memory":"1Gi"},"requests":{"cpu":"100m","memory":"100Mi"}},"volumeMounts":[{"name":"jenkins-data","mountPath":"/var/lib/jenkins"}],"livenessProbe":{"httpGet":{"path":"/login","port":8080,"scheme":"HTTP"},"initialDelaySeconds":420,"timeoutSeconds":240,"periodSeconds":360,"successThreshold":1,"failureThreshold":2},"readinessProbe":{"httpGet":{"path":"/login","port":8080,"scheme":"HTTP"},"initialDelaySeconds":3,"timeoutSeconds":240,"periodSeconds":10,"successThreshold":1,"failureThreshold":3},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File","imagePullPolicy":"IfNotPresent","securityContext":{"capabilities":{},"privileged":false}}],"restartPolicy":"Always","terminationGracePeriodSeconds":30,"dnsPolicy":"ClusterFirst","serviceAccountName":"jenkins","serviceAccount":"jenkins","securityContext":{},"schedulerName":"default-scheduler"}}},"status":{"latestVersion":5,"observedGeneration":12,"replicas":1,"updatedReplicas":1,"availableReplicas":1,"unavailableReplicas":0,"details":{"message":"image change","causes":[{"type":"ImageChange","imageTrigger":{"from":{"kind":"DockerImage","name":"image-registry.openshift-image-registry.svc:5000/openshift/jenkins@sha256:902246da403bf7ff1f6f3cf531dce445c0289d3b2b01a26f6008926ec2068077"}}}]},"conditions":[{"type":"Progressing","status":"True","lastUpdateTime":"2023-10-13T20:20:30Z","lastTransitionTime":"2023-10-13T20:17:18Z","reason":"NewReplicationControllerAvailable","message":"replication controller \"jenkins-4\" successfully rolled out"},{"type":"Available","status":"True","lastUpdateTime":"2023-10-13T20:24:57Z","lastTransitionTime":"2023-10-13T20:24:57Z","message":"Deployment config has minimum availability."}],"readyReplicas":1}}
+    creationTimestamp: "2023-10-13T20:27:22Z"
+    generation: 3
+    labels:
+      app: jenkins-persistent
+      migration.openshift.io/migrated-by-migmigration: 4066e18a-7c09-4930-a1fd-19e7058b887b
+      migration.openshift.io/migrated-by-migplan: adcc6565-a1ee-4eee-a8d6-19a7e8841033
+      openshift.io/deployment-config.name: jenkins
+      template: jenkins-persistent-template
+      template.openshift.io/template-instance-owner: f8bb2d3d-5894-11ea-bff7-000d3ac052bc
+      velero.io/backup-name: migration-85fa4-initial-h496m
+      velero.io/restore-name: migration-85fa4-final-wmd58
+    name: jenkins-5
+    namespace: cicd
+    ownerReferences:
+    - apiVersion: apps.openshift.io/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DeploymentConfig
+      name: jenkins
+      uid: 9dd9eef6-3f4d-44fd-a711-3ee1d74da976
+    resourceVersion: "134039444"
+    uid: 4dcfa44b-f897-4ea7-93f6-74117c49b370
+  spec:
+    replicas: 0
+    selector:
+      deployment: jenkins-5
+      deploymentconfig: jenkins
+      name: jenkins
+    template:
+      metadata:
+        annotations:
+          openshift.io/deployment-config.latest-version: "5"
+          openshift.io/deployment-config.name: jenkins
+          openshift.io/deployment.name: jenkins-5
+        creationTimestamp: null
+        labels:
+          deployment: jenkins-5
+          deploymentconfig: jenkins
+          name: jenkins
+      spec:
+        containers:
+        - env:
+          - name: OPENSHIFT_ENABLE_OAUTH
+            value: "true"
+          - name: OPENSHIFT_ENABLE_REDIRECT_PROMPT
+            value: "true"
+          - name: DISABLE_ADMINISTRATIVE_MONITORS
+            value: "false"
+          - name: KUBERNETES_MASTER
+            value: https://kubernetes.default:443
+          - name: KUBERNETES_TRUST_CERTIFICATES
+            value: "true"
+          - name: JENKINS_SERVICE_NAME
+            value: jenkins
+          - name: JNLP_SERVICE_NAME
+            value: jenkins-jnlp
+          - name: ENABLE_FATAL_ERROR_LOG_FILE
+            value: "false"
+          image: image-registry.openshift-image-registry.svc:5000/openshift/jenkins@sha256:902246da403bf7ff1f6f3cf531dce445c0289d3b2b01a26f6008926ec2068077
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            failureThreshold: 2
+            httpGet:
+              path: /login
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 420
+            periodSeconds: 360
+            successThreshold: 1
+            timeoutSeconds: 240
+          name: jenkins
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /login
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 3
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 240
+          resources:
+            limits:
+              cpu: 800m
+              memory: 1Gi
+            requests:
+              cpu: 100m
+              memory: 100Mi
+          securityContext:
+            capabilities: {}
+            privileged: false
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/lib/jenkins
+            name: jenkins-data
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: jenkins
+        serviceAccountName: jenkins
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - name: jenkins-data
+          persistentVolumeClaim:
+            claimName: jenkins
+  status:
+    observedGeneration: 3
+    replicas: 0
+- apiVersion: v1
+  kind: ReplicationController
+  metadata:
+    annotations:
+      openshift.io/deployer-pod.completed-at: 2023-10-13 20:38:38 +0000 UTC
+      openshift.io/deployer-pod.created-at: 2023-10-13 20:37:31 +0000 UTC
+      openshift.io/deployer-pod.name: jenkins-6-deploy
+      openshift.io/deployment-config.latest-version: "6"
+      openshift.io/deployment-config.name: jenkins
+      openshift.io/deployment.phase: Complete
+      openshift.io/deployment.replicas: "1"
+      openshift.io/deployment.status-reason: config change
+      openshift.io/encoded-deployment-config: |
+        {"kind":"DeploymentConfig","apiVersion":"apps.openshift.io/v1","metadata":{"name":"jenkins","namespace":"cicd","uid":"9dd9eef6-3f4d-44fd-a711-3ee1d74da976","resourceVersion":"134039389","generation":14,"creationTimestamp":"2023-06-03T20:16:44Z","labels":{"app":"jenkins-persistent","migration.openshift.io/migrated-by-migmigration":"4066e18a-7c09-4930-a1fd-19e7058b887b","migration.openshift.io/migrated-by-migplan":"adcc6565-a1ee-4eee-a8d6-19a7e8841033","template":"jenkins-persistent-template","template.openshift.io/template-instance-owner":"f8bb2d3d-5894-11ea-bff7-000d3ac052bc","velero.io/backup-name":"migration-85fa4-initial-h496m","velero.io/restore-name":"migration-85fa4-final-wmd58"},"annotations":{"openshift.io/backup-registry-hostname":"docker-registry.default.svc:5000","openshift.io/backup-server-version":"1.11","openshift.io/migration-registry":"172.30.245.25:5000","openshift.io/restore-registry-hostname":"image-registry.openshift-image-registry.svc:5000","openshift.io/restore-server-version":"1.23","template.alpha.openshift.io/wait-for-ready":"true"},"managedFields":[{"manager":"velero-server","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-06-03T20:16:44Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{".":{},"f:openshift.io/backup-registry-hostname":{},"f:openshift.io/backup-server-version":{},"f:openshift.io/migration-registry":{},"f:openshift.io/restore-registry-hostname":{},"f:openshift.io/restore-server-version":{},"f:template.alpha.openshift.io/wait-for-ready":{}},"f:labels":{".":{},"f:app":{},"f:migration.openshift.io/migrated-by-migmigration":{},"f:migration.openshift.io/migrated-by-migplan":{},"f:template":{},"f:template.openshift.io/template-instance-owner":{},"f:velero.io/backup-name":{},"f:velero.io/restore-name":{}}},"f:spec":{"f:replicas":{},"f:revisionHistoryLimit":{},"f:selector":{".":{},"f:name":{}},"f:strategy":{"f:activeDeadlineSeconds":{},"f:recreateParams":{".":{},"f:timeoutSeconds":{}},"f:type":{}},"f:template":{".":{},"f:metadata":{".":{},"f:creationTimestamp":{},"f:labels":{".":{},"f:name":{}}},"f:spec":{".":{},"f:containers":{".":{},"k:{\"name\":\"jenkins\"}":{".":{},"f:env":{".":{},"k:{\"name\":\"DISABLE_ADMINISTRATIVE_MONITORS\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"ENABLE_FATAL_ERROR_LOG_FILE\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"JENKINS_SERVICE_NAME\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"JNLP_SERVICE_NAME\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"KUBERNETES_MASTER\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"KUBERNETES_TRUST_CERTIFICATES\"}":{".":{},"f:name":{}},"k:{\"name\":\"OPENSHIFT_ENABLE_OAUTH\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"OPENSHIFT_ENABLE_REDIRECT_PROMPT\"}":{".":{},"f:name":{},"f:value":{}}},"f:imagePullPolicy":{},"f:livenessProbe":{".":{},"f:failureThreshold":{},"f:httpGet":{".":{},"f:path":{},"f:port":{},"f:scheme":{}},"f:initialDelaySeconds":{},"f:periodSeconds":{},"f:successThreshold":{},"f:timeoutSeconds":{}},"f:name":{},"f:readinessProbe":{".":{},"f:failureThreshold":{},"f:httpGet":{".":{},"f:path":{},"f:port":{},"f:scheme":{}},"f:initialDelaySeconds":{},"f:periodSeconds":{},"f:successThreshold":{},"f:timeoutSeconds":{}},"f:resources":{".":{},"f:limits":{},"f:requests":{".":{},"f:memory":{}}},"f:securityContext":{".":{},"f:capabilities":{},"f:privileged":{}},"f:terminationMessagePath":{},"f:terminationMessagePolicy":{},"f:volumeMounts":{".":{},"k:{\"mountPath\":\"/var/lib/jenkins\"}":{".":{},"f:mountPath":{},"f:name":{}}}}},"f:dnsPolicy":{},"f:restartPolicy":{},"f:schedulerName":{},"f:securityContext":{},"f:serviceAccount":{},"f:serviceAccountName":{},"f:terminationGracePeriodSeconds":{},"f:volumes":{".":{},"k:{\"name\":\"jenkins-data\"}":{".":{},"f:name":{},"f:persistentVolumeClaim":{".":{},"f:claimName":{}}}}}}}}},{"manager":"openshift-controller-manager","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-10-11T15:08:20Z","fieldsType":"FieldsV1","fieldsV1":{"f:spec":{"f:template":{"f:spec":{"f:containers":{"k:{\"name\":\"jenkins\"}":{"f:image":{}}}}},"f:triggers":{}}}},{"manager":"openshift-controller-manager","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-10-13T20:29:54Z","fieldsType":"FieldsV1","fieldsV1":{"f:status":{"f:availableReplicas":{},"f:conditions":{".":{},"k:{\"type\":\"Available\"}":{".":{},"f:lastTransitionTime":{},"f:lastUpdateTime":{},"f:message":{},"f:status":{},"f:type":{}},"k:{\"type\":\"Progressing\"}":{".":{},"f:lastTransitionTime":{},"f:lastUpdateTime":{},"f:message":{},"f:reason":{},"f:status":{},"f:type":{}}},"f:details":{".":{},"f:causes":{},"f:message":{}},"f:latestVersion":{},"f:observedGeneration":{},"f:readyReplicas":{},"f:replicas":{},"f:unavailableReplicas":{},"f:updatedReplicas":{}}},"subresource":"status"},{"manager":"Mozilla","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-10-13T20:37:31Z","fieldsType":"FieldsV1","fieldsV1":{"f:spec":{"f:template":{"f:spec":{"f:containers":{"k:{\"name\":\"jenkins\"}":{"f:env":{"k:{\"name\":\"KUBERNETES_TRUST_CERTIFICATES\"}":{"f:value":{}}},"f:resources":{"f:limits":{"f:cpu":{},"f:memory":{}},"f:requests":{"f:cpu":{}}}}}}}}}}]},"spec":{"strategy":{"type":"Recreate","recreateParams":{"timeoutSeconds":600},"resources":{},"activeDeadlineSeconds":21600},"triggers":[{"type":"ImageChange","imageChangeParams":{"automatic":true,"containerNames":["jenkins"],"from":{"kind":"ImageStreamTag","namespace":"openshift","name":"jenkins:2"},"lastTriggeredImage":"image-registry.openshift-image-registry.svc:5000/openshift/jenkins@sha256:902246da403bf7ff1f6f3cf531dce445c0289d3b2b01a26f6008926ec2068077"}},{"type":"ConfigChange"}],"replicas":1,"revisionHistoryLimit":10,"test":false,"selector":{"name":"jenkins"},"template":{"metadata":{"creationTimestamp":null,"labels":{"name":"jenkins"}},"spec":{"volumes":[{"name":"jenkins-data","persistentVolumeClaim":{"claimName":"jenkins"}}],"containers":[{"name":"jenkins","image":"image-registry.openshift-image-registry.svc:5000/openshift/jenkins@sha256:902246da403bf7ff1f6f3cf531dce445c0289d3b2b01a26f6008926ec2068077","env":[{"name":"OPENSHIFT_ENABLE_OAUTH","value":"true"},{"name":"OPENSHIFT_ENABLE_REDIRECT_PROMPT","value":"true"},{"name":"DISABLE_ADMINISTRATIVE_MONITORS","value":"false"},{"name":"KUBERNETES_MASTER","value":"https://kubernetes.default:443"},{"name":"KUBERNETES_TRUST_CERTIFICATES","value":"true"},{"name":"JENKINS_SERVICE_NAME","value":"jenkins"},{"name":"JNLP_SERVICE_NAME","value":"jenkins-jnlp"},{"name":"ENABLE_FATAL_ERROR_LOG_FILE","value":"false"}],"resources":{"limits":{"cpu":"2","memory":"2Gi"},"requests":{"cpu":"500m","memory":"100Mi"}},"volumeMounts":[{"name":"jenkins-data","mountPath":"/var/lib/jenkins"}],"livenessProbe":{"httpGet":{"path":"/login","port":8080,"scheme":"HTTP"},"initialDelaySeconds":420,"timeoutSeconds":240,"periodSeconds":360,"successThreshold":1,"failureThreshold":2},"readinessProbe":{"httpGet":{"path":"/login","port":8080,"scheme":"HTTP"},"initialDelaySeconds":3,"timeoutSeconds":240,"periodSeconds":10,"successThreshold":1,"failureThreshold":3},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File","imagePullPolicy":"IfNotPresent","securityContext":{"capabilities":{},"privileged":false}}],"restartPolicy":"Always","terminationGracePeriodSeconds":30,"dnsPolicy":"ClusterFirst","serviceAccountName":"jenkins","serviceAccount":"jenkins","securityContext":{},"schedulerName":"default-scheduler"}}},"status":{"latestVersion":6,"observedGeneration":13,"replicas":1,"updatedReplicas":1,"availableReplicas":1,"unavailableReplicas":0,"details":{"message":"config change","causes":[{"type":"ConfigChange"}]},"conditions":[{"type":"Available","status":"True","lastUpdateTime":"2023-10-13T20:29:53Z","lastTransitionTime":"2023-10-13T20:29:53Z","message":"Deployment config has minimum availability."},{"type":"Progressing","status":"True","lastUpdateTime":"2023-10-13T20:29:56Z","lastTransitionTime":"2023-10-13T20:27:28Z","reason":"NewReplicationControllerAvailable","message":"replication controller \"jenkins-5\" successfully rolled out"}],"readyReplicas":1}}
+    creationTimestamp: "2023-10-13T20:37:31Z"
+    generation: 2
+    labels:
+      app: jenkins-persistent
+      migration.openshift.io/migrated-by-migmigration: 4066e18a-7c09-4930-a1fd-19e7058b887b
+      migration.openshift.io/migrated-by-migplan: adcc6565-a1ee-4eee-a8d6-19a7e8841033
+      openshift.io/deployment-config.name: jenkins
+      template: jenkins-persistent-template
+      template.openshift.io/template-instance-owner: f8bb2d3d-5894-11ea-bff7-000d3ac052bc
+      velero.io/backup-name: migration-85fa4-initial-h496m
+      velero.io/restore-name: migration-85fa4-final-wmd58
+    name: jenkins-6
+    namespace: cicd
+    ownerReferences:
+    - apiVersion: apps.openshift.io/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DeploymentConfig
+      name: jenkins
+      uid: 9dd9eef6-3f4d-44fd-a711-3ee1d74da976
+    resourceVersion: "467404289"
+    uid: 92448dda-ba9b-44d4-b266-9c0c3e8afcbc
+  spec:
+    replicas: 1
+    selector:
+      deployment: jenkins-6
+      deploymentconfig: jenkins
+      name: jenkins
+    template:
+      metadata:
+        annotations:
+          openshift.io/deployment-config.latest-version: "6"
+          openshift.io/deployment-config.name: jenkins
+          openshift.io/deployment.name: jenkins-6
+        creationTimestamp: null
+        labels:
+          deployment: jenkins-6
+          deploymentconfig: jenkins
+          name: jenkins
+      spec:
+        containers:
+        - env:
+          - name: OPENSHIFT_ENABLE_OAUTH
+            value: "true"
+          - name: OPENSHIFT_ENABLE_REDIRECT_PROMPT
+            value: "true"
+          - name: DISABLE_ADMINISTRATIVE_MONITORS
+            value: "false"
+          - name: KUBERNETES_MASTER
+            value: https://kubernetes.default:443
+          - name: KUBERNETES_TRUST_CERTIFICATES
+            value: "true"
+          - name: JENKINS_SERVICE_NAME
+            value: jenkins
+          - name: JNLP_SERVICE_NAME
+            value: jenkins-jnlp
+          - name: ENABLE_FATAL_ERROR_LOG_FILE
+            value: "false"
+          image: image-registry.openshift-image-registry.svc:5000/openshift/jenkins@sha256:902246da403bf7ff1f6f3cf531dce445c0289d3b2b01a26f6008926ec2068077
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            failureThreshold: 2
+            httpGet:
+              path: /login
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 420
+            periodSeconds: 360
+            successThreshold: 1
+            timeoutSeconds: 240
+          name: jenkins
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /login
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 3
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 240
+          resources:
+            limits:
+              cpu: "2"
+              memory: 2Gi
+            requests:
+              cpu: 500m
+              memory: 100Mi
+          securityContext:
+            capabilities: {}
+            privileged: false
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/lib/jenkins
+            name: jenkins-data
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: jenkins
+        serviceAccountName: jenkins
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - name: jenkins-data
+          persistentVolumeClaim:
+            claimName: jenkins
+  status:
+    availableReplicas: 1
+    fullyLabeledReplicas: 1
+    observedGeneration: 2
+    readyReplicas: 1
+    replicas: 1
+- apiVersion: v1
+  kind: ReplicationController
+  metadata:
+    annotations:
+      openshift.io/deployer-pod.completed-at: 2023-06-03 20:17:12 +0000 UTC
+      openshift.io/deployer-pod.created-at: 2023-06-03 20:16:47 +0000 UTC
+      openshift.io/deployer-pod.name: nexus-1-deploy
+      openshift.io/deployment-config.latest-version: "1"
+      openshift.io/deployment-config.name: nexus
+      openshift.io/deployment.phase: Complete
+      openshift.io/deployment.replicas: "1"
+      openshift.io/deployment.status-reason: config change
+      openshift.io/encoded-deployment-config: |
+        {"kind":"DeploymentConfig","apiVersion":"apps.openshift.io/v1","metadata":{"name":"nexus","namespace":"cicd","uid":"b7e74894-2af3-4490-8e07-a91d00d15fd3","resourceVersion":"19235047","generation":2,"creationTimestamp":"2023-06-03T20:16:44Z","labels":{"app":"nexus","migration.openshift.io/migrated-by-migmigration":"4066e18a-7c09-4930-a1fd-19e7058b887b","migration.openshift.io/migrated-by-migplan":"adcc6565-a1ee-4eee-a8d6-19a7e8841033","velero.io/backup-name":"migration-85fa4-initial-h496m","velero.io/restore-name":"migration-85fa4-final-wmd58"},"annotations":{"openshift.io/backup-registry-hostname":"docker-registry.default.svc:5000","openshift.io/backup-server-version":"1.11","openshift.io/generated-by":"OpenShiftNewApp","openshift.io/migration-registry":"172.30.245.25:5000","openshift.io/restore-registry-hostname":"image-registry.openshift-image-registry.svc:5000","openshift.io/restore-server-version":"1.23"},"managedFields":[{"manager":"velero-server","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-06-03T20:16:44Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{".":{},"f:openshift.io/backup-registry-hostname":{},"f:openshift.io/backup-server-version":{},"f:openshift.io/generated-by":{},"f:openshift.io/migration-registry":{},"f:openshift.io/restore-registry-hostname":{},"f:openshift.io/restore-server-version":{}},"f:labels":{".":{},"f:app":{},"f:migration.openshift.io/migrated-by-migmigration":{},"f:migration.openshift.io/migrated-by-migplan":{},"f:velero.io/backup-name":{},"f:velero.io/restore-name":{}}},"f:spec":{"f:replicas":{},"f:revisionHistoryLimit":{},"f:selector":{".":{},"f:app":{},"f:deploymentconfig":{}},"f:strategy":{"f:activeDeadlineSeconds":{},"f:rollingParams":{".":{},"f:intervalSeconds":{},"f:maxSurge":{},"f:maxUnavailable":{},"f:timeoutSeconds":{},"f:updatePeriodSeconds":{}},"f:type":{}},"f:template":{".":{},"f:metadata":{".":{},"f:annotations":{".":{},"f:openshift.io/generated-by":{}},"f:creationTimestamp":{},"f:labels":{".":{},"f:app":{},"f:deploymentconfig":{}}},"f:spec":{".":{},"f:containers":{".":{},"k:{\"name\":\"nexus\"}":{".":{},"f:imagePullPolicy":{},"f:name":{},"f:ports":{".":{},"k:{\"containerPort\":8081,\"protocol\":\"TCP\"}":{".":{},"f:containerPort":{},"f:protocol":{}}},"f:resources":{},"f:terminationMessagePath":{},"f:terminationMessagePolicy":{},"f:volumeMounts":{".":{},"k:{\"mountPath\":\"/sonatype-work\"}":{".":{},"f:mountPath":{},"f:name":{}}}}},"f:dnsPolicy":{},"f:restartPolicy":{},"f:schedulerName":{},"f:securityContext":{},"f:terminationGracePeriodSeconds":{},"f:volumes":{".":{},"k:{\"name\":\"nexus-volume-1\"}":{".":{},"f:emptyDir":{},"f:name":{}}}}}}}},{"manager":"openshift-controller-manager","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-06-03T20:16:47Z","fieldsType":"FieldsV1","fieldsV1":{"f:spec":{"f:template":{"f:spec":{"f:containers":{"k:{\"name\":\"nexus\"}":{"f:image":{}}}}},"f:triggers":{}}}},{"manager":"openshift-controller-manager","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-06-03T20:16:47Z","fieldsType":"FieldsV1","fieldsV1":{"f:status":{"f:conditions":{".":{},"k:{\"type\":\"Available\"}":{".":{},"f:lastTransitionTime":{},"f:lastUpdateTime":{},"f:message":{},"f:status":{},"f:type":{}}},"f:details":{".":{},"f:causes":{},"f:message":{}},"f:latestVersion":{},"f:observedGeneration":{}}},"subresource":"status"}]},"spec":{"strategy":{"type":"Rolling","rollingParams":{"updatePeriodSeconds":1,"intervalSeconds":1,"timeoutSeconds":600,"maxUnavailable":"25%","maxSurge":"25%"},"resources":{},"activeDeadlineSeconds":21600},"triggers":[{"type":"ConfigChange"},{"type":"ImageChange","imageChangeParams":{"automatic":true,"containerNames":["nexus"],"from":{"kind":"ImageStreamTag","namespace":"cicd","name":"nexus:latest"},"lastTriggeredImage":"sonatype/nexus@sha256:54702b1a275b8a458ae271cfaa616ccf68b135bcc89c63bf3111ff32fad1c23b"}}],"replicas":1,"revisionHistoryLimit":10,"test":false,"selector":{"app":"nexus","deploymentconfig":"nexus"},"template":{"metadata":{"creationTimestamp":null,"labels":{"app":"nexus","deploymentconfig":"nexus"},"annotations":{"openshift.io/generated-by":"OpenShiftNewApp"}},"spec":{"volumes":[{"name":"nexus-volume-1","emptyDir":{}}],"containers":[{"name":"nexus","image":"sonatype/nexus@sha256:54702b1a275b8a458ae271cfaa616ccf68b135bcc89c63bf3111ff32fad1c23b","ports":[{"containerPort":8081,"protocol":"TCP"}],"resources":{},"volumeMounts":[{"name":"nexus-volume-1","mountPath":"/sonatype-work"}],"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File","imagePullPolicy":"Always"}],"restartPolicy":"Always","terminationGracePeriodSeconds":30,"dnsPolicy":"ClusterFirst","securityContext":{},"schedulerName":"default-scheduler"}}},"status":{"latestVersion":1,"observedGeneration":1,"replicas":0,"updatedReplicas":0,"availableReplicas":0,"unavailableReplicas":0,"details":{"message":"config change","causes":[{"type":"ConfigChange"}]},"conditions":[{"type":"Available","status":"False","lastUpdateTime":"2023-06-03T20:16:44Z","lastTransitionTime":"2023-06-03T20:16:44Z","message":"Deployment config does not have minimum availability."}]}}
+    creationTimestamp: "2023-06-03T20:16:47Z"
+    generation: 6
+    labels:
+      app: nexus
+      migration.openshift.io/migrated-by-migmigration: 4066e18a-7c09-4930-a1fd-19e7058b887b
+      migration.openshift.io/migrated-by-migplan: adcc6565-a1ee-4eee-a8d6-19a7e8841033
+      openshift.io/deployment-config.name: nexus
+      velero.io/backup-name: migration-85fa4-initial-h496m
+      velero.io/restore-name: migration-85fa4-final-wmd58
+    name: nexus-1
+    namespace: cicd
+    ownerReferences:
+    - apiVersion: apps.openshift.io/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DeploymentConfig
+      name: nexus
+      uid: b7e74894-2af3-4490-8e07-a91d00d15fd3
+    resourceVersion: "467404325"
+    uid: 72db9fcf-fd51-4e73-8f70-7c2e251eb505
+  spec:
+    replicas: 1
+    selector:
+      app: nexus
+      deployment: nexus-1
+      deploymentconfig: nexus
+    template:
+      metadata:
+        annotations:
+          openshift.io/deployment-config.latest-version: "1"
+          openshift.io/deployment-config.name: nexus
+          openshift.io/deployment.name: nexus-1
+          openshift.io/generated-by: OpenShiftNewApp
+        creationTimestamp: null
+        labels:
+          app: nexus
+          deployment: nexus-1
+          deploymentconfig: nexus
+      spec:
+        containers:
+        - image: sonatype/nexus@sha256:54702b1a275b8a458ae271cfaa616ccf68b135bcc89c63bf3111ff32fad1c23b
+          imagePullPolicy: Always
+          name: nexus
+          ports:
+          - containerPort: 8081
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /sonatype-work
+            name: nexus-volume-1
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - emptyDir: {}
+          name: nexus-volume-1
+  status:
+    availableReplicas: 1
+    fullyLabeledReplicas: 1
+    observedGeneration: 6
+    readyReplicas: 1
+    replicas: 1
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

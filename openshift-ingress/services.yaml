@@ -1,0 +1,106 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      service.beta.kubernetes.io/azure-load-balancer-internal: "true"
+      traffic-policy.network.alpha.openshift.io/local-with-fallback: ""
+    creationTimestamp: "2023-05-04T21:41:43Z"
+    finalizers:
+    - service.kubernetes.io/load-balancer-cleanup
+    labels:
+      app: router
+      ingresscontroller.operator.openshift.io/owning-ingresscontroller: default
+      router: router-default
+    name: router-default
+    namespace: openshift-ingress
+    ownerReferences:
+    - apiVersion: apps/v1
+      controller: true
+      kind: Deployment
+      name: router-default
+      uid: 1a010d49-2934-42d7-9bd4-40b933af6615
+    resourceVersion: "17491"
+    uid: bccbdb8c-efe3-4776-82d4-e579f17251b3
+  spec:
+    allocateLoadBalancerNodePorts: true
+    clusterIP: 172.30.231.183
+    clusterIPs:
+    - 172.30.231.183
+    externalTrafficPolicy: Local
+    healthCheckNodePort: 31049
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: http
+      nodePort: 31655
+      port: 80
+      protocol: TCP
+      targetPort: http
+    - name: https
+      nodePort: 30979
+      port: 443
+      protocol: TCP
+      targetPort: https
+    selector:
+      ingresscontroller.operator.openshift.io/deployment-ingresscontroller: default
+    sessionAffinity: None
+    type: LoadBalancer
+  status:
+    loadBalancer:
+      ingress:
+      - ip: 10.80.80.14
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      service.alpha.openshift.io/serving-cert-secret-name: router-metrics-certs-default
+      service.alpha.openshift.io/serving-cert-signed-by: openshift-service-serving-signer@1683236429
+      service.beta.openshift.io/serving-cert-signed-by: openshift-service-serving-signer@1683236429
+    creationTimestamp: "2023-05-04T21:41:43Z"
+    labels:
+      ingresscontroller.operator.openshift.io/owning-ingresscontroller: default
+    name: router-internal-default
+    namespace: openshift-ingress
+    ownerReferences:
+    - apiVersion: apps/v1
+      controller: true
+      kind: Deployment
+      name: router-default
+      uid: 1a010d49-2934-42d7-9bd4-40b933af6615
+    resourceVersion: "8668"
+    uid: 0f0209e7-b755-4034-a0fe-272c83eb1e3b
+  spec:
+    clusterIP: 172.30.116.186
+    clusterIPs:
+    - 172.30.116.186
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: http
+      port: 80
+      protocol: TCP
+      targetPort: http
+    - name: https
+      port: 443
+      protocol: TCP
+      targetPort: https
+    - name: metrics
+      port: 1936
+      protocol: TCP
+      targetPort: 1936
+    selector:
+      ingresscontroller.operator.openshift.io/deployment-ingresscontroller: default
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

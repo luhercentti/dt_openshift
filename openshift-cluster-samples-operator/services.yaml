@@ -1,0 +1,46 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      include.release.openshift.io/ibm-cloud-managed: "true"
+      include.release.openshift.io/self-managed-high-availability: "true"
+      include.release.openshift.io/single-node-developer: "true"
+      service.alpha.openshift.io/serving-cert-signed-by: openshift-service-serving-signer@1683236429
+      service.beta.openshift.io/serving-cert-secret-name: samples-operator-tls
+      service.beta.openshift.io/serving-cert-signed-by: openshift-service-serving-signer@1683236429
+    creationTimestamp: "2023-05-04T21:43:19Z"
+    labels:
+      name: cluster-samples-operator
+    name: metrics
+    namespace: openshift-cluster-samples-operator
+    ownerReferences:
+    - apiVersion: config.openshift.io/v1
+      kind: ClusterVersion
+      name: version
+      uid: 5d92b52f-9fff-4a6e-b815-398b934115ad
+    resourceVersion: "11300"
+    uid: 20a49910-8ad7-4928-9d28-8ea94fa654ff
+  spec:
+    clusterIP: None
+    clusterIPs:
+    - None
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - port: 60000
+      protocol: TCP
+      targetPort: 60000
+    selector:
+      name: cluster-samples-operator
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

@@ -1,0 +1,66 @@
+apiVersion: v1
+items:
+- apiVersion: route.openshift.io/v1
+  kind: Route
+  metadata:
+    annotations:
+      openshift.io/host.generated: "true"
+    creationTimestamp: "2023-06-14T15:17:13Z"
+    labels:
+      app: trackdt
+    name: trackdt
+    namespace: arquitectura-test
+    resourceVersion: "28568770"
+    uid: 4472e8b9-e99f-4d7c-8079-c832801c618c
+  spec:
+    host: trackdt-arquitectura-test.api-cloud.dirtrab.cl
+    port:
+      targetPort: 8080-tcp
+    to:
+      kind: Service
+      name: trackdt
+      weight: 100
+    wildcardPolicy: None
+  status:
+    ingress:
+    - conditions:
+      - lastTransitionTime: "2023-06-14T15:17:13Z"
+        status: "True"
+        type: Admitted
+      host: trackdt-arquitectura-test.api-cloud.dirtrab.cl
+      routerCanonicalHostname: router-default.apps.ocp4azu.dirtrab.cl
+      routerName: default
+      wildcardPolicy: None
+- apiVersion: route.openshift.io/v1
+  kind: Route
+  metadata:
+    creationTimestamp: "2023-06-14T15:22:05Z"
+    labels:
+      app: trackdt
+    name: trackdt-ocp4
+    namespace: arquitectura-test
+    resourceVersion: "28571503"
+    uid: 563fbb3c-db1e-405c-b566-07ff4d21945c
+  spec:
+    host: trackdt-arquitectura-test.apps.ocp4azu.dirtrab.cl
+    port:
+      targetPort: 8080-tcp
+    to:
+      kind: Service
+      name: trackdt
+      weight: 100
+    wildcardPolicy: None
+  status:
+    ingress:
+    - conditions:
+      - lastTransitionTime: "2023-06-14T15:22:05Z"
+        status: "True"
+        type: Admitted
+      host: trackdt-arquitectura-test.apps.ocp4azu.dirtrab.cl
+      routerCanonicalHostname: router-default.apps.ocp4azu.dirtrab.cl
+      routerName: default
+      wildcardPolicy: None
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

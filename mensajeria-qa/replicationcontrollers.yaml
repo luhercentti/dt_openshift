@@ -1,0 +1,219 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: ReplicationController
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/desired-replicas: "0"
+      openshift.io/deployer-pod.created-at: 2023-05-22 19:39:06 +0000 UTC
+      openshift.io/deployer-pod.name: laboralprevisional-1-deploy
+      openshift.io/deployment-config.latest-version: "1"
+      openshift.io/deployment-config.name: laboralprevisional
+      openshift.io/deployment.phase: Failed
+      openshift.io/deployment.replicas: "0"
+      openshift.io/deployment.status-reason: deployer pod no longer exists
+      openshift.io/encoded-deployment-config: |
+        {"kind":"DeploymentConfig","apiVersion":"apps.openshift.io/v1","metadata":{"name":"laboralprevisional","namespace":"mensajeria-qa","uid":"5d52a908-f4f5-4ff3-8b0a-3ce837539eb2","resourceVersion":"9200643","generation":2,"creationTimestamp":"2023-05-22T19:39:05Z","labels":{"app":"laboralprevisional","migration.openshift.io/migrated-by-migmigration":"465f3a37-eb75-4e9e-bc67-35796c567b7c","migration.openshift.io/migrated-by-migplan":"1ab7d19c-1b63-4fd8-8e50-983c4958473a","velero.io/backup-name":"migration-4180a-initial-6br59","velero.io/restore-name":"migration-4180a-final-6kqlt"},"annotations":{"openshift.io/backup-registry-hostname":"docker-registry.default.svc:5000","openshift.io/backup-server-version":"1.11","openshift.io/generated-by":"OpenShiftWebConsole","openshift.io/migration-registry":"","openshift.io/restore-registry-hostname":"image-registry.openshift-image-registry.svc:5000","openshift.io/restore-server-version":"1.23"},"managedFields":[{"manager":"velero-server","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-05-22T19:39:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{".":{},"f:openshift.io/backup-registry-hostname":{},"f:openshift.io/backup-server-version":{},"f:openshift.io/generated-by":{},"f:openshift.io/migration-registry":{},"f:openshift.io/restore-registry-hostname":{},"f:openshift.io/restore-server-version":{}},"f:labels":{".":{},"f:app":{},"f:migration.openshift.io/migrated-by-migmigration":{},"f:migration.openshift.io/migrated-by-migplan":{},"f:velero.io/backup-name":{},"f:velero.io/restore-name":{}}},"f:spec":{"f:selector":{".":{},"f:app":{},"f:deploymentconfig":{}},"f:strategy":{"f:activeDeadlineSeconds":{},"f:rollingParams":{".":{},"f:intervalSeconds":{},"f:maxSurge":{},"f:maxUnavailable":{},"f:timeoutSeconds":{},"f:updatePeriodSeconds":{}},"f:type":{}},"f:template":{".":{},"f:metadata":{".":{},"f:annotations":{".":{},"f:openshift.io/generated-by":{}},"f:creationTimestamp":{},"f:labels":{".":{},"f:app":{},"f:deploymentconfig":{}}},"f:spec":{".":{},"f:containers":{".":{},"k:{\"name\":\"laboralprevisional\"}":{".":{},"f:image":{},"f:imagePullPolicy":{},"f:name":{},"f:ports":{".":{},"k:{\"containerPort\":8080,\"protocol\":\"TCP\"}":{".":{},"f:containerPort":{},"f:protocol":{}}},"f:resources":{},"f:terminationMessagePath":{},"f:terminationMessagePolicy":{}}},"f:dnsPolicy":{},"f:restartPolicy":{},"f:schedulerName":{},"f:securityContext":{},"f:terminationGracePeriodSeconds":{}}}}}},{"manager":"openshift-controller-manager","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-05-22T19:39:06Z","fieldsType":"FieldsV1","fieldsV1":{"f:spec":{"f:triggers":{}}}},{"manager":"openshift-controller-manager","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-05-22T19:39:06Z","fieldsType":"FieldsV1","fieldsV1":{"f:status":{"f:conditions":{".":{},"k:{\"type\":\"Available\"}":{".":{},"f:lastTransitionTime":{},"f:lastUpdateTime":{},"f:message":{},"f:status":{},"f:type":{}}},"f:details":{".":{},"f:causes":{},"f:message":{}},"f:latestVersion":{},"f:observedGeneration":{}}},"subresource":"status"}]},"spec":{"strategy":{"type":"Rolling","rollingParams":{"updatePeriodSeconds":1,"intervalSeconds":1,"timeoutSeconds":600,"maxUnavailable":"25%","maxSurge":"25%"},"resources":{},"activeDeadlineSeconds":21600},"triggers":[{"type":"ConfigChange"},{"type":"ImageChange","imageChangeParams":{"automatic":true,"containerNames":["laboralprevisional"],"from":{"kind":"ImageStreamTag","namespace":"mensajeria-dev","name":"laboralprevisional-qa:latest"},"lastTriggeredImage":"image-registry.openshift-image-registry.svc:5000/mensajeria-dev/laboralprevisional-qa@sha256:e83f8d3d8bf5afc76405823f7d99c71c24c64be92817a71de5f6c914707e7cea"}}],"replicas":0,"revisionHistoryLimit":10,"test":false,"selector":{"app":"laboralprevisional","deploymentconfig":"laboralprevisional"},"template":{"metadata":{"creationTimestamp":null,"labels":{"app":"laboralprevisional","deploymentconfig":"laboralprevisional"},"annotations":{"openshift.io/generated-by":"OpenShiftWebConsole"}},"spec":{"containers":[{"name":"laboralprevisional","image":"image-registry.openshift-image-registry.svc:5000/mensajeria-dev/laboralprevisional-qa@sha256:e83f8d3d8bf5afc76405823f7d99c71c24c64be92817a71de5f6c914707e7cea","ports":[{"containerPort":8080,"protocol":"TCP"}],"resources":{},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File","imagePullPolicy":"Always"}],"restartPolicy":"Always","terminationGracePeriodSeconds":30,"dnsPolicy":"ClusterFirst","securityContext":{},"schedulerName":"default-scheduler"}}},"status":{"latestVersion":1,"observedGeneration":1,"replicas":0,"updatedReplicas":0,"availableReplicas":0,"unavailableReplicas":0,"details":{"message":"config change","causes":[{"type":"ConfigChange"}]},"conditions":[{"type":"Available","status":"False","lastUpdateTime":"2023-05-22T19:39:05Z","lastTransitionTime":"2023-05-22T19:39:05Z","message":"Deployment config does not have minimum availability."}]}}
+    creationTimestamp: "2023-05-22T19:39:06Z"
+    generation: 1
+    labels:
+      app: laboralprevisional
+      migration.openshift.io/migrated-by-migmigration: 465f3a37-eb75-4e9e-bc67-35796c567b7c
+      migration.openshift.io/migrated-by-migplan: 1ab7d19c-1b63-4fd8-8e50-983c4958473a
+      openshift.io/deployment-config.name: laboralprevisional
+      velero.io/backup-name: migration-4180a-initial-6br59
+      velero.io/restore-name: migration-4180a-final-6kqlt
+    name: laboralprevisional-1
+    namespace: mensajeria-qa
+    ownerReferences:
+    - apiVersion: apps.openshift.io/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DeploymentConfig
+      name: laboralprevisional
+      uid: 5d52a908-f4f5-4ff3-8b0a-3ce837539eb2
+    resourceVersion: "9215070"
+    uid: 1e01049b-543b-47e9-a479-8d3d45386ce5
+  spec:
+    replicas: 0
+    selector:
+      app: laboralprevisional
+      deployment: laboralprevisional-1
+      deploymentconfig: laboralprevisional
+    template:
+      metadata:
+        annotations:
+          openshift.io/deployment-config.latest-version: "1"
+          openshift.io/deployment-config.name: laboralprevisional
+          openshift.io/deployment.name: laboralprevisional-1
+          openshift.io/generated-by: OpenShiftWebConsole
+        creationTimestamp: null
+        labels:
+          app: laboralprevisional
+          deployment: laboralprevisional-1
+          deploymentconfig: laboralprevisional
+      spec:
+        containers:
+        - image: image-registry.openshift-image-registry.svc:5000/mensajeria-dev/laboralprevisional-qa@sha256:e83f8d3d8bf5afc76405823f7d99c71c24c64be92817a71de5f6c914707e7cea
+          imagePullPolicy: Always
+          name: laboralprevisional
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    observedGeneration: 1
+    replicas: 0
+- apiVersion: v1
+  kind: ReplicationController
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/desired-replicas: "0"
+      openshift.io/deployer-pod.created-at: 2023-05-22 19:39:05 +0000 UTC
+      openshift.io/deployer-pod.name: laboralprevisionalbckgrd-1-deploy
+      openshift.io/deployment-config.latest-version: "1"
+      openshift.io/deployment-config.name: laboralprevisionalbckgrd
+      openshift.io/deployment.phase: Failed
+      openshift.io/deployment.replicas: "0"
+      openshift.io/deployment.status-reason: deployer pod no longer exists
+      openshift.io/encoded-deployment-config: |
+        {"kind":"DeploymentConfig","apiVersion":"apps.openshift.io/v1","metadata":{"name":"laboralprevisionalbckgrd","namespace":"mensajeria-qa","uid":"2fb10d9e-a043-4379-960e-369e2cbfd68e","resourceVersion":"9200597","generation":2,"creationTimestamp":"2023-05-22T19:39:05Z","labels":{"app":"laboralprevisionalbckgrd","migration.openshift.io/migrated-by-migmigration":"465f3a37-eb75-4e9e-bc67-35796c567b7c","migration.openshift.io/migrated-by-migplan":"1ab7d19c-1b63-4fd8-8e50-983c4958473a","velero.io/backup-name":"migration-4180a-initial-6br59","velero.io/restore-name":"migration-4180a-final-6kqlt"},"annotations":{"openshift.io/backup-registry-hostname":"docker-registry.default.svc:5000","openshift.io/backup-server-version":"1.11","openshift.io/generated-by":"OpenShiftWebConsole","openshift.io/migration-registry":"","openshift.io/restore-registry-hostname":"image-registry.openshift-image-registry.svc:5000","openshift.io/restore-server-version":"1.23"},"managedFields":[{"manager":"openshift-controller-manager","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-05-22T19:39:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:spec":{"f:triggers":{}}}},{"manager":"openshift-controller-manager","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-05-22T19:39:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:status":{"f:details":{".":{},"f:causes":{},"f:message":{}},"f:latestVersion":{}}},"subresource":"status"},{"manager":"velero-server","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-05-22T19:39:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{".":{},"f:openshift.io/backup-registry-hostname":{},"f:openshift.io/backup-server-version":{},"f:openshift.io/generated-by":{},"f:openshift.io/migration-registry":{},"f:openshift.io/restore-registry-hostname":{},"f:openshift.io/restore-server-version":{}},"f:labels":{".":{},"f:app":{},"f:migration.openshift.io/migrated-by-migmigration":{},"f:migration.openshift.io/migrated-by-migplan":{},"f:velero.io/backup-name":{},"f:velero.io/restore-name":{}}},"f:spec":{"f:selector":{".":{},"f:app":{},"f:deploymentconfig":{}},"f:strategy":{"f:activeDeadlineSeconds":{},"f:rollingParams":{".":{},"f:intervalSeconds":{},"f:maxSurge":{},"f:maxUnavailable":{},"f:timeoutSeconds":{},"f:updatePeriodSeconds":{}},"f:type":{}},"f:template":{".":{},"f:metadata":{".":{},"f:annotations":{".":{},"f:openshift.io/generated-by":{}},"f:creationTimestamp":{},"f:labels":{".":{},"f:app":{},"f:deploymentconfig":{}}},"f:spec":{".":{},"f:containers":{".":{},"k:{\"name\":\"laboralprevisionalbckgrd\"}":{".":{},"f:image":{},"f:imagePullPolicy":{},"f:name":{},"f:ports":{".":{},"k:{\"containerPort\":8080,\"protocol\":\"TCP\"}":{".":{},"f:containerPort":{},"f:protocol":{}}},"f:resources":{},"f:terminationMessagePath":{},"f:terminationMessagePolicy":{}}},"f:dnsPolicy":{},"f:restartPolicy":{},"f:schedulerName":{},"f:securityContext":{},"f:terminationGracePeriodSeconds":{}}}}}}]},"spec":{"strategy":{"type":"Rolling","rollingParams":{"updatePeriodSeconds":1,"intervalSeconds":1,"timeoutSeconds":600,"maxUnavailable":"25%","maxSurge":"25%"},"resources":{},"activeDeadlineSeconds":21600},"triggers":[{"type":"ImageChange","imageChangeParams":{"automatic":true,"containerNames":["laboralprevisionalbckgrd"],"from":{"kind":"ImageStreamTag","namespace":"mensajeria-dev","name":"laboralprevisionalbck-qa:latest"},"lastTriggeredImage":"image-registry.openshift-image-registry.svc:5000/mensajeria-dev/laboralprevisionalbck-qa@sha256:e9a546b5a0d942d38a0501a7524c00fdf9d13a3b2162c4b2b6f938fae1e40c40"}},{"type":"ConfigChange"}],"replicas":0,"revisionHistoryLimit":10,"test":false,"selector":{"app":"laboralprevisionalbckgrd","deploymentconfig":"laboralprevisionalbckgrd"},"template":{"metadata":{"creationTimestamp":null,"labels":{"app":"laboralprevisionalbckgrd","deploymentconfig":"laboralprevisionalbckgrd"},"annotations":{"openshift.io/generated-by":"OpenShiftWebConsole"}},"spec":{"containers":[{"name":"laboralprevisionalbckgrd","image":"image-registry.openshift-image-registry.svc:5000/mensajeria-dev/laboralprevisionalbck-qa@sha256:e9a546b5a0d942d38a0501a7524c00fdf9d13a3b2162c4b2b6f938fae1e40c40","ports":[{"containerPort":8080,"protocol":"TCP"}],"resources":{},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File","imagePullPolicy":"Always"}],"restartPolicy":"Always","terminationGracePeriodSeconds":30,"dnsPolicy":"ClusterFirst","securityContext":{},"schedulerName":"default-scheduler"}}},"status":{"latestVersion":1,"observedGeneration":0,"replicas":0,"updatedReplicas":0,"availableReplicas":0,"unavailableReplicas":0,"details":{"message":"config change","causes":[{"type":"ConfigChange"}]}}}
+    creationTimestamp: "2023-05-22T19:39:05Z"
+    generation: 1
+    labels:
+      app: laboralprevisionalbckgrd
+      migration.openshift.io/migrated-by-migmigration: 465f3a37-eb75-4e9e-bc67-35796c567b7c
+      migration.openshift.io/migrated-by-migplan: 1ab7d19c-1b63-4fd8-8e50-983c4958473a
+      openshift.io/deployment-config.name: laboralprevisionalbckgrd
+      velero.io/backup-name: migration-4180a-initial-6br59
+      velero.io/restore-name: migration-4180a-final-6kqlt
+    name: laboralprevisionalbckgrd-1
+    namespace: mensajeria-qa
+    ownerReferences:
+    - apiVersion: apps.openshift.io/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DeploymentConfig
+      name: laboralprevisionalbckgrd
+      uid: 2fb10d9e-a043-4379-960e-369e2cbfd68e
+    resourceVersion: "9215119"
+    uid: 246e6226-2895-45eb-9d4c-4d5586ea9a32
+  spec:
+    replicas: 0
+    selector:
+      app: laboralprevisionalbckgrd
+      deployment: laboralprevisionalbckgrd-1
+      deploymentconfig: laboralprevisionalbckgrd
+    template:
+      metadata:
+        annotations:
+          openshift.io/deployment-config.latest-version: "1"
+          openshift.io/deployment-config.name: laboralprevisionalbckgrd
+          openshift.io/deployment.name: laboralprevisionalbckgrd-1
+          openshift.io/generated-by: OpenShiftWebConsole
+        creationTimestamp: null
+        labels:
+          app: laboralprevisionalbckgrd
+          deployment: laboralprevisionalbckgrd-1
+          deploymentconfig: laboralprevisionalbckgrd
+      spec:
+        containers:
+        - image: image-registry.openshift-image-registry.svc:5000/mensajeria-dev/laboralprevisionalbck-qa@sha256:e9a546b5a0d942d38a0501a7524c00fdf9d13a3b2162c4b2b6f938fae1e40c40
+          imagePullPolicy: Always
+          name: laboralprevisionalbckgrd
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    observedGeneration: 1
+    replicas: 0
+- apiVersion: v1
+  kind: ReplicationController
+  metadata:
+    annotations:
+      openshift.io/deployer-pod.completed-at: 2023-05-22 20:04:41 +0000 UTC
+      openshift.io/deployer-pod.created-at: 2023-05-22 19:39:05 +0000 UTC
+      openshift.io/deployer-pod.name: labprev-cumplimiento-1-deploy
+      openshift.io/deployment-config.latest-version: "1"
+      openshift.io/deployment-config.name: labprev-cumplimiento
+      openshift.io/deployment.phase: Complete
+      openshift.io/deployment.replicas: "0"
+      openshift.io/deployment.status-reason: config change
+      openshift.io/encoded-deployment-config: |
+        {"kind":"DeploymentConfig","apiVersion":"apps.openshift.io/v1","metadata":{"name":"labprev-cumplimiento","namespace":"mensajeria-qa","uid":"fe14643e-0eeb-439e-84cd-00499d9afcd4","resourceVersion":"9200601","generation":2,"creationTimestamp":"2023-05-22T19:39:05Z","labels":{"app":"labprev-cumplimiento","migration.openshift.io/migrated-by-migmigration":"465f3a37-eb75-4e9e-bc67-35796c567b7c","migration.openshift.io/migrated-by-migplan":"1ab7d19c-1b63-4fd8-8e50-983c4958473a","velero.io/backup-name":"migration-4180a-initial-6br59","velero.io/restore-name":"migration-4180a-final-6kqlt"},"annotations":{"openshift.io/backup-registry-hostname":"docker-registry.default.svc:5000","openshift.io/backup-server-version":"1.11","openshift.io/generated-by":"OpenShiftWebConsole","openshift.io/migration-registry":"","openshift.io/restore-registry-hostname":"image-registry.openshift-image-registry.svc:5000","openshift.io/restore-server-version":"1.23"},"managedFields":[{"manager":"openshift-controller-manager","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-05-22T19:39:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:spec":{"f:triggers":{}}}},{"manager":"openshift-controller-manager","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-05-22T19:39:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:status":{"f:details":{".":{},"f:causes":{},"f:message":{}},"f:latestVersion":{}}},"subresource":"status"},{"manager":"velero-server","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-05-22T19:39:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{".":{},"f:openshift.io/backup-registry-hostname":{},"f:openshift.io/backup-server-version":{},"f:openshift.io/generated-by":{},"f:openshift.io/migration-registry":{},"f:openshift.io/restore-registry-hostname":{},"f:openshift.io/restore-server-version":{}},"f:labels":{".":{},"f:app":{},"f:migration.openshift.io/migrated-by-migmigration":{},"f:migration.openshift.io/migrated-by-migplan":{},"f:velero.io/backup-name":{},"f:velero.io/restore-name":{}}},"f:spec":{"f:selector":{".":{},"f:app":{},"f:deploymentconfig":{}},"f:strategy":{"f:activeDeadlineSeconds":{},"f:rollingParams":{".":{},"f:intervalSeconds":{},"f:maxSurge":{},"f:maxUnavailable":{},"f:timeoutSeconds":{},"f:updatePeriodSeconds":{}},"f:type":{}},"f:template":{".":{},"f:metadata":{".":{},"f:annotations":{".":{},"f:openshift.io/generated-by":{}},"f:creationTimestamp":{},"f:labels":{".":{},"f:app":{},"f:deploymentconfig":{}}},"f:spec":{".":{},"f:containers":{".":{},"k:{\"name\":\"labprev-cumplimiento\"}":{".":{},"f:image":{},"f:imagePullPolicy":{},"f:name":{},"f:ports":{".":{},"k:{\"containerPort\":8080,\"protocol\":\"TCP\"}":{".":{},"f:containerPort":{},"f:protocol":{}}},"f:resources":{},"f:terminationMessagePath":{},"f:terminationMessagePolicy":{}}},"f:dnsPolicy":{},"f:restartPolicy":{},"f:schedulerName":{},"f:securityContext":{},"f:terminationGracePeriodSeconds":{}}}}}}]},"spec":{"strategy":{"type":"Rolling","rollingParams":{"updatePeriodSeconds":1,"intervalSeconds":1,"timeoutSeconds":600,"maxUnavailable":"25%","maxSurge":"25%"},"resources":{},"activeDeadlineSeconds":21600},"triggers":[{"type":"ConfigChange"},{"type":"ImageChange","imageChangeParams":{"automatic":true,"containerNames":["labprev-cumplimiento"],"from":{"kind":"ImageStreamTag","namespace":"mensajeria-dev","name":"labprev-cumplimiento-qa:latest"},"lastTriggeredImage":"image-registry.openshift-image-registry.svc:5000/mensajeria-dev/labprev-cumplimiento-qa@sha256:b7e8790a0a521dabd0920eb2f99d11c8beaecf9b80a13d08177e232b5668d37e"}}],"replicas":0,"revisionHistoryLimit":10,"test":false,"selector":{"app":"labprev-cumplimiento","deploymentconfig":"labprev-cumplimiento"},"template":{"metadata":{"creationTimestamp":null,"labels":{"app":"labprev-cumplimiento","deploymentconfig":"labprev-cumplimiento"},"annotations":{"openshift.io/generated-by":"OpenShiftWebConsole"}},"spec":{"containers":[{"name":"labprev-cumplimiento","image":"image-registry.openshift-image-registry.svc:5000/mensajeria-dev/labprev-cumplimiento-qa@sha256:b7e8790a0a521dabd0920eb2f99d11c8beaecf9b80a13d08177e232b5668d37e","ports":[{"containerPort":8080,"protocol":"TCP"}],"resources":{},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File","imagePullPolicy":"Always"}],"restartPolicy":"Always","terminationGracePeriodSeconds":30,"dnsPolicy":"ClusterFirst","securityContext":{},"schedulerName":"default-scheduler"}}},"status":{"latestVersion":1,"observedGeneration":0,"replicas":0,"updatedReplicas":0,"availableReplicas":0,"unavailableReplicas":0,"details":{"message":"config change","causes":[{"type":"ConfigChange"}]}}}
+    creationTimestamp: "2023-05-22T19:39:05Z"
+    generation: 1
+    labels:
+      app: labprev-cumplimiento
+      migration.openshift.io/migrated-by-migmigration: 465f3a37-eb75-4e9e-bc67-35796c567b7c
+      migration.openshift.io/migrated-by-migplan: 1ab7d19c-1b63-4fd8-8e50-983c4958473a
+      openshift.io/deployment-config.name: labprev-cumplimiento
+      velero.io/backup-name: migration-4180a-initial-6br59
+      velero.io/restore-name: migration-4180a-final-6kqlt
+    name: labprev-cumplimiento-1
+    namespace: mensajeria-qa
+    ownerReferences:
+    - apiVersion: apps.openshift.io/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DeploymentConfig
+      name: labprev-cumplimiento
+      uid: fe14643e-0eeb-439e-84cd-00499d9afcd4
+    resourceVersion: "9215755"
+    uid: 630e2dc5-da3b-4a3f-9cde-9b1cb7724bd5
+  spec:
+    replicas: 0
+    selector:
+      app: labprev-cumplimiento
+      deployment: labprev-cumplimiento-1
+      deploymentconfig: labprev-cumplimiento
+    template:
+      metadata:
+        annotations:
+          openshift.io/deployment-config.latest-version: "1"
+          openshift.io/deployment-config.name: labprev-cumplimiento
+          openshift.io/deployment.name: labprev-cumplimiento-1
+          openshift.io/generated-by: OpenShiftWebConsole
+        creationTimestamp: null
+        labels:
+          app: labprev-cumplimiento
+          deployment: labprev-cumplimiento-1
+          deploymentconfig: labprev-cumplimiento
+      spec:
+        containers:
+        - image: image-registry.openshift-image-registry.svc:5000/mensajeria-dev/labprev-cumplimiento-qa@sha256:b7e8790a0a521dabd0920eb2f99d11c8beaecf9b80a13d08177e232b5668d37e
+          imagePullPolicy: Always
+          name: labprev-cumplimiento
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    observedGeneration: 1
+    replicas: 0
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

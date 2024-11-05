@@ -1,0 +1,112 @@
+apiVersion: v1
+items:
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: RoleBinding
+  metadata:
+    annotations:
+      include.release.openshift.io/self-managed-high-availability: "true"
+      include.release.openshift.io/single-node-developer: "true"
+    creationTimestamp: "2023-05-04T21:36:13Z"
+    name: cloud-controller-manager
+    namespace: openshift-cloud-controller-manager
+    ownerReferences:
+    - apiVersion: config.openshift.io/v1
+      kind: ClusterVersion
+      name: version
+      uid: 5d92b52f-9fff-4a6e-b815-398b934115ad
+    resourceVersion: "2089"
+    uid: fb2882e2-62b8-4a8f-b375-7f87fe9dac98
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: Role
+    name: cloud-controller-manager
+  subjects:
+  - kind: ServiceAccount
+    name: cloud-controller-manager
+    namespace: openshift-cloud-controller-manager
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: RoleBinding
+  metadata:
+    annotations:
+      include.release.openshift.io/self-managed-high-availability: "true"
+      include.release.openshift.io/single-node-developer: "true"
+    creationTimestamp: "2023-05-04T21:36:12Z"
+    name: cluster-cloud-controller-manager
+    namespace: openshift-cloud-controller-manager
+    ownerReferences:
+    - apiVersion: config.openshift.io/v1
+      kind: ClusterVersion
+      name: version
+      uid: 5d92b52f-9fff-4a6e-b815-398b934115ad
+    resourceVersion: "2045"
+    uid: b4f22a93-7cc2-43cc-a7a2-759eac1a570d
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: ClusterRole
+    name: admin
+  subjects:
+  - kind: ServiceAccount
+    name: cluster-cloud-controller-manager
+    namespace: openshift-cloud-controller-manager-operator
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/description: Allows deploymentconfigs in this namespace to rollout
+        pods in this namespace.  It is auto-managed by a controller; remove subjects
+        to disable.
+    creationTimestamp: "2023-05-04T21:45:24Z"
+    name: system:deployers
+    namespace: openshift-cloud-controller-manager
+    resourceVersion: "14958"
+    uid: 3c3aeef7-048c-419e-a957-c6af1e83fb27
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: ClusterRole
+    name: system:deployer
+  subjects:
+  - kind: ServiceAccount
+    name: deployer
+    namespace: openshift-cloud-controller-manager
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/description: Allows builds in this namespace to push images to
+        this namespace.  It is auto-managed by a controller; remove subjects to disable.
+    creationTimestamp: "2023-05-04T21:45:23Z"
+    name: system:image-builders
+    namespace: openshift-cloud-controller-manager
+    resourceVersion: "14909"
+    uid: da403064-dfa4-4a97-82d1-15c67ed317cc
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: ClusterRole
+    name: system:image-builder
+  subjects:
+  - kind: ServiceAccount
+    name: builder
+    namespace: openshift-cloud-controller-manager
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/description: Allows all pods in this namespace to pull images from
+        this namespace.  It is auto-managed by a controller; remove subjects to disable.
+    creationTimestamp: "2023-05-04T21:45:23Z"
+    name: system:image-pullers
+    namespace: openshift-cloud-controller-manager
+    resourceVersion: "14856"
+    uid: 81bdb7a5-fb4e-4a16-ab68-7ca49dc1b3b6
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: ClusterRole
+    name: system:image-puller
+  subjects:
+  - apiGroup: rbac.authorization.k8s.io
+    kind: Group
+    name: system:serviceaccounts:openshift-cloud-controller-manager
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

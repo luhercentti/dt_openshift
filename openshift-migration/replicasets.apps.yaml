@@ -1,0 +1,4996 @@
+apiVersion: v1
+items:
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "7"
+    creationTimestamp: "2024-05-01T02:40:53Z"
+    generation: 2
+    labels:
+      app: migration
+      app.kubernetes.io/part-of: openshift-migration
+      cluster_config_name: migration-cluster-config-9gk225958c
+      control-plane: controller-manager
+      controller-tools.k8s.io: "1.0"
+      controller_config_name: migration-controller-kf64f8d8b4
+      pod-template-hash: 5f44d79b49
+      webhook_secret_name: webhook-server-secret-hbm87h96gd
+    name: migration-controller-5f44d79b49
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: migration-controller
+      uid: fa7f85ce-f2e0-4f2e-a778-ab8754b45642
+    resourceVersion: "449357672"
+    uid: acd3406f-7d59-485d-92f2-61dc05f07041
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        app: migration
+        control-plane: controller-manager
+        controller-tools.k8s.io: "1.0"
+        pod-template-hash: 5f44d79b49
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: migration
+          app.kubernetes.io/part-of: openshift-migration
+          cluster_config_name: migration-cluster-config-9gk225958c
+          control-plane: controller-manager
+          controller-tools.k8s.io: "1.0"
+          controller_config_name: migration-controller-kf64f8d8b4
+          pod-template-hash: 5f44d79b49
+          webhook_secret_name: webhook-server-secret-hbm87h96gd
+      spec:
+        containers:
+        - command:
+          - /manager
+          env:
+          - name: EXCLUDED_RESOURCES
+            value: imagetags,templateinstances,clusterserviceversions,packagemanifests,subscriptions,servicebrokers,servicebindings,serviceclasses,serviceinstances,serviceplans,operatorgroups,events,events.events.k8s.io,rolebindings.authorization.openshift.io
+          - name: POD_NAMESPACE
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+          - name: ROLE
+            value: mtc
+          - name: SECRET_NAME
+            value: webhook-server-secret
+          - name: MIGRATION_REGISTRY_IMAGE
+            value: registry.redhat.io/rhmtc/openshift-migration-registry-rhel8@sha256:107839e416d3323be843fb18cc03c2e098471193126718c1e6d2fe6c5f5c4884
+          envFrom:
+          - configMapRef:
+              name: migration-controller
+          image: registry.redhat.io/rhmtc/openshift-migration-controller-rhel8@sha256:1c6af15263b0b03c01838fcf8d15066310becc775ce2f00ef9a9367910007ed9
+          imagePullPolicy: Always
+          name: mtc
+          ports:
+          - containerPort: 9876
+            name: webhook-server
+            protocol: TCP
+          resources:
+            limits:
+              cpu: "1"
+              memory: 10Gi
+            requests:
+              cpu: 100m
+              memory: 350Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /tmp/cert
+            name: cert
+            readOnly: true
+        - command:
+          - /manager
+          env:
+          - name: POD_NAMESPACE
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+          - name: ROLE
+            value: discovery
+          - name: SECRET_NAME
+            value: webhook-server-secret
+          envFrom:
+          - configMapRef:
+              name: migration-controller
+          image: registry.redhat.io/rhmtc/openshift-migration-controller-rhel8@sha256:1c6af15263b0b03c01838fcf8d15066310becc775ce2f00ef9a9367910007ed9
+          imagePullPolicy: Always
+          name: discovery
+          ports:
+          - containerPort: 8080
+            name: webhook-server
+            protocol: TCP
+          resources:
+            limits:
+              cpu: "1"
+              memory: 10Gi
+            requests:
+              cpu: 100m
+              memory: 350Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/cache/discovery
+            name: discovery
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: migration-controller
+        serviceAccountName: migration-controller
+        terminationGracePeriodSeconds: 10
+        volumes:
+        - name: cert
+          secret:
+            defaultMode: 420
+            secretName: webhook-server-secret
+        - emptyDir: {}
+          name: discovery
+  status:
+    observedGeneration: 2
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "1"
+    creationTimestamp: "2023-05-12T20:25:58Z"
+    generation: 2
+    labels:
+      app: migration
+      app.kubernetes.io/part-of: openshift-migration
+      cluster_config_name: migration-cluster-config-gg9b5tkfd8
+      control-plane: controller-manager
+      controller-tools.k8s.io: "1.0"
+      controller_config_name: migration-controller-kf64f8d8b4
+      pod-template-hash: 5f7c8784b4
+      webhook_secret_name: webhook-server-secret-hbm87h96gd
+    name: migration-controller-5f7c8784b4
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: migration-controller
+      uid: fa7f85ce-f2e0-4f2e-a778-ab8754b45642
+    resourceVersion: "28930562"
+    uid: 9ad6e2e5-dee3-4a3c-ae6d-fde4c47b1b1e
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        app: migration
+        control-plane: controller-manager
+        controller-tools.k8s.io: "1.0"
+        pod-template-hash: 5f7c8784b4
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: migration
+          app.kubernetes.io/part-of: openshift-migration
+          cluster_config_name: migration-cluster-config-gg9b5tkfd8
+          control-plane: controller-manager
+          controller-tools.k8s.io: "1.0"
+          controller_config_name: migration-controller-kf64f8d8b4
+          pod-template-hash: 5f7c8784b4
+          webhook_secret_name: webhook-server-secret-hbm87h96gd
+      spec:
+        containers:
+        - command:
+          - /manager
+          env:
+          - name: EXCLUDED_RESOURCES
+            value: imagetags,templateinstances,clusterserviceversions,packagemanifests,subscriptions,servicebrokers,servicebindings,serviceclasses,serviceinstances,serviceplans,operatorgroups,events,events.events.k8s.io,rolebindings.authorization.openshift.io
+          - name: POD_NAMESPACE
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+          - name: ROLE
+            value: mtc
+          - name: SECRET_NAME
+            value: webhook-server-secret
+          - name: MIGRATION_REGISTRY_IMAGE
+            value: registry.redhat.io/rhmtc/openshift-migration-registry-rhel8@sha256:9e870b410e8f21f0bb8a25d634a588313a5f45dd4bbfb7c64e3db3375b080d13
+          envFrom:
+          - configMapRef:
+              name: migration-controller
+          image: registry.redhat.io/rhmtc/openshift-migration-controller-rhel8@sha256:50414cb906ac6d34d086c778197ad6b7b27b8f7e7f7875580780bc821030c1e9
+          imagePullPolicy: Always
+          name: mtc
+          ports:
+          - containerPort: 9876
+            name: webhook-server
+            protocol: TCP
+          resources:
+            limits:
+              cpu: "1"
+              memory: 10Gi
+            requests:
+              cpu: 100m
+              memory: 350Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /tmp/cert
+            name: cert
+            readOnly: true
+        - command:
+          - /manager
+          env:
+          - name: POD_NAMESPACE
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+          - name: ROLE
+            value: discovery
+          - name: SECRET_NAME
+            value: webhook-server-secret
+          envFrom:
+          - configMapRef:
+              name: migration-controller
+          image: registry.redhat.io/rhmtc/openshift-migration-controller-rhel8@sha256:50414cb906ac6d34d086c778197ad6b7b27b8f7e7f7875580780bc821030c1e9
+          imagePullPolicy: Always
+          name: discovery
+          ports:
+          - containerPort: 8080
+            name: webhook-server
+            protocol: TCP
+          resources:
+            limits:
+              cpu: "1"
+              memory: 10Gi
+            requests:
+              cpu: 100m
+              memory: 350Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/cache/discovery
+            name: discovery
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: migration-controller
+        serviceAccountName: migration-controller
+        terminationGracePeriodSeconds: 10
+        volumes:
+        - name: cert
+          secret:
+            defaultMode: 420
+            secretName: webhook-server-secret
+        - emptyDir: {}
+          name: discovery
+  status:
+    observedGeneration: 2
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "5"
+    creationTimestamp: "2023-10-19T03:19:49Z"
+    generation: 2
+    labels:
+      app: migration
+      app.kubernetes.io/part-of: openshift-migration
+      cluster_config_name: migration-cluster-config-4fb86fhk68
+      control-plane: controller-manager
+      controller-tools.k8s.io: "1.0"
+      controller_config_name: migration-controller-kf64f8d8b4
+      pod-template-hash: 67c85f5bb6
+      webhook_secret_name: webhook-server-secret-hbm87h96gd
+    name: migration-controller-67c85f5bb6
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: migration-controller
+      uid: fa7f85ce-f2e0-4f2e-a778-ab8754b45642
+    resourceVersion: "147742949"
+    uid: 40cfb38a-5375-43d5-83d0-1c836a92f5ac
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        app: migration
+        control-plane: controller-manager
+        controller-tools.k8s.io: "1.0"
+        pod-template-hash: 67c85f5bb6
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: migration
+          app.kubernetes.io/part-of: openshift-migration
+          cluster_config_name: migration-cluster-config-4fb86fhk68
+          control-plane: controller-manager
+          controller-tools.k8s.io: "1.0"
+          controller_config_name: migration-controller-kf64f8d8b4
+          pod-template-hash: 67c85f5bb6
+          webhook_secret_name: webhook-server-secret-hbm87h96gd
+      spec:
+        containers:
+        - command:
+          - /manager
+          env:
+          - name: EXCLUDED_RESOURCES
+            value: imagetags,templateinstances,clusterserviceversions,packagemanifests,subscriptions,servicebrokers,servicebindings,serviceclasses,serviceinstances,serviceplans,operatorgroups,events,events.events.k8s.io,rolebindings.authorization.openshift.io
+          - name: POD_NAMESPACE
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+          - name: ROLE
+            value: mtc
+          - name: SECRET_NAME
+            value: webhook-server-secret
+          - name: MIGRATION_REGISTRY_IMAGE
+            value: registry.redhat.io/rhmtc/openshift-migration-registry-rhel8@sha256:d6f6070e0857f2e906e1db126f32c4250f90bf29f7afa3b606ad85e8ef18cefd
+          envFrom:
+          - configMapRef:
+              name: migration-controller
+          image: registry.redhat.io/rhmtc/openshift-migration-controller-rhel8@sha256:7b51d746d8c2864f41a0513b09bb8da6e1ea96ff0442561b689fea8381151aca
+          imagePullPolicy: Always
+          name: mtc
+          ports:
+          - containerPort: 9876
+            name: webhook-server
+            protocol: TCP
+          resources:
+            limits:
+              cpu: "1"
+              memory: 10Gi
+            requests:
+              cpu: 100m
+              memory: 350Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /tmp/cert
+            name: cert
+            readOnly: true
+        - command:
+          - /manager
+          env:
+          - name: POD_NAMESPACE
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+          - name: ROLE
+            value: discovery
+          - name: SECRET_NAME
+            value: webhook-server-secret
+          envFrom:
+          - configMapRef:
+              name: migration-controller
+          image: registry.redhat.io/rhmtc/openshift-migration-controller-rhel8@sha256:7b51d746d8c2864f41a0513b09bb8da6e1ea96ff0442561b689fea8381151aca
+          imagePullPolicy: Always
+          name: discovery
+          ports:
+          - containerPort: 8080
+            name: webhook-server
+            protocol: TCP
+          resources:
+            limits:
+              cpu: "1"
+              memory: 10Gi
+            requests:
+              cpu: 100m
+              memory: 350Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/cache/discovery
+            name: discovery
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: migration-controller
+        serviceAccountName: migration-controller
+        terminationGracePeriodSeconds: 10
+        volumes:
+        - name: cert
+          secret:
+            defaultMode: 420
+            secretName: webhook-server-secret
+        - emptyDir: {}
+          name: discovery
+  status:
+    observedGeneration: 2
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "3"
+    creationTimestamp: "2023-07-27T00:51:17Z"
+    generation: 2
+    labels:
+      app: migration
+      app.kubernetes.io/part-of: openshift-migration
+      cluster_config_name: migration-cluster-config-k79k66655h
+      control-plane: controller-manager
+      controller-tools.k8s.io: "1.0"
+      controller_config_name: migration-controller-kf64f8d8b4
+      pod-template-hash: 7467fc99cc
+      webhook_secret_name: webhook-server-secret-hbm87h96gd
+    name: migration-controller-7467fc99cc
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: migration-controller
+      uid: fa7f85ce-f2e0-4f2e-a778-ab8754b45642
+    resourceVersion: "95063324"
+    uid: 9c0e5e69-f315-4bf9-add0-6ee87534f47c
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        app: migration
+        control-plane: controller-manager
+        controller-tools.k8s.io: "1.0"
+        pod-template-hash: 7467fc99cc
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: migration
+          app.kubernetes.io/part-of: openshift-migration
+          cluster_config_name: migration-cluster-config-k79k66655h
+          control-plane: controller-manager
+          controller-tools.k8s.io: "1.0"
+          controller_config_name: migration-controller-kf64f8d8b4
+          pod-template-hash: 7467fc99cc
+          webhook_secret_name: webhook-server-secret-hbm87h96gd
+      spec:
+        containers:
+        - command:
+          - /manager
+          env:
+          - name: EXCLUDED_RESOURCES
+            value: imagetags,templateinstances,clusterserviceversions,packagemanifests,subscriptions,servicebrokers,servicebindings,serviceclasses,serviceinstances,serviceplans,operatorgroups,events,events.events.k8s.io,rolebindings.authorization.openshift.io
+          - name: POD_NAMESPACE
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+          - name: ROLE
+            value: mtc
+          - name: SECRET_NAME
+            value: webhook-server-secret
+          - name: MIGRATION_REGISTRY_IMAGE
+            value: registry.redhat.io/rhmtc/openshift-migration-registry-rhel8@sha256:4e89b1dd8b5c096f617029f1bf40bb9d443f99a8525f8d3b0d094994381ef4a2
+          envFrom:
+          - configMapRef:
+              name: migration-controller
+          image: registry.redhat.io/rhmtc/openshift-migration-controller-rhel8@sha256:3da4dde02629c021acd97c55476c74e8fed60771a6a203cd46b231ec6cf4d49e
+          imagePullPolicy: Always
+          name: mtc
+          ports:
+          - containerPort: 9876
+            name: webhook-server
+            protocol: TCP
+          resources:
+            limits:
+              cpu: "1"
+              memory: 10Gi
+            requests:
+              cpu: 100m
+              memory: 350Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /tmp/cert
+            name: cert
+            readOnly: true
+        - command:
+          - /manager
+          env:
+          - name: POD_NAMESPACE
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+          - name: ROLE
+            value: discovery
+          - name: SECRET_NAME
+            value: webhook-server-secret
+          envFrom:
+          - configMapRef:
+              name: migration-controller
+          image: registry.redhat.io/rhmtc/openshift-migration-controller-rhel8@sha256:3da4dde02629c021acd97c55476c74e8fed60771a6a203cd46b231ec6cf4d49e
+          imagePullPolicy: Always
+          name: discovery
+          ports:
+          - containerPort: 8080
+            name: webhook-server
+            protocol: TCP
+          resources:
+            limits:
+              cpu: "1"
+              memory: 10Gi
+            requests:
+              cpu: 100m
+              memory: 350Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/cache/discovery
+            name: discovery
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: migration-controller
+        serviceAccountName: migration-controller
+        terminationGracePeriodSeconds: 10
+        volumes:
+        - name: cert
+          secret:
+            defaultMode: 420
+            secretName: webhook-server-secret
+        - emptyDir: {}
+          name: discovery
+  status:
+    observedGeneration: 2
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "4"
+    creationTimestamp: "2023-08-31T00:56:10Z"
+    generation: 2
+    labels:
+      app: migration
+      app.kubernetes.io/part-of: openshift-migration
+      cluster_config_name: migration-cluster-config-tk9df5fbk7
+      control-plane: controller-manager
+      controller-tools.k8s.io: "1.0"
+      controller_config_name: migration-controller-kf64f8d8b4
+      pod-template-hash: 7f7775f6b7
+      webhook_secret_name: webhook-server-secret-hbm87h96gd
+    name: migration-controller-7f7775f6b7
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: migration-controller
+      uid: fa7f85ce-f2e0-4f2e-a778-ab8754b45642
+    resourceVersion: "138489922"
+    uid: fd92fccb-f411-4fd0-b0a4-665101538f5f
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        app: migration
+        control-plane: controller-manager
+        controller-tools.k8s.io: "1.0"
+        pod-template-hash: 7f7775f6b7
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: migration
+          app.kubernetes.io/part-of: openshift-migration
+          cluster_config_name: migration-cluster-config-tk9df5fbk7
+          control-plane: controller-manager
+          controller-tools.k8s.io: "1.0"
+          controller_config_name: migration-controller-kf64f8d8b4
+          pod-template-hash: 7f7775f6b7
+          webhook_secret_name: webhook-server-secret-hbm87h96gd
+      spec:
+        containers:
+        - command:
+          - /manager
+          env:
+          - name: EXCLUDED_RESOURCES
+            value: imagetags,templateinstances,clusterserviceversions,packagemanifests,subscriptions,servicebrokers,servicebindings,serviceclasses,serviceinstances,serviceplans,operatorgroups,events,events.events.k8s.io,rolebindings.authorization.openshift.io
+          - name: POD_NAMESPACE
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+          - name: ROLE
+            value: mtc
+          - name: SECRET_NAME
+            value: webhook-server-secret
+          - name: MIGRATION_REGISTRY_IMAGE
+            value: registry.redhat.io/rhmtc/openshift-migration-registry-rhel8@sha256:e18190ba6d39b46981e8fd61e18515093d486d5915b0a6a61e17c0386538d488
+          envFrom:
+          - configMapRef:
+              name: migration-controller
+          image: registry.redhat.io/rhmtc/openshift-migration-controller-rhel8@sha256:15009450a6193834fcaae237e90477d9262fe228c8813d899f44c1188e188519
+          imagePullPolicy: Always
+          name: mtc
+          ports:
+          - containerPort: 9876
+            name: webhook-server
+            protocol: TCP
+          resources:
+            limits:
+              cpu: "1"
+              memory: 10Gi
+            requests:
+              cpu: 100m
+              memory: 350Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /tmp/cert
+            name: cert
+            readOnly: true
+        - command:
+          - /manager
+          env:
+          - name: POD_NAMESPACE
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+          - name: ROLE
+            value: discovery
+          - name: SECRET_NAME
+            value: webhook-server-secret
+          envFrom:
+          - configMapRef:
+              name: migration-controller
+          image: registry.redhat.io/rhmtc/openshift-migration-controller-rhel8@sha256:15009450a6193834fcaae237e90477d9262fe228c8813d899f44c1188e188519
+          imagePullPolicy: Always
+          name: discovery
+          ports:
+          - containerPort: 8080
+            name: webhook-server
+            protocol: TCP
+          resources:
+            limits:
+              cpu: "1"
+              memory: 10Gi
+            requests:
+              cpu: 100m
+              memory: 350Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/cache/discovery
+            name: discovery
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: migration-controller
+        serviceAccountName: migration-controller
+        terminationGracePeriodSeconds: 10
+        volumes:
+        - name: cert
+          secret:
+            defaultMode: 420
+            secretName: webhook-server-secret
+        - emptyDir: {}
+          name: discovery
+  status:
+    observedGeneration: 2
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "2"
+    creationTimestamp: "2023-06-15T01:21:30Z"
+    generation: 2
+    labels:
+      app: migration
+      app.kubernetes.io/part-of: openshift-migration
+      cluster_config_name: migration-cluster-config-tcfdk58g22
+      control-plane: controller-manager
+      controller-tools.k8s.io: "1.0"
+      controller_config_name: migration-controller-kf64f8d8b4
+      pod-template-hash: 8447997ddb
+      webhook_secret_name: webhook-server-secret-hbm87h96gd
+    name: migration-controller-8447997ddb
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: migration-controller
+      uid: fa7f85ce-f2e0-4f2e-a778-ab8754b45642
+    resourceVersion: "65067848"
+    uid: 2bb347fa-6405-49c0-92b9-aaadfd136f84
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        app: migration
+        control-plane: controller-manager
+        controller-tools.k8s.io: "1.0"
+        pod-template-hash: 8447997ddb
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: migration
+          app.kubernetes.io/part-of: openshift-migration
+          cluster_config_name: migration-cluster-config-tcfdk58g22
+          control-plane: controller-manager
+          controller-tools.k8s.io: "1.0"
+          controller_config_name: migration-controller-kf64f8d8b4
+          pod-template-hash: 8447997ddb
+          webhook_secret_name: webhook-server-secret-hbm87h96gd
+      spec:
+        containers:
+        - command:
+          - /manager
+          env:
+          - name: EXCLUDED_RESOURCES
+            value: imagetags,templateinstances,clusterserviceversions,packagemanifests,subscriptions,servicebrokers,servicebindings,serviceclasses,serviceinstances,serviceplans,operatorgroups,events,events.events.k8s.io,rolebindings.authorization.openshift.io
+          - name: POD_NAMESPACE
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+          - name: ROLE
+            value: mtc
+          - name: SECRET_NAME
+            value: webhook-server-secret
+          - name: MIGRATION_REGISTRY_IMAGE
+            value: registry.redhat.io/rhmtc/openshift-migration-registry-rhel8@sha256:a8eddd5fce325956e2bd06f94356b4eebb2a71015a34b4b7f58b0d6c2cde931b
+          envFrom:
+          - configMapRef:
+              name: migration-controller
+          image: registry.redhat.io/rhmtc/openshift-migration-controller-rhel8@sha256:bc2646b92cc2667e2e3e834f4e509c1f680ca8b768dd8b27f8e41d6557a2e060
+          imagePullPolicy: Always
+          name: mtc
+          ports:
+          - containerPort: 9876
+            name: webhook-server
+            protocol: TCP
+          resources:
+            limits:
+              cpu: "1"
+              memory: 10Gi
+            requests:
+              cpu: 100m
+              memory: 350Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /tmp/cert
+            name: cert
+            readOnly: true
+        - command:
+          - /manager
+          env:
+          - name: POD_NAMESPACE
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+          - name: ROLE
+            value: discovery
+          - name: SECRET_NAME
+            value: webhook-server-secret
+          envFrom:
+          - configMapRef:
+              name: migration-controller
+          image: registry.redhat.io/rhmtc/openshift-migration-controller-rhel8@sha256:bc2646b92cc2667e2e3e834f4e509c1f680ca8b768dd8b27f8e41d6557a2e060
+          imagePullPolicy: Always
+          name: discovery
+          ports:
+          - containerPort: 8080
+            name: webhook-server
+            protocol: TCP
+          resources:
+            limits:
+              cpu: "1"
+              memory: 10Gi
+            requests:
+              cpu: 100m
+              memory: 350Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/cache/discovery
+            name: discovery
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: migration-controller
+        serviceAccountName: migration-controller
+        terminationGracePeriodSeconds: 10
+        volumes:
+        - name: cert
+          secret:
+            defaultMode: 420
+            secretName: webhook-server-secret
+        - emptyDir: {}
+          name: discovery
+  status:
+    observedGeneration: 2
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "6"
+    creationTimestamp: "2023-10-30T02:21:44Z"
+    generation: 2
+    labels:
+      app: migration
+      app.kubernetes.io/part-of: openshift-migration
+      cluster_config_name: migration-cluster-config-89kcgb4ghh
+      control-plane: controller-manager
+      controller-tools.k8s.io: "1.0"
+      controller_config_name: migration-controller-kf64f8d8b4
+      pod-template-hash: 845f8bb769
+      webhook_secret_name: webhook-server-secret-hbm87h96gd
+    name: migration-controller-845f8bb769
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: migration-controller
+      uid: fa7f85ce-f2e0-4f2e-a778-ab8754b45642
+    resourceVersion: "304852878"
+    uid: 0c8441b8-558e-40c0-b746-099efb780527
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        app: migration
+        control-plane: controller-manager
+        controller-tools.k8s.io: "1.0"
+        pod-template-hash: 845f8bb769
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: migration
+          app.kubernetes.io/part-of: openshift-migration
+          cluster_config_name: migration-cluster-config-89kcgb4ghh
+          control-plane: controller-manager
+          controller-tools.k8s.io: "1.0"
+          controller_config_name: migration-controller-kf64f8d8b4
+          pod-template-hash: 845f8bb769
+          webhook_secret_name: webhook-server-secret-hbm87h96gd
+      spec:
+        containers:
+        - command:
+          - /manager
+          env:
+          - name: EXCLUDED_RESOURCES
+            value: imagetags,templateinstances,clusterserviceversions,packagemanifests,subscriptions,servicebrokers,servicebindings,serviceclasses,serviceinstances,serviceplans,operatorgroups,events,events.events.k8s.io,rolebindings.authorization.openshift.io
+          - name: POD_NAMESPACE
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+          - name: ROLE
+            value: mtc
+          - name: SECRET_NAME
+            value: webhook-server-secret
+          - name: MIGRATION_REGISTRY_IMAGE
+            value: registry.redhat.io/rhmtc/openshift-migration-registry-rhel8@sha256:b71841a5df643d25c086e26c9fa3cd93ee3840938b718f816adc5159a5292b27
+          envFrom:
+          - configMapRef:
+              name: migration-controller
+          image: registry.redhat.io/rhmtc/openshift-migration-controller-rhel8@sha256:db0718ed259dc56b36fdd54fc8aa2ef765c0bf0684df2fb67292b88543334a28
+          imagePullPolicy: Always
+          name: mtc
+          ports:
+          - containerPort: 9876
+            name: webhook-server
+            protocol: TCP
+          resources:
+            limits:
+              cpu: "1"
+              memory: 10Gi
+            requests:
+              cpu: 100m
+              memory: 350Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /tmp/cert
+            name: cert
+            readOnly: true
+        - command:
+          - /manager
+          env:
+          - name: POD_NAMESPACE
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+          - name: ROLE
+            value: discovery
+          - name: SECRET_NAME
+            value: webhook-server-secret
+          envFrom:
+          - configMapRef:
+              name: migration-controller
+          image: registry.redhat.io/rhmtc/openshift-migration-controller-rhel8@sha256:db0718ed259dc56b36fdd54fc8aa2ef765c0bf0684df2fb67292b88543334a28
+          imagePullPolicy: Always
+          name: discovery
+          ports:
+          - containerPort: 8080
+            name: webhook-server
+            protocol: TCP
+          resources:
+            limits:
+              cpu: "1"
+              memory: 10Gi
+            requests:
+              cpu: 100m
+              memory: 350Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/cache/discovery
+            name: discovery
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: migration-controller
+        serviceAccountName: migration-controller
+        terminationGracePeriodSeconds: 10
+        volumes:
+        - name: cert
+          secret:
+            defaultMode: 420
+            secretName: webhook-server-secret
+        - emptyDir: {}
+          name: discovery
+  status:
+    observedGeneration: 2
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "8"
+    creationTimestamp: "2024-07-11T17:33:05Z"
+    generation: 1
+    labels:
+      app: migration
+      app.kubernetes.io/part-of: openshift-migration
+      cluster_config_name: migration-cluster-config-d85hf4294b
+      control-plane: controller-manager
+      controller-tools.k8s.io: "1.0"
+      controller_config_name: migration-controller-kf64f8d8b4
+      pod-template-hash: 9688b78dc
+      webhook_secret_name: webhook-server-secret-hbm87h96gd
+    name: migration-controller-9688b78dc
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: migration-controller
+      uid: fa7f85ce-f2e0-4f2e-a778-ab8754b45642
+    resourceVersion: "476624644"
+    uid: 81e6044a-bb2e-4e2a-9357-42181f556f15
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: migration
+        control-plane: controller-manager
+        controller-tools.k8s.io: "1.0"
+        pod-template-hash: 9688b78dc
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: migration
+          app.kubernetes.io/part-of: openshift-migration
+          cluster_config_name: migration-cluster-config-d85hf4294b
+          control-plane: controller-manager
+          controller-tools.k8s.io: "1.0"
+          controller_config_name: migration-controller-kf64f8d8b4
+          pod-template-hash: 9688b78dc
+          webhook_secret_name: webhook-server-secret-hbm87h96gd
+      spec:
+        containers:
+        - command:
+          - /manager
+          env:
+          - name: EXCLUDED_RESOURCES
+            value: imagetags,templateinstances,clusterserviceversions,packagemanifests,subscriptions,servicebrokers,servicebindings,serviceclasses,serviceinstances,serviceplans,operatorgroups,events,events.events.k8s.io,rolebindings.authorization.openshift.io
+          - name: POD_NAMESPACE
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+          - name: ROLE
+            value: mtc
+          - name: SECRET_NAME
+            value: webhook-server-secret
+          - name: MIGRATION_REGISTRY_IMAGE
+            value: registry.redhat.io/rhmtc/openshift-migration-registry-rhel8@sha256:03a267f927d08143b1b044bdc75618b60a3d011cac70164e0d201857cd39a5e2
+          envFrom:
+          - configMapRef:
+              name: migration-controller
+          image: registry.redhat.io/rhmtc/openshift-migration-controller-rhel8@sha256:2f14742d58bf09442510845664d7ea7175a7230f800e3cf0e77b4f1e4cb96e1c
+          imagePullPolicy: Always
+          name: mtc
+          ports:
+          - containerPort: 9876
+            name: webhook-server
+            protocol: TCP
+          resources:
+            limits:
+              cpu: "1"
+              memory: 10Gi
+            requests:
+              cpu: 100m
+              memory: 350Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /tmp/cert
+            name: cert
+            readOnly: true
+        - command:
+          - /manager
+          env:
+          - name: POD_NAMESPACE
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+          - name: ROLE
+            value: discovery
+          - name: SECRET_NAME
+            value: webhook-server-secret
+          envFrom:
+          - configMapRef:
+              name: migration-controller
+          image: registry.redhat.io/rhmtc/openshift-migration-controller-rhel8@sha256:2f14742d58bf09442510845664d7ea7175a7230f800e3cf0e77b4f1e4cb96e1c
+          imagePullPolicy: Always
+          name: discovery
+          ports:
+          - containerPort: 8080
+            name: webhook-server
+            protocol: TCP
+          resources:
+            limits:
+              cpu: "1"
+              memory: 10Gi
+            requests:
+              cpu: 100m
+              memory: 350Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/cache/discovery
+            name: discovery
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: migration-controller
+        serviceAccountName: migration-controller
+        terminationGracePeriodSeconds: 10
+        volumes:
+        - name: cert
+          secret:
+            defaultMode: 420
+            secretName: webhook-server-secret
+        - emptyDir: {}
+          name: discovery
+  status:
+    availableReplicas: 1
+    fullyLabeledReplicas: 1
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "7"
+    creationTimestamp: "2024-05-01T02:40:54Z"
+    generation: 2
+    labels:
+      app: migration
+      logreader: mig
+      pod-template-hash: 54b89cb56d
+    name: migration-log-reader-54b89cb56d
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: migration-log-reader
+      uid: 7f38fad4-3fee-4c5d-bcaf-30106b281492
+    resourceVersion: "449357671"
+    uid: fe040876-29bf-4617-977b-c7178aab43f4
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        logreader: mig
+        pod-template-hash: 54b89cb56d
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: migration
+          logreader: mig
+          pod-template-hash: 54b89cb56d
+      spec:
+        containers:
+        - env:
+          - name: STERN_COLOR
+            value: always
+          - name: KSUFFIX
+            value: color
+          image: registry.redhat.io/rhmtc/openshift-migration-log-reader-rhel8@sha256:793efcaebe8afd3bf514a809d6fdefe88083dbf9d706676be004411542549601
+          imagePullPolicy: Always
+          name: color
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/cache/sa2kubeconfig
+            name: kubeconfig
+        - env:
+          - name: STERN_COLOR
+            value: never
+          - name: KSUFFIX
+            value: plain
+          image: registry.redhat.io/rhmtc/openshift-migration-log-reader-rhel8@sha256:793efcaebe8afd3bf514a809d6fdefe88083dbf9d706676be004411542549601
+          imagePullPolicy: Always
+          name: plain
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/cache/sa2kubeconfig
+            name: kubeconfig
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: migration-controller
+        serviceAccountName: migration-controller
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - emptyDir: {}
+          name: kubeconfig
+  status:
+    observedGeneration: 2
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "3"
+    creationTimestamp: "2023-07-27T00:51:18Z"
+    generation: 2
+    labels:
+      app: migration
+      logreader: mig
+      pod-template-hash: 5d484bf88
+    name: migration-log-reader-5d484bf88
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: migration-log-reader
+      uid: 7f38fad4-3fee-4c5d-bcaf-30106b281492
+    resourceVersion: "95063260"
+    uid: 9024ea20-a46e-4fe6-9213-dc9009d0ff0c
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        logreader: mig
+        pod-template-hash: 5d484bf88
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: migration
+          logreader: mig
+          pod-template-hash: 5d484bf88
+      spec:
+        containers:
+        - env:
+          - name: STERN_COLOR
+            value: always
+          - name: KSUFFIX
+            value: color
+          image: registry.redhat.io/rhmtc/openshift-migration-log-reader-rhel8@sha256:89983c37f2e6a0a0a0d073525d060a12df8bef5649d6878bd28ebb6cd50a283e
+          imagePullPolicy: Always
+          name: color
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/cache/sa2kubeconfig
+            name: kubeconfig
+        - env:
+          - name: STERN_COLOR
+            value: never
+          - name: KSUFFIX
+            value: plain
+          image: registry.redhat.io/rhmtc/openshift-migration-log-reader-rhel8@sha256:89983c37f2e6a0a0a0d073525d060a12df8bef5649d6878bd28ebb6cd50a283e
+          imagePullPolicy: Always
+          name: plain
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/cache/sa2kubeconfig
+            name: kubeconfig
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: migration-controller
+        serviceAccountName: migration-controller
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - emptyDir: {}
+          name: kubeconfig
+  status:
+    observedGeneration: 2
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "8"
+    creationTimestamp: "2024-07-11T17:33:06Z"
+    generation: 1
+    labels:
+      app: migration
+      logreader: mig
+      pod-template-hash: 6577995b5b
+    name: migration-log-reader-6577995b5b
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: migration-log-reader
+      uid: 7f38fad4-3fee-4c5d-bcaf-30106b281492
+    resourceVersion: "476624531"
+    uid: 22f8febb-a1e8-4d0a-96f3-3ed5048cdeb4
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        logreader: mig
+        pod-template-hash: 6577995b5b
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: migration
+          logreader: mig
+          pod-template-hash: 6577995b5b
+      spec:
+        containers:
+        - env:
+          - name: STERN_COLOR
+            value: always
+          - name: KSUFFIX
+            value: color
+          image: registry.redhat.io/rhmtc/openshift-migration-log-reader-rhel8@sha256:db002b2271ae87333f2d749433fa373c4455c820faf0ad4f4fcbd46d010fc1d9
+          imagePullPolicy: Always
+          name: color
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/cache/sa2kubeconfig
+            name: kubeconfig
+        - env:
+          - name: STERN_COLOR
+            value: never
+          - name: KSUFFIX
+            value: plain
+          image: registry.redhat.io/rhmtc/openshift-migration-log-reader-rhel8@sha256:db002b2271ae87333f2d749433fa373c4455c820faf0ad4f4fcbd46d010fc1d9
+          imagePullPolicy: Always
+          name: plain
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/cache/sa2kubeconfig
+            name: kubeconfig
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: migration-controller
+        serviceAccountName: migration-controller
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - emptyDir: {}
+          name: kubeconfig
+  status:
+    availableReplicas: 1
+    fullyLabeledReplicas: 1
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "2"
+    creationTimestamp: "2023-06-15T01:21:31Z"
+    generation: 2
+    labels:
+      app: migration
+      logreader: mig
+      pod-template-hash: 659fb8777b
+    name: migration-log-reader-659fb8777b
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: migration-log-reader
+      uid: 7f38fad4-3fee-4c5d-bcaf-30106b281492
+    resourceVersion: "65068668"
+    uid: 0d10e99d-d39a-4cf1-b796-00c4efb0bf6e
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        logreader: mig
+        pod-template-hash: 659fb8777b
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: migration
+          logreader: mig
+          pod-template-hash: 659fb8777b
+      spec:
+        containers:
+        - env:
+          - name: STERN_COLOR
+            value: always
+          - name: KSUFFIX
+            value: color
+          image: registry.redhat.io/rhmtc/openshift-migration-log-reader-rhel8@sha256:26e0a32f7155e9cdc0fd8eade62f3f3b4106346cd42d74a14c21913a7a369d21
+          imagePullPolicy: Always
+          name: color
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/cache/sa2kubeconfig
+            name: kubeconfig
+        - env:
+          - name: STERN_COLOR
+            value: never
+          - name: KSUFFIX
+            value: plain
+          image: registry.redhat.io/rhmtc/openshift-migration-log-reader-rhel8@sha256:26e0a32f7155e9cdc0fd8eade62f3f3b4106346cd42d74a14c21913a7a369d21
+          imagePullPolicy: Always
+          name: plain
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/cache/sa2kubeconfig
+            name: kubeconfig
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: migration-controller
+        serviceAccountName: migration-controller
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - emptyDir: {}
+          name: kubeconfig
+  status:
+    observedGeneration: 2
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "6"
+    creationTimestamp: "2023-10-30T02:21:45Z"
+    generation: 2
+    labels:
+      app: migration
+      logreader: mig
+      pod-template-hash: 687f7c7c56
+    name: migration-log-reader-687f7c7c56
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: migration-log-reader
+      uid: 7f38fad4-3fee-4c5d-bcaf-30106b281492
+    resourceVersion: "304852956"
+    uid: 10465525-09c8-4c20-8c82-9aaf77502543
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        logreader: mig
+        pod-template-hash: 687f7c7c56
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: migration
+          logreader: mig
+          pod-template-hash: 687f7c7c56
+      spec:
+        containers:
+        - env:
+          - name: STERN_COLOR
+            value: always
+          - name: KSUFFIX
+            value: color
+          image: registry.redhat.io/rhmtc/openshift-migration-log-reader-rhel8@sha256:647dfe99fc7a036483317964c34349fa4e219969c710eeb3ac339eb98ca8ca79
+          imagePullPolicy: Always
+          name: color
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/cache/sa2kubeconfig
+            name: kubeconfig
+        - env:
+          - name: STERN_COLOR
+            value: never
+          - name: KSUFFIX
+            value: plain
+          image: registry.redhat.io/rhmtc/openshift-migration-log-reader-rhel8@sha256:647dfe99fc7a036483317964c34349fa4e219969c710eeb3ac339eb98ca8ca79
+          imagePullPolicy: Always
+          name: plain
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/cache/sa2kubeconfig
+            name: kubeconfig
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: migration-controller
+        serviceAccountName: migration-controller
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - emptyDir: {}
+          name: kubeconfig
+  status:
+    observedGeneration: 2
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "5"
+    creationTimestamp: "2023-10-19T03:19:50Z"
+    generation: 2
+    labels:
+      app: migration
+      logreader: mig
+      pod-template-hash: 6d9679d6c6
+    name: migration-log-reader-6d9679d6c6
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: migration-log-reader
+      uid: 7f38fad4-3fee-4c5d-bcaf-30106b281492
+    resourceVersion: "147743312"
+    uid: aba974ec-7610-4cb0-bc7f-f2a5aae2cd40
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        logreader: mig
+        pod-template-hash: 6d9679d6c6
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: migration
+          logreader: mig
+          pod-template-hash: 6d9679d6c6
+      spec:
+        containers:
+        - env:
+          - name: STERN_COLOR
+            value: always
+          - name: KSUFFIX
+            value: color
+          image: registry.redhat.io/rhmtc/openshift-migration-log-reader-rhel8@sha256:e27aea7e73d727d971e01c702550a003e309230aa00a779d4058f962a881aa81
+          imagePullPolicy: Always
+          name: color
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/cache/sa2kubeconfig
+            name: kubeconfig
+        - env:
+          - name: STERN_COLOR
+            value: never
+          - name: KSUFFIX
+            value: plain
+          image: registry.redhat.io/rhmtc/openshift-migration-log-reader-rhel8@sha256:e27aea7e73d727d971e01c702550a003e309230aa00a779d4058f962a881aa81
+          imagePullPolicy: Always
+          name: plain
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/cache/sa2kubeconfig
+            name: kubeconfig
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: migration-controller
+        serviceAccountName: migration-controller
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - emptyDir: {}
+          name: kubeconfig
+  status:
+    observedGeneration: 2
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "4"
+    creationTimestamp: "2023-08-31T00:56:11Z"
+    generation: 2
+    labels:
+      app: migration
+      logreader: mig
+      pod-template-hash: 76fb87f85b
+    name: migration-log-reader-76fb87f85b
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: migration-log-reader
+      uid: 7f38fad4-3fee-4c5d-bcaf-30106b281492
+    resourceVersion: "138490126"
+    uid: a7c6a403-03a6-4bac-be2e-a9e8c3dd7f0c
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        logreader: mig
+        pod-template-hash: 76fb87f85b
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: migration
+          logreader: mig
+          pod-template-hash: 76fb87f85b
+      spec:
+        containers:
+        - env:
+          - name: STERN_COLOR
+            value: always
+          - name: KSUFFIX
+            value: color
+          image: registry.redhat.io/rhmtc/openshift-migration-log-reader-rhel8@sha256:bdd395918ece94367939b6bdd0542341fd91e35043768fce8c5c4ae7b8155f17
+          imagePullPolicy: Always
+          name: color
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/cache/sa2kubeconfig
+            name: kubeconfig
+        - env:
+          - name: STERN_COLOR
+            value: never
+          - name: KSUFFIX
+            value: plain
+          image: registry.redhat.io/rhmtc/openshift-migration-log-reader-rhel8@sha256:bdd395918ece94367939b6bdd0542341fd91e35043768fce8c5c4ae7b8155f17
+          imagePullPolicy: Always
+          name: plain
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/cache/sa2kubeconfig
+            name: kubeconfig
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: migration-controller
+        serviceAccountName: migration-controller
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - emptyDir: {}
+          name: kubeconfig
+  status:
+    observedGeneration: 2
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "1"
+    creationTimestamp: "2023-05-12T20:25:59Z"
+    generation: 2
+    labels:
+      app: migration
+      logreader: mig
+      pod-template-hash: 8f47df7cb
+    name: migration-log-reader-8f47df7cb
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: migration-log-reader
+      uid: 7f38fad4-3fee-4c5d-bcaf-30106b281492
+    resourceVersion: "28930561"
+    uid: 91c0165f-66ee-4400-a141-39aa8b9322db
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        logreader: mig
+        pod-template-hash: 8f47df7cb
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: migration
+          logreader: mig
+          pod-template-hash: 8f47df7cb
+      spec:
+        containers:
+        - env:
+          - name: STERN_COLOR
+            value: always
+          - name: KSUFFIX
+            value: color
+          image: registry.redhat.io/rhmtc/openshift-migration-log-reader-rhel8@sha256:f545470db7aa3df1d6129e2f6beb5f00cbaffad5338d30c3571f96142e34542b
+          imagePullPolicy: Always
+          name: color
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/cache/sa2kubeconfig
+            name: kubeconfig
+        - env:
+          - name: STERN_COLOR
+            value: never
+          - name: KSUFFIX
+            value: plain
+          image: registry.redhat.io/rhmtc/openshift-migration-log-reader-rhel8@sha256:f545470db7aa3df1d6129e2f6beb5f00cbaffad5338d30c3571f96142e34542b
+          imagePullPolicy: Always
+          name: plain
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/cache/sa2kubeconfig
+            name: kubeconfig
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: migration-controller
+        serviceAccountName: migration-controller
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - emptyDir: {}
+          name: kubeconfig
+  status:
+    observedGeneration: 2
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "7"
+    creationTimestamp: "2024-05-01T02:39:42Z"
+    generation: 2
+    labels:
+      app: migration
+      pod-template-hash: 65f885fbbb
+    name: migration-operator-65f885fbbb
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: migration-operator
+      uid: a5f918d8-53d8-4639-a995-3d9afe04c647
+    resourceVersion: "449356040"
+    uid: fd92dc21-51b4-472b-9108-574579151f73
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        app: migration
+        pod-template-hash: 65f885fbbb
+    template:
+      metadata:
+        annotations:
+          alm-examples: |-
+            [
+              {
+                  "apiVersion": "migration.openshift.io/v1alpha1",
+                  "kind": "MigrationController",
+                  "metadata": {
+                    "name": "migration-controller",
+                    "namespace": "openshift-migration"
+                  },
+                  "spec": {
+                    "azure_resource_group": "",
+                    "cluster_name": "host",
+                    "migration_velero": true,
+                    "migration_controller": true,
+                    "migration_ui": true,
+                    "migration_log_reader": true,
+                    "olm_managed": true,
+                    "restic_timeout": "1h",
+                    "mig_pv_limit": "100",
+                    "mig_pod_limit": "100",
+                    "mig_namespace_limit": "10"
+                  }
+              },
+              {
+                  "apiVersion": "migration.openshift.io/v1alpha1",
+                  "kind": "DirectImageMigration",
+                  "metadata": {
+                    "name": "directimagemigration",
+                    "namespace": "openshift-migration"
+                  },
+                  "spec": {}
+              },
+              {
+                  "apiVersion": "migration.openshift.io/v1alpha1",
+                  "kind": "DirectImageStreamMigration",
+                  "metadata": {
+                    "name": "directimagestreammigration",
+                    "namespace": "openshift-migration"
+                  },
+                  "spec": {}
+              },
+              {
+                  "apiVersion": "migration.openshift.io/v1alpha1",
+                  "kind": "MigAnalytic",
+                  "metadata": {
+                    "name": "host",
+                    "namespace": "openshift-migration"
+                  },
+                  "spec": {
+                    "plan": {
+                      "name": "foo",
+                      "namespace": "openshift-migration"
+                    },
+                    "analyzeK8SResources": true,
+                    "analyzeImageCount": true,
+                    "analyzePVCapacity": true
+                  }
+              },
+              {
+                  "apiVersion": "migration.openshift.io/v1alpha1",
+                  "kind": "MigCluster",
+                  "metadata": {
+                    "name": "host",
+                    "namespace": "openshift-migration"
+                  },
+                  "spec": {}
+              },
+              {
+                  "apiVersion": "migration.openshift.io/v1alpha1",
+                  "kind": "DirectVolumeMigration",
+                  "metadata": {
+                    "name": "direct",
+                    "namespace": "openshift-migration"
+                  },
+                  "spec": {}
+              },
+              {
+                  "apiVersion": "migration.openshift.io/v1alpha1",
+                      "kind": "DirectVolumeMigrationProgress",
+                      "metadata": {
+                        "name": "direct-progress",
+                        "namespace": "openshift-migration"
+                      },
+                      "spec": {}
+              },
+              {
+                  "apiVersion": "migration.openshift.io/v1alpha1",
+                  "kind": "MigPlan",
+                  "metadata": {
+                    "name": "migplan",
+                    "namespace": "openshift-migration"
+                  },
+                  "spec": {}
+              },
+              {
+                  "apiVersion": "migration.openshift.io/v1alpha1",
+                  "kind": "MigMigration",
+                  "metadata": {
+                    "name": "migmigration",
+                    "namespace": "openshift-migration"
+                  },
+                  "spec": {}
+              },
+              {
+                  "apiVersion": "migration.openshift.io/v1alpha1",
+                  "kind": "MigStorage",
+                  "metadata": {
+                    "name": "migstorage",
+                    "namespace": "openshift-migration"
+                  },
+                  "spec": {}
+              }
+            ]
+          capabilities: Seamless Upgrades
+          categories: OpenShift Optional, Modernization & Migration
+          certified: "false"
+          containerImage: registry.redhat.io/rhmtc/openshift-migration-rhel8-operator@sha256:5847c26016feb4e5a4194d623dbc83be99e6bf029cf4b1555c289f3955f61825
+          createdAt: "2024-04-22T15:09:56Z"
+          description: Facilitates migration of container workloads from OpenShift
+            3.x to OpenShift 4.x
+          features.operators.openshift.io/cnf: "false"
+          features.operators.openshift.io/cni: "false"
+          features.operators.openshift.io/csi: "false"
+          features.operators.openshift.io/disconnected: "true"
+          features.operators.openshift.io/fips-compliant: "false"
+          features.operators.openshift.io/proxy-aware: "false"
+          features.operators.openshift.io/tls-profiles: "false"
+          features.operators.openshift.io/token-auth-aws: "false"
+          features.operators.openshift.io/token-auth-azure: "false"
+          features.operators.openshift.io/token-auth-gcp: "false"
+          olm.operatorGroup: openshift-migration-z5b5h
+          olm.operatorNamespace: openshift-migration
+          olm.skipRange: '>=1.5.0 <1.7.15'
+          olm.targetNamespaces: openshift-migration
+          operatorframework.io/cluster-monitoring: "true"
+          operatorframework.io/properties: '{"properties":[{"type":"olm.gvk","value":{"group":"migration.openshift.io","kind":"MigStorage","version":"v1alpha1"}},{"type":"olm.gvk","value":{"group":"migration.openshift.io","kind":"MigCluster","version":"v1alpha1"}},{"type":"olm.gvk","value":{"group":"migration.openshift.io","kind":"MigHook","version":"v1alpha1"}},{"type":"olm.gvk","value":{"group":"migration.openshift.io","kind":"MigPlan","version":"v1alpha1"}},{"type":"olm.gvk","value":{"group":"migration.openshift.io","kind":"DirectImageStreamMigration","version":"v1alpha1"}},{"type":"olm.gvk","value":{"group":"migration.openshift.io","kind":"MigAnalytic","version":"v1alpha1"}},{"type":"olm.gvk","value":{"group":"migration.openshift.io","kind":"DirectVolumeMigrationProgress","version":"v1alpha1"}},{"type":"olm.gvk","value":{"group":"migration.openshift.io","kind":"DirectVolumeMigration","version":"v1alpha1"}},{"type":"olm.gvk","value":{"group":"migration.openshift.io","kind":"MigMigration","version":"v1alpha1"}},{"type":"olm.gvk","value":{"group":"migration.openshift.io","kind":"MigrationController","version":"v1alpha1"}},{"type":"olm.package","value":{"packageName":"mtc-operator","version":"1.7.15"}},{"type":"olm.gvk","value":{"group":"migration.openshift.io","kind":"DirectImageMigration","version":"v1alpha1"}},{"type":"olm.package.required","value":{"packageName":"redhat-oadp-operator","versionRange":"\u003e=1.0.14
+            \u003c1.1.0"}}]}'
+          operatorframework.io/suggested-namespace: openshift-migration
+          operators.openshift.io/infrastructure-features: '["Disconnected"]'
+          operators.openshift.io/must-gather-image: registry.redhat.io/rhmtc/openshift-migration-must-gather-rhel8@sha256:3c125e9994ee4aa1d20728c653c77abe64d6493464151f4ec8c8dbded568724f
+          operators.openshift.io/valid-subscription: '["OpenShift Container Platform",
+            "OpenShift Platform Plus"]'
+          repository: https://github.com/konveyor/mig-operator
+          support: Red Hat
+        creationTimestamp: null
+        labels:
+          app: migration
+          pod-template-hash: 65f885fbbb
+      spec:
+        containers:
+        - env:
+          - name: OPERATOR_NAME
+            value: migration-operator
+          - name: POD_NAME
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.name
+          - name: WATCH_NAMESPACE
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+          - name: REGISTRY
+            value: registry.redhat.io
+          - name: PROJECT
+            value: rhmtc
+          - name: RSYNC_TRANSFER_REPO
+            value: openshift-migration-rsync-transfer-rhel8@sha256
+          - name: RSYNC_TRANSFER_TAG
+            value: 70c1775e0287c3126541fb015d43b0aac59323ea50922f4ae80650fbbc15f014
+          - name: HOOK_RUNNER_REPO
+            value: openshift-migration-hook-runner-rhel8@sha256
+          - name: HOOK_RUNNER_TAG
+            value: f9f2516d1d41352a2ef4e64429487305f7514133c806babf74a4719bf699d925
+          - name: MIG_CONTROLLER_REPO
+            value: openshift-migration-controller-rhel8@sha256
+          - name: MIG_CONTROLLER_TAG
+            value: 1c6af15263b0b03c01838fcf8d15066310becc775ce2f00ef9a9367910007ed9
+          - name: MIG_UI_REPO
+            value: openshift-migration-ui-rhel8@sha256
+          - name: MIG_UI_TAG
+            value: ea6df61836d5ddf6dce29138510df7e494cec3236511e4ad7925c4566d777790
+          - name: MIG_LOG_READER_REPO
+            value: openshift-migration-log-reader-rhel8@sha256
+          - name: MIG_LOG_READER_TAG
+            value: 793efcaebe8afd3bf514a809d6fdefe88083dbf9d706676be004411542549601
+          - name: MIGRATION_REGISTRY_REPO
+            value: openshift-migration-registry-rhel8@sha256
+          - name: MIGRATION_REGISTRY_TAG
+            value: 107839e416d3323be843fb18cc03c2e098471193126718c1e6d2fe6c5f5c4884
+          - name: VELERO_REPO
+            value: openshift-migration-velero-rhel8@sha256
+          - name: VELERO_TAG
+            value: c45faea8ef401e33a537c7ffcbd8c629b4a457e166c918fab5be4ca65d4a17cb
+          - name: VELERO_PLUGIN_REPO
+            value: openshift-velero-plugin-rhel8@sha256
+          - name: VELERO_PLUGIN_TAG
+            value: a3bfe13e6f0339f8c9fc8419dc25ff85dbae3fded508584d5895b3dc82b380ef
+          - name: VELERO_RESTIC_RESTORE_HELPER_REPO
+            value: openshift-migration-velero-restic-restore-helper-rhel8@sha256
+          - name: VELERO_RESTIC_RESTORE_HELPER_TAG
+            value: 0f8671fa2a91acd3cb153513cd9cd2c1184dd796d2af3f8430412521af561c4c
+          - name: VELERO_AWS_PLUGIN_REPO
+            value: openshift-migration-velero-plugin-for-aws-rhel8@sha256
+          - name: VELERO_AWS_PLUGIN_TAG
+            value: 745b08a3c68bd0ca2d08e466bab932e437c04331a228db9957d4f5a7edb5ce4e
+          - name: VELERO_GCP_PLUGIN_REPO
+            value: openshift-migration-velero-plugin-for-gcp-rhel8@sha256
+          - name: VELERO_GCP_PLUGIN_TAG
+            value: d0c1830a5060790385b82b5a9b617d2253bf95f885c41f960eab1f2c5a1d440b
+          - name: VELERO_AZURE_PLUGIN_REPO
+            value: openshift-migration-velero-plugin-for-microsoft-azure-rhel8@sha256
+          - name: VELERO_AZURE_PLUGIN_TAG
+            value: 6361d1616c4cfd120368ff7a32ce0dc5968ab20b6b463454a8385c1f9505ccf9
+          - name: OPERATOR_CONDITION_NAME
+            value: mtc-operator.v1.7.15
+          image: registry.redhat.io/rhmtc/openshift-migration-rhel8-operator@sha256:5847c26016feb4e5a4194d623dbc83be99e6bf029cf4b1555c289f3955f61825
+          imagePullPolicy: Always
+          name: operator
+          resources: {}
+          securityContext:
+            allowPrivilegeEscalation: false
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /tmp/ansible-operator/runner
+            name: runner
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext:
+          runAsNonRoot: true
+        serviceAccount: migration-operator
+        serviceAccountName: migration-operator
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - emptyDir: {}
+          name: runner
+  status:
+    observedGeneration: 2
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "8"
+    creationTimestamp: "2024-07-11T17:31:49Z"
+    generation: 1
+    labels:
+      app: migration
+      pod-template-hash: 864956fc8d
+    name: migration-operator-864956fc8d
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: migration-operator
+      uid: a5f918d8-53d8-4639-a995-3d9afe04c647
+    resourceVersion: "476624554"
+    uid: 3da1ae1d-009e-4937-bc08-601712e32b93
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: migration
+        pod-template-hash: 864956fc8d
+    template:
+      metadata:
+        annotations:
+          alm-examples: |-
+            [
+              {
+                  "apiVersion": "migration.openshift.io/v1alpha1",
+                  "kind": "MigrationController",
+                  "metadata": {
+                    "name": "migration-controller",
+                    "namespace": "openshift-migration"
+                  },
+                  "spec": {
+                    "azure_resource_group": "",
+                    "cluster_name": "host",
+                    "migration_velero": true,
+                    "migration_controller": true,
+                    "migration_ui": true,
+                    "migration_log_reader": true,
+                    "olm_managed": true,
+                    "restic_timeout": "1h",
+                    "mig_pv_limit": "100",
+                    "mig_pod_limit": "100",
+                    "mig_namespace_limit": "10"
+                  }
+              },
+              {
+                  "apiVersion": "migration.openshift.io/v1alpha1",
+                  "kind": "DirectImageMigration",
+                  "metadata": {
+                    "name": "directimagemigration",
+                    "namespace": "openshift-migration"
+                  },
+                  "spec": {}
+              },
+              {
+                  "apiVersion": "migration.openshift.io/v1alpha1",
+                  "kind": "DirectImageStreamMigration",
+                  "metadata": {
+                    "name": "directimagestreammigration",
+                    "namespace": "openshift-migration"
+                  },
+                  "spec": {}
+              },
+              {
+                  "apiVersion": "migration.openshift.io/v1alpha1",
+                  "kind": "MigAnalytic",
+                  "metadata": {
+                    "name": "host",
+                    "namespace": "openshift-migration"
+                  },
+                  "spec": {
+                    "plan": {
+                      "name": "foo",
+                      "namespace": "openshift-migration"
+                    },
+                    "analyzeK8SResources": true,
+                    "analyzeImageCount": true,
+                    "analyzePVCapacity": true
+                  }
+              },
+              {
+                  "apiVersion": "migration.openshift.io/v1alpha1",
+                  "kind": "MigCluster",
+                  "metadata": {
+                    "name": "host",
+                    "namespace": "openshift-migration"
+                  },
+                  "spec": {}
+              },
+              {
+                  "apiVersion": "migration.openshift.io/v1alpha1",
+                  "kind": "DirectVolumeMigration",
+                  "metadata": {
+                    "name": "direct",
+                    "namespace": "openshift-migration"
+                  },
+                  "spec": {}
+              },
+              {
+                  "apiVersion": "migration.openshift.io/v1alpha1",
+                      "kind": "DirectVolumeMigrationProgress",
+                      "metadata": {
+                        "name": "direct-progress",
+                        "namespace": "openshift-migration"
+                      },
+                      "spec": {}
+              },
+              {
+                  "apiVersion": "migration.openshift.io/v1alpha1",
+                  "kind": "MigPlan",
+                  "metadata": {
+                    "name": "migplan",
+                    "namespace": "openshift-migration"
+                  },
+                  "spec": {}
+              },
+              {
+                  "apiVersion": "migration.openshift.io/v1alpha1",
+                  "kind": "MigMigration",
+                  "metadata": {
+                    "name": "migmigration",
+                    "namespace": "openshift-migration"
+                  },
+                  "spec": {}
+              },
+              {
+                  "apiVersion": "migration.openshift.io/v1alpha1",
+                  "kind": "MigStorage",
+                  "metadata": {
+                    "name": "migstorage",
+                    "namespace": "openshift-migration"
+                  },
+                  "spec": {}
+              }
+            ]
+          capabilities: Seamless Upgrades
+          categories: OpenShift Optional, Modernization & Migration
+          certified: "false"
+          containerImage: registry.redhat.io/rhmtc/openshift-migration-rhel8-operator@sha256:8f1891677fbb290f130b906050bad0918353da85b5953bed593dc28038707807
+          createdAt: "2024-06-26T18:13:06Z"
+          description: Facilitates migration of container workloads from OpenShift
+            3.x to OpenShift 4.x
+          features.operators.openshift.io/cnf: "false"
+          features.operators.openshift.io/cni: "false"
+          features.operators.openshift.io/csi: "false"
+          features.operators.openshift.io/disconnected: "true"
+          features.operators.openshift.io/fips-compliant: "false"
+          features.operators.openshift.io/proxy-aware: "false"
+          features.operators.openshift.io/tls-profiles: "false"
+          features.operators.openshift.io/token-auth-aws: "false"
+          features.operators.openshift.io/token-auth-azure: "false"
+          features.operators.openshift.io/token-auth-gcp: "false"
+          olm.operatorGroup: openshift-migration-z5b5h
+          olm.operatorNamespace: openshift-migration
+          olm.skipRange: '>=1.5.0 <1.7.16'
+          olm.targetNamespaces: openshift-migration
+          operatorframework.io/cluster-monitoring: "true"
+          operatorframework.io/properties: '{"properties":[{"type":"olm.gvk","value":{"group":"migration.openshift.io","kind":"MigrationController","version":"v1alpha1"}},{"type":"olm.gvk","value":{"group":"migration.openshift.io","kind":"MigPlan","version":"v1alpha1"}},{"type":"olm.gvk","value":{"group":"migration.openshift.io","kind":"MigStorage","version":"v1alpha1"}},{"type":"olm.gvk","value":{"group":"migration.openshift.io","kind":"DirectImageStreamMigration","version":"v1alpha1"}},{"type":"olm.gvk","value":{"group":"migration.openshift.io","kind":"MigCluster","version":"v1alpha1"}},{"type":"olm.gvk","value":{"group":"migration.openshift.io","kind":"MigHook","version":"v1alpha1"}},{"type":"olm.gvk","value":{"group":"migration.openshift.io","kind":"DirectVolumeMigration","version":"v1alpha1"}},{"type":"olm.package","value":{"packageName":"mtc-operator","version":"1.7.16"}},{"type":"olm.gvk","value":{"group":"migration.openshift.io","kind":"DirectVolumeMigrationProgress","version":"v1alpha1"}},{"type":"olm.gvk","value":{"group":"migration.openshift.io","kind":"MigAnalytic","version":"v1alpha1"}},{"type":"olm.gvk","value":{"group":"migration.openshift.io","kind":"MigMigration","version":"v1alpha1"}},{"type":"olm.gvk","value":{"group":"migration.openshift.io","kind":"DirectImageMigration","version":"v1alpha1"}},{"type":"olm.package.required","value":{"packageName":"redhat-oadp-operator","versionRange":"\u003e=1.0.14
+            \u003c1.1.0"}}]}'
+          operatorframework.io/suggested-namespace: openshift-migration
+          operators.openshift.io/infrastructure-features: '["Disconnected"]'
+          operators.openshift.io/must-gather-image: registry.redhat.io/rhmtc/openshift-migration-must-gather-rhel8@sha256:5fdab45b5ec09a8044f33d890c9e616154bf6b3844674b52f8548c4c95dffefd
+          operators.openshift.io/valid-subscription: '["OpenShift Container Platform",
+            "OpenShift Platform Plus"]'
+          repository: https://github.com/konveyor/mig-operator
+          support: Red Hat
+        creationTimestamp: null
+        labels:
+          app: migration
+          pod-template-hash: 864956fc8d
+      spec:
+        containers:
+        - env:
+          - name: OPERATOR_NAME
+            value: migration-operator
+          - name: POD_NAME
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.name
+          - name: WATCH_NAMESPACE
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+          - name: REGISTRY
+            value: registry.redhat.io
+          - name: PROJECT
+            value: rhmtc
+          - name: RSYNC_TRANSFER_REPO
+            value: openshift-migration-rsync-transfer-rhel8@sha256
+          - name: RSYNC_TRANSFER_TAG
+            value: d1d65d090533509619a037318a4a56bf78e37571a4f836b89a83d2f449721983
+          - name: HOOK_RUNNER_REPO
+            value: openshift-migration-hook-runner-rhel8@sha256
+          - name: HOOK_RUNNER_TAG
+            value: 8d12970d0dd5379b55e25504efe65168535d58c2cafd5a14ec7a6cd2ecbc4973
+          - name: MIG_CONTROLLER_REPO
+            value: openshift-migration-controller-rhel8@sha256
+          - name: MIG_CONTROLLER_TAG
+            value: 2f14742d58bf09442510845664d7ea7175a7230f800e3cf0e77b4f1e4cb96e1c
+          - name: MIG_UI_REPO
+            value: openshift-migration-ui-rhel8@sha256
+          - name: MIG_UI_TAG
+            value: 90321b75d2de313fd2f4cb0303ece5b186448bedda864c0eaf932a22b1a9c5e2
+          - name: MIG_LOG_READER_REPO
+            value: openshift-migration-log-reader-rhel8@sha256
+          - name: MIG_LOG_READER_TAG
+            value: db002b2271ae87333f2d749433fa373c4455c820faf0ad4f4fcbd46d010fc1d9
+          - name: MIGRATION_REGISTRY_REPO
+            value: openshift-migration-registry-rhel8@sha256
+          - name: MIGRATION_REGISTRY_TAG
+            value: 03a267f927d08143b1b044bdc75618b60a3d011cac70164e0d201857cd39a5e2
+          - name: VELERO_REPO
+            value: openshift-migration-velero-rhel8@sha256
+          - name: VELERO_TAG
+            value: 4892f019cab3bbe9f14680a692cd94b0bbbf55571b8be3b16ab4aab8238b70f3
+          - name: VELERO_PLUGIN_REPO
+            value: openshift-velero-plugin-rhel8@sha256
+          - name: VELERO_PLUGIN_TAG
+            value: b55b9829db207cd26f542c2fd735fe910ac8b4e45212622e7170aa20d7a32758
+          - name: VELERO_RESTIC_RESTORE_HELPER_REPO
+            value: openshift-migration-velero-restic-restore-helper-rhel8@sha256
+          - name: VELERO_RESTIC_RESTORE_HELPER_TAG
+            value: 5bab782d274c5eed359f2cd89530349fb7402d273d12f971b56901b7afe962a9
+          - name: VELERO_AWS_PLUGIN_REPO
+            value: openshift-migration-velero-plugin-for-aws-rhel8@sha256
+          - name: VELERO_AWS_PLUGIN_TAG
+            value: fb397d4608359b246754c5b4bb382f2ecfc3125aac4ca6f5d8f8cb49fbc018a0
+          - name: VELERO_GCP_PLUGIN_REPO
+            value: openshift-migration-velero-plugin-for-gcp-rhel8@sha256
+          - name: VELERO_GCP_PLUGIN_TAG
+            value: 01b1c7d7cbcc7670008450ab8aa695ff7fd84aaca06c6a1362407c08e772a198
+          - name: VELERO_AZURE_PLUGIN_REPO
+            value: openshift-migration-velero-plugin-for-microsoft-azure-rhel8@sha256
+          - name: VELERO_AZURE_PLUGIN_TAG
+            value: c811c61e3d77a3e3c7d5b28619ce77eba64d93030b86ca3eea49562921f97f27
+          - name: OPERATOR_CONDITION_NAME
+            value: mtc-operator.v1.7.16
+          image: registry.redhat.io/rhmtc/openshift-migration-rhel8-operator@sha256:8f1891677fbb290f130b906050bad0918353da85b5953bed593dc28038707807
+          imagePullPolicy: Always
+          name: operator
+          resources: {}
+          securityContext:
+            allowPrivilegeEscalation: false
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /tmp/ansible-operator/runner
+            name: runner
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext:
+          runAsNonRoot: true
+        serviceAccount: migration-operator
+        serviceAccountName: migration-operator
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - emptyDir: {}
+          name: runner
+  status:
+    availableReplicas: 1
+    fullyLabeledReplicas: 1
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "3"
+    creationTimestamp: "2023-07-27T00:51:23Z"
+    generation: 2
+    labels:
+      app: migration
+      app.kubernetes.io/part-of: openshift-migration
+      pod-template-hash: 56445dbf56
+      service: migration-ui
+      ui-config-name: mig-ui-config-b65d7cchc5
+    name: migration-ui-56445dbf56
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: migration-ui
+      uid: 607225a7-51a1-44bd-b93c-076efc4424bf
+    resourceVersion: "95063259"
+    uid: a299cbbe-d8a8-4a09-b0ce-70e142a20185
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        app: migration
+        pod-template-hash: 56445dbf56
+        service: migration-ui
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: migration
+          app.kubernetes.io/part-of: openshift-migration
+          pod-template-hash: 56445dbf56
+          service: migration-ui
+          ui-config-name: mig-ui-config-b65d7cchc5
+      spec:
+        containers:
+        - env:
+          - name: CLUSTER_API_URL
+            value: https://kubernetes.default.svc.cluster.local
+          - name: DISCOVERY_SVC_URL
+            value: http://discovery.openshift-migration.svc.cluster.local
+          image: registry.redhat.io/rhmtc/openshift-migration-ui-rhel8@sha256:76b9e66581e6e324a2eeb9df6aae32e0d0b26c3d7dff6cd1d0cd8425dec6fc78
+          imagePullPolicy: Always
+          name: mig-ui
+          ports:
+          - containerPort: 9000
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /etc/mig-ui
+            name: mig-ui-config
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - configMap:
+            defaultMode: 420
+            name: mig-ui-config
+          name: mig-ui-config
+  status:
+    observedGeneration: 2
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "4"
+    creationTimestamp: "2023-08-31T00:56:16Z"
+    generation: 2
+    labels:
+      app: migration
+      app.kubernetes.io/part-of: openshift-migration
+      pod-template-hash: 5856c8b699
+      service: migration-ui
+      ui-config-name: mig-ui-config-4chkk58g26
+    name: migration-ui-5856c8b699
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: migration-ui
+      uid: 607225a7-51a1-44bd-b93c-076efc4424bf
+    resourceVersion: "138490477"
+    uid: 27973c7c-84e6-4018-aae2-fed79efff6db
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        app: migration
+        pod-template-hash: 5856c8b699
+        service: migration-ui
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: migration
+          app.kubernetes.io/part-of: openshift-migration
+          pod-template-hash: 5856c8b699
+          service: migration-ui
+          ui-config-name: mig-ui-config-4chkk58g26
+      spec:
+        containers:
+        - env:
+          - name: CLUSTER_API_URL
+            value: https://kubernetes.default.svc.cluster.local
+          - name: DISCOVERY_SVC_URL
+            value: http://discovery.openshift-migration.svc.cluster.local
+          image: registry.redhat.io/rhmtc/openshift-migration-ui-rhel8@sha256:a92e1d0f81453f3c1b9da7941e98f96f54aa3438b18a644ff3a02cab8e8ee554
+          imagePullPolicy: Always
+          name: mig-ui
+          ports:
+          - containerPort: 9000
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /etc/mig-ui
+            name: mig-ui-config
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - configMap:
+            defaultMode: 420
+            name: mig-ui-config
+          name: mig-ui-config
+  status:
+    observedGeneration: 2
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "1"
+    creationTimestamp: "2023-05-12T20:26:10Z"
+    generation: 2
+    labels:
+      app: migration
+      app.kubernetes.io/part-of: openshift-migration
+      pod-template-hash: 598b6c58fd
+      service: migration-ui
+      ui-config-name: mig-ui-config-ktmk725gkg
+    name: migration-ui-598b6c58fd
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: migration-ui
+      uid: 607225a7-51a1-44bd-b93c-076efc4424bf
+    resourceVersion: "28930751"
+    uid: 08c8b07b-5372-4460-829c-b9f68a7d130c
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        app: migration
+        pod-template-hash: 598b6c58fd
+        service: migration-ui
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: migration
+          app.kubernetes.io/part-of: openshift-migration
+          pod-template-hash: 598b6c58fd
+          service: migration-ui
+          ui-config-name: mig-ui-config-ktmk725gkg
+      spec:
+        containers:
+        - env:
+          - name: CLUSTER_API_URL
+            value: https://kubernetes.default.svc.cluster.local
+          - name: DISCOVERY_SVC_URL
+            value: http://discovery.openshift-migration.svc.cluster.local
+          image: registry.redhat.io/rhmtc/openshift-migration-ui-rhel8@sha256:a7b5d13ade72444110fa9f512239ae9f308564d7c189ec51fc33cca96132451b
+          imagePullPolicy: Always
+          name: mig-ui
+          ports:
+          - containerPort: 9000
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /etc/mig-ui
+            name: mig-ui-config
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - configMap:
+            defaultMode: 420
+            name: mig-ui-config
+          name: mig-ui-config
+  status:
+    observedGeneration: 2
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "6"
+    creationTimestamp: "2023-10-30T02:21:50Z"
+    generation: 2
+    labels:
+      app: migration
+      app.kubernetes.io/part-of: openshift-migration
+      pod-template-hash: 76f8d4887b
+      service: migration-ui
+      ui-config-name: mig-ui-config-2f82h746kd
+    name: migration-ui-76f8d4887b
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: migration-ui
+      uid: 607225a7-51a1-44bd-b93c-076efc4424bf
+    resourceVersion: "304852886"
+    uid: 3320da88-aae4-4e01-8f1c-c1b2f83a139a
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        app: migration
+        pod-template-hash: 76f8d4887b
+        service: migration-ui
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: migration
+          app.kubernetes.io/part-of: openshift-migration
+          pod-template-hash: 76f8d4887b
+          service: migration-ui
+          ui-config-name: mig-ui-config-2f82h746kd
+      spec:
+        containers:
+        - env:
+          - name: CLUSTER_API_URL
+            value: https://kubernetes.default.svc.cluster.local
+          - name: DISCOVERY_SVC_URL
+            value: http://discovery.openshift-migration.svc.cluster.local
+          image: registry.redhat.io/rhmtc/openshift-migration-ui-rhel8@sha256:65fab10ffd7784b1c694225b1a31cb1985be1716270387decb4994d375aec842
+          imagePullPolicy: Always
+          name: mig-ui
+          ports:
+          - containerPort: 9000
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /etc/mig-ui
+            name: mig-ui-config
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - configMap:
+            defaultMode: 420
+            name: mig-ui-config
+          name: mig-ui-config
+  status:
+    observedGeneration: 2
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "2"
+    creationTimestamp: "2023-06-15T01:21:35Z"
+    generation: 2
+    labels:
+      app: migration
+      app.kubernetes.io/part-of: openshift-migration
+      pod-template-hash: 7fd59b5
+      service: migration-ui
+      ui-config-name: mig-ui-config-bgf7dh29bk
+    name: migration-ui-7fd59b5
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: migration-ui
+      uid: 607225a7-51a1-44bd-b93c-076efc4424bf
+    resourceVersion: "65068239"
+    uid: 061358a9-6781-4fd5-b867-e1eef68ff534
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        app: migration
+        pod-template-hash: 7fd59b5
+        service: migration-ui
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: migration
+          app.kubernetes.io/part-of: openshift-migration
+          pod-template-hash: 7fd59b5
+          service: migration-ui
+          ui-config-name: mig-ui-config-bgf7dh29bk
+      spec:
+        containers:
+        - env:
+          - name: CLUSTER_API_URL
+            value: https://kubernetes.default.svc.cluster.local
+          - name: DISCOVERY_SVC_URL
+            value: http://discovery.openshift-migration.svc.cluster.local
+          image: registry.redhat.io/rhmtc/openshift-migration-ui-rhel8@sha256:c4d130484cc4002186900246ea6d5b2c47fd52e5498b2b086c01e4791c7c2d91
+          imagePullPolicy: Always
+          name: mig-ui
+          ports:
+          - containerPort: 9000
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /etc/mig-ui
+            name: mig-ui-config
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - configMap:
+            defaultMode: 420
+            name: mig-ui-config
+          name: mig-ui-config
+  status:
+    observedGeneration: 2
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "5"
+    creationTimestamp: "2023-10-19T03:19:56Z"
+    generation: 2
+    labels:
+      app: migration
+      app.kubernetes.io/part-of: openshift-migration
+      pod-template-hash: 868b96f999
+      service: migration-ui
+      ui-config-name: mig-ui-config-d728hb6kkf
+    name: migration-ui-868b96f999
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: migration-ui
+      uid: 607225a7-51a1-44bd-b93c-076efc4424bf
+    resourceVersion: "147743320"
+    uid: 3097d6b8-b713-4897-9221-da10789fa1b1
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        app: migration
+        pod-template-hash: 868b96f999
+        service: migration-ui
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: migration
+          app.kubernetes.io/part-of: openshift-migration
+          pod-template-hash: 868b96f999
+          service: migration-ui
+          ui-config-name: mig-ui-config-d728hb6kkf
+      spec:
+        containers:
+        - env:
+          - name: CLUSTER_API_URL
+            value: https://kubernetes.default.svc.cluster.local
+          - name: DISCOVERY_SVC_URL
+            value: http://discovery.openshift-migration.svc.cluster.local
+          image: registry.redhat.io/rhmtc/openshift-migration-ui-rhel8@sha256:8c0432993b96f271bf056fc0ea1247bbf28e2540678f2bbfccbc73ba1cc7643b
+          imagePullPolicy: Always
+          name: mig-ui
+          ports:
+          - containerPort: 9000
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /etc/mig-ui
+            name: mig-ui-config
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - configMap:
+            defaultMode: 420
+            name: mig-ui-config
+          name: mig-ui-config
+  status:
+    observedGeneration: 2
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "8"
+    creationTimestamp: "2024-07-11T17:33:12Z"
+    generation: 1
+    labels:
+      app: migration
+      app.kubernetes.io/part-of: openshift-migration
+      pod-template-hash: 86f78879f7
+      service: migration-ui
+      ui-config-name: mig-ui-config-5gm5c57bc8
+    name: migration-ui-86f78879f7
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: migration-ui
+      uid: 607225a7-51a1-44bd-b93c-076efc4424bf
+    resourceVersion: "476624618"
+    uid: 6365927f-9c86-41a3-b233-ebd0e5b2536e
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: migration
+        pod-template-hash: 86f78879f7
+        service: migration-ui
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: migration
+          app.kubernetes.io/part-of: openshift-migration
+          pod-template-hash: 86f78879f7
+          service: migration-ui
+          ui-config-name: mig-ui-config-5gm5c57bc8
+      spec:
+        containers:
+        - env:
+          - name: CLUSTER_API_URL
+            value: https://kubernetes.default.svc.cluster.local
+          - name: DISCOVERY_SVC_URL
+            value: http://discovery.openshift-migration.svc.cluster.local
+          image: registry.redhat.io/rhmtc/openshift-migration-ui-rhel8@sha256:90321b75d2de313fd2f4cb0303ece5b186448bedda864c0eaf932a22b1a9c5e2
+          imagePullPolicy: Always
+          name: mig-ui
+          ports:
+          - containerPort: 9000
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /etc/mig-ui
+            name: mig-ui-config
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - configMap:
+            defaultMode: 420
+            name: mig-ui-config
+          name: mig-ui-config
+  status:
+    availableReplicas: 1
+    fullyLabeledReplicas: 1
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "7"
+    creationTimestamp: "2024-05-01T02:40:59Z"
+    generation: 2
+    labels:
+      app: migration
+      app.kubernetes.io/part-of: openshift-migration
+      pod-template-hash: 965ddb88f
+      service: migration-ui
+      ui-config-name: mig-ui-config-6kf8gmtd25
+    name: migration-ui-965ddb88f
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: migration-ui
+      uid: 607225a7-51a1-44bd-b93c-076efc4424bf
+    resourceVersion: "449358335"
+    uid: 7ba000d2-7d87-4e6d-a67e-adca96ac469b
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        app: migration
+        pod-template-hash: 965ddb88f
+        service: migration-ui
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: migration
+          app.kubernetes.io/part-of: openshift-migration
+          pod-template-hash: 965ddb88f
+          service: migration-ui
+          ui-config-name: mig-ui-config-6kf8gmtd25
+      spec:
+        containers:
+        - env:
+          - name: CLUSTER_API_URL
+            value: https://kubernetes.default.svc.cluster.local
+          - name: DISCOVERY_SVC_URL
+            value: http://discovery.openshift-migration.svc.cluster.local
+          image: registry.redhat.io/rhmtc/openshift-migration-ui-rhel8@sha256:ea6df61836d5ddf6dce29138510df7e494cec3236511e4ad7925c4566d777790
+          imagePullPolicy: Always
+          name: mig-ui
+          ports:
+          - containerPort: 9000
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /etc/mig-ui
+            name: mig-ui-config
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - configMap:
+            defaultMode: 420
+            name: mig-ui-config
+          name: mig-ui-config
+  status:
+    observedGeneration: 2
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "8"
+    creationTimestamp: "2024-07-11T14:22:57Z"
+    generation: 1
+    labels:
+      control-plane: controller-manager
+      pod-template-hash: 5f7bb58f7
+    name: openshift-adp-controller-manager-5f7bb58f7
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: openshift-adp-controller-manager
+      uid: 672687ba-56cf-4306-8fb8-a5fb89b07b0b
+    resourceVersion: "476624600"
+    uid: 32abe60b-39b7-4f70-885b-6f119dfeea8c
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        control-plane: controller-manager
+        pod-template-hash: 5f7bb58f7
+    template:
+      metadata:
+        annotations:
+          alm-examples: |-
+            [
+              {
+                "apiVersion": "oadp.openshift.io/v1alpha1",
+                "kind": "DataProtectionApplication",
+                "metadata": {
+                  "name": "velero-sample"
+                },
+                "spec": {
+                  "backupLocations": [
+                    {
+                      "velero": {
+                        "config": {
+                          "profile": "default",
+                          "region": "us-east-1"
+                        },
+                        "credential": {
+                          "key": "cloud",
+                          "name": "cloud-credentials"
+                        },
+                        "default": true,
+                        "objectStorage": {
+                          "bucket": "my-bucket-name",
+                          "prefix": "velero"
+                        },
+                        "provider": "aws"
+                      }
+                    }
+                  ],
+                  "configuration": {
+                    "restic": {
+                      "enable": true
+                    },
+                    "velero": {
+                      "defaultPlugins": [
+                        "openshift",
+                        "aws",
+                        "kubevirt"
+                      ]
+                    }
+                  },
+                  "snapshotLocations": [
+                    {
+                      "velero": {
+                        "config": {
+                          "profile": "default",
+                          "region": "us-west-2"
+                        },
+                        "provider": "aws"
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "apiVersion": "velero.io/v1",
+                "kind": "Backup",
+                "metadata": {
+                  "name": "backup",
+                  "namespace": "openshift-adp"
+                },
+                "spec": {}
+              },
+              {
+                "apiVersion": "velero.io/v1",
+                "kind": "BackupStorageLocation",
+                "metadata": {
+                  "name": "backupstoragelocation",
+                  "namespace": "openshift-adp"
+                },
+                "spec": {}
+              },
+              {
+                "apiVersion": "velero.io/v1",
+                "kind": "DeleteBackupRequest",
+                "metadata": {
+                  "name": "deletebackuprequest",
+                  "namespace": "openshift-adp"
+                },
+                "spec": {}
+              },
+              {
+                "apiVersion": "velero.io/v1",
+                "kind": "DownloadRequest",
+                "metadata": {
+                  "name": "downloadrequest",
+                  "namespace": "openshift-adp"
+                },
+                "spec": {}
+              },
+              {
+                "apiVersion": "velero.io/v1",
+                "kind": "PodVolumeBackup",
+                "metadata": {
+                  "name": "podvolumebackup",
+                  "namespace": "openshift-adp"
+                },
+                "spec": {}
+              },
+              {
+                "apiVersion": "velero.io/v1",
+                "kind": "PodVolumeRestore",
+                "metadata": {
+                  "name": "podvolumerestore",
+                  "namespace": "openshift-adp"
+                },
+                "spec": {}
+              },
+              {
+                "apiVersion": "velero.io/v1",
+                "kind": "ResticRepository",
+                "metadata": {
+                  "name": "resticrepository",
+                  "namespace": "openshift-adp"
+                },
+                "spec": {}
+              },
+              {
+                "apiVersion": "velero.io/v1",
+                "kind": "Restore",
+                "metadata": {
+                  "name": "restore",
+                  "namespace": "openshift-adp"
+                },
+                "spec": {}
+              },
+              {
+                "apiVersion": "velero.io/v1",
+                "kind": "Schedule",
+                "metadata": {
+                  "name": "schedule",
+                  "namespace": "openshift-adp"
+                },
+                "spec": {}
+              },
+              {
+                "apiVersion": "velero.io/v1",
+                "kind": "ServerStatusRequest",
+                "metadata": {
+                  "name": "serverstatusrequest",
+                  "namespace": "openshift-adp"
+                },
+                "spec": {}
+              },
+              {
+                "apiVersion": "velero.io/v1",
+                "kind": "VolumeSnapshotLocation",
+                "metadata": {
+                  "name": "volumesnapshotlocation",
+                  "namespace": "openshift-adp"
+                },
+                "spec": {}
+              }
+            ]
+          capabilities: Seamless Upgrades
+          categories: OpenShift Optional
+          certified: "false"
+          containerImage: registry.redhat.io/oadp/oadp-rhel8-operator@sha256:5ba8d9bca89945f05cc8f071e1a96bf62dcf21792ff2ca09033464dabd67e293
+          createdAt: "2024-06-26T17:04:33Z"
+          description: |-
+            OADP (OpenShift API for Data Protection) operator sets up and installs
+            Velero on the OpenShift platform.
+          features.operators.openshift.io/cnf: "false"
+          features.operators.openshift.io/cni: "false"
+          features.operators.openshift.io/csi: "false"
+          features.operators.openshift.io/disconnected: "true"
+          features.operators.openshift.io/fips-compliant: "false"
+          features.operators.openshift.io/proxy-aware: "false"
+          features.operators.openshift.io/tls-profiles: "false"
+          features.operators.openshift.io/token-auth-aws: "false"
+          features.operators.openshift.io/token-auth-azure: "false"
+          features.operators.openshift.io/token-auth-gcp: "false"
+          olm.operatorGroup: openshift-migration-z5b5h
+          olm.operatorNamespace: openshift-migration
+          olm.skipRange: '>=0.0.0 <1.0.16'
+          olm.targetNamespaces: openshift-migration
+          operatorframework.io/cluster-monitoring: "true"
+          operatorframework.io/properties: '{"properties":[{"type":"olm.gvk","value":{"group":"oadp.openshift.io","kind":"DataProtectionApplication","version":"v1alpha1"}},{"type":"olm.gvk","value":{"group":"velero.io","kind":"DownloadRequest","version":"v1"}},{"type":"olm.gvk","value":{"group":"velero.io","kind":"VolumeSnapshotLocation","version":"v1"}},{"type":"olm.gvk","value":{"group":"velero.io","kind":"Backup","version":"v1"}},{"type":"olm.package","value":{"packageName":"redhat-oadp-operator","version":"1.0.16"}},{"type":"olm.gvk","value":{"group":"velero.io","kind":"PodVolumeBackup","version":"v1"}},{"type":"olm.gvk","value":{"group":"velero.io","kind":"Restore","version":"v1"}},{"type":"olm.gvk","value":{"group":"velero.io","kind":"PodVolumeRestore","version":"v1"}},{"type":"olm.gvk","value":{"group":"velero.io","kind":"ResticRepository","version":"v1"}},{"type":"olm.gvk","value":{"group":"velero.io","kind":"BackupStorageLocation","version":"v1"}},{"type":"olm.gvk","value":{"group":"velero.io","kind":"ServerStatusRequest","version":"v1"}},{"type":"olm.gvk","value":{"group":"velero.io","kind":"Schedule","version":"v1"}},{"type":"olm.gvk","value":{"group":"oadp.openshift.io","kind":"CloudStorage","version":"v1alpha1"}},{"type":"olm.gvk","value":{"group":"velero.io","kind":"DeleteBackupRequest","version":"v1"}}]}'
+          operatorframework.io/suggested-namespace: openshift-adp
+          operators.openshift.io/infrastructure-features: '["Disconnected"]'
+          operators.openshift.io/must-gather-image: registry.redhat.io/oadp/oadp-mustgather-rhel8@sha256:35028c0615425ac1756a3e16de2b6f0559a8131b74d553c49751a6cf25d36832
+          operators.openshift.io/valid-subscription: '["OpenShift Container Platform",
+            "OpenShift Platform Plus"]'
+          operators.operatorframework.io/builder: operator-sdk-v1.21.0
+          operators.operatorframework.io/project_layout: go.kubebuilder.io/v3
+          repository: https://github.com/openshift/oadp-operator
+          support: Red Hat
+        creationTimestamp: null
+        labels:
+          control-plane: controller-manager
+          pod-template-hash: 5f7bb58f7
+      spec:
+        containers:
+        - args:
+          - --leader-elect
+          command:
+          - /manager
+          env:
+          - name: WATCH_NAMESPACE
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.annotations['olm.targetNamespaces']
+          - name: RELATED_IMAGE_VELERO
+            value: registry.redhat.io/oadp/oadp-velero-rhel8@sha256:9b681de9e02cb402e24fa10dce66b36d02702b82ece9dff511bb6c7d1e6c9c31
+          - name: RELATED_IMAGE_VELERO_RESTIC_RESTORE_HELPER
+            value: registry.redhat.io/oadp/oadp-velero-restic-restore-helper-rhel8@sha256:602414650663295350974dea5e58658866927770d0bb10b2147749b5cdb78980
+          - name: RELATED_IMAGE_OPENSHIFT_VELERO_PLUGIN
+            value: registry.redhat.io/oadp/oadp-velero-plugin-rhel8@sha256:eac641a34d00fb5592e38d559b85cce99bbce436ae3ac2f3767d164d374a2278
+          - name: RELATED_IMAGE_REGISTRY
+            value: registry.redhat.io/oadp/oadp-registry-rhel8@sha256:c4b6cb088c96ec7aca6014e8d48f83fa4b2067edd507d1da73e48a969c7c9da9
+          - name: RELATED_IMAGE_VELERO_PLUGIN_FOR_AWS
+            value: registry.redhat.io/oadp/oadp-velero-plugin-for-aws-rhel8@sha256:a12100d0faf4dd4bdeb5212186d8a94c88a2b73d3632bdd4b6f504895fafb704
+          - name: RELATED_IMAGE_VELERO_PLUGIN_FOR_MICROSOFT_AZURE
+            value: registry.redhat.io/oadp/oadp-velero-plugin-for-microsoft-azure-rhel8@sha256:60b7d0f7ab58efcc1dc2ed13f3cb77b7396308a63580b3bf9235172b263a0ba2
+          - name: RELATED_IMAGE_VELERO_PLUGIN_FOR_GCP
+            value: registry.redhat.io/oadp/oadp-velero-plugin-for-gcp-rhel8@sha256:97e901972699a73e32e6ac456038179d6a614ea0fe29e052d0f872d66ac38365
+          - name: RELATED_IMAGE_VELERO_PLUGIN_FOR_CSI
+            value: registry.redhat.io/oadp/oadp-velero-plugin-for-csi-rhel8@sha256:db98264e722a3756ed923fff8f19b03dc6047105c372279c24fb707b3a0bd4aa
+          - name: RELATED_IMAGE_KUBEVIRT_VELERO_PLUGIN
+            value: registry.redhat.io/oadp/oadp-kubevirt-velero-plugin-rhel8@sha256:5c178c7d50f8a7ec9588648c7c978ae6707eaf26b851edef947b9d2d5635b3d4
+          - name: RELATED_IMAGE_MUSTGATHER
+            value: registry.redhat.io/oadp/oadp-mustgather-rhel8@sha256:35028c0615425ac1756a3e16de2b6f0559a8131b74d553c49751a6cf25d36832
+          - name: OPERATOR_CONDITION_NAME
+            value: oadp-operator.v1.0.16
+          image: registry.redhat.io/oadp/oadp-rhel8-operator@sha256:5ba8d9bca89945f05cc8f071e1a96bf62dcf21792ff2ca09033464dabd67e293
+          imagePullPolicy: Always
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /healthz
+              port: 8081
+              scheme: HTTP
+            initialDelaySeconds: 15
+            periodSeconds: 20
+            successThreshold: 1
+            timeoutSeconds: 1
+          name: manager
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /readyz
+              port: 8081
+              scheme: HTTP
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources:
+            limits:
+              cpu: "1"
+              memory: 512Mi
+            requests:
+              cpu: 500m
+              memory: 128Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+          startupProbe:
+            failureThreshold: 12
+            httpGet:
+              path: /healthz
+              port: 8081
+              scheme: HTTP
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/run/secrets/openshift/serviceaccount
+            name: bound-sa-token
+            readOnly: true
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext:
+          runAsNonRoot: true
+        serviceAccount: openshift-adp-controller-manager
+        serviceAccountName: openshift-adp-controller-manager
+        terminationGracePeriodSeconds: 10
+        volumes:
+        - name: bound-sa-token
+          projected:
+            defaultMode: 420
+            sources:
+            - serviceAccountToken:
+                audience: openshift
+                expirationSeconds: 3600
+                path: token
+  status:
+    availableReplicas: 1
+    fullyLabeledReplicas: 1
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "7"
+    creationTimestamp: "2024-05-01T01:51:57Z"
+    generation: 2
+    labels:
+      control-plane: controller-manager
+      pod-template-hash: f85796f77
+    name: openshift-adp-controller-manager-f85796f77
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: openshift-adp-controller-manager
+      uid: 672687ba-56cf-4306-8fb8-a5fb89b07b0b
+    resourceVersion: "449090522"
+    uid: f6e683b7-21e1-41dd-89d3-0b33484ecbea
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        control-plane: controller-manager
+        pod-template-hash: f85796f77
+    template:
+      metadata:
+        annotations:
+          alm-examples: |-
+            [
+              {
+                "apiVersion": "oadp.openshift.io/v1alpha1",
+                "kind": "DataProtectionApplication",
+                "metadata": {
+                  "name": "velero-sample"
+                },
+                "spec": {
+                  "backupLocations": [
+                    {
+                      "velero": {
+                        "config": {
+                          "profile": "default",
+                          "region": "us-east-1"
+                        },
+                        "credential": {
+                          "key": "cloud",
+                          "name": "cloud-credentials"
+                        },
+                        "default": true,
+                        "objectStorage": {
+                          "bucket": "my-bucket-name",
+                          "prefix": "velero"
+                        },
+                        "provider": "aws"
+                      }
+                    }
+                  ],
+                  "configuration": {
+                    "restic": {
+                      "enable": true
+                    },
+                    "velero": {
+                      "defaultPlugins": [
+                        "openshift",
+                        "aws",
+                        "kubevirt"
+                      ]
+                    }
+                  },
+                  "snapshotLocations": [
+                    {
+                      "velero": {
+                        "config": {
+                          "profile": "default",
+                          "region": "us-west-2"
+                        },
+                        "provider": "aws"
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "apiVersion": "velero.io/v1",
+                "kind": "Backup",
+                "metadata": {
+                  "name": "backup",
+                  "namespace": "openshift-adp"
+                },
+                "spec": {}
+              },
+              {
+                "apiVersion": "velero.io/v1",
+                "kind": "BackupStorageLocation",
+                "metadata": {
+                  "name": "backupstoragelocation",
+                  "namespace": "openshift-adp"
+                },
+                "spec": {}
+              },
+              {
+                "apiVersion": "velero.io/v1",
+                "kind": "DeleteBackupRequest",
+                "metadata": {
+                  "name": "deletebackuprequest",
+                  "namespace": "openshift-adp"
+                },
+                "spec": {}
+              },
+              {
+                "apiVersion": "velero.io/v1",
+                "kind": "DownloadRequest",
+                "metadata": {
+                  "name": "downloadrequest",
+                  "namespace": "openshift-adp"
+                },
+                "spec": {}
+              },
+              {
+                "apiVersion": "velero.io/v1",
+                "kind": "PodVolumeBackup",
+                "metadata": {
+                  "name": "podvolumebackup",
+                  "namespace": "openshift-adp"
+                },
+                "spec": {}
+              },
+              {
+                "apiVersion": "velero.io/v1",
+                "kind": "PodVolumeRestore",
+                "metadata": {
+                  "name": "podvolumerestore",
+                  "namespace": "openshift-adp"
+                },
+                "spec": {}
+              },
+              {
+                "apiVersion": "velero.io/v1",
+                "kind": "ResticRepository",
+                "metadata": {
+                  "name": "resticrepository",
+                  "namespace": "openshift-adp"
+                },
+                "spec": {}
+              },
+              {
+                "apiVersion": "velero.io/v1",
+                "kind": "Restore",
+                "metadata": {
+                  "name": "restore",
+                  "namespace": "openshift-adp"
+                },
+                "spec": {}
+              },
+              {
+                "apiVersion": "velero.io/v1",
+                "kind": "Schedule",
+                "metadata": {
+                  "name": "schedule",
+                  "namespace": "openshift-adp"
+                },
+                "spec": {}
+              },
+              {
+                "apiVersion": "velero.io/v1",
+                "kind": "ServerStatusRequest",
+                "metadata": {
+                  "name": "serverstatusrequest",
+                  "namespace": "openshift-adp"
+                },
+                "spec": {}
+              },
+              {
+                "apiVersion": "velero.io/v1",
+                "kind": "VolumeSnapshotLocation",
+                "metadata": {
+                  "name": "volumesnapshotlocation",
+                  "namespace": "openshift-adp"
+                },
+                "spec": {}
+              }
+            ]
+          capabilities: Seamless Upgrades
+          categories: OpenShift Optional
+          certified: "false"
+          containerImage: registry.redhat.io/oadp/oadp-rhel8-operator@sha256:8a4235ab3e3c41344796c177200f325128f92095d5b5ea456bee68e970d4fe93
+          createdAt: "2024-04-22T13:03:16Z"
+          description: |-
+            OADP (OpenShift API for Data Protection) operator sets up and installs
+            Velero on the OpenShift platform.
+          features.operators.openshift.io/cnf: "false"
+          features.operators.openshift.io/cni: "false"
+          features.operators.openshift.io/csi: "false"
+          features.operators.openshift.io/disconnected: "true"
+          features.operators.openshift.io/fips-compliant: "false"
+          features.operators.openshift.io/proxy-aware: "false"
+          features.operators.openshift.io/tls-profiles: "false"
+          features.operators.openshift.io/token-auth-aws: "false"
+          features.operators.openshift.io/token-auth-azure: "false"
+          features.operators.openshift.io/token-auth-gcp: "false"
+          olm.operatorGroup: openshift-migration-z5b5h
+          olm.operatorNamespace: openshift-migration
+          olm.skipRange: '>=0.0.0 <1.0.15'
+          olm.targetNamespaces: openshift-migration
+          operatorframework.io/cluster-monitoring: "true"
+          operatorframework.io/properties: '{"properties":[{"type":"olm.gvk","value":{"group":"oadp.openshift.io","kind":"DataProtectionApplication","version":"v1alpha1"}},{"type":"olm.gvk","value":{"group":"velero.io","kind":"PodVolumeBackup","version":"v1"}},{"type":"olm.gvk","value":{"group":"velero.io","kind":"DownloadRequest","version":"v1"}},{"type":"olm.gvk","value":{"group":"velero.io","kind":"VolumeSnapshotLocation","version":"v1"}},{"type":"olm.gvk","value":{"group":"velero.io","kind":"Restore","version":"v1"}},{"type":"olm.gvk","value":{"group":"velero.io","kind":"BackupStorageLocation","version":"v1"}},{"type":"olm.gvk","value":{"group":"velero.io","kind":"PodVolumeRestore","version":"v1"}},{"type":"olm.gvk","value":{"group":"velero.io","kind":"ServerStatusRequest","version":"v1"}},{"type":"olm.package","value":{"packageName":"redhat-oadp-operator","version":"1.0.15"}},{"type":"olm.gvk","value":{"group":"velero.io","kind":"Schedule","version":"v1"}},{"type":"olm.gvk","value":{"group":"velero.io","kind":"Backup","version":"v1"}},{"type":"olm.gvk","value":{"group":"velero.io","kind":"DeleteBackupRequest","version":"v1"}},{"type":"olm.gvk","value":{"group":"velero.io","kind":"ResticRepository","version":"v1"}},{"type":"olm.gvk","value":{"group":"oadp.openshift.io","kind":"CloudStorage","version":"v1alpha1"}}]}'
+          operatorframework.io/suggested-namespace: openshift-adp
+          operators.openshift.io/infrastructure-features: '["Disconnected"]'
+          operators.openshift.io/must-gather-image: registry.redhat.io/oadp/oadp-mustgather-rhel8@sha256:4a09f0524d5fc9a052917fdeffdc80e0ca5e2b587248fef6eec0dc9f1e889784
+          operators.openshift.io/valid-subscription: '["OpenShift Container Platform",
+            "OpenShift Platform Plus"]'
+          operators.operatorframework.io/builder: operator-sdk-v1.21.0
+          operators.operatorframework.io/project_layout: go.kubebuilder.io/v3
+          repository: https://github.com/openshift/oadp-operator
+          support: Red Hat
+        creationTimestamp: null
+        labels:
+          control-plane: controller-manager
+          pod-template-hash: f85796f77
+      spec:
+        containers:
+        - args:
+          - --leader-elect
+          command:
+          - /manager
+          env:
+          - name: WATCH_NAMESPACE
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.annotations['olm.targetNamespaces']
+          - name: RELATED_IMAGE_VELERO
+            value: registry.redhat.io/oadp/oadp-velero-rhel8@sha256:5babc0e348e46c703647bd6fd0fb5b0e9c88f091c474c11950e18bd2b5a86741
+          - name: RELATED_IMAGE_VELERO_RESTIC_RESTORE_HELPER
+            value: registry.redhat.io/oadp/oadp-velero-restic-restore-helper-rhel8@sha256:937f4b1cb8aa98be1feb94d3387c7c4db01d33273bf0bdcaea95ef1a8380455e
+          - name: RELATED_IMAGE_OPENSHIFT_VELERO_PLUGIN
+            value: registry.redhat.io/oadp/oadp-velero-plugin-rhel8@sha256:c67e56d2f2abf94695b0eed9cf247407ac9e57ab7df0dee36bc858153334e3b0
+          - name: RELATED_IMAGE_REGISTRY
+            value: registry.redhat.io/oadp/oadp-registry-rhel8@sha256:644ee573596a985d3f4df69428d7a4b471237046b01e3891ecbb7f6861c4854d
+          - name: RELATED_IMAGE_VELERO_PLUGIN_FOR_AWS
+            value: registry.redhat.io/oadp/oadp-velero-plugin-for-aws-rhel8@sha256:5ea5f460dab71402b942feff56e310c8b6c5c622cca0974ab3c8aa136b40c631
+          - name: RELATED_IMAGE_VELERO_PLUGIN_FOR_MICROSOFT_AZURE
+            value: registry.redhat.io/oadp/oadp-velero-plugin-for-microsoft-azure-rhel8@sha256:a82f427a7cac0d8a27235bd6db75e064805dfc8499a43281e154e5d35091be62
+          - name: RELATED_IMAGE_VELERO_PLUGIN_FOR_GCP
+            value: registry.redhat.io/oadp/oadp-velero-plugin-for-gcp-rhel8@sha256:ae1b5c31db1f3cf7e29f7b055e62da606b5de8c7e4554c8470f5608c4af981b8
+          - name: RELATED_IMAGE_VELERO_PLUGIN_FOR_CSI
+            value: registry.redhat.io/oadp/oadp-velero-plugin-for-csi-rhel8@sha256:f56e464df086ea7ff6289e519e04758006e0a5faee5ba64240a61c9f0ba765a5
+          - name: RELATED_IMAGE_KUBEVIRT_VELERO_PLUGIN
+            value: registry.redhat.io/oadp/oadp-kubevirt-velero-plugin-rhel8@sha256:596ac552bca1dd1ac98c2d98a6d3d2bbaaaccb019f39ef3092606bf5325bc960
+          - name: RELATED_IMAGE_MUSTGATHER
+            value: registry.redhat.io/oadp/oadp-mustgather-rhel8@sha256:4a09f0524d5fc9a052917fdeffdc80e0ca5e2b587248fef6eec0dc9f1e889784
+          - name: OPERATOR_CONDITION_NAME
+            value: oadp-operator.v1.0.15
+          image: registry.redhat.io/oadp/oadp-rhel8-operator@sha256:8a4235ab3e3c41344796c177200f325128f92095d5b5ea456bee68e970d4fe93
+          imagePullPolicy: Always
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /healthz
+              port: 8081
+              scheme: HTTP
+            initialDelaySeconds: 15
+            periodSeconds: 20
+            successThreshold: 1
+            timeoutSeconds: 1
+          name: manager
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /readyz
+              port: 8081
+              scheme: HTTP
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources:
+            limits:
+              cpu: "1"
+              memory: 512Mi
+            requests:
+              cpu: 500m
+              memory: 128Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+          startupProbe:
+            failureThreshold: 12
+            httpGet:
+              path: /healthz
+              port: 8081
+              scheme: HTTP
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/run/secrets/openshift/serviceaccount
+            name: bound-sa-token
+            readOnly: true
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext:
+          runAsNonRoot: true
+        serviceAccount: openshift-adp-controller-manager
+        serviceAccountName: openshift-adp-controller-manager
+        terminationGracePeriodSeconds: 10
+        volumes:
+        - name: bound-sa-token
+          projected:
+            defaultMode: 420
+            sources:
+            - serviceAccountToken:
+                audience: openshift
+                expirationSeconds: 3600
+                path: token
+  status:
+    observedGeneration: 2
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "2"
+    creationTimestamp: "2023-06-15T05:37:02Z"
+    generation: 2
+    labels:
+      app.kubernetes.io/component: server
+      app.kubernetes.io/instance: velero
+      app.kubernetes.io/managed-by: oadp-operator
+      app.kubernetes.io/name: velero
+      app.kubernetes.io/part-of: openshift-migration
+      component: velero
+      deploy: velero
+      openshift.io/oadp: "True"
+      pod-template-hash: 56d8cd8575
+    name: velero-56d8cd8575
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: velero
+      uid: 6e0a5e8e-ddf9-4f86-b61f-624e37d518c6
+    resourceVersion: "65068852"
+    uid: 24a0ca16-2548-41bb-95e0-33530fbb5fea
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        app.kubernetes.io/component: server
+        app.kubernetes.io/instance: velero
+        app.kubernetes.io/managed-by: oadp-operator
+        app.kubernetes.io/name: velero
+        component: velero
+        deploy: velero
+        openshift.io/oadp: "True"
+        pod-template-hash: 56d8cd8575
+    template:
+      metadata:
+        annotations:
+          prometheus.io/path: /metrics
+          prometheus.io/port: "8085"
+          prometheus.io/scrape: "true"
+        creationTimestamp: null
+        labels:
+          app.kubernetes.io/component: server
+          app.kubernetes.io/instance: velero
+          app.kubernetes.io/managed-by: oadp-operator
+          app.kubernetes.io/name: velero
+          app.kubernetes.io/part-of: openshift-migration
+          component: velero
+          deploy: velero
+          openshift.io/oadp: "True"
+          pod-template-hash: 56d8cd8575
+      spec:
+        containers:
+        - args:
+          - server
+          - --restic-timeout=1h
+          command:
+          - /velero
+          env:
+          - name: VELERO_SCRATCH_DIR
+            value: /scratch
+          - name: VELERO_NAMESPACE
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+          - name: LD_LIBRARY_PATH
+            value: /plugins
+          - name: AWS_SHARED_CREDENTIALS_FILE
+            value: /credentials/cloud
+          - name: GOOGLE_APPLICATION_CREDENTIALS
+            value: /credentials-gcp/cloud
+          - name: AZURE_CREDENTIALS_FILE
+            value: /credentials-azure/cloud
+          image: registry.redhat.io/oadp/oadp-velero-rhel8@sha256:c04a4b6eedcc0e6b3f2893b1f0cdcb564f93a1c44333853f6074c082afda773d
+          imagePullPolicy: Always
+          name: velero
+          ports:
+          - containerPort: 8085
+            name: metrics
+            protocol: TCP
+          resources:
+            limits:
+              cpu: "1"
+              memory: 512Mi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /plugins
+            name: plugins
+          - mountPath: /scratch
+            name: scratch
+          - mountPath: /etc/ssl/certs
+            name: certs
+          - mountPath: /credentials
+            name: cloud-credentials
+          - mountPath: /credentials-gcp
+            name: cloud-credentials-gcp
+          - mountPath: /credentials-azure
+            name: cloud-credentials-azure
+        dnsPolicy: ClusterFirst
+        initContainers:
+        - image: registry.redhat.io/oadp/oadp-velero-plugin-rhel8@sha256:eb9fef9a859cabf4835497c75f35cfec7cf44f5142c796dcc151e786ab013c4a
+          imagePullPolicy: Always
+          name: openshift-velero-plugin
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /target
+            name: plugins
+        - image: registry.redhat.io/oadp/oadp-velero-plugin-for-aws-rhel8@sha256:e851b6c8062293efbc888d1d13f5f37d5731903e328441a0dc702e55af5d95b2
+          imagePullPolicy: Always
+          name: velero-plugin-for-aws
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /target
+            name: plugins
+        - image: registry.redhat.io/oadp/oadp-velero-plugin-for-gcp-rhel8@sha256:2ec0c01fd0c8319733e555832d67b8dfd5422b7370c3c62de1578181fa817555
+          imagePullPolicy: Always
+          name: velero-plugin-for-gcp
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /target
+            name: plugins
+        - image: registry.redhat.io/oadp/oadp-velero-plugin-for-microsoft-azure-rhel8@sha256:1d85b3453e4d1fd1ae93aef8c0418a1061d7d1ab64fb63dd89e1cfb70250d7c6
+          imagePullPolicy: Always
+          name: velero-plugin-for-microsoft-azure
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /target
+            name: plugins
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: velero
+        serviceAccountName: velero
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - emptyDir: {}
+          name: plugins
+        - emptyDir: {}
+          name: scratch
+        - emptyDir: {}
+          name: certs
+        - name: cloud-credentials
+          secret:
+            defaultMode: 420
+            secretName: cloud-credentials
+        - name: cloud-credentials-gcp
+          secret:
+            defaultMode: 420
+            secretName: cloud-credentials-gcp
+        - name: cloud-credentials-azure
+          secret:
+            defaultMode: 420
+            secretName: cloud-credentials-azure
+  status:
+    observedGeneration: 2
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "8"
+    creationTimestamp: "2024-07-11T14:23:44Z"
+    generation: 1
+    labels:
+      app.kubernetes.io/component: server
+      app.kubernetes.io/instance: velero
+      app.kubernetes.io/managed-by: oadp-operator
+      app.kubernetes.io/name: velero
+      app.kubernetes.io/part-of: openshift-migration
+      component: velero
+      deploy: velero
+      openshift.io/oadp: "True"
+      pod-template-hash: 5bcb94bb68
+    name: velero-5bcb94bb68
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: velero
+      uid: 6e0a5e8e-ddf9-4f86-b61f-624e37d518c6
+    resourceVersion: "476624573"
+    uid: 7c3ac7bb-7d94-4210-b90c-0dc12f0aef01
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app.kubernetes.io/component: server
+        app.kubernetes.io/instance: velero
+        app.kubernetes.io/managed-by: oadp-operator
+        app.kubernetes.io/name: velero
+        component: velero
+        deploy: velero
+        openshift.io/oadp: "True"
+        pod-template-hash: 5bcb94bb68
+    template:
+      metadata:
+        annotations:
+          prometheus.io/path: /metrics
+          prometheus.io/port: "8085"
+          prometheus.io/scrape: "true"
+        creationTimestamp: null
+        labels:
+          app.kubernetes.io/component: server
+          app.kubernetes.io/instance: velero
+          app.kubernetes.io/managed-by: oadp-operator
+          app.kubernetes.io/name: velero
+          app.kubernetes.io/part-of: openshift-migration
+          component: velero
+          deploy: velero
+          openshift.io/oadp: "True"
+          pod-template-hash: 5bcb94bb68
+      spec:
+        containers:
+        - args:
+          - server
+          - --restic-timeout=1h
+          command:
+          - /velero
+          env:
+          - name: VELERO_SCRATCH_DIR
+            value: /scratch
+          - name: VELERO_NAMESPACE
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+          - name: LD_LIBRARY_PATH
+            value: /plugins
+          - name: AWS_SHARED_CREDENTIALS_FILE
+            value: /credentials/cloud
+          - name: GOOGLE_APPLICATION_CREDENTIALS
+            value: /credentials-gcp/cloud
+          - name: AZURE_CREDENTIALS_FILE
+            value: /credentials-azure/cloud
+          image: registry.redhat.io/oadp/oadp-velero-rhel8@sha256:9b681de9e02cb402e24fa10dce66b36d02702b82ece9dff511bb6c7d1e6c9c31
+          imagePullPolicy: Always
+          name: velero
+          ports:
+          - containerPort: 8085
+            name: metrics
+            protocol: TCP
+          resources:
+            limits:
+              cpu: "1"
+              memory: 512Mi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /plugins
+            name: plugins
+          - mountPath: /scratch
+            name: scratch
+          - mountPath: /etc/ssl/certs
+            name: certs
+          - mountPath: /credentials
+            name: cloud-credentials
+          - mountPath: /credentials-gcp
+            name: cloud-credentials-gcp
+          - mountPath: /credentials-azure
+            name: cloud-credentials-azure
+        dnsPolicy: ClusterFirst
+        initContainers:
+        - image: registry.redhat.io/oadp/oadp-velero-plugin-rhel8@sha256:eac641a34d00fb5592e38d559b85cce99bbce436ae3ac2f3767d164d374a2278
+          imagePullPolicy: Always
+          name: openshift-velero-plugin
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /target
+            name: plugins
+        - image: registry.redhat.io/oadp/oadp-velero-plugin-for-aws-rhel8@sha256:a12100d0faf4dd4bdeb5212186d8a94c88a2b73d3632bdd4b6f504895fafb704
+          imagePullPolicy: Always
+          name: velero-plugin-for-aws
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /target
+            name: plugins
+        - image: registry.redhat.io/oadp/oadp-velero-plugin-for-gcp-rhel8@sha256:97e901972699a73e32e6ac456038179d6a614ea0fe29e052d0f872d66ac38365
+          imagePullPolicy: Always
+          name: velero-plugin-for-gcp
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /target
+            name: plugins
+        - image: registry.redhat.io/oadp/oadp-velero-plugin-for-microsoft-azure-rhel8@sha256:60b7d0f7ab58efcc1dc2ed13f3cb77b7396308a63580b3bf9235172b263a0ba2
+          imagePullPolicy: Always
+          name: velero-plugin-for-microsoft-azure
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /target
+            name: plugins
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: velero
+        serviceAccountName: velero
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - emptyDir: {}
+          name: plugins
+        - emptyDir: {}
+          name: scratch
+        - emptyDir: {}
+          name: certs
+        - name: cloud-credentials
+          secret:
+            defaultMode: 420
+            secretName: cloud-credentials
+        - name: cloud-credentials-gcp
+          secret:
+            defaultMode: 420
+            secretName: cloud-credentials-gcp
+        - name: cloud-credentials-azure
+          secret:
+            defaultMode: 420
+            secretName: cloud-credentials-azure
+  status:
+    availableReplicas: 1
+    fullyLabeledReplicas: 1
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "4"
+    creationTimestamp: "2023-08-31T00:55:39Z"
+    generation: 2
+    labels:
+      app.kubernetes.io/component: server
+      app.kubernetes.io/instance: velero
+      app.kubernetes.io/managed-by: oadp-operator
+      app.kubernetes.io/name: velero
+      app.kubernetes.io/part-of: openshift-migration
+      component: velero
+      deploy: velero
+      openshift.io/oadp: "True"
+      pod-template-hash: 5cd779dcdb
+    name: velero-5cd779dcdb
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: velero
+      uid: 6e0a5e8e-ddf9-4f86-b61f-624e37d518c6
+    resourceVersion: "138489797"
+    uid: 1508c483-d8d4-4c58-a269-920a016a7f35
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        app.kubernetes.io/component: server
+        app.kubernetes.io/instance: velero
+        app.kubernetes.io/managed-by: oadp-operator
+        app.kubernetes.io/name: velero
+        component: velero
+        deploy: velero
+        openshift.io/oadp: "True"
+        pod-template-hash: 5cd779dcdb
+    template:
+      metadata:
+        annotations:
+          prometheus.io/path: /metrics
+          prometheus.io/port: "8085"
+          prometheus.io/scrape: "true"
+        creationTimestamp: null
+        labels:
+          app.kubernetes.io/component: server
+          app.kubernetes.io/instance: velero
+          app.kubernetes.io/managed-by: oadp-operator
+          app.kubernetes.io/name: velero
+          app.kubernetes.io/part-of: openshift-migration
+          component: velero
+          deploy: velero
+          openshift.io/oadp: "True"
+          pod-template-hash: 5cd779dcdb
+      spec:
+        containers:
+        - args:
+          - server
+          - --restic-timeout=1h
+          command:
+          - /velero
+          env:
+          - name: VELERO_SCRATCH_DIR
+            value: /scratch
+          - name: VELERO_NAMESPACE
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+          - name: LD_LIBRARY_PATH
+            value: /plugins
+          - name: AWS_SHARED_CREDENTIALS_FILE
+            value: /credentials/cloud
+          - name: GOOGLE_APPLICATION_CREDENTIALS
+            value: /credentials-gcp/cloud
+          - name: AZURE_CREDENTIALS_FILE
+            value: /credentials-azure/cloud
+          image: registry.redhat.io/oadp/oadp-velero-rhel8@sha256:debc046b8e2ad0b956a20b3f8a16ead3ceaca9ecb1213a7a8902574cdb3534b3
+          imagePullPolicy: Always
+          name: velero
+          ports:
+          - containerPort: 8085
+            name: metrics
+            protocol: TCP
+          resources:
+            limits:
+              cpu: "1"
+              memory: 512Mi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /plugins
+            name: plugins
+          - mountPath: /scratch
+            name: scratch
+          - mountPath: /etc/ssl/certs
+            name: certs
+          - mountPath: /credentials
+            name: cloud-credentials
+          - mountPath: /credentials-gcp
+            name: cloud-credentials-gcp
+          - mountPath: /credentials-azure
+            name: cloud-credentials-azure
+        dnsPolicy: ClusterFirst
+        initContainers:
+        - image: registry.redhat.io/oadp/oadp-velero-plugin-rhel8@sha256:57ec3bdc8fd2b4c068d66ff7d2a34a301aa87189c791a539e6ce6d39cd104fc9
+          imagePullPolicy: Always
+          name: openshift-velero-plugin
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /target
+            name: plugins
+        - image: registry.redhat.io/oadp/oadp-velero-plugin-for-aws-rhel8@sha256:dbe417c3ba2107aee723d2cc4a6baf1b1c143efeac19a59a115e23f20c528bad
+          imagePullPolicy: Always
+          name: velero-plugin-for-aws
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /target
+            name: plugins
+        - image: registry.redhat.io/oadp/oadp-velero-plugin-for-gcp-rhel8@sha256:629789475a94f8ee871e70db13eb5e678294eaeadff7d3ffd3e135a2edf8a0da
+          imagePullPolicy: Always
+          name: velero-plugin-for-gcp
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /target
+            name: plugins
+        - image: registry.redhat.io/oadp/oadp-velero-plugin-for-microsoft-azure-rhel8@sha256:0949c9b7710cceb5d9c3c23ed6fdf3e99af82324decf3780290e48ab67fd59c7
+          imagePullPolicy: Always
+          name: velero-plugin-for-microsoft-azure
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /target
+            name: plugins
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: velero
+        serviceAccountName: velero
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - emptyDir: {}
+          name: plugins
+        - emptyDir: {}
+          name: scratch
+        - emptyDir: {}
+          name: certs
+        - name: cloud-credentials
+          secret:
+            defaultMode: 420
+            secretName: cloud-credentials
+        - name: cloud-credentials-gcp
+          secret:
+            defaultMode: 420
+            secretName: cloud-credentials-gcp
+        - name: cloud-credentials-azure
+          secret:
+            defaultMode: 420
+            secretName: cloud-credentials-azure
+  status:
+    observedGeneration: 2
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "3"
+    creationTimestamp: "2023-07-27T00:51:10Z"
+    generation: 2
+    labels:
+      app.kubernetes.io/component: server
+      app.kubernetes.io/instance: velero
+      app.kubernetes.io/managed-by: oadp-operator
+      app.kubernetes.io/name: velero
+      app.kubernetes.io/part-of: openshift-migration
+      component: velero
+      deploy: velero
+      openshift.io/oadp: "True"
+      pod-template-hash: 6788b44dbf
+    name: velero-6788b44dbf
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: velero
+      uid: 6e0a5e8e-ddf9-4f86-b61f-624e37d518c6
+    resourceVersion: "95063925"
+    uid: fbd71ec5-06a7-465b-9c21-a30ec7ab870d
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        app.kubernetes.io/component: server
+        app.kubernetes.io/instance: velero
+        app.kubernetes.io/managed-by: oadp-operator
+        app.kubernetes.io/name: velero
+        component: velero
+        deploy: velero
+        openshift.io/oadp: "True"
+        pod-template-hash: 6788b44dbf
+    template:
+      metadata:
+        annotations:
+          prometheus.io/path: /metrics
+          prometheus.io/port: "8085"
+          prometheus.io/scrape: "true"
+        creationTimestamp: null
+        labels:
+          app.kubernetes.io/component: server
+          app.kubernetes.io/instance: velero
+          app.kubernetes.io/managed-by: oadp-operator
+          app.kubernetes.io/name: velero
+          app.kubernetes.io/part-of: openshift-migration
+          component: velero
+          deploy: velero
+          openshift.io/oadp: "True"
+          pod-template-hash: 6788b44dbf
+      spec:
+        containers:
+        - args:
+          - server
+          - --restic-timeout=1h
+          command:
+          - /velero
+          env:
+          - name: VELERO_SCRATCH_DIR
+            value: /scratch
+          - name: VELERO_NAMESPACE
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+          - name: LD_LIBRARY_PATH
+            value: /plugins
+          - name: AWS_SHARED_CREDENTIALS_FILE
+            value: /credentials/cloud
+          - name: GOOGLE_APPLICATION_CREDENTIALS
+            value: /credentials-gcp/cloud
+          - name: AZURE_CREDENTIALS_FILE
+            value: /credentials-azure/cloud
+          image: registry.redhat.io/oadp/oadp-velero-rhel8@sha256:119e017222d7deb28193f96092faa1abd978425a95e66c9c67ef9c52494a6482
+          imagePullPolicy: Always
+          name: velero
+          ports:
+          - containerPort: 8085
+            name: metrics
+            protocol: TCP
+          resources:
+            limits:
+              cpu: "1"
+              memory: 512Mi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /plugins
+            name: plugins
+          - mountPath: /scratch
+            name: scratch
+          - mountPath: /etc/ssl/certs
+            name: certs
+          - mountPath: /credentials
+            name: cloud-credentials
+          - mountPath: /credentials-gcp
+            name: cloud-credentials-gcp
+          - mountPath: /credentials-azure
+            name: cloud-credentials-azure
+        dnsPolicy: ClusterFirst
+        initContainers:
+        - image: registry.redhat.io/oadp/oadp-velero-plugin-rhel8@sha256:316848055bff5cdd3cf987614a8a8c05146c3cab1e4037fdb84a3ebf58f0faac
+          imagePullPolicy: Always
+          name: openshift-velero-plugin
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /target
+            name: plugins
+        - image: registry.redhat.io/oadp/oadp-velero-plugin-for-aws-rhel8@sha256:2c43164ffee3d6544122e4f09f0d1bf5f99fdc34a4ec1dcd57f2a2ea9506e2af
+          imagePullPolicy: Always
+          name: velero-plugin-for-aws
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /target
+            name: plugins
+        - image: registry.redhat.io/oadp/oadp-velero-plugin-for-gcp-rhel8@sha256:6faa651e0ff86a201fd99cb7bf2a4b44f400d626aa2cd0628bd3cc970fd5d815
+          imagePullPolicy: Always
+          name: velero-plugin-for-gcp
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /target
+            name: plugins
+        - image: registry.redhat.io/oadp/oadp-velero-plugin-for-microsoft-azure-rhel8@sha256:17212b6ef29b4e566e55a660ba955499c2238208bec5a1c5a66ccc7758a3b5a8
+          imagePullPolicy: Always
+          name: velero-plugin-for-microsoft-azure
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /target
+            name: plugins
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: velero
+        serviceAccountName: velero
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - emptyDir: {}
+          name: plugins
+        - emptyDir: {}
+          name: scratch
+        - emptyDir: {}
+          name: certs
+        - name: cloud-credentials
+          secret:
+            defaultMode: 420
+            secretName: cloud-credentials
+        - name: cloud-credentials-gcp
+          secret:
+            defaultMode: 420
+            secretName: cloud-credentials-gcp
+        - name: cloud-credentials-azure
+          secret:
+            defaultMode: 420
+            secretName: cloud-credentials-azure
+  status:
+    observedGeneration: 2
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "1"
+    creationTimestamp: "2023-05-12T20:25:40Z"
+    generation: 2
+    labels:
+      app.kubernetes.io/component: server
+      app.kubernetes.io/instance: velero
+      app.kubernetes.io/managed-by: oadp-operator
+      app.kubernetes.io/name: velero
+      app.kubernetes.io/part-of: openshift-migration
+      component: velero
+      deploy: velero
+      openshift.io/oadp: "True"
+      pod-template-hash: 6b46df678d
+    name: velero-6b46df678d
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: velero
+      uid: 6e0a5e8e-ddf9-4f86-b61f-624e37d518c6
+    resourceVersion: "29084205"
+    uid: 89462bf0-c892-4b0b-ad13-5a976dd2e6a3
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        app.kubernetes.io/component: server
+        app.kubernetes.io/instance: velero
+        app.kubernetes.io/managed-by: oadp-operator
+        app.kubernetes.io/name: velero
+        component: velero
+        deploy: velero
+        openshift.io/oadp: "True"
+        pod-template-hash: 6b46df678d
+    template:
+      metadata:
+        annotations:
+          prometheus.io/path: /metrics
+          prometheus.io/port: "8085"
+          prometheus.io/scrape: "true"
+        creationTimestamp: null
+        labels:
+          app.kubernetes.io/component: server
+          app.kubernetes.io/instance: velero
+          app.kubernetes.io/managed-by: oadp-operator
+          app.kubernetes.io/name: velero
+          app.kubernetes.io/part-of: openshift-migration
+          component: velero
+          deploy: velero
+          openshift.io/oadp: "True"
+          pod-template-hash: 6b46df678d
+      spec:
+        containers:
+        - args:
+          - server
+          - --restic-timeout=1h
+          command:
+          - /velero
+          env:
+          - name: VELERO_SCRATCH_DIR
+            value: /scratch
+          - name: VELERO_NAMESPACE
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+          - name: LD_LIBRARY_PATH
+            value: /plugins
+          - name: AWS_SHARED_CREDENTIALS_FILE
+            value: /credentials/cloud
+          - name: GOOGLE_APPLICATION_CREDENTIALS
+            value: /credentials-gcp/cloud
+          - name: AZURE_CREDENTIALS_FILE
+            value: /credentials-azure/cloud
+          image: registry.redhat.io/oadp/oadp-velero-rhel8@sha256:a8954d484712fd81c386a413d7be9664049b5e98113cb98e7c0f452f94498b3b
+          imagePullPolicy: Always
+          name: velero
+          ports:
+          - containerPort: 8085
+            name: metrics
+            protocol: TCP
+          resources:
+            limits:
+              cpu: "1"
+              memory: 512Mi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /plugins
+            name: plugins
+          - mountPath: /scratch
+            name: scratch
+          - mountPath: /etc/ssl/certs
+            name: certs
+          - mountPath: /credentials
+            name: cloud-credentials
+          - mountPath: /credentials-gcp
+            name: cloud-credentials-gcp
+          - mountPath: /credentials-azure
+            name: cloud-credentials-azure
+        dnsPolicy: ClusterFirst
+        initContainers:
+        - image: registry.redhat.io/oadp/oadp-velero-plugin-rhel8@sha256:505dba5535f528825c426256b9299e63a05cde9607fc1955fb7adef3e48eb21d
+          imagePullPolicy: Always
+          name: openshift-velero-plugin
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /target
+            name: plugins
+        - image: registry.redhat.io/oadp/oadp-velero-plugin-for-aws-rhel8@sha256:b0c81aa38e751f66c274ac554d161e5e7e3f2a8fcc3a2a7ea1d6540f1d616f6a
+          imagePullPolicy: Always
+          name: velero-plugin-for-aws
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /target
+            name: plugins
+        - image: registry.redhat.io/oadp/oadp-velero-plugin-for-gcp-rhel8@sha256:df22307f75a6a66c04e6b843dfadb8e593886ee74790c5e02abf88da96170428
+          imagePullPolicy: Always
+          name: velero-plugin-for-gcp
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /target
+            name: plugins
+        - image: registry.redhat.io/oadp/oadp-velero-plugin-for-microsoft-azure-rhel8@sha256:1174e96fe7a9a1a72d5ef3a64dee7ecdf3f3488e9cdf5094961634d245e1c20b
+          imagePullPolicy: Always
+          name: velero-plugin-for-microsoft-azure
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /target
+            name: plugins
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: velero
+        serviceAccountName: velero
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - emptyDir: {}
+          name: plugins
+        - emptyDir: {}
+          name: scratch
+        - emptyDir: {}
+          name: certs
+        - name: cloud-credentials
+          secret:
+            defaultMode: 420
+            secretName: cloud-credentials
+        - name: cloud-credentials-gcp
+          secret:
+            defaultMode: 420
+            secretName: cloud-credentials-gcp
+        - name: cloud-credentials-azure
+          secret:
+            defaultMode: 420
+            secretName: cloud-credentials-azure
+  status:
+    observedGeneration: 2
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "6"
+    creationTimestamp: "2023-10-25T13:58:18Z"
+    generation: 2
+    labels:
+      app.kubernetes.io/component: server
+      app.kubernetes.io/instance: velero
+      app.kubernetes.io/managed-by: oadp-operator
+      app.kubernetes.io/name: velero
+      app.kubernetes.io/part-of: openshift-migration
+      component: velero
+      deploy: velero
+      openshift.io/oadp: "True"
+      pod-template-hash: 749c846464
+    name: velero-749c846464
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: velero
+      uid: 6e0a5e8e-ddf9-4f86-b61f-624e37d518c6
+    resourceVersion: "304824502"
+    uid: 43f28247-d011-42a1-9f53-f19c435a8300
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        app.kubernetes.io/component: server
+        app.kubernetes.io/instance: velero
+        app.kubernetes.io/managed-by: oadp-operator
+        app.kubernetes.io/name: velero
+        component: velero
+        deploy: velero
+        openshift.io/oadp: "True"
+        pod-template-hash: 749c846464
+    template:
+      metadata:
+        annotations:
+          prometheus.io/path: /metrics
+          prometheus.io/port: "8085"
+          prometheus.io/scrape: "true"
+        creationTimestamp: null
+        labels:
+          app.kubernetes.io/component: server
+          app.kubernetes.io/instance: velero
+          app.kubernetes.io/managed-by: oadp-operator
+          app.kubernetes.io/name: velero
+          app.kubernetes.io/part-of: openshift-migration
+          component: velero
+          deploy: velero
+          openshift.io/oadp: "True"
+          pod-template-hash: 749c846464
+      spec:
+        containers:
+        - args:
+          - server
+          - --restic-timeout=1h
+          command:
+          - /velero
+          env:
+          - name: VELERO_SCRATCH_DIR
+            value: /scratch
+          - name: VELERO_NAMESPACE
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+          - name: LD_LIBRARY_PATH
+            value: /plugins
+          - name: AWS_SHARED_CREDENTIALS_FILE
+            value: /credentials/cloud
+          - name: GOOGLE_APPLICATION_CREDENTIALS
+            value: /credentials-gcp/cloud
+          - name: AZURE_CREDENTIALS_FILE
+            value: /credentials-azure/cloud
+          image: registry.redhat.io/oadp/oadp-velero-rhel8@sha256:804b10c1ad2dfc005b1ea788828434f61c59c90cbe1fb91fc91f537bac1c2dcc
+          imagePullPolicy: Always
+          name: velero
+          ports:
+          - containerPort: 8085
+            name: metrics
+            protocol: TCP
+          resources:
+            limits:
+              cpu: "1"
+              memory: 512Mi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /plugins
+            name: plugins
+          - mountPath: /scratch
+            name: scratch
+          - mountPath: /etc/ssl/certs
+            name: certs
+          - mountPath: /credentials
+            name: cloud-credentials
+          - mountPath: /credentials-gcp
+            name: cloud-credentials-gcp
+          - mountPath: /credentials-azure
+            name: cloud-credentials-azure
+        dnsPolicy: ClusterFirst
+        initContainers:
+        - image: registry.redhat.io/oadp/oadp-velero-plugin-rhel8@sha256:23b5ba70fea1a3b6f023e3a5646e25e89ce03ee501259a3d8891586fcec7eebf
+          imagePullPolicy: Always
+          name: openshift-velero-plugin
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /target
+            name: plugins
+        - image: registry.redhat.io/oadp/oadp-velero-plugin-for-aws-rhel8@sha256:ba64d46251e596000df0678d013156d3f4ed54ac812292283cfb169f666931b6
+          imagePullPolicy: Always
+          name: velero-plugin-for-aws
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /target
+            name: plugins
+        - image: registry.redhat.io/oadp/oadp-velero-plugin-for-gcp-rhel8@sha256:82c3c82e65e3feae26a6d3e84ec9cfc4d2e089bfe1bb7ed3e18258c0676597a3
+          imagePullPolicy: Always
+          name: velero-plugin-for-gcp
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /target
+            name: plugins
+        - image: registry.redhat.io/oadp/oadp-velero-plugin-for-microsoft-azure-rhel8@sha256:8bc6b07f99f8613bb2ef228d264d5033ffc697b0fbc4b74b3e99b9cf50a5ae4d
+          imagePullPolicy: Always
+          name: velero-plugin-for-microsoft-azure
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /target
+            name: plugins
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: velero
+        serviceAccountName: velero
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - emptyDir: {}
+          name: plugins
+        - emptyDir: {}
+          name: scratch
+        - emptyDir: {}
+          name: certs
+        - name: cloud-credentials
+          secret:
+            defaultMode: 420
+            secretName: cloud-credentials
+        - name: cloud-credentials-gcp
+          secret:
+            defaultMode: 420
+            secretName: cloud-credentials-gcp
+        - name: cloud-credentials-azure
+          secret:
+            defaultMode: 420
+            secretName: cloud-credentials-azure
+  status:
+    observedGeneration: 2
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "5"
+    creationTimestamp: "2023-10-19T03:19:19Z"
+    generation: 2
+    labels:
+      app.kubernetes.io/component: server
+      app.kubernetes.io/instance: velero
+      app.kubernetes.io/managed-by: oadp-operator
+      app.kubernetes.io/name: velero
+      app.kubernetes.io/part-of: openshift-migration
+      component: velero
+      deploy: velero
+      openshift.io/oadp: "True"
+      pod-template-hash: 74d7bf5845
+    name: velero-74d7bf5845
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: velero
+      uid: 6e0a5e8e-ddf9-4f86-b61f-624e37d518c6
+    resourceVersion: "143931558"
+    uid: 6038e97c-ad65-476d-ae05-112f66077efa
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        app.kubernetes.io/component: server
+        app.kubernetes.io/instance: velero
+        app.kubernetes.io/managed-by: oadp-operator
+        app.kubernetes.io/name: velero
+        component: velero
+        deploy: velero
+        openshift.io/oadp: "True"
+        pod-template-hash: 74d7bf5845
+    template:
+      metadata:
+        annotations:
+          prometheus.io/path: /metrics
+          prometheus.io/port: "8085"
+          prometheus.io/scrape: "true"
+        creationTimestamp: null
+        labels:
+          app.kubernetes.io/component: server
+          app.kubernetes.io/instance: velero
+          app.kubernetes.io/managed-by: oadp-operator
+          app.kubernetes.io/name: velero
+          app.kubernetes.io/part-of: openshift-migration
+          component: velero
+          deploy: velero
+          openshift.io/oadp: "True"
+          pod-template-hash: 74d7bf5845
+      spec:
+        containers:
+        - args:
+          - server
+          - --restic-timeout=1h
+          command:
+          - /velero
+          env:
+          - name: VELERO_SCRATCH_DIR
+            value: /scratch
+          - name: VELERO_NAMESPACE
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+          - name: LD_LIBRARY_PATH
+            value: /plugins
+          - name: AWS_SHARED_CREDENTIALS_FILE
+            value: /credentials/cloud
+          - name: GOOGLE_APPLICATION_CREDENTIALS
+            value: /credentials-gcp/cloud
+          - name: AZURE_CREDENTIALS_FILE
+            value: /credentials-azure/cloud
+          image: registry.redhat.io/oadp/oadp-velero-rhel8@sha256:eeab945f483af402f5f713b2e50a57f6bdc333875fc22272da1e0f0bee1ed7c7
+          imagePullPolicy: Always
+          name: velero
+          ports:
+          - containerPort: 8085
+            name: metrics
+            protocol: TCP
+          resources:
+            limits:
+              cpu: "1"
+              memory: 512Mi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /plugins
+            name: plugins
+          - mountPath: /scratch
+            name: scratch
+          - mountPath: /etc/ssl/certs
+            name: certs
+          - mountPath: /credentials
+            name: cloud-credentials
+          - mountPath: /credentials-gcp
+            name: cloud-credentials-gcp
+          - mountPath: /credentials-azure
+            name: cloud-credentials-azure
+        dnsPolicy: ClusterFirst
+        initContainers:
+        - image: registry.redhat.io/oadp/oadp-velero-plugin-rhel8@sha256:b02e24410c31232119c38d6b26f3b1b656589f01ccd1c1857a31855f4c9bccf0
+          imagePullPolicy: Always
+          name: openshift-velero-plugin
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /target
+            name: plugins
+        - image: registry.redhat.io/oadp/oadp-velero-plugin-for-aws-rhel8@sha256:ed77f3002e82ae71b416ef9a4a76b56963f3361920fe54daae734b17d9bc9476
+          imagePullPolicy: Always
+          name: velero-plugin-for-aws
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /target
+            name: plugins
+        - image: registry.redhat.io/oadp/oadp-velero-plugin-for-gcp-rhel8@sha256:a0cab78e75e33d241b46468266bf79484e508807b54b992154effcb7a3d7d789
+          imagePullPolicy: Always
+          name: velero-plugin-for-gcp
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /target
+            name: plugins
+        - image: registry.redhat.io/oadp/oadp-velero-plugin-for-microsoft-azure-rhel8@sha256:7accceecd28658cb58a77463c2a8204d4452032d181f43894bd1257e2448491c
+          imagePullPolicy: Always
+          name: velero-plugin-for-microsoft-azure
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /target
+            name: plugins
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: velero
+        serviceAccountName: velero
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - emptyDir: {}
+          name: plugins
+        - emptyDir: {}
+          name: scratch
+        - emptyDir: {}
+          name: certs
+        - name: cloud-credentials
+          secret:
+            defaultMode: 420
+            secretName: cloud-credentials
+        - name: cloud-credentials-gcp
+          secret:
+            defaultMode: 420
+            secretName: cloud-credentials-gcp
+        - name: cloud-credentials-azure
+          secret:
+            defaultMode: 420
+            secretName: cloud-credentials-azure
+  status:
+    observedGeneration: 2
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "7"
+    creationTimestamp: "2024-05-01T01:52:46Z"
+    generation: 2
+    labels:
+      app.kubernetes.io/component: server
+      app.kubernetes.io/instance: velero
+      app.kubernetes.io/managed-by: oadp-operator
+      app.kubernetes.io/name: velero
+      app.kubernetes.io/part-of: openshift-migration
+      component: velero
+      deploy: velero
+      openshift.io/oadp: "True"
+      pod-template-hash: 79d9c94678
+    name: velero-79d9c94678
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: velero
+      uid: 6e0a5e8e-ddf9-4f86-b61f-624e37d518c6
+    resourceVersion: "449093404"
+    uid: b1ccc9b3-2a19-4c94-b757-0ea6354e4c32
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        app.kubernetes.io/component: server
+        app.kubernetes.io/instance: velero
+        app.kubernetes.io/managed-by: oadp-operator
+        app.kubernetes.io/name: velero
+        component: velero
+        deploy: velero
+        openshift.io/oadp: "True"
+        pod-template-hash: 79d9c94678
+    template:
+      metadata:
+        annotations:
+          prometheus.io/path: /metrics
+          prometheus.io/port: "8085"
+          prometheus.io/scrape: "true"
+        creationTimestamp: null
+        labels:
+          app.kubernetes.io/component: server
+          app.kubernetes.io/instance: velero
+          app.kubernetes.io/managed-by: oadp-operator
+          app.kubernetes.io/name: velero
+          app.kubernetes.io/part-of: openshift-migration
+          component: velero
+          deploy: velero
+          openshift.io/oadp: "True"
+          pod-template-hash: 79d9c94678
+      spec:
+        containers:
+        - args:
+          - server
+          - --restic-timeout=1h
+          command:
+          - /velero
+          env:
+          - name: VELERO_SCRATCH_DIR
+            value: /scratch
+          - name: VELERO_NAMESPACE
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+          - name: LD_LIBRARY_PATH
+            value: /plugins
+          - name: AWS_SHARED_CREDENTIALS_FILE
+            value: /credentials/cloud
+          - name: GOOGLE_APPLICATION_CREDENTIALS
+            value: /credentials-gcp/cloud
+          - name: AZURE_CREDENTIALS_FILE
+            value: /credentials-azure/cloud
+          image: registry.redhat.io/oadp/oadp-velero-rhel8@sha256:5babc0e348e46c703647bd6fd0fb5b0e9c88f091c474c11950e18bd2b5a86741
+          imagePullPolicy: Always
+          name: velero
+          ports:
+          - containerPort: 8085
+            name: metrics
+            protocol: TCP
+          resources:
+            limits:
+              cpu: "1"
+              memory: 512Mi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /plugins
+            name: plugins
+          - mountPath: /scratch
+            name: scratch
+          - mountPath: /etc/ssl/certs
+            name: certs
+          - mountPath: /credentials
+            name: cloud-credentials
+          - mountPath: /credentials-gcp
+            name: cloud-credentials-gcp
+          - mountPath: /credentials-azure
+            name: cloud-credentials-azure
+        dnsPolicy: ClusterFirst
+        initContainers:
+        - image: registry.redhat.io/oadp/oadp-velero-plugin-rhel8@sha256:c67e56d2f2abf94695b0eed9cf247407ac9e57ab7df0dee36bc858153334e3b0
+          imagePullPolicy: Always
+          name: openshift-velero-plugin
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /target
+            name: plugins
+        - image: registry.redhat.io/oadp/oadp-velero-plugin-for-aws-rhel8@sha256:5ea5f460dab71402b942feff56e310c8b6c5c622cca0974ab3c8aa136b40c631
+          imagePullPolicy: Always
+          name: velero-plugin-for-aws
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /target
+            name: plugins
+        - image: registry.redhat.io/oadp/oadp-velero-plugin-for-gcp-rhel8@sha256:ae1b5c31db1f3cf7e29f7b055e62da606b5de8c7e4554c8470f5608c4af981b8
+          imagePullPolicy: Always
+          name: velero-plugin-for-gcp
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /target
+            name: plugins
+        - image: registry.redhat.io/oadp/oadp-velero-plugin-for-microsoft-azure-rhel8@sha256:a82f427a7cac0d8a27235bd6db75e064805dfc8499a43281e154e5d35091be62
+          imagePullPolicy: Always
+          name: velero-plugin-for-microsoft-azure
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /target
+            name: plugins
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: velero
+        serviceAccountName: velero
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - emptyDir: {}
+          name: plugins
+        - emptyDir: {}
+          name: scratch
+        - emptyDir: {}
+          name: certs
+        - name: cloud-credentials
+          secret:
+            defaultMode: 420
+            secretName: cloud-credentials
+        - name: cloud-credentials-gcp
+          secret:
+            defaultMode: 420
+            secretName: cloud-credentials-gcp
+        - name: cloud-credentials-azure
+          secret:
+            defaultMode: 420
+            secretName: cloud-credentials-azure
+  status:
+    observedGeneration: 2
+    replicas: 0
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

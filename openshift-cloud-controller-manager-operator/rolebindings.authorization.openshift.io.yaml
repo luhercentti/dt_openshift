@@ -1,0 +1,92 @@
+apiVersion: v1
+items:
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    annotations:
+      include.release.openshift.io/self-managed-high-availability: "true"
+      include.release.openshift.io/single-node-developer: "true"
+    creationTimestamp: "2023-05-04T21:36:10Z"
+    name: cluster-cloud-controller-manager
+    namespace: openshift-cloud-controller-manager-operator
+    ownerReferences:
+    - apiVersion: config.openshift.io/v1
+      kind: ClusterVersion
+      name: version
+      uid: 5d92b52f-9fff-4a6e-b815-398b934115ad
+    resourceVersion: "2006"
+    uid: 3608e788-d996-4809-9052-8d12375b1247
+  roleRef:
+    name: cluster-cloud-controller-manager
+    namespace: openshift-cloud-controller-manager-operator
+  subjects:
+  - kind: ServiceAccount
+    name: cluster-cloud-controller-manager
+    namespace: openshift-cloud-controller-manager-operator
+  userNames:
+  - system:serviceaccount:openshift-cloud-controller-manager-operator:cluster-cloud-controller-manager
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/description: Allows deploymentconfigs in this namespace to rollout
+        pods in this namespace.  It is auto-managed by a controller; remove subjects
+        to disable.
+    creationTimestamp: "2023-05-04T21:45:22Z"
+    name: system:deployers
+    namespace: openshift-cloud-controller-manager-operator
+    resourceVersion: "14603"
+    uid: 857f022e-bd4a-44c9-bb84-953b668ce778
+  roleRef:
+    name: system:deployer
+  subjects:
+  - kind: ServiceAccount
+    name: deployer
+    namespace: openshift-cloud-controller-manager-operator
+  userNames:
+  - system:serviceaccount:openshift-cloud-controller-manager-operator:deployer
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/description: Allows builds in this namespace to push images to
+        this namespace.  It is auto-managed by a controller; remove subjects to disable.
+    creationTimestamp: "2023-05-04T21:45:22Z"
+    name: system:image-builders
+    namespace: openshift-cloud-controller-manager-operator
+    resourceVersion: "14519"
+    uid: 748dc199-63f7-40ab-adda-9d5d468f385c
+  roleRef:
+    name: system:image-builder
+  subjects:
+  - kind: ServiceAccount
+    name: builder
+    namespace: openshift-cloud-controller-manager-operator
+  userNames:
+  - system:serviceaccount:openshift-cloud-controller-manager-operator:builder
+- apiVersion: authorization.openshift.io/v1
+  groupNames:
+  - system:serviceaccounts:openshift-cloud-controller-manager-operator
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/description: Allows all pods in this namespace to pull images from
+        this namespace.  It is auto-managed by a controller; remove subjects to disable.
+    creationTimestamp: "2023-05-04T21:45:21Z"
+    name: system:image-pullers
+    namespace: openshift-cloud-controller-manager-operator
+    resourceVersion: "14390"
+    uid: c09af90f-2614-4a69-b279-1b27dfdbf50c
+  roleRef:
+    name: system:image-puller
+  subjects:
+  - kind: SystemGroup
+    name: system:serviceaccounts:openshift-cloud-controller-manager-operator
+  userNames: null
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

@@ -1,0 +1,186 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.130.0.25"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.130.0.25"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+    creationTimestamp: "2023-05-04T21:35:51Z"
+    generateName: openshift-kube-scheduler-operator-757d8dd789-
+    labels:
+      app: openshift-kube-scheduler-operator
+      pod-template-hash: 757d8dd789
+    name: openshift-kube-scheduler-operator-757d8dd789-xd4sp
+    namespace: openshift-kube-scheduler-operator
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: openshift-kube-scheduler-operator-757d8dd789
+      uid: 19d57a49-30db-465a-b572-028ec0dc3bff
+    resourceVersion: "369060361"
+    uid: 3adb80f6-640a-4687-ba30-ac5dea2a3ae1
+  spec:
+    automountServiceAccountToken: false
+    containers:
+    - args:
+      - --config=/var/run/configmaps/config/config.yaml
+      - -v=2
+      command:
+      - cluster-kube-scheduler-operator
+      - operator
+      env:
+      - name: IMAGE
+        value: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:e89af482440b076be332c49bd2dc4041ddea5704ce9e2f162ba286bba0c9f60b
+      - name: OPERATOR_IMAGE
+        value: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:0a661a81adf07d562ecb77c9afa3c8e12403532165cad10e82e9ac81163282db
+      - name: OPERATOR_IMAGE_VERSION
+        value: 4.10.53
+      - name: OPERAND_IMAGE_VERSION
+        value: 1.23.12
+      - name: POD_NAME
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: metadata.name
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:0a661a81adf07d562ecb77c9afa3c8e12403532165cad10e82e9ac81163282db
+      imagePullPolicy: IfNotPresent
+      name: kube-scheduler-operator-container
+      resources:
+        requests:
+          cpu: 10m
+          memory: 50Mi
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: FallbackToLogsOnError
+      volumeMounts:
+      - mountPath: /var/run/configmaps/config
+        name: config
+      - mountPath: /var/run/secrets/serving-cert
+        name: serving-cert
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    nodeName: ocp4azu-sj2sl-master-1
+    nodeSelector:
+      node-role.kubernetes.io/master: ""
+    preemptionPolicy: PreemptLowerPriority
+    priority: 2000000000
+    priorityClassName: system-cluster-critical
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: openshift-kube-scheduler-operator
+    serviceAccountName: openshift-kube-scheduler-operator
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/master
+      operator: Exists
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 120
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 120
+    - effect: NoSchedule
+      key: node.kubernetes.io/memory-pressure
+      operator: Exists
+    volumes:
+    - name: serving-cert
+      secret:
+        defaultMode: 420
+        optional: true
+        secretName: kube-scheduler-operator-serving-cert
+    - configMap:
+        defaultMode: 420
+        name: openshift-kube-scheduler-operator-config
+      name: config
+    - name: kube-api-access
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3600
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-04T21:40:05Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2024-06-02T21:41:43Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2024-06-02T21:41:43Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-04T21:40:05Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://04acb4b435844feadde75ca3c69d604af03b9eda2440086f7925bfb029f42d08
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:0a661a81adf07d562ecb77c9afa3c8e12403532165cad10e82e9ac81163282db
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:0a661a81adf07d562ecb77c9afa3c8e12403532165cad10e82e9ac81163282db
+      lastState:
+        terminated:
+          containerID: cri-o://e548d580cfce8c9022830de6e66875972f325272526343fa10f4f6037f88a52a
+          exitCode: 0
+          finishedAt: "2024-06-02T21:41:41Z"
+          reason: Completed
+          startedAt: "2023-05-11T18:26:31Z"
+      name: kube-scheduler-operator-container
+      ready: true
+      restartCount: 5
+      started: true
+      state:
+        running:
+          startedAt: "2024-06-02T21:41:42Z"
+    hostIP: 10.80.80.8
+    phase: Running
+    podIP: 10.130.0.25
+    podIPs:
+    - ip: 10.130.0.25
+    qosClass: Burstable
+    startTime: "2023-05-04T21:40:05Z"
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

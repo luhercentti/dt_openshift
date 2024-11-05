@@ -1,0 +1,54 @@
+apiVersion: v1
+items:
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: Role
+  metadata:
+    creationTimestamp: "2023-05-04T21:39:32Z"
+    name: prometheus-k8s
+    namespace: openshift-multus
+    ownerReferences:
+    - apiVersion: operator.openshift.io/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Network
+      name: cluster
+      uid: 5513ebe5-e5fd-4f40-8857-5fcd3d31efca
+    resourceVersion: "3040"
+    uid: 54397951-4224-4a61-98ce-35110f41678f
+  rules:
+  - apiGroups:
+    - ""
+    resources:
+    - services
+    - endpoints
+    - pods
+    verbs:
+    - get
+    - list
+    - watch
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: Role
+  metadata:
+    creationTimestamp: "2023-05-04T21:39:32Z"
+    name: whereabouts-cni
+    namespace: openshift-multus
+    ownerReferences:
+    - apiVersion: operator.openshift.io/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Network
+      name: cluster
+      uid: 5513ebe5-e5fd-4f40-8857-5fcd3d31efca
+    resourceVersion: "2983"
+    uid: c5f662e9-5092-4ca7-9471-44cb501e32af
+  rules:
+  - apiGroups:
+    - coordination.k8s.io
+    resources:
+    - leases
+    verbs:
+    - '*'
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

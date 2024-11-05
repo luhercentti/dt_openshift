@@ -1,0 +1,116 @@
+apiVersion: v1
+items:
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    annotations:
+      include.release.openshift.io/ibm-cloud-managed: "true"
+      include.release.openshift.io/self-managed-high-availability: "true"
+      include.release.openshift.io/single-node-developer: "true"
+    creationTimestamp: "2023-05-04T21:36:06Z"
+    name: cluster-monitoring-operator
+    namespace: openshift-user-workload-monitoring
+    ownerReferences:
+    - apiVersion: config.openshift.io/v1
+      kind: ClusterVersion
+      name: version
+      uid: 5d92b52f-9fff-4a6e-b815-398b934115ad
+    resourceVersion: "1860"
+    uid: dd9e1f30-c64d-4fc6-a474-777f185cac74
+  roleRef:
+    name: cluster-monitoring-operator-namespaced
+  subjects:
+  - kind: ServiceAccount
+    name: cluster-monitoring-operator
+    namespace: openshift-monitoring
+  userNames:
+  - system:serviceaccount:openshift-monitoring:cluster-monitoring-operator
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    creationTimestamp: "2023-05-04T21:49:26Z"
+    labels:
+      app.kubernetes.io/component: prometheus
+      app.kubernetes.io/instance: k8s
+      app.kubernetes.io/name: prometheus
+      app.kubernetes.io/part-of: openshift-monitoring
+      app.kubernetes.io/version: 2.32.1
+    name: prometheus-k8s
+    namespace: openshift-user-workload-monitoring
+    resourceVersion: "21599"
+    uid: 5a262e75-fe3c-4c5e-aa04-ecbf1ecad8f9
+  roleRef:
+    name: prometheus-k8s
+    namespace: openshift-user-workload-monitoring
+  subjects:
+  - kind: ServiceAccount
+    name: prometheus-k8s
+    namespace: openshift-monitoring
+  userNames:
+  - system:serviceaccount:openshift-monitoring:prometheus-k8s
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/description: Allows deploymentconfigs in this namespace to rollout
+        pods in this namespace.  It is auto-managed by a controller; remove subjects
+        to disable.
+    creationTimestamp: "2023-05-04T21:45:29Z"
+    name: system:deployers
+    namespace: openshift-user-workload-monitoring
+    resourceVersion: "15783"
+    uid: 6179890a-e3e9-4f22-925e-abc3113c554c
+  roleRef:
+    name: system:deployer
+  subjects:
+  - kind: ServiceAccount
+    name: deployer
+    namespace: openshift-user-workload-monitoring
+  userNames:
+  - system:serviceaccount:openshift-user-workload-monitoring:deployer
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/description: Allows builds in this namespace to push images to
+        this namespace.  It is auto-managed by a controller; remove subjects to disable.
+    creationTimestamp: "2023-05-04T21:45:29Z"
+    name: system:image-builders
+    namespace: openshift-user-workload-monitoring
+    resourceVersion: "15781"
+    uid: 65888434-e603-4f3e-b6bb-0fed6d1fcd41
+  roleRef:
+    name: system:image-builder
+  subjects:
+  - kind: ServiceAccount
+    name: builder
+    namespace: openshift-user-workload-monitoring
+  userNames:
+  - system:serviceaccount:openshift-user-workload-monitoring:builder
+- apiVersion: authorization.openshift.io/v1
+  groupNames:
+  - system:serviceaccounts:openshift-user-workload-monitoring
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/description: Allows all pods in this namespace to pull images from
+        this namespace.  It is auto-managed by a controller; remove subjects to disable.
+    creationTimestamp: "2023-05-04T21:45:29Z"
+    name: system:image-pullers
+    namespace: openshift-user-workload-monitoring
+    resourceVersion: "15780"
+    uid: 87b6650f-710e-44d5-9db4-3b47f20264a9
+  roleRef:
+    name: system:image-puller
+  subjects:
+  - kind: SystemGroup
+    name: system:serviceaccounts:openshift-user-workload-monitoring
+  userNames: null
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

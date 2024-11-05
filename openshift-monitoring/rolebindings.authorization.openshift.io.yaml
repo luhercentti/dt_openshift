@@ -1,0 +1,187 @@
+apiVersion: v1
+items:
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    creationTimestamp: "2023-05-04T21:49:25Z"
+    labels:
+      app.kubernetes.io/part-of: openshift-monitoring
+    name: alertmanager-prometheusk8s
+    namespace: openshift-monitoring
+    resourceVersion: "21534"
+    uid: cdf283bd-b9a4-4482-9175-971fdf143d49
+  roleRef:
+    name: monitoring-alertmanager-edit
+    namespace: openshift-monitoring
+  subjects:
+  - kind: ServiceAccount
+    name: prometheus-k8s
+    namespace: openshift-monitoring
+  userNames:
+  - system:serviceaccount:openshift-monitoring:prometheus-k8s
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    annotations:
+      include.release.openshift.io/ibm-cloud-managed: "true"
+      include.release.openshift.io/self-managed-high-availability: "true"
+      include.release.openshift.io/single-node-developer: "true"
+    creationTimestamp: "2023-05-04T21:36:04Z"
+    name: cluster-monitoring-operator
+    namespace: openshift-monitoring
+    ownerReferences:
+    - apiVersion: config.openshift.io/v1
+      kind: ClusterVersion
+      name: version
+      uid: 5d92b52f-9fff-4a6e-b815-398b934115ad
+    resourceVersion: "1819"
+    uid: 0cef8cd6-0795-4f85-85aa-0835495c1837
+  roleRef:
+    name: cluster-monitoring-operator-namespaced
+  subjects:
+  - kind: ServiceAccount
+    name: cluster-monitoring-operator
+    namespace: openshift-monitoring
+  userNames:
+  - system:serviceaccount:openshift-monitoring:cluster-monitoring-operator
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    annotations:
+      include.release.openshift.io/ibm-cloud-managed: "true"
+      include.release.openshift.io/self-managed-high-availability: "true"
+      include.release.openshift.io/single-node-developer: "true"
+    creationTimestamp: "2023-05-04T21:35:52Z"
+    name: insights-operator-alertmanager
+    namespace: openshift-monitoring
+    ownerReferences:
+    - apiVersion: config.openshift.io/v1
+      kind: ClusterVersion
+      name: version
+      uid: 5d92b52f-9fff-4a6e-b815-398b934115ad
+    resourceVersion: "1539"
+    uid: cbf6f80b-2aae-4c50-a672-14baf3fc7c00
+  roleRef:
+    name: monitoring-alertmanager-edit
+    namespace: openshift-monitoring
+  subjects:
+  - kind: ServiceAccount
+    name: operator
+    namespace: openshift-insights
+  userNames:
+  - system:serviceaccount:openshift-insights:operator
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    creationTimestamp: "2023-05-04T21:49:26Z"
+    labels:
+      app.kubernetes.io/component: prometheus
+      app.kubernetes.io/instance: k8s
+      app.kubernetes.io/name: prometheus
+      app.kubernetes.io/part-of: openshift-monitoring
+      app.kubernetes.io/version: 2.32.1
+    name: prometheus-k8s
+    namespace: openshift-monitoring
+    resourceVersion: "21595"
+    uid: 188f6ac9-4793-4017-8f71-c259055b1978
+  roleRef:
+    name: prometheus-k8s
+    namespace: openshift-monitoring
+  subjects:
+  - kind: ServiceAccount
+    name: prometheus-k8s
+    namespace: openshift-monitoring
+  userNames:
+  - system:serviceaccount:openshift-monitoring:prometheus-k8s
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    creationTimestamp: "2023-05-04T21:49:26Z"
+    labels:
+      app.kubernetes.io/component: prometheus
+      app.kubernetes.io/instance: k8s
+      app.kubernetes.io/name: prometheus
+      app.kubernetes.io/part-of: openshift-monitoring
+      app.kubernetes.io/version: 2.32.1
+    name: prometheus-k8s-config
+    namespace: openshift-monitoring
+    resourceVersion: "21600"
+    uid: 265d87e5-de4f-4243-b8de-930d436e9239
+  roleRef:
+    name: prometheus-k8s-config
+    namespace: openshift-monitoring
+  subjects:
+  - kind: ServiceAccount
+    name: prometheus-k8s
+    namespace: openshift-monitoring
+  userNames:
+  - system:serviceaccount:openshift-monitoring:prometheus-k8s
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/description: Allows deploymentconfigs in this namespace to rollout
+        pods in this namespace.  It is auto-managed by a controller; remove subjects
+        to disable.
+    creationTimestamp: "2023-05-04T21:45:23Z"
+    name: system:deployers
+    namespace: openshift-monitoring
+    resourceVersion: "14804"
+    uid: 30d6a4a8-4945-47a7-8152-80ef775afd21
+  roleRef:
+    name: system:deployer
+  subjects:
+  - kind: ServiceAccount
+    name: deployer
+    namespace: openshift-monitoring
+  userNames:
+  - system:serviceaccount:openshift-monitoring:deployer
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/description: Allows builds in this namespace to push images to
+        this namespace.  It is auto-managed by a controller; remove subjects to disable.
+    creationTimestamp: "2023-05-04T21:45:23Z"
+    name: system:image-builders
+    namespace: openshift-monitoring
+    resourceVersion: "14738"
+    uid: afabfeb4-084f-48f1-acf5-2d354592b0e4
+  roleRef:
+    name: system:image-builder
+  subjects:
+  - kind: ServiceAccount
+    name: builder
+    namespace: openshift-monitoring
+  userNames:
+  - system:serviceaccount:openshift-monitoring:builder
+- apiVersion: authorization.openshift.io/v1
+  groupNames:
+  - system:serviceaccounts:openshift-monitoring
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/description: Allows all pods in this namespace to pull images from
+        this namespace.  It is auto-managed by a controller; remove subjects to disable.
+    creationTimestamp: "2023-05-04T21:45:22Z"
+    name: system:image-pullers
+    namespace: openshift-monitoring
+    resourceVersion: "14655"
+    uid: e39b460f-b2cc-405c-8ce0-3be827420562
+  roleRef:
+    name: system:image-puller
+  subjects:
+  - kind: SystemGroup
+    name: system:serviceaccounts:openshift-monitoring
+  userNames: null
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

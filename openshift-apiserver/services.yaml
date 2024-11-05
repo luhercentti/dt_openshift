@@ -1,0 +1,77 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      service.alpha.openshift.io/serving-cert-secret-name: serving-cert
+      service.alpha.openshift.io/serving-cert-signed-by: openshift-service-serving-signer@1683236429
+      service.beta.openshift.io/serving-cert-signed-by: openshift-service-serving-signer@1683236429
+    creationTimestamp: "2023-05-04T21:40:32Z"
+    labels:
+      prometheus: openshift-apiserver
+    name: api
+    namespace: openshift-apiserver
+    resourceVersion: "6575"
+    uid: 0a7b909c-0b4a-4347-879f-78ce895743de
+  spec:
+    clusterIP: 172.30.234.55
+    clusterIPs:
+    - 172.30.234.55
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: https
+      port: 443
+      protocol: TCP
+      targetPort: 8443
+    selector:
+      apiserver: "true"
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      include.release.openshift.io/ibm-cloud-managed: "true"
+      include.release.openshift.io/self-managed-high-availability: "true"
+      include.release.openshift.io/single-node-developer: "true"
+    creationTimestamp: "2023-05-04T21:40:32Z"
+    labels:
+      prometheus: openshift-apiserver-check-endpoints
+    name: check-endpoints
+    namespace: openshift-apiserver
+    ownerReferences:
+    - apiVersion: config.openshift.io/v1
+      kind: ClusterVersion
+      name: version
+      uid: 5d92b52f-9fff-4a6e-b815-398b934115ad
+    resourceVersion: "5149"
+    uid: 9c896784-c811-457f-899a-3f49fe23b024
+  spec:
+    clusterIP: 172.30.36.79
+    clusterIPs:
+    - 172.30.36.79
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: check-endpoints
+      port: 17698
+      protocol: TCP
+      targetPort: 17698
+    selector:
+      apiserver: "true"
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

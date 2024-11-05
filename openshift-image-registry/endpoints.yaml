@@ -1,0 +1,56 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Endpoints
+  metadata:
+    creationTimestamp: "2023-05-04T21:48:48Z"
+    labels:
+      docker-registry: default
+    name: image-registry
+    namespace: openshift-image-registry
+    resourceVersion: "467286830"
+    uid: 86b96711-f931-45dd-bc58-a31ba8a01b1a
+  subsets:
+  - addresses:
+    - ip: 10.129.4.57
+      nodeName: ocp4azu-sj2sl-infra-brazilsouth3-pfrpx
+      targetRef:
+        kind: Pod
+        name: image-registry-655c865b7f-lfwxx
+        namespace: openshift-image-registry
+        resourceVersion: "467286828"
+        uid: 0eeb91b8-8223-4570-95d0-1a5ff19d0761
+    ports:
+    - name: 5000-tcp
+      port: 5000
+      protocol: TCP
+- apiVersion: v1
+  kind: Endpoints
+  metadata:
+    annotations:
+      endpoints.kubernetes.io/last-change-trigger-time: "2024-06-02T21:42:00Z"
+    creationTimestamp: "2023-05-04T21:36:18Z"
+    labels:
+      name: image-registry-operator
+      service.kubernetes.io/headless: ""
+    name: image-registry-operator
+    namespace: openshift-image-registry
+    resourceVersion: "369060943"
+    uid: d119c3ae-aa75-449a-9c2d-9908a4eb0beb
+  subsets:
+  - addresses:
+    - ip: 10.130.0.54
+      nodeName: ocp4azu-sj2sl-master-1
+      targetRef:
+        kind: Pod
+        name: cluster-image-registry-operator-56df9997c7-t5jkd
+        namespace: openshift-image-registry
+        resourceVersion: "369060940"
+        uid: 75c6ea1f-6ccc-4511-9db9-22707a0afeff
+    ports:
+    - port: 60000
+      protocol: TCP
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

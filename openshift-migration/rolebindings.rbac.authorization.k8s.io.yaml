@@ -1,0 +1,193 @@
+apiVersion: v1
+items:
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: RoleBinding
+  metadata:
+    creationTimestamp: "2024-07-11T17:31:42Z"
+    name: mtc-operator.v1.7.16
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: operators.coreos.com/v2
+      blockOwnerDeletion: false
+      controller: true
+      kind: OperatorCondition
+      name: mtc-operator.v1.7.16
+      uid: b465a60b-8134-4693-801e-3f4a54e03817
+    resourceVersion: "449354714"
+    uid: 55491205-4b8c-4b0a-82b5-fc71a7fd1ad2
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: Role
+    name: mtc-operator.v1.7.16
+  subjects:
+  - kind: ServiceAccount
+    name: migration-operator
+  - kind: ServiceAccount
+    name: migration-controller
+  - kind: ServiceAccount
+    name: migration-operator
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: RoleBinding
+  metadata:
+    creationTimestamp: "2024-07-11T17:31:49Z"
+    labels:
+      olm.owner: mtc-operator.v1.7.16
+      olm.owner.kind: ClusterServiceVersion
+      olm.owner.namespace: openshift-migration
+      operators.coreos.com/mtc-operator.openshift-migration: ""
+    name: mtc-operator.v1.7.16-migration-operator-6c9958c97b
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: operators.coreos.com/v1alpha1
+      blockOwnerDeletion: false
+      controller: false
+      kind: ClusterServiceVersion
+      name: mtc-operator.v1.7.16
+      uid: 92379bf9-f5b5-4f6c-8e75-c1d41bd6f15e
+    resourceVersion: "449354970"
+    uid: 2f56ba30-6a0f-49d2-84e2-c9df18fb1ccc
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: Role
+    name: mtc-operator.v1.7.16-migration-operator-6c9958c97b
+  subjects:
+  - kind: ServiceAccount
+    name: migration-operator
+    namespace: openshift-migration
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: RoleBinding
+  metadata:
+    creationTimestamp: "2024-07-11T14:22:50Z"
+    name: oadp-operator.v1.0.16
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: operators.coreos.com/v2
+      blockOwnerDeletion: false
+      controller: true
+      kind: OperatorCondition
+      name: oadp-operator.v1.0.16
+      uid: 5427ac72-b41c-425b-9c7c-03283c11a792
+    resourceVersion: "449089440"
+    uid: f55bacd1-4951-4a28-9d5e-9196869b9170
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: Role
+    name: oadp-operator.v1.0.16
+  subjects:
+  - kind: ServiceAccount
+    name: openshift-adp-controller-manager
+  - kind: ServiceAccount
+    name: velero
+  - kind: ServiceAccount
+    name: openshift-adp-controller-manager
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: RoleBinding
+  metadata:
+    creationTimestamp: "2024-07-11T14:22:56Z"
+    labels:
+      olm.owner: oadp-operator.v1.0.16
+      olm.owner.kind: ClusterServiceVersion
+      olm.owner.namespace: openshift-migration
+      operators.coreos.com/redhat-oadp-operator.openshift-migration: ""
+    name: oadp-operator.v1.0.16-openshift-adp-controller-manager-894b6bd48
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: operators.coreos.com/v1alpha1
+      blockOwnerDeletion: false
+      controller: false
+      kind: ClusterServiceVersion
+      name: oadp-operator.v1.0.16
+      uid: 5f287fe9-f79a-466a-b87f-e751cf75fac3
+    resourceVersion: "449089680"
+    uid: c5dca5c5-b4ec-4a67-8560-79d8cb5bc377
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: Role
+    name: oadp-operator.v1.0.16-openshift-adp-controller-manager-894b6bd48
+  subjects:
+  - kind: ServiceAccount
+    name: openshift-adp-controller-manager
+    namespace: openshift-migration
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: RoleBinding
+  metadata:
+    creationTimestamp: "2023-05-12T20:25:46Z"
+    name: prometheus-k8s
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: migration.openshift.io/v1alpha1
+      kind: MigrationController
+      name: migration-controller
+      uid: 6c83ac9d-343f-4bbd-82b5-65232ad8f08e
+    resourceVersion: "2280985"
+    uid: fd894e26-3fe8-4e39-9d91-c332415ee01e
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: Role
+    name: prometheus-k8s
+  subjects:
+  - kind: ServiceAccount
+    name: prometheus-k8s
+    namespace: openshift-monitoring
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/description: Allows deploymentconfigs in this namespace to rollout
+        pods in this namespace.  It is auto-managed by a controller; remove subjects
+        to disable.
+    creationTimestamp: "2023-05-06T12:03:49Z"
+    name: system:deployers
+    namespace: openshift-migration
+    resourceVersion: "508738"
+    uid: 94c0c8bc-6bbe-42f9-aff5-1189536461f9
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: ClusterRole
+    name: system:deployer
+  subjects:
+  - kind: ServiceAccount
+    name: deployer
+    namespace: openshift-migration
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/description: Allows builds in this namespace to push images to
+        this namespace.  It is auto-managed by a controller; remove subjects to disable.
+    creationTimestamp: "2023-05-06T12:03:49Z"
+    name: system:image-builders
+    namespace: openshift-migration
+    resourceVersion: "508737"
+    uid: de062987-5791-439a-9431-4df8679ea013
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: ClusterRole
+    name: system:image-builder
+  subjects:
+  - kind: ServiceAccount
+    name: builder
+    namespace: openshift-migration
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/description: Allows all pods in this namespace to pull images from
+        this namespace.  It is auto-managed by a controller; remove subjects to disable.
+    creationTimestamp: "2023-05-06T12:03:49Z"
+    name: system:image-pullers
+    namespace: openshift-migration
+    resourceVersion: "508734"
+    uid: b832786e-4dd2-454b-87b9-236e9a54a694
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: ClusterRole
+    name: system:image-puller
+  subjects:
+  - apiGroup: rbac.authorization.k8s.io
+    kind: Group
+    name: system:serviceaccounts:openshift-migration
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

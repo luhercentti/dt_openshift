@@ -1,0 +1,498 @@
+apiVersion: v1
+items:
+- apiVersion: authorization.openshift.io/v1
+  kind: Role
+  metadata:
+    annotations:
+      include.release.openshift.io/ibm-cloud-managed: "true"
+      include.release.openshift.io/self-managed-high-availability: "true"
+      include.release.openshift.io/single-node-developer: "true"
+    creationTimestamp: "2023-05-04T21:36:18Z"
+    labels:
+      k8s-addon: cluster-autoscaler.addons.k8s.io
+      k8s-app: cluster-autoscaler
+    name: cluster-autoscaler
+    namespace: openshift-machine-api
+    ownerReferences:
+    - apiVersion: config.openshift.io/v1
+      kind: ClusterVersion
+      name: version
+      uid: 5d92b52f-9fff-4a6e-b815-398b934115ad
+    resourceVersion: "2212"
+    uid: 614632a6-c28a-432f-b8f7-4ed025d1f0e2
+  rules:
+  - apiGroups:
+    - ""
+    attributeRestrictions: null
+    resources:
+    - configmaps
+    verbs:
+    - create
+  - apiGroups:
+    - ""
+    attributeRestrictions: null
+    resourceNames:
+    - cluster-autoscaler-status
+    resources:
+    - configmaps
+    verbs:
+    - delete
+    - get
+    - update
+- apiVersion: authorization.openshift.io/v1
+  kind: Role
+  metadata:
+    annotations:
+      include.release.openshift.io/ibm-cloud-managed: "true"
+      include.release.openshift.io/self-managed-high-availability: "true"
+      include.release.openshift.io/single-node-developer: "true"
+    creationTimestamp: "2023-05-04T21:36:12Z"
+    name: cluster-autoscaler-operator
+    namespace: openshift-machine-api
+    ownerReferences:
+    - apiVersion: config.openshift.io/v1
+      kind: ClusterVersion
+      name: version
+      uid: 5d92b52f-9fff-4a6e-b815-398b934115ad
+    resourceVersion: "2050"
+    uid: 9c7570a9-a0b0-4a97-8ed7-6269985c30b7
+  rules:
+  - apiGroups:
+    - autoscaling.openshift.io
+    attributeRestrictions: null
+    resources:
+    - '*'
+    verbs:
+    - '*'
+  - apiGroups:
+    - ""
+    attributeRestrictions: null
+    resources:
+    - configmaps
+    - endpoints
+    - events
+    - persistentvolumeclaims
+    - pods
+    - secrets
+    - services
+    verbs:
+    - '*'
+  - apiGroups:
+    - apps
+    attributeRestrictions: null
+    resources:
+    - daemonsets
+    - deployments
+    - replicasets
+    - statefulsets
+    verbs:
+    - '*'
+  - apiGroups:
+    - cluster.k8s.io
+    - machine.openshift.io
+    attributeRestrictions: null
+    resources:
+    - machinedeployments
+    - machinesets
+    verbs:
+    - get
+    - list
+    - update
+    - watch
+  - apiGroups:
+    - monitoring.coreos.com
+    attributeRestrictions: null
+    resources:
+    - prometheusrules
+    - servicemonitors
+    verbs:
+    - create
+    - get
+    - list
+    - update
+    - watch
+  - apiGroups:
+    - coordination.k8s.io
+    attributeRestrictions: null
+    resources:
+    - leases
+    verbs:
+    - create
+    - delete
+    - get
+    - list
+    - patch
+    - update
+    - watch
+  - apiGroups:
+    - config.openshift.io
+    attributeRestrictions: null
+    resources:
+    - infrastructures
+    verbs:
+    - get
+    - list
+    - watch
+- apiVersion: authorization.openshift.io/v1
+  kind: Role
+  metadata:
+    annotations:
+      include.release.openshift.io/self-managed-high-availability: "true"
+      include.release.openshift.io/single-node-developer: "true"
+    creationTimestamp: "2023-05-04T21:36:19Z"
+    name: cluster-baremetal-operator
+    namespace: openshift-machine-api
+    ownerReferences:
+    - apiVersion: config.openshift.io/v1
+      kind: ClusterVersion
+      name: version
+      uid: 5d92b52f-9fff-4a6e-b815-398b934115ad
+    resourceVersion: "2292"
+    uid: 61940f11-9f7f-4ae6-855e-10a6f80a7333
+  rules:
+  - apiGroups:
+    - ""
+    attributeRestrictions: null
+    resources:
+    - configmaps
+    - secrets
+    - services
+    verbs:
+    - create
+    - delete
+    - get
+    - list
+    - patch
+    - update
+    - watch
+  - apiGroups:
+    - ""
+    attributeRestrictions: null
+    resources:
+    - pods
+    verbs:
+    - get
+    - list
+    - watch
+  - apiGroups:
+    - apps
+    attributeRestrictions: null
+    resources:
+    - daemonsets
+    - deployments
+    verbs:
+    - create
+    - delete
+    - get
+    - list
+    - patch
+    - update
+    - watch
+  - apiGroups:
+    - monitoring.coreos.com
+    attributeRestrictions: null
+    resources:
+    - servicemonitors
+    verbs:
+    - create
+    - get
+    - list
+    - patch
+    - watch
+  - apiGroups:
+    - security.openshift.io
+    attributeRestrictions: null
+    resources:
+    - securitycontextconstraints
+    verbs:
+    - use
+- apiVersion: authorization.openshift.io/v1
+  kind: Role
+  metadata:
+    annotations:
+      include.release.openshift.io/self-managed-high-availability: "true"
+      include.release.openshift.io/single-node-developer: "true"
+    creationTimestamp: "2023-05-04T21:36:19Z"
+    name: machine-api-controllers
+    namespace: openshift-machine-api
+    ownerReferences:
+    - apiVersion: config.openshift.io/v1
+      kind: ClusterVersion
+      name: version
+      uid: 5d92b52f-9fff-4a6e-b815-398b934115ad
+    resourceVersion: "2315"
+    uid: 7dd06ba5-6cea-4056-925a-9fd9e6695c60
+  rules:
+  - apiGroups:
+    - machine.openshift.io
+    attributeRestrictions: null
+    resources:
+    - '*'
+    verbs:
+    - '*'
+  - apiGroups:
+    - healthchecking.openshift.io
+    attributeRestrictions: null
+    resources:
+    - '*'
+    verbs:
+    - '*'
+  - apiGroups:
+    - ""
+    attributeRestrictions: null
+    resources:
+    - configmaps
+    verbs:
+    - create
+    - delete
+    - get
+    - list
+    - patch
+    - update
+    - watch
+  - apiGroups:
+    - ""
+    attributeRestrictions: null
+    resources:
+    - secrets
+    verbs:
+    - create
+    - delete
+    - get
+    - list
+    - patch
+    - update
+    - watch
+  - apiGroups:
+    - coordination.k8s.io
+    attributeRestrictions: null
+    resources:
+    - leases
+    verbs:
+    - create
+    - delete
+    - get
+    - list
+    - patch
+    - update
+    - watch
+  - apiGroups:
+    - ""
+    attributeRestrictions: null
+    resources:
+    - events
+    verbs:
+    - create
+    - list
+    - patch
+    - watch
+  - apiGroups:
+    - metal3.io
+    attributeRestrictions: null
+    resources:
+    - baremetalhosts
+    verbs:
+    - get
+    - list
+    - patch
+    - update
+    - watch
+  - apiGroups:
+    - metal3.io
+    attributeRestrictions: null
+    resources:
+    - baremetalhosts/finalizers
+    - baremetalhosts/status
+    verbs:
+    - update
+- apiVersion: authorization.openshift.io/v1
+  kind: Role
+  metadata:
+    annotations:
+      include.release.openshift.io/self-managed-high-availability: "true"
+      include.release.openshift.io/single-node-developer: "true"
+    creationTimestamp: "2023-05-04T21:36:20Z"
+    name: machine-api-operator
+    namespace: openshift-machine-api
+    ownerReferences:
+    - apiVersion: config.openshift.io/v1
+      kind: ClusterVersion
+      name: version
+      uid: 5d92b52f-9fff-4a6e-b815-398b934115ad
+    resourceVersion: "2368"
+    uid: 74bab76e-8a82-4fb6-ac20-5932cb0d4b04
+  rules:
+  - apiGroups:
+    - ""
+    attributeRestrictions: null
+    resources:
+    - configmaps
+    verbs:
+    - create
+    - delete
+    - get
+    - list
+    - patch
+    - update
+    - watch
+  - apiGroups:
+    - apps
+    attributeRestrictions: null
+    resources:
+    - daemonsets
+    - deployments
+    verbs:
+    - create
+    - delete
+    - get
+    - list
+    - patch
+    - update
+    - watch
+  - apiGroups:
+    - machine.openshift.io
+    attributeRestrictions: null
+    resources:
+    - '*'
+    verbs:
+    - list
+    - watch
+  - apiGroups:
+    - ""
+    attributeRestrictions: null
+    resources:
+    - secrets
+    verbs:
+    - create
+    - get
+  - apiGroups:
+    - ""
+    attributeRestrictions: null
+    resources:
+    - services
+    verbs:
+    - create
+    - get
+    - list
+    - patch
+    - watch
+  - apiGroups:
+    - monitoring.coreos.com
+    attributeRestrictions: null
+    resources:
+    - servicemonitors
+    verbs:
+    - create
+    - get
+    - list
+    - patch
+    - watch
+- apiVersion: authorization.openshift.io/v1
+  kind: Role
+  metadata:
+    annotations:
+      include.release.openshift.io/ibm-cloud-managed: "true"
+      include.release.openshift.io/self-managed-high-availability: "true"
+      include.release.openshift.io/single-node-developer: "true"
+    creationTimestamp: "2023-05-04T21:36:20Z"
+    name: prometheus-k8s-cluster-autoscaler-operator
+    namespace: openshift-machine-api
+    ownerReferences:
+    - apiVersion: config.openshift.io/v1
+      kind: ClusterVersion
+      name: version
+      uid: 5d92b52f-9fff-4a6e-b815-398b934115ad
+    resourceVersion: "2355"
+    uid: 874dd7db-32a3-4591-a184-a867964f4174
+  rules:
+  - apiGroups:
+    - ""
+    attributeRestrictions: null
+    resources:
+    - namespace/metrics
+    verbs:
+    - get
+  - apiGroups:
+    - ""
+    attributeRestrictions: null
+    resources:
+    - endpoints
+    - pods
+    - services
+    verbs:
+    - get
+    - list
+    - watch
+- apiVersion: authorization.openshift.io/v1
+  kind: Role
+  metadata:
+    annotations:
+      include.release.openshift.io/self-managed-high-availability: "true"
+    creationTimestamp: "2023-05-04T21:36:18Z"
+    name: prometheus-k8s-cluster-baremetal-operator
+    namespace: openshift-machine-api
+    ownerReferences:
+    - apiVersion: config.openshift.io/v1
+      kind: ClusterVersion
+      name: version
+      uid: 5d92b52f-9fff-4a6e-b815-398b934115ad
+    resourceVersion: "2239"
+    uid: 3c02e802-d4dd-41b4-a773-e7157401259d
+  rules:
+  - apiGroups:
+    - ""
+    attributeRestrictions: null
+    resources:
+    - namespace/metrics
+    verbs:
+    - get
+  - apiGroups:
+    - ""
+    attributeRestrictions: null
+    resources:
+    - endpoints
+    - pods
+    - services
+    verbs:
+    - get
+    - list
+    - watch
+- apiVersion: authorization.openshift.io/v1
+  kind: Role
+  metadata:
+    annotations:
+      include.release.openshift.io/self-managed-high-availability: "true"
+      include.release.openshift.io/single-node-developer: "true"
+    creationTimestamp: "2023-05-04T21:36:23Z"
+    name: prometheus-k8s-machine-api-operator
+    namespace: openshift-machine-api
+    ownerReferences:
+    - apiVersion: config.openshift.io/v1
+      kind: ClusterVersion
+      name: version
+      uid: 5d92b52f-9fff-4a6e-b815-398b934115ad
+    resourceVersion: "2429"
+    uid: b766644c-6c24-4fa1-aa7e-eced9aa7eba0
+  rules:
+  - apiGroups:
+    - ""
+    attributeRestrictions: null
+    resources:
+    - namespace/metrics
+    verbs:
+    - get
+  - apiGroups:
+    - ""
+    attributeRestrictions: null
+    resources:
+    - endpoints
+    - pods
+    - services
+    verbs:
+    - get
+    - list
+    - watch
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

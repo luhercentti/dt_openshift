@@ -1,0 +1,199 @@
+apiVersion: v1
+items:
+- apiVersion: operators.coreos.com/v1alpha1
+  kind: InstallPlan
+  metadata:
+    creationTimestamp: "2023-05-15T18:37:47Z"
+    generateName: install-
+    generation: 1
+    labels:
+      operators.coreos.com/cluster-logging.openshift-logging: ""
+    name: install-n2gdl
+    namespace: openshift-logging
+    ownerReferences:
+    - apiVersion: operators.coreos.com/v1alpha1
+      blockOwnerDeletion: false
+      controller: false
+      kind: Subscription
+      name: cluster-logging
+      uid: f5ab5322-2280-44a9-bea6-766a2c2ca582
+    resourceVersion: "4139872"
+    uid: b96b23b1-40d6-47d2-a649-3dd9124e3fee
+  spec:
+    approval: Automatic
+    approved: true
+    clusterServiceVersionNames:
+    - cluster-logging.v5.6.5
+    generation: 1
+  status:
+    bundleLookups:
+    - catalogSourceRef:
+        name: redhat-operators
+        namespace: openshift-marketplace
+      identifier: cluster-logging.v5.6.5
+      path: registry.redhat.io/openshift-logging/cluster-logging-operator-bundle@sha256:f1a9fce2a0474fffabc36e62b3208e333a2154b0c75b8674f0264c0e77faf011
+      properties: '{"properties":[{"type":"olm.maxOpenShiftVersion","value":4.14},{"type":"olm.package","value":{"packageName":"cluster-logging","version":"5.6.5"}},{"type":"olm.gvk","value":{"group":"logging.openshift.io","kind":"ClusterLogForwarder","version":"v1"}},{"type":"olm.gvk","value":{"group":"logging.openshift.io","kind":"ClusterLogging","version":"v1"}}]}'
+      replaces: cluster-logging.v5.6.4
+    catalogSources: []
+    conditions:
+    - lastTransitionTime: "2023-05-15T18:37:52Z"
+      lastUpdateTime: "2023-05-15T18:37:52Z"
+      status: "True"
+      type: Installed
+    phase: Complete
+    plan:
+    - resolving: cluster-logging.v5.6.5
+      resource:
+        group: operators.coreos.com
+        kind: ClusterServiceVersion
+        manifest: '{"kind":"ConfigMap","name":"d8ecfc80b6789de04b5e95729da041e81811375faa1ea46b9e9db58fffd7de3","namespace":"openshift-marketplace","catalogSourceName":"redhat-operators","catalogSourceNamespace":"openshift-marketplace","replaces":"cluster-logging.v5.6.4","properties":"{\"properties\":[{\"type\":\"olm.maxOpenShiftVersion\",\"value\":4.14},{\"type\":\"olm.package\",\"value\":{\"packageName\":\"cluster-logging\",\"version\":\"5.6.5\"}},{\"type\":\"olm.gvk\",\"value\":{\"group\":\"logging.openshift.io\",\"kind\":\"ClusterLogForwarder\",\"version\":\"v1\"}},{\"type\":\"olm.gvk\",\"value\":{\"group\":\"logging.openshift.io\",\"kind\":\"ClusterLogging\",\"version\":\"v1\"}}]}"}'
+        name: cluster-logging.v5.6.5
+        sourceName: redhat-operators
+        sourceNamespace: openshift-marketplace
+        version: v1alpha1
+      status: Present
+    - resolving: cluster-logging.v5.6.5
+      resource:
+        group: rbac.authorization.k8s.io
+        kind: ClusterRole
+        manifest: '{"kind":"ConfigMap","name":"d8ecfc80b6789de04b5e95729da041e81811375faa1ea46b9e9db58fffd7de3","namespace":"openshift-marketplace","catalogSourceName":"redhat-operators","catalogSourceNamespace":"openshift-marketplace","replaces":"cluster-logging.v5.6.4","properties":"{\"properties\":[{\"type\":\"olm.maxOpenShiftVersion\",\"value\":4.14},{\"type\":\"olm.package\",\"value\":{\"packageName\":\"cluster-logging\",\"version\":\"5.6.5\"}},{\"type\":\"olm.gvk\",\"value\":{\"group\":\"logging.openshift.io\",\"kind\":\"ClusterLogForwarder\",\"version\":\"v1\"}},{\"type\":\"olm.gvk\",\"value\":{\"group\":\"logging.openshift.io\",\"kind\":\"ClusterLogging\",\"version\":\"v1\"}}]}"}'
+        name: metadata-reader
+        sourceName: redhat-operators
+        sourceNamespace: openshift-marketplace
+        version: v1
+      status: Present
+    - resolving: cluster-logging.v5.6.5
+      resource:
+        group: rbac.authorization.k8s.io
+        kind: RoleBinding
+        manifest: '{"kind":"ConfigMap","name":"d8ecfc80b6789de04b5e95729da041e81811375faa1ea46b9e9db58fffd7de3","namespace":"openshift-marketplace","catalogSourceName":"redhat-operators","catalogSourceNamespace":"openshift-marketplace","replaces":"cluster-logging.v5.6.4","properties":"{\"properties\":[{\"type\":\"olm.maxOpenShiftVersion\",\"value\":4.14},{\"type\":\"olm.package\",\"value\":{\"packageName\":\"cluster-logging\",\"version\":\"5.6.5\"}},{\"type\":\"olm.gvk\",\"value\":{\"group\":\"logging.openshift.io\",\"kind\":\"ClusterLogForwarder\",\"version\":\"v1\"}},{\"type\":\"olm.gvk\",\"value\":{\"group\":\"logging.openshift.io\",\"kind\":\"ClusterLogging\",\"version\":\"v1\"}}]}"}'
+        name: log-collector-privileged-binding
+        sourceName: redhat-operators
+        sourceNamespace: openshift-marketplace
+        version: v1
+      status: Present
+    - resolving: cluster-logging.v5.6.5
+      resource:
+        group: rbac.authorization.k8s.io
+        kind: Role
+        manifest: '{"kind":"ConfigMap","name":"d8ecfc80b6789de04b5e95729da041e81811375faa1ea46b9e9db58fffd7de3","namespace":"openshift-marketplace","catalogSourceName":"redhat-operators","catalogSourceNamespace":"openshift-marketplace","replaces":"cluster-logging.v5.6.4","properties":"{\"properties\":[{\"type\":\"olm.maxOpenShiftVersion\",\"value\":4.14},{\"type\":\"olm.package\",\"value\":{\"packageName\":\"cluster-logging\",\"version\":\"5.6.5\"}},{\"type\":\"olm.gvk\",\"value\":{\"group\":\"logging.openshift.io\",\"kind\":\"ClusterLogForwarder\",\"version\":\"v1\"}},{\"type\":\"olm.gvk\",\"value\":{\"group\":\"logging.openshift.io\",\"kind\":\"ClusterLogging\",\"version\":\"v1\"}}]}"}'
+        name: prometheus
+        sourceName: redhat-operators
+        sourceNamespace: openshift-marketplace
+        version: v1
+      status: Present
+    - resolving: cluster-logging.v5.6.5
+      resource:
+        group: rbac.authorization.k8s.io
+        kind: RoleBinding
+        manifest: '{"kind":"ConfigMap","name":"d8ecfc80b6789de04b5e95729da041e81811375faa1ea46b9e9db58fffd7de3","namespace":"openshift-marketplace","catalogSourceName":"redhat-operators","catalogSourceNamespace":"openshift-marketplace","replaces":"cluster-logging.v5.6.4","properties":"{\"properties\":[{\"type\":\"olm.maxOpenShiftVersion\",\"value\":4.14},{\"type\":\"olm.package\",\"value\":{\"packageName\":\"cluster-logging\",\"version\":\"5.6.5\"}},{\"type\":\"olm.gvk\",\"value\":{\"group\":\"logging.openshift.io\",\"kind\":\"ClusterLogForwarder\",\"version\":\"v1\"}},{\"type\":\"olm.gvk\",\"value\":{\"group\":\"logging.openshift.io\",\"kind\":\"ClusterLogging\",\"version\":\"v1\"}}]}"}'
+        name: prometheus
+        sourceName: redhat-operators
+        sourceNamespace: openshift-marketplace
+        version: v1
+      status: Present
+    - resolving: cluster-logging.v5.6.5
+      resource:
+        group: monitoring.coreos.com
+        kind: ServiceMonitor
+        manifest: '{"kind":"ConfigMap","name":"d8ecfc80b6789de04b5e95729da041e81811375faa1ea46b9e9db58fffd7de3","namespace":"openshift-marketplace","catalogSourceName":"redhat-operators","catalogSourceNamespace":"openshift-marketplace","replaces":"cluster-logging.v5.6.4","properties":"{\"properties\":[{\"type\":\"olm.maxOpenShiftVersion\",\"value\":4.14},{\"type\":\"olm.package\",\"value\":{\"packageName\":\"cluster-logging\",\"version\":\"5.6.5\"}},{\"type\":\"olm.gvk\",\"value\":{\"group\":\"logging.openshift.io\",\"kind\":\"ClusterLogForwarder\",\"version\":\"v1\"}},{\"type\":\"olm.gvk\",\"value\":{\"group\":\"logging.openshift.io\",\"kind\":\"ClusterLogging\",\"version\":\"v1\"}}]}"}'
+        name: cluster-logging-operator-metrics-monitor
+        sourceName: redhat-operators
+        sourceNamespace: openshift-marketplace
+        version: v1
+      status: Present
+    - resolving: cluster-logging.v5.6.5
+      resource:
+        group: apiextensions.k8s.io
+        kind: CustomResourceDefinition
+        manifest: '{"kind":"ConfigMap","name":"d8ecfc80b6789de04b5e95729da041e81811375faa1ea46b9e9db58fffd7de3","namespace":"openshift-marketplace","catalogSourceName":"redhat-operators","catalogSourceNamespace":"openshift-marketplace","replaces":"cluster-logging.v5.6.4","properties":"{\"properties\":[{\"type\":\"olm.maxOpenShiftVersion\",\"value\":4.14},{\"type\":\"olm.package\",\"value\":{\"packageName\":\"cluster-logging\",\"version\":\"5.6.5\"}},{\"type\":\"olm.gvk\",\"value\":{\"group\":\"logging.openshift.io\",\"kind\":\"ClusterLogForwarder\",\"version\":\"v1\"}},{\"type\":\"olm.gvk\",\"value\":{\"group\":\"logging.openshift.io\",\"kind\":\"ClusterLogging\",\"version\":\"v1\"}}]}"}'
+        name: clusterloggings.logging.openshift.io
+        sourceName: redhat-operators
+        sourceNamespace: openshift-marketplace
+        version: v1
+      status: Present
+    - resolving: cluster-logging.v5.6.5
+      resource:
+        group: apiextensions.k8s.io
+        kind: CustomResourceDefinition
+        manifest: '{"kind":"ConfigMap","name":"d8ecfc80b6789de04b5e95729da041e81811375faa1ea46b9e9db58fffd7de3","namespace":"openshift-marketplace","catalogSourceName":"redhat-operators","catalogSourceNamespace":"openshift-marketplace","replaces":"cluster-logging.v5.6.4","properties":"{\"properties\":[{\"type\":\"olm.maxOpenShiftVersion\",\"value\":4.14},{\"type\":\"olm.package\",\"value\":{\"packageName\":\"cluster-logging\",\"version\":\"5.6.5\"}},{\"type\":\"olm.gvk\",\"value\":{\"group\":\"logging.openshift.io\",\"kind\":\"ClusterLogForwarder\",\"version\":\"v1\"}},{\"type\":\"olm.gvk\",\"value\":{\"group\":\"logging.openshift.io\",\"kind\":\"ClusterLogging\",\"version\":\"v1\"}}]}"}'
+        name: clusterlogforwarders.logging.openshift.io
+        sourceName: redhat-operators
+        sourceNamespace: openshift-marketplace
+        version: v1
+      status: Present
+    - resolving: cluster-logging.v5.6.5
+      resource:
+        group: rbac.authorization.k8s.io
+        kind: Role
+        manifest: '{"kind":"ConfigMap","name":"d8ecfc80b6789de04b5e95729da041e81811375faa1ea46b9e9db58fffd7de3","namespace":"openshift-marketplace","catalogSourceName":"redhat-operators","catalogSourceNamespace":"openshift-marketplace","replaces":"cluster-logging.v5.6.4","properties":"{\"properties\":[{\"type\":\"olm.maxOpenShiftVersion\",\"value\":4.14},{\"type\":\"olm.package\",\"value\":{\"packageName\":\"cluster-logging\",\"version\":\"5.6.5\"}},{\"type\":\"olm.gvk\",\"value\":{\"group\":\"logging.openshift.io\",\"kind\":\"ClusterLogForwarder\",\"version\":\"v1\"}},{\"type\":\"olm.gvk\",\"value\":{\"group\":\"logging.openshift.io\",\"kind\":\"ClusterLogging\",\"version\":\"v1\"}}]}"}'
+        name: log-collector-privileged
+        sourceName: redhat-operators
+        sourceNamespace: openshift-marketplace
+        version: v1
+      status: Present
+    - resolving: cluster-logging.v5.6.5
+      resource:
+        group: ""
+        kind: Service
+        manifest: '{"kind":"ConfigMap","name":"d8ecfc80b6789de04b5e95729da041e81811375faa1ea46b9e9db58fffd7de3","namespace":"openshift-marketplace","catalogSourceName":"redhat-operators","catalogSourceNamespace":"openshift-marketplace","replaces":"cluster-logging.v5.6.4","properties":"{\"properties\":[{\"type\":\"olm.maxOpenShiftVersion\",\"value\":4.14},{\"type\":\"olm.package\",\"value\":{\"packageName\":\"cluster-logging\",\"version\":\"5.6.5\"}},{\"type\":\"olm.gvk\",\"value\":{\"group\":\"logging.openshift.io\",\"kind\":\"ClusterLogForwarder\",\"version\":\"v1\"}},{\"type\":\"olm.gvk\",\"value\":{\"group\":\"logging.openshift.io\",\"kind\":\"ClusterLogging\",\"version\":\"v1\"}}]}"}'
+        name: cluster-logging-operator-metrics
+        sourceName: redhat-operators
+        sourceNamespace: openshift-marketplace
+        version: v1
+      status: Present
+    - resolving: cluster-logging.v5.6.5
+      resource:
+        group: ""
+        kind: ServiceAccount
+        manifest: '{"kind":"ConfigMap","name":"d8ecfc80b6789de04b5e95729da041e81811375faa1ea46b9e9db58fffd7de3","namespace":"openshift-marketplace","catalogSourceName":"redhat-operators","catalogSourceNamespace":"openshift-marketplace","replaces":"cluster-logging.v5.6.4","properties":"{\"properties\":[{\"type\":\"olm.maxOpenShiftVersion\",\"value\":4.14},{\"type\":\"olm.package\",\"value\":{\"packageName\":\"cluster-logging\",\"version\":\"5.6.5\"}},{\"type\":\"olm.gvk\",\"value\":{\"group\":\"logging.openshift.io\",\"kind\":\"ClusterLogForwarder\",\"version\":\"v1\"}},{\"type\":\"olm.gvk\",\"value\":{\"group\":\"logging.openshift.io\",\"kind\":\"ClusterLogging\",\"version\":\"v1\"}}]}"}'
+        name: cluster-logging-operator
+        sourceName: redhat-operators
+        sourceNamespace: openshift-marketplace
+        version: v1
+      status: Present
+    - resolving: cluster-logging.v5.6.5
+      resource:
+        group: rbac.authorization.k8s.io
+        kind: Role
+        manifest: '{"kind":"ConfigMap","name":"d8ecfc80b6789de04b5e95729da041e81811375faa1ea46b9e9db58fffd7de3","namespace":"openshift-marketplace","catalogSourceName":"redhat-operators","catalogSourceNamespace":"openshift-marketplace","replaces":"cluster-logging.v5.6.4","properties":"{\"properties\":[{\"type\":\"olm.maxOpenShiftVersion\",\"value\":4.14},{\"type\":\"olm.package\",\"value\":{\"packageName\":\"cluster-logging\",\"version\":\"5.6.5\"}},{\"type\":\"olm.gvk\",\"value\":{\"group\":\"logging.openshift.io\",\"kind\":\"ClusterLogForwarder\",\"version\":\"v1\"}},{\"type\":\"olm.gvk\",\"value\":{\"group\":\"logging.openshift.io\",\"kind\":\"ClusterLogging\",\"version\":\"v1\"}}]}"}'
+        name: cluster-logging.v5.6.5-cluster-logging-operator-5c6549c878
+        sourceName: redhat-operators
+        sourceNamespace: openshift-marketplace
+        version: v1
+      status: Present
+    - resolving: cluster-logging.v5.6.5
+      resource:
+        group: rbac.authorization.k8s.io
+        kind: RoleBinding
+        manifest: '{"kind":"ConfigMap","name":"d8ecfc80b6789de04b5e95729da041e81811375faa1ea46b9e9db58fffd7de3","namespace":"openshift-marketplace","catalogSourceName":"redhat-operators","catalogSourceNamespace":"openshift-marketplace","replaces":"cluster-logging.v5.6.4","properties":"{\"properties\":[{\"type\":\"olm.maxOpenShiftVersion\",\"value\":4.14},{\"type\":\"olm.package\",\"value\":{\"packageName\":\"cluster-logging\",\"version\":\"5.6.5\"}},{\"type\":\"olm.gvk\",\"value\":{\"group\":\"logging.openshift.io\",\"kind\":\"ClusterLogForwarder\",\"version\":\"v1\"}},{\"type\":\"olm.gvk\",\"value\":{\"group\":\"logging.openshift.io\",\"kind\":\"ClusterLogging\",\"version\":\"v1\"}}]}"}'
+        name: cluster-logging.v5.6.5-cluster-logging-operator-5c6549c878
+        sourceName: redhat-operators
+        sourceNamespace: openshift-marketplace
+        version: v1
+      status: Present
+    - resolving: cluster-logging.v5.6.5
+      resource:
+        group: rbac.authorization.k8s.io
+        kind: ClusterRole
+        manifest: '{"kind":"ConfigMap","name":"d8ecfc80b6789de04b5e95729da041e81811375faa1ea46b9e9db58fffd7de3","namespace":"openshift-marketplace","catalogSourceName":"redhat-operators","catalogSourceNamespace":"openshift-marketplace","replaces":"cluster-logging.v5.6.4","properties":"{\"properties\":[{\"type\":\"olm.maxOpenShiftVersion\",\"value\":4.14},{\"type\":\"olm.package\",\"value\":{\"packageName\":\"cluster-logging\",\"version\":\"5.6.5\"}},{\"type\":\"olm.gvk\",\"value\":{\"group\":\"logging.openshift.io\",\"kind\":\"ClusterLogForwarder\",\"version\":\"v1\"}},{\"type\":\"olm.gvk\",\"value\":{\"group\":\"logging.openshift.io\",\"kind\":\"ClusterLogging\",\"version\":\"v1\"}}]}"}'
+        name: cluster-logging.v5.6.5-77d7b556cb
+        sourceName: redhat-operators
+        sourceNamespace: openshift-marketplace
+        version: v1
+      status: Present
+    - resolving: cluster-logging.v5.6.5
+      resource:
+        group: rbac.authorization.k8s.io
+        kind: ClusterRoleBinding
+        manifest: '{"kind":"ConfigMap","name":"d8ecfc80b6789de04b5e95729da041e81811375faa1ea46b9e9db58fffd7de3","namespace":"openshift-marketplace","catalogSourceName":"redhat-operators","catalogSourceNamespace":"openshift-marketplace","replaces":"cluster-logging.v5.6.4","properties":"{\"properties\":[{\"type\":\"olm.maxOpenShiftVersion\",\"value\":4.14},{\"type\":\"olm.package\",\"value\":{\"packageName\":\"cluster-logging\",\"version\":\"5.6.5\"}},{\"type\":\"olm.gvk\",\"value\":{\"group\":\"logging.openshift.io\",\"kind\":\"ClusterLogForwarder\",\"version\":\"v1\"}},{\"type\":\"olm.gvk\",\"value\":{\"group\":\"logging.openshift.io\",\"kind\":\"ClusterLogging\",\"version\":\"v1\"}}]}"}'
+        name: cluster-logging.v5.6.5-77d7b556cb
+        sourceName: redhat-operators
+        sourceNamespace: openshift-marketplace
+        version: v1
+      status: Present
+    startTime: "2023-05-15T18:37:52Z"
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

@@ -1,0 +1,240 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.129.0.12"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.129.0.12"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/scc: restricted
+    creationTimestamp: "2023-05-04T21:43:19Z"
+    generateName: cluster-samples-operator-c86ccdfb7-
+    labels:
+      name: cluster-samples-operator
+      pod-template-hash: c86ccdfb7
+    name: cluster-samples-operator-c86ccdfb7-m7l72
+    namespace: openshift-cluster-samples-operator
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: cluster-samples-operator-c86ccdfb7
+      uid: 1ceeaa1b-0688-4972-a9cd-7829245aea6a
+    resourceVersion: "369058940"
+    uid: 10ca5c89-6ef1-44a2-b4c4-b089f92c3e53
+  spec:
+    containers:
+    - command:
+      - cluster-samples-operator
+      env:
+      - name: WATCH_NAMESPACE
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: metadata.namespace
+      - name: OPERATOR_NAME
+        value: cluster-samples-operator
+      - name: RELEASE_VERSION
+        value: 4.10.53
+      - name: IMAGE_JENKINS
+        value: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:902246da403bf7ff1f6f3cf531dce445c0289d3b2b01a26f6008926ec2068077
+      - name: IMAGE_AGENT_BASE
+        value: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:299ddfb176a538474767909fe22a6cb09c109b197c00e2cc2898556a3dda6b6f
+      - name: IMAGE_AGENT_NODEJS
+        value: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:e1e2adfbfa864bb847b223f72f21368a6f5a566ece72e2073e06eecdf65807bd
+      - name: IMAGE_AGENT_MAVEN
+        value: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:b568176c4286286796f67acf71ced3516bc686e76175c63b294de7804d418b91
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:67b8855091ff7447c95554a42ef3278bcd2bd27df939a9ea46fec12b3e5dff2d
+      imagePullPolicy: IfNotPresent
+      name: cluster-samples-operator
+      ports:
+      - containerPort: 60000
+        name: metrics
+        protocol: TCP
+      resources:
+        requests:
+          cpu: 10m
+          memory: 50Mi
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000250000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /etc/secrets
+        name: samples-operator-tls
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-cpxq6
+        readOnly: true
+    - args:
+      - --namespace=openshift-cluster-samples-operator
+      - --process-name=cluster-samples-operator
+      - --termination-grace-period=30s
+      - --files=/etc/secrets/tls.crt,/etc/secrets/tls.key
+      command:
+      - cluster-samples-operator-watch
+      - file-watcher-watchdog
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:67b8855091ff7447c95554a42ef3278bcd2bd27df939a9ea46fec12b3e5dff2d
+      imagePullPolicy: IfNotPresent
+      name: cluster-samples-operator-watch
+      resources:
+        requests:
+          cpu: 10m
+          memory: 50Mi
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000250000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-cpxq6
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    nodeName: ocp4azu-sj2sl-master-0
+    nodeSelector:
+      node-role.kubernetes.io/master: ""
+    preemptionPolicy: PreemptLowerPriority
+    priority: 2000000000
+    priorityClassName: system-cluster-critical
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000250000
+      seLinuxOptions:
+        level: s0:c16,c5
+    serviceAccount: cluster-samples-operator
+    serviceAccountName: cluster-samples-operator
+    shareProcessNamespace: true
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/master
+      operator: Exists
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 120
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 120
+    - effect: NoSchedule
+      key: node.kubernetes.io/memory-pressure
+      operator: Exists
+    volumes:
+    - name: samples-operator-tls
+      secret:
+        defaultMode: 420
+        secretName: samples-operator-tls
+    - name: kube-api-access-cpxq6
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-04T21:43:19Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2024-06-02T21:41:05Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2024-06-02T21:41:05Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-04T21:43:19Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://a491fff57fbfa5104fc34d0b866b17da0d06ba08d92b8d00231aed5af6ac8a1b
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:67b8855091ff7447c95554a42ef3278bcd2bd27df939a9ea46fec12b3e5dff2d
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:67b8855091ff7447c95554a42ef3278bcd2bd27df939a9ea46fec12b3e5dff2d
+      lastState:
+        terminated:
+          containerID: cri-o://29123aee23a14a8566fab204f88458a386c98d56b9900afb369213fc08fb2978
+          exitCode: 0
+          finishedAt: "2024-06-02T21:41:04Z"
+          reason: Completed
+          startedAt: "2023-05-11T18:26:20Z"
+      name: cluster-samples-operator
+      ready: true
+      restartCount: 4
+      started: true
+      state:
+        running:
+          startedAt: "2024-06-02T21:41:04Z"
+    - containerID: cri-o://3795a4a56d76fb465df7d6f2ffb2c9fa4cecb31e40f96057996012cf27b3ef78
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:67b8855091ff7447c95554a42ef3278bcd2bd27df939a9ea46fec12b3e5dff2d
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:67b8855091ff7447c95554a42ef3278bcd2bd27df939a9ea46fec12b3e5dff2d
+      lastState: {}
+      name: cluster-samples-operator-watch
+      ready: true
+      restartCount: 3
+      started: true
+      state:
+        running:
+          startedAt: "2023-05-11T18:26:20Z"
+    hostIP: 10.80.80.6
+    phase: Running
+    podIP: 10.129.0.12
+    podIPs:
+    - ip: 10.129.0.12
+    qosClass: Burstable
+    startTime: "2023-05-04T21:43:19Z"
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

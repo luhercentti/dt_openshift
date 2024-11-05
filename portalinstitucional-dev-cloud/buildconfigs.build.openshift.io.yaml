@@ -1,0 +1,83 @@
+apiVersion: v1
+items:
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftWebConsole
+      openshift.io/migration-registry: 172.30.176.178:5000
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-18T22:13:52Z"
+    generation: 2
+    labels:
+      app: mi-escritorio-ux-v4
+      migration.openshift.io/migrated-by-migmigration: fec3ec19-481f-46b7-9ae7-bff48fdea7a1
+      migration.openshift.io/migrated-by-migplan: 115bf39f-32dd-46ac-8d1e-ac95f44b53ed
+      velero.io/backup-name: migration-17781-initial-hpqdg
+      velero.io/restore-name: migration-17781-final-nbzfx
+    name: mi-escritorio-ux-v4
+    namespace: portalinstitucional-dev-cloud
+    resourceVersion: "95922931"
+    uid: 1797ced7-9fe8-432b-9004-b99cc0a6c87e
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: mi-escritorio-ux-v4:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      git:
+        ref: moveapps/midt-v4-test
+        uri: https://dirtrab.visualstudio.com/Portal%20Institucional/_git/EscritorioFrontend
+      sourceSecret:
+        name: vsts
+      type: Git
+    strategy:
+      sourceStrategy:
+        env:
+        - name: NODE_ENV
+          value: development
+        - name: NPM_RUN
+          value: start
+        - name: REACT_APP_DT_API_JORNADA_EXCEPCIONAL
+          value: http://jornada-ex-dev.api.dirtrab.cl/api
+        - name: REACT_APP_DT_API_SIMULADOR_FINIQUITO
+          value: http://simulador-finiquito-dev.api.dirtrab.cl/api
+        - name: REACT_APP_DT_API_URL
+          value: http://proxy-portalinstitucional-dev.api.dirtrab.cl/api
+        from:
+          kind: ImageStreamTag
+          name: nodejs:10
+          namespace: openshift
+      type: Source
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - imageChange:
+        lastTriggeredImageID: docker-registry.default.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+      type: ImageChange
+    - type: ConfigChange
+    - generic:
+        secret: 7f9dd1fbbd609e94
+      type: Generic
+    - github:
+        secret: fb319ecd52355c11
+      type: GitHub
+  status:
+    imageChangeTriggers:
+    - from:
+        name: nodejs:10
+        namespace: openshift
+      lastTriggerTime: "2023-09-01T01:10:32Z"
+      lastTriggeredImageID: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+    lastVersion: 1
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

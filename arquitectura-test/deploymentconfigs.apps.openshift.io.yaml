@@ -1,0 +1,106 @@
+apiVersion: v1
+items:
+- apiVersion: apps.openshift.io/v1
+  kind: DeploymentConfig
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: "2023-06-14T14:20:32Z"
+    generation: 19
+    labels:
+      app: trackdt
+    name: trackdt
+    namespace: arquitectura-test
+    resourceVersion: "472917991"
+    uid: 0f9fab59-2e18-48fa-a912-51eb645c3ffd
+  spec:
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      app: trackdt
+      deploymentconfig: trackdt
+    strategy:
+      activeDeadlineSeconds: 21600
+      resources: {}
+      rollingParams:
+        intervalSeconds: 1
+        maxSurge: 25%
+        maxUnavailable: 25%
+        timeoutSeconds: 600
+        updatePeriodSeconds: 1
+      type: Rolling
+    template:
+      metadata:
+        annotations:
+          openshift.io/generated-by: OpenShiftNewApp
+        creationTimestamp: null
+        labels:
+          app: trackdt
+          deploymentconfig: trackdt
+      spec:
+        containers:
+        - command:
+          - npm
+          - run
+          - dev
+          image: image-registry.openshift-image-registry.svc:5000/arquitectura-test/trackdt@sha256:ce8cb59d4c8ebf2a44ec66183f8f641b7f5bd0d3cd6d0d99a9f773c5a3574c9b
+          imagePullPolicy: Always
+          name: trackdt
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources:
+            limits:
+              cpu: 50m
+              memory: 200Mi
+            requests:
+              cpu: 25m
+              memory: 80Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+    test: false
+    triggers:
+    - type: ConfigChange
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+        - trackdt
+        from:
+          kind: ImageStreamTag
+          name: trackdt:latest
+          namespace: arquitectura-test
+        lastTriggeredImage: image-registry.openshift-image-registry.svc:5000/arquitectura-test/trackdt@sha256:ce8cb59d4c8ebf2a44ec66183f8f641b7f5bd0d3cd6d0d99a9f773c5a3574c9b
+      type: ImageChange
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2023-06-14T15:39:52Z"
+      lastUpdateTime: "2023-06-14T15:39:56Z"
+      message: replication controller "trackdt-8" successfully rolled out
+      reason: NewReplicationControllerAvailable
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: "2024-07-23T01:24:57Z"
+      lastUpdateTime: "2024-07-23T01:24:57Z"
+      message: Deployment config has minimum availability.
+      status: "True"
+      type: Available
+    details:
+      causes:
+      - type: ConfigChange
+      message: config change
+    latestVersion: 8
+    observedGeneration: 19
+    readyReplicas: 1
+    replicas: 1
+    unavailableReplicas: 0
+    updatedReplicas: 1
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

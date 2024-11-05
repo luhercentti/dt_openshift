@@ -1,0 +1,267 @@
+apiVersion: v1
+items:
+- apiVersion: batch/v1
+  kind: Job
+  metadata:
+    creationTimestamp: "2024-08-02T14:30:00Z"
+    generation: 1
+    labels:
+      controller-uid: 32951e7e-d34e-43f4-b94d-19f0569b4235
+      job-name: collect-profiles-28710150
+    name: collect-profiles-28710150
+    namespace: openshift-operator-lifecycle-manager
+    ownerReferences:
+    - apiVersion: batch/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: CronJob
+      name: collect-profiles
+      uid: 77d0ccf1-9bb7-4af4-a937-e83996fb265b
+    resourceVersion: "494940990"
+    uid: 32951e7e-d34e-43f4-b94d-19f0569b4235
+  spec:
+    backoffLimit: 6
+    completionMode: NonIndexed
+    completions: 1
+    parallelism: 1
+    selector:
+      matchLabels:
+        controller-uid: 32951e7e-d34e-43f4-b94d-19f0569b4235
+    suspend: false
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          controller-uid: 32951e7e-d34e-43f4-b94d-19f0569b4235
+          job-name: collect-profiles-28710150
+      spec:
+        containers:
+        - args:
+          - -n
+          - openshift-operator-lifecycle-manager
+          - --config-mount-path
+          - /etc/config
+          - --cert-mount-path
+          - /var/run/secrets/serving-cert
+          - olm-operator-heap-:https://olm-operator-metrics:8443/debug/pprof/heap
+          - catalog-operator-heap-:https://catalog-operator-metrics:8443/debug/pprof/heap
+          command:
+          - bin/collect-profiles
+          image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:58d171c685b8bba98ed0a0497b23ddc9703fe975ce93e04182a283ac17f31410
+          imagePullPolicy: IfNotPresent
+          name: collect-profiles
+          resources:
+            requests:
+              cpu: 10m
+              memory: 80Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /etc/config
+            name: config-volume
+          - mountPath: /var/run/secrets/serving-cert
+            name: secret-volume
+        dnsPolicy: ClusterFirst
+        priorityClassName: openshift-user-critical
+        restartPolicy: Never
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: collect-profiles
+        serviceAccountName: collect-profiles
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - configMap:
+            defaultMode: 420
+            name: collect-profiles-config
+          name: config-volume
+        - name: secret-volume
+          secret:
+            defaultMode: 420
+            secretName: pprof-cert
+  status:
+    completionTime: "2024-08-02T14:30:06Z"
+    conditions:
+    - lastProbeTime: "2024-08-02T14:30:06Z"
+      lastTransitionTime: "2024-08-02T14:30:06Z"
+      status: "True"
+      type: Complete
+    startTime: "2024-08-02T14:30:00Z"
+    succeeded: 1
+- apiVersion: batch/v1
+  kind: Job
+  metadata:
+    creationTimestamp: "2024-08-02T14:45:00Z"
+    generation: 1
+    labels:
+      controller-uid: 3814bb3e-a141-45a1-8475-fdde93eca3c8
+      job-name: collect-profiles-28710165
+    name: collect-profiles-28710165
+    namespace: openshift-operator-lifecycle-manager
+    ownerReferences:
+    - apiVersion: batch/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: CronJob
+      name: collect-profiles
+      uid: 77d0ccf1-9bb7-4af4-a937-e83996fb265b
+    resourceVersion: "494962738"
+    uid: 3814bb3e-a141-45a1-8475-fdde93eca3c8
+  spec:
+    backoffLimit: 6
+    completionMode: NonIndexed
+    completions: 1
+    parallelism: 1
+    selector:
+      matchLabels:
+        controller-uid: 3814bb3e-a141-45a1-8475-fdde93eca3c8
+    suspend: false
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          controller-uid: 3814bb3e-a141-45a1-8475-fdde93eca3c8
+          job-name: collect-profiles-28710165
+      spec:
+        containers:
+        - args:
+          - -n
+          - openshift-operator-lifecycle-manager
+          - --config-mount-path
+          - /etc/config
+          - --cert-mount-path
+          - /var/run/secrets/serving-cert
+          - olm-operator-heap-:https://olm-operator-metrics:8443/debug/pprof/heap
+          - catalog-operator-heap-:https://catalog-operator-metrics:8443/debug/pprof/heap
+          command:
+          - bin/collect-profiles
+          image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:58d171c685b8bba98ed0a0497b23ddc9703fe975ce93e04182a283ac17f31410
+          imagePullPolicy: IfNotPresent
+          name: collect-profiles
+          resources:
+            requests:
+              cpu: 10m
+              memory: 80Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /etc/config
+            name: config-volume
+          - mountPath: /var/run/secrets/serving-cert
+            name: secret-volume
+        dnsPolicy: ClusterFirst
+        priorityClassName: openshift-user-critical
+        restartPolicy: Never
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: collect-profiles
+        serviceAccountName: collect-profiles
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - configMap:
+            defaultMode: 420
+            name: collect-profiles-config
+          name: config-volume
+        - name: secret-volume
+          secret:
+            defaultMode: 420
+            secretName: pprof-cert
+  status:
+    completionTime: "2024-08-02T14:45:08Z"
+    conditions:
+    - lastProbeTime: "2024-08-02T14:45:08Z"
+      lastTransitionTime: "2024-08-02T14:45:08Z"
+      status: "True"
+      type: Complete
+    startTime: "2024-08-02T14:45:00Z"
+    succeeded: 1
+- apiVersion: batch/v1
+  kind: Job
+  metadata:
+    creationTimestamp: "2024-08-02T15:00:00Z"
+    generation: 1
+    labels:
+      controller-uid: 9fa62072-827b-4f3b-8da5-c3e959fb1842
+      job-name: collect-profiles-28710180
+    name: collect-profiles-28710180
+    namespace: openshift-operator-lifecycle-manager
+    ownerReferences:
+    - apiVersion: batch/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: CronJob
+      name: collect-profiles
+      uid: 77d0ccf1-9bb7-4af4-a937-e83996fb265b
+    resourceVersion: "494984455"
+    uid: 9fa62072-827b-4f3b-8da5-c3e959fb1842
+  spec:
+    backoffLimit: 6
+    completionMode: NonIndexed
+    completions: 1
+    parallelism: 1
+    selector:
+      matchLabels:
+        controller-uid: 9fa62072-827b-4f3b-8da5-c3e959fb1842
+    suspend: false
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          controller-uid: 9fa62072-827b-4f3b-8da5-c3e959fb1842
+          job-name: collect-profiles-28710180
+      spec:
+        containers:
+        - args:
+          - -n
+          - openshift-operator-lifecycle-manager
+          - --config-mount-path
+          - /etc/config
+          - --cert-mount-path
+          - /var/run/secrets/serving-cert
+          - olm-operator-heap-:https://olm-operator-metrics:8443/debug/pprof/heap
+          - catalog-operator-heap-:https://catalog-operator-metrics:8443/debug/pprof/heap
+          command:
+          - bin/collect-profiles
+          image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:58d171c685b8bba98ed0a0497b23ddc9703fe975ce93e04182a283ac17f31410
+          imagePullPolicy: IfNotPresent
+          name: collect-profiles
+          resources:
+            requests:
+              cpu: 10m
+              memory: 80Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /etc/config
+            name: config-volume
+          - mountPath: /var/run/secrets/serving-cert
+            name: secret-volume
+        dnsPolicy: ClusterFirst
+        priorityClassName: openshift-user-critical
+        restartPolicy: Never
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: collect-profiles
+        serviceAccountName: collect-profiles
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - configMap:
+            defaultMode: 420
+            name: collect-profiles-config
+          name: config-volume
+        - name: secret-volume
+          secret:
+            defaultMode: 420
+            secretName: pprof-cert
+  status:
+    completionTime: "2024-08-02T15:00:09Z"
+    conditions:
+    - lastProbeTime: "2024-08-02T15:00:09Z"
+      lastTransitionTime: "2024-08-02T15:00:09Z"
+      status: "True"
+      type: Complete
+    startTime: "2024-08-02T15:00:00Z"
+    succeeded: 1
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

@@ -1,0 +1,120 @@
+apiVersion: v1
+items:
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    annotations:
+      include.release.openshift.io/ibm-cloud-managed: "true"
+      include.release.openshift.io/self-managed-high-availability: "true"
+      include.release.openshift.io/single-node-developer: "true"
+    creationTimestamp: "2023-05-04T21:35:39Z"
+    name: machine-approver
+    namespace: openshift-cluster-machine-approver
+    ownerReferences:
+    - apiVersion: config.openshift.io/v1
+      kind: ClusterVersion
+      name: version
+      uid: 5d92b52f-9fff-4a6e-b815-398b934115ad
+    resourceVersion: "1172"
+    uid: fafdcb3e-3e0a-4ea6-82b0-b697d0978741
+  roleRef:
+    name: machine-approver
+    namespace: openshift-cluster-machine-approver
+  subjects:
+  - kind: ServiceAccount
+    name: machine-approver-sa
+    namespace: openshift-cluster-machine-approver
+  userNames:
+  - system:serviceaccount:openshift-cluster-machine-approver:machine-approver-sa
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    annotations:
+      include.release.openshift.io/ibm-cloud-managed: "true"
+      include.release.openshift.io/self-managed-high-availability: "true"
+      include.release.openshift.io/single-node-developer: "true"
+    creationTimestamp: "2023-05-04T21:35:36Z"
+    name: prometheus-k8s
+    namespace: openshift-cluster-machine-approver
+    ownerReferences:
+    - apiVersion: config.openshift.io/v1
+      kind: ClusterVersion
+      name: version
+      uid: 5d92b52f-9fff-4a6e-b815-398b934115ad
+    resourceVersion: "1109"
+    uid: 68e13206-8455-4432-a705-7f21b9c890a8
+  roleRef:
+    name: prometheus-k8s
+    namespace: openshift-cluster-machine-approver
+  subjects:
+  - kind: ServiceAccount
+    name: prometheus-k8s
+    namespace: openshift-monitoring
+  userNames:
+  - system:serviceaccount:openshift-monitoring:prometheus-k8s
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/description: Allows deploymentconfigs in this namespace to rollout
+        pods in this namespace.  It is auto-managed by a controller; remove subjects
+        to disable.
+    creationTimestamp: "2023-05-04T21:45:26Z"
+    name: system:deployers
+    namespace: openshift-cluster-machine-approver
+    resourceVersion: "15384"
+    uid: 549b03ed-e825-493b-a361-046a0ca7f7cf
+  roleRef:
+    name: system:deployer
+  subjects:
+  - kind: ServiceAccount
+    name: deployer
+    namespace: openshift-cluster-machine-approver
+  userNames:
+  - system:serviceaccount:openshift-cluster-machine-approver:deployer
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/description: Allows builds in this namespace to push images to
+        this namespace.  It is auto-managed by a controller; remove subjects to disable.
+    creationTimestamp: "2023-05-04T21:45:26Z"
+    name: system:image-builders
+    namespace: openshift-cluster-machine-approver
+    resourceVersion: "15326"
+    uid: c0f78f8e-8950-4e28-b201-d7de94d0969d
+  roleRef:
+    name: system:image-builder
+  subjects:
+  - kind: ServiceAccount
+    name: builder
+    namespace: openshift-cluster-machine-approver
+  userNames:
+  - system:serviceaccount:openshift-cluster-machine-approver:builder
+- apiVersion: authorization.openshift.io/v1
+  groupNames:
+  - system:serviceaccounts:openshift-cluster-machine-approver
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/description: Allows all pods in this namespace to pull images from
+        this namespace.  It is auto-managed by a controller; remove subjects to disable.
+    creationTimestamp: "2023-05-04T21:45:25Z"
+    name: system:image-pullers
+    namespace: openshift-cluster-machine-approver
+    resourceVersion: "15250"
+    uid: 6ecb8800-1f9f-493f-962e-f9e45d166db6
+  roleRef:
+    name: system:image-puller
+  subjects:
+  - kind: SystemGroup
+    name: system:serviceaccounts:openshift-cluster-machine-approver
+  userNames: null
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

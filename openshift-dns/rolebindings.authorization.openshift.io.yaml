@@ -1,0 +1,84 @@
+apiVersion: v1
+items:
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    creationTimestamp: "2023-05-04T21:41:31Z"
+    name: prometheus-k8s
+    namespace: openshift-dns
+    resourceVersion: "8129"
+    uid: dd18f101-2471-4eba-ab4c-17e2c830fcdc
+  roleRef:
+    name: prometheus-k8s
+    namespace: openshift-dns
+  subjects:
+  - kind: ServiceAccount
+    name: prometheus-k8s
+    namespace: openshift-monitoring
+  userNames:
+  - system:serviceaccount:openshift-monitoring:prometheus-k8s
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/description: Allows deploymentconfigs in this namespace to rollout
+        pods in this namespace.  It is auto-managed by a controller; remove subjects
+        to disable.
+    creationTimestamp: "2023-05-04T21:45:21Z"
+    name: system:deployers
+    namespace: openshift-dns
+    resourceVersion: "14233"
+    uid: a4eff5b2-49a5-488e-afcf-fb12f0a322d7
+  roleRef:
+    name: system:deployer
+  subjects:
+  - kind: ServiceAccount
+    name: deployer
+    namespace: openshift-dns
+  userNames:
+  - system:serviceaccount:openshift-dns:deployer
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/description: Allows builds in this namespace to push images to
+        this namespace.  It is auto-managed by a controller; remove subjects to disable.
+    creationTimestamp: "2023-05-04T21:45:20Z"
+    name: system:image-builders
+    namespace: openshift-dns
+    resourceVersion: "14083"
+    uid: 8da48dfb-2770-49b3-bfca-5ee007519e14
+  roleRef:
+    name: system:image-builder
+  subjects:
+  - kind: ServiceAccount
+    name: builder
+    namespace: openshift-dns
+  userNames:
+  - system:serviceaccount:openshift-dns:builder
+- apiVersion: authorization.openshift.io/v1
+  groupNames:
+  - system:serviceaccounts:openshift-dns
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/description: Allows all pods in this namespace to pull images from
+        this namespace.  It is auto-managed by a controller; remove subjects to disable.
+    creationTimestamp: "2023-05-04T21:45:19Z"
+    name: system:image-pullers
+    namespace: openshift-dns
+    resourceVersion: "13949"
+    uid: 3ef125b3-3330-4929-99a2-81f998608059
+  roleRef:
+    name: system:image-puller
+  subjects:
+  - kind: SystemGroup
+    name: system:serviceaccounts:openshift-dns
+  userNames: null
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

@@ -1,0 +1,211 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.130.0.27"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.130.0.27"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/scc: anyuid
+    creationTimestamp: "2023-05-04T21:35:50Z"
+    generateName: kube-storage-version-migrator-operator-77b67c667-
+    labels:
+      app: kube-storage-version-migrator-operator
+      pod-template-hash: 77b67c667
+    name: kube-storage-version-migrator-operator-77b67c667-flh6q
+    namespace: openshift-kube-storage-version-migrator-operator
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: kube-storage-version-migrator-operator-77b67c667
+      uid: 0ae997d8-ad39-4e06-87b0-f5a5f574749e
+    resourceVersion: "369060406"
+    uid: ec371813-1370-4cfd-bc14-fec5b8ab6864
+  spec:
+    containers:
+    - args:
+      - --config=/var/run/configmaps/config/config.yaml
+      command:
+      - cluster-kube-storage-version-migrator-operator
+      - start
+      env:
+      - name: IMAGE
+        value: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:ecb2f830cb211728de87c2b166a714bdcb3047be342a73d3d899b3236eef2815
+      - name: OPERATOR_IMAGE
+        value: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:e41e127af5beea5549acef16b3cc6ae4756cbe46875e68662a5b3fdf9449fa48
+      - name: OPERATOR_IMAGE_VERSION
+        value: 4.10.53
+      - name: OPERAND_IMAGE_VERSION
+        value: 4.10.53
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:e41e127af5beea5549acef16b3cc6ae4756cbe46875e68662a5b3fdf9449fa48
+      imagePullPolicy: IfNotPresent
+      name: kube-storage-version-migrator-operator
+      ports:
+      - containerPort: 8443
+        name: metrics
+        protocol: TCP
+      resources:
+        requests:
+          cpu: 10m
+          memory: 50Mi
+      securityContext:
+        capabilities:
+          drop:
+          - MKNOD
+        runAsUser: 1001
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: FallbackToLogsOnError
+      volumeMounts:
+      - mountPath: /var/run/configmaps/config
+        name: config
+      - mountPath: /var/run/secrets/serving-cert
+        name: serving-cert
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-xhjmf
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    nodeName: ocp4azu-sj2sl-master-1
+    nodeSelector:
+      node-role.kubernetes.io/master: ""
+    preemptionPolicy: PreemptLowerPriority
+    priority: 2000000000
+    priorityClassName: system-cluster-critical
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      seLinuxOptions:
+        level: s0:c19,c4
+    serviceAccount: kube-storage-version-migrator-operator
+    serviceAccountName: kube-storage-version-migrator-operator
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/master
+      operator: Exists
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 120
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 120
+    - effect: NoSchedule
+      key: node.kubernetes.io/memory-pressure
+      operator: Exists
+    volumes:
+    - name: serving-cert
+      secret:
+        defaultMode: 420
+        optional: true
+        secretName: serving-cert
+    - configMap:
+        defaultMode: 420
+        name: config
+      name: config
+    - name: kube-api-access-xhjmf
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-04T21:40:05Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2024-06-02T21:41:44Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2024-06-02T21:41:44Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-04T21:40:05Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://dbc2fcd6d47b81cae1c9bcd6ccdeee1b58e6a50e3d148f7df6a10b006955aefc
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:e41e127af5beea5549acef16b3cc6ae4756cbe46875e68662a5b3fdf9449fa48
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:e41e127af5beea5549acef16b3cc6ae4756cbe46875e68662a5b3fdf9449fa48
+      lastState:
+        terminated:
+          containerID: cri-o://54280e782a94e1f341ffa62ee7c443d8f7566dfd7aff4f8d6d6fb07991048217
+          exitCode: 1
+          finishedAt: "2024-06-02T21:41:42Z"
+          message: |
+            lf-signed loopback" certDetail="\"apiserver-loopback-client@1683829592\" [serving] validServingFor=[apiserver-loopback-client] issuer=\"apiserver-loopback-client-ca@1683829592\" (2023-05-11 17:26:32 +0000 UTC to 2024-05-10 17:26:32 +0000 UTC (now=2024-06-02 21:41:41.4390036 +0000 UTC))"
+            I0602 21:41:42.182932       1 observer_polling.go:120] Observed file "/var/run/secrets/serving-cert/tls.crt" has been modified (old="3d51f5c64bb81a5da202ff7b2de68129c47a556ba632e0180e6554b823d291e7", new="959530b4104a1f5004fab0b72cfa88ce9a6479891a6ccfed96f5a372dae72234")
+            W0602 21:41:42.182992       1 builder.go:129] Restart triggered because of file /var/run/secrets/serving-cert/tls.crt was modified
+            I0602 21:41:42.183082       1 observer_polling.go:120] Observed file "/var/run/secrets/serving-cert/tls.key" has been modified (old="e8e9a97414cd38e68cd925aad2cd5d7e3e03e0c8ed036f7524fb4b2f8ed8b3ae", new="fb03d3b80ace521e1afd58abe38eb0c49d8c1a578656ad0bc8ffddf32d06e49a")
+            I0602 21:41:42.183490       1 genericapiserver.go:470] [graceful-termination] RunPreShutdownHooks has completed
+            I0602 21:41:42.183546       1 genericapiserver.go:419] "[graceful-termination] shutdown event" name="ShutdownInitiated"
+            I0602 21:41:42.183752       1 base_controller.go:167] Shutting down StatusSyncer_kube-storage-version-migrator ...
+            I0602 21:41:42.183773       1 base_controller.go:145] All StatusSyncer_kube-storage-version-migrator post start hooks have been terminated
+            I0602 21:41:42.183786       1 base_controller.go:167] Shutting down RemoveStaleConditionsController ...
+            I0602 21:41:42.183795       1 base_controller.go:167] Shutting down StaticConditionsController ...
+            I0602 21:41:42.183804       1 base_controller.go:167] Shutting down StaticResourceController ...
+            I0602 21:41:42.183814       1 base_controller.go:167] Shutting down KubeStorageVersionMigrator ...
+            I0602 21:41:42.183823       1 base_controller.go:167] Shutting down LoggingSyncer ...
+            W0602 21:41:42.183876       1 builder.go:106] graceful termination failed, controllers failed with error: stopped
+          reason: Error
+          startedAt: "2023-05-11T18:26:31Z"
+      name: kube-storage-version-migrator-operator
+      ready: true
+      restartCount: 5
+      started: true
+      state:
+        running:
+          startedAt: "2024-06-02T21:41:43Z"
+    hostIP: 10.80.80.8
+    phase: Running
+    podIP: 10.130.0.27
+    podIPs:
+    - ip: 10.130.0.27
+    qosClass: Burstable
+    startTime: "2023-05-04T21:40:05Z"
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

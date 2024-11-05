@@ -1,0 +1,101 @@
+apiVersion: v1
+items:
+- apiVersion: authorization.openshift.io/v1
+  kind: Role
+  metadata:
+    creationTimestamp: "2023-05-25T13:37:39Z"
+    labels:
+      migration.openshift.io/migrated-by-migmigration: c3ea9ecb-e90b-490b-b3d5-a4a3ca470138
+      migration.openshift.io/migrated-by-migplan: 09dc99a3-20c0-4d89-88a2-c81cce3ef81b
+      velero.io/backup-name: migration-f9156-initial-ff7x9
+      velero.io/restore-name: migration-f9156-final-jccsn
+    name: amq-broker-operator
+    namespace: lre-dev
+    resourceVersion: "11409199"
+    uid: dc14cd13-f036-4188-a36e-50f195a4fc11
+  rules:
+  - apiGroups:
+    - ""
+    attributeRestrictions: null
+    resources:
+    - configmaps
+    - endpoints
+    - events
+    - persistentvolumeclaims
+    - pods
+    - routes
+    - secrets
+    - services
+    verbs:
+    - '*'
+  - apiGroups:
+    - ""
+    attributeRestrictions: null
+    resources:
+    - namespaces
+    verbs:
+    - get
+  - apiGroups:
+    - apps
+    attributeRestrictions: null
+    resources:
+    - daemonsets
+    - deployments
+    - replicasets
+    - statefulsets
+    verbs:
+    - '*'
+  - apiGroups:
+    - monitoring.coreos.com
+    attributeRestrictions: null
+    resources:
+    - servicemonitors
+    verbs:
+    - create
+    - get
+  - apiGroups:
+    - broker.amq.io
+    attributeRestrictions: null
+    resources:
+    - '*'
+    - activemqartemis
+    - activemqartemisaddresses
+    - activemqartemisscaledowns
+    verbs:
+    - '*'
+  - apiGroups:
+    - route.openshift.io
+    attributeRestrictions: null
+    resources:
+    - routes
+    - routes/custom-host
+    - routes/status
+    verbs:
+    - create
+    - delete
+    - get
+    - list
+    - update
+    - watch
+  - apiGroups:
+    - extensions
+    attributeRestrictions: null
+    resources:
+    - ingresses
+    verbs:
+    - create
+    - delete
+    - get
+    - list
+    - watch
+  - apiGroups:
+    - apps
+    attributeRestrictions: null
+    resources:
+    - deployments/finalizers
+    verbs:
+    - update
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

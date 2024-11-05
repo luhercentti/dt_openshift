@@ -1,0 +1,620 @@
+apiVersion: v1
+items:
+- apiVersion: apps/v1
+  data:
+    spec:
+      template:
+        $patch: replace
+        metadata:
+          creationTimestamp: null
+          labels:
+            application: cache-service
+            deploymentConfig: cache-service
+          name: cache-service
+        spec:
+          containers:
+          - env:
+            - name: AB_PROMETHEUS_ENABLE
+              value: "true"
+            - name: SERVICE_NAME
+              value: cache-service
+            - name: SERVICE_PROFILE
+              value: cache-service
+            - name: JGROUPS_PING_PROTOCOL
+              value: openshift.DNS_PING
+            - name: OPENSHIFT_DNS_PING_SERVICE_NAME
+              value: cache-service-ping
+            - name: USERNAME
+              valueFrom:
+                secretKeyRef:
+                  key: application-user
+                  name: cache-service
+            - name: PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: application-password
+                  name: cache-service
+            - name: REPLICATION_FACTOR
+              value: "1"
+            - name: EVICTION_POLICY
+              value: evict
+            - name: TZ
+              value: America/Santiago
+            image: registry.redhat.io/jboss-datagrid-7/datagrid73-openshift
+            imagePullPolicy: Always
+            livenessProbe:
+              exec:
+                command:
+                - /opt/datagrid/bin/livenessProbe.sh
+              failureThreshold: 5
+              initialDelaySeconds: 15
+              periodSeconds: 20
+              successThreshold: 1
+              timeoutSeconds: 10
+            name: cache-service
+            ports:
+            - containerPort: 8443
+              name: https
+              protocol: TCP
+            - containerPort: 8888
+              name: ping
+              protocol: TCP
+            - containerPort: 11222
+              name: hotrod
+              protocol: TCP
+            readinessProbe:
+              exec:
+                command:
+                - /opt/datagrid/bin/readinessProbe.sh
+              failureThreshold: 5
+              initialDelaySeconds: 17
+              periodSeconds: 10
+              successThreshold: 1
+              timeoutSeconds: 10
+            resources:
+              limits:
+                cpu: 600m
+                memory: 4Gi
+              requests:
+                cpu: 200m
+                memory: 2Gi
+            terminationMessagePath: /dev/termination-log
+            terminationMessagePolicy: File
+            volumeMounts:
+            - mountPath: /opt/datagrid/standalone/data
+              name: srv-data
+            - mountPath: /var/run/secrets/java.io/keystores
+              name: keystore-volume
+            - mountPath: /var/run/secrets/openshift.io/serviceaccount
+              name: service-certs
+          dnsPolicy: ClusterFirst
+          restartPolicy: Always
+          schedulerName: default-scheduler
+          securityContext: {}
+          terminationGracePeriodSeconds: 60
+          volumes:
+          - emptyDir: {}
+            name: keystore-volume
+          - name: service-certs
+            secret:
+              defaultMode: 420
+              secretName: service-certs
+  kind: ControllerRevision
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: "2023-05-24T19:11:46Z"
+    labels:
+      application: cache-service
+      controller.kubernetes.io/hash: "1030186974"
+      deploymentConfig: cache-service
+      migration.openshift.io/migrated-by-migmigration: fb6d415b-403f-4870-9be1-ea5c70a277b4
+      migration.openshift.io/migrated-by-migplan: 939c18ea-060c-41cf-8cf0-870f4b31a246
+      velero.io/backup-name: migration-2aa62-initial-wp7t9
+      velero.io/restore-name: migration-2aa62-final-cd6m2
+    name: cache-service-54745dbfc8
+    namespace: api-fiscalizacion-prod
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: StatefulSet
+      name: cache-service
+      uid: 629ec180-4c61-467c-8eef-c6c3c5788b13
+    resourceVersion: "10764741"
+    uid: c24af16f-e466-4424-a9fa-920a0e049515
+  revision: 5
+- apiVersion: apps/v1
+  data:
+    spec:
+      template:
+        $patch: replace
+        metadata:
+          creationTimestamp: null
+          labels:
+            application: cache-service
+            deploymentConfig: cache-service
+          name: cache-service
+        spec:
+          containers:
+          - env:
+            - name: AB_PROMETHEUS_ENABLE
+              value: "true"
+            - name: SERVICE_NAME
+              value: cache-service
+            - name: SERVICE_PROFILE
+              value: cache-service
+            - name: JGROUPS_PING_PROTOCOL
+              value: openshift.DNS_PING
+            - name: OPENSHIFT_DNS_PING_SERVICE_NAME
+              value: cache-service-ping
+            - name: USERNAME
+              valueFrom:
+                secretKeyRef:
+                  key: application-user
+                  name: cache-service
+            - name: PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: application-password
+                  name: cache-service
+            - name: REPLICATION_FACTOR
+              value: "1"
+            - name: EVICTION_POLICY
+              value: evict
+            image: registry.redhat.io/jboss-datagrid-7/datagrid73-openshift
+            imagePullPolicy: Always
+            livenessProbe:
+              exec:
+                command:
+                - /opt/datagrid/bin/livenessProbe.sh
+              failureThreshold: 5
+              initialDelaySeconds: 15
+              periodSeconds: 20
+              successThreshold: 1
+              timeoutSeconds: 10
+            name: cache-service
+            ports:
+            - containerPort: 8443
+              name: https
+              protocol: TCP
+            - containerPort: 8888
+              name: ping
+              protocol: TCP
+            - containerPort: 11222
+              name: hotrod
+              protocol: TCP
+            readinessProbe:
+              exec:
+                command:
+                - /opt/datagrid/bin/readinessProbe.sh
+              failureThreshold: 5
+              initialDelaySeconds: 17
+              periodSeconds: 10
+              successThreshold: 1
+              timeoutSeconds: 10
+            resources:
+              limits:
+                memory: 512Mi
+              requests:
+                cpu: 500m
+                memory: 512Mi
+            terminationMessagePath: /dev/termination-log
+            terminationMessagePolicy: File
+            volumeMounts:
+            - mountPath: /opt/datagrid/standalone/data
+              name: srv-data
+            - mountPath: /var/run/secrets/java.io/keystores
+              name: keystore-volume
+            - mountPath: /var/run/secrets/openshift.io/serviceaccount
+              name: service-certs
+          dnsPolicy: ClusterFirst
+          restartPolicy: Always
+          schedulerName: default-scheduler
+          securityContext: {}
+          terminationGracePeriodSeconds: 60
+          volumes:
+          - emptyDir: {}
+            name: keystore-volume
+          - name: service-certs
+            secret:
+              defaultMode: 420
+              secretName: service-certs
+  kind: ControllerRevision
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: "2023-05-24T19:11:46Z"
+    labels:
+      application: cache-service
+      controller.kubernetes.io/hash: "2683621875"
+      deploymentConfig: cache-service
+      migration.openshift.io/migrated-by-migmigration: fb6d415b-403f-4870-9be1-ea5c70a277b4
+      migration.openshift.io/migrated-by-migplan: 939c18ea-060c-41cf-8cf0-870f4b31a246
+      velero.io/backup-name: migration-2aa62-initial-wp7t9
+      velero.io/restore-name: migration-2aa62-final-cd6m2
+    name: cache-service-6bd7b65dc9
+    namespace: api-fiscalizacion-prod
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: StatefulSet
+      name: cache-service
+      uid: 629ec180-4c61-467c-8eef-c6c3c5788b13
+    resourceVersion: "10764742"
+    uid: a49a24ae-6190-479a-bc24-2f86e1353790
+  revision: 1
+- apiVersion: apps/v1
+  data:
+    spec:
+      template:
+        $patch: replace
+        metadata:
+          creationTimestamp: null
+          labels:
+            application: cache-service
+            deploymentConfig: cache-service
+          name: cache-service
+        spec:
+          containers:
+          - env:
+            - name: AB_PROMETHEUS_ENABLE
+              value: "true"
+            - name: SERVICE_NAME
+              value: cache-service
+            - name: SERVICE_PROFILE
+              value: cache-service
+            - name: JGROUPS_PING_PROTOCOL
+              value: openshift.DNS_PING
+            - name: OPENSHIFT_DNS_PING_SERVICE_NAME
+              value: cache-service-ping
+            - name: USERNAME
+              valueFrom:
+                secretKeyRef:
+                  key: application-user
+                  name: cache-service
+            - name: PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: application-password
+                  name: cache-service
+            - name: REPLICATION_FACTOR
+              value: "1"
+            - name: EVICTION_POLICY
+              value: evict
+            - name: TZ
+              value: America/Santiago
+            image: registry.redhat.io/jboss-datagrid-7/datagrid73-openshift
+            imagePullPolicy: Always
+            livenessProbe:
+              exec:
+                command:
+                - /opt/datagrid/bin/livenessProbe.sh
+              failureThreshold: 5
+              initialDelaySeconds: 15
+              periodSeconds: 20
+              successThreshold: 1
+              timeoutSeconds: 10
+            name: cache-service
+            ports:
+            - containerPort: 8443
+              name: https
+              protocol: TCP
+            - containerPort: 8888
+              name: ping
+              protocol: TCP
+            - containerPort: 11222
+              name: hotrod
+              protocol: TCP
+            readinessProbe:
+              exec:
+                command:
+                - /opt/datagrid/bin/readinessProbe.sh
+              failureThreshold: 5
+              initialDelaySeconds: 17
+              periodSeconds: 10
+              successThreshold: 1
+              timeoutSeconds: 10
+            resources:
+              limits:
+                memory: 1Gi
+              requests:
+                cpu: 500m
+                memory: 1Gi
+            terminationMessagePath: /dev/termination-log
+            terminationMessagePolicy: File
+            volumeMounts:
+            - mountPath: /opt/datagrid/standalone/data
+              name: srv-data
+            - mountPath: /var/run/secrets/java.io/keystores
+              name: keystore-volume
+            - mountPath: /var/run/secrets/openshift.io/serviceaccount
+              name: service-certs
+          dnsPolicy: ClusterFirst
+          restartPolicy: Always
+          schedulerName: default-scheduler
+          securityContext: {}
+          terminationGracePeriodSeconds: 60
+          volumes:
+          - emptyDir: {}
+            name: keystore-volume
+          - name: service-certs
+            secret:
+              defaultMode: 420
+              secretName: service-certs
+  kind: ControllerRevision
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: "2023-05-24T19:11:46Z"
+    labels:
+      application: cache-service
+      controller.kubernetes.io/hash: "3325207756"
+      deploymentConfig: cache-service
+      migration.openshift.io/migrated-by-migmigration: fb6d415b-403f-4870-9be1-ea5c70a277b4
+      migration.openshift.io/migrated-by-migplan: 939c18ea-060c-41cf-8cf0-870f4b31a246
+      velero.io/backup-name: migration-2aa62-initial-wp7t9
+      velero.io/restore-name: migration-2aa62-final-cd6m2
+    name: cache-service-776964cc9b
+    namespace: api-fiscalizacion-prod
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: StatefulSet
+      name: cache-service
+      uid: 629ec180-4c61-467c-8eef-c6c3c5788b13
+    resourceVersion: "10764744"
+    uid: 3aa3548e-5642-46fd-bdcc-e31ff0ca522c
+  revision: 4
+- apiVersion: apps/v1
+  data:
+    spec:
+      template:
+        $patch: replace
+        metadata:
+          creationTimestamp: null
+          labels:
+            application: cache-service
+            deploymentConfig: cache-service
+          name: cache-service
+        spec:
+          containers:
+          - env:
+            - name: AB_PROMETHEUS_ENABLE
+              value: "true"
+            - name: SERVICE_NAME
+              value: cache-service
+            - name: SERVICE_PROFILE
+              value: cache-service
+            - name: JGROUPS_PING_PROTOCOL
+              value: openshift.DNS_PING
+            - name: OPENSHIFT_DNS_PING_SERVICE_NAME
+              value: cache-service-ping
+            - name: USERNAME
+              valueFrom:
+                secretKeyRef:
+                  key: application-user
+                  name: cache-service
+            - name: PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: application-password
+                  name: cache-service
+            - name: REPLICATION_FACTOR
+              value: "1"
+            - name: EVICTION_POLICY
+              value: evict
+            - name: TZ
+              value: America/Santiago
+            image: registry.redhat.io/jboss-datagrid-7/datagrid73-openshift
+            imagePullPolicy: Always
+            livenessProbe:
+              exec:
+                command:
+                - /opt/datagrid/bin/livenessProbe.sh
+              failureThreshold: 5
+              initialDelaySeconds: 15
+              periodSeconds: 20
+              successThreshold: 1
+              timeoutSeconds: 10
+            name: cache-service
+            ports:
+            - containerPort: 8443
+              name: https
+              protocol: TCP
+            - containerPort: 8888
+              name: ping
+              protocol: TCP
+            - containerPort: 11222
+              name: hotrod
+              protocol: TCP
+            readinessProbe:
+              exec:
+                command:
+                - /opt/datagrid/bin/readinessProbe.sh
+              failureThreshold: 5
+              initialDelaySeconds: 17
+              periodSeconds: 10
+              successThreshold: 1
+              timeoutSeconds: 10
+            resources:
+              limits:
+                memory: 2Gi
+              requests:
+                cpu: 500m
+                memory: 2Gi
+            terminationMessagePath: /dev/termination-log
+            terminationMessagePolicy: File
+            volumeMounts:
+            - mountPath: /opt/datagrid/standalone/data
+              name: srv-data
+            - mountPath: /var/run/secrets/java.io/keystores
+              name: keystore-volume
+            - mountPath: /var/run/secrets/openshift.io/serviceaccount
+              name: service-certs
+          dnsPolicy: ClusterFirst
+          restartPolicy: Always
+          schedulerName: default-scheduler
+          securityContext: {}
+          terminationGracePeriodSeconds: 60
+          volumes:
+          - emptyDir: {}
+            name: keystore-volume
+          - name: service-certs
+            secret:
+              defaultMode: 420
+              secretName: service-certs
+  kind: ControllerRevision
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: "2023-05-24T19:11:46Z"
+    labels:
+      application: cache-service
+      controller.kubernetes.io/hash: "3803674130"
+      deploymentConfig: cache-service
+      migration.openshift.io/migrated-by-migmigration: fb6d415b-403f-4870-9be1-ea5c70a277b4
+      migration.openshift.io/migrated-by-migplan: 939c18ea-060c-41cf-8cf0-870f4b31a246
+      velero.io/backup-name: migration-2aa62-initial-wp7t9
+      velero.io/restore-name: migration-2aa62-final-cd6m2
+    name: cache-service-7d47bc8574
+    namespace: api-fiscalizacion-prod
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: StatefulSet
+      name: cache-service
+      uid: 629ec180-4c61-467c-8eef-c6c3c5788b13
+    resourceVersion: "10764745"
+    uid: 339249e0-5f78-4c97-8d4f-8c2cbfec9961
+  revision: 3
+- apiVersion: apps/v1
+  data:
+    spec:
+      template:
+        $patch: replace
+        metadata:
+          creationTimestamp: null
+          labels:
+            application: cache-service
+            deploymentConfig: cache-service
+          name: cache-service
+        spec:
+          containers:
+          - env:
+            - name: AB_PROMETHEUS_ENABLE
+              value: "true"
+            - name: SERVICE_NAME
+              value: cache-service
+            - name: SERVICE_PROFILE
+              value: cache-service
+            - name: JGROUPS_PING_PROTOCOL
+              value: openshift.DNS_PING
+            - name: OPENSHIFT_DNS_PING_SERVICE_NAME
+              value: cache-service-ping
+            - name: USERNAME
+              valueFrom:
+                secretKeyRef:
+                  key: application-user
+                  name: cache-service
+            - name: PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: application-password
+                  name: cache-service
+            - name: REPLICATION_FACTOR
+              value: "1"
+            - name: EVICTION_POLICY
+              value: evict
+            - name: TZ
+              value: America/Santiago
+            image: registry.redhat.io/jboss-datagrid-7/datagrid73-openshift
+            imagePullPolicy: Always
+            livenessProbe:
+              exec:
+                command:
+                - /opt/datagrid/bin/livenessProbe.sh
+              failureThreshold: 5
+              initialDelaySeconds: 15
+              periodSeconds: 20
+              successThreshold: 1
+              timeoutSeconds: 10
+            name: cache-service
+            ports:
+            - containerPort: 8443
+              name: https
+              protocol: TCP
+            - containerPort: 8888
+              name: ping
+              protocol: TCP
+            - containerPort: 11222
+              name: hotrod
+              protocol: TCP
+            readinessProbe:
+              exec:
+                command:
+                - /opt/datagrid/bin/readinessProbe.sh
+              failureThreshold: 5
+              initialDelaySeconds: 17
+              periodSeconds: 10
+              successThreshold: 1
+              timeoutSeconds: 10
+            resources:
+              limits:
+                memory: 512Mi
+              requests:
+                cpu: 500m
+                memory: 512Mi
+            terminationMessagePath: /dev/termination-log
+            terminationMessagePolicy: File
+            volumeMounts:
+            - mountPath: /opt/datagrid/standalone/data
+              name: srv-data
+            - mountPath: /var/run/secrets/java.io/keystores
+              name: keystore-volume
+            - mountPath: /var/run/secrets/openshift.io/serviceaccount
+              name: service-certs
+          dnsPolicy: ClusterFirst
+          restartPolicy: Always
+          schedulerName: default-scheduler
+          securityContext: {}
+          terminationGracePeriodSeconds: 60
+          volumes:
+          - emptyDir: {}
+            name: keystore-volume
+          - name: service-certs
+            secret:
+              defaultMode: 420
+              secretName: service-certs
+  kind: ControllerRevision
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: "2023-05-24T19:11:46Z"
+    labels:
+      application: cache-service
+      controller.kubernetes.io/hash: "4120949550"
+      deploymentConfig: cache-service
+      migration.openshift.io/migrated-by-migmigration: fb6d415b-403f-4870-9be1-ea5c70a277b4
+      migration.openshift.io/migrated-by-migplan: 939c18ea-060c-41cf-8cf0-870f4b31a246
+      velero.io/backup-name: migration-2aa62-initial-wp7t9
+      velero.io/restore-name: migration-2aa62-final-cd6m2
+    name: cache-service-8564f8f994
+    namespace: api-fiscalizacion-prod
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: StatefulSet
+      name: cache-service
+      uid: 629ec180-4c61-467c-8eef-c6c3c5788b13
+    resourceVersion: "10764747"
+    uid: dbaed65d-6ccc-44ff-b183-d3ff3d58fea2
+  revision: 2
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

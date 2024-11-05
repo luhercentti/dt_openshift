@@ -1,0 +1,188 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.129.0.206"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.129.0.206"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/scc: restricted
+      operator.openshift.io/force: 8351a209-45ee-4f86-9d4b-928bacf9606b
+    creationTimestamp: "2024-06-02T21:40:44Z"
+    generateName: service-ca-f99cd879f-
+    labels:
+      app: service-ca
+      pod-template-hash: f99cd879f
+      service-ca: "true"
+    name: service-ca-f99cd879f-tzpjn
+    namespace: openshift-service-ca
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: service-ca-f99cd879f
+      uid: daf5e1db-0b2e-41f4-9235-072ed1ad78bc
+    resourceVersion: "369058153"
+    uid: 01a2993a-333f-4ccc-b249-f7e20514b71e
+  spec:
+    containers:
+    - args:
+      - -v=2
+      command:
+      - service-ca-operator
+      - controller
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:6c80ee7d9e97893321cf2b45aa3c3bf09d20bfa575f7c9b2e6fa50318f8f4281
+      imagePullPolicy: IfNotPresent
+      name: service-ca-controller
+      ports:
+      - containerPort: 8443
+        protocol: TCP
+      resources:
+        requests:
+          cpu: 10m
+          memory: 120Mi
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsNonRoot: true
+        runAsUser: 1000510000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/signing-key
+        name: signing-key
+      - mountPath: /var/run/configmaps/signing-cabundle
+        name: signing-cabundle
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-745gq
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: service-ca-dockercfg-9r7j9
+    nodeName: ocp4azu-sj2sl-master-0
+    nodeSelector:
+      node-role.kubernetes.io/master: ""
+    preemptionPolicy: PreemptLowerPriority
+    priority: 2000000000
+    priorityClassName: system-cluster-critical
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000510000
+      seLinuxOptions:
+        level: s0:c23,c2
+    serviceAccount: service-ca
+    serviceAccountName: service-ca
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/master
+      operator: Exists
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 120
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 120
+    - effect: NoSchedule
+      key: node.kubernetes.io/memory-pressure
+      operator: Exists
+    volumes:
+    - name: signing-key
+      secret:
+        defaultMode: 420
+        secretName: signing-key
+    - configMap:
+        defaultMode: 420
+        name: signing-cabundle
+      name: signing-cabundle
+    - name: kube-api-access-745gq
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2024-06-02T21:40:44Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2024-06-02T21:40:47Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2024-06-02T21:40:47Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2024-06-02T21:40:44Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://0da22b5bf17d6c1226de9795d8bfea4ce23a4c817506f16177d3a7b6c3748f4e
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:6c80ee7d9e97893321cf2b45aa3c3bf09d20bfa575f7c9b2e6fa50318f8f4281
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:6c80ee7d9e97893321cf2b45aa3c3bf09d20bfa575f7c9b2e6fa50318f8f4281
+      lastState: {}
+      name: service-ca-controller
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2024-06-02T21:40:46Z"
+    hostIP: 10.80.80.6
+    phase: Running
+    podIP: 10.129.0.206
+    podIPs:
+    - ip: 10.129.0.206
+    qosClass: Burstable
+    startTime: "2024-06-02T21:40:44Z"
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

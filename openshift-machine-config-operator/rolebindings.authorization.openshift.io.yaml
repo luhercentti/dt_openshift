@@ -1,0 +1,127 @@
+apiVersion: v1
+items:
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    creationTimestamp: "2023-05-04T21:41:10Z"
+    name: machine-config-controller-events
+    namespace: openshift-machine-config-operator
+    resourceVersion: "7047"
+    uid: 2aca4301-6ea5-4264-a892-82ee57d9e814
+  roleRef:
+    name: machine-config-controller-events
+  subjects:
+  - kind: ServiceAccount
+    name: machine-config-controller
+    namespace: openshift-machine-config-operator
+  userNames:
+  - system:serviceaccount:openshift-machine-config-operator:machine-config-controller
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    creationTimestamp: "2023-05-04T21:40:28Z"
+    name: machine-config-daemon-events
+    namespace: openshift-machine-config-operator
+    resourceVersion: "4564"
+    uid: 982b34b0-27ac-43c9-bc2d-608fd2ed97b8
+  roleRef:
+    name: machine-config-daemon-events
+  subjects:
+  - kind: ServiceAccount
+    name: machine-config-daemon
+    namespace: openshift-machine-config-operator
+  userNames:
+  - system:serviceaccount:openshift-machine-config-operator:machine-config-daemon
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    annotations:
+      include.release.openshift.io/ibm-cloud-managed: "true"
+      include.release.openshift.io/self-managed-high-availability: "true"
+      include.release.openshift.io/single-node-developer: "true"
+    creationTimestamp: "2023-05-04T21:36:04Z"
+    name: prometheus-k8s
+    namespace: openshift-machine-config-operator
+    ownerReferences:
+    - apiVersion: config.openshift.io/v1
+      kind: ClusterVersion
+      name: version
+      uid: 5d92b52f-9fff-4a6e-b815-398b934115ad
+    resourceVersion: "1818"
+    uid: e4faab4e-e35e-41b8-8ea4-9d29cb6c1bbc
+  roleRef:
+    name: prometheus-k8s
+    namespace: openshift-machine-config-operator
+  subjects:
+  - kind: ServiceAccount
+    name: prometheus-k8s
+    namespace: openshift-monitoring
+  userNames:
+  - system:serviceaccount:openshift-monitoring:prometheus-k8s
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/description: Allows deploymentconfigs in this namespace to rollout
+        pods in this namespace.  It is auto-managed by a controller; remove subjects
+        to disable.
+    creationTimestamp: "2023-05-04T21:45:23Z"
+    name: system:deployers
+    namespace: openshift-machine-config-operator
+    resourceVersion: "14789"
+    uid: ea66c291-1516-46b9-95ba-080cea9f93a7
+  roleRef:
+    name: system:deployer
+  subjects:
+  - kind: ServiceAccount
+    name: deployer
+    namespace: openshift-machine-config-operator
+  userNames:
+  - system:serviceaccount:openshift-machine-config-operator:deployer
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/description: Allows builds in this namespace to push images to
+        this namespace.  It is auto-managed by a controller; remove subjects to disable.
+    creationTimestamp: "2023-05-04T21:45:23Z"
+    name: system:image-builders
+    namespace: openshift-machine-config-operator
+    resourceVersion: "14731"
+    uid: b75f37e5-2e1a-469d-9d6a-4449a2aa7680
+  roleRef:
+    name: system:image-builder
+  subjects:
+  - kind: ServiceAccount
+    name: builder
+    namespace: openshift-machine-config-operator
+  userNames:
+  - system:serviceaccount:openshift-machine-config-operator:builder
+- apiVersion: authorization.openshift.io/v1
+  groupNames:
+  - system:serviceaccounts:openshift-machine-config-operator
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/description: Allows all pods in this namespace to pull images from
+        this namespace.  It is auto-managed by a controller; remove subjects to disable.
+    creationTimestamp: "2023-05-04T21:45:22Z"
+    name: system:image-pullers
+    namespace: openshift-machine-config-operator
+    resourceVersion: "14647"
+    uid: 62f4ae49-1ac5-4a81-b69b-f6a11a42e159
+  roleRef:
+    name: system:image-puller
+  subjects:
+  - kind: SystemGroup
+    name: system:serviceaccounts:openshift-machine-config-operator
+  userNames: null
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

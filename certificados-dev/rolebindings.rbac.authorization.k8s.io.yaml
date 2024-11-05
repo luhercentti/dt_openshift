@@ -1,0 +1,168 @@
+apiVersion: v1
+items:
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: RoleBinding
+  metadata:
+    creationTimestamp: "2023-05-18T19:19:15Z"
+    labels:
+      migration.openshift.io/migrated-by-migmigration: 8690bc41-c3bd-4635-b619-49d556958192
+      migration.openshift.io/migrated-by-migplan: 58fc7209-f833-4046-ab0e-edad201bf2f4
+      velero.io/backup-name: migration-c666a-initial-r4gpt
+      velero.io/restore-name: migration-c666a-final-cbd8s
+    name: admin
+    namespace: certificados-dev
+    resourceVersion: "6214656"
+    uid: 06627b01-c1cf-424c-8eb5-93e020ec8707
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: ClusterRole
+    name: admin
+  subjects:
+  - apiGroup: rbac.authorization.k8s.io
+    kind: User
+    name: cmoralesg@dt.gob.cl
+  - apiGroup: rbac.authorization.k8s.io
+    kind: User
+    name: jalvarez@dt.gob.cl
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: RoleBinding
+  metadata:
+    creationTimestamp: "2023-05-23T18:50:18Z"
+    name: admin-0
+    namespace: certificados-dev
+    resourceVersion: "9947035"
+    uid: e59d8b43-5d6f-407c-9a45-558958490f05
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: ClusterRole
+    name: admin
+  subjects:
+  - apiGroup: rbac.authorization.k8s.io
+    kind: User
+    name: ipenaloza@dt.gob.cl
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: RoleBinding
+  metadata:
+    creationTimestamp: "2023-05-23T18:50:18Z"
+    name: admin-1
+    namespace: certificados-dev
+    resourceVersion: "9947038"
+    uid: 387b09c9-5ce2-4523-b04c-dc9019df3453
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: ClusterRole
+    name: admin
+  subjects:
+  - apiGroup: rbac.authorization.k8s.io
+    kind: User
+    name: pmedinac
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: RoleBinding
+  metadata:
+    creationTimestamp: "2023-05-23T18:50:19Z"
+    name: admin-2
+    namespace: certificados-dev
+    resourceVersion: "9947041"
+    uid: 63322ec5-56e6-456b-a8a3-27d6e76c61eb
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: ClusterRole
+    name: admin
+  subjects:
+  - apiGroup: rbac.authorization.k8s.io
+    kind: User
+    name: araiman@dt.gob.cl
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: RoleBinding
+  metadata:
+    creationTimestamp: "2023-05-23T18:50:19Z"
+    name: admin-3
+    namespace: certificados-dev
+    resourceVersion: "9947043"
+    uid: e1b140ff-d4e9-4338-bb44-693805de152b
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: ClusterRole
+    name: admin
+  subjects:
+  - apiGroup: rbac.authorization.k8s.io
+    kind: User
+    name: ealmuna@dt.gob.cl
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: RoleBinding
+  metadata:
+    creationTimestamp: "2023-05-23T18:50:19Z"
+    name: admin-4
+    namespace: certificados-dev
+    resourceVersion: "9947044"
+    uid: 74d60499-a76d-4926-a053-526d1203c182
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: ClusterRole
+    name: admin
+  subjects:
+  - apiGroup: rbac.authorization.k8s.io
+    kind: User
+    name: cacevedoq@dt.gob.cl
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/description: Allows deploymentconfigs in this namespace to rollout
+        pods in this namespace.  It is auto-managed by a controller; remove subjects
+        to disable.
+    creationTimestamp: "2023-05-18T19:19:15Z"
+    name: system:deployers
+    namespace: certificados-dev
+    resourceVersion: "6214651"
+    uid: 96332c07-4960-4396-8e2e-c1dcec8a6fa1
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: ClusterRole
+    name: system:deployer
+  subjects:
+  - kind: ServiceAccount
+    name: deployer
+    namespace: certificados-dev
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/description: Allows builds in this namespace to push images to
+        this namespace.  It is auto-managed by a controller; remove subjects to disable.
+    creationTimestamp: "2023-05-18T19:19:15Z"
+    name: system:image-builders
+    namespace: certificados-dev
+    resourceVersion: "6214645"
+    uid: b7e30a4d-c6fe-469d-b93b-a56fac9d9781
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: ClusterRole
+    name: system:image-builder
+  subjects:
+  - kind: ServiceAccount
+    name: builder
+    namespace: certificados-dev
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/description: Allows all pods in this namespace to pull images from
+        this namespace.  It is auto-managed by a controller; remove subjects to disable.
+    creationTimestamp: "2023-05-18T19:19:15Z"
+    name: system:image-pullers
+    namespace: certificados-dev
+    resourceVersion: "6214637"
+    uid: b8bf9ae8-4802-43d6-a627-0c1a383b4693
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: ClusterRole
+    name: system:image-puller
+  subjects:
+  - apiGroup: rbac.authorization.k8s.io
+    kind: Group
+    name: system:serviceaccounts:certificados-dev
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

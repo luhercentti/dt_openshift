@@ -1,0 +1,218 @@
+apiVersion: v1
+items:
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    creationTimestamp: "2023-05-15T18:37:49Z"
+    name: cluster-logging.v5.6.5
+    namespace: openshift-logging
+    ownerReferences:
+    - apiVersion: operators.coreos.com/v2
+      blockOwnerDeletion: false
+      controller: true
+      kind: OperatorCondition
+      name: cluster-logging.v5.6.5
+      uid: c4284849-bb7d-4bb3-832b-2995b34d9328
+    resourceVersion: "4139669"
+    uid: 4c55690f-bdd1-4e90-8328-8badefe0241c
+  roleRef:
+    name: cluster-logging.v5.6.5
+    namespace: openshift-logging
+  subjects:
+  - kind: ServiceAccount
+    name: cluster-logging-operator
+  - kind: ServiceAccount
+    name: cluster-logging-operator
+  userNames:
+  - system:serviceaccount:openshift-logging:cluster-logging-operator
+  - system:serviceaccount:openshift-logging:cluster-logging-operator
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    creationTimestamp: "2023-05-15T18:37:51Z"
+    labels:
+      olm.owner: cluster-logging.v5.6.5
+      olm.owner.kind: ClusterServiceVersion
+      olm.owner.namespace: openshift-logging
+      operators.coreos.com/cluster-logging.openshift-logging: ""
+    name: cluster-logging.v5.6.5-cluster-logging-operator-5c6549c878
+    namespace: openshift-logging
+    ownerReferences:
+    - apiVersion: operators.coreos.com/v1alpha1
+      blockOwnerDeletion: false
+      controller: false
+      kind: ClusterServiceVersion
+      name: cluster-logging.v5.6.5
+      uid: 728f7a6d-ca6d-4102-9f2d-dc70c4a6883d
+    resourceVersion: "4139926"
+    uid: a6adc2cb-4cd8-42ad-8849-746a4cd939b9
+  roleRef:
+    name: cluster-logging.v5.6.5-cluster-logging-operator-5c6549c878
+    namespace: openshift-logging
+  subjects:
+  - kind: ServiceAccount
+    name: cluster-logging-operator
+    namespace: openshift-logging
+  userNames:
+  - system:serviceaccount:openshift-logging:cluster-logging-operator
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    creationTimestamp: "2023-05-15T20:18:56Z"
+    name: elasticsearch-index-management
+    namespace: openshift-logging
+    ownerReferences:
+    - apiVersion: logging.openshift.io/v1
+      controller: true
+      kind: Elasticsearch
+      name: elasticsearch
+      uid: 2ae98126-4c52-4543-90f0-f736c6651f74
+    resourceVersion: "4183685"
+    uid: 276af0f9-0860-49d0-9dc5-5caafc9d6804
+  roleRef:
+    name: elasticsearch-index-management
+    namespace: openshift-logging
+  subjects:
+  - kind: ServiceAccount
+    name: elasticsearch
+    namespace: openshift-logging
+  userNames:
+  - system:serviceaccount:openshift-logging:elasticsearch
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    creationTimestamp: "2023-05-12T16:46:19Z"
+    name: elasticsearch-metrics
+    namespace: openshift-logging
+    resourceVersion: "2183212"
+    uid: 1665a1b8-687a-485b-b555-2d158165556a
+  roleRef:
+    name: elasticsearch-metrics
+    namespace: openshift-logging
+  subjects:
+  - kind: ServiceAccount
+    name: elasticsearch-metrics
+    namespace: openshift-logging
+  userNames:
+  - system:serviceaccount:openshift-logging:elasticsearch-metrics
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    creationTimestamp: "2023-05-12T16:46:19Z"
+    name: elasticsearch-restricted
+    namespace: openshift-logging
+    resourceVersion: "2183210"
+    uid: bafcb2a3-2599-4682-8bfe-c31f2bec23fd
+  roleRef:
+    name: elasticsearch-restricted
+    namespace: openshift-logging
+  subjects:
+  - kind: ServiceAccount
+    name: elasticsearch
+    namespace: openshift-logging
+  userNames:
+  - system:serviceaccount:openshift-logging:elasticsearch
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    creationTimestamp: "2023-05-12T16:41:30Z"
+    name: log-collector-privileged-binding
+    namespace: openshift-logging
+    resourceVersion: "2180878"
+    uid: 5e1bed2b-7518-4fe8-8722-120efb8d959f
+  roleRef:
+    name: log-collector-privileged
+    namespace: openshift-logging
+  subjects:
+  - kind: ServiceAccount
+    name: logcollector
+  userNames:
+  - system:serviceaccount:openshift-logging:logcollector
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    creationTimestamp: "2023-05-12T16:41:30Z"
+    name: prometheus
+    namespace: openshift-logging
+    resourceVersion: "2180891"
+    uid: c26d48ec-7402-4e93-9af9-dc02ceeabf22
+  roleRef:
+    name: prometheus
+    namespace: openshift-logging
+  subjects:
+  - kind: ServiceAccount
+    name: prometheus-k8s
+    namespace: openshift-monitoring
+  userNames:
+  - system:serviceaccount:openshift-monitoring:prometheus-k8s
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/description: Allows deploymentconfigs in this namespace to rollout
+        pods in this namespace.  It is auto-managed by a controller; remove subjects
+        to disable.
+    creationTimestamp: "2023-05-12T16:41:17Z"
+    name: system:deployers
+    namespace: openshift-logging
+    resourceVersion: "2180746"
+    uid: 383d8c47-a186-4465-be52-49ba1b7f1917
+  roleRef:
+    name: system:deployer
+  subjects:
+  - kind: ServiceAccount
+    name: deployer
+    namespace: openshift-logging
+  userNames:
+  - system:serviceaccount:openshift-logging:deployer
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/description: Allows builds in this namespace to push images to
+        this namespace.  It is auto-managed by a controller; remove subjects to disable.
+    creationTimestamp: "2023-05-12T16:41:17Z"
+    name: system:image-builders
+    namespace: openshift-logging
+    resourceVersion: "2180745"
+    uid: 6fc28098-a437-4715-b532-11aeda7053d6
+  roleRef:
+    name: system:image-builder
+  subjects:
+  - kind: ServiceAccount
+    name: builder
+    namespace: openshift-logging
+  userNames:
+  - system:serviceaccount:openshift-logging:builder
+- apiVersion: authorization.openshift.io/v1
+  groupNames:
+  - system:serviceaccounts:openshift-logging
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/description: Allows all pods in this namespace to pull images from
+        this namespace.  It is auto-managed by a controller; remove subjects to disable.
+    creationTimestamp: "2023-05-12T16:41:17Z"
+    name: system:image-pullers
+    namespace: openshift-logging
+    resourceVersion: "2180732"
+    uid: f591c165-84e5-44c5-ba42-a2b066ccbb44
+  roleRef:
+    name: system:image-puller
+  subjects:
+  - kind: SystemGroup
+    name: system:serviceaccounts:openshift-logging
+  userNames: null
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

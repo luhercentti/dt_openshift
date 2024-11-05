@@ -1,0 +1,301 @@
+apiVersion: v1
+items:
+- apiVersion: apps.openshift.io/v1
+  kind: DeploymentConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftWebConsole
+      openshift.io/migration-registry: ""
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-22T19:39:05Z"
+    generation: 2
+    labels:
+      app: laboralprevisional
+      migration.openshift.io/migrated-by-migmigration: 465f3a37-eb75-4e9e-bc67-35796c567b7c
+      migration.openshift.io/migrated-by-migplan: 1ab7d19c-1b63-4fd8-8e50-983c4958473a
+      velero.io/backup-name: migration-4180a-initial-6br59
+      velero.io/restore-name: migration-4180a-final-6kqlt
+    name: laboralprevisional
+    namespace: mensajeria-qa
+    resourceVersion: "9215071"
+    uid: 5d52a908-f4f5-4ff3-8b0a-3ce837539eb2
+  spec:
+    replicas: 0
+    revisionHistoryLimit: 10
+    selector:
+      app: laboralprevisional
+      deploymentconfig: laboralprevisional
+    strategy:
+      activeDeadlineSeconds: 21600
+      resources: {}
+      rollingParams:
+        intervalSeconds: 1
+        maxSurge: 25%
+        maxUnavailable: 25%
+        timeoutSeconds: 600
+        updatePeriodSeconds: 1
+      type: Rolling
+    template:
+      metadata:
+        annotations:
+          openshift.io/generated-by: OpenShiftWebConsole
+        creationTimestamp: null
+        labels:
+          app: laboralprevisional
+          deploymentconfig: laboralprevisional
+      spec:
+        containers:
+        - image: image-registry.openshift-image-registry.svc:5000/mensajeria-dev/laboralprevisional-qa@sha256:e83f8d3d8bf5afc76405823f7d99c71c24c64be92817a71de5f6c914707e7cea
+          imagePullPolicy: Always
+          name: laboralprevisional
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+    test: false
+    triggers:
+    - type: ConfigChange
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+        - laboralprevisional
+        from:
+          kind: ImageStreamTag
+          name: laboralprevisional-qa:latest
+          namespace: mensajeria-dev
+        lastTriggeredImage: image-registry.openshift-image-registry.svc:5000/mensajeria-dev/laboralprevisional-qa@sha256:e83f8d3d8bf5afc76405823f7d99c71c24c64be92817a71de5f6c914707e7cea
+      type: ImageChange
+  status:
+    availableReplicas: 0
+    conditions:
+    - lastTransitionTime: "2023-05-22T19:39:05Z"
+      lastUpdateTime: "2023-05-22T19:39:05Z"
+      message: Deployment config does not have minimum availability.
+      status: "False"
+      type: Available
+    - lastTransitionTime: "2023-05-22T20:03:52Z"
+      lastUpdateTime: "2023-05-22T20:03:52Z"
+      message: replication controller "laboralprevisional-1" has failed progressing
+      reason: ProgressDeadlineExceeded
+      status: "False"
+      type: Progressing
+    details:
+      causes:
+      - type: ConfigChange
+      message: config change
+    latestVersion: 1
+    observedGeneration: 2
+    replicas: 0
+    unavailableReplicas: 0
+    updatedReplicas: 0
+- apiVersion: apps.openshift.io/v1
+  kind: DeploymentConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftWebConsole
+      openshift.io/migration-registry: ""
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-22T19:39:05Z"
+    generation: 2
+    labels:
+      app: laboralprevisionalbckgrd
+      migration.openshift.io/migrated-by-migmigration: 465f3a37-eb75-4e9e-bc67-35796c567b7c
+      migration.openshift.io/migrated-by-migplan: 1ab7d19c-1b63-4fd8-8e50-983c4958473a
+      velero.io/backup-name: migration-4180a-initial-6br59
+      velero.io/restore-name: migration-4180a-final-6kqlt
+    name: laboralprevisionalbckgrd
+    namespace: mensajeria-qa
+    resourceVersion: "9215120"
+    uid: 2fb10d9e-a043-4379-960e-369e2cbfd68e
+  spec:
+    replicas: 0
+    revisionHistoryLimit: 10
+    selector:
+      app: laboralprevisionalbckgrd
+      deploymentconfig: laboralprevisionalbckgrd
+    strategy:
+      activeDeadlineSeconds: 21600
+      resources: {}
+      rollingParams:
+        intervalSeconds: 1
+        maxSurge: 25%
+        maxUnavailable: 25%
+        timeoutSeconds: 600
+        updatePeriodSeconds: 1
+      type: Rolling
+    template:
+      metadata:
+        annotations:
+          openshift.io/generated-by: OpenShiftWebConsole
+        creationTimestamp: null
+        labels:
+          app: laboralprevisionalbckgrd
+          deploymentconfig: laboralprevisionalbckgrd
+      spec:
+        containers:
+        - image: image-registry.openshift-image-registry.svc:5000/mensajeria-dev/laboralprevisionalbck-qa@sha256:e9a546b5a0d942d38a0501a7524c00fdf9d13a3b2162c4b2b6f938fae1e40c40
+          imagePullPolicy: Always
+          name: laboralprevisionalbckgrd
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+    test: false
+    triggers:
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+        - laboralprevisionalbckgrd
+        from:
+          kind: ImageStreamTag
+          name: laboralprevisionalbck-qa:latest
+          namespace: mensajeria-dev
+        lastTriggeredImage: image-registry.openshift-image-registry.svc:5000/mensajeria-dev/laboralprevisionalbck-qa@sha256:e9a546b5a0d942d38a0501a7524c00fdf9d13a3b2162c4b2b6f938fae1e40c40
+      type: ImageChange
+    - type: ConfigChange
+  status:
+    availableReplicas: 0
+    conditions:
+    - lastTransitionTime: "2023-05-22T19:39:05Z"
+      lastUpdateTime: "2023-05-22T19:39:05Z"
+      message: Deployment config does not have minimum availability.
+      status: "False"
+      type: Available
+    - lastTransitionTime: "2023-05-22T20:03:57Z"
+      lastUpdateTime: "2023-05-22T20:03:57Z"
+      message: replication controller "laboralprevisionalbckgrd-1" has failed progressing
+      reason: ProgressDeadlineExceeded
+      status: "False"
+      type: Progressing
+    details:
+      causes:
+      - type: ConfigChange
+      message: config change
+    latestVersion: 1
+    observedGeneration: 2
+    replicas: 0
+    unavailableReplicas: 0
+    updatedReplicas: 0
+- apiVersion: apps.openshift.io/v1
+  kind: DeploymentConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftWebConsole
+      openshift.io/migration-registry: ""
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-22T19:39:05Z"
+    generation: 2
+    labels:
+      app: labprev-cumplimiento
+      migration.openshift.io/migrated-by-migmigration: 465f3a37-eb75-4e9e-bc67-35796c567b7c
+      migration.openshift.io/migrated-by-migplan: 1ab7d19c-1b63-4fd8-8e50-983c4958473a
+      velero.io/backup-name: migration-4180a-initial-6br59
+      velero.io/restore-name: migration-4180a-final-6kqlt
+    name: labprev-cumplimiento
+    namespace: mensajeria-qa
+    resourceVersion: "9215756"
+    uid: fe14643e-0eeb-439e-84cd-00499d9afcd4
+  spec:
+    replicas: 0
+    revisionHistoryLimit: 10
+    selector:
+      app: labprev-cumplimiento
+      deploymentconfig: labprev-cumplimiento
+    strategy:
+      activeDeadlineSeconds: 21600
+      resources: {}
+      rollingParams:
+        intervalSeconds: 1
+        maxSurge: 25%
+        maxUnavailable: 25%
+        timeoutSeconds: 600
+        updatePeriodSeconds: 1
+      type: Rolling
+    template:
+      metadata:
+        annotations:
+          openshift.io/generated-by: OpenShiftWebConsole
+        creationTimestamp: null
+        labels:
+          app: labprev-cumplimiento
+          deploymentconfig: labprev-cumplimiento
+      spec:
+        containers:
+        - image: image-registry.openshift-image-registry.svc:5000/mensajeria-dev/labprev-cumplimiento-qa@sha256:b7e8790a0a521dabd0920eb2f99d11c8beaecf9b80a13d08177e232b5668d37e
+          imagePullPolicy: Always
+          name: labprev-cumplimiento
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+    test: false
+    triggers:
+    - type: ConfigChange
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+        - labprev-cumplimiento
+        from:
+          kind: ImageStreamTag
+          name: labprev-cumplimiento-qa:latest
+          namespace: mensajeria-dev
+        lastTriggeredImage: image-registry.openshift-image-registry.svc:5000/mensajeria-dev/labprev-cumplimiento-qa@sha256:b7e8790a0a521dabd0920eb2f99d11c8beaecf9b80a13d08177e232b5668d37e
+      type: ImageChange
+  status:
+    availableReplicas: 0
+    conditions:
+    - lastTransitionTime: "2023-05-22T19:39:05Z"
+      lastUpdateTime: "2023-05-22T19:39:05Z"
+      message: Deployment config does not have minimum availability.
+      status: "False"
+      type: Available
+    - lastTransitionTime: "2023-05-22T20:04:44Z"
+      lastUpdateTime: "2023-05-22T20:04:44Z"
+      message: replication controller "labprev-cumplimiento-1" successfully rolled
+        out
+      reason: NewReplicationControllerAvailable
+      status: "True"
+      type: Progressing
+    details:
+      causes:
+      - type: ConfigChange
+      message: config change
+    latestVersion: 1
+    observedGeneration: 2
+    replicas: 0
+    unavailableReplicas: 0
+    updatedReplicas: 0
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

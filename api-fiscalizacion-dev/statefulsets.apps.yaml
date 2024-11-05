@@ -1,0 +1,162 @@
+apiVersion: v1
+items:
+- apiVersion: apps/v1
+  kind: StatefulSet
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftNewApp
+      openshift.io/migration-registry: 172.30.129.250:5000
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-25T15:23:47Z"
+    generation: 1
+    labels:
+      app: cache-service
+      application: cache-service
+      migration.openshift.io/migrated-by-migmigration: ba74a433-680f-400b-880b-8d473b7be0bb
+      migration.openshift.io/migrated-by-migplan: d32776aa-7836-49bd-a3f4-42e6abcad5c0
+      template: cache-service
+      velero.io/backup-name: migration-66e29-initial-zwkhh
+      velero.io/restore-name: migration-66e29-final-9r56m
+    name: cache-service
+    namespace: api-fiscalizacion-dev
+    resourceVersion: "476624545"
+    uid: 21ef84d7-a88d-480e-bc94-e4c2f8de6114
+  spec:
+    podManagementPolicy: OrderedReady
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        application: cache-service
+    serviceName: cache-service-ping
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          application: cache-service
+          deploymentConfig: cache-service
+        name: cache-service
+      spec:
+        containers:
+        - env:
+          - name: AB_PROMETHEUS_ENABLE
+            value: "true"
+          - name: SERVICE_NAME
+            value: cache-service
+          - name: SERVICE_PROFILE
+            value: cache-service
+          - name: JGROUPS_PING_PROTOCOL
+            value: openshift.DNS_PING
+          - name: OPENSHIFT_DNS_PING_SERVICE_NAME
+            value: cache-service-ping
+          - name: USERNAME
+            valueFrom:
+              secretKeyRef:
+                key: application-user
+                name: cache-service
+          - name: PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: application-password
+                name: cache-service
+          - name: REPLICATION_FACTOR
+            value: "1"
+          - name: EVICTION_POLICY
+            value: reject
+          - name: TZ
+            value: America/Santiago
+          image: registry.redhat.io/jboss-datagrid-7/datagrid73-openshift
+          imagePullPolicy: Always
+          livenessProbe:
+            exec:
+              command:
+              - /opt/datagrid/bin/livenessProbe.sh
+            failureThreshold: 5
+            initialDelaySeconds: 15
+            periodSeconds: 20
+            successThreshold: 1
+            timeoutSeconds: 10
+          name: cache-service
+          ports:
+          - containerPort: 8443
+            name: https
+            protocol: TCP
+          - containerPort: 8888
+            name: ping
+            protocol: TCP
+          - containerPort: 11222
+            name: hotrod
+            protocol: TCP
+          readinessProbe:
+            exec:
+              command:
+              - /opt/datagrid/bin/readinessProbe.sh
+            failureThreshold: 5
+            initialDelaySeconds: 17
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 10
+          resources:
+            limits:
+              cpu: 500m
+              memory: 512Mi
+            requests:
+              cpu: 150m
+              memory: 512Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /opt/datagrid/standalone/data
+            name: srv-data
+          - mountPath: /var/run/secrets/java.io/keystores
+            name: keystore-volume
+          - mountPath: /var/run/secrets/openshift.io/serviceaccount
+            name: service-certs
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 60
+        volumes:
+        - emptyDir: {}
+          name: keystore-volume
+        - name: service-certs
+          secret:
+            defaultMode: 420
+            secretName: service-certs
+    updateStrategy:
+      rollingUpdate:
+        partition: 0
+      type: RollingUpdate
+    volumeClaimTemplates:
+    - apiVersion: v1
+      kind: PersistentVolumeClaim
+      metadata:
+        creationTimestamp: null
+        name: srv-data
+      spec:
+        accessModes:
+        - ReadWriteOnce
+        resources:
+          requests:
+            storage: 1Gi
+        volumeMode: Filesystem
+      status:
+        phase: Pending
+  status:
+    availableReplicas: 1
+    collisionCount: 0
+    currentReplicas: 1
+    currentRevision: cache-service-6cc5bb7685
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+    updateRevision: cache-service-6cc5bb7685
+    updatedReplicas: 1
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

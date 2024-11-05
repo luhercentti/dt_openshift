@@ -1,0 +1,3815 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.129.0.9"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.129.0.9"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/scc: restricted
+    creationTimestamp: "2023-05-04T21:41:10Z"
+    generateName: machine-config-controller-6b765f899b-
+    labels:
+      k8s-app: machine-config-controller
+      pod-template-hash: 6b765f899b
+    name: machine-config-controller-6b765f899b-qdt5s
+    namespace: openshift-machine-config-operator
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: machine-config-controller-6b765f899b
+      uid: 29ea7330-06e5-4963-83a2-030b02a042e3
+    resourceVersion: "1605896"
+    uid: c373bf01-b589-4786-9d32-384ff1265865
+  spec:
+    containers:
+    - args:
+      - start
+      - --resourcelock-namespace=openshift-machine-config-operator
+      - --v=2
+      command:
+      - /usr/bin/machine-config-controller
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:79d5795925dd513ab2e5710b72bfdc51e289cf67fe2f4508bda85647233446d9
+      imagePullPolicy: IfNotPresent
+      name: machine-config-controller
+      resources:
+        requests:
+          cpu: 20m
+          memory: 50Mi
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000310000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: FallbackToLogsOnError
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-ll9pv
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    nodeName: ocp4azu-sj2sl-master-0
+    nodeSelector:
+      node-role.kubernetes.io/master: ""
+    preemptionPolicy: PreemptLowerPriority
+    priority: 2000000000
+    priorityClassName: system-cluster-critical
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000310000
+      seLinuxOptions:
+        level: s0:c18,c2
+    serviceAccount: machine-config-controller
+    serviceAccountName: machine-config-controller
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/master
+      operator: Exists
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 120
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 120
+    - effect: NoSchedule
+      key: node.kubernetes.io/memory-pressure
+      operator: Exists
+    volumes:
+    - name: kube-api-access-ll9pv
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-04T21:41:10Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-11T18:26:19Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-11T18:26:19Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-04T21:41:10Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://6d0490fdad408f3424b54dd7b911f4cace51bf11d6da13e92061e1b5cbe69e43
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:79d5795925dd513ab2e5710b72bfdc51e289cf67fe2f4508bda85647233446d9
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:79d5795925dd513ab2e5710b72bfdc51e289cf67fe2f4508bda85647233446d9
+      lastState: {}
+      name: machine-config-controller
+      ready: true
+      restartCount: 3
+      started: true
+      state:
+        running:
+          startedAt: "2023-05-11T18:26:19Z"
+    hostIP: 10.80.80.6
+    phase: Running
+    podIP: 10.129.0.9
+    podIPs:
+    - ip: 10.129.0.9
+    qosClass: Burstable
+    startTime: "2023-05-04T21:41:10Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      openshift.io/scc: privileged
+    creationTimestamp: "2023-05-25T20:10:15Z"
+    generateName: machine-config-daemon-
+    labels:
+      controller-revision-hash: 5bb44df779
+      k8s-app: machine-config-daemon
+      pod-template-generation: "1"
+    name: machine-config-daemon-2fz26
+    namespace: openshift-machine-config-operator
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DaemonSet
+      name: machine-config-daemon
+      uid: 62b02da1-7fd8-4f5c-aef6-282c6f2cbc55
+    resourceVersion: "428583503"
+    uid: 35dc59b0-00ac-44ed-81d8-d6f44e30ea24
+  spec:
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchFields:
+            - key: metadata.name
+              operator: In
+              values:
+              - ocp4azu-sj2sl-worker-prod-brazilsouth2-gmw4z
+    containers:
+    - args:
+      - start
+      command:
+      - /usr/bin/machine-config-daemon
+      env:
+      - name: NODE_NAME
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: spec.nodeName
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:79d5795925dd513ab2e5710b72bfdc51e289cf67fe2f4508bda85647233446d9
+      imagePullPolicy: IfNotPresent
+      name: machine-config-daemon
+      resources:
+        requests:
+          cpu: 20m
+          memory: 50Mi
+      securityContext:
+        privileged: true
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: FallbackToLogsOnError
+      volumeMounts:
+      - mountPath: /rootfs
+        name: rootfs
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-kwnxn
+        readOnly: true
+    - args:
+      - --https-address=:9001
+      - --provider=openshift
+      - --openshift-service-account=machine-config-daemon
+      - --upstream=http://127.0.0.1:8797
+      - --tls-cert=/etc/tls/private/tls.crt
+      - --tls-key=/etc/tls/private/tls.key
+      - --cookie-secret-file=/etc/tls/cookie-secret/cookie-secret
+      - '--openshift-sar={"resource": "namespaces", "verb": "get"}'
+      - '--openshift-delegate-urls={"/": {"resource": "namespaces", "verb": "get"}}'
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:65234696ad55f1c997665762491e05c2137898dcd595180cc5337e268bc5fc3c
+      imagePullPolicy: IfNotPresent
+      name: oauth-proxy
+      ports:
+      - containerPort: 9001
+        hostPort: 9001
+        name: metrics
+        protocol: TCP
+      resources:
+        requests:
+          cpu: 20m
+          memory: 50Mi
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /etc/tls/private
+        name: proxy-tls
+      - mountPath: /etc/tls/cookie-secret
+        name: cookie-secret
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-kwnxn
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    hostNetwork: true
+    hostPID: true
+    imagePullSecrets:
+    - name: machine-config-daemon-dockercfg-xfcn2
+    nodeName: ocp4azu-sj2sl-worker-prod-brazilsouth2-gmw4z
+    nodeSelector:
+      kubernetes.io/os: linux
+    preemptionPolicy: PreemptLowerPriority
+    priority: 2000001000
+    priorityClassName: system-node-critical
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: machine-config-daemon
+    serviceAccountName: machine-config-daemon
+    terminationGracePeriodSeconds: 600
+    tolerations:
+    - operator: Exists
+    volumes:
+    - hostPath:
+        path: /
+        type: ""
+      name: rootfs
+    - name: proxy-tls
+      secret:
+        defaultMode: 420
+        secretName: proxy-tls
+    - name: cookie-secret
+      secret:
+        defaultMode: 420
+        secretName: cookie-secret
+    - name: kube-api-access-kwnxn
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-25T20:10:16Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-25T20:10:36Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-25T20:10:36Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-25T20:10:15Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://4445cc860f48470dbf55dc28bd858ecbc5ec8698142ba9111bdd6b642fd142fd
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:79d5795925dd513ab2e5710b72bfdc51e289cf67fe2f4508bda85647233446d9
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:79d5795925dd513ab2e5710b72bfdc51e289cf67fe2f4508bda85647233446d9
+      lastState: {}
+      name: machine-config-daemon
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2023-05-25T20:10:19Z"
+    - containerID: cri-o://d154346d058fcdc516926acc806e34ac90caeaedf1082c55f4b1a0c010a99e2e
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:65234696ad55f1c997665762491e05c2137898dcd595180cc5337e268bc5fc3c
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:65234696ad55f1c997665762491e05c2137898dcd595180cc5337e268bc5fc3c
+      lastState: {}
+      name: oauth-proxy
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2023-05-25T20:10:34Z"
+    hostIP: 10.80.80.17
+    phase: Running
+    podIP: 10.80.80.17
+    podIPs:
+    - ip: 10.80.80.17
+    qosClass: Burstable
+    startTime: "2023-05-25T20:10:16Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      openshift.io/scc: privileged
+    creationTimestamp: "2023-05-25T19:26:47Z"
+    generateName: machine-config-daemon-
+    labels:
+      controller-revision-hash: 5bb44df779
+      k8s-app: machine-config-daemon
+      pod-template-generation: "1"
+    name: machine-config-daemon-52d22
+    namespace: openshift-machine-config-operator
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DaemonSet
+      name: machine-config-daemon
+      uid: 62b02da1-7fd8-4f5c-aef6-282c6f2cbc55
+    resourceVersion: "380476274"
+    uid: 5bb2efec-435e-454f-b7fb-99aa3b496c51
+  spec:
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchFields:
+            - key: metadata.name
+              operator: In
+              values:
+              - ocp4azu-sj2sl-worker-prod-brazilsouth1-mjsb5
+    containers:
+    - args:
+      - start
+      command:
+      - /usr/bin/machine-config-daemon
+      env:
+      - name: NODE_NAME
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: spec.nodeName
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:79d5795925dd513ab2e5710b72bfdc51e289cf67fe2f4508bda85647233446d9
+      imagePullPolicy: IfNotPresent
+      name: machine-config-daemon
+      resources:
+        requests:
+          cpu: 20m
+          memory: 50Mi
+      securityContext:
+        privileged: true
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: FallbackToLogsOnError
+      volumeMounts:
+      - mountPath: /rootfs
+        name: rootfs
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-54vpt
+        readOnly: true
+    - args:
+      - --https-address=:9001
+      - --provider=openshift
+      - --openshift-service-account=machine-config-daemon
+      - --upstream=http://127.0.0.1:8797
+      - --tls-cert=/etc/tls/private/tls.crt
+      - --tls-key=/etc/tls/private/tls.key
+      - --cookie-secret-file=/etc/tls/cookie-secret/cookie-secret
+      - '--openshift-sar={"resource": "namespaces", "verb": "get"}'
+      - '--openshift-delegate-urls={"/": {"resource": "namespaces", "verb": "get"}}'
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:65234696ad55f1c997665762491e05c2137898dcd595180cc5337e268bc5fc3c
+      imagePullPolicy: IfNotPresent
+      name: oauth-proxy
+      ports:
+      - containerPort: 9001
+        hostPort: 9001
+        name: metrics
+        protocol: TCP
+      resources:
+        requests:
+          cpu: 20m
+          memory: 50Mi
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /etc/tls/private
+        name: proxy-tls
+      - mountPath: /etc/tls/cookie-secret
+        name: cookie-secret
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-54vpt
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    hostNetwork: true
+    hostPID: true
+    imagePullSecrets:
+    - name: machine-config-daemon-dockercfg-xfcn2
+    nodeName: ocp4azu-sj2sl-worker-prod-brazilsouth1-mjsb5
+    nodeSelector:
+      kubernetes.io/os: linux
+    preemptionPolicy: PreemptLowerPriority
+    priority: 2000001000
+    priorityClassName: system-node-critical
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: machine-config-daemon
+    serviceAccountName: machine-config-daemon
+    terminationGracePeriodSeconds: 600
+    tolerations:
+    - operator: Exists
+    volumes:
+    - hostPath:
+        path: /
+        type: ""
+      name: rootfs
+    - name: proxy-tls
+      secret:
+        defaultMode: 420
+        secretName: proxy-tls
+    - name: cookie-secret
+      secret:
+        defaultMode: 420
+        secretName: cookie-secret
+    - name: kube-api-access-54vpt
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-25T19:26:48Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-25T19:27:10Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-25T19:27:10Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-25T19:26:47Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://77257ed742db4e8e1ce03102d43e6a71b0c31f6b25f88beaba4e5040da7d7b9c
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:79d5795925dd513ab2e5710b72bfdc51e289cf67fe2f4508bda85647233446d9
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:79d5795925dd513ab2e5710b72bfdc51e289cf67fe2f4508bda85647233446d9
+      lastState: {}
+      name: machine-config-daemon
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2023-05-25T19:26:52Z"
+    - containerID: cri-o://bf89c0b9b91c10b9c7a35f2c9ee4b05d3ed00dd1d4cd25b21cdefcf4ce7c7af3
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:65234696ad55f1c997665762491e05c2137898dcd595180cc5337e268bc5fc3c
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:65234696ad55f1c997665762491e05c2137898dcd595180cc5337e268bc5fc3c
+      lastState: {}
+      name: oauth-proxy
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2023-05-25T19:27:09Z"
+    hostIP: 10.80.80.13
+    phase: Running
+    podIP: 10.80.80.13
+    podIPs:
+    - ip: 10.80.80.13
+    qosClass: Burstable
+    startTime: "2023-05-25T19:26:48Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      openshift.io/scc: privileged
+    creationTimestamp: "2023-05-17T18:14:31Z"
+    generateName: machine-config-daemon-
+    labels:
+      controller-revision-hash: 5bb44df779
+      k8s-app: machine-config-daemon
+      pod-template-generation: "1"
+    name: machine-config-daemon-6bg8w
+    namespace: openshift-machine-config-operator
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DaemonSet
+      name: machine-config-daemon
+      uid: 62b02da1-7fd8-4f5c-aef6-282c6f2cbc55
+    resourceVersion: "460420454"
+    uid: 9583751a-e5b5-4e8f-98f9-8661ad95b540
+  spec:
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchFields:
+            - key: metadata.name
+              operator: In
+              values:
+              - ocp4azu-sj2sl-infra-brazilsouth1-5zvnf
+    containers:
+    - args:
+      - start
+      command:
+      - /usr/bin/machine-config-daemon
+      env:
+      - name: NODE_NAME
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: spec.nodeName
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:79d5795925dd513ab2e5710b72bfdc51e289cf67fe2f4508bda85647233446d9
+      imagePullPolicy: IfNotPresent
+      name: machine-config-daemon
+      resources:
+        requests:
+          cpu: 20m
+          memory: 50Mi
+      securityContext:
+        privileged: true
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: FallbackToLogsOnError
+      volumeMounts:
+      - mountPath: /rootfs
+        name: rootfs
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-xxppx
+        readOnly: true
+    - args:
+      - --https-address=:9001
+      - --provider=openshift
+      - --openshift-service-account=machine-config-daemon
+      - --upstream=http://127.0.0.1:8797
+      - --tls-cert=/etc/tls/private/tls.crt
+      - --tls-key=/etc/tls/private/tls.key
+      - --cookie-secret-file=/etc/tls/cookie-secret/cookie-secret
+      - '--openshift-sar={"resource": "namespaces", "verb": "get"}'
+      - '--openshift-delegate-urls={"/": {"resource": "namespaces", "verb": "get"}}'
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:65234696ad55f1c997665762491e05c2137898dcd595180cc5337e268bc5fc3c
+      imagePullPolicy: IfNotPresent
+      name: oauth-proxy
+      ports:
+      - containerPort: 9001
+        hostPort: 9001
+        name: metrics
+        protocol: TCP
+      resources:
+        requests:
+          cpu: 20m
+          memory: 50Mi
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /etc/tls/private
+        name: proxy-tls
+      - mountPath: /etc/tls/cookie-secret
+        name: cookie-secret
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-xxppx
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    hostNetwork: true
+    hostPID: true
+    imagePullSecrets:
+    - name: machine-config-daemon-dockercfg-xfcn2
+    nodeName: ocp4azu-sj2sl-infra-brazilsouth1-5zvnf
+    nodeSelector:
+      kubernetes.io/os: linux
+    preemptionPolicy: PreemptLowerPriority
+    priority: 2000001000
+    priorityClassName: system-node-critical
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: machine-config-daemon
+    serviceAccountName: machine-config-daemon
+    terminationGracePeriodSeconds: 600
+    tolerations:
+    - operator: Exists
+    volumes:
+    - hostPath:
+        path: /
+        type: ""
+      name: rootfs
+    - name: proxy-tls
+      secret:
+        defaultMode: 420
+        secretName: proxy-tls
+    - name: cookie-secret
+      secret:
+        defaultMode: 420
+        secretName: cookie-secret
+    - name: kube-api-access-xxppx
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-17T18:14:31Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-17T18:14:49Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-17T18:14:49Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-17T18:14:31Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://477747cbb6d06970ac09d14295ec43d0dff47773f8e838cb422e8185dcee9441
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:79d5795925dd513ab2e5710b72bfdc51e289cf67fe2f4508bda85647233446d9
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:79d5795925dd513ab2e5710b72bfdc51e289cf67fe2f4508bda85647233446d9
+      lastState: {}
+      name: machine-config-daemon
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2023-05-17T18:14:36Z"
+    - containerID: cri-o://1047a1b3f309c414f2d397b6b68d3eb5c53d063712a2787d157d3962b7547ee8
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:65234696ad55f1c997665762491e05c2137898dcd595180cc5337e268bc5fc3c
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:65234696ad55f1c997665762491e05c2137898dcd595180cc5337e268bc5fc3c
+      lastState: {}
+      name: oauth-proxy
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2023-05-17T18:14:48Z"
+    hostIP: 10.80.80.11
+    phase: Running
+    podIP: 10.80.80.11
+    podIPs:
+    - ip: 10.80.80.11
+    qosClass: Burstable
+    startTime: "2023-05-17T18:14:31Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      openshift.io/scc: privileged
+    creationTimestamp: "2023-05-16T17:01:43Z"
+    generateName: machine-config-daemon-
+    labels:
+      controller-revision-hash: 5bb44df779
+      k8s-app: machine-config-daemon
+      pod-template-generation: "1"
+    name: machine-config-daemon-6lmwv
+    namespace: openshift-machine-config-operator
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DaemonSet
+      name: machine-config-daemon
+      uid: 62b02da1-7fd8-4f5c-aef6-282c6f2cbc55
+    resourceVersion: "458211555"
+    uid: 695c47c5-721b-44d4-b544-89f02e043e2a
+  spec:
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchFields:
+            - key: metadata.name
+              operator: In
+              values:
+              - ocp4azu-sj2sl-infra-brazilsouth2-ptg7h
+    containers:
+    - args:
+      - start
+      command:
+      - /usr/bin/machine-config-daemon
+      env:
+      - name: NODE_NAME
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: spec.nodeName
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:79d5795925dd513ab2e5710b72bfdc51e289cf67fe2f4508bda85647233446d9
+      imagePullPolicy: IfNotPresent
+      name: machine-config-daemon
+      resources:
+        requests:
+          cpu: 20m
+          memory: 50Mi
+      securityContext:
+        privileged: true
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: FallbackToLogsOnError
+      volumeMounts:
+      - mountPath: /rootfs
+        name: rootfs
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-tnvp6
+        readOnly: true
+    - args:
+      - --https-address=:9001
+      - --provider=openshift
+      - --openshift-service-account=machine-config-daemon
+      - --upstream=http://127.0.0.1:8797
+      - --tls-cert=/etc/tls/private/tls.crt
+      - --tls-key=/etc/tls/private/tls.key
+      - --cookie-secret-file=/etc/tls/cookie-secret/cookie-secret
+      - '--openshift-sar={"resource": "namespaces", "verb": "get"}'
+      - '--openshift-delegate-urls={"/": {"resource": "namespaces", "verb": "get"}}'
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:65234696ad55f1c997665762491e05c2137898dcd595180cc5337e268bc5fc3c
+      imagePullPolicy: IfNotPresent
+      name: oauth-proxy
+      ports:
+      - containerPort: 9001
+        hostPort: 9001
+        name: metrics
+        protocol: TCP
+      resources:
+        requests:
+          cpu: 20m
+          memory: 50Mi
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /etc/tls/private
+        name: proxy-tls
+      - mountPath: /etc/tls/cookie-secret
+        name: cookie-secret
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-tnvp6
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    hostNetwork: true
+    hostPID: true
+    imagePullSecrets:
+    - name: machine-config-daemon-dockercfg-xfcn2
+    nodeName: ocp4azu-sj2sl-infra-brazilsouth2-ptg7h
+    nodeSelector:
+      kubernetes.io/os: linux
+    preemptionPolicy: PreemptLowerPriority
+    priority: 2000001000
+    priorityClassName: system-node-critical
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: machine-config-daemon
+    serviceAccountName: machine-config-daemon
+    terminationGracePeriodSeconds: 600
+    tolerations:
+    - operator: Exists
+    volumes:
+    - hostPath:
+        path: /
+        type: ""
+      name: rootfs
+    - name: proxy-tls
+      secret:
+        defaultMode: 420
+        secretName: proxy-tls
+    - name: cookie-secret
+      secret:
+        defaultMode: 420
+        secretName: cookie-secret
+    - name: kube-api-access-tnvp6
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-16T17:01:44Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-16T17:02:04Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-16T17:02:04Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-16T17:01:43Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://31264eaaab04198a0aab700fb56d1f00818340e3b6202caf4a38271b2ae9841f
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:79d5795925dd513ab2e5710b72bfdc51e289cf67fe2f4508bda85647233446d9
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:79d5795925dd513ab2e5710b72bfdc51e289cf67fe2f4508bda85647233446d9
+      lastState: {}
+      name: machine-config-daemon
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2023-05-16T17:01:48Z"
+    - containerID: cri-o://4d2311f9a87418beab7be3dd338082307b63931e134bc02dde493b894b9c9a7f
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:65234696ad55f1c997665762491e05c2137898dcd595180cc5337e268bc5fc3c
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:65234696ad55f1c997665762491e05c2137898dcd595180cc5337e268bc5fc3c
+      lastState: {}
+      name: oauth-proxy
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2023-05-16T17:02:03Z"
+    hostIP: 10.80.80.12
+    phase: Running
+    podIP: 10.80.80.12
+    podIPs:
+    - ip: 10.80.80.12
+    qosClass: Burstable
+    startTime: "2023-05-16T17:01:44Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      openshift.io/scc: privileged
+    creationTimestamp: "2023-05-25T13:39:03Z"
+    generateName: machine-config-daemon-
+    labels:
+      controller-revision-hash: 5bb44df779
+      k8s-app: machine-config-daemon
+      pod-template-generation: "1"
+    name: machine-config-daemon-8lf74
+    namespace: openshift-machine-config-operator
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DaemonSet
+      name: machine-config-daemon
+      uid: 62b02da1-7fd8-4f5c-aef6-282c6f2cbc55
+    resourceVersion: "491646481"
+    uid: 7e1a950e-72d5-4722-96fc-1a29aa331d06
+  spec:
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchFields:
+            - key: metadata.name
+              operator: In
+              values:
+              - ocp4azu-sj2sl-worker-prod-brazilsouth1-lks8v
+    containers:
+    - args:
+      - start
+      command:
+      - /usr/bin/machine-config-daemon
+      env:
+      - name: NODE_NAME
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: spec.nodeName
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:79d5795925dd513ab2e5710b72bfdc51e289cf67fe2f4508bda85647233446d9
+      imagePullPolicy: IfNotPresent
+      name: machine-config-daemon
+      resources:
+        requests:
+          cpu: 20m
+          memory: 50Mi
+      securityContext:
+        privileged: true
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: FallbackToLogsOnError
+      volumeMounts:
+      - mountPath: /rootfs
+        name: rootfs
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-lchbn
+        readOnly: true
+    - args:
+      - --https-address=:9001
+      - --provider=openshift
+      - --openshift-service-account=machine-config-daemon
+      - --upstream=http://127.0.0.1:8797
+      - --tls-cert=/etc/tls/private/tls.crt
+      - --tls-key=/etc/tls/private/tls.key
+      - --cookie-secret-file=/etc/tls/cookie-secret/cookie-secret
+      - '--openshift-sar={"resource": "namespaces", "verb": "get"}'
+      - '--openshift-delegate-urls={"/": {"resource": "namespaces", "verb": "get"}}'
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:65234696ad55f1c997665762491e05c2137898dcd595180cc5337e268bc5fc3c
+      imagePullPolicy: IfNotPresent
+      name: oauth-proxy
+      ports:
+      - containerPort: 9001
+        hostPort: 9001
+        name: metrics
+        protocol: TCP
+      resources:
+        requests:
+          cpu: 20m
+          memory: 50Mi
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /etc/tls/private
+        name: proxy-tls
+      - mountPath: /etc/tls/cookie-secret
+        name: cookie-secret
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-lchbn
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    hostNetwork: true
+    hostPID: true
+    imagePullSecrets:
+    - name: machine-config-daemon-dockercfg-xfcn2
+    nodeName: ocp4azu-sj2sl-worker-prod-brazilsouth1-lks8v
+    nodeSelector:
+      kubernetes.io/os: linux
+    preemptionPolicy: PreemptLowerPriority
+    priority: 2000001000
+    priorityClassName: system-node-critical
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: machine-config-daemon
+    serviceAccountName: machine-config-daemon
+    terminationGracePeriodSeconds: 600
+    tolerations:
+    - operator: Exists
+    volumes:
+    - hostPath:
+        path: /
+        type: ""
+      name: rootfs
+    - name: proxy-tls
+      secret:
+        defaultMode: 420
+        secretName: proxy-tls
+    - name: cookie-secret
+      secret:
+        defaultMode: 420
+        secretName: cookie-secret
+    - name: kube-api-access-lchbn
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-25T13:39:04Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-25T13:39:24Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-25T13:39:24Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-25T13:39:03Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://face83f9c03ae3681015001f61883706cd5e514539f9e42e8a7c75bf18faff76
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:79d5795925dd513ab2e5710b72bfdc51e289cf67fe2f4508bda85647233446d9
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:79d5795925dd513ab2e5710b72bfdc51e289cf67fe2f4508bda85647233446d9
+      lastState: {}
+      name: machine-config-daemon
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2023-05-25T13:39:08Z"
+    - containerID: cri-o://186de36b2e4c5e6b6d9eba46a0c531fa067af366a896c546c4cb1ba206fe9a22
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:65234696ad55f1c997665762491e05c2137898dcd595180cc5337e268bc5fc3c
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:65234696ad55f1c997665762491e05c2137898dcd595180cc5337e268bc5fc3c
+      lastState: {}
+      name: oauth-proxy
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2023-05-25T13:39:24Z"
+    hostIP: 10.80.80.19
+    phase: Running
+    podIP: 10.80.80.19
+    podIPs:
+    - ip: 10.80.80.19
+    qosClass: Burstable
+    startTime: "2023-05-25T13:39:04Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      openshift.io/scc: privileged
+    creationTimestamp: "2023-05-16T16:46:16Z"
+    generateName: machine-config-daemon-
+    labels:
+      controller-revision-hash: 5bb44df779
+      k8s-app: machine-config-daemon
+      pod-template-generation: "1"
+    name: machine-config-daemon-9xtg7
+    namespace: openshift-machine-config-operator
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DaemonSet
+      name: machine-config-daemon
+      uid: 62b02da1-7fd8-4f5c-aef6-282c6f2cbc55
+    resourceVersion: "467286850"
+    uid: 08ff2507-2915-450b-a136-588d5b1cda50
+  spec:
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchFields:
+            - key: metadata.name
+              operator: In
+              values:
+              - ocp4azu-sj2sl-infra-brazilsouth3-pfrpx
+    containers:
+    - args:
+      - start
+      command:
+      - /usr/bin/machine-config-daemon
+      env:
+      - name: NODE_NAME
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: spec.nodeName
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:79d5795925dd513ab2e5710b72bfdc51e289cf67fe2f4508bda85647233446d9
+      imagePullPolicy: IfNotPresent
+      name: machine-config-daemon
+      resources:
+        requests:
+          cpu: 20m
+          memory: 50Mi
+      securityContext:
+        privileged: true
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: FallbackToLogsOnError
+      volumeMounts:
+      - mountPath: /rootfs
+        name: rootfs
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-nmc22
+        readOnly: true
+    - args:
+      - --https-address=:9001
+      - --provider=openshift
+      - --openshift-service-account=machine-config-daemon
+      - --upstream=http://127.0.0.1:8797
+      - --tls-cert=/etc/tls/private/tls.crt
+      - --tls-key=/etc/tls/private/tls.key
+      - --cookie-secret-file=/etc/tls/cookie-secret/cookie-secret
+      - '--openshift-sar={"resource": "namespaces", "verb": "get"}'
+      - '--openshift-delegate-urls={"/": {"resource": "namespaces", "verb": "get"}}'
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:65234696ad55f1c997665762491e05c2137898dcd595180cc5337e268bc5fc3c
+      imagePullPolicy: IfNotPresent
+      name: oauth-proxy
+      ports:
+      - containerPort: 9001
+        hostPort: 9001
+        name: metrics
+        protocol: TCP
+      resources:
+        requests:
+          cpu: 20m
+          memory: 50Mi
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /etc/tls/private
+        name: proxy-tls
+      - mountPath: /etc/tls/cookie-secret
+        name: cookie-secret
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-nmc22
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    hostNetwork: true
+    hostPID: true
+    imagePullSecrets:
+    - name: machine-config-daemon-dockercfg-xfcn2
+    nodeName: ocp4azu-sj2sl-infra-brazilsouth3-pfrpx
+    nodeSelector:
+      kubernetes.io/os: linux
+    preemptionPolicy: PreemptLowerPriority
+    priority: 2000001000
+    priorityClassName: system-node-critical
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: machine-config-daemon
+    serviceAccountName: machine-config-daemon
+    terminationGracePeriodSeconds: 600
+    tolerations:
+    - operator: Exists
+    volumes:
+    - hostPath:
+        path: /
+        type: ""
+      name: rootfs
+    - name: proxy-tls
+      secret:
+        defaultMode: 420
+        secretName: proxy-tls
+    - name: cookie-secret
+      secret:
+        defaultMode: 420
+        secretName: cookie-secret
+    - name: kube-api-access-nmc22
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-16T16:46:17Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-16T16:46:34Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-16T16:46:34Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-16T16:46:16Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://95f21dc930b543c67deb38e3ab5e49f2c6c133fb6b4f63570f8267a74376b282
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:79d5795925dd513ab2e5710b72bfdc51e289cf67fe2f4508bda85647233446d9
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:79d5795925dd513ab2e5710b72bfdc51e289cf67fe2f4508bda85647233446d9
+      lastState: {}
+      name: machine-config-daemon
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2023-05-16T16:46:21Z"
+    - containerID: cri-o://114c9150e9c5e6306731b768b5223ddc3e7aa2da272356654161753d3033ef0c
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:65234696ad55f1c997665762491e05c2137898dcd595180cc5337e268bc5fc3c
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:65234696ad55f1c997665762491e05c2137898dcd595180cc5337e268bc5fc3c
+      lastState: {}
+      name: oauth-proxy
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2023-05-16T16:46:34Z"
+    hostIP: 10.80.80.16
+    phase: Running
+    podIP: 10.80.80.16
+    podIPs:
+    - ip: 10.80.80.16
+    qosClass: Burstable
+    startTime: "2023-05-16T16:46:17Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      openshift.io/scc: privileged
+    creationTimestamp: "2023-05-25T14:41:57Z"
+    generateName: machine-config-daemon-
+    labels:
+      controller-revision-hash: 5bb44df779
+      k8s-app: machine-config-daemon
+      pod-template-generation: "1"
+    name: machine-config-daemon-j265k
+    namespace: openshift-machine-config-operator
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DaemonSet
+      name: machine-config-daemon
+      uid: 62b02da1-7fd8-4f5c-aef6-282c6f2cbc55
+    resourceVersion: "476624501"
+    uid: ab4b6397-fbc3-4f4b-bf91-bc318ef99233
+  spec:
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchFields:
+            - key: metadata.name
+              operator: In
+              values:
+              - ocp4azu-sj2sl-worker-noprod-dev-brazilsouth2-4dm6s
+    containers:
+    - args:
+      - start
+      command:
+      - /usr/bin/machine-config-daemon
+      env:
+      - name: NODE_NAME
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: spec.nodeName
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:79d5795925dd513ab2e5710b72bfdc51e289cf67fe2f4508bda85647233446d9
+      imagePullPolicy: IfNotPresent
+      name: machine-config-daemon
+      resources:
+        requests:
+          cpu: 20m
+          memory: 50Mi
+      securityContext:
+        privileged: true
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: FallbackToLogsOnError
+      volumeMounts:
+      - mountPath: /rootfs
+        name: rootfs
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-czsgm
+        readOnly: true
+    - args:
+      - --https-address=:9001
+      - --provider=openshift
+      - --openshift-service-account=machine-config-daemon
+      - --upstream=http://127.0.0.1:8797
+      - --tls-cert=/etc/tls/private/tls.crt
+      - --tls-key=/etc/tls/private/tls.key
+      - --cookie-secret-file=/etc/tls/cookie-secret/cookie-secret
+      - '--openshift-sar={"resource": "namespaces", "verb": "get"}'
+      - '--openshift-delegate-urls={"/": {"resource": "namespaces", "verb": "get"}}'
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:65234696ad55f1c997665762491e05c2137898dcd595180cc5337e268bc5fc3c
+      imagePullPolicy: IfNotPresent
+      name: oauth-proxy
+      ports:
+      - containerPort: 9001
+        hostPort: 9001
+        name: metrics
+        protocol: TCP
+      resources:
+        requests:
+          cpu: 20m
+          memory: 50Mi
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /etc/tls/private
+        name: proxy-tls
+      - mountPath: /etc/tls/cookie-secret
+        name: cookie-secret
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-czsgm
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    hostNetwork: true
+    hostPID: true
+    imagePullSecrets:
+    - name: machine-config-daemon-dockercfg-xfcn2
+    nodeName: ocp4azu-sj2sl-worker-noprod-dev-brazilsouth2-4dm6s
+    nodeSelector:
+      kubernetes.io/os: linux
+    preemptionPolicy: PreemptLowerPriority
+    priority: 2000001000
+    priorityClassName: system-node-critical
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: machine-config-daemon
+    serviceAccountName: machine-config-daemon
+    terminationGracePeriodSeconds: 600
+    tolerations:
+    - operator: Exists
+    volumes:
+    - hostPath:
+        path: /
+        type: ""
+      name: rootfs
+    - name: proxy-tls
+      secret:
+        defaultMode: 420
+        secretName: proxy-tls
+    - name: cookie-secret
+      secret:
+        defaultMode: 420
+        secretName: cookie-secret
+    - name: kube-api-access-czsgm
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-25T14:41:58Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2024-05-02T14:26:36Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2024-05-02T14:26:36Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-25T14:41:57Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://1dedb599623d17fa129eada9179fe15f78db6ade6f3617ce679fda6b109bf4cc
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:79d5795925dd513ab2e5710b72bfdc51e289cf67fe2f4508bda85647233446d9
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:79d5795925dd513ab2e5710b72bfdc51e289cf67fe2f4508bda85647233446d9
+      lastState: {}
+      name: machine-config-daemon
+      ready: true
+      restartCount: 1
+      started: true
+      state:
+        running:
+          startedAt: "2024-05-02T14:24:43Z"
+    - containerID: cri-o://2137ba8589f9637a8836a857fc56c528730965aac66d90edcf4bdcd6296aec3d
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:65234696ad55f1c997665762491e05c2137898dcd595180cc5337e268bc5fc3c
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:65234696ad55f1c997665762491e05c2137898dcd595180cc5337e268bc5fc3c
+      lastState: {}
+      name: oauth-proxy
+      ready: true
+      restartCount: 1
+      started: true
+      state:
+        running:
+          startedAt: "2024-05-02T14:26:35Z"
+    hostIP: 10.80.80.9
+    phase: Running
+    podIP: 10.80.80.9
+    podIPs:
+    - ip: 10.80.80.9
+    qosClass: Burstable
+    startTime: "2023-05-25T14:41:58Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      openshift.io/scc: privileged
+    creationTimestamp: "2023-05-25T13:31:43Z"
+    generateName: machine-config-daemon-
+    labels:
+      controller-revision-hash: 5bb44df779
+      k8s-app: machine-config-daemon
+      pod-template-generation: "1"
+    name: machine-config-daemon-jdgnw
+    namespace: openshift-machine-config-operator
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DaemonSet
+      name: machine-config-daemon
+      uid: 62b02da1-7fd8-4f5c-aef6-282c6f2cbc55
+    resourceVersion: "467404208"
+    uid: 333ddaef-5a98-407c-b0ac-845519058106
+  spec:
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchFields:
+            - key: metadata.name
+              operator: In
+              values:
+              - ocp4azu-sj2sl-worker-noprod-qa-brazilsouth2-rglbf
+    containers:
+    - args:
+      - start
+      command:
+      - /usr/bin/machine-config-daemon
+      env:
+      - name: NODE_NAME
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: spec.nodeName
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:79d5795925dd513ab2e5710b72bfdc51e289cf67fe2f4508bda85647233446d9
+      imagePullPolicy: IfNotPresent
+      name: machine-config-daemon
+      resources:
+        requests:
+          cpu: 20m
+          memory: 50Mi
+      securityContext:
+        privileged: true
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: FallbackToLogsOnError
+      volumeMounts:
+      - mountPath: /rootfs
+        name: rootfs
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-r54qw
+        readOnly: true
+    - args:
+      - --https-address=:9001
+      - --provider=openshift
+      - --openshift-service-account=machine-config-daemon
+      - --upstream=http://127.0.0.1:8797
+      - --tls-cert=/etc/tls/private/tls.crt
+      - --tls-key=/etc/tls/private/tls.key
+      - --cookie-secret-file=/etc/tls/cookie-secret/cookie-secret
+      - '--openshift-sar={"resource": "namespaces", "verb": "get"}'
+      - '--openshift-delegate-urls={"/": {"resource": "namespaces", "verb": "get"}}'
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:65234696ad55f1c997665762491e05c2137898dcd595180cc5337e268bc5fc3c
+      imagePullPolicy: IfNotPresent
+      name: oauth-proxy
+      ports:
+      - containerPort: 9001
+        hostPort: 9001
+        name: metrics
+        protocol: TCP
+      resources:
+        requests:
+          cpu: 20m
+          memory: 50Mi
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /etc/tls/private
+        name: proxy-tls
+      - mountPath: /etc/tls/cookie-secret
+        name: cookie-secret
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-r54qw
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    hostNetwork: true
+    hostPID: true
+    imagePullSecrets:
+    - name: machine-config-daemon-dockercfg-xfcn2
+    nodeName: ocp4azu-sj2sl-worker-noprod-qa-brazilsouth2-rglbf
+    nodeSelector:
+      kubernetes.io/os: linux
+    preemptionPolicy: PreemptLowerPriority
+    priority: 2000001000
+    priorityClassName: system-node-critical
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: machine-config-daemon
+    serviceAccountName: machine-config-daemon
+    terminationGracePeriodSeconds: 600
+    tolerations:
+    - operator: Exists
+    volumes:
+    - hostPath:
+        path: /
+        type: ""
+      name: rootfs
+    - name: proxy-tls
+      secret:
+        defaultMode: 420
+        secretName: proxy-tls
+    - name: cookie-secret
+      secret:
+        defaultMode: 420
+        secretName: cookie-secret
+    - name: kube-api-access-r54qw
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-25T13:31:44Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-25T13:32:03Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-25T13:32:03Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-25T13:31:43Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://e965c5a7472c3643a1cc66fdb338a11ff4c93ea331e3a5cce0fee331fc30b92e
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:79d5795925dd513ab2e5710b72bfdc51e289cf67fe2f4508bda85647233446d9
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:79d5795925dd513ab2e5710b72bfdc51e289cf67fe2f4508bda85647233446d9
+      lastState: {}
+      name: machine-config-daemon
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2023-05-25T13:31:47Z"
+    - containerID: cri-o://a728c3d73cbfc978a85c4266c859453f991bd73dd0e156b187c26813966320cd
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:65234696ad55f1c997665762491e05c2137898dcd595180cc5337e268bc5fc3c
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:65234696ad55f1c997665762491e05c2137898dcd595180cc5337e268bc5fc3c
+      lastState: {}
+      name: oauth-proxy
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2023-05-25T13:32:02Z"
+    hostIP: 10.80.80.22
+    phase: Running
+    podIP: 10.80.80.22
+    podIPs:
+    - ip: 10.80.80.22
+    qosClass: Burstable
+    startTime: "2023-05-25T13:31:44Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      openshift.io/scc: privileged
+    creationTimestamp: "2023-05-25T13:26:47Z"
+    generateName: machine-config-daemon-
+    labels:
+      controller-revision-hash: 5bb44df779
+      k8s-app: machine-config-daemon
+      pod-template-generation: "1"
+    name: machine-config-daemon-jgtvv
+    namespace: openshift-machine-config-operator
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DaemonSet
+      name: machine-config-daemon
+      uid: 62b02da1-7fd8-4f5c-aef6-282c6f2cbc55
+    resourceVersion: "472918098"
+    uid: 0ade6925-34fb-428a-9895-5d27b5deed37
+  spec:
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchFields:
+            - key: metadata.name
+              operator: In
+              values:
+              - ocp4azu-sj2sl-worker-noprod-qa-brazilsouth1-2s77x
+    containers:
+    - args:
+      - start
+      command:
+      - /usr/bin/machine-config-daemon
+      env:
+      - name: NODE_NAME
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: spec.nodeName
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:79d5795925dd513ab2e5710b72bfdc51e289cf67fe2f4508bda85647233446d9
+      imagePullPolicy: IfNotPresent
+      name: machine-config-daemon
+      resources:
+        requests:
+          cpu: 20m
+          memory: 50Mi
+      securityContext:
+        privileged: true
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: FallbackToLogsOnError
+      volumeMounts:
+      - mountPath: /rootfs
+        name: rootfs
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-zjndh
+        readOnly: true
+    - args:
+      - --https-address=:9001
+      - --provider=openshift
+      - --openshift-service-account=machine-config-daemon
+      - --upstream=http://127.0.0.1:8797
+      - --tls-cert=/etc/tls/private/tls.crt
+      - --tls-key=/etc/tls/private/tls.key
+      - --cookie-secret-file=/etc/tls/cookie-secret/cookie-secret
+      - '--openshift-sar={"resource": "namespaces", "verb": "get"}'
+      - '--openshift-delegate-urls={"/": {"resource": "namespaces", "verb": "get"}}'
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:65234696ad55f1c997665762491e05c2137898dcd595180cc5337e268bc5fc3c
+      imagePullPolicy: IfNotPresent
+      name: oauth-proxy
+      ports:
+      - containerPort: 9001
+        hostPort: 9001
+        name: metrics
+        protocol: TCP
+      resources:
+        requests:
+          cpu: 20m
+          memory: 50Mi
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /etc/tls/private
+        name: proxy-tls
+      - mountPath: /etc/tls/cookie-secret
+        name: cookie-secret
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-zjndh
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    hostNetwork: true
+    hostPID: true
+    imagePullSecrets:
+    - name: machine-config-daemon-dockercfg-xfcn2
+    nodeName: ocp4azu-sj2sl-worker-noprod-qa-brazilsouth1-2s77x
+    nodeSelector:
+      kubernetes.io/os: linux
+    preemptionPolicy: PreemptLowerPriority
+    priority: 2000001000
+    priorityClassName: system-node-critical
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: machine-config-daemon
+    serviceAccountName: machine-config-daemon
+    terminationGracePeriodSeconds: 600
+    tolerations:
+    - operator: Exists
+    volumes:
+    - hostPath:
+        path: /
+        type: ""
+      name: rootfs
+    - name: proxy-tls
+      secret:
+        defaultMode: 420
+        secretName: proxy-tls
+    - name: cookie-secret
+      secret:
+        defaultMode: 420
+        secretName: cookie-secret
+    - name: kube-api-access-zjndh
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-25T13:26:47Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-25T13:27:08Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-25T13:27:08Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-25T13:26:47Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://7ff249e8b9a648c461d926303241e64577aed71936641143ded0845e2cbadf3a
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:79d5795925dd513ab2e5710b72bfdc51e289cf67fe2f4508bda85647233446d9
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:79d5795925dd513ab2e5710b72bfdc51e289cf67fe2f4508bda85647233446d9
+      lastState: {}
+      name: machine-config-daemon
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2023-05-25T13:26:51Z"
+    - containerID: cri-o://924a2ab82ae2bc41d0363a9ad5185ad89b6f0be4141aa8800c045c7740babdc9
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:65234696ad55f1c997665762491e05c2137898dcd595180cc5337e268bc5fc3c
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:65234696ad55f1c997665762491e05c2137898dcd595180cc5337e268bc5fc3c
+      lastState: {}
+      name: oauth-proxy
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2023-05-25T13:27:07Z"
+    hostIP: 10.80.80.28
+    phase: Running
+    podIP: 10.80.80.28
+    podIPs:
+    - ip: 10.80.80.28
+    qosClass: Burstable
+    startTime: "2023-05-25T13:26:47Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      openshift.io/scc: privileged
+    creationTimestamp: "2023-05-25T14:39:41Z"
+    generateName: machine-config-daemon-
+    labels:
+      controller-revision-hash: 5bb44df779
+      k8s-app: machine-config-daemon
+      pod-template-generation: "1"
+    name: machine-config-daemon-lmlfg
+    namespace: openshift-machine-config-operator
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DaemonSet
+      name: machine-config-daemon
+      uid: 62b02da1-7fd8-4f5c-aef6-282c6f2cbc55
+    resourceVersion: "476624844"
+    uid: 14550fe2-0f37-4b90-83bb-aebbaa5bcf26
+  spec:
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchFields:
+            - key: metadata.name
+              operator: In
+              values:
+              - ocp4azu-sj2sl-worker-noprod-dev-brazilsouth1-vlxcp
+    containers:
+    - args:
+      - start
+      command:
+      - /usr/bin/machine-config-daemon
+      env:
+      - name: NODE_NAME
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: spec.nodeName
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:79d5795925dd513ab2e5710b72bfdc51e289cf67fe2f4508bda85647233446d9
+      imagePullPolicy: IfNotPresent
+      name: machine-config-daemon
+      resources:
+        requests:
+          cpu: 20m
+          memory: 50Mi
+      securityContext:
+        privileged: true
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: FallbackToLogsOnError
+      volumeMounts:
+      - mountPath: /rootfs
+        name: rootfs
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-t9fww
+        readOnly: true
+    - args:
+      - --https-address=:9001
+      - --provider=openshift
+      - --openshift-service-account=machine-config-daemon
+      - --upstream=http://127.0.0.1:8797
+      - --tls-cert=/etc/tls/private/tls.crt
+      - --tls-key=/etc/tls/private/tls.key
+      - --cookie-secret-file=/etc/tls/cookie-secret/cookie-secret
+      - '--openshift-sar={"resource": "namespaces", "verb": "get"}'
+      - '--openshift-delegate-urls={"/": {"resource": "namespaces", "verb": "get"}}'
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:65234696ad55f1c997665762491e05c2137898dcd595180cc5337e268bc5fc3c
+      imagePullPolicy: IfNotPresent
+      name: oauth-proxy
+      ports:
+      - containerPort: 9001
+        hostPort: 9001
+        name: metrics
+        protocol: TCP
+      resources:
+        requests:
+          cpu: 20m
+          memory: 50Mi
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /etc/tls/private
+        name: proxy-tls
+      - mountPath: /etc/tls/cookie-secret
+        name: cookie-secret
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-t9fww
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    hostNetwork: true
+    hostPID: true
+    imagePullSecrets:
+    - name: machine-config-daemon-dockercfg-xfcn2
+    nodeName: ocp4azu-sj2sl-worker-noprod-dev-brazilsouth1-vlxcp
+    nodeSelector:
+      kubernetes.io/os: linux
+    preemptionPolicy: PreemptLowerPriority
+    priority: 2000001000
+    priorityClassName: system-node-critical
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: machine-config-daemon
+    serviceAccountName: machine-config-daemon
+    terminationGracePeriodSeconds: 600
+    tolerations:
+    - operator: Exists
+    volumes:
+    - hostPath:
+        path: /
+        type: ""
+      name: rootfs
+    - name: proxy-tls
+      secret:
+        defaultMode: 420
+        secretName: proxy-tls
+    - name: cookie-secret
+      secret:
+        defaultMode: 420
+        secretName: cookie-secret
+    - name: kube-api-access-t9fww
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-25T14:39:42Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-25T14:40:02Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-25T14:40:02Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-25T14:39:41Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://883981853f9f2d589a50783aa5daa9525d3445eb24bcf6fc6d460ef2c0d34eda
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:79d5795925dd513ab2e5710b72bfdc51e289cf67fe2f4508bda85647233446d9
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:79d5795925dd513ab2e5710b72bfdc51e289cf67fe2f4508bda85647233446d9
+      lastState: {}
+      name: machine-config-daemon
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2023-05-25T14:39:46Z"
+    - containerID: cri-o://f0fb2730d52b65583bdf7e9a320da20d4c784657f0b96447ccbc798d423334ad
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:65234696ad55f1c997665762491e05c2137898dcd595180cc5337e268bc5fc3c
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:65234696ad55f1c997665762491e05c2137898dcd595180cc5337e268bc5fc3c
+      lastState: {}
+      name: oauth-proxy
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2023-05-25T14:40:02Z"
+    hostIP: 10.80.80.5
+    phase: Running
+    podIP: 10.80.80.5
+    podIPs:
+    - ip: 10.80.80.5
+    qosClass: Burstable
+    startTime: "2023-05-25T14:39:42Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      openshift.io/scc: privileged
+    creationTimestamp: "2023-05-25T13:39:12Z"
+    generateName: machine-config-daemon-
+    labels:
+      controller-revision-hash: 5bb44df779
+      k8s-app: machine-config-daemon
+      pod-template-generation: "1"
+    name: machine-config-daemon-lxhmj
+    namespace: openshift-machine-config-operator
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DaemonSet
+      name: machine-config-daemon
+      uid: 62b02da1-7fd8-4f5c-aef6-282c6f2cbc55
+    resourceVersion: "472847171"
+    uid: b8b3c313-aa72-4245-bede-2aa43e7f3751
+  spec:
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchFields:
+            - key: metadata.name
+              operator: In
+              values:
+              - ocp4azu-sj2sl-worker-prod-brazilsouth2-xbz5z
+    containers:
+    - args:
+      - start
+      command:
+      - /usr/bin/machine-config-daemon
+      env:
+      - name: NODE_NAME
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: spec.nodeName
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:79d5795925dd513ab2e5710b72bfdc51e289cf67fe2f4508bda85647233446d9
+      imagePullPolicy: IfNotPresent
+      name: machine-config-daemon
+      resources:
+        requests:
+          cpu: 20m
+          memory: 50Mi
+      securityContext:
+        privileged: true
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: FallbackToLogsOnError
+      volumeMounts:
+      - mountPath: /rootfs
+        name: rootfs
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-rvzjg
+        readOnly: true
+    - args:
+      - --https-address=:9001
+      - --provider=openshift
+      - --openshift-service-account=machine-config-daemon
+      - --upstream=http://127.0.0.1:8797
+      - --tls-cert=/etc/tls/private/tls.crt
+      - --tls-key=/etc/tls/private/tls.key
+      - --cookie-secret-file=/etc/tls/cookie-secret/cookie-secret
+      - '--openshift-sar={"resource": "namespaces", "verb": "get"}'
+      - '--openshift-delegate-urls={"/": {"resource": "namespaces", "verb": "get"}}'
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:65234696ad55f1c997665762491e05c2137898dcd595180cc5337e268bc5fc3c
+      imagePullPolicy: IfNotPresent
+      name: oauth-proxy
+      ports:
+      - containerPort: 9001
+        hostPort: 9001
+        name: metrics
+        protocol: TCP
+      resources:
+        requests:
+          cpu: 20m
+          memory: 50Mi
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /etc/tls/private
+        name: proxy-tls
+      - mountPath: /etc/tls/cookie-secret
+        name: cookie-secret
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-rvzjg
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    hostNetwork: true
+    hostPID: true
+    imagePullSecrets:
+    - name: machine-config-daemon-dockercfg-xfcn2
+    nodeName: ocp4azu-sj2sl-worker-prod-brazilsouth2-xbz5z
+    nodeSelector:
+      kubernetes.io/os: linux
+    preemptionPolicy: PreemptLowerPriority
+    priority: 2000001000
+    priorityClassName: system-node-critical
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: machine-config-daemon
+    serviceAccountName: machine-config-daemon
+    terminationGracePeriodSeconds: 600
+    tolerations:
+    - operator: Exists
+    volumes:
+    - hostPath:
+        path: /
+        type: ""
+      name: rootfs
+    - name: proxy-tls
+      secret:
+        defaultMode: 420
+        secretName: proxy-tls
+    - name: cookie-secret
+      secret:
+        defaultMode: 420
+        secretName: cookie-secret
+    - name: kube-api-access-rvzjg
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-25T13:39:12Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-25T13:39:31Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-25T13:39:31Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-25T13:39:12Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://3a28eb8ed3ea1dc9a15352e68c2fa51931afb9a1a49b78c97384588fdfd60df4
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:79d5795925dd513ab2e5710b72bfdc51e289cf67fe2f4508bda85647233446d9
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:79d5795925dd513ab2e5710b72bfdc51e289cf67fe2f4508bda85647233446d9
+      lastState: {}
+      name: machine-config-daemon
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2023-05-25T13:39:16Z"
+    - containerID: cri-o://b959ec069a57c1fefcf21a986f8beede788d38a07dbdd4dd223ab3157c437146
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:65234696ad55f1c997665762491e05c2137898dcd595180cc5337e268bc5fc3c
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:65234696ad55f1c997665762491e05c2137898dcd595180cc5337e268bc5fc3c
+      lastState: {}
+      name: oauth-proxy
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2023-05-25T13:39:30Z"
+    hostIP: 10.80.80.23
+    phase: Running
+    podIP: 10.80.80.23
+    podIPs:
+    - ip: 10.80.80.23
+    qosClass: Burstable
+    startTime: "2023-05-25T13:39:12Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      openshift.io/scc: privileged
+    creationTimestamp: "2023-05-04T21:40:30Z"
+    generateName: machine-config-daemon-
+    labels:
+      controller-revision-hash: 5bb44df779
+      k8s-app: machine-config-daemon
+      pod-template-generation: "1"
+    name: machine-config-daemon-mzvht
+    namespace: openshift-machine-config-operator
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DaemonSet
+      name: machine-config-daemon
+      uid: 62b02da1-7fd8-4f5c-aef6-282c6f2cbc55
+    resourceVersion: "1605439"
+    uid: ef73e8f7-f537-4f37-8a89-b32c9d1816ea
+  spec:
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchFields:
+            - key: metadata.name
+              operator: In
+              values:
+              - ocp4azu-sj2sl-master-0
+    containers:
+    - args:
+      - start
+      command:
+      - /usr/bin/machine-config-daemon
+      env:
+      - name: NODE_NAME
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: spec.nodeName
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:79d5795925dd513ab2e5710b72bfdc51e289cf67fe2f4508bda85647233446d9
+      imagePullPolicy: IfNotPresent
+      name: machine-config-daemon
+      resources:
+        requests:
+          cpu: 20m
+          memory: 50Mi
+      securityContext:
+        privileged: true
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: FallbackToLogsOnError
+      volumeMounts:
+      - mountPath: /rootfs
+        name: rootfs
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-n7lm8
+        readOnly: true
+    - args:
+      - --https-address=:9001
+      - --provider=openshift
+      - --openshift-service-account=machine-config-daemon
+      - --upstream=http://127.0.0.1:8797
+      - --tls-cert=/etc/tls/private/tls.crt
+      - --tls-key=/etc/tls/private/tls.key
+      - --cookie-secret-file=/etc/tls/cookie-secret/cookie-secret
+      - '--openshift-sar={"resource": "namespaces", "verb": "get"}'
+      - '--openshift-delegate-urls={"/": {"resource": "namespaces", "verb": "get"}}'
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:65234696ad55f1c997665762491e05c2137898dcd595180cc5337e268bc5fc3c
+      imagePullPolicy: IfNotPresent
+      name: oauth-proxy
+      ports:
+      - containerPort: 9001
+        hostPort: 9001
+        name: metrics
+        protocol: TCP
+      resources:
+        requests:
+          cpu: 20m
+          memory: 50Mi
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /etc/tls/private
+        name: proxy-tls
+      - mountPath: /etc/tls/cookie-secret
+        name: cookie-secret
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-n7lm8
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    hostNetwork: true
+    hostPID: true
+    nodeName: ocp4azu-sj2sl-master-0
+    nodeSelector:
+      kubernetes.io/os: linux
+    preemptionPolicy: PreemptLowerPriority
+    priority: 2000001000
+    priorityClassName: system-node-critical
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: machine-config-daemon
+    serviceAccountName: machine-config-daemon
+    terminationGracePeriodSeconds: 600
+    tolerations:
+    - operator: Exists
+    volumes:
+    - hostPath:
+        path: /
+        type: ""
+      name: rootfs
+    - name: proxy-tls
+      secret:
+        defaultMode: 420
+        secretName: proxy-tls
+    - name: cookie-secret
+      secret:
+        defaultMode: 420
+        secretName: cookie-secret
+    - name: kube-api-access-n7lm8
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-04T21:40:30Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-11T18:26:14Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-11T18:26:14Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-04T21:40:30Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://caa996e09154c9c1d4ed7ff1b886b24ccae0eb2b6589138465ac15d993f900d9
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:79d5795925dd513ab2e5710b72bfdc51e289cf67fe2f4508bda85647233446d9
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:79d5795925dd513ab2e5710b72bfdc51e289cf67fe2f4508bda85647233446d9
+      lastState: {}
+      name: machine-config-daemon
+      ready: true
+      restartCount: 3
+      started: true
+      state:
+        running:
+          startedAt: "2023-05-11T18:26:13Z"
+    - containerID: cri-o://484713a41080f1270a247ff1120851a274c88e6c5a7cb5cdd1ce4b65f70afb0d
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:65234696ad55f1c997665762491e05c2137898dcd595180cc5337e268bc5fc3c
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:65234696ad55f1c997665762491e05c2137898dcd595180cc5337e268bc5fc3c
+      lastState: {}
+      name: oauth-proxy
+      ready: true
+      restartCount: 3
+      started: true
+      state:
+        running:
+          startedAt: "2023-05-11T18:26:13Z"
+    hostIP: 10.80.80.6
+    phase: Running
+    podIP: 10.80.80.6
+    podIPs:
+    - ip: 10.80.80.6
+    qosClass: Burstable
+    startTime: "2023-05-04T21:40:30Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      openshift.io/scc: privileged
+    creationTimestamp: "2023-05-04T21:40:30Z"
+    generateName: machine-config-daemon-
+    labels:
+      controller-revision-hash: 5bb44df779
+      k8s-app: machine-config-daemon
+      pod-template-generation: "1"
+    name: machine-config-daemon-pw2cr
+    namespace: openshift-machine-config-operator
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DaemonSet
+      name: machine-config-daemon
+      uid: 62b02da1-7fd8-4f5c-aef6-282c6f2cbc55
+    resourceVersion: "465633604"
+    uid: 31203436-a701-4ef9-9d1b-f7fccbbdf74c
+  spec:
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchFields:
+            - key: metadata.name
+              operator: In
+              values:
+              - ocp4azu-sj2sl-master-2
+    containers:
+    - args:
+      - start
+      command:
+      - /usr/bin/machine-config-daemon
+      env:
+      - name: NODE_NAME
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: spec.nodeName
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:79d5795925dd513ab2e5710b72bfdc51e289cf67fe2f4508bda85647233446d9
+      imagePullPolicy: IfNotPresent
+      name: machine-config-daemon
+      resources:
+        requests:
+          cpu: 20m
+          memory: 50Mi
+      securityContext:
+        privileged: true
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: FallbackToLogsOnError
+      volumeMounts:
+      - mountPath: /rootfs
+        name: rootfs
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-s47jm
+        readOnly: true
+    - args:
+      - --https-address=:9001
+      - --provider=openshift
+      - --openshift-service-account=machine-config-daemon
+      - --upstream=http://127.0.0.1:8797
+      - --tls-cert=/etc/tls/private/tls.crt
+      - --tls-key=/etc/tls/private/tls.key
+      - --cookie-secret-file=/etc/tls/cookie-secret/cookie-secret
+      - '--openshift-sar={"resource": "namespaces", "verb": "get"}'
+      - '--openshift-delegate-urls={"/": {"resource": "namespaces", "verb": "get"}}'
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:65234696ad55f1c997665762491e05c2137898dcd595180cc5337e268bc5fc3c
+      imagePullPolicy: IfNotPresent
+      name: oauth-proxy
+      ports:
+      - containerPort: 9001
+        hostPort: 9001
+        name: metrics
+        protocol: TCP
+      resources:
+        requests:
+          cpu: 20m
+          memory: 50Mi
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /etc/tls/private
+        name: proxy-tls
+      - mountPath: /etc/tls/cookie-secret
+        name: cookie-secret
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-s47jm
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    hostNetwork: true
+    hostPID: true
+    nodeName: ocp4azu-sj2sl-master-2
+    nodeSelector:
+      kubernetes.io/os: linux
+    preemptionPolicy: PreemptLowerPriority
+    priority: 2000001000
+    priorityClassName: system-node-critical
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: machine-config-daemon
+    serviceAccountName: machine-config-daemon
+    terminationGracePeriodSeconds: 600
+    tolerations:
+    - operator: Exists
+    volumes:
+    - hostPath:
+        path: /
+        type: ""
+      name: rootfs
+    - name: proxy-tls
+      secret:
+        defaultMode: 420
+        secretName: proxy-tls
+    - name: cookie-secret
+      secret:
+        defaultMode: 420
+        secretName: cookie-secret
+    - name: kube-api-access-s47jm
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-04T21:40:30Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-11T18:26:13Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-11T18:26:13Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-04T21:40:30Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://88a313ca01f97f987a013463549a3d8a899801c07580824efe37adc9a4c5843a
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:79d5795925dd513ab2e5710b72bfdc51e289cf67fe2f4508bda85647233446d9
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:79d5795925dd513ab2e5710b72bfdc51e289cf67fe2f4508bda85647233446d9
+      lastState: {}
+      name: machine-config-daemon
+      ready: true
+      restartCount: 3
+      started: true
+      state:
+        running:
+          startedAt: "2023-05-11T18:26:12Z"
+    - containerID: cri-o://58411ca6804c3876031a9d66f8b99ef9ab6dc61e6cf96e510e92ff989ca13640
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:65234696ad55f1c997665762491e05c2137898dcd595180cc5337e268bc5fc3c
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:65234696ad55f1c997665762491e05c2137898dcd595180cc5337e268bc5fc3c
+      lastState: {}
+      name: oauth-proxy
+      ready: true
+      restartCount: 3
+      started: true
+      state:
+        running:
+          startedAt: "2023-05-11T18:26:13Z"
+    hostIP: 10.80.80.7
+    phase: Running
+    podIP: 10.80.80.7
+    podIPs:
+    - ip: 10.80.80.7
+    qosClass: Burstable
+    startTime: "2023-05-04T21:40:30Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      openshift.io/scc: privileged
+    creationTimestamp: "2023-06-05T02:11:56Z"
+    generateName: machine-config-daemon-
+    labels:
+      controller-revision-hash: 5bb44df779
+      k8s-app: machine-config-daemon
+      pod-template-generation: "1"
+    name: machine-config-daemon-tld4m
+    namespace: openshift-machine-config-operator
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DaemonSet
+      name: machine-config-daemon
+      uid: 62b02da1-7fd8-4f5c-aef6-282c6f2cbc55
+    resourceVersion: "466147386"
+    uid: 078cc5af-a8d8-45dd-88e9-9940f942f04e
+  spec:
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchFields:
+            - key: metadata.name
+              operator: In
+              values:
+              - ocp4azu-sj2sl-worker-prod-brazilsouth3-vmmxw
+    containers:
+    - args:
+      - start
+      command:
+      - /usr/bin/machine-config-daemon
+      env:
+      - name: NODE_NAME
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: spec.nodeName
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:79d5795925dd513ab2e5710b72bfdc51e289cf67fe2f4508bda85647233446d9
+      imagePullPolicy: IfNotPresent
+      name: machine-config-daemon
+      resources:
+        requests:
+          cpu: 20m
+          memory: 50Mi
+      securityContext:
+        privileged: true
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: FallbackToLogsOnError
+      volumeMounts:
+      - mountPath: /rootfs
+        name: rootfs
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-rf8pf
+        readOnly: true
+    - args:
+      - --https-address=:9001
+      - --provider=openshift
+      - --openshift-service-account=machine-config-daemon
+      - --upstream=http://127.0.0.1:8797
+      - --tls-cert=/etc/tls/private/tls.crt
+      - --tls-key=/etc/tls/private/tls.key
+      - --cookie-secret-file=/etc/tls/cookie-secret/cookie-secret
+      - '--openshift-sar={"resource": "namespaces", "verb": "get"}'
+      - '--openshift-delegate-urls={"/": {"resource": "namespaces", "verb": "get"}}'
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:65234696ad55f1c997665762491e05c2137898dcd595180cc5337e268bc5fc3c
+      imagePullPolicy: IfNotPresent
+      name: oauth-proxy
+      ports:
+      - containerPort: 9001
+        hostPort: 9001
+        name: metrics
+        protocol: TCP
+      resources:
+        requests:
+          cpu: 20m
+          memory: 50Mi
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /etc/tls/private
+        name: proxy-tls
+      - mountPath: /etc/tls/cookie-secret
+        name: cookie-secret
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-rf8pf
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    hostNetwork: true
+    hostPID: true
+    imagePullSecrets:
+    - name: machine-config-daemon-dockercfg-xfcn2
+    nodeName: ocp4azu-sj2sl-worker-prod-brazilsouth3-vmmxw
+    nodeSelector:
+      kubernetes.io/os: linux
+    preemptionPolicy: PreemptLowerPriority
+    priority: 2000001000
+    priorityClassName: system-node-critical
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: machine-config-daemon
+    serviceAccountName: machine-config-daemon
+    terminationGracePeriodSeconds: 600
+    tolerations:
+    - operator: Exists
+    volumes:
+    - hostPath:
+        path: /
+        type: ""
+      name: rootfs
+    - name: proxy-tls
+      secret:
+        defaultMode: 420
+        secretName: proxy-tls
+    - name: cookie-secret
+      secret:
+        defaultMode: 420
+        secretName: cookie-secret
+    - name: kube-api-access-rf8pf
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-06-05T02:11:57Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2024-01-17T22:40:59Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2024-01-17T22:40:59Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-06-05T02:11:56Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://a6670f87aa3fdbfc522c22f80e493f357110248172d0042fd8d12c1b30b342be
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:79d5795925dd513ab2e5710b72bfdc51e289cf67fe2f4508bda85647233446d9
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:79d5795925dd513ab2e5710b72bfdc51e289cf67fe2f4508bda85647233446d9
+      lastState: {}
+      name: machine-config-daemon
+      ready: true
+      restartCount: 1
+      started: true
+      state:
+        running:
+          startedAt: "2024-01-17T22:38:50Z"
+    - containerID: cri-o://ce8c28c571388e2a91914b26d5f5695b72bedbd60941cb81b637da774adcedde
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:65234696ad55f1c997665762491e05c2137898dcd595180cc5337e268bc5fc3c
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:65234696ad55f1c997665762491e05c2137898dcd595180cc5337e268bc5fc3c
+      lastState: {}
+      name: oauth-proxy
+      ready: true
+      restartCount: 1
+      started: true
+      state:
+        running:
+          startedAt: "2024-01-17T22:40:59Z"
+    hostIP: 10.80.80.18
+    phase: Running
+    podIP: 10.80.80.18
+    podIPs:
+    - ip: 10.80.80.18
+    qosClass: Burstable
+    startTime: "2023-06-05T02:11:57Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      openshift.io/scc: privileged
+    creationTimestamp: "2023-05-04T21:40:30Z"
+    generateName: machine-config-daemon-
+    labels:
+      controller-revision-hash: 5bb44df779
+      k8s-app: machine-config-daemon
+      pod-template-generation: "1"
+    name: machine-config-daemon-vbxzr
+    namespace: openshift-machine-config-operator
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DaemonSet
+      name: machine-config-daemon
+      uid: 62b02da1-7fd8-4f5c-aef6-282c6f2cbc55
+    resourceVersion: "114617711"
+    uid: a93b10a4-4854-4c6c-9634-e33d160c2432
+  spec:
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchFields:
+            - key: metadata.name
+              operator: In
+              values:
+              - ocp4azu-sj2sl-master-1
+    containers:
+    - args:
+      - start
+      command:
+      - /usr/bin/machine-config-daemon
+      env:
+      - name: NODE_NAME
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: spec.nodeName
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:79d5795925dd513ab2e5710b72bfdc51e289cf67fe2f4508bda85647233446d9
+      imagePullPolicy: IfNotPresent
+      name: machine-config-daemon
+      resources:
+        requests:
+          cpu: 20m
+          memory: 50Mi
+      securityContext:
+        privileged: true
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: FallbackToLogsOnError
+      volumeMounts:
+      - mountPath: /rootfs
+        name: rootfs
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-fm77x
+        readOnly: true
+    - args:
+      - --https-address=:9001
+      - --provider=openshift
+      - --openshift-service-account=machine-config-daemon
+      - --upstream=http://127.0.0.1:8797
+      - --tls-cert=/etc/tls/private/tls.crt
+      - --tls-key=/etc/tls/private/tls.key
+      - --cookie-secret-file=/etc/tls/cookie-secret/cookie-secret
+      - '--openshift-sar={"resource": "namespaces", "verb": "get"}'
+      - '--openshift-delegate-urls={"/": {"resource": "namespaces", "verb": "get"}}'
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:65234696ad55f1c997665762491e05c2137898dcd595180cc5337e268bc5fc3c
+      imagePullPolicy: IfNotPresent
+      name: oauth-proxy
+      ports:
+      - containerPort: 9001
+        hostPort: 9001
+        name: metrics
+        protocol: TCP
+      resources:
+        requests:
+          cpu: 20m
+          memory: 50Mi
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /etc/tls/private
+        name: proxy-tls
+      - mountPath: /etc/tls/cookie-secret
+        name: cookie-secret
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-fm77x
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    hostNetwork: true
+    hostPID: true
+    nodeName: ocp4azu-sj2sl-master-1
+    nodeSelector:
+      kubernetes.io/os: linux
+    preemptionPolicy: PreemptLowerPriority
+    priority: 2000001000
+    priorityClassName: system-node-critical
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: machine-config-daemon
+    serviceAccountName: machine-config-daemon
+    terminationGracePeriodSeconds: 600
+    tolerations:
+    - operator: Exists
+    volumes:
+    - hostPath:
+        path: /
+        type: ""
+      name: rootfs
+    - name: proxy-tls
+      secret:
+        defaultMode: 420
+        secretName: proxy-tls
+    - name: cookie-secret
+      secret:
+        defaultMode: 420
+        secretName: cookie-secret
+    - name: kube-api-access-fm77x
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-04T21:40:30Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-11T18:26:17Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-11T18:26:17Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-04T21:40:30Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://1630f9355cb84ef635026cb99107ea2f584019c477200e67c2a0db870215d842
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:79d5795925dd513ab2e5710b72bfdc51e289cf67fe2f4508bda85647233446d9
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:79d5795925dd513ab2e5710b72bfdc51e289cf67fe2f4508bda85647233446d9
+      lastState: {}
+      name: machine-config-daemon
+      ready: true
+      restartCount: 3
+      started: true
+      state:
+        running:
+          startedAt: "2023-05-11T18:26:16Z"
+    - containerID: cri-o://89ff7c5f50350a844d21ae86ca4fcd492da8828fdcb5ea3b756699bbc7dd4a07
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:65234696ad55f1c997665762491e05c2137898dcd595180cc5337e268bc5fc3c
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:65234696ad55f1c997665762491e05c2137898dcd595180cc5337e268bc5fc3c
+      lastState: {}
+      name: oauth-proxy
+      ready: true
+      restartCount: 3
+      started: true
+      state:
+        running:
+          startedAt: "2023-05-11T18:26:17Z"
+    hostIP: 10.80.80.8
+    phase: Running
+    podIP: 10.80.80.8
+    podIPs:
+    - ip: 10.80.80.8
+    qosClass: Burstable
+    startTime: "2023-05-04T21:40:30Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.130.0.45"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.130.0.45"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/scc: hostmount-anyuid
+    creationTimestamp: "2023-05-04T21:36:06Z"
+    generateName: machine-config-operator-7f9f5f8d9-
+    labels:
+      k8s-app: machine-config-operator
+      pod-template-hash: 7f9f5f8d9
+    name: machine-config-operator-7f9f5f8d9-ndlsd
+    namespace: openshift-machine-config-operator
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: machine-config-operator-7f9f5f8d9
+      uid: 13b4cc92-71c6-4ffe-9b61-4c4d979233bc
+    resourceVersion: "114617566"
+    uid: 97b21667-5c99-48c8-9771-5066f2ad8b71
+  spec:
+    containers:
+    - args:
+      - start
+      - --images-json=/etc/mco/images/images.json
+      env:
+      - name: RELEASE_VERSION
+        value: 4.10.53
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:79d5795925dd513ab2e5710b72bfdc51e289cf67fe2f4508bda85647233446d9
+      imagePullPolicy: IfNotPresent
+      name: machine-config-operator
+      resources:
+        requests:
+          cpu: 20m
+          memory: 50Mi
+      securityContext:
+        capabilities:
+          drop:
+          - MKNOD
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: FallbackToLogsOnError
+      volumeMounts:
+      - mountPath: /etc/ssl/kubernetes/ca.crt
+        name: root-ca
+      - mountPath: /etc/mco/images
+        name: images
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-wt6q6
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    nodeName: ocp4azu-sj2sl-master-1
+    nodeSelector:
+      node-role.kubernetes.io/master: ""
+    preemptionPolicy: PreemptLowerPriority
+    priority: 2000000000
+    priorityClassName: system-cluster-critical
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      runAsNonRoot: true
+      runAsUser: 65534
+      seLinuxOptions:
+        level: s0:c18,c2
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/master
+      operator: Exists
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 120
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 120
+    - effect: NoSchedule
+      key: node.kubernetes.io/memory-pressure
+      operator: Exists
+    volumes:
+    - configMap:
+        defaultMode: 420
+        name: machine-config-operator-images
+      name: images
+    - hostPath:
+        path: /etc/kubernetes/ca.crt
+        type: ""
+      name: root-ca
+    - name: kube-api-access-wt6q6
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-04T21:40:05Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-11T18:26:40Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-11T18:26:40Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-04T21:40:05Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://6f8f981a13e7ba7b91cb4f93d590dd546976070dab5aaef5b407166b1b098fdd
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:79d5795925dd513ab2e5710b72bfdc51e289cf67fe2f4508bda85647233446d9
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:79d5795925dd513ab2e5710b72bfdc51e289cf67fe2f4508bda85647233446d9
+      lastState: {}
+      name: machine-config-operator
+      ready: true
+      restartCount: 3
+      started: true
+      state:
+        running:
+          startedAt: "2023-05-11T18:26:40Z"
+    hostIP: 10.80.80.8
+    phase: Running
+    podIP: 10.130.0.45
+    podIPs:
+    - ip: 10.130.0.45
+    qosClass: Burstable
+    startTime: "2023-05-04T21:40:05Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      openshift.io/scc: hostnetwork
+    creationTimestamp: "2023-05-04T21:41:15Z"
+    generateName: machine-config-server-
+    labels:
+      controller-revision-hash: 67cc947f59
+      k8s-app: machine-config-server
+      pod-template-generation: "1"
+    name: machine-config-server-6fxfk
+    namespace: openshift-machine-config-operator
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DaemonSet
+      name: machine-config-server
+      uid: 9a5823f6-dab2-42d8-91a0-178609b11330
+    resourceVersion: "1605364"
+    uid: 043aac88-5874-4306-827d-acd754923bd5
+  spec:
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchFields:
+            - key: metadata.name
+              operator: In
+              values:
+              - ocp4azu-sj2sl-master-0
+    containers:
+    - args:
+      - start
+      - --apiserver-url=https://api-int.ocp4azu.dirtrab.cl:6443
+      command:
+      - /usr/bin/machine-config-server
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:79d5795925dd513ab2e5710b72bfdc51e289cf67fe2f4508bda85647233446d9
+      imagePullPolicy: IfNotPresent
+      name: machine-config-server
+      resources:
+        requests:
+          cpu: 20m
+          memory: 50Mi
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000310000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: FallbackToLogsOnError
+      volumeMounts:
+      - mountPath: /etc/ssl/mcs
+        name: certs
+      - mountPath: /etc/mcs/bootstrap-token
+        name: node-bootstrap-token
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-xpzlg
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    hostNetwork: true
+    nodeName: ocp4azu-sj2sl-master-0
+    nodeSelector:
+      node-role.kubernetes.io/master: ""
+    preemptionPolicy: PreemptLowerPriority
+    priority: 2000000000
+    priorityClassName: system-cluster-critical
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000310000
+      seLinuxOptions:
+        level: s0:c18,c2
+      supplementalGroups:
+      - 1000310000
+    serviceAccount: machine-config-server
+    serviceAccountName: machine-config-server
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/master
+      operator: Exists
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/etcd
+      operator: Exists
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/disk-pressure
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/memory-pressure
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/pid-pressure
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/unschedulable
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/network-unavailable
+      operator: Exists
+    volumes:
+    - name: node-bootstrap-token
+      secret:
+        defaultMode: 420
+        secretName: node-bootstrapper-token
+    - name: certs
+      secret:
+        defaultMode: 420
+        secretName: machine-config-server-tls
+    - name: kube-api-access-xpzlg
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-04T21:41:15Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-11T18:26:12Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-11T18:26:12Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-04T21:41:15Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://0e7528229d44e3749ebc730230c2de87653c248eef03957102f89234c19abf10
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:79d5795925dd513ab2e5710b72bfdc51e289cf67fe2f4508bda85647233446d9
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:79d5795925dd513ab2e5710b72bfdc51e289cf67fe2f4508bda85647233446d9
+      lastState: {}
+      name: machine-config-server
+      ready: true
+      restartCount: 3
+      started: true
+      state:
+        running:
+          startedAt: "2023-05-11T18:26:12Z"
+    hostIP: 10.80.80.6
+    phase: Running
+    podIP: 10.80.80.6
+    podIPs:
+    - ip: 10.80.80.6
+    qosClass: Burstable
+    startTime: "2023-05-04T21:41:15Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      openshift.io/scc: hostnetwork
+    creationTimestamp: "2023-05-04T21:41:15Z"
+    generateName: machine-config-server-
+    labels:
+      controller-revision-hash: 67cc947f59
+      k8s-app: machine-config-server
+      pod-template-generation: "1"
+    name: machine-config-server-d6zth
+    namespace: openshift-machine-config-operator
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DaemonSet
+      name: machine-config-server
+      uid: 9a5823f6-dab2-42d8-91a0-178609b11330
+    resourceVersion: "465633550"
+    uid: 5d0b943d-ab56-4dd7-b171-dca4c1ea2201
+  spec:
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchFields:
+            - key: metadata.name
+              operator: In
+              values:
+              - ocp4azu-sj2sl-master-2
+    containers:
+    - args:
+      - start
+      - --apiserver-url=https://api-int.ocp4azu.dirtrab.cl:6443
+      command:
+      - /usr/bin/machine-config-server
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:79d5795925dd513ab2e5710b72bfdc51e289cf67fe2f4508bda85647233446d9
+      imagePullPolicy: IfNotPresent
+      name: machine-config-server
+      resources:
+        requests:
+          cpu: 20m
+          memory: 50Mi
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000310000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: FallbackToLogsOnError
+      volumeMounts:
+      - mountPath: /etc/ssl/mcs
+        name: certs
+      - mountPath: /etc/mcs/bootstrap-token
+        name: node-bootstrap-token
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-ptwln
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    hostNetwork: true
+    nodeName: ocp4azu-sj2sl-master-2
+    nodeSelector:
+      node-role.kubernetes.io/master: ""
+    preemptionPolicy: PreemptLowerPriority
+    priority: 2000000000
+    priorityClassName: system-cluster-critical
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000310000
+      seLinuxOptions:
+        level: s0:c18,c2
+      supplementalGroups:
+      - 1000310000
+    serviceAccount: machine-config-server
+    serviceAccountName: machine-config-server
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/master
+      operator: Exists
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/etcd
+      operator: Exists
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/disk-pressure
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/memory-pressure
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/pid-pressure
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/unschedulable
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/network-unavailable
+      operator: Exists
+    volumes:
+    - name: node-bootstrap-token
+      secret:
+        defaultMode: 420
+        secretName: node-bootstrapper-token
+    - name: certs
+      secret:
+        defaultMode: 420
+        secretName: machine-config-server-tls
+    - name: kube-api-access-ptwln
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-04T21:41:15Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-11T18:26:13Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-11T18:26:13Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-04T21:41:15Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://848ce4cd70697632ad5b4c1b677b333c9c18faf85cfa182cd78eea47e6897498
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:79d5795925dd513ab2e5710b72bfdc51e289cf67fe2f4508bda85647233446d9
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:79d5795925dd513ab2e5710b72bfdc51e289cf67fe2f4508bda85647233446d9
+      lastState: {}
+      name: machine-config-server
+      ready: true
+      restartCount: 3
+      started: true
+      state:
+        running:
+          startedAt: "2023-05-11T18:26:13Z"
+    hostIP: 10.80.80.7
+    phase: Running
+    podIP: 10.80.80.7
+    podIPs:
+    - ip: 10.80.80.7
+    qosClass: Burstable
+    startTime: "2023-05-04T21:41:15Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      openshift.io/scc: hostnetwork
+    creationTimestamp: "2023-05-04T21:41:15Z"
+    generateName: machine-config-server-
+    labels:
+      controller-revision-hash: 67cc947f59
+      k8s-app: machine-config-server
+      pod-template-generation: "1"
+    name: machine-config-server-zwbhl
+    namespace: openshift-machine-config-operator
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DaemonSet
+      name: machine-config-server
+      uid: 9a5823f6-dab2-42d8-91a0-178609b11330
+    resourceVersion: "114617539"
+    uid: eeef1031-3bd7-4bb1-8f17-7118e13f7920
+  spec:
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchFields:
+            - key: metadata.name
+              operator: In
+              values:
+              - ocp4azu-sj2sl-master-1
+    containers:
+    - args:
+      - start
+      - --apiserver-url=https://api-int.ocp4azu.dirtrab.cl:6443
+      command:
+      - /usr/bin/machine-config-server
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:79d5795925dd513ab2e5710b72bfdc51e289cf67fe2f4508bda85647233446d9
+      imagePullPolicy: IfNotPresent
+      name: machine-config-server
+      resources:
+        requests:
+          cpu: 20m
+          memory: 50Mi
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000310000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: FallbackToLogsOnError
+      volumeMounts:
+      - mountPath: /etc/ssl/mcs
+        name: certs
+      - mountPath: /etc/mcs/bootstrap-token
+        name: node-bootstrap-token
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-bkggk
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    hostNetwork: true
+    nodeName: ocp4azu-sj2sl-master-1
+    nodeSelector:
+      node-role.kubernetes.io/master: ""
+    preemptionPolicy: PreemptLowerPriority
+    priority: 2000000000
+    priorityClassName: system-cluster-critical
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000310000
+      seLinuxOptions:
+        level: s0:c18,c2
+      supplementalGroups:
+      - 1000310000
+    serviceAccount: machine-config-server
+    serviceAccountName: machine-config-server
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/master
+      operator: Exists
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/etcd
+      operator: Exists
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/disk-pressure
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/memory-pressure
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/pid-pressure
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/unschedulable
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/network-unavailable
+      operator: Exists
+    volumes:
+    - name: node-bootstrap-token
+      secret:
+        defaultMode: 420
+        secretName: node-bootstrapper-token
+    - name: certs
+      secret:
+        defaultMode: 420
+        secretName: machine-config-server-tls
+    - name: kube-api-access-bkggk
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-04T21:41:15Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-11T18:26:19Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-11T18:26:19Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-04T21:41:15Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://dfb0a50af3e9c229c7903ff3c9dd2c316446e61ce429ca094125ef1f6ef57440
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:79d5795925dd513ab2e5710b72bfdc51e289cf67fe2f4508bda85647233446d9
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:79d5795925dd513ab2e5710b72bfdc51e289cf67fe2f4508bda85647233446d9
+      lastState: {}
+      name: machine-config-server
+      ready: true
+      restartCount: 3
+      started: true
+      state:
+        running:
+          startedAt: "2023-05-11T18:26:19Z"
+    hostIP: 10.80.80.8
+    phase: Running
+    podIP: 10.80.80.8
+    podIPs:
+    - ip: 10.80.80.8
+    qosClass: Burstable
+    startTime: "2023-05-04T21:41:15Z"
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

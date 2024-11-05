@@ -1,0 +1,61 @@
+apiVersion: v1
+items:
+- apiVersion: authorization.openshift.io/v1
+  kind: Role
+  metadata:
+    creationTimestamp: "2023-05-04T21:40:28Z"
+    name: system:openshift:controller:service-ca
+    namespace: openshift-service-ca
+    resourceVersion: "4531"
+    uid: 7d20b15a-f539-451c-a6e3-363929647a67
+  rules:
+  - apiGroups:
+    - security.openshift.io
+    attributeRestrictions: null
+    resourceNames:
+    - restricted
+    resources:
+    - securitycontextconstraints
+    verbs:
+    - use
+  - apiGroups:
+    - ""
+    attributeRestrictions: null
+    resources:
+    - events
+    verbs:
+    - create
+  - apiGroups:
+    - ""
+    attributeRestrictions: null
+    resources:
+    - configmaps
+    verbs:
+    - create
+    - get
+    - list
+    - update
+    - watch
+  - apiGroups:
+    - ""
+    attributeRestrictions: null
+    resources:
+    - pods
+    verbs:
+    - get
+    - list
+    - watch
+  - apiGroups:
+    - apps
+    attributeRestrictions: null
+    resources:
+    - deployments
+    - replicasets
+    verbs:
+    - get
+    - list
+    - watch
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

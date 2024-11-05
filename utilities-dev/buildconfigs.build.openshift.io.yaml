@@ -1,0 +1,267 @@
+apiVersion: v1
+items:
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftWebConsole
+      openshift.io/migration-registry: 172.30.149.66:5000
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-18T22:20:06Z"
+    generation: 1
+    labels:
+      app: indicadores-dev
+      migration.openshift.io/migrated-by-migmigration: 6d5b8e4e-6e6a-4858-a8cb-69094aa3de8a
+      migration.openshift.io/migrated-by-migplan: fc39346c-f9d4-4b3a-8404-0437309f995a
+      velero.io/backup-name: migration-7ff83-initial-fq7dv
+      velero.io/restore-name: migration-7ff83-final-jlm4p
+    name: indicadores-dev
+    namespace: utilities-dev
+    resourceVersion: "6313042"
+    uid: dd84cb4a-beaa-4f9f-b0d9-b948ccb908c6
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: indicadores-dev:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      git:
+        ref: master
+        uri: https://dirtrab.visualstudio.com/Utilitarios/_git/Indicadores
+      sourceSecret:
+        name: vsts
+      type: Git
+    strategy:
+      sourceStrategy:
+        env:
+        - name: DOTNET_STARTUP_PROJECT
+          value: Backend/Dt.BackEnd.WebApi/Dt.BackEnd.Indicadores.WebApi.csproj
+        - name: ASPNETCORE_ENVIRONMENT
+          value: Development
+        from:
+          kind: ImageStreamTag
+          name: dotnet:2.1
+          namespace: openshift
+      type: Source
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - imageChange:
+        lastTriggeredImageID: docker-registry.default.svc:5000/openshift/dotnet@sha256:c3aa4f3fa47b8f172a311aeebce45a091f6689dbf5aebf7e4c7ffa1c5c418a81
+      type: ImageChange
+    - type: ConfigChange
+    - generic:
+        secret: 576e75fa6e2760a0
+      type: Generic
+    - github:
+        secret: 4255fdff7e49b206
+      type: GitHub
+  status:
+    lastVersion: 0
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftWebConsole
+      openshift.io/migration-registry: 172.30.149.66:5000
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-18T22:20:06Z"
+    generation: 1
+    labels:
+      app: publico-dev
+      migration.openshift.io/migrated-by-migmigration: 6d5b8e4e-6e6a-4858-a8cb-69094aa3de8a
+      migration.openshift.io/migrated-by-migplan: fc39346c-f9d4-4b3a-8404-0437309f995a
+      velero.io/backup-name: migration-7ff83-initial-fq7dv
+      velero.io/restore-name: migration-7ff83-final-jlm4p
+    name: publico-dev
+    namespace: utilities-dev
+    resourceVersion: "6313044"
+    uid: ad1ff2e4-c697-4f9b-807f-16a0273bfd87
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: publico-dev:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      git:
+        ref: lre_test
+        uri: https://dirtrab.visualstudio.com/Publico/_git/PublicoCore
+      sourceSecret:
+        name: vsts
+      type: Git
+    strategy:
+      sourceStrategy:
+        env:
+        - name: DOTNET_STARTUP_PROJECT
+          value: Backend/Dt.Backend.WebApi/Dt.Backend.WebApi.csproj
+        - name: ASPNETCORE_ENVIRONMENT
+          value: Development
+        from:
+          kind: ImageStreamTag
+          name: dotnet:2.1
+          namespace: openshift
+      type: Source
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - imageChange:
+        lastTriggeredImageID: docker-registry.default.svc:5000/openshift/dotnet@sha256:c3aa4f3fa47b8f172a311aeebce45a091f6689dbf5aebf7e4c7ffa1c5c418a81
+      type: ImageChange
+    - type: ConfigChange
+    - generic:
+        secret: 650c8d2eca420100
+      type: Generic
+    - github:
+        secret: dc88ac993950f689
+      type: GitHub
+  status:
+    lastVersion: 0
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftWebConsole
+      openshift.io/migration-registry: 172.30.149.66:5000
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-18T22:20:06Z"
+    generation: 2
+    labels:
+      app: s2i-nestjs
+      migration.openshift.io/migrated-by-migmigration: 6d5b8e4e-6e6a-4858-a8cb-69094aa3de8a
+      migration.openshift.io/migrated-by-migplan: fc39346c-f9d4-4b3a-8404-0437309f995a
+      velero.io/backup-name: migration-7ff83-initial-fq7dv
+      velero.io/restore-name: migration-7ff83-final-jlm4p
+    name: s2i-nestjs
+    namespace: utilities-dev
+    resourceVersion: "95922902"
+    uid: f380c98b-0172-4921-96dc-c620d57b4e2d
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: s2i-nestjs:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      git:
+        ref: master
+        uri: https://dirtrab.visualstudio.com/Denuncia%20Posterior%20Termino%20Contrato/_git/serv001-denuncia
+      sourceSecret:
+        name: vsts
+      type: Git
+    strategy:
+      sourceStrategy:
+        from:
+          kind: ImageStreamTag
+          name: nodejs:10
+          namespace: openshift
+      type: Source
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - generic:
+        secret: 8bb6edde9c68e03c
+      type: Generic
+    - github:
+        secret: 24df01b8b851df42
+      type: GitHub
+    - imageChange:
+        lastTriggeredImageID: docker-registry.default.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+      type: ImageChange
+    - type: ConfigChange
+  status:
+    imageChangeTriggers:
+    - from:
+        name: nodejs:10
+        namespace: openshift
+      lastTriggerTime: "2023-09-01T01:10:32Z"
+      lastTriggeredImageID: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+    lastVersion: 1
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftWebConsole
+      openshift.io/migration-registry: 172.30.149.66:5000
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-18T22:20:06Z"
+    generation: 1
+    labels:
+      app: test-reg-civil
+      migration.openshift.io/migrated-by-migmigration: 6d5b8e4e-6e6a-4858-a8cb-69094aa3de8a
+      migration.openshift.io/migrated-by-migplan: fc39346c-f9d4-4b3a-8404-0437309f995a
+      velero.io/backup-name: migration-7ff83-initial-fq7dv
+      velero.io/restore-name: migration-7ff83-final-jlm4p
+    name: test-reg-civil
+    namespace: utilities-dev
+    resourceVersion: "6313053"
+    uid: c2aef360-5feb-4890-ba8d-23701a249d4c
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: test-reg-civil:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      git:
+        ref: master
+        uri: https://dirtrab.visualstudio.com/Utilitarios/_git/RegistroCivilProxy
+      sourceSecret:
+        name: vsts
+      type: Git
+    strategy:
+      sourceStrategy:
+        env:
+        - name: DOTNET_STARTUP_PROJECT
+          value: RegistroCivilProxyCore/Dt.Backend.ProxyApi.csproj
+        - name: ASPNETCORE_ENVIRONMENT
+          value: Production
+        from:
+          kind: ImageStreamTag
+          name: dotnet:2.1
+          namespace: openshift
+      type: Source
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - imageChange:
+        lastTriggeredImageID: docker-registry.default.svc:5000/openshift/dotnet@sha256:c3aa4f3fa47b8f172a311aeebce45a091f6689dbf5aebf7e4c7ffa1c5c418a81
+      type: ImageChange
+    - type: ConfigChange
+    - generic:
+        secret: a9aa162ef8653849
+      type: Generic
+    - github:
+        secret: b9d4392b2ff6180f
+      type: GitHub
+  status:
+    lastVersion: 0
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

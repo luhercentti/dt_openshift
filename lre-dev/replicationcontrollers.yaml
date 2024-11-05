@@ -1,0 +1,1114 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: ReplicationController
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/original-replicas: "1"
+      openshift.io/deployer-pod.completed-at: 2023-05-25 13:38:29 +0000 UTC
+      openshift.io/deployer-pod.created-at: 2023-05-25 13:37:37 +0000 UTC
+      openshift.io/deployer-pod.name: api-integracion-1-deploy
+      openshift.io/deployment-config.latest-version: "1"
+      openshift.io/deployment-config.name: api-integracion
+      openshift.io/deployment.phase: Complete
+      openshift.io/deployment.replicas: "1"
+      openshift.io/deployment.status-reason: config change
+      openshift.io/encoded-deployment-config: |
+        {"kind":"DeploymentConfig","apiVersion":"apps.openshift.io/v1","metadata":{"name":"api-integracion","namespace":"lre-dev","uid":"f2584896-7525-400e-b1e8-7e18d7a7fd30","resourceVersion":"11409109","generation":2,"creationTimestamp":"2023-05-25T13:37:37Z","labels":{"app":"api-integracion","migration.openshift.io/migrated-by-migmigration":"c3ea9ecb-e90b-490b-b3d5-a4a3ca470138","migration.openshift.io/migrated-by-migplan":"09dc99a3-20c0-4d89-88a2-c81cce3ef81b","velero.io/backup-name":"migration-f9156-initial-ff7x9","velero.io/restore-name":"migration-f9156-final-jccsn"},"annotations":{"openshift.io/backup-registry-hostname":"docker-registry.default.svc:5000","openshift.io/backup-server-version":"1.11","openshift.io/generated-by":"OpenShiftWebConsole","openshift.io/migration-registry":"172.30.164.193:5000","openshift.io/restore-registry-hostname":"image-registry.openshift-image-registry.svc:5000","openshift.io/restore-server-version":"1.23"},"managedFields":[{"manager":"openshift-controller-manager","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-05-25T13:37:37Z","fieldsType":"FieldsV1","fieldsV1":{"f:spec":{"f:triggers":{}}}},{"manager":"openshift-controller-manager","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-05-25T13:37:37Z","fieldsType":"FieldsV1","fieldsV1":{"f:status":{"f:details":{".":{},"f:causes":{},"f:message":{}},"f:latestVersion":{}}},"subresource":"status"},{"manager":"velero-server","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-05-25T13:37:37Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{".":{},"f:openshift.io/backup-registry-hostname":{},"f:openshift.io/backup-server-version":{},"f:openshift.io/generated-by":{},"f:openshift.io/migration-registry":{},"f:openshift.io/restore-registry-hostname":{},"f:openshift.io/restore-server-version":{}},"f:labels":{".":{},"f:app":{},"f:migration.openshift.io/migrated-by-migmigration":{},"f:migration.openshift.io/migrated-by-migplan":{},"f:velero.io/backup-name":{},"f:velero.io/restore-name":{}}},"f:spec":{"f:replicas":{},"f:selector":{".":{},"f:deploymentconfig":{}},"f:strategy":{"f:activeDeadlineSeconds":{},"f:rollingParams":{".":{},"f:intervalSeconds":{},"f:maxSurge":{},"f:maxUnavailable":{},"f:timeoutSeconds":{},"f:updatePeriodSeconds":{}},"f:type":{}},"f:template":{".":{},"f:metadata":{".":{},"f:creationTimestamp":{},"f:labels":{".":{},"f:app":{},"f:deploymentconfig":{}}},"f:spec":{".":{},"f:containers":{".":{},"k:{\"name\":\"api-integracion\"}":{".":{},"f:env":{".":{},"k:{\"name\":\"CorsConfig\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"TZ\"}":{".":{},"f:name":{},"f:value":{}}},"f:image":{},"f:imagePullPolicy":{},"f:name":{},"f:ports":{".":{},"k:{\"containerPort\":8080,\"protocol\":\"TCP\"}":{".":{},"f:containerPort":{},"f:protocol":{}}},"f:resources":{".":{},"f:limits":{".":{},"f:cpu":{},"f:memory":{}},"f:requests":{".":{},"f:cpu":{},"f:memory":{}}},"f:terminationMessagePath":{},"f:terminationMessagePolicy":{}}},"f:dnsPolicy":{},"f:restartPolicy":{},"f:schedulerName":{},"f:securityContext":{},"f:terminationGracePeriodSeconds":{}}}}}}]},"spec":{"strategy":{"type":"Rolling","rollingParams":{"updatePeriodSeconds":1,"intervalSeconds":1,"timeoutSeconds":600,"maxUnavailable":"25%","maxSurge":"25%"},"resources":{},"activeDeadlineSeconds":21600},"triggers":[{"type":"ImageChange","imageChangeParams":{"automatic":true,"containerNames":["api-integracion"],"from":{"kind":"ImageStreamTag","namespace":"lre-dev","name":"api-integracion:latest"},"lastTriggeredImage":"image-registry.openshift-image-registry.svc:5000/lre-dev/api-integracion@sha256:e14172b1dcdd9faf01a0b5c2517f11720ad695cc3faabdb4f16d847135d411c0"}},{"type":"ConfigChange"}],"replicas":1,"revisionHistoryLimit":10,"test":false,"selector":{"deploymentconfig":"api-integracion"},"template":{"metadata":{"creationTimestamp":null,"labels":{"app":"api-integracion","deploymentconfig":"api-integracion"}},"spec":{"containers":[{"name":"api-integracion","image":"image-registry.openshift-image-registry.svc:5000/lre-dev/api-integracion@sha256:e14172b1dcdd9faf01a0b5c2517f11720ad695cc3faabdb4f16d847135d411c0","ports":[{"containerPort":8080,"protocol":"TCP"}],"env":[{"name":"TZ","value":"America/Santiago"},{"name":"CorsConfig","value":"{\"PolicyOrigin\": \"*\"}"}],"resources":{"limits":{"cpu":"500m","memory":"600Mi"},"requests":{"cpu":"200m","memory":"100Mi"}},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File","imagePullPolicy":"Always"}],"restartPolicy":"Always","terminationGracePeriodSeconds":30,"dnsPolicy":"ClusterFirst","securityContext":{},"schedulerName":"default-scheduler"}}},"status":{"latestVersion":1,"observedGeneration":0,"replicas":0,"updatedReplicas":0,"availableReplicas":0,"unavailableReplicas":0,"details":{"message":"config change","causes":[{"type":"ConfigChange"}]}}}
+    creationTimestamp: "2023-05-25T13:37:37Z"
+    generation: 3
+    labels:
+      app: api-integracion
+      migration.openshift.io/migrated-by-migmigration: c3ea9ecb-e90b-490b-b3d5-a4a3ca470138
+      migration.openshift.io/migrated-by-migplan: 09dc99a3-20c0-4d89-88a2-c81cce3ef81b
+      openshift.io/deployment-config.name: api-integracion
+      velero.io/backup-name: migration-f9156-initial-ff7x9
+      velero.io/restore-name: migration-f9156-final-jccsn
+    name: api-integracion-1
+    namespace: lre-dev
+    ownerReferences:
+    - apiVersion: apps.openshift.io/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DeploymentConfig
+      name: api-integracion
+      uid: f2584896-7525-400e-b1e8-7e18d7a7fd30
+    resourceVersion: "19644886"
+    uid: edeb752f-d3b4-45d8-a87a-338deefcc270
+  spec:
+    replicas: 0
+    selector:
+      deployment: api-integracion-1
+      deploymentconfig: api-integracion
+    template:
+      metadata:
+        annotations:
+          openshift.io/deployment-config.latest-version: "1"
+          openshift.io/deployment-config.name: api-integracion
+          openshift.io/deployment.name: api-integracion-1
+        creationTimestamp: null
+        labels:
+          app: api-integracion
+          deployment: api-integracion-1
+          deploymentconfig: api-integracion
+      spec:
+        containers:
+        - env:
+          - name: TZ
+            value: America/Santiago
+          - name: CorsConfig
+            value: '{"PolicyOrigin": "*"}'
+          image: image-registry.openshift-image-registry.svc:5000/lre-dev/api-integracion@sha256:e14172b1dcdd9faf01a0b5c2517f11720ad695cc3faabdb4f16d847135d411c0
+          imagePullPolicy: Always
+          name: api-integracion
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources:
+            limits:
+              cpu: 500m
+              memory: 600Mi
+            requests:
+              cpu: 200m
+              memory: 100Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    observedGeneration: 3
+    replicas: 0
+- apiVersion: v1
+  kind: ReplicationController
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/desired-replicas: "1"
+      openshift.io/deployer-pod.completed-at: 2023-06-04 07:44:31 +0000 UTC
+      openshift.io/deployer-pod.created-at: 2023-06-04 07:44:27 +0000 UTC
+      openshift.io/deployer-pod.name: api-integracion-2-deploy
+      openshift.io/deployment-config.latest-version: "2"
+      openshift.io/deployment-config.name: api-integracion
+      openshift.io/deployment.cancelled: "true"
+      openshift.io/deployment.phase: Failed
+      openshift.io/deployment.replicas: "0"
+      openshift.io/deployment.status-reason: newer deployment was found running
+      openshift.io/encoded-deployment-config: |
+        {"kind":"DeploymentConfig","apiVersion":"apps.openshift.io/v1","metadata":{"name":"api-integracion","namespace":"lre-dev","uid":"f2584896-7525-400e-b1e8-7e18d7a7fd30","resourceVersion":"19644614","generation":3,"creationTimestamp":"2023-05-25T13:37:37Z","labels":{"app":"api-integracion","migration.openshift.io/migrated-by-migmigration":"c3ea9ecb-e90b-490b-b3d5-a4a3ca470138","migration.openshift.io/migrated-by-migplan":"09dc99a3-20c0-4d89-88a2-c81cce3ef81b","velero.io/backup-name":"migration-f9156-initial-ff7x9","velero.io/restore-name":"migration-f9156-final-jccsn"},"annotations":{"openshift.io/backup-registry-hostname":"docker-registry.default.svc:5000","openshift.io/backup-server-version":"1.11","openshift.io/generated-by":"OpenShiftWebConsole","openshift.io/migration-registry":"172.30.164.193:5000","openshift.io/restore-registry-hostname":"image-registry.openshift-image-registry.svc:5000","openshift.io/restore-server-version":"1.23"},"managedFields":[{"manager":"velero-server","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-05-25T13:37:37Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{".":{},"f:openshift.io/backup-registry-hostname":{},"f:openshift.io/backup-server-version":{},"f:openshift.io/generated-by":{},"f:openshift.io/migration-registry":{},"f:openshift.io/restore-registry-hostname":{},"f:openshift.io/restore-server-version":{}},"f:labels":{".":{},"f:app":{},"f:migration.openshift.io/migrated-by-migmigration":{},"f:migration.openshift.io/migrated-by-migplan":{},"f:velero.io/backup-name":{},"f:velero.io/restore-name":{}}},"f:spec":{"f:replicas":{},"f:selector":{".":{},"f:deploymentconfig":{}},"f:strategy":{"f:activeDeadlineSeconds":{},"f:rollingParams":{".":{},"f:intervalSeconds":{},"f:maxSurge":{},"f:maxUnavailable":{},"f:timeoutSeconds":{},"f:updatePeriodSeconds":{}},"f:type":{}},"f:template":{".":{},"f:metadata":{".":{},"f:creationTimestamp":{},"f:labels":{".":{},"f:app":{},"f:deploymentconfig":{}}},"f:spec":{".":{},"f:containers":{".":{},"k:{\"name\":\"api-integracion\"}":{".":{},"f:env":{".":{},"k:{\"name\":\"CorsConfig\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"TZ\"}":{".":{},"f:name":{},"f:value":{}}},"f:imagePullPolicy":{},"f:name":{},"f:ports":{".":{},"k:{\"containerPort\":8080,\"protocol\":\"TCP\"}":{".":{},"f:containerPort":{},"f:protocol":{}}},"f:resources":{".":{},"f:limits":{".":{},"f:cpu":{},"f:memory":{}},"f:requests":{".":{},"f:cpu":{},"f:memory":{}}},"f:terminationMessagePath":{},"f:terminationMessagePolicy":{}}},"f:dnsPolicy":{},"f:restartPolicy":{},"f:schedulerName":{},"f:securityContext":{},"f:terminationGracePeriodSeconds":{}}}}}},{"manager":"openshift-controller-manager","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-06-04T02:15:13Z","fieldsType":"FieldsV1","fieldsV1":{"f:status":{"f:availableReplicas":{},"f:conditions":{".":{},"k:{\"type\":\"Available\"}":{".":{},"f:lastTransitionTime":{},"f:lastUpdateTime":{},"f:message":{},"f:status":{},"f:type":{}},"k:{\"type\":\"Progressing\"}":{".":{},"f:lastTransitionTime":{},"f:lastUpdateTime":{},"f:message":{},"f:reason":{},"f:status":{},"f:type":{}}},"f:details":{".":{},"f:causes":{},"f:message":{}},"f:latestVersion":{},"f:observedGeneration":{},"f:readyReplicas":{},"f:replicas":{},"f:unavailableReplicas":{},"f:updatedReplicas":{}}},"subresource":"status"},{"manager":"openshift-controller-manager","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-06-04T07:44:27Z","fieldsType":"FieldsV1","fieldsV1":{"f:spec":{"f:template":{"f:spec":{"f:containers":{"k:{\"name\":\"api-integracion\"}":{"f:image":{}}}}},"f:triggers":{}}}}]},"spec":{"strategy":{"type":"Rolling","rollingParams":{"updatePeriodSeconds":1,"intervalSeconds":1,"timeoutSeconds":600,"maxUnavailable":"25%","maxSurge":"25%"},"resources":{},"activeDeadlineSeconds":21600},"triggers":[{"type":"ImageChange","imageChangeParams":{"automatic":true,"containerNames":["api-integracion"],"from":{"kind":"ImageStreamTag","namespace":"lre-dev","name":"api-integracion:latest"},"lastTriggeredImage":"image-registry.openshift-image-registry.svc:5000/lre-dev/api-integracion@sha256:0da31e1c3ad50e3477dcda527a87fe1e6c2d5ab4dbbcbea55b65359bfee303ab"}},{"type":"ConfigChange"}],"replicas":1,"revisionHistoryLimit":10,"test":false,"selector":{"deploymentconfig":"api-integracion"},"template":{"metadata":{"creationTimestamp":null,"labels":{"app":"api-integracion","deploymentconfig":"api-integracion"}},"spec":{"containers":[{"name":"api-integracion","image":"image-registry.openshift-image-registry.svc:5000/lre-dev/api-integracion@sha256:0da31e1c3ad50e3477dcda527a87fe1e6c2d5ab4dbbcbea55b65359bfee303ab","ports":[{"containerPort":8080,"protocol":"TCP"}],"env":[{"name":"TZ","value":"America/Santiago"},{"name":"CorsConfig","value":"{\"PolicyOrigin\": \"*\"}"}],"resources":{"limits":{"cpu":"500m","memory":"600Mi"},"requests":{"cpu":"200m","memory":"100Mi"}},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File","imagePullPolicy":"Always"}],"restartPolicy":"Always","terminationGracePeriodSeconds":30,"dnsPolicy":"ClusterFirst","securityContext":{},"schedulerName":"default-scheduler"}}},"status":{"latestVersion":2,"observedGeneration":2,"replicas":1,"updatedReplicas":1,"availableReplicas":1,"unavailableReplicas":0,"details":{"message":"image change","causes":[{"type":"ImageChange","imageTrigger":{"from":{"kind":"DockerImage","name":"image-registry.openshift-image-registry.svc:5000/lre-dev/api-integracion@sha256:0da31e1c3ad50e3477dcda527a87fe1e6c2d5ab4dbbcbea55b65359bfee303ab"}}}]},"conditions":[{"type":"Progressing","status":"True","lastUpdateTime":"2023-05-25T13:38:36Z","lastTransitionTime":"2023-05-25T13:38:36Z","reason":"NewReplicationControllerAvailable","message":"replication controller \"api-integracion-1\" successfully rolled out"},{"type":"Available","status":"True","lastUpdateTime":"2023-06-04T02:15:13Z","lastTransitionTime":"2023-06-04T02:15:13Z","message":"Deployment config has minimum availability."}],"readyReplicas":1}}
+    creationTimestamp: "2023-06-04T07:44:27Z"
+    generation: 1
+    labels:
+      app: api-integracion
+      migration.openshift.io/migrated-by-migmigration: c3ea9ecb-e90b-490b-b3d5-a4a3ca470138
+      migration.openshift.io/migrated-by-migplan: 09dc99a3-20c0-4d89-88a2-c81cce3ef81b
+      openshift.io/deployment-config.name: api-integracion
+      velero.io/backup-name: migration-f9156-initial-ff7x9
+      velero.io/restore-name: migration-f9156-final-jccsn
+    name: api-integracion-2
+    namespace: lre-dev
+    ownerReferences:
+    - apiVersion: apps.openshift.io/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DeploymentConfig
+      name: api-integracion
+      uid: f2584896-7525-400e-b1e8-7e18d7a7fd30
+    resourceVersion: "19644723"
+    uid: 8c97657a-d075-4290-ac62-520eef2321a0
+  spec:
+    replicas: 0
+    selector:
+      deployment: api-integracion-2
+      deploymentconfig: api-integracion
+    template:
+      metadata:
+        annotations:
+          openshift.io/deployment-config.latest-version: "2"
+          openshift.io/deployment-config.name: api-integracion
+          openshift.io/deployment.name: api-integracion-2
+        creationTimestamp: null
+        labels:
+          app: api-integracion
+          deployment: api-integracion-2
+          deploymentconfig: api-integracion
+      spec:
+        containers:
+        - env:
+          - name: TZ
+            value: America/Santiago
+          - name: CorsConfig
+            value: '{"PolicyOrigin": "*"}'
+          image: image-registry.openshift-image-registry.svc:5000/lre-dev/api-integracion@sha256:0da31e1c3ad50e3477dcda527a87fe1e6c2d5ab4dbbcbea55b65359bfee303ab
+          imagePullPolicy: Always
+          name: api-integracion
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources:
+            limits:
+              cpu: 500m
+              memory: 600Mi
+            requests:
+              cpu: 200m
+              memory: 100Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    observedGeneration: 1
+    replicas: 0
+- apiVersion: v1
+  kind: ReplicationController
+  metadata:
+    annotations:
+      openshift.io/deployer-pod.completed-at: 2023-06-04 07:44:42 +0000 UTC
+      openshift.io/deployer-pod.created-at: 2023-06-04 07:44:32 +0000 UTC
+      openshift.io/deployer-pod.name: api-integracion-3-deploy
+      openshift.io/deployment-config.latest-version: "3"
+      openshift.io/deployment-config.name: api-integracion
+      openshift.io/deployment.phase: Complete
+      openshift.io/deployment.replicas: ""
+      openshift.io/deployment.status-reason: image change
+      openshift.io/encoded-deployment-config: |
+        {"kind":"DeploymentConfig","apiVersion":"apps.openshift.io/v1","metadata":{"name":"api-integracion","namespace":"lre-dev","uid":"f2584896-7525-400e-b1e8-7e18d7a7fd30","resourceVersion":"19644647","generation":5,"creationTimestamp":"2023-05-25T13:37:37Z","labels":{"app":"api-integracion","migration.openshift.io/migrated-by-migmigration":"c3ea9ecb-e90b-490b-b3d5-a4a3ca470138","migration.openshift.io/migrated-by-migplan":"09dc99a3-20c0-4d89-88a2-c81cce3ef81b","velero.io/backup-name":"migration-f9156-initial-ff7x9","velero.io/restore-name":"migration-f9156-final-jccsn"},"annotations":{"openshift.io/backup-registry-hostname":"docker-registry.default.svc:5000","openshift.io/backup-server-version":"1.11","openshift.io/generated-by":"OpenShiftWebConsole","openshift.io/migration-registry":"172.30.164.193:5000","openshift.io/restore-registry-hostname":"image-registry.openshift-image-registry.svc:5000","openshift.io/restore-server-version":"1.23"},"managedFields":[{"manager":"velero-server","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-05-25T13:37:37Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{".":{},"f:openshift.io/backup-registry-hostname":{},"f:openshift.io/backup-server-version":{},"f:openshift.io/generated-by":{},"f:openshift.io/migration-registry":{},"f:openshift.io/restore-registry-hostname":{},"f:openshift.io/restore-server-version":{}},"f:labels":{".":{},"f:app":{},"f:migration.openshift.io/migrated-by-migmigration":{},"f:migration.openshift.io/migrated-by-migplan":{},"f:velero.io/backup-name":{},"f:velero.io/restore-name":{}}},"f:spec":{"f:replicas":{},"f:selector":{".":{},"f:deploymentconfig":{}},"f:strategy":{"f:activeDeadlineSeconds":{},"f:rollingParams":{".":{},"f:intervalSeconds":{},"f:maxSurge":{},"f:maxUnavailable":{},"f:timeoutSeconds":{},"f:updatePeriodSeconds":{}},"f:type":{}},"f:template":{".":{},"f:metadata":{".":{},"f:creationTimestamp":{},"f:labels":{".":{},"f:app":{},"f:deploymentconfig":{}}},"f:spec":{".":{},"f:containers":{".":{},"k:{\"name\":\"api-integracion\"}":{".":{},"f:env":{".":{},"k:{\"name\":\"CorsConfig\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"TZ\"}":{".":{},"f:name":{},"f:value":{}}},"f:imagePullPolicy":{},"f:name":{},"f:ports":{".":{},"k:{\"containerPort\":8080,\"protocol\":\"TCP\"}":{".":{},"f:containerPort":{},"f:protocol":{}}},"f:resources":{".":{},"f:limits":{".":{},"f:cpu":{},"f:memory":{}},"f:requests":{".":{},"f:cpu":{},"f:memory":{}}},"f:terminationMessagePath":{},"f:terminationMessagePolicy":{}}},"f:dnsPolicy":{},"f:restartPolicy":{},"f:schedulerName":{},"f:securityContext":{},"f:terminationGracePeriodSeconds":{}}}}}},{"manager":"openshift-controller-manager","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-06-04T07:44:27Z","fieldsType":"FieldsV1","fieldsV1":{"f:spec":{"f:template":{"f:spec":{"f:containers":{"k:{\"name\":\"api-integracion\"}":{"f:image":{}}}}},"f:triggers":{}}}},{"manager":"openshift-controller-manager","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-06-04T07:44:27Z","fieldsType":"FieldsV1","fieldsV1":{"f:status":{"f:availableReplicas":{},"f:conditions":{".":{},"k:{\"type\":\"Available\"}":{".":{},"f:lastTransitionTime":{},"f:lastUpdateTime":{},"f:message":{},"f:status":{},"f:type":{}},"k:{\"type\":\"Progressing\"}":{".":{},"f:lastTransitionTime":{},"f:lastUpdateTime":{},"f:message":{},"f:status":{},"f:type":{}}},"f:details":{".":{},"f:causes":{},"f:message":{}},"f:latestVersion":{},"f:observedGeneration":{},"f:readyReplicas":{},"f:replicas":{},"f:unavailableReplicas":{},"f:updatedReplicas":{}}},"subresource":"status"}]},"spec":{"strategy":{"type":"Rolling","rollingParams":{"updatePeriodSeconds":1,"intervalSeconds":1,"timeoutSeconds":600,"maxUnavailable":"25%","maxSurge":"25%"},"resources":{},"activeDeadlineSeconds":21600},"triggers":[{"type":"ImageChange","imageChangeParams":{"automatic":true,"containerNames":["api-integracion"],"from":{"kind":"ImageStreamTag","namespace":"lre-dev","name":"api-integracion:latest"},"lastTriggeredImage":"image-registry.openshift-image-registry.svc:5000/lre-dev/api-integracion@sha256:e14172b1dcdd9faf01a0b5c2517f11720ad695cc3faabdb4f16d847135d411c0"}},{"type":"ConfigChange"}],"replicas":1,"revisionHistoryLimit":10,"test":false,"selector":{"deploymentconfig":"api-integracion"},"template":{"metadata":{"creationTimestamp":null,"labels":{"app":"api-integracion","deploymentconfig":"api-integracion"}},"spec":{"containers":[{"name":"api-integracion","image":"image-registry.openshift-image-registry.svc:5000/lre-dev/api-integracion@sha256:e14172b1dcdd9faf01a0b5c2517f11720ad695cc3faabdb4f16d847135d411c0","ports":[{"containerPort":8080,"protocol":"TCP"}],"env":[{"name":"TZ","value":"America/Santiago"},{"name":"CorsConfig","value":"{\"PolicyOrigin\": \"*\"}"}],"resources":{"limits":{"cpu":"500m","memory":"600Mi"},"requests":{"cpu":"200m","memory":"100Mi"}},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File","imagePullPolicy":"Always"}],"restartPolicy":"Always","terminationGracePeriodSeconds":30,"dnsPolicy":"ClusterFirst","securityContext":{},"schedulerName":"default-scheduler"}}},"status":{"latestVersion":3,"observedGeneration":3,"replicas":1,"updatedReplicas":0,"availableReplicas":1,"unavailableReplicas":0,"details":{"message":"image change","causes":[{"type":"ImageChange","imageTrigger":{"from":{"kind":"DockerImage","name":"image-registry.openshift-image-registry.svc:5000/lre-dev/api-integracion@sha256:673e3c35b0581e5a67fb486497bce45dc0a6a4035f166a32f24748611367bb5f"}}}]},"conditions":[{"type":"Available","status":"True","lastUpdateTime":"2023-06-04T02:15:13Z","lastTransitionTime":"2023-06-04T02:15:13Z","message":"Deployment config has minimum availability."},{"type":"Progressing","status":"Unknown","lastUpdateTime":"2023-06-04T07:44:27Z","lastTransitionTime":"2023-06-04T07:44:27Z","message":"replication controller \"api-integracion-2\" is waiting for pod \"api-integracion-2-deploy\" to run"}],"readyReplicas":1}}
+    creationTimestamp: "2023-06-04T07:44:32Z"
+    generation: 2
+    labels:
+      app: api-integracion
+      migration.openshift.io/migrated-by-migmigration: c3ea9ecb-e90b-490b-b3d5-a4a3ca470138
+      migration.openshift.io/migrated-by-migplan: 09dc99a3-20c0-4d89-88a2-c81cce3ef81b
+      openshift.io/deployment-config.name: api-integracion
+      velero.io/backup-name: migration-f9156-initial-ff7x9
+      velero.io/restore-name: migration-f9156-final-jccsn
+    name: api-integracion-3
+    namespace: lre-dev
+    ownerReferences:
+    - apiVersion: apps.openshift.io/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DeploymentConfig
+      name: api-integracion
+      uid: f2584896-7525-400e-b1e8-7e18d7a7fd30
+    resourceVersion: "476624956"
+    uid: 42c71ec0-c712-4ff6-a0a5-67af3b4bde2e
+  spec:
+    replicas: 1
+    selector:
+      deployment: api-integracion-3
+      deploymentconfig: api-integracion
+    template:
+      metadata:
+        annotations:
+          openshift.io/deployment-config.latest-version: "3"
+          openshift.io/deployment-config.name: api-integracion
+          openshift.io/deployment.name: api-integracion-3
+        creationTimestamp: null
+        labels:
+          app: api-integracion
+          deployment: api-integracion-3
+          deploymentconfig: api-integracion
+      spec:
+        containers:
+        - env:
+          - name: TZ
+            value: America/Santiago
+          - name: CorsConfig
+            value: '{"PolicyOrigin": "*"}'
+          image: image-registry.openshift-image-registry.svc:5000/lre-dev/api-integracion@sha256:e14172b1dcdd9faf01a0b5c2517f11720ad695cc3faabdb4f16d847135d411c0
+          imagePullPolicy: Always
+          name: api-integracion
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources:
+            limits:
+              cpu: 500m
+              memory: 600Mi
+            requests:
+              cpu: 200m
+              memory: 100Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    availableReplicas: 1
+    fullyLabeledReplicas: 1
+    observedGeneration: 2
+    readyReplicas: 1
+    replicas: 1
+- apiVersion: v1
+  kind: ReplicationController
+  metadata:
+    annotations:
+      openshift.io/deployer-pod.completed-at: 2023-05-25 13:38:29 +0000 UTC
+      openshift.io/deployer-pod.created-at: 2023-05-25 13:37:38 +0000 UTC
+      openshift.io/deployer-pod.name: lre-front-1-deploy
+      openshift.io/deployment-config.latest-version: "1"
+      openshift.io/deployment-config.name: lre-front
+      openshift.io/deployment.phase: Complete
+      openshift.io/deployment.replicas: "1"
+      openshift.io/deployment.status-reason: config change
+      openshift.io/encoded-deployment-config: |
+        {"kind":"DeploymentConfig","apiVersion":"apps.openshift.io/v1","metadata":{"name":"lre-front","namespace":"lre-dev","uid":"edb720d5-b70c-4b1c-9a7e-2bae40a71c13","resourceVersion":"11409167","generation":2,"creationTimestamp":"2023-05-25T13:37:37Z","labels":{"app":"lre-front","migration.openshift.io/migrated-by-migmigration":"c3ea9ecb-e90b-490b-b3d5-a4a3ca470138","migration.openshift.io/migrated-by-migplan":"09dc99a3-20c0-4d89-88a2-c81cce3ef81b","velero.io/backup-name":"migration-f9156-initial-ff7x9","velero.io/restore-name":"migration-f9156-final-jccsn"},"annotations":{"openshift.io/backup-registry-hostname":"docker-registry.default.svc:5000","openshift.io/backup-server-version":"1.11","openshift.io/generated-by":"OpenShiftWebConsole","openshift.io/migration-registry":"172.30.164.193:5000","openshift.io/restore-registry-hostname":"image-registry.openshift-image-registry.svc:5000","openshift.io/restore-server-version":"1.23"},"managedFields":[{"manager":"velero-server","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-05-25T13:37:37Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{".":{},"f:openshift.io/backup-registry-hostname":{},"f:openshift.io/backup-server-version":{},"f:openshift.io/generated-by":{},"f:openshift.io/migration-registry":{},"f:openshift.io/restore-registry-hostname":{},"f:openshift.io/restore-server-version":{}},"f:labels":{".":{},"f:app":{},"f:migration.openshift.io/migrated-by-migmigration":{},"f:migration.openshift.io/migrated-by-migplan":{},"f:velero.io/backup-name":{},"f:velero.io/restore-name":{}}},"f:spec":{"f:replicas":{},"f:selector":{".":{},"f:deploymentconfig":{}},"f:strategy":{"f:activeDeadlineSeconds":{},"f:recreateParams":{".":{},"f:timeoutSeconds":{}},"f:type":{}},"f:template":{".":{},"f:metadata":{".":{},"f:creationTimestamp":{},"f:labels":{".":{},"f:app":{},"f:deploymentconfig":{}}},"f:spec":{".":{},"f:containers":{".":{},"k:{\"name\":\"lre-front\"}":{".":{},"f:env":{".":{},"k:{\"name\":\"REACT_APP_CARGAR_DECLARACIONES_TEST\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_DESCARGAR_CSV\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_DESCARGAR_DECLARACIONES\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_LRE_URL_GUARDAR_TERMINO_CONDICIONES\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_LRE_URL_METADATA\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_OBTENER_DECLARACIONES\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_OBTENER_OBSERVACIONES\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_PARENT_DOMAIN\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_PDF_INSTRUCCIONES\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_PDF_POLITICAS_PRIVACIDAD\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_PDF_SUPLEMENTO_LRE\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_SEGUNDOS_DE_RECARGA\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_VALIDAR_EMPLEADOR\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_VOLVER_REDIRECT_EMPLEADOR\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"TZ\"}":{".":{},"f:name":{},"f:value":{}}},"f:image":{},"f:imagePullPolicy":{},"f:name":{},"f:ports":{".":{},"k:{\"containerPort\":3000,\"protocol\":\"TCP\"}":{".":{},"f:containerPort":{},"f:protocol":{}}},"f:resources":{".":{},"f:limits":{".":{},"f:cpu":{},"f:memory":{}},"f:requests":{".":{},"f:cpu":{},"f:memory":{}}},"f:terminationMessagePath":{},"f:terminationMessagePolicy":{}}},"f:dnsPolicy":{},"f:restartPolicy":{},"f:schedulerName":{},"f:securityContext":{},"f:terminationGracePeriodSeconds":{}}}}}},{"manager":"openshift-controller-manager","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-05-25T13:37:38Z","fieldsType":"FieldsV1","fieldsV1":{"f:spec":{"f:triggers":{}}}},{"manager":"openshift-controller-manager","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-05-25T13:37:38Z","fieldsType":"FieldsV1","fieldsV1":{"f:status":{"f:conditions":{".":{},"k:{\"type\":\"Available\"}":{".":{},"f:lastTransitionTime":{},"f:lastUpdateTime":{},"f:message":{},"f:status":{},"f:type":{}}},"f:details":{".":{},"f:causes":{},"f:message":{}},"f:latestVersion":{},"f:observedGeneration":{}}},"subresource":"status"}]},"spec":{"strategy":{"type":"Recreate","recreateParams":{"timeoutSeconds":600},"resources":{},"activeDeadlineSeconds":21600},"triggers":[{"type":"ImageChange","imageChangeParams":{"automatic":true,"containerNames":["lre-front"],"from":{"kind":"ImageStreamTag","namespace":"lre-dev","name":"lre-front:latest"},"lastTriggeredImage":"image-registry.openshift-image-registry.svc:5000/lre-dev/lre-front@sha256:a49eff66df5e36f15840a29ce6344b28e744fc4650438d51f60d6ab9cf89b360"}},{"type":"ConfigChange"}],"replicas":1,"revisionHistoryLimit":10,"test":false,"selector":{"deploymentconfig":"lre-front"},"template":{"metadata":{"creationTimestamp":null,"labels":{"app":"lre-front","deploymentconfig":"lre-front"}},"spec":{"containers":[{"name":"lre-front","image":"image-registry.openshift-image-registry.svc:5000/lre-dev/lre-front@sha256:a49eff66df5e36f15840a29ce6344b28e744fc4650438d51f60d6ab9cf89b360","ports":[{"containerPort":3000,"protocol":"TCP"}],"env":[{"name":"TZ","value":"America/Santiago"},{"name":"REACT_APP_VOLVER_REDIRECT_EMPLEADOR","value":"https://lre-services-live-dev.api.dirtrab.cl/fiscalizacion/remuneracion"},{"name":"REACT_APP_PARENT_DOMAIN","value":"*"},{"name":"REACT_APP_OBTENER_DECLARACIONES","value":"https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/declaracion/datosDeclaraciones/empleador/"},{"name":"REACT_APP_OBTENER_OBSERVACIONES","value":"https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/declaracion/datosDeclaraciones/observaciones/"},{"name":"REACT_APP_CARGAR_DECLARACIONES_TEST","value":"https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/declaracion/cargaDeclaracion"},{"name":"REACT_APP_DESCARGAR_CSV","value":"https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/declaracion/descargaDeclaracion/"},{"name":"REACT_APP_DESCARGAR_DECLARACIONES","value":"https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/declaracion/descargaDeclaracion/plantilla"},{"name":"REACT_APP_VALIDAR_EMPLEADOR","value":"https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/validaEmpleador/empleador/"},{"name":"REACT_APP_LRE_URL_METADATA","value":"https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/bff/metadata/empleador"},{"name":"REACT_APP_LRE_URL_GUARDAR_TERMINO_CONDICIONES","value":"https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/empleador/terminoCondiciones"},{"name":"REACT_APP_PDF_INSTRUCCIONES","value":"https://static-content-dev.api.dirtrab.cl/dt-docs/lre/lre_instrucciones_de_carga.pdf"},{"name":"REACT_APP_PDF_POLITICAS_PRIVACIDAD","value":"https://static-content-dev.api.dirtrab.cl/dt-docs/lre/lre_politicas_proteccion_datos_personales.pdf"},{"name":"REACT_APP_PDF_SUPLEMENTO_LRE","value":"https://static-content-dev.api.dirtrab.cl/dt-docs/lre/lre_suplemento.pdf"},{"name":"REACT_APP_SEGUNDOS_DE_RECARGA","value":"20"}],"resources":{"limits":{"cpu":"500m","memory":"600Mi"},"requests":{"cpu":"200m","memory":"100Mi"}},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File","imagePullPolicy":"Always"}],"restartPolicy":"Always","terminationGracePeriodSeconds":30,"dnsPolicy":"ClusterFirst","securityContext":{},"schedulerName":"default-scheduler"}}},"status":{"latestVersion":1,"observedGeneration":1,"replicas":0,"updatedReplicas":0,"availableReplicas":0,"unavailableReplicas":0,"details":{"message":"config change","causes":[{"type":"ConfigChange"}]},"conditions":[{"type":"Available","status":"False","lastUpdateTime":"2023-05-25T13:37:37Z","lastTransitionTime":"2023-05-25T13:37:37Z","message":"Deployment config does not have minimum availability."}]}}
+    creationTimestamp: "2023-05-25T13:37:38Z"
+    generation: 3
+    labels:
+      app: lre-front
+      migration.openshift.io/migrated-by-migmigration: c3ea9ecb-e90b-490b-b3d5-a4a3ca470138
+      migration.openshift.io/migrated-by-migplan: 09dc99a3-20c0-4d89-88a2-c81cce3ef81b
+      openshift.io/deployment-config.name: lre-front
+      velero.io/backup-name: migration-f9156-initial-ff7x9
+      velero.io/restore-name: migration-f9156-final-jccsn
+    name: lre-front-1
+    namespace: lre-dev
+    ownerReferences:
+    - apiVersion: apps.openshift.io/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DeploymentConfig
+      name: lre-front
+      uid: edb720d5-b70c-4b1c-9a7e-2bae40a71c13
+    resourceVersion: "19644923"
+    uid: fec99b51-b0b4-4d7b-a333-401fa5e043ad
+  spec:
+    replicas: 0
+    selector:
+      deployment: lre-front-1
+      deploymentconfig: lre-front
+    template:
+      metadata:
+        annotations:
+          openshift.io/deployment-config.latest-version: "1"
+          openshift.io/deployment-config.name: lre-front
+          openshift.io/deployment.name: lre-front-1
+        creationTimestamp: null
+        labels:
+          app: lre-front
+          deployment: lre-front-1
+          deploymentconfig: lre-front
+      spec:
+        containers:
+        - env:
+          - name: TZ
+            value: America/Santiago
+          - name: REACT_APP_VOLVER_REDIRECT_EMPLEADOR
+            value: https://lre-services-live-dev.api.dirtrab.cl/fiscalizacion/remuneracion
+          - name: REACT_APP_PARENT_DOMAIN
+            value: '*'
+          - name: REACT_APP_OBTENER_DECLARACIONES
+            value: https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/declaracion/datosDeclaraciones/empleador/
+          - name: REACT_APP_OBTENER_OBSERVACIONES
+            value: https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/declaracion/datosDeclaraciones/observaciones/
+          - name: REACT_APP_CARGAR_DECLARACIONES_TEST
+            value: https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/declaracion/cargaDeclaracion
+          - name: REACT_APP_DESCARGAR_CSV
+            value: https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/declaracion/descargaDeclaracion/
+          - name: REACT_APP_DESCARGAR_DECLARACIONES
+            value: https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/declaracion/descargaDeclaracion/plantilla
+          - name: REACT_APP_VALIDAR_EMPLEADOR
+            value: https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/validaEmpleador/empleador/
+          - name: REACT_APP_LRE_URL_METADATA
+            value: https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/bff/metadata/empleador
+          - name: REACT_APP_LRE_URL_GUARDAR_TERMINO_CONDICIONES
+            value: https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/empleador/terminoCondiciones
+          - name: REACT_APP_PDF_INSTRUCCIONES
+            value: https://static-content-dev.api.dirtrab.cl/dt-docs/lre/lre_instrucciones_de_carga.pdf
+          - name: REACT_APP_PDF_POLITICAS_PRIVACIDAD
+            value: https://static-content-dev.api.dirtrab.cl/dt-docs/lre/lre_politicas_proteccion_datos_personales.pdf
+          - name: REACT_APP_PDF_SUPLEMENTO_LRE
+            value: https://static-content-dev.api.dirtrab.cl/dt-docs/lre/lre_suplemento.pdf
+          - name: REACT_APP_SEGUNDOS_DE_RECARGA
+            value: "20"
+          image: image-registry.openshift-image-registry.svc:5000/lre-dev/lre-front@sha256:a49eff66df5e36f15840a29ce6344b28e744fc4650438d51f60d6ab9cf89b360
+          imagePullPolicy: Always
+          name: lre-front
+          ports:
+          - containerPort: 3000
+            protocol: TCP
+          resources:
+            limits:
+              cpu: 500m
+              memory: 600Mi
+            requests:
+              cpu: 200m
+              memory: 100Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    observedGeneration: 3
+    replicas: 0
+- apiVersion: v1
+  kind: ReplicationController
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/desired-replicas: "1"
+      openshift.io/deployer-pod.completed-at: 2023-06-04 07:44:49 +0000 UTC
+      openshift.io/deployer-pod.created-at: 2023-06-04 07:44:39 +0000 UTC
+      openshift.io/deployer-pod.name: lre-front-2-deploy
+      openshift.io/deployment-config.latest-version: "2"
+      openshift.io/deployment-config.name: lre-front
+      openshift.io/deployment.cancelled: "true"
+      openshift.io/deployment.phase: Failed
+      openshift.io/deployment.replicas: "0"
+      openshift.io/deployment.status-reason: newer deployment was found running
+      openshift.io/encoded-deployment-config: |
+        {"kind":"DeploymentConfig","apiVersion":"apps.openshift.io/v1","metadata":{"name":"lre-front","namespace":"lre-dev","uid":"edb720d5-b70c-4b1c-9a7e-2bae40a71c13","resourceVersion":"19644849","generation":3,"creationTimestamp":"2023-05-25T13:37:37Z","labels":{"app":"lre-front","migration.openshift.io/migrated-by-migmigration":"c3ea9ecb-e90b-490b-b3d5-a4a3ca470138","migration.openshift.io/migrated-by-migplan":"09dc99a3-20c0-4d89-88a2-c81cce3ef81b","velero.io/backup-name":"migration-f9156-initial-ff7x9","velero.io/restore-name":"migration-f9156-final-jccsn"},"annotations":{"openshift.io/backup-registry-hostname":"docker-registry.default.svc:5000","openshift.io/backup-server-version":"1.11","openshift.io/generated-by":"OpenShiftWebConsole","openshift.io/migration-registry":"172.30.164.193:5000","openshift.io/restore-registry-hostname":"image-registry.openshift-image-registry.svc:5000","openshift.io/restore-server-version":"1.23"},"managedFields":[{"manager":"velero-server","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-05-25T13:37:37Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{".":{},"f:openshift.io/backup-registry-hostname":{},"f:openshift.io/backup-server-version":{},"f:openshift.io/generated-by":{},"f:openshift.io/migration-registry":{},"f:openshift.io/restore-registry-hostname":{},"f:openshift.io/restore-server-version":{}},"f:labels":{".":{},"f:app":{},"f:migration.openshift.io/migrated-by-migmigration":{},"f:migration.openshift.io/migrated-by-migplan":{},"f:velero.io/backup-name":{},"f:velero.io/restore-name":{}}},"f:spec":{"f:replicas":{},"f:selector":{".":{},"f:deploymentconfig":{}},"f:strategy":{"f:activeDeadlineSeconds":{},"f:recreateParams":{".":{},"f:timeoutSeconds":{}},"f:type":{}},"f:template":{".":{},"f:metadata":{".":{},"f:creationTimestamp":{},"f:labels":{".":{},"f:app":{},"f:deploymentconfig":{}}},"f:spec":{".":{},"f:containers":{".":{},"k:{\"name\":\"lre-front\"}":{".":{},"f:env":{".":{},"k:{\"name\":\"REACT_APP_CARGAR_DECLARACIONES_TEST\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_DESCARGAR_CSV\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_DESCARGAR_DECLARACIONES\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_LRE_URL_GUARDAR_TERMINO_CONDICIONES\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_LRE_URL_METADATA\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_OBTENER_DECLARACIONES\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_OBTENER_OBSERVACIONES\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_PARENT_DOMAIN\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_PDF_INSTRUCCIONES\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_PDF_POLITICAS_PRIVACIDAD\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_PDF_SUPLEMENTO_LRE\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_SEGUNDOS_DE_RECARGA\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_VALIDAR_EMPLEADOR\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_VOLVER_REDIRECT_EMPLEADOR\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"TZ\"}":{".":{},"f:name":{},"f:value":{}}},"f:imagePullPolicy":{},"f:name":{},"f:ports":{".":{},"k:{\"containerPort\":3000,\"protocol\":\"TCP\"}":{".":{},"f:containerPort":{},"f:protocol":{}}},"f:resources":{".":{},"f:limits":{".":{},"f:cpu":{},"f:memory":{}},"f:requests":{".":{},"f:cpu":{},"f:memory":{}}},"f:terminationMessagePath":{},"f:terminationMessagePolicy":{}}},"f:dnsPolicy":{},"f:restartPolicy":{},"f:schedulerName":{},"f:securityContext":{},"f:terminationGracePeriodSeconds":{}}}}}},{"manager":"openshift-controller-manager","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-06-04T02:15:13Z","fieldsType":"FieldsV1","fieldsV1":{"f:status":{"f:availableReplicas":{},"f:conditions":{".":{},"k:{\"type\":\"Available\"}":{".":{},"f:lastTransitionTime":{},"f:lastUpdateTime":{},"f:message":{},"f:status":{},"f:type":{}},"k:{\"type\":\"Progressing\"}":{".":{},"f:lastTransitionTime":{},"f:lastUpdateTime":{},"f:message":{},"f:reason":{},"f:status":{},"f:type":{}}},"f:details":{".":{},"f:causes":{},"f:message":{}},"f:latestVersion":{},"f:observedGeneration":{},"f:readyReplicas":{},"f:replicas":{},"f:unavailableReplicas":{},"f:updatedReplicas":{}}},"subresource":"status"},{"manager":"openshift-controller-manager","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-06-04T07:44:39Z","fieldsType":"FieldsV1","fieldsV1":{"f:spec":{"f:template":{"f:spec":{"f:containers":{"k:{\"name\":\"lre-front\"}":{"f:image":{}}}}},"f:triggers":{}}}}]},"spec":{"strategy":{"type":"Recreate","recreateParams":{"timeoutSeconds":600},"resources":{},"activeDeadlineSeconds":21600},"triggers":[{"type":"ImageChange","imageChangeParams":{"automatic":true,"containerNames":["lre-front"],"from":{"kind":"ImageStreamTag","namespace":"lre-dev","name":"lre-front:latest"},"lastTriggeredImage":"image-registry.openshift-image-registry.svc:5000/lre-dev/lre-front@sha256:b8c8cb6c141c0a1be83bf3321b2c344f87f85d3ac34483887964ec9e565cf00b"}},{"type":"ConfigChange"}],"replicas":1,"revisionHistoryLimit":10,"test":false,"selector":{"deploymentconfig":"lre-front"},"template":{"metadata":{"creationTimestamp":null,"labels":{"app":"lre-front","deploymentconfig":"lre-front"}},"spec":{"containers":[{"name":"lre-front","image":"image-registry.openshift-image-registry.svc:5000/lre-dev/lre-front@sha256:b8c8cb6c141c0a1be83bf3321b2c344f87f85d3ac34483887964ec9e565cf00b","ports":[{"containerPort":3000,"protocol":"TCP"}],"env":[{"name":"TZ","value":"America/Santiago"},{"name":"REACT_APP_VOLVER_REDIRECT_EMPLEADOR","value":"https://lre-services-live-dev.api.dirtrab.cl/fiscalizacion/remuneracion"},{"name":"REACT_APP_PARENT_DOMAIN","value":"*"},{"name":"REACT_APP_OBTENER_DECLARACIONES","value":"https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/declaracion/datosDeclaraciones/empleador/"},{"name":"REACT_APP_OBTENER_OBSERVACIONES","value":"https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/declaracion/datosDeclaraciones/observaciones/"},{"name":"REACT_APP_CARGAR_DECLARACIONES_TEST","value":"https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/declaracion/cargaDeclaracion"},{"name":"REACT_APP_DESCARGAR_CSV","value":"https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/declaracion/descargaDeclaracion/"},{"name":"REACT_APP_DESCARGAR_DECLARACIONES","value":"https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/declaracion/descargaDeclaracion/plantilla"},{"name":"REACT_APP_VALIDAR_EMPLEADOR","value":"https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/validaEmpleador/empleador/"},{"name":"REACT_APP_LRE_URL_METADATA","value":"https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/bff/metadata/empleador"},{"name":"REACT_APP_LRE_URL_GUARDAR_TERMINO_CONDICIONES","value":"https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/empleador/terminoCondiciones"},{"name":"REACT_APP_PDF_INSTRUCCIONES","value":"https://static-content-dev.api.dirtrab.cl/dt-docs/lre/lre_instrucciones_de_carga.pdf"},{"name":"REACT_APP_PDF_POLITICAS_PRIVACIDAD","value":"https://static-content-dev.api.dirtrab.cl/dt-docs/lre/lre_politicas_proteccion_datos_personales.pdf"},{"name":"REACT_APP_PDF_SUPLEMENTO_LRE","value":"https://static-content-dev.api.dirtrab.cl/dt-docs/lre/lre_suplemento.pdf"},{"name":"REACT_APP_SEGUNDOS_DE_RECARGA","value":"20"}],"resources":{"limits":{"cpu":"500m","memory":"600Mi"},"requests":{"cpu":"200m","memory":"100Mi"}},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File","imagePullPolicy":"Always"}],"restartPolicy":"Always","terminationGracePeriodSeconds":30,"dnsPolicy":"ClusterFirst","securityContext":{},"schedulerName":"default-scheduler"}}},"status":{"latestVersion":2,"observedGeneration":2,"replicas":1,"updatedReplicas":1,"availableReplicas":1,"unavailableReplicas":0,"details":{"message":"image change","causes":[{"type":"ImageChange","imageTrigger":{"from":{"kind":"DockerImage","name":"image-registry.openshift-image-registry.svc:5000/lre-dev/lre-front@sha256:b8c8cb6c141c0a1be83bf3321b2c344f87f85d3ac34483887964ec9e565cf00b"}}}]},"conditions":[{"type":"Progressing","status":"True","lastUpdateTime":"2023-05-25T13:38:33Z","lastTransitionTime":"2023-05-25T13:38:33Z","reason":"NewReplicationControllerAvailable","message":"replication controller \"lre-front-1\" successfully rolled out"},{"type":"Available","status":"True","lastUpdateTime":"2023-06-04T02:15:13Z","lastTransitionTime":"2023-06-04T02:15:13Z","message":"Deployment config has minimum availability."}],"readyReplicas":1}}
+    creationTimestamp: "2023-06-04T07:44:39Z"
+    generation: 3
+    labels:
+      app: lre-front
+      migration.openshift.io/migrated-by-migmigration: c3ea9ecb-e90b-490b-b3d5-a4a3ca470138
+      migration.openshift.io/migrated-by-migplan: 09dc99a3-20c0-4d89-88a2-c81cce3ef81b
+      openshift.io/deployment-config.name: lre-front
+      velero.io/backup-name: migration-f9156-initial-ff7x9
+      velero.io/restore-name: migration-f9156-final-jccsn
+    name: lre-front-2
+    namespace: lre-dev
+    ownerReferences:
+    - apiVersion: apps.openshift.io/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DeploymentConfig
+      name: lre-front
+      uid: edb720d5-b70c-4b1c-9a7e-2bae40a71c13
+    resourceVersion: "19645123"
+    uid: d1d40c7d-e7cc-4258-acf7-516f25f508cb
+  spec:
+    replicas: 0
+    selector:
+      deployment: lre-front-2
+      deploymentconfig: lre-front
+    template:
+      metadata:
+        annotations:
+          openshift.io/deployment-config.latest-version: "2"
+          openshift.io/deployment-config.name: lre-front
+          openshift.io/deployment.name: lre-front-2
+        creationTimestamp: null
+        labels:
+          app: lre-front
+          deployment: lre-front-2
+          deploymentconfig: lre-front
+      spec:
+        containers:
+        - env:
+          - name: TZ
+            value: America/Santiago
+          - name: REACT_APP_VOLVER_REDIRECT_EMPLEADOR
+            value: https://lre-services-live-dev.api.dirtrab.cl/fiscalizacion/remuneracion
+          - name: REACT_APP_PARENT_DOMAIN
+            value: '*'
+          - name: REACT_APP_OBTENER_DECLARACIONES
+            value: https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/declaracion/datosDeclaraciones/empleador/
+          - name: REACT_APP_OBTENER_OBSERVACIONES
+            value: https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/declaracion/datosDeclaraciones/observaciones/
+          - name: REACT_APP_CARGAR_DECLARACIONES_TEST
+            value: https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/declaracion/cargaDeclaracion
+          - name: REACT_APP_DESCARGAR_CSV
+            value: https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/declaracion/descargaDeclaracion/
+          - name: REACT_APP_DESCARGAR_DECLARACIONES
+            value: https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/declaracion/descargaDeclaracion/plantilla
+          - name: REACT_APP_VALIDAR_EMPLEADOR
+            value: https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/validaEmpleador/empleador/
+          - name: REACT_APP_LRE_URL_METADATA
+            value: https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/bff/metadata/empleador
+          - name: REACT_APP_LRE_URL_GUARDAR_TERMINO_CONDICIONES
+            value: https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/empleador/terminoCondiciones
+          - name: REACT_APP_PDF_INSTRUCCIONES
+            value: https://static-content-dev.api.dirtrab.cl/dt-docs/lre/lre_instrucciones_de_carga.pdf
+          - name: REACT_APP_PDF_POLITICAS_PRIVACIDAD
+            value: https://static-content-dev.api.dirtrab.cl/dt-docs/lre/lre_politicas_proteccion_datos_personales.pdf
+          - name: REACT_APP_PDF_SUPLEMENTO_LRE
+            value: https://static-content-dev.api.dirtrab.cl/dt-docs/lre/lre_suplemento.pdf
+          - name: REACT_APP_SEGUNDOS_DE_RECARGA
+            value: "20"
+          image: image-registry.openshift-image-registry.svc:5000/lre-dev/lre-front@sha256:b8c8cb6c141c0a1be83bf3321b2c344f87f85d3ac34483887964ec9e565cf00b
+          imagePullPolicy: Always
+          name: lre-front
+          ports:
+          - containerPort: 3000
+            protocol: TCP
+          resources:
+            limits:
+              cpu: 500m
+              memory: 600Mi
+            requests:
+              cpu: 200m
+              memory: 100Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    observedGeneration: 3
+    replicas: 0
+- apiVersion: v1
+  kind: ReplicationController
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/desired-replicas: "1"
+      openshift.io/deployer-pod.completed-at: 2023-06-04 07:44:58 +0000 UTC
+      openshift.io/deployer-pod.created-at: 2023-06-04 07:44:50 +0000 UTC
+      openshift.io/deployer-pod.name: lre-front-3-deploy
+      openshift.io/deployment-config.latest-version: "3"
+      openshift.io/deployment-config.name: lre-front
+      openshift.io/deployment.cancelled: "true"
+      openshift.io/deployment.phase: Failed
+      openshift.io/deployment.replicas: "0"
+      openshift.io/deployment.status-reason: newer deployment was found running
+      openshift.io/encoded-deployment-config: |
+        {"kind":"DeploymentConfig","apiVersion":"apps.openshift.io/v1","metadata":{"name":"lre-front","namespace":"lre-dev","uid":"edb720d5-b70c-4b1c-9a7e-2bae40a71c13","resourceVersion":"19645056","generation":4,"creationTimestamp":"2023-05-25T13:37:37Z","labels":{"app":"lre-front","migration.openshift.io/migrated-by-migmigration":"c3ea9ecb-e90b-490b-b3d5-a4a3ca470138","migration.openshift.io/migrated-by-migplan":"09dc99a3-20c0-4d89-88a2-c81cce3ef81b","velero.io/backup-name":"migration-f9156-initial-ff7x9","velero.io/restore-name":"migration-f9156-final-jccsn"},"annotations":{"openshift.io/backup-registry-hostname":"docker-registry.default.svc:5000","openshift.io/backup-server-version":"1.11","openshift.io/generated-by":"OpenShiftWebConsole","openshift.io/migration-registry":"172.30.164.193:5000","openshift.io/restore-registry-hostname":"image-registry.openshift-image-registry.svc:5000","openshift.io/restore-server-version":"1.23"},"managedFields":[{"manager":"velero-server","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-05-25T13:37:37Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{".":{},"f:openshift.io/backup-registry-hostname":{},"f:openshift.io/backup-server-version":{},"f:openshift.io/generated-by":{},"f:openshift.io/migration-registry":{},"f:openshift.io/restore-registry-hostname":{},"f:openshift.io/restore-server-version":{}},"f:labels":{".":{},"f:app":{},"f:migration.openshift.io/migrated-by-migmigration":{},"f:migration.openshift.io/migrated-by-migplan":{},"f:velero.io/backup-name":{},"f:velero.io/restore-name":{}}},"f:spec":{"f:replicas":{},"f:selector":{".":{},"f:deploymentconfig":{}},"f:strategy":{"f:activeDeadlineSeconds":{},"f:recreateParams":{".":{},"f:timeoutSeconds":{}},"f:type":{}},"f:template":{".":{},"f:metadata":{".":{},"f:creationTimestamp":{},"f:labels":{".":{},"f:app":{},"f:deploymentconfig":{}}},"f:spec":{".":{},"f:containers":{".":{},"k:{\"name\":\"lre-front\"}":{".":{},"f:env":{".":{},"k:{\"name\":\"REACT_APP_CARGAR_DECLARACIONES_TEST\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_DESCARGAR_CSV\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_DESCARGAR_DECLARACIONES\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_LRE_URL_GUARDAR_TERMINO_CONDICIONES\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_LRE_URL_METADATA\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_OBTENER_DECLARACIONES\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_OBTENER_OBSERVACIONES\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_PARENT_DOMAIN\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_PDF_INSTRUCCIONES\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_PDF_POLITICAS_PRIVACIDAD\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_PDF_SUPLEMENTO_LRE\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_SEGUNDOS_DE_RECARGA\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_VALIDAR_EMPLEADOR\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_VOLVER_REDIRECT_EMPLEADOR\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"TZ\"}":{".":{},"f:name":{},"f:value":{}}},"f:imagePullPolicy":{},"f:name":{},"f:ports":{".":{},"k:{\"containerPort\":3000,\"protocol\":\"TCP\"}":{".":{},"f:containerPort":{},"f:protocol":{}}},"f:resources":{".":{},"f:limits":{".":{},"f:cpu":{},"f:memory":{}},"f:requests":{".":{},"f:cpu":{},"f:memory":{}}},"f:terminationMessagePath":{},"f:terminationMessagePolicy":{}}},"f:dnsPolicy":{},"f:restartPolicy":{},"f:schedulerName":{},"f:securityContext":{},"f:terminationGracePeriodSeconds":{}}}}}},{"manager":"openshift-controller-manager","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-06-04T07:44:39Z","fieldsType":"FieldsV1","fieldsV1":{"f:spec":{"f:template":{"f:spec":{"f:containers":{"k:{\"name\":\"lre-front\"}":{"f:image":{}}}}},"f:triggers":{}}}},{"manager":"openshift-controller-manager","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-06-04T07:44:44Z","fieldsType":"FieldsV1","fieldsV1":{"f:status":{"f:availableReplicas":{},"f:conditions":{".":{},"k:{\"type\":\"Available\"}":{".":{},"f:lastTransitionTime":{},"f:lastUpdateTime":{},"f:message":{},"f:status":{},"f:type":{}},"k:{\"type\":\"Progressing\"}":{".":{},"f:lastTransitionTime":{},"f:lastUpdateTime":{},"f:message":{},"f:reason":{},"f:status":{},"f:type":{}}},"f:details":{".":{},"f:causes":{},"f:message":{}},"f:latestVersion":{},"f:observedGeneration":{},"f:replicas":{},"f:unavailableReplicas":{},"f:updatedReplicas":{}}},"subresource":"status"}]},"spec":{"strategy":{"type":"Recreate","recreateParams":{"timeoutSeconds":600},"resources":{},"activeDeadlineSeconds":21600},"triggers":[{"type":"ImageChange","imageChangeParams":{"automatic":true,"containerNames":["lre-front"],"from":{"kind":"ImageStreamTag","namespace":"lre-dev","name":"lre-front:latest"},"lastTriggeredImage":"image-registry.openshift-image-registry.svc:5000/lre-dev/lre-front@sha256:bc3f4237f05d4c01fd8c7d4cd6992a8b601d83f7d41e5eb166510828279014e5"}},{"type":"ConfigChange"}],"replicas":1,"revisionHistoryLimit":10,"test":false,"selector":{"deploymentconfig":"lre-front"},"template":{"metadata":{"creationTimestamp":null,"labels":{"app":"lre-front","deploymentconfig":"lre-front"}},"spec":{"containers":[{"name":"lre-front","image":"image-registry.openshift-image-registry.svc:5000/lre-dev/lre-front@sha256:bc3f4237f05d4c01fd8c7d4cd6992a8b601d83f7d41e5eb166510828279014e5","ports":[{"containerPort":3000,"protocol":"TCP"}],"env":[{"name":"TZ","value":"America/Santiago"},{"name":"REACT_APP_VOLVER_REDIRECT_EMPLEADOR","value":"https://lre-services-live-dev.api.dirtrab.cl/fiscalizacion/remuneracion"},{"name":"REACT_APP_PARENT_DOMAIN","value":"*"},{"name":"REACT_APP_OBTENER_DECLARACIONES","value":"https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/declaracion/datosDeclaraciones/empleador/"},{"name":"REACT_APP_OBTENER_OBSERVACIONES","value":"https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/declaracion/datosDeclaraciones/observaciones/"},{"name":"REACT_APP_CARGAR_DECLARACIONES_TEST","value":"https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/declaracion/cargaDeclaracion"},{"name":"REACT_APP_DESCARGAR_CSV","value":"https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/declaracion/descargaDeclaracion/"},{"name":"REACT_APP_DESCARGAR_DECLARACIONES","value":"https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/declaracion/descargaDeclaracion/plantilla"},{"name":"REACT_APP_VALIDAR_EMPLEADOR","value":"https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/validaEmpleador/empleador/"},{"name":"REACT_APP_LRE_URL_METADATA","value":"https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/bff/metadata/empleador"},{"name":"REACT_APP_LRE_URL_GUARDAR_TERMINO_CONDICIONES","value":"https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/empleador/terminoCondiciones"},{"name":"REACT_APP_PDF_INSTRUCCIONES","value":"https://static-content-dev.api.dirtrab.cl/dt-docs/lre/lre_instrucciones_de_carga.pdf"},{"name":"REACT_APP_PDF_POLITICAS_PRIVACIDAD","value":"https://static-content-dev.api.dirtrab.cl/dt-docs/lre/lre_politicas_proteccion_datos_personales.pdf"},{"name":"REACT_APP_PDF_SUPLEMENTO_LRE","value":"https://static-content-dev.api.dirtrab.cl/dt-docs/lre/lre_suplemento.pdf"},{"name":"REACT_APP_SEGUNDOS_DE_RECARGA","value":"20"}],"resources":{"limits":{"cpu":"500m","memory":"600Mi"},"requests":{"cpu":"200m","memory":"100Mi"}},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File","imagePullPolicy":"Always"}],"restartPolicy":"Always","terminationGracePeriodSeconds":30,"dnsPolicy":"ClusterFirst","securityContext":{},"schedulerName":"default-scheduler"}}},"status":{"latestVersion":3,"observedGeneration":3,"replicas":1,"updatedReplicas":1,"availableReplicas":0,"unavailableReplicas":1,"details":{"message":"image change","causes":[{"type":"ImageChange","imageTrigger":{"from":{"kind":"DockerImage","name":"image-registry.openshift-image-registry.svc:5000/lre-dev/lre-front@sha256:bc3f4237f05d4c01fd8c7d4cd6992a8b601d83f7d41e5eb166510828279014e5"}}}]},"conditions":[{"type":"Available","status":"False","lastUpdateTime":"2023-06-04T07:44:42Z","lastTransitionTime":"2023-06-04T07:44:42Z","message":"Deployment config does not have minimum availability."},{"type":"Progressing","status":"True","lastUpdateTime":"2023-06-04T07:44:44Z","lastTransitionTime":"2023-06-04T07:44:44Z","reason":"ReplicationControllerUpdated","message":"replication controller \"lre-front-2\" is progressing"}]}}
+    creationTimestamp: "2023-06-04T07:44:50Z"
+    generation: 3
+    labels:
+      app: lre-front
+      migration.openshift.io/migrated-by-migmigration: c3ea9ecb-e90b-490b-b3d5-a4a3ca470138
+      migration.openshift.io/migrated-by-migplan: 09dc99a3-20c0-4d89-88a2-c81cce3ef81b
+      openshift.io/deployment-config.name: lre-front
+      velero.io/backup-name: migration-f9156-initial-ff7x9
+      velero.io/restore-name: migration-f9156-final-jccsn
+    name: lre-front-3
+    namespace: lre-dev
+    ownerReferences:
+    - apiVersion: apps.openshift.io/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DeploymentConfig
+      name: lre-front
+      uid: edb720d5-b70c-4b1c-9a7e-2bae40a71c13
+    resourceVersion: "19645306"
+    uid: 822b6339-dccb-4e3f-bdf4-64f5748016c8
+  spec:
+    replicas: 0
+    selector:
+      deployment: lre-front-3
+      deploymentconfig: lre-front
+    template:
+      metadata:
+        annotations:
+          openshift.io/deployment-config.latest-version: "3"
+          openshift.io/deployment-config.name: lre-front
+          openshift.io/deployment.name: lre-front-3
+        creationTimestamp: null
+        labels:
+          app: lre-front
+          deployment: lre-front-3
+          deploymentconfig: lre-front
+      spec:
+        containers:
+        - env:
+          - name: TZ
+            value: America/Santiago
+          - name: REACT_APP_VOLVER_REDIRECT_EMPLEADOR
+            value: https://lre-services-live-dev.api.dirtrab.cl/fiscalizacion/remuneracion
+          - name: REACT_APP_PARENT_DOMAIN
+            value: '*'
+          - name: REACT_APP_OBTENER_DECLARACIONES
+            value: https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/declaracion/datosDeclaraciones/empleador/
+          - name: REACT_APP_OBTENER_OBSERVACIONES
+            value: https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/declaracion/datosDeclaraciones/observaciones/
+          - name: REACT_APP_CARGAR_DECLARACIONES_TEST
+            value: https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/declaracion/cargaDeclaracion
+          - name: REACT_APP_DESCARGAR_CSV
+            value: https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/declaracion/descargaDeclaracion/
+          - name: REACT_APP_DESCARGAR_DECLARACIONES
+            value: https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/declaracion/descargaDeclaracion/plantilla
+          - name: REACT_APP_VALIDAR_EMPLEADOR
+            value: https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/validaEmpleador/empleador/
+          - name: REACT_APP_LRE_URL_METADATA
+            value: https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/bff/metadata/empleador
+          - name: REACT_APP_LRE_URL_GUARDAR_TERMINO_CONDICIONES
+            value: https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/empleador/terminoCondiciones
+          - name: REACT_APP_PDF_INSTRUCCIONES
+            value: https://static-content-dev.api.dirtrab.cl/dt-docs/lre/lre_instrucciones_de_carga.pdf
+          - name: REACT_APP_PDF_POLITICAS_PRIVACIDAD
+            value: https://static-content-dev.api.dirtrab.cl/dt-docs/lre/lre_politicas_proteccion_datos_personales.pdf
+          - name: REACT_APP_PDF_SUPLEMENTO_LRE
+            value: https://static-content-dev.api.dirtrab.cl/dt-docs/lre/lre_suplemento.pdf
+          - name: REACT_APP_SEGUNDOS_DE_RECARGA
+            value: "20"
+          image: image-registry.openshift-image-registry.svc:5000/lre-dev/lre-front@sha256:bc3f4237f05d4c01fd8c7d4cd6992a8b601d83f7d41e5eb166510828279014e5
+          imagePullPolicy: Always
+          name: lre-front
+          ports:
+          - containerPort: 3000
+            protocol: TCP
+          resources:
+            limits:
+              cpu: 500m
+              memory: 600Mi
+            requests:
+              cpu: 200m
+              memory: 100Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    observedGeneration: 3
+    replicas: 0
+- apiVersion: v1
+  kind: ReplicationController
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/desired-replicas: "1"
+      openshift.io/deployer-pod.completed-at: 2023-06-04 07:45:08 +0000 UTC
+      openshift.io/deployer-pod.created-at: 2023-06-04 07:44:58 +0000 UTC
+      openshift.io/deployer-pod.name: lre-front-4-deploy
+      openshift.io/deployment-config.latest-version: "4"
+      openshift.io/deployment-config.name: lre-front
+      openshift.io/deployment.cancelled: "true"
+      openshift.io/deployment.phase: Failed
+      openshift.io/deployment.replicas: "0"
+      openshift.io/deployment.status-reason: newer deployment was found running
+      openshift.io/encoded-deployment-config: |
+        {"kind":"DeploymentConfig","apiVersion":"apps.openshift.io/v1","metadata":{"name":"lre-front","namespace":"lre-dev","uid":"edb720d5-b70c-4b1c-9a7e-2bae40a71c13","resourceVersion":"19645208","generation":5,"creationTimestamp":"2023-05-25T13:37:37Z","labels":{"app":"lre-front","migration.openshift.io/migrated-by-migmigration":"c3ea9ecb-e90b-490b-b3d5-a4a3ca470138","migration.openshift.io/migrated-by-migplan":"09dc99a3-20c0-4d89-88a2-c81cce3ef81b","velero.io/backup-name":"migration-f9156-initial-ff7x9","velero.io/restore-name":"migration-f9156-final-jccsn"},"annotations":{"openshift.io/backup-registry-hostname":"docker-registry.default.svc:5000","openshift.io/backup-server-version":"1.11","openshift.io/generated-by":"OpenShiftWebConsole","openshift.io/migration-registry":"172.30.164.193:5000","openshift.io/restore-registry-hostname":"image-registry.openshift-image-registry.svc:5000","openshift.io/restore-server-version":"1.23"},"managedFields":[{"manager":"velero-server","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-05-25T13:37:37Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{".":{},"f:openshift.io/backup-registry-hostname":{},"f:openshift.io/backup-server-version":{},"f:openshift.io/generated-by":{},"f:openshift.io/migration-registry":{},"f:openshift.io/restore-registry-hostname":{},"f:openshift.io/restore-server-version":{}},"f:labels":{".":{},"f:app":{},"f:migration.openshift.io/migrated-by-migmigration":{},"f:migration.openshift.io/migrated-by-migplan":{},"f:velero.io/backup-name":{},"f:velero.io/restore-name":{}}},"f:spec":{"f:replicas":{},"f:selector":{".":{},"f:deploymentconfig":{}},"f:strategy":{"f:activeDeadlineSeconds":{},"f:recreateParams":{".":{},"f:timeoutSeconds":{}},"f:type":{}},"f:template":{".":{},"f:metadata":{".":{},"f:creationTimestamp":{},"f:labels":{".":{},"f:app":{},"f:deploymentconfig":{}}},"f:spec":{".":{},"f:containers":{".":{},"k:{\"name\":\"lre-front\"}":{".":{},"f:env":{".":{},"k:{\"name\":\"REACT_APP_CARGAR_DECLARACIONES_TEST\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_DESCARGAR_CSV\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_DESCARGAR_DECLARACIONES\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_LRE_URL_GUARDAR_TERMINO_CONDICIONES\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_LRE_URL_METADATA\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_OBTENER_DECLARACIONES\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_OBTENER_OBSERVACIONES\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_PARENT_DOMAIN\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_PDF_INSTRUCCIONES\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_PDF_POLITICAS_PRIVACIDAD\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_PDF_SUPLEMENTO_LRE\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_SEGUNDOS_DE_RECARGA\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_VALIDAR_EMPLEADOR\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_VOLVER_REDIRECT_EMPLEADOR\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"TZ\"}":{".":{},"f:name":{},"f:value":{}}},"f:imagePullPolicy":{},"f:name":{},"f:ports":{".":{},"k:{\"containerPort\":3000,\"protocol\":\"TCP\"}":{".":{},"f:containerPort":{},"f:protocol":{}}},"f:resources":{".":{},"f:limits":{".":{},"f:cpu":{},"f:memory":{}},"f:requests":{".":{},"f:cpu":{},"f:memory":{}}},"f:terminationMessagePath":{},"f:terminationMessagePolicy":{}}},"f:dnsPolicy":{},"f:restartPolicy":{},"f:schedulerName":{},"f:securityContext":{},"f:terminationGracePeriodSeconds":{}}}}}},{"manager":"openshift-controller-manager","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-06-04T07:44:39Z","fieldsType":"FieldsV1","fieldsV1":{"f:spec":{"f:template":{"f:spec":{"f:containers":{"k:{\"name\":\"lre-front\"}":{"f:image":{}}}}},"f:triggers":{}}}},{"manager":"openshift-controller-manager","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-06-04T07:44:54Z","fieldsType":"FieldsV1","fieldsV1":{"f:status":{"f:availableReplicas":{},"f:conditions":{".":{},"k:{\"type\":\"Available\"}":{".":{},"f:lastTransitionTime":{},"f:lastUpdateTime":{},"f:message":{},"f:status":{},"f:type":{}},"k:{\"type\":\"Progressing\"}":{".":{},"f:lastTransitionTime":{},"f:lastUpdateTime":{},"f:message":{},"f:reason":{},"f:status":{},"f:type":{}}},"f:details":{".":{},"f:causes":{},"f:message":{}},"f:latestVersion":{},"f:observedGeneration":{},"f:replicas":{},"f:unavailableReplicas":{},"f:updatedReplicas":{}}},"subresource":"status"}]},"spec":{"strategy":{"type":"Recreate","recreateParams":{"timeoutSeconds":600},"resources":{},"activeDeadlineSeconds":21600},"triggers":[{"type":"ImageChange","imageChangeParams":{"automatic":true,"containerNames":["lre-front"],"from":{"kind":"ImageStreamTag","namespace":"lre-dev","name":"lre-front:latest"},"lastTriggeredImage":"image-registry.openshift-image-registry.svc:5000/lre-dev/lre-front@sha256:c8f3fa86eca20c610d9d4ddc90e6f7b07eccb52c5a592222e51670d3a6006492"}},{"type":"ConfigChange"}],"replicas":1,"revisionHistoryLimit":10,"test":false,"selector":{"deploymentconfig":"lre-front"},"template":{"metadata":{"creationTimestamp":null,"labels":{"app":"lre-front","deploymentconfig":"lre-front"}},"spec":{"containers":[{"name":"lre-front","image":"image-registry.openshift-image-registry.svc:5000/lre-dev/lre-front@sha256:c8f3fa86eca20c610d9d4ddc90e6f7b07eccb52c5a592222e51670d3a6006492","ports":[{"containerPort":3000,"protocol":"TCP"}],"env":[{"name":"TZ","value":"America/Santiago"},{"name":"REACT_APP_VOLVER_REDIRECT_EMPLEADOR","value":"https://lre-services-live-dev.api.dirtrab.cl/fiscalizacion/remuneracion"},{"name":"REACT_APP_PARENT_DOMAIN","value":"*"},{"name":"REACT_APP_OBTENER_DECLARACIONES","value":"https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/declaracion/datosDeclaraciones/empleador/"},{"name":"REACT_APP_OBTENER_OBSERVACIONES","value":"https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/declaracion/datosDeclaraciones/observaciones/"},{"name":"REACT_APP_CARGAR_DECLARACIONES_TEST","value":"https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/declaracion/cargaDeclaracion"},{"name":"REACT_APP_DESCARGAR_CSV","value":"https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/declaracion/descargaDeclaracion/"},{"name":"REACT_APP_DESCARGAR_DECLARACIONES","value":"https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/declaracion/descargaDeclaracion/plantilla"},{"name":"REACT_APP_VALIDAR_EMPLEADOR","value":"https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/validaEmpleador/empleador/"},{"name":"REACT_APP_LRE_URL_METADATA","value":"https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/bff/metadata/empleador"},{"name":"REACT_APP_LRE_URL_GUARDAR_TERMINO_CONDICIONES","value":"https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/empleador/terminoCondiciones"},{"name":"REACT_APP_PDF_INSTRUCCIONES","value":"https://static-content-dev.api.dirtrab.cl/dt-docs/lre/lre_instrucciones_de_carga.pdf"},{"name":"REACT_APP_PDF_POLITICAS_PRIVACIDAD","value":"https://static-content-dev.api.dirtrab.cl/dt-docs/lre/lre_politicas_proteccion_datos_personales.pdf"},{"name":"REACT_APP_PDF_SUPLEMENTO_LRE","value":"https://static-content-dev.api.dirtrab.cl/dt-docs/lre/lre_suplemento.pdf"},{"name":"REACT_APP_SEGUNDOS_DE_RECARGA","value":"20"}],"resources":{"limits":{"cpu":"500m","memory":"600Mi"},"requests":{"cpu":"200m","memory":"100Mi"}},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File","imagePullPolicy":"Always"}],"restartPolicy":"Always","terminationGracePeriodSeconds":30,"dnsPolicy":"ClusterFirst","securityContext":{},"schedulerName":"default-scheduler"}}},"status":{"latestVersion":4,"observedGeneration":4,"replicas":1,"updatedReplicas":1,"availableReplicas":0,"unavailableReplicas":1,"details":{"message":"image change","causes":[{"type":"ImageChange","imageTrigger":{"from":{"kind":"DockerImage","name":"image-registry.openshift-image-registry.svc:5000/lre-dev/lre-front@sha256:c8f3fa86eca20c610d9d4ddc90e6f7b07eccb52c5a592222e51670d3a6006492"}}}]},"conditions":[{"type":"Available","status":"False","lastUpdateTime":"2023-06-04T07:44:42Z","lastTransitionTime":"2023-06-04T07:44:42Z","message":"Deployment config does not have minimum availability."},{"type":"Progressing","status":"True","lastUpdateTime":"2023-06-04T07:44:54Z","lastTransitionTime":"2023-06-04T07:44:54Z","reason":"ReplicationControllerUpdated","message":"replication controller \"lre-front-3\" is progressing"}]}}
+    creationTimestamp: "2023-06-04T07:44:58Z"
+    generation: 3
+    labels:
+      app: lre-front
+      migration.openshift.io/migrated-by-migmigration: c3ea9ecb-e90b-490b-b3d5-a4a3ca470138
+      migration.openshift.io/migrated-by-migplan: 09dc99a3-20c0-4d89-88a2-c81cce3ef81b
+      openshift.io/deployment-config.name: lre-front
+      velero.io/backup-name: migration-f9156-initial-ff7x9
+      velero.io/restore-name: migration-f9156-final-jccsn
+    name: lre-front-4
+    namespace: lre-dev
+    ownerReferences:
+    - apiVersion: apps.openshift.io/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DeploymentConfig
+      name: lre-front
+      uid: edb720d5-b70c-4b1c-9a7e-2bae40a71c13
+    resourceVersion: "19645751"
+    uid: e301359a-5880-4fe3-a69f-03171c304c7f
+  spec:
+    replicas: 0
+    selector:
+      deployment: lre-front-4
+      deploymentconfig: lre-front
+    template:
+      metadata:
+        annotations:
+          openshift.io/deployment-config.latest-version: "4"
+          openshift.io/deployment-config.name: lre-front
+          openshift.io/deployment.name: lre-front-4
+        creationTimestamp: null
+        labels:
+          app: lre-front
+          deployment: lre-front-4
+          deploymentconfig: lre-front
+      spec:
+        containers:
+        - env:
+          - name: TZ
+            value: America/Santiago
+          - name: REACT_APP_VOLVER_REDIRECT_EMPLEADOR
+            value: https://lre-services-live-dev.api.dirtrab.cl/fiscalizacion/remuneracion
+          - name: REACT_APP_PARENT_DOMAIN
+            value: '*'
+          - name: REACT_APP_OBTENER_DECLARACIONES
+            value: https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/declaracion/datosDeclaraciones/empleador/
+          - name: REACT_APP_OBTENER_OBSERVACIONES
+            value: https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/declaracion/datosDeclaraciones/observaciones/
+          - name: REACT_APP_CARGAR_DECLARACIONES_TEST
+            value: https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/declaracion/cargaDeclaracion
+          - name: REACT_APP_DESCARGAR_CSV
+            value: https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/declaracion/descargaDeclaracion/
+          - name: REACT_APP_DESCARGAR_DECLARACIONES
+            value: https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/declaracion/descargaDeclaracion/plantilla
+          - name: REACT_APP_VALIDAR_EMPLEADOR
+            value: https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/validaEmpleador/empleador/
+          - name: REACT_APP_LRE_URL_METADATA
+            value: https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/bff/metadata/empleador
+          - name: REACT_APP_LRE_URL_GUARDAR_TERMINO_CONDICIONES
+            value: https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/empleador/terminoCondiciones
+          - name: REACT_APP_PDF_INSTRUCCIONES
+            value: https://static-content-dev.api.dirtrab.cl/dt-docs/lre/lre_instrucciones_de_carga.pdf
+          - name: REACT_APP_PDF_POLITICAS_PRIVACIDAD
+            value: https://static-content-dev.api.dirtrab.cl/dt-docs/lre/lre_politicas_proteccion_datos_personales.pdf
+          - name: REACT_APP_PDF_SUPLEMENTO_LRE
+            value: https://static-content-dev.api.dirtrab.cl/dt-docs/lre/lre_suplemento.pdf
+          - name: REACT_APP_SEGUNDOS_DE_RECARGA
+            value: "20"
+          image: image-registry.openshift-image-registry.svc:5000/lre-dev/lre-front@sha256:c8f3fa86eca20c610d9d4ddc90e6f7b07eccb52c5a592222e51670d3a6006492
+          imagePullPolicy: Always
+          name: lre-front
+          ports:
+          - containerPort: 3000
+            protocol: TCP
+          resources:
+            limits:
+              cpu: 500m
+              memory: 600Mi
+            requests:
+              cpu: 200m
+              memory: 100Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    observedGeneration: 3
+    replicas: 0
+- apiVersion: v1
+  kind: ReplicationController
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/desired-replicas: "1"
+      openshift.io/deployer-pod.completed-at: 2023-06-04 07:45:29 +0000 UTC
+      openshift.io/deployer-pod.created-at: 2023-06-04 07:45:20 +0000 UTC
+      openshift.io/deployer-pod.name: lre-front-5-deploy
+      openshift.io/deployment-config.latest-version: "5"
+      openshift.io/deployment-config.name: lre-front
+      openshift.io/deployment.cancelled: "true"
+      openshift.io/deployment.phase: Failed
+      openshift.io/deployment.replicas: "0"
+      openshift.io/deployment.status-reason: newer deployment was found running
+      openshift.io/encoded-deployment-config: |
+        {"kind":"DeploymentConfig","apiVersion":"apps.openshift.io/v1","metadata":{"name":"lre-front","namespace":"lre-dev","uid":"edb720d5-b70c-4b1c-9a7e-2bae40a71c13","resourceVersion":"19645679","generation":8,"creationTimestamp":"2023-05-25T13:37:37Z","labels":{"app":"lre-front","migration.openshift.io/migrated-by-migmigration":"c3ea9ecb-e90b-490b-b3d5-a4a3ca470138","migration.openshift.io/migrated-by-migplan":"09dc99a3-20c0-4d89-88a2-c81cce3ef81b","velero.io/backup-name":"migration-f9156-initial-ff7x9","velero.io/restore-name":"migration-f9156-final-jccsn"},"annotations":{"openshift.io/backup-registry-hostname":"docker-registry.default.svc:5000","openshift.io/backup-server-version":"1.11","openshift.io/generated-by":"OpenShiftWebConsole","openshift.io/migration-registry":"172.30.164.193:5000","openshift.io/restore-registry-hostname":"image-registry.openshift-image-registry.svc:5000","openshift.io/restore-server-version":"1.23"},"managedFields":[{"manager":"velero-server","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-05-25T13:37:37Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{".":{},"f:openshift.io/backup-registry-hostname":{},"f:openshift.io/backup-server-version":{},"f:openshift.io/generated-by":{},"f:openshift.io/migration-registry":{},"f:openshift.io/restore-registry-hostname":{},"f:openshift.io/restore-server-version":{}},"f:labels":{".":{},"f:app":{},"f:migration.openshift.io/migrated-by-migmigration":{},"f:migration.openshift.io/migrated-by-migplan":{},"f:velero.io/backup-name":{},"f:velero.io/restore-name":{}}},"f:spec":{"f:replicas":{},"f:selector":{".":{},"f:deploymentconfig":{}},"f:strategy":{"f:activeDeadlineSeconds":{},"f:recreateParams":{".":{},"f:timeoutSeconds":{}},"f:type":{}},"f:template":{".":{},"f:metadata":{".":{},"f:creationTimestamp":{},"f:labels":{".":{},"f:app":{},"f:deploymentconfig":{}}},"f:spec":{".":{},"f:containers":{".":{},"k:{\"name\":\"lre-front\"}":{".":{},"f:env":{".":{},"k:{\"name\":\"REACT_APP_CARGAR_DECLARACIONES_TEST\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_DESCARGAR_CSV\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_DESCARGAR_DECLARACIONES\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_LRE_URL_GUARDAR_TERMINO_CONDICIONES\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_LRE_URL_METADATA\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_OBTENER_DECLARACIONES\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_OBTENER_OBSERVACIONES\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_PARENT_DOMAIN\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_PDF_INSTRUCCIONES\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_PDF_POLITICAS_PRIVACIDAD\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_PDF_SUPLEMENTO_LRE\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_SEGUNDOS_DE_RECARGA\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_VALIDAR_EMPLEADOR\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_VOLVER_REDIRECT_EMPLEADOR\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"TZ\"}":{".":{},"f:name":{},"f:value":{}}},"f:imagePullPolicy":{},"f:name":{},"f:ports":{".":{},"k:{\"containerPort\":3000,\"protocol\":\"TCP\"}":{".":{},"f:containerPort":{},"f:protocol":{}}},"f:resources":{".":{},"f:limits":{".":{},"f:cpu":{},"f:memory":{}},"f:requests":{".":{},"f:cpu":{},"f:memory":{}}},"f:terminationMessagePath":{},"f:terminationMessagePolicy":{}}},"f:dnsPolicy":{},"f:restartPolicy":{},"f:schedulerName":{},"f:securityContext":{},"f:terminationGracePeriodSeconds":{}}}}}},{"manager":"openshift-controller-manager","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-06-04T07:44:39Z","fieldsType":"FieldsV1","fieldsV1":{"f:spec":{"f:template":{"f:spec":{"f:containers":{"k:{\"name\":\"lre-front\"}":{"f:image":{}}}}},"f:triggers":{}}}},{"manager":"openshift-controller-manager","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-06-04T07:45:00Z","fieldsType":"FieldsV1","fieldsV1":{"f:status":{"f:availableReplicas":{},"f:conditions":{".":{},"k:{\"type\":\"Available\"}":{".":{},"f:lastTransitionTime":{},"f:lastUpdateTime":{},"f:message":{},"f:status":{},"f:type":{}},"k:{\"type\":\"Progressing\"}":{".":{},"f:lastTransitionTime":{},"f:lastUpdateTime":{},"f:message":{},"f:reason":{},"f:status":{},"f:type":{}}},"f:details":{".":{},"f:causes":{},"f:message":{}},"f:latestVersion":{},"f:observedGeneration":{},"f:replicas":{},"f:unavailableReplicas":{},"f:updatedReplicas":{}}},"subresource":"status"}]},"spec":{"strategy":{"type":"Recreate","recreateParams":{"timeoutSeconds":600},"resources":{},"activeDeadlineSeconds":21600},"triggers":[{"type":"ImageChange","imageChangeParams":{"automatic":true,"containerNames":["lre-front"],"from":{"kind":"ImageStreamTag","namespace":"lre-dev","name":"lre-front:latest"},"lastTriggeredImage":"image-registry.openshift-image-registry.svc:5000/lre-dev/lre-front@sha256:538eea4b4610d663f6c5bd89916c9c530454c5eaa8c961d8035f7cafe563a8b2"}},{"type":"ConfigChange"}],"replicas":1,"revisionHistoryLimit":10,"test":false,"selector":{"deploymentconfig":"lre-front"},"template":{"metadata":{"creationTimestamp":null,"labels":{"app":"lre-front","deploymentconfig":"lre-front"}},"spec":{"containers":[{"name":"lre-front","image":"image-registry.openshift-image-registry.svc:5000/lre-dev/lre-front@sha256:538eea4b4610d663f6c5bd89916c9c530454c5eaa8c961d8035f7cafe563a8b2","ports":[{"containerPort":3000,"protocol":"TCP"}],"env":[{"name":"TZ","value":"America/Santiago"},{"name":"REACT_APP_VOLVER_REDIRECT_EMPLEADOR","value":"https://lre-services-live-dev.api.dirtrab.cl/fiscalizacion/remuneracion"},{"name":"REACT_APP_PARENT_DOMAIN","value":"*"},{"name":"REACT_APP_OBTENER_DECLARACIONES","value":"https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/declaracion/datosDeclaraciones/empleador/"},{"name":"REACT_APP_OBTENER_OBSERVACIONES","value":"https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/declaracion/datosDeclaraciones/observaciones/"},{"name":"REACT_APP_CARGAR_DECLARACIONES_TEST","value":"https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/declaracion/cargaDeclaracion"},{"name":"REACT_APP_DESCARGAR_CSV","value":"https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/declaracion/descargaDeclaracion/"},{"name":"REACT_APP_DESCARGAR_DECLARACIONES","value":"https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/declaracion/descargaDeclaracion/plantilla"},{"name":"REACT_APP_VALIDAR_EMPLEADOR","value":"https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/validaEmpleador/empleador/"},{"name":"REACT_APP_LRE_URL_METADATA","value":"https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/bff/metadata/empleador"},{"name":"REACT_APP_LRE_URL_GUARDAR_TERMINO_CONDICIONES","value":"https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/empleador/terminoCondiciones"},{"name":"REACT_APP_PDF_INSTRUCCIONES","value":"https://static-content-dev.api.dirtrab.cl/dt-docs/lre/lre_instrucciones_de_carga.pdf"},{"name":"REACT_APP_PDF_POLITICAS_PRIVACIDAD","value":"https://static-content-dev.api.dirtrab.cl/dt-docs/lre/lre_politicas_proteccion_datos_personales.pdf"},{"name":"REACT_APP_PDF_SUPLEMENTO_LRE","value":"https://static-content-dev.api.dirtrab.cl/dt-docs/lre/lre_suplemento.pdf"},{"name":"REACT_APP_SEGUNDOS_DE_RECARGA","value":"20"}],"resources":{"limits":{"cpu":"500m","memory":"600Mi"},"requests":{"cpu":"200m","memory":"100Mi"}},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File","imagePullPolicy":"Always"}],"restartPolicy":"Always","terminationGracePeriodSeconds":30,"dnsPolicy":"ClusterFirst","securityContext":{},"schedulerName":"default-scheduler"}}},"status":{"latestVersion":5,"observedGeneration":5,"replicas":1,"updatedReplicas":1,"availableReplicas":0,"unavailableReplicas":1,"details":{"message":"image change","causes":[{"type":"ImageChange","imageTrigger":{"from":{"kind":"DockerImage","name":"image-registry.openshift-image-registry.svc:5000/lre-dev/lre-front@sha256:6b088dc7f03f3d8c290be03cc24a67772fd9725d1d60cd5e294a5d31b7a1c455"}}}]},"conditions":[{"type":"Available","status":"False","lastUpdateTime":"2023-06-04T07:44:42Z","lastTransitionTime":"2023-06-04T07:44:42Z","message":"Deployment config does not have minimum availability."},{"type":"Progressing","status":"True","lastUpdateTime":"2023-06-04T07:45:01Z","lastTransitionTime":"2023-06-04T07:45:01Z","reason":"ReplicationControllerUpdated","message":"replication controller \"lre-front-4\" is progressing"}]}}
+    creationTimestamp: "2023-06-04T07:45:20Z"
+    generation: 3
+    labels:
+      app: lre-front
+      migration.openshift.io/migrated-by-migmigration: c3ea9ecb-e90b-490b-b3d5-a4a3ca470138
+      migration.openshift.io/migrated-by-migplan: 09dc99a3-20c0-4d89-88a2-c81cce3ef81b
+      openshift.io/deployment-config.name: lre-front
+      velero.io/backup-name: migration-f9156-initial-ff7x9
+      velero.io/restore-name: migration-f9156-final-jccsn
+    name: lre-front-5
+    namespace: lre-dev
+    ownerReferences:
+    - apiVersion: apps.openshift.io/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DeploymentConfig
+      name: lre-front
+      uid: edb720d5-b70c-4b1c-9a7e-2bae40a71c13
+    resourceVersion: "19645912"
+    uid: 55e1bd6b-9894-4868-9d0b-5c5d12e2c887
+  spec:
+    replicas: 0
+    selector:
+      deployment: lre-front-5
+      deploymentconfig: lre-front
+    template:
+      metadata:
+        annotations:
+          openshift.io/deployment-config.latest-version: "5"
+          openshift.io/deployment-config.name: lre-front
+          openshift.io/deployment.name: lre-front-5
+        creationTimestamp: null
+        labels:
+          app: lre-front
+          deployment: lre-front-5
+          deploymentconfig: lre-front
+      spec:
+        containers:
+        - env:
+          - name: TZ
+            value: America/Santiago
+          - name: REACT_APP_VOLVER_REDIRECT_EMPLEADOR
+            value: https://lre-services-live-dev.api.dirtrab.cl/fiscalizacion/remuneracion
+          - name: REACT_APP_PARENT_DOMAIN
+            value: '*'
+          - name: REACT_APP_OBTENER_DECLARACIONES
+            value: https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/declaracion/datosDeclaraciones/empleador/
+          - name: REACT_APP_OBTENER_OBSERVACIONES
+            value: https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/declaracion/datosDeclaraciones/observaciones/
+          - name: REACT_APP_CARGAR_DECLARACIONES_TEST
+            value: https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/declaracion/cargaDeclaracion
+          - name: REACT_APP_DESCARGAR_CSV
+            value: https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/declaracion/descargaDeclaracion/
+          - name: REACT_APP_DESCARGAR_DECLARACIONES
+            value: https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/declaracion/descargaDeclaracion/plantilla
+          - name: REACT_APP_VALIDAR_EMPLEADOR
+            value: https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/validaEmpleador/empleador/
+          - name: REACT_APP_LRE_URL_METADATA
+            value: https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/bff/metadata/empleador
+          - name: REACT_APP_LRE_URL_GUARDAR_TERMINO_CONDICIONES
+            value: https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/empleador/terminoCondiciones
+          - name: REACT_APP_PDF_INSTRUCCIONES
+            value: https://static-content-dev.api.dirtrab.cl/dt-docs/lre/lre_instrucciones_de_carga.pdf
+          - name: REACT_APP_PDF_POLITICAS_PRIVACIDAD
+            value: https://static-content-dev.api.dirtrab.cl/dt-docs/lre/lre_politicas_proteccion_datos_personales.pdf
+          - name: REACT_APP_PDF_SUPLEMENTO_LRE
+            value: https://static-content-dev.api.dirtrab.cl/dt-docs/lre/lre_suplemento.pdf
+          - name: REACT_APP_SEGUNDOS_DE_RECARGA
+            value: "20"
+          image: image-registry.openshift-image-registry.svc:5000/lre-dev/lre-front@sha256:538eea4b4610d663f6c5bd89916c9c530454c5eaa8c961d8035f7cafe563a8b2
+          imagePullPolicy: Always
+          name: lre-front
+          ports:
+          - containerPort: 3000
+            protocol: TCP
+          resources:
+            limits:
+              cpu: 500m
+              memory: 600Mi
+            requests:
+              cpu: 200m
+              memory: 100Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    observedGeneration: 3
+    replicas: 0
+- apiVersion: v1
+  kind: ReplicationController
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/desired-replicas: "1"
+      openshift.io/deployer-pod.completed-at: 2023-06-04 07:45:33 +0000 UTC
+      openshift.io/deployer-pod.created-at: 2023-06-04 07:45:30 +0000 UTC
+      openshift.io/deployer-pod.name: lre-front-6-deploy
+      openshift.io/deployment-config.latest-version: "6"
+      openshift.io/deployment-config.name: lre-front
+      openshift.io/deployment.cancelled: "true"
+      openshift.io/deployment.phase: Failed
+      openshift.io/deployment.replicas: "0"
+      openshift.io/deployment.status-reason: newer deployment was found running
+      openshift.io/encoded-deployment-config: |
+        {"kind":"DeploymentConfig","apiVersion":"apps.openshift.io/v1","metadata":{"name":"lre-front","namespace":"lre-dev","uid":"edb720d5-b70c-4b1c-9a7e-2bae40a71c13","resourceVersion":"19645862","generation":11,"creationTimestamp":"2023-05-25T13:37:37Z","labels":{"app":"lre-front","migration.openshift.io/migrated-by-migmigration":"c3ea9ecb-e90b-490b-b3d5-a4a3ca470138","migration.openshift.io/migrated-by-migplan":"09dc99a3-20c0-4d89-88a2-c81cce3ef81b","velero.io/backup-name":"migration-f9156-initial-ff7x9","velero.io/restore-name":"migration-f9156-final-jccsn"},"annotations":{"openshift.io/backup-registry-hostname":"docker-registry.default.svc:5000","openshift.io/backup-server-version":"1.11","openshift.io/generated-by":"OpenShiftWebConsole","openshift.io/migration-registry":"172.30.164.193:5000","openshift.io/restore-registry-hostname":"image-registry.openshift-image-registry.svc:5000","openshift.io/restore-server-version":"1.23"},"managedFields":[{"manager":"velero-server","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-05-25T13:37:37Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{".":{},"f:openshift.io/backup-registry-hostname":{},"f:openshift.io/backup-server-version":{},"f:openshift.io/generated-by":{},"f:openshift.io/migration-registry":{},"f:openshift.io/restore-registry-hostname":{},"f:openshift.io/restore-server-version":{}},"f:labels":{".":{},"f:app":{},"f:migration.openshift.io/migrated-by-migmigration":{},"f:migration.openshift.io/migrated-by-migplan":{},"f:velero.io/backup-name":{},"f:velero.io/restore-name":{}}},"f:spec":{"f:replicas":{},"f:selector":{".":{},"f:deploymentconfig":{}},"f:strategy":{"f:activeDeadlineSeconds":{},"f:recreateParams":{".":{},"f:timeoutSeconds":{}},"f:type":{}},"f:template":{".":{},"f:metadata":{".":{},"f:creationTimestamp":{},"f:labels":{".":{},"f:app":{},"f:deploymentconfig":{}}},"f:spec":{".":{},"f:containers":{".":{},"k:{\"name\":\"lre-front\"}":{".":{},"f:env":{".":{},"k:{\"name\":\"REACT_APP_CARGAR_DECLARACIONES_TEST\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_DESCARGAR_CSV\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_DESCARGAR_DECLARACIONES\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_LRE_URL_GUARDAR_TERMINO_CONDICIONES\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_LRE_URL_METADATA\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_OBTENER_DECLARACIONES\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_OBTENER_OBSERVACIONES\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_PARENT_DOMAIN\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_PDF_INSTRUCCIONES\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_PDF_POLITICAS_PRIVACIDAD\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_PDF_SUPLEMENTO_LRE\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_SEGUNDOS_DE_RECARGA\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_VALIDAR_EMPLEADOR\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_VOLVER_REDIRECT_EMPLEADOR\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"TZ\"}":{".":{},"f:name":{},"f:value":{}}},"f:imagePullPolicy":{},"f:name":{},"f:ports":{".":{},"k:{\"containerPort\":3000,\"protocol\":\"TCP\"}":{".":{},"f:containerPort":{},"f:protocol":{}}},"f:resources":{".":{},"f:limits":{".":{},"f:cpu":{},"f:memory":{}},"f:requests":{".":{},"f:cpu":{},"f:memory":{}}},"f:terminationMessagePath":{},"f:terminationMessagePolicy":{}}},"f:dnsPolicy":{},"f:restartPolicy":{},"f:schedulerName":{},"f:securityContext":{},"f:terminationGracePeriodSeconds":{}}}}}},{"manager":"openshift-controller-manager","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-06-04T07:44:39Z","fieldsType":"FieldsV1","fieldsV1":{"f:spec":{"f:template":{"f:spec":{"f:containers":{"k:{\"name\":\"lre-front\"}":{"f:image":{}}}}},"f:triggers":{}}}},{"manager":"openshift-controller-manager","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-06-04T07:45:23Z","fieldsType":"FieldsV1","fieldsV1":{"f:status":{"f:availableReplicas":{},"f:conditions":{".":{},"k:{\"type\":\"Available\"}":{".":{},"f:lastTransitionTime":{},"f:lastUpdateTime":{},"f:message":{},"f:status":{},"f:type":{}},"k:{\"type\":\"Progressing\"}":{".":{},"f:lastTransitionTime":{},"f:lastUpdateTime":{},"f:message":{},"f:reason":{},"f:status":{},"f:type":{}}},"f:details":{".":{},"f:causes":{},"f:message":{}},"f:latestVersion":{},"f:observedGeneration":{},"f:replicas":{},"f:unavailableReplicas":{},"f:updatedReplicas":{}}},"subresource":"status"}]},"spec":{"strategy":{"type":"Recreate","recreateParams":{"timeoutSeconds":600},"resources":{},"activeDeadlineSeconds":21600},"triggers":[{"type":"ImageChange","imageChangeParams":{"automatic":true,"containerNames":["lre-front"],"from":{"kind":"ImageStreamTag","namespace":"lre-dev","name":"lre-front:latest"},"lastTriggeredImage":"image-registry.openshift-image-registry.svc:5000/lre-dev/lre-front@sha256:2ad84cc0b5e0515fbbb7f138c085fe26c5d5a08fd6fb7d2d0d3453c2f2069f30"}},{"type":"ConfigChange"}],"replicas":1,"revisionHistoryLimit":10,"test":false,"selector":{"deploymentconfig":"lre-front"},"template":{"metadata":{"creationTimestamp":null,"labels":{"app":"lre-front","deploymentconfig":"lre-front"}},"spec":{"containers":[{"name":"lre-front","image":"image-registry.openshift-image-registry.svc:5000/lre-dev/lre-front@sha256:2ad84cc0b5e0515fbbb7f138c085fe26c5d5a08fd6fb7d2d0d3453c2f2069f30","ports":[{"containerPort":3000,"protocol":"TCP"}],"env":[{"name":"TZ","value":"America/Santiago"},{"name":"REACT_APP_VOLVER_REDIRECT_EMPLEADOR","value":"https://lre-services-live-dev.api.dirtrab.cl/fiscalizacion/remuneracion"},{"name":"REACT_APP_PARENT_DOMAIN","value":"*"},{"name":"REACT_APP_OBTENER_DECLARACIONES","value":"https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/declaracion/datosDeclaraciones/empleador/"},{"name":"REACT_APP_OBTENER_OBSERVACIONES","value":"https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/declaracion/datosDeclaraciones/observaciones/"},{"name":"REACT_APP_CARGAR_DECLARACIONES_TEST","value":"https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/declaracion/cargaDeclaracion"},{"name":"REACT_APP_DESCARGAR_CSV","value":"https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/declaracion/descargaDeclaracion/"},{"name":"REACT_APP_DESCARGAR_DECLARACIONES","value":"https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/declaracion/descargaDeclaracion/plantilla"},{"name":"REACT_APP_VALIDAR_EMPLEADOR","value":"https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/validaEmpleador/empleador/"},{"name":"REACT_APP_LRE_URL_METADATA","value":"https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/bff/metadata/empleador"},{"name":"REACT_APP_LRE_URL_GUARDAR_TERMINO_CONDICIONES","value":"https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/empleador/terminoCondiciones"},{"name":"REACT_APP_PDF_INSTRUCCIONES","value":"https://static-content-dev.api.dirtrab.cl/dt-docs/lre/lre_instrucciones_de_carga.pdf"},{"name":"REACT_APP_PDF_POLITICAS_PRIVACIDAD","value":"https://static-content-dev.api.dirtrab.cl/dt-docs/lre/lre_politicas_proteccion_datos_personales.pdf"},{"name":"REACT_APP_PDF_SUPLEMENTO_LRE","value":"https://static-content-dev.api.dirtrab.cl/dt-docs/lre/lre_suplemento.pdf"},{"name":"REACT_APP_SEGUNDOS_DE_RECARGA","value":"20"}],"resources":{"limits":{"cpu":"500m","memory":"600Mi"},"requests":{"cpu":"200m","memory":"100Mi"}},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File","imagePullPolicy":"Always"}],"restartPolicy":"Always","terminationGracePeriodSeconds":30,"dnsPolicy":"ClusterFirst","securityContext":{},"schedulerName":"default-scheduler"}}},"status":{"latestVersion":6,"observedGeneration":8,"replicas":1,"updatedReplicas":1,"availableReplicas":0,"unavailableReplicas":1,"details":{"message":"image change","causes":[{"type":"ImageChange","imageTrigger":{"from":{"kind":"DockerImage","name":"image-registry.openshift-image-registry.svc:5000/lre-dev/lre-front@sha256:75d46db7925fc6a9aa6c3dfb1b81d90592d1e4f6baa3028d058a917a5d02ddd8"}}}]},"conditions":[{"type":"Available","status":"False","lastUpdateTime":"2023-06-04T07:45:22Z","lastTransitionTime":"2023-06-04T07:45:22Z","message":"Deployment config does not have minimum availability."},{"type":"Progressing","status":"True","lastUpdateTime":"2023-06-04T07:45:23Z","lastTransitionTime":"2023-06-04T07:45:23Z","reason":"ReplicationControllerUpdated","message":"replication controller \"lre-front-5\" is progressing"}]}}
+    creationTimestamp: "2023-06-04T07:45:30Z"
+    generation: 1
+    labels:
+      app: lre-front
+      migration.openshift.io/migrated-by-migmigration: c3ea9ecb-e90b-490b-b3d5-a4a3ca470138
+      migration.openshift.io/migrated-by-migplan: 09dc99a3-20c0-4d89-88a2-c81cce3ef81b
+      openshift.io/deployment-config.name: lre-front
+      velero.io/backup-name: migration-f9156-initial-ff7x9
+      velero.io/restore-name: migration-f9156-final-jccsn
+    name: lre-front-6
+    namespace: lre-dev
+    ownerReferences:
+    - apiVersion: apps.openshift.io/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DeploymentConfig
+      name: lre-front
+      uid: edb720d5-b70c-4b1c-9a7e-2bae40a71c13
+    resourceVersion: "19645947"
+    uid: 403b8b03-7a3d-4176-b84f-6ec8e88a85f9
+  spec:
+    replicas: 0
+    selector:
+      deployment: lre-front-6
+      deploymentconfig: lre-front
+    template:
+      metadata:
+        annotations:
+          openshift.io/deployment-config.latest-version: "6"
+          openshift.io/deployment-config.name: lre-front
+          openshift.io/deployment.name: lre-front-6
+        creationTimestamp: null
+        labels:
+          app: lre-front
+          deployment: lre-front-6
+          deploymentconfig: lre-front
+      spec:
+        containers:
+        - env:
+          - name: TZ
+            value: America/Santiago
+          - name: REACT_APP_VOLVER_REDIRECT_EMPLEADOR
+            value: https://lre-services-live-dev.api.dirtrab.cl/fiscalizacion/remuneracion
+          - name: REACT_APP_PARENT_DOMAIN
+            value: '*'
+          - name: REACT_APP_OBTENER_DECLARACIONES
+            value: https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/declaracion/datosDeclaraciones/empleador/
+          - name: REACT_APP_OBTENER_OBSERVACIONES
+            value: https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/declaracion/datosDeclaraciones/observaciones/
+          - name: REACT_APP_CARGAR_DECLARACIONES_TEST
+            value: https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/declaracion/cargaDeclaracion
+          - name: REACT_APP_DESCARGAR_CSV
+            value: https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/declaracion/descargaDeclaracion/
+          - name: REACT_APP_DESCARGAR_DECLARACIONES
+            value: https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/declaracion/descargaDeclaracion/plantilla
+          - name: REACT_APP_VALIDAR_EMPLEADOR
+            value: https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/validaEmpleador/empleador/
+          - name: REACT_APP_LRE_URL_METADATA
+            value: https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/bff/metadata/empleador
+          - name: REACT_APP_LRE_URL_GUARDAR_TERMINO_CONDICIONES
+            value: https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/empleador/terminoCondiciones
+          - name: REACT_APP_PDF_INSTRUCCIONES
+            value: https://static-content-dev.api.dirtrab.cl/dt-docs/lre/lre_instrucciones_de_carga.pdf
+          - name: REACT_APP_PDF_POLITICAS_PRIVACIDAD
+            value: https://static-content-dev.api.dirtrab.cl/dt-docs/lre/lre_politicas_proteccion_datos_personales.pdf
+          - name: REACT_APP_PDF_SUPLEMENTO_LRE
+            value: https://static-content-dev.api.dirtrab.cl/dt-docs/lre/lre_suplemento.pdf
+          - name: REACT_APP_SEGUNDOS_DE_RECARGA
+            value: "20"
+          image: image-registry.openshift-image-registry.svc:5000/lre-dev/lre-front@sha256:2ad84cc0b5e0515fbbb7f138c085fe26c5d5a08fd6fb7d2d0d3453c2f2069f30
+          imagePullPolicy: Always
+          name: lre-front
+          ports:
+          - containerPort: 3000
+            protocol: TCP
+          resources:
+            limits:
+              cpu: 500m
+              memory: 600Mi
+            requests:
+              cpu: 200m
+              memory: 100Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    observedGeneration: 1
+    replicas: 0
+- apiVersion: v1
+  kind: ReplicationController
+  metadata:
+    annotations:
+      openshift.io/deployer-pod.completed-at: 2023-06-04 07:45:54 +0000 UTC
+      openshift.io/deployer-pod.created-at: 2023-06-04 07:45:34 +0000 UTC
+      openshift.io/deployer-pod.name: lre-front-7-deploy
+      openshift.io/deployment-config.latest-version: "7"
+      openshift.io/deployment-config.name: lre-front
+      openshift.io/deployment.phase: Complete
+      openshift.io/deployment.replicas: "1"
+      openshift.io/deployment.status-reason: image change
+      openshift.io/encoded-deployment-config: |
+        {"kind":"DeploymentConfig","apiVersion":"apps.openshift.io/v1","metadata":{"name":"lre-front","namespace":"lre-dev","uid":"edb720d5-b70c-4b1c-9a7e-2bae40a71c13","resourceVersion":"19645882","generation":12,"creationTimestamp":"2023-05-25T13:37:37Z","labels":{"app":"lre-front","migration.openshift.io/migrated-by-migmigration":"c3ea9ecb-e90b-490b-b3d5-a4a3ca470138","migration.openshift.io/migrated-by-migplan":"09dc99a3-20c0-4d89-88a2-c81cce3ef81b","velero.io/backup-name":"migration-f9156-initial-ff7x9","velero.io/restore-name":"migration-f9156-final-jccsn"},"annotations":{"openshift.io/backup-registry-hostname":"docker-registry.default.svc:5000","openshift.io/backup-server-version":"1.11","openshift.io/generated-by":"OpenShiftWebConsole","openshift.io/migration-registry":"172.30.164.193:5000","openshift.io/restore-registry-hostname":"image-registry.openshift-image-registry.svc:5000","openshift.io/restore-server-version":"1.23"},"managedFields":[{"manager":"velero-server","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-05-25T13:37:37Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{".":{},"f:openshift.io/backup-registry-hostname":{},"f:openshift.io/backup-server-version":{},"f:openshift.io/generated-by":{},"f:openshift.io/migration-registry":{},"f:openshift.io/restore-registry-hostname":{},"f:openshift.io/restore-server-version":{}},"f:labels":{".":{},"f:app":{},"f:migration.openshift.io/migrated-by-migmigration":{},"f:migration.openshift.io/migrated-by-migplan":{},"f:velero.io/backup-name":{},"f:velero.io/restore-name":{}}},"f:spec":{"f:replicas":{},"f:selector":{".":{},"f:deploymentconfig":{}},"f:strategy":{"f:activeDeadlineSeconds":{},"f:recreateParams":{".":{},"f:timeoutSeconds":{}},"f:type":{}},"f:template":{".":{},"f:metadata":{".":{},"f:creationTimestamp":{},"f:labels":{".":{},"f:app":{},"f:deploymentconfig":{}}},"f:spec":{".":{},"f:containers":{".":{},"k:{\"name\":\"lre-front\"}":{".":{},"f:env":{".":{},"k:{\"name\":\"REACT_APP_CARGAR_DECLARACIONES_TEST\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_DESCARGAR_CSV\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_DESCARGAR_DECLARACIONES\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_LRE_URL_GUARDAR_TERMINO_CONDICIONES\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_LRE_URL_METADATA\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_OBTENER_DECLARACIONES\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_OBTENER_OBSERVACIONES\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_PARENT_DOMAIN\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_PDF_INSTRUCCIONES\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_PDF_POLITICAS_PRIVACIDAD\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_PDF_SUPLEMENTO_LRE\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_SEGUNDOS_DE_RECARGA\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_VALIDAR_EMPLEADOR\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_VOLVER_REDIRECT_EMPLEADOR\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"TZ\"}":{".":{},"f:name":{},"f:value":{}}},"f:imagePullPolicy":{},"f:name":{},"f:ports":{".":{},"k:{\"containerPort\":3000,\"protocol\":\"TCP\"}":{".":{},"f:containerPort":{},"f:protocol":{}}},"f:resources":{".":{},"f:limits":{".":{},"f:cpu":{},"f:memory":{}},"f:requests":{".":{},"f:cpu":{},"f:memory":{}}},"f:terminationMessagePath":{},"f:terminationMessagePolicy":{}}},"f:dnsPolicy":{},"f:restartPolicy":{},"f:schedulerName":{},"f:securityContext":{},"f:terminationGracePeriodSeconds":{}}}}}},{"manager":"openshift-controller-manager","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-06-04T07:44:39Z","fieldsType":"FieldsV1","fieldsV1":{"f:spec":{"f:template":{"f:spec":{"f:containers":{"k:{\"name\":\"lre-front\"}":{"f:image":{}}}}},"f:triggers":{}}}},{"manager":"openshift-controller-manager","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-06-04T07:45:30Z","fieldsType":"FieldsV1","fieldsV1":{"f:status":{"f:availableReplicas":{},"f:conditions":{".":{},"k:{\"type\":\"Available\"}":{".":{},"f:lastTransitionTime":{},"f:lastUpdateTime":{},"f:message":{},"f:status":{},"f:type":{}},"k:{\"type\":\"Progressing\"}":{".":{},"f:lastTransitionTime":{},"f:lastUpdateTime":{},"f:message":{},"f:status":{},"f:type":{}}},"f:details":{".":{},"f:causes":{},"f:message":{}},"f:latestVersion":{},"f:observedGeneration":{},"f:replicas":{},"f:unavailableReplicas":{},"f:updatedReplicas":{}}},"subresource":"status"}]},"spec":{"strategy":{"type":"Recreate","recreateParams":{"timeoutSeconds":600},"resources":{},"activeDeadlineSeconds":21600},"triggers":[{"type":"ImageChange","imageChangeParams":{"automatic":true,"containerNames":["lre-front"],"from":{"kind":"ImageStreamTag","namespace":"lre-dev","name":"lre-front:latest"},"lastTriggeredImage":"image-registry.openshift-image-registry.svc:5000/lre-dev/lre-front@sha256:a49eff66df5e36f15840a29ce6344b28e744fc4650438d51f60d6ab9cf89b360"}},{"type":"ConfigChange"}],"replicas":1,"revisionHistoryLimit":10,"test":false,"selector":{"deploymentconfig":"lre-front"},"template":{"metadata":{"creationTimestamp":null,"labels":{"app":"lre-front","deploymentconfig":"lre-front"}},"spec":{"containers":[{"name":"lre-front","image":"image-registry.openshift-image-registry.svc:5000/lre-dev/lre-front@sha256:a49eff66df5e36f15840a29ce6344b28e744fc4650438d51f60d6ab9cf89b360","ports":[{"containerPort":3000,"protocol":"TCP"}],"env":[{"name":"TZ","value":"America/Santiago"},{"name":"REACT_APP_VOLVER_REDIRECT_EMPLEADOR","value":"https://lre-services-live-dev.api.dirtrab.cl/fiscalizacion/remuneracion"},{"name":"REACT_APP_PARENT_DOMAIN","value":"*"},{"name":"REACT_APP_OBTENER_DECLARACIONES","value":"https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/declaracion/datosDeclaraciones/empleador/"},{"name":"REACT_APP_OBTENER_OBSERVACIONES","value":"https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/declaracion/datosDeclaraciones/observaciones/"},{"name":"REACT_APP_CARGAR_DECLARACIONES_TEST","value":"https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/declaracion/cargaDeclaracion"},{"name":"REACT_APP_DESCARGAR_CSV","value":"https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/declaracion/descargaDeclaracion/"},{"name":"REACT_APP_DESCARGAR_DECLARACIONES","value":"https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/declaracion/descargaDeclaracion/plantilla"},{"name":"REACT_APP_VALIDAR_EMPLEADOR","value":"https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/validaEmpleador/empleador/"},{"name":"REACT_APP_LRE_URL_METADATA","value":"https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/bff/metadata/empleador"},{"name":"REACT_APP_LRE_URL_GUARDAR_TERMINO_CONDICIONES","value":"https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/empleador/terminoCondiciones"},{"name":"REACT_APP_PDF_INSTRUCCIONES","value":"https://static-content-dev.api.dirtrab.cl/dt-docs/lre/lre_instrucciones_de_carga.pdf"},{"name":"REACT_APP_PDF_POLITICAS_PRIVACIDAD","value":"https://static-content-dev.api.dirtrab.cl/dt-docs/lre/lre_politicas_proteccion_datos_personales.pdf"},{"name":"REACT_APP_PDF_SUPLEMENTO_LRE","value":"https://static-content-dev.api.dirtrab.cl/dt-docs/lre/lre_suplemento.pdf"},{"name":"REACT_APP_SEGUNDOS_DE_RECARGA","value":"20"}],"resources":{"limits":{"cpu":"500m","memory":"600Mi"},"requests":{"cpu":"200m","memory":"100Mi"}},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File","imagePullPolicy":"Always"}],"restartPolicy":"Always","terminationGracePeriodSeconds":30,"dnsPolicy":"ClusterFirst","securityContext":{},"schedulerName":"default-scheduler"}}},"status":{"latestVersion":7,"observedGeneration":11,"replicas":1,"updatedReplicas":0,"availableReplicas":0,"unavailableReplicas":1,"details":{"message":"image change","causes":[{"type":"ImageChange","imageTrigger":{"from":{"kind":"DockerImage","name":"image-registry.openshift-image-registry.svc:5000/lre-dev/lre-front@sha256:a49eff66df5e36f15840a29ce6344b28e744fc4650438d51f60d6ab9cf89b360"}}}]},"conditions":[{"type":"Available","status":"False","lastUpdateTime":"2023-06-04T07:45:22Z","lastTransitionTime":"2023-06-04T07:45:22Z","message":"Deployment config does not have minimum availability."},{"type":"Progressing","status":"Unknown","lastUpdateTime":"2023-06-04T07:45:30Z","lastTransitionTime":"2023-06-04T07:45:30Z","message":"replication controller \"lre-front-6\" is waiting for pod \"lre-front-6-deploy\" to run"}]}}
+    creationTimestamp: "2023-06-04T07:45:34Z"
+    generation: 2
+    labels:
+      app: lre-front
+      migration.openshift.io/migrated-by-migmigration: c3ea9ecb-e90b-490b-b3d5-a4a3ca470138
+      migration.openshift.io/migrated-by-migplan: 09dc99a3-20c0-4d89-88a2-c81cce3ef81b
+      openshift.io/deployment-config.name: lre-front
+      velero.io/backup-name: migration-f9156-initial-ff7x9
+      velero.io/restore-name: migration-f9156-final-jccsn
+    name: lre-front-7
+    namespace: lre-dev
+    ownerReferences:
+    - apiVersion: apps.openshift.io/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DeploymentConfig
+      name: lre-front
+      uid: edb720d5-b70c-4b1c-9a7e-2bae40a71c13
+    resourceVersion: "472918003"
+    uid: b1737463-b7a1-4873-bbdb-d6100de47b8b
+  spec:
+    replicas: 1
+    selector:
+      deployment: lre-front-7
+      deploymentconfig: lre-front
+    template:
+      metadata:
+        annotations:
+          openshift.io/deployment-config.latest-version: "7"
+          openshift.io/deployment-config.name: lre-front
+          openshift.io/deployment.name: lre-front-7
+        creationTimestamp: null
+        labels:
+          app: lre-front
+          deployment: lre-front-7
+          deploymentconfig: lre-front
+      spec:
+        containers:
+        - env:
+          - name: TZ
+            value: America/Santiago
+          - name: REACT_APP_VOLVER_REDIRECT_EMPLEADOR
+            value: https://lre-services-live-dev.api.dirtrab.cl/fiscalizacion/remuneracion
+          - name: REACT_APP_PARENT_DOMAIN
+            value: '*'
+          - name: REACT_APP_OBTENER_DECLARACIONES
+            value: https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/declaracion/datosDeclaraciones/empleador/
+          - name: REACT_APP_OBTENER_OBSERVACIONES
+            value: https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/declaracion/datosDeclaraciones/observaciones/
+          - name: REACT_APP_CARGAR_DECLARACIONES_TEST
+            value: https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/declaracion/cargaDeclaracion
+          - name: REACT_APP_DESCARGAR_CSV
+            value: https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/declaracion/descargaDeclaracion/
+          - name: REACT_APP_DESCARGAR_DECLARACIONES
+            value: https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/declaracion/descargaDeclaracion/plantilla
+          - name: REACT_APP_VALIDAR_EMPLEADOR
+            value: https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/validaEmpleador/empleador/
+          - name: REACT_APP_LRE_URL_METADATA
+            value: https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/bff/metadata/empleador
+          - name: REACT_APP_LRE_URL_GUARDAR_TERMINO_CONDICIONES
+            value: https://api-integracion-lre-dev.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/empleador/terminoCondiciones
+          - name: REACT_APP_PDF_INSTRUCCIONES
+            value: https://static-content-dev.api.dirtrab.cl/dt-docs/lre/lre_instrucciones_de_carga.pdf
+          - name: REACT_APP_PDF_POLITICAS_PRIVACIDAD
+            value: https://static-content-dev.api.dirtrab.cl/dt-docs/lre/lre_politicas_proteccion_datos_personales.pdf
+          - name: REACT_APP_PDF_SUPLEMENTO_LRE
+            value: https://static-content-dev.api.dirtrab.cl/dt-docs/lre/lre_suplemento.pdf
+          - name: REACT_APP_SEGUNDOS_DE_RECARGA
+            value: "20"
+          image: image-registry.openshift-image-registry.svc:5000/lre-dev/lre-front@sha256:a49eff66df5e36f15840a29ce6344b28e744fc4650438d51f60d6ab9cf89b360
+          imagePullPolicy: Always
+          name: lre-front
+          ports:
+          - containerPort: 3000
+            protocol: TCP
+          resources:
+            limits:
+              cpu: 500m
+              memory: 600Mi
+            requests:
+              cpu: 200m
+              memory: 100Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    availableReplicas: 1
+    fullyLabeledReplicas: 1
+    observedGeneration: 2
+    readyReplicas: 1
+    replicas: 1
+- apiVersion: v1
+  kind: ReplicationController
+  metadata:
+    annotations:
+      openshift.io/deployer-pod.completed-at: 2023-06-05 17:51:25 +0000 UTC
+      openshift.io/deployer-pod.created-at: 2023-06-05 17:51:08 +0000 UTC
+      openshift.io/deployer-pod.name: product-lre-1-deploy
+      openshift.io/deployment-config.latest-version: "1"
+      openshift.io/deployment-config.name: product-lre
+      openshift.io/deployment.phase: Complete
+      openshift.io/deployment.replicas: "1"
+      openshift.io/deployment.status-reason: manual change
+      openshift.io/encoded-deployment-config: |
+        {"kind":"DeploymentConfig","apiVersion":"apps.openshift.io/v1","metadata":{"name":"product-lre","namespace":"lre-dev","uid":"eeeec4e5-ecf9-410d-8157-9e5a6e95fc63","resourceVersion":"20931960","generation":2,"creationTimestamp":"2023-05-25T13:37:37Z","labels":{"app":"product-lre","migration.openshift.io/migrated-by-migmigration":"c3ea9ecb-e90b-490b-b3d5-a4a3ca470138","migration.openshift.io/migrated-by-migplan":"09dc99a3-20c0-4d89-88a2-c81cce3ef81b","velero.io/backup-name":"migration-f9156-initial-ff7x9","velero.io/restore-name":"migration-f9156-final-jccsn"},"annotations":{"openshift.io/backup-registry-hostname":"docker-registry.default.svc:5000","openshift.io/backup-server-version":"1.11","openshift.io/generated-by":"OpenShiftNewApp","openshift.io/migration-registry":"172.30.164.193:5000","openshift.io/restore-registry-hostname":"image-registry.openshift-image-registry.svc:5000","openshift.io/restore-server-version":"1.23"},"managedFields":[{"manager":"openshift-controller-manager","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-05-25T13:37:37Z","fieldsType":"FieldsV1","fieldsV1":{"f:status":{"f:conditions":{".":{},"k:{\"type\":\"Available\"}":{".":{},"f:lastTransitionTime":{},"f:lastUpdateTime":{},"f:message":{},"f:status":{},"f:type":{}}},"f:observedGeneration":{}}},"subresource":"status"},{"manager":"velero-server","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-05-25T13:37:37Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{".":{},"f:openshift.io/backup-registry-hostname":{},"f:openshift.io/backup-server-version":{},"f:openshift.io/generated-by":{},"f:openshift.io/migration-registry":{},"f:openshift.io/restore-registry-hostname":{},"f:openshift.io/restore-server-version":{}},"f:labels":{".":{},"f:app":{},"f:migration.openshift.io/migrated-by-migmigration":{},"f:migration.openshift.io/migrated-by-migplan":{},"f:velero.io/backup-name":{},"f:velero.io/restore-name":{}}},"f:spec":{"f:replicas":{},"f:revisionHistoryLimit":{},"f:selector":{".":{},"f:app":{},"f:deploymentconfig":{}},"f:strategy":{"f:activeDeadlineSeconds":{},"f:rollingParams":{".":{},"f:intervalSeconds":{},"f:maxSurge":{},"f:maxUnavailable":{},"f:timeoutSeconds":{},"f:updatePeriodSeconds":{}},"f:type":{}},"f:template":{".":{},"f:metadata":{".":{},"f:annotations":{".":{},"f:openshift.io/generated-by":{}},"f:creationTimestamp":{},"f:labels":{".":{},"f:app":{},"f:deploymentconfig":{}}},"f:spec":{".":{},"f:containers":{".":{},"k:{\"name\":\"product-lre\"}":{".":{},"f:env":{".":{},"k:{\"name\":\"REACT_APP_LRE_CARGAR_DECLARACION\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_LRE_EMPLEADOR\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_LRE_OBTENER_CSV_DECLARACION\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_LRE_OBTENER_DECLARACIONES\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_LRE_OBTENER_OBSERVACIONES\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_LRE_OBTENER_PLANTILLA_EJEMPLO\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_LRE_URL_GUARDAR_TERMINO_CONDICIONES\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_LRE_URL_METADATA\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_PARENT_DOMAIN\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_PDF_INSTRUCCIONES\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_PDF_POLITICAS_PRIVACIDAD\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_PDF_SUPLEMENTO_LRE\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_VOLVER_REDIRECT_EMPLEADOR\"}":{".":{},"f:name":{},"f:value":{}}},"f:image":{},"f:imagePullPolicy":{},"f:name":{},"f:ports":{".":{},"k:{\"containerPort\":8080,\"protocol\":\"TCP\"}":{".":{},"f:containerPort":{},"f:protocol":{}}},"f:resources":{".":{},"f:limits":{".":{},"f:cpu":{},"f:memory":{}},"f:requests":{".":{},"f:cpu":{},"f:memory":{}}},"f:terminationMessagePath":{},"f:terminationMessagePolicy":{}}},"f:dnsPolicy":{},"f:restartPolicy":{},"f:schedulerName":{},"f:securityContext":{},"f:terminationGracePeriodSeconds":{}}},"f:triggers":{}}}}]},"spec":{"strategy":{"type":"Rolling","rollingParams":{"updatePeriodSeconds":1,"intervalSeconds":1,"timeoutSeconds":600,"maxUnavailable":"25%","maxSurge":"25%"},"resources":{},"activeDeadlineSeconds":21600},"triggers":[{"type":"ImageChange","imageChangeParams":{"containerNames":["product-lre"],"from":{"kind":"ImageStreamTag","namespace":"lre-dev","name":"product-lre:latest"},"lastTriggeredImage":"image-registry.openshift-image-registry.svc:5000/lre-dev/product-lre@sha256:60fbe25035b0491ee432f88807d3e2eb14aca0b0b45677b2bbaa9aba04cec41e"}}],"replicas":1,"revisionHistoryLimit":10,"test":false,"selector":{"app":"product-lre","deploymentconfig":"product-lre"},"template":{"metadata":{"creationTimestamp":null,"labels":{"app":"product-lre","deploymentconfig":"product-lre"},"annotations":{"openshift.io/generated-by":"OpenShiftNewApp"}},"spec":{"containers":[{"name":"product-lre","image":"image-registry.openshift-image-registry.svc:5000/lre-dev/product-lre@sha256:60fbe25035b0491ee432f88807d3e2eb14aca0b0b45677b2bbaa9aba04cec41e","ports":[{"containerPort":8080,"protocol":"TCP"}],"env":[{"name":"REACT_APP_VOLVER_REDIRECT_EMPLEADOR","value":"/empleador/home"},{"name":"REACT_APP_PARENT_DOMAIN","value":"*"},{"name":"REACT_APP_LRE_OBTENER_DECLARACIONES","value":"https://lre-services-live-qa.api.dirtrab.cl/fiscalizacion/remuneracion/declaracion/datosDeclaraciones/empleador/"},{"name":"REACT_APP_LRE_OBTENER_OBSERVACIONES","value":"https://lre-services-live-qa.api.dirtrab.cl/fiscalizacion/remuneracion/declaracion/datosDeclaraciones/observaciones/"},{"name":"REACT_APP_LRE_CARGAR_DECLARACION","value":"https://lre-services-live-qa.api.dirtrab.cl/fiscalizacion/remuneracion/declaracion/cargaDeclaracion"},{"name":"REACT_APP_LRE_OBTENER_CSV_DECLARACION","value":"https://lre-services-live-qa.api.dirtrab.cl/fiscalizacion/remuneracion/declaracion/descargaDeclaracion/"},{"name":"REACT_APP_LRE_OBTENER_PLANTILLA_EJEMPLO","value":"https://lre-services-live-qa.api.dirtrab.cl/fiscalizacion/remuneracion/declaracion/descargaDeclaracion/plantilla"},{"name":"REACT_APP_LRE_EMPLEADOR","value":"https://lre-services-live-qa.api.dirtrab.cl/fiscalizacion/remuneracion/validaEmpleador/empleador/"},{"name":"REACT_APP_LRE_URL_METADATA","value":"https://lre-services-live-qa.api.dirtrab.cl/fiscalizacion/remuneracion/bff/metadata/empleador/"},{"name":"REACT_APP_LRE_URL_GUARDAR_TERMINO_CONDICIONES","value":"https://lre-services-live-qa.api.dirtrab.cl/fiscalizacion/remuneracion/terminoCondiciones/empleador/"},{"name":"REACT_APP_PDF_INSTRUCCIONES","value":"https://static-content.api.dirtrab.cl/dt-docs/lre/lre_instrucciones_de_carga.pdf"},{"name":"REACT_APP_PDF_POLITICAS_PRIVACIDAD","value":"https://static-content.api.dirtrab.cl/dt-docs/lre/lre_politicas_proteccion_datos_personales.pdf"},{"name":"REACT_APP_PDF_SUPLEMENTO_LRE","value":"https://static-content.api.dirtrab.cl/dt-docs/lre/lre_suplemento.pdf"}],"resources":{"limits":{"cpu":"500m","memory":"600Mi"},"requests":{"cpu":"200m","memory":"100Mi"}},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File","imagePullPolicy":"Always"}],"restartPolicy":"Always","terminationGracePeriodSeconds":30,"dnsPolicy":"ClusterFirst","securityContext":{},"schedulerName":"default-scheduler"}}},"status":{"latestVersion":1,"observedGeneration":1,"replicas":0,"updatedReplicas":0,"availableReplicas":0,"unavailableReplicas":0,"details":{"message":"manual change","causes":[{"type":"Manual"}]},"conditions":[{"type":"Available","status":"False","lastUpdateTime":"2023-05-25T13:37:37Z","lastTransitionTime":"2023-05-25T13:37:37Z","message":"Deployment config does not have minimum availability."}]}}
+    creationTimestamp: "2023-06-05T17:51:08Z"
+    generation: 2
+    labels:
+      app: product-lre
+      migration.openshift.io/migrated-by-migmigration: c3ea9ecb-e90b-490b-b3d5-a4a3ca470138
+      migration.openshift.io/migrated-by-migplan: 09dc99a3-20c0-4d89-88a2-c81cce3ef81b
+      openshift.io/deployment-config.name: product-lre
+      velero.io/backup-name: migration-f9156-initial-ff7x9
+      velero.io/restore-name: migration-f9156-final-jccsn
+    name: product-lre-1
+    namespace: lre-dev
+    ownerReferences:
+    - apiVersion: apps.openshift.io/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DeploymentConfig
+      name: product-lre
+      uid: eeeec4e5-ecf9-410d-8157-9e5a6e95fc63
+    resourceVersion: "467404304"
+    uid: e9859f49-ab08-4138-9dee-1c630d2988e4
+  spec:
+    replicas: 1
+    selector:
+      app: product-lre
+      deployment: product-lre-1
+      deploymentconfig: product-lre
+    template:
+      metadata:
+        annotations:
+          openshift.io/deployment-config.latest-version: "1"
+          openshift.io/deployment-config.name: product-lre
+          openshift.io/deployment.name: product-lre-1
+          openshift.io/generated-by: OpenShiftNewApp
+        creationTimestamp: null
+        labels:
+          app: product-lre
+          deployment: product-lre-1
+          deploymentconfig: product-lre
+      spec:
+        containers:
+        - env:
+          - name: REACT_APP_VOLVER_REDIRECT_EMPLEADOR
+            value: /empleador/home
+          - name: REACT_APP_PARENT_DOMAIN
+            value: '*'
+          - name: REACT_APP_LRE_OBTENER_DECLARACIONES
+            value: https://lre-services-live-qa.api.dirtrab.cl/fiscalizacion/remuneracion/declaracion/datosDeclaraciones/empleador/
+          - name: REACT_APP_LRE_OBTENER_OBSERVACIONES
+            value: https://lre-services-live-qa.api.dirtrab.cl/fiscalizacion/remuneracion/declaracion/datosDeclaraciones/observaciones/
+          - name: REACT_APP_LRE_CARGAR_DECLARACION
+            value: https://lre-services-live-qa.api.dirtrab.cl/fiscalizacion/remuneracion/declaracion/cargaDeclaracion
+          - name: REACT_APP_LRE_OBTENER_CSV_DECLARACION
+            value: https://lre-services-live-qa.api.dirtrab.cl/fiscalizacion/remuneracion/declaracion/descargaDeclaracion/
+          - name: REACT_APP_LRE_OBTENER_PLANTILLA_EJEMPLO
+            value: https://lre-services-live-qa.api.dirtrab.cl/fiscalizacion/remuneracion/declaracion/descargaDeclaracion/plantilla
+          - name: REACT_APP_LRE_EMPLEADOR
+            value: https://lre-services-live-qa.api.dirtrab.cl/fiscalizacion/remuneracion/validaEmpleador/empleador/
+          - name: REACT_APP_LRE_URL_METADATA
+            value: https://lre-services-live-qa.api.dirtrab.cl/fiscalizacion/remuneracion/bff/metadata/empleador/
+          - name: REACT_APP_LRE_URL_GUARDAR_TERMINO_CONDICIONES
+            value: https://lre-services-live-qa.api.dirtrab.cl/fiscalizacion/remuneracion/terminoCondiciones/empleador/
+          - name: REACT_APP_PDF_INSTRUCCIONES
+            value: https://static-content.api.dirtrab.cl/dt-docs/lre/lre_instrucciones_de_carga.pdf
+          - name: REACT_APP_PDF_POLITICAS_PRIVACIDAD
+            value: https://static-content.api.dirtrab.cl/dt-docs/lre/lre_politicas_proteccion_datos_personales.pdf
+          - name: REACT_APP_PDF_SUPLEMENTO_LRE
+            value: https://static-content.api.dirtrab.cl/dt-docs/lre/lre_suplemento.pdf
+          image: image-registry.openshift-image-registry.svc:5000/lre-dev/product-lre@sha256:60fbe25035b0491ee432f88807d3e2eb14aca0b0b45677b2bbaa9aba04cec41e
+          imagePullPolicy: Always
+          name: product-lre
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources:
+            limits:
+              cpu: 500m
+              memory: 600Mi
+            requests:
+              cpu: 200m
+              memory: 100Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    availableReplicas: 1
+    fullyLabeledReplicas: 1
+    observedGeneration: 2
+    readyReplicas: 1
+    replicas: 1
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

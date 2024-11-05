@@ -1,0 +1,198 @@
+apiVersion: v1
+items:
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    creationTimestamp: "2023-05-23T18:51:40Z"
+    name: admin
+    namespace: pipelines-qa
+    resourceVersion: "9947787"
+    uid: 1355bf8f-2814-467a-90da-ff955d1be977
+  roleRef:
+    name: admin
+  subjects:
+  - kind: User
+    name: ipenaloza@dt.gob.cl
+  userNames:
+  - ipenaloza@dt.gob.cl
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    creationTimestamp: "2023-05-23T18:51:41Z"
+    name: admin-0
+    namespace: pipelines-qa
+    resourceVersion: "9947793"
+    uid: 91a2d2b7-b2e9-490c-a27d-363edd5270b3
+  roleRef:
+    name: admin
+  subjects:
+  - kind: User
+    name: pmedinac
+  userNames:
+  - pmedinac
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    creationTimestamp: "2023-05-23T18:51:41Z"
+    name: admin-1
+    namespace: pipelines-qa
+    resourceVersion: "9947797"
+    uid: 6882e33a-72b6-418e-a87f-6b6116d53d33
+  roleRef:
+    name: admin
+  subjects:
+  - kind: User
+    name: cacevedoq@dt.gob.cl
+  userNames:
+  - cacevedoq@dt.gob.cl
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    creationTimestamp: "2023-05-22T20:03:02Z"
+    labels:
+      migration.openshift.io/migrated-by-migmigration: 83812283-da61-428b-8d35-e15d91aa764d
+      migration.openshift.io/migrated-by-migplan: 6b6402c2-9258-443b-83f4-8bb51f1d90f8
+      velero.io/backup-name: migration-8d005-initial-6s92c
+      velero.io/restore-name: migration-8d005-final-jj2bc
+    name: admin-c5r6r
+    namespace: pipelines-qa
+    resourceVersion: "9214619"
+    uid: 76694dba-37ca-40a1-bad2-65bdc401800a
+  roleRef:
+    name: admin
+  subjects:
+  - kind: User
+    name: jalvarez@dt.gob.cl
+  - kind: User
+    name: ditorres@dt.gob.cl
+  - kind: User
+    name: ealmuna@dt.gob.cl
+  - kind: User
+    name: araiman@dt.gob.cl
+  - kind: User
+    name: ffernandeza@dt.gob.cl
+  - kind: User
+    name: lolivero@redhat.com
+  - kind: User
+    name: iosorio@redhat.com
+  userNames:
+  - jalvarez@dt.gob.cl
+  - ditorres@dt.gob.cl
+  - ealmuna@dt.gob.cl
+  - araiman@dt.gob.cl
+  - ffernandeza@dt.gob.cl
+  - lolivero@redhat.com
+  - iosorio@redhat.com
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    creationTimestamp: "2023-05-22T20:03:02Z"
+    labels:
+      app: jenkins
+      migration.openshift.io/migrated-by-migmigration: 83812283-da61-428b-8d35-e15d91aa764d
+      migration.openshift.io/migrated-by-migplan: 6b6402c2-9258-443b-83f4-8bb51f1d90f8
+      velero.io/backup-name: migration-8d005-initial-6s92c
+      velero.io/restore-name: migration-8d005-final-jj2bc
+    name: cicd-jenkins-rolebinding
+    namespace: pipelines-qa
+    resourceVersion: "9214621"
+    uid: f4c161db-1eaa-4a12-be44-7063b557b602
+  roleRef:
+    name: edit
+  subjects:
+  - kind: ServiceAccount
+    name: jenkins
+    namespace: cicd
+  userNames:
+  - system:serviceaccount:cicd:jenkins
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    creationTimestamp: "2023-05-22T20:03:02Z"
+    labels:
+      migration.openshift.io/migrated-by-migmigration: 83812283-da61-428b-8d35-e15d91aa764d
+      migration.openshift.io/migrated-by-migplan: 6b6402c2-9258-443b-83f4-8bb51f1d90f8
+      velero.io/backup-name: migration-8d005-initial-6s92c
+      velero.io/restore-name: migration-8d005-final-jj2bc
+    name: jenkins-cicd-edit
+    namespace: pipelines-qa
+    resourceVersion: "9214622"
+    uid: 4ec38f9f-826b-4aa2-98b8-0bddde667a84
+  roleRef:
+    name: edit
+  subjects:
+  - kind: ServiceAccount
+    name: jenkins
+    namespace: cicd
+  userNames:
+  - system:serviceaccount:cicd:jenkins
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/description: Allows deploymentconfigs in this namespace to rollout
+        pods in this namespace.  It is auto-managed by a controller; remove subjects
+        to disable.
+    creationTimestamp: "2023-05-22T20:02:54Z"
+    name: system:deployers
+    namespace: pipelines-qa
+    resourceVersion: "9214470"
+    uid: 749ea8d6-2487-43f2-8019-19b5c03f65d8
+  roleRef:
+    name: system:deployer
+  subjects:
+  - kind: ServiceAccount
+    name: deployer
+    namespace: pipelines-qa
+  userNames:
+  - system:serviceaccount:pipelines-qa:deployer
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/description: Allows builds in this namespace to push images to
+        this namespace.  It is auto-managed by a controller; remove subjects to disable.
+    creationTimestamp: "2023-05-22T20:02:54Z"
+    name: system:image-builders
+    namespace: pipelines-qa
+    resourceVersion: "9214465"
+    uid: 7acb775e-1c94-4506-8621-3f08bf24b521
+  roleRef:
+    name: system:image-builder
+  subjects:
+  - kind: ServiceAccount
+    name: builder
+    namespace: pipelines-qa
+  userNames:
+  - system:serviceaccount:pipelines-qa:builder
+- apiVersion: authorization.openshift.io/v1
+  groupNames:
+  - system:serviceaccounts:pipelines-qa
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/description: Allows all pods in this namespace to pull images from
+        this namespace.  It is auto-managed by a controller; remove subjects to disable.
+    creationTimestamp: "2023-05-22T20:02:54Z"
+    name: system:image-pullers
+    namespace: pipelines-qa
+    resourceVersion: "9214459"
+    uid: b21353c3-fdf7-45b0-b8cd-6638c7d59483
+  roleRef:
+    name: system:image-puller
+  subjects:
+  - kind: SystemGroup
+    name: system:serviceaccounts:pipelines-qa
+  userNames: null
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

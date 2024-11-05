@@ -1,0 +1,96 @@
+apiVersion: v1
+items:
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    creationTimestamp: "2023-05-25T14:45:02Z"
+    labels:
+      migration.openshift.io/migrated-by-migmigration: 5007d33d-caaf-467b-b9cc-65a18caf3d1c
+      migration.openshift.io/migrated-by-migplan: f921392c-1b4c-4dd1-9fd7-bfec352bc628
+      velero.io/backup-name: migration-b31dc-initial-dfwm9
+      velero.io/restore-name: migration-b31dc-final-vttsb
+    name: admin
+    namespace: apicast-dev
+    resourceVersion: "11464769"
+    uid: 10753af3-86c5-4c50-923e-0fb2cdbd278f
+  roleRef:
+    name: admin
+  subjects:
+  - kind: User
+    name: admin
+  - kind: User
+    name: fgonzalez@dt.gob.cl
+  - kind: User
+    name: jalvarez@dt.gob.cl
+  - kind: User
+    name: ditorres@dt.gob.cl
+  userNames:
+  - admin
+  - fgonzalez@dt.gob.cl
+  - jalvarez@dt.gob.cl
+  - ditorres@dt.gob.cl
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/description: Allows deploymentconfigs in this namespace to rollout
+        pods in this namespace.  It is auto-managed by a controller; remove subjects
+        to disable.
+    creationTimestamp: "2023-05-25T14:45:02Z"
+    name: system:deployers
+    namespace: apicast-dev
+    resourceVersion: "11464733"
+    uid: e62a878f-9d79-4115-9835-b970d7651f1f
+  roleRef:
+    name: system:deployer
+  subjects:
+  - kind: ServiceAccount
+    name: deployer
+    namespace: apicast-dev
+  userNames:
+  - system:serviceaccount:apicast-dev:deployer
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/description: Allows builds in this namespace to push images to
+        this namespace.  It is auto-managed by a controller; remove subjects to disable.
+    creationTimestamp: "2023-05-25T14:45:02Z"
+    name: system:image-builders
+    namespace: apicast-dev
+    resourceVersion: "11464724"
+    uid: 40a96cfb-063b-456d-9167-fa2a2cc7a5d3
+  roleRef:
+    name: system:image-builder
+  subjects:
+  - kind: ServiceAccount
+    name: builder
+    namespace: apicast-dev
+  userNames:
+  - system:serviceaccount:apicast-dev:builder
+- apiVersion: authorization.openshift.io/v1
+  groupNames:
+  - system:serviceaccounts:apicast-dev
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/description: Allows all pods in this namespace to pull images from
+        this namespace.  It is auto-managed by a controller; remove subjects to disable.
+    creationTimestamp: "2023-05-25T14:45:02Z"
+    name: system:image-pullers
+    namespace: apicast-dev
+    resourceVersion: "11464711"
+    uid: b4b42d80-28e0-42a5-9cbc-a142baa97429
+  roleRef:
+    name: system:image-puller
+  subjects:
+  - kind: SystemGroup
+    name: system:serviceaccounts:apicast-dev
+  userNames: null
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

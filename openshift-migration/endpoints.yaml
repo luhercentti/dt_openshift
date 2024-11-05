@@ -1,0 +1,144 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Endpoints
+  metadata:
+    creationTimestamp: "2023-05-12T20:25:58Z"
+    labels:
+      control-plane: controller-manager
+      controller-tools.k8s.io: "1.0"
+    name: controller-manager-service
+    namespace: openshift-migration
+    resourceVersion: "476624642"
+    uid: e28be0ef-4ef9-4fab-95a1-66ee45f368ac
+  subsets:
+  - addresses:
+    - ip: 10.128.22.214
+      nodeName: ocp4azu-sj2sl-worker-noprod-dev-brazilsouth2-4dm6s
+      targetRef:
+        kind: Pod
+        name: migration-controller-9688b78dc-9ff5n
+        namespace: openshift-migration
+        resourceVersion: "476624636"
+        uid: 7154de43-10a2-46fc-a46b-5793e0e6eb99
+    ports:
+    - port: 443
+      protocol: TCP
+- apiVersion: v1
+  kind: Endpoints
+  metadata:
+    creationTimestamp: "2023-05-12T20:25:50Z"
+    labels:
+      app.kubernetes.io/part-of: openshift-migration
+      control-plane: controller-manager
+      controller-tools.k8s.io: "1.0"
+    name: discovery
+    namespace: openshift-migration
+    resourceVersion: "476624637"
+    uid: 40d495e8-5136-4b9e-97da-351d9debfa0e
+  subsets:
+  - addresses:
+    - ip: 10.128.22.214
+      nodeName: ocp4azu-sj2sl-worker-noprod-dev-brazilsouth2-4dm6s
+      targetRef:
+        kind: Pod
+        name: migration-controller-9688b78dc-9ff5n
+        namespace: openshift-migration
+        resourceVersion: "476624636"
+        uid: 7154de43-10a2-46fc-a46b-5793e0e6eb99
+    ports:
+    - port: 8080
+      protocol: TCP
+- apiVersion: v1
+  kind: Endpoints
+  metadata:
+    creationTimestamp: "2023-05-12T20:25:44Z"
+    labels:
+      app: mig-controller
+      service.kubernetes.io/headless: ""
+    name: mig-controller-metrics
+    namespace: openshift-migration
+    resourceVersion: "476624639"
+    uid: defab6b5-b721-46f6-8e63-5c293f53d6a5
+  subsets:
+  - addresses:
+    - ip: 10.128.22.214
+      nodeName: ocp4azu-sj2sl-worker-noprod-dev-brazilsouth2-4dm6s
+      targetRef:
+        kind: Pod
+        name: migration-controller-9688b78dc-9ff5n
+        namespace: openshift-migration
+        resourceVersion: "476624636"
+        uid: 7154de43-10a2-46fc-a46b-5793e0e6eb99
+    ports:
+    - name: metrics
+      port: 2112
+      protocol: TCP
+- apiVersion: v1
+  kind: Endpoints
+  metadata:
+    creationTimestamp: "2023-05-12T20:26:10Z"
+    labels:
+      app: migration
+      service: migration-ui
+    name: migration-ui
+    namespace: openshift-migration
+    resourceVersion: "476624616"
+    uid: 4e70a8f9-da08-42dd-bb6f-49d9d0be0d16
+  subsets:
+  - addresses:
+    - ip: 10.128.22.216
+      nodeName: ocp4azu-sj2sl-worker-noprod-dev-brazilsouth2-4dm6s
+      targetRef:
+        kind: Pod
+        name: migration-ui-86f78879f7-z4qpm
+        namespace: openshift-migration
+        resourceVersion: "476624613"
+        uid: d1ba4712-338e-4217-895d-b389dc85d994
+    ports:
+    - name: port-9000
+      port: 9000
+      protocol: TCP
+- apiVersion: v1
+  kind: Endpoints
+  metadata:
+    creationTimestamp: "2023-05-06T12:20:18Z"
+    labels:
+      control-plane: controller-manager
+      operators.coreos.com/redhat-oadp-operator.openshift-migration: ""
+    name: openshift-adp-controller-manager-metrics-service
+    namespace: openshift-migration
+    resourceVersion: "449089686"
+    uid: 1628db58-82a6-4776-a714-f6cf7e916846
+- apiVersion: v1
+  kind: Endpoints
+  metadata:
+    creationTimestamp: "2023-05-12T20:25:40Z"
+    labels:
+      app.kubernetes.io/component: server
+      app.kubernetes.io/instance: velero
+      app.kubernetes.io/managed-by: oadp-operator
+      app.kubernetes.io/name: velero
+      openshift.io/oadp: "True"
+    name: openshift-adp-velero-metrics-svc
+    namespace: openshift-migration
+    resourceVersion: "476624572"
+    uid: 3417b502-c088-4d70-a486-5a6150fd2940
+  subsets:
+  - addresses:
+    - ip: 10.128.22.159
+      nodeName: ocp4azu-sj2sl-worker-noprod-dev-brazilsouth2-4dm6s
+      targetRef:
+        kind: Pod
+        name: velero-5bcb94bb68-lw7ld
+        namespace: openshift-migration
+        resourceVersion: "476624569"
+        uid: 472ba212-e451-4bb6-b046-011424b648a7
+    ports:
+    - name: monitoring
+      port: 8085
+      protocol: TCP
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

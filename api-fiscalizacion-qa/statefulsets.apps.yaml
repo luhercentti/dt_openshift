@@ -1,0 +1,161 @@
+apiVersion: v1
+items:
+- apiVersion: apps/v1
+  kind: StatefulSet
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftNewApp
+      openshift.io/migration-registry: 172.30.114.175:5000
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-24T16:47:31Z"
+    generation: 1
+    labels:
+      app: cache-service
+      application: cache-service
+      migration.openshift.io/migrated-by-migmigration: 7403c997-3617-4c43-a005-e473ceb26445
+      migration.openshift.io/migrated-by-migplan: 2a8299ac-1423-4ceb-93a5-de572a0f44a9
+      template: cache-service
+      velero.io/backup-name: migration-9db42-initial-5kc64
+      velero.io/restore-name: migration-9db42-final-cpc2b
+    name: cache-service
+    namespace: api-fiscalizacion-qa
+    resourceVersion: "69174387"
+    uid: ed95d1eb-12f9-49bd-ab42-b0bf073d0168
+  spec:
+    podManagementPolicy: OrderedReady
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        application: cache-service
+    serviceName: cache-service-ping
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          application: cache-service
+          deploymentConfig: cache-service
+        name: cache-service
+      spec:
+        containers:
+        - env:
+          - name: AB_PROMETHEUS_ENABLE
+            value: "true"
+          - name: SERVICE_NAME
+            value: cache-service
+          - name: SERVICE_PROFILE
+            value: cache-service
+          - name: JGROUPS_PING_PROTOCOL
+            value: openshift.DNS_PING
+          - name: OPENSHIFT_DNS_PING_SERVICE_NAME
+            value: cache-service-ping
+          - name: USERNAME
+            valueFrom:
+              secretKeyRef:
+                key: application-user
+                name: cache-service
+          - name: PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: application-password
+                name: cache-service
+          - name: REPLICATION_FACTOR
+            value: "1"
+          - name: EVICTION_POLICY
+            value: evict
+          - name: TZ
+            value: America/Santiago
+          image: registry.redhat.io/jboss-datagrid-7/datagrid73-openshift
+          imagePullPolicy: Always
+          livenessProbe:
+            exec:
+              command:
+              - /opt/datagrid/bin/livenessProbe.sh
+            failureThreshold: 5
+            initialDelaySeconds: 15
+            periodSeconds: 20
+            successThreshold: 1
+            timeoutSeconds: 10
+          name: cache-service
+          ports:
+          - containerPort: 8443
+            name: https
+            protocol: TCP
+          - containerPort: 8888
+            name: ping
+            protocol: TCP
+          - containerPort: 11222
+            name: hotrod
+            protocol: TCP
+          readinessProbe:
+            exec:
+              command:
+              - /opt/datagrid/bin/readinessProbe.sh
+            failureThreshold: 5
+            initialDelaySeconds: 17
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 10
+          resources:
+            limits:
+              cpu: 500m
+              memory: 1Gi
+            requests:
+              cpu: 150m
+              memory: 512Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /opt/datagrid/standalone/data
+            name: srv-data
+          - mountPath: /var/run/secrets/java.io/keystores
+            name: keystore-volume
+          - mountPath: /var/run/secrets/openshift.io/serviceaccount
+            name: service-certs
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 60
+        volumes:
+        - emptyDir: {}
+          name: keystore-volume
+        - name: service-certs
+          secret:
+            defaultMode: 420
+            secretName: service-certs
+    updateStrategy:
+      rollingUpdate:
+        partition: 0
+      type: RollingUpdate
+    volumeClaimTemplates:
+    - apiVersion: v1
+      kind: PersistentVolumeClaim
+      metadata:
+        creationTimestamp: null
+        name: srv-data
+      spec:
+        accessModes:
+        - ReadWriteOnce
+        resources:
+          requests:
+            storage: 1Gi
+        volumeMode: Filesystem
+      status:
+        phase: Pending
+  status:
+    availableReplicas: 0
+    collisionCount: 0
+    currentReplicas: 1
+    currentRevision: cache-service-89c6c9f4d
+    observedGeneration: 1
+    replicas: 1
+    updateRevision: cache-service-89c6c9f4d
+    updatedReplicas: 1
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

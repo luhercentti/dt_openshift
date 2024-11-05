@@ -1,0 +1,83 @@
+apiVersion: v1
+items:
+- apiVersion: authorization.openshift.io/v1
+  kind: Role
+  metadata:
+    creationTimestamp: "2023-05-04T21:40:31Z"
+    name: azure-disk-csi-driver-operator-role
+    namespace: openshift-cluster-csi-drivers
+    resourceVersion: "5042"
+    uid: 7671cd0f-d6a5-47ae-8afb-5aafbb0965a2
+  rules:
+  - apiGroups:
+    - ""
+    attributeRestrictions: null
+    resources:
+    - configmaps
+    - endpoints
+    - events
+    - persistentvolumeclaims
+    - pods
+    - secrets
+    - services
+    verbs:
+    - '*'
+  - apiGroups:
+    - ""
+    attributeRestrictions: null
+    resources:
+    - namespaces
+    verbs:
+    - get
+  - apiGroups:
+    - apps
+    attributeRestrictions: null
+    resources:
+    - daemonsets
+    - deployments
+    - replicasets
+    - statefulsets
+    verbs:
+    - '*'
+  - apiGroups:
+    - policy
+    attributeRestrictions: null
+    resources:
+    - poddisruptionbudgets
+    verbs:
+    - '*'
+  - apiGroups:
+    - monitoring.coreos.com
+    attributeRestrictions: null
+    resources:
+    - servicemonitors
+    verbs:
+    - create
+    - delete
+    - get
+    - patch
+    - update
+- apiVersion: authorization.openshift.io/v1
+  kind: Role
+  metadata:
+    creationTimestamp: "2023-05-04T21:40:44Z"
+    name: azure-disk-csi-driver-prometheus
+    namespace: openshift-cluster-csi-drivers
+    resourceVersion: "6140"
+    uid: e4236392-7255-41fe-8fea-a01551c7e7fb
+  rules:
+  - apiGroups:
+    - ""
+    attributeRestrictions: null
+    resources:
+    - endpoints
+    - pods
+    - services
+    verbs:
+    - get
+    - list
+    - watch
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

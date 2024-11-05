@@ -1,0 +1,684 @@
+apiVersion: v1
+items:
+- apiVersion: apps.openshift.io/v1
+  kind: DeploymentConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftWebConsole
+      openshift.io/migration-registry: 172.30.149.66:5000
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-18T22:20:06Z"
+    generation: 2
+    labels:
+      app: indicadores-dev
+      migration.openshift.io/migrated-by-migmigration: 6d5b8e4e-6e6a-4858-a8cb-69094aa3de8a
+      migration.openshift.io/migrated-by-migplan: fc39346c-f9d4-4b3a-8404-0437309f995a
+      velero.io/backup-name: migration-7ff83-initial-fq7dv
+      velero.io/restore-name: migration-7ff83-final-jlm4p
+    name: indicadores-dev
+    namespace: utilities-dev
+    resourceVersion: "6313424"
+    uid: 70cd9bff-ff8d-461b-8d73-6e191fb616a1
+  spec:
+    replicas: 0
+    revisionHistoryLimit: 10
+    selector:
+      deploymentconfig: indicadores-dev
+    strategy:
+      activeDeadlineSeconds: 21600
+      resources: {}
+      rollingParams:
+        intervalSeconds: 1
+        maxSurge: 25%
+        maxUnavailable: 25%
+        timeoutSeconds: 600
+        updatePeriodSeconds: 1
+      type: Rolling
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: indicadores-dev
+          deploymentconfig: indicadores-dev
+      spec:
+        containers:
+        - image: image-registry.openshift-image-registry.svc:5000/utilities-dev/indicadores-dev@sha256:c783ef06cd7015b9b9023d26512a210c4114611168ccb87e43969754f0955d37
+          imagePullPolicy: Always
+          name: indicadores-dev
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+    test: false
+    triggers:
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+        - indicadores-dev
+        from:
+          kind: ImageStreamTag
+          name: indicadores-dev:latest
+          namespace: utilities-dev
+        lastTriggeredImage: image-registry.openshift-image-registry.svc:5000/utilities-dev/indicadores-dev@sha256:c783ef06cd7015b9b9023d26512a210c4114611168ccb87e43969754f0955d37
+      type: ImageChange
+    - type: ConfigChange
+  status:
+    availableReplicas: 0
+    conditions:
+    - lastTransitionTime: "2023-05-18T22:20:07Z"
+      lastUpdateTime: "2023-05-18T22:20:07Z"
+      message: Deployment config does not have minimum availability.
+      status: "False"
+      type: Available
+    - lastTransitionTime: "2023-05-18T22:20:13Z"
+      lastUpdateTime: "2023-05-18T22:20:13Z"
+      message: replication controller "indicadores-dev-1" successfully rolled out
+      reason: NewReplicationControllerAvailable
+      status: "True"
+      type: Progressing
+    details:
+      causes:
+      - type: ConfigChange
+      message: config change
+    latestVersion: 1
+    observedGeneration: 2
+    replicas: 0
+    unavailableReplicas: 0
+    updatedReplicas: 0
+- apiVersion: apps.openshift.io/v1
+  kind: DeploymentConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftWebConsole
+      openshift.io/migration-registry: 172.30.149.66:5000
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-18T22:20:07Z"
+    generation: 2
+    labels:
+      app: publico-dev
+      migration.openshift.io/migrated-by-migmigration: 6d5b8e4e-6e6a-4858-a8cb-69094aa3de8a
+      migration.openshift.io/migrated-by-migplan: fc39346c-f9d4-4b3a-8404-0437309f995a
+      velero.io/backup-name: migration-7ff83-initial-fq7dv
+      velero.io/restore-name: migration-7ff83-final-jlm4p
+    name: publico-dev
+    namespace: utilities-dev
+    resourceVersion: "476624678"
+    uid: 3d1ebb2c-3c59-4210-8242-ae1fe3fe8c34
+  spec:
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      deploymentconfig: publico-dev
+    strategy:
+      activeDeadlineSeconds: 21600
+      resources: {}
+      rollingParams:
+        intervalSeconds: 1
+        maxSurge: 25%
+        maxUnavailable: 25%
+        timeoutSeconds: 600
+        updatePeriodSeconds: 1
+      type: Rolling
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: publico-dev
+          deploymentconfig: publico-dev
+      spec:
+        containers:
+        - image: image-registry.openshift-image-registry.svc:5000/utilities-dev/publico-dev@sha256:becbab33d4fdc56d0a7d81c108e50390c9d0b34df5189243957c7f48c36ae5f3
+          imagePullPolicy: Always
+          name: publico-dev
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources:
+            limits:
+              cpu: 100m
+              memory: 200Mi
+            requests:
+              cpu: 10m
+              memory: 50Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+    test: false
+    triggers:
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+        - publico-dev
+        from:
+          kind: ImageStreamTag
+          name: publico-dev:latest
+          namespace: utilities-dev
+        lastTriggeredImage: image-registry.openshift-image-registry.svc:5000/utilities-dev/publico-dev@sha256:becbab33d4fdc56d0a7d81c108e50390c9d0b34df5189243957c7f48c36ae5f3
+      type: ImageChange
+    - type: ConfigChange
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2023-05-18T22:21:31Z"
+      lastUpdateTime: "2023-05-18T22:21:31Z"
+      message: replication controller "publico-dev-1" successfully rolled out
+      reason: NewReplicationControllerAvailable
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: "2024-07-24T20:17:57Z"
+      lastUpdateTime: "2024-07-24T20:17:57Z"
+      message: Deployment config has minimum availability.
+      status: "True"
+      type: Available
+    details:
+      causes:
+      - type: ConfigChange
+      message: config change
+    latestVersion: 1
+    observedGeneration: 2
+    readyReplicas: 1
+    replicas: 1
+    unavailableReplicas: 0
+    updatedReplicas: 1
+- apiVersion: apps.openshift.io/v1
+  kind: DeploymentConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftWebConsole
+      openshift.io/migration-registry: 172.30.149.66:5000
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-18T22:20:07Z"
+    generation: 2
+    labels:
+      app: s2i-nestjs
+      migration.openshift.io/migrated-by-migmigration: 6d5b8e4e-6e6a-4858-a8cb-69094aa3de8a
+      migration.openshift.io/migrated-by-migplan: fc39346c-f9d4-4b3a-8404-0437309f995a
+      velero.io/backup-name: migration-7ff83-initial-fq7dv
+      velero.io/restore-name: migration-7ff83-final-jlm4p
+    name: s2i-nestjs
+    namespace: utilities-dev
+    resourceVersion: "6313444"
+    uid: d811475f-7744-4974-a547-3409e1b89cff
+  spec:
+    replicas: 0
+    revisionHistoryLimit: 10
+    selector:
+      deploymentconfig: s2i-nestjs
+    strategy:
+      activeDeadlineSeconds: 21600
+      resources: {}
+      rollingParams:
+        intervalSeconds: 1
+        maxSurge: 25%
+        maxUnavailable: 25%
+        timeoutSeconds: 600
+        updatePeriodSeconds: 1
+      type: Rolling
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: s2i-nestjs
+          deploymentconfig: s2i-nestjs
+      spec:
+        containers:
+        - image: image-registry.openshift-image-registry.svc:5000/utilities-dev/s2i-nestjs@sha256:49cb118f601d0f82d8c89e4d7c904c777d3496b5cfbf54ec00891f36b3e7dd78
+          imagePullPolicy: Always
+          name: s2i-nestjs
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+    test: false
+    triggers:
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+        - s2i-nestjs
+        from:
+          kind: ImageStreamTag
+          name: s2i-nestjs:latest
+          namespace: utilities-dev
+        lastTriggeredImage: image-registry.openshift-image-registry.svc:5000/utilities-dev/s2i-nestjs@sha256:49cb118f601d0f82d8c89e4d7c904c777d3496b5cfbf54ec00891f36b3e7dd78
+      type: ImageChange
+    - type: ConfigChange
+  status:
+    availableReplicas: 0
+    conditions:
+    - lastTransitionTime: "2023-05-18T22:20:07Z"
+      lastUpdateTime: "2023-05-18T22:20:07Z"
+      message: Deployment config does not have minimum availability.
+      status: "False"
+      type: Available
+    - lastTransitionTime: "2023-05-18T22:20:14Z"
+      lastUpdateTime: "2023-05-18T22:20:14Z"
+      message: replication controller "s2i-nestjs-1" successfully rolled out
+      reason: NewReplicationControllerAvailable
+      status: "True"
+      type: Progressing
+    details:
+      causes:
+      - type: ConfigChange
+      message: config change
+    latestVersion: 1
+    observedGeneration: 2
+    replicas: 0
+    unavailableReplicas: 0
+    updatedReplicas: 0
+- apiVersion: apps.openshift.io/v1
+  kind: DeploymentConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftWebConsole
+      openshift.io/migration-registry: 172.30.149.66:5000
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-18T22:20:07Z"
+    generation: 2
+    labels:
+      app: test-nestjs-ab
+      migration.openshift.io/migrated-by-migmigration: 6d5b8e4e-6e6a-4858-a8cb-69094aa3de8a
+      migration.openshift.io/migrated-by-migplan: fc39346c-f9d4-4b3a-8404-0437309f995a
+      velero.io/backup-name: migration-7ff83-initial-fq7dv
+      velero.io/restore-name: migration-7ff83-final-jlm4p
+    name: test-nestjs-ab
+    namespace: utilities-dev
+    resourceVersion: "472847169"
+    uid: 3a99b01b-7108-4213-8ff7-c5149c0397e1
+  spec:
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      app: test-nestjs-ab
+      deploymentconfig: test-nestjs-ab
+    strategy:
+      activeDeadlineSeconds: 21600
+      resources: {}
+      rollingParams:
+        intervalSeconds: 1
+        maxSurge: 25%
+        maxUnavailable: 25%
+        timeoutSeconds: 600
+        updatePeriodSeconds: 1
+      type: Rolling
+    template:
+      metadata:
+        annotations:
+          openshift.io/generated-by: OpenShiftWebConsole
+        creationTimestamp: null
+        labels:
+          app: test-nestjs-ab
+          deploymentconfig: test-nestjs-ab
+      spec:
+        containers:
+        - image: docker.io/fgonzalezdt/test-nestjs@sha256:b2be139a4546376613b37514e0fcfb1408e519a8eadcaaece33e0eace98ae37b
+          imagePullPolicy: Always
+          name: test-nestjs-ab
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+    test: false
+    triggers:
+    - type: ConfigChange
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+        - test-nestjs-ab
+        from:
+          kind: ImageStreamTag
+          name: test-nestjs-ab:latest
+          namespace: utilities-dev
+        lastTriggeredImage: docker.io/fgonzalezdt/test-nestjs@sha256:b2be139a4546376613b37514e0fcfb1408e519a8eadcaaece33e0eace98ae37b
+      type: ImageChange
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2023-05-18T22:21:31Z"
+      lastUpdateTime: "2023-05-18T22:21:31Z"
+      message: replication controller "test-nestjs-ab-1" successfully rolled out
+      reason: NewReplicationControllerAvailable
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: "2024-07-23T00:36:13Z"
+      lastUpdateTime: "2024-07-23T00:36:13Z"
+      message: Deployment config has minimum availability.
+      status: "True"
+      type: Available
+    details:
+      causes:
+      - type: ConfigChange
+      message: config change
+    latestVersion: 1
+    observedGeneration: 2
+    readyReplicas: 1
+    replicas: 1
+    unavailableReplicas: 0
+    updatedReplicas: 1
+- apiVersion: apps.openshift.io/v1
+  kind: DeploymentConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftWebConsole
+      openshift.io/migration-registry: 172.30.149.66:5000
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-18T22:20:07Z"
+    generation: 1
+    labels:
+      app: test-nestjs-private
+      migration.openshift.io/migrated-by-migmigration: 6d5b8e4e-6e6a-4858-a8cb-69094aa3de8a
+      migration.openshift.io/migrated-by-migplan: fc39346c-f9d4-4b3a-8404-0437309f995a
+      velero.io/backup-name: migration-7ff83-initial-fq7dv
+      velero.io/restore-name: migration-7ff83-final-jlm4p
+    name: test-nestjs-private
+    namespace: utilities-dev
+    resourceVersion: "476625013"
+    uid: 033780bd-c574-44e0-9057-34708dd56d18
+  spec:
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      app: test-nestjs-private
+      deploymentconfig: test-nestjs-private
+    strategy:
+      activeDeadlineSeconds: 21600
+      resources: {}
+      rollingParams:
+        intervalSeconds: 1
+        maxSurge: 25%
+        maxUnavailable: 25%
+        timeoutSeconds: 600
+        updatePeriodSeconds: 1
+      type: Rolling
+    template:
+      metadata:
+        annotations:
+          openshift.io/generated-by: OpenShiftWebConsole
+        creationTimestamp: null
+        labels:
+          app: test-nestjs-private
+          deploymentconfig: test-nestjs-private
+      spec:
+        containers:
+        - image: docker.io/fgonzalezdt/test-nestjs@sha256:9808e16060e85bf11e3e2b388018c2750baf3c3be86ee0dd00c060d324c7fc38
+          imagePullPolicy: Always
+          name: test-nestjs-private
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        imagePullSecrets:
+        - name: dt-docker-hub
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+    test: false
+    triggers:
+    - type: ConfigChange
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2023-05-18T22:21:32Z"
+      lastUpdateTime: "2023-05-18T22:21:32Z"
+      message: replication controller "test-nestjs-private-1" successfully rolled
+        out
+      reason: NewReplicationControllerAvailable
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: "2024-07-24T20:18:03Z"
+      lastUpdateTime: "2024-07-24T20:18:03Z"
+      message: Deployment config has minimum availability.
+      status: "True"
+      type: Available
+    details:
+      causes:
+      - type: ConfigChange
+      message: config change
+    latestVersion: 1
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+    unavailableReplicas: 0
+    updatedReplicas: 1
+- apiVersion: apps.openshift.io/v1
+  kind: DeploymentConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftWebConsole
+      openshift.io/migration-registry: 172.30.149.66:5000
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-18T22:20:07Z"
+    generation: 2
+    labels:
+      app: test-nestjs-x
+      migration.openshift.io/migrated-by-migmigration: 6d5b8e4e-6e6a-4858-a8cb-69094aa3de8a
+      migration.openshift.io/migrated-by-migplan: fc39346c-f9d4-4b3a-8404-0437309f995a
+      velero.io/backup-name: migration-7ff83-initial-fq7dv
+      velero.io/restore-name: migration-7ff83-final-jlm4p
+    name: test-nestjs-x
+    namespace: utilities-dev
+    resourceVersion: "476624650"
+    uid: f0619e1c-3491-411d-9f27-c1cc80f5c259
+  spec:
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      app: test-nestjs-x
+      deploymentconfig: test-nestjs-x
+    strategy:
+      activeDeadlineSeconds: 21600
+      resources: {}
+      rollingParams:
+        intervalSeconds: 1
+        maxSurge: 25%
+        maxUnavailable: 25%
+        timeoutSeconds: 600
+        updatePeriodSeconds: 1
+      type: Rolling
+    template:
+      metadata:
+        annotations:
+          openshift.io/generated-by: OpenShiftWebConsole
+        creationTimestamp: null
+        labels:
+          app: test-nestjs-x
+          deploymentconfig: test-nestjs-x
+      spec:
+        containers:
+        - image: docker.io/fgonzalezdt/test-nestjs@sha256:b2be139a4546376613b37514e0fcfb1408e519a8eadcaaece33e0eace98ae37b
+          imagePullPolicy: Always
+          name: test-nestjs-x
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+    test: false
+    triggers:
+    - type: ConfigChange
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+        - test-nestjs-x
+        from:
+          kind: ImageStreamTag
+          name: test-nestjs-x:latest
+          namespace: utilities-dev
+        lastTriggeredImage: docker.io/fgonzalezdt/test-nestjs@sha256:b2be139a4546376613b37514e0fcfb1408e519a8eadcaaece33e0eace98ae37b
+      type: ImageChange
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2023-05-18T22:21:31Z"
+      lastUpdateTime: "2023-05-18T22:21:31Z"
+      message: replication controller "test-nestjs-x-1" successfully rolled out
+      reason: NewReplicationControllerAvailable
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: "2024-07-24T20:17:57Z"
+      lastUpdateTime: "2024-07-24T20:17:57Z"
+      message: Deployment config has minimum availability.
+      status: "True"
+      type: Available
+    details:
+      causes:
+      - type: ConfigChange
+      message: config change
+    latestVersion: 1
+    observedGeneration: 2
+    readyReplicas: 1
+    replicas: 1
+    unavailableReplicas: 0
+    updatedReplicas: 1
+- apiVersion: apps.openshift.io/v1
+  kind: DeploymentConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftWebConsole
+      openshift.io/migration-registry: 172.30.149.66:5000
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-18T22:20:07Z"
+    generation: 2
+    labels:
+      app: test-reg-civil
+      migration.openshift.io/migrated-by-migmigration: 6d5b8e4e-6e6a-4858-a8cb-69094aa3de8a
+      migration.openshift.io/migrated-by-migplan: fc39346c-f9d4-4b3a-8404-0437309f995a
+      velero.io/backup-name: migration-7ff83-initial-fq7dv
+      velero.io/restore-name: migration-7ff83-final-jlm4p
+    name: test-reg-civil
+    namespace: utilities-dev
+    resourceVersion: "472847024"
+    uid: 0a65b76f-4dc3-45c7-ac5f-4b6135df5e9f
+  spec:
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      deploymentconfig: test-reg-civil
+    strategy:
+      activeDeadlineSeconds: 21600
+      resources: {}
+      rollingParams:
+        intervalSeconds: 1
+        maxSurge: 25%
+        maxUnavailable: 25%
+        timeoutSeconds: 600
+        updatePeriodSeconds: 1
+      type: Rolling
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: test-reg-civil
+          deploymentconfig: test-reg-civil
+      spec:
+        containers:
+        - image: image-registry.openshift-image-registry.svc:5000/utilities-dev/test-reg-civil@sha256:445ddac2db5d0fb97505827957b3544c36cd66bf4e242bd5752ba10201fc5df5
+          imagePullPolicy: Always
+          name: test-reg-civil
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+    test: false
+    triggers:
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+        - test-reg-civil
+        from:
+          kind: ImageStreamTag
+          name: test-reg-civil:latest
+          namespace: utilities-dev
+        lastTriggeredImage: image-registry.openshift-image-registry.svc:5000/utilities-dev/test-reg-civil@sha256:445ddac2db5d0fb97505827957b3544c36cd66bf4e242bd5752ba10201fc5df5
+      type: ImageChange
+    - type: ConfigChange
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2023-05-18T22:21:32Z"
+      lastUpdateTime: "2023-05-18T22:21:32Z"
+      message: replication controller "test-reg-civil-1" successfully rolled out
+      reason: NewReplicationControllerAvailable
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: "2024-07-23T00:36:12Z"
+      lastUpdateTime: "2024-07-23T00:36:12Z"
+      message: Deployment config has minimum availability.
+      status: "True"
+      type: Available
+    details:
+      causes:
+      - type: ConfigChange
+      message: config change
+    latestVersion: 1
+    observedGeneration: 2
+    readyReplicas: 1
+    replicas: 1
+    unavailableReplicas: 0
+    updatedReplicas: 1
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

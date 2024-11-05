@@ -1,0 +1,291 @@
+apiVersion: v1
+items:
+- apiVersion: apps/v1
+  kind: DaemonSet
+  metadata:
+    annotations:
+      deprecated.daemonset.template.generation: "1"
+    creationTimestamp: "2023-05-04T21:41:31Z"
+    generation: 1
+    labels:
+      dns.operator.openshift.io/owning-dns: default
+    name: dns-default
+    namespace: openshift-dns
+    ownerReferences:
+    - apiVersion: operator.openshift.io/v1
+      controller: true
+      kind: DNS
+      name: default
+      uid: b544d468-2bcf-4dba-ad69-04e1006e0ec2
+    resourceVersion: "491646529"
+    uid: 27628d4a-be2d-42e9-af97-2c80f979405b
+  spec:
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        dns.operator.openshift.io/daemonset-dns: default
+    template:
+      metadata:
+        annotations:
+          cluster-autoscaler.kubernetes.io/enable-ds-eviction: "true"
+          target.workload.openshift.io/management: '{"effect": "PreferredDuringScheduling"}'
+        creationTimestamp: null
+        labels:
+          dns.operator.openshift.io/daemonset-dns: default
+      spec:
+        containers:
+        - args:
+          - -conf
+          - /etc/coredns/Corefile
+          command:
+          - coredns
+          image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:4f171b567d9ce66dbf9f4cf41cad21de4f2a6f1ca535795b82e6f06efab18071
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            failureThreshold: 5
+            httpGet:
+              path: /health
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 5
+          name: dns
+          ports:
+          - containerPort: 5353
+            name: dns
+            protocol: UDP
+          - containerPort: 5353
+            name: dns-tcp
+            protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /ready
+              port: 8181
+              scheme: HTTP
+            initialDelaySeconds: 10
+            periodSeconds: 3
+            successThreshold: 1
+            timeoutSeconds: 3
+          resources:
+            requests:
+              cpu: 50m
+              memory: 70Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: FallbackToLogsOnError
+          volumeMounts:
+          - mountPath: /etc/coredns
+            name: config-volume
+            readOnly: true
+        - args:
+          - --logtostderr
+          - --secure-listen-address=:9154
+          - --tls-cipher-suites=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,TLS_RSA_WITH_AES_128_CBC_SHA256,TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256,TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256
+          - --upstream=http://127.0.0.1:9153/
+          - --tls-cert-file=/etc/tls/private/tls.crt
+          - --tls-private-key-file=/etc/tls/private/tls.key
+          image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:d253bc69fdc967c1fc1543b01deddacd4eefe816cc9ed4541ea3673e35321753
+          imagePullPolicy: IfNotPresent
+          name: kube-rbac-proxy
+          ports:
+          - containerPort: 9154
+            name: metrics
+            protocol: TCP
+          resources:
+            requests:
+              cpu: 10m
+              memory: 40Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /etc/tls/private
+            name: metrics-tls
+            readOnly: true
+        dnsPolicy: Default
+        nodeSelector:
+          kubernetes.io/os: linux
+        priorityClassName: system-node-critical
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: dns
+        serviceAccountName: dns
+        terminationGracePeriodSeconds: 30
+        tolerations:
+        - key: node-role.kubernetes.io/master
+          operator: Exists
+        volumes:
+        - configMap:
+            defaultMode: 420
+            items:
+            - key: Corefile
+              path: Corefile
+            name: dns-default
+          name: config-volume
+        - name: metrics-tls
+          secret:
+            defaultMode: 420
+            secretName: dns-default-metrics-tls
+    updateStrategy:
+      rollingUpdate:
+        maxSurge: 0
+        maxUnavailable: 10%
+      type: RollingUpdate
+  status:
+    currentNumberScheduled: 12
+    desiredNumberScheduled: 12
+    numberAvailable: 12
+    numberMisscheduled: 0
+    numberReady: 12
+    observedGeneration: 1
+    updatedNumberScheduled: 12
+- apiVersion: apps/v1
+  kind: DaemonSet
+  metadata:
+    annotations:
+      deprecated.daemonset.template.generation: "1"
+    creationTimestamp: "2023-05-04T21:41:31Z"
+    generation: 1
+    name: node-resolver
+    namespace: openshift-dns
+    ownerReferences:
+    - apiVersion: operator.openshift.io/v1
+      controller: true
+      kind: DNS
+      name: default
+      uid: b544d468-2bcf-4dba-ad69-04e1006e0ec2
+    resourceVersion: "491646511"
+    uid: 9850e993-8c36-49cf-9907-74bcf47d701f
+  spec:
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        dns.operator.openshift.io/daemonset-node-resolver: ""
+    template:
+      metadata:
+        annotations:
+          target.workload.openshift.io/management: '{"effect": "PreferredDuringScheduling"}'
+        creationTimestamp: null
+        labels:
+          dns.operator.openshift.io/daemonset-node-resolver: ""
+      spec:
+        containers:
+        - command:
+          - /bin/bash
+          - -c
+          - |
+            #!/bin/bash
+            set -uo pipefail
+
+            trap 'jobs -p | xargs kill || true; wait; exit 0' TERM
+
+            OPENSHIFT_MARKER="openshift-generated-node-resolver"
+            HOSTS_FILE="/etc/hosts"
+            TEMP_FILE="/etc/hosts.tmp"
+
+            IFS=', ' read -r -a services <<< "${SERVICES}"
+
+            # Make a temporary file with the old hosts file's attributes.
+            cp -f --attributes-only "${HOSTS_FILE}" "${TEMP_FILE}"
+
+            while true; do
+              declare -A svc_ips
+              for svc in "${services[@]}"; do
+                # Fetch service IP from cluster dns if present. We make several tries
+                # to do it: IPv4, IPv6, IPv4 over TCP and IPv6 over TCP. The two last ones
+                # are for deployments with Kuryr on older OpenStack (OSP13) - those do not
+                # support UDP loadbalancers and require reaching DNS through TCP.
+                cmds=('dig -t A @"${NAMESERVER}" +short "${svc}.${CLUSTER_DOMAIN}"|grep -v "^;"'
+                      'dig -t AAAA @"${NAMESERVER}" +short "${svc}.${CLUSTER_DOMAIN}"|grep -v "^;"'
+                      'dig -t A +tcp +retry=0 @"${NAMESERVER}" +short "${svc}.${CLUSTER_DOMAIN}"|grep -v "^;"'
+                      'dig -t AAAA +tcp +retry=0 @"${NAMESERVER}" +short "${svc}.${CLUSTER_DOMAIN}"|grep -v "^;"')
+                for i in ${!cmds[*]}
+                do
+                  ips=($(eval "${cmds[i]}"))
+                  if [[ "$?" -eq 0 && "${#ips[@]}" -ne 0 ]]; then
+                    svc_ips["${svc}"]="${ips[@]}"
+                    break
+                  fi
+                done
+              done
+
+              # Update /etc/hosts only if we get valid service IPs
+              # We will not update /etc/hosts when there is coredns service outage or api unavailability
+              # Stale entries could exist in /etc/hosts if the service is deleted
+              if [[ -n "${svc_ips[*]-}" ]]; then
+                # Build a new hosts file from /etc/hosts with our custom entries filtered out
+                grep -v "# ${OPENSHIFT_MARKER}" "${HOSTS_FILE}" > "${TEMP_FILE}"
+
+                # Append resolver entries for services
+                for svc in "${!svc_ips[@]}"; do
+                  for ip in ${svc_ips[${svc}]}; do
+                    echo "${ip} ${svc} ${svc}.${CLUSTER_DOMAIN} # ${OPENSHIFT_MARKER}" >> "${TEMP_FILE}"
+                  done
+                done
+
+                # TODO: Update /etc/hosts atomically to avoid any inconsistent behavior
+                # Replace /etc/hosts with our modified version if needed
+                cmp "${TEMP_FILE}" "${HOSTS_FILE}" || cp -f "${TEMP_FILE}" "${HOSTS_FILE}"
+                # TEMP_FILE is not removed to avoid file create/delete and attributes copy churn
+              fi
+              sleep 60 & wait
+              unset svc_ips
+            done
+          env:
+          - name: SERVICES
+            value: image-registry.openshift-image-registry.svc
+          - name: NAMESERVER
+            value: 172.30.0.10
+          - name: CLUSTER_DOMAIN
+            value: cluster.local
+          image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:0ac9b5c2bf8e08f15e5d239a34102b09fd77985579ecece9d915a814c2e6405b
+          imagePullPolicy: IfNotPresent
+          name: dns-node-resolver
+          resources:
+            requests:
+              cpu: 5m
+              memory: 21Mi
+          securityContext:
+            privileged: true
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: FallbackToLogsOnError
+          volumeMounts:
+          - mountPath: /etc/hosts
+            name: hosts-file
+        dnsPolicy: ClusterFirst
+        hostNetwork: true
+        nodeSelector:
+          kubernetes.io/os: linux
+        priorityClassName: system-node-critical
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: node-resolver
+        serviceAccountName: node-resolver
+        terminationGracePeriodSeconds: 30
+        tolerations:
+        - operator: Exists
+        volumes:
+        - hostPath:
+            path: /etc/hosts
+            type: File
+          name: hosts-file
+    updateStrategy:
+      rollingUpdate:
+        maxSurge: 0
+        maxUnavailable: 33%
+      type: RollingUpdate
+  status:
+    currentNumberScheduled: 15
+    desiredNumberScheduled: 15
+    numberAvailable: 15
+    numberMisscheduled: 0
+    numberReady: 15
+    observedGeneration: 1
+    updatedNumberScheduled: 15
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

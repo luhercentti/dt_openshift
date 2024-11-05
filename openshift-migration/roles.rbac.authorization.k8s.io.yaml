@@ -1,0 +1,219 @@
+apiVersion: v1
+items:
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: Role
+  metadata:
+    creationTimestamp: "2024-07-11T17:31:42Z"
+    name: mtc-operator.v1.7.16
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: operators.coreos.com/v2
+      blockOwnerDeletion: false
+      controller: true
+      kind: OperatorCondition
+      name: mtc-operator.v1.7.16
+      uid: b465a60b-8134-4693-801e-3f4a54e03817
+    resourceVersion: "449354711"
+    uid: 6e92dc54-5bb7-4f10-b541-acf7b5906159
+  rules:
+  - apiGroups:
+    - operators.coreos.com
+    resourceNames:
+    - mtc-operator.v1.7.16
+    resources:
+    - operatorconditions
+    verbs:
+    - get
+    - update
+    - patch
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: Role
+  metadata:
+    creationTimestamp: "2024-07-11T17:31:49Z"
+    labels:
+      olm.owner: mtc-operator.v1.7.16
+      olm.owner.kind: ClusterServiceVersion
+      olm.owner.namespace: openshift-migration
+      operators.coreos.com/mtc-operator.openshift-migration: ""
+    name: mtc-operator.v1.7.16-migration-operator-6c9958c97b
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: operators.coreos.com/v1alpha1
+      blockOwnerDeletion: false
+      controller: false
+      kind: ClusterServiceVersion
+      name: mtc-operator.v1.7.16
+      uid: 92379bf9-f5b5-4f6c-8e75-c1d41bd6f15e
+    resourceVersion: "449354952"
+    uid: 89046d00-b466-4290-817a-8b9d144e6687
+  rules:
+  - apiGroups:
+    - rbac.authorization.k8s.io
+    resources:
+    - roles
+    - rolebindings
+    verbs:
+    - list
+    - get
+    - create
+    - delete
+    - patch
+    - update
+    - watch
+  - apiGroups:
+    - oadp.openshift.io
+    resources:
+    - '*'
+    verbs:
+    - '*'
+  - apiGroups:
+    - apps
+    resources:
+    - daemonsets
+    - deployments
+    - replicasets
+    verbs:
+    - '*'
+  - apiGroups:
+    - monitoring.coreos.com
+    resources:
+    - servicemonitors
+    verbs:
+    - list
+    - get
+    - create
+    - delete
+    - update
+    - patch
+    - watch
+  - apiGroups:
+    - migration.openshift.io
+    resources:
+    - '*'
+    verbs:
+    - '*'
+  - apiGroups:
+    - route.openshift.io
+    resources:
+    - routes
+    verbs:
+    - '*'
+  - apiGroups:
+    - ""
+    resources:
+    - pods
+    - services
+    - endpoints
+    - persistentvolumeclaims
+    - events
+    - configmaps
+    - secrets
+    - serviceaccounts
+    verbs:
+    - '*'
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: Role
+  metadata:
+    creationTimestamp: "2024-07-11T14:22:50Z"
+    name: oadp-operator.v1.0.16
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: operators.coreos.com/v2
+      blockOwnerDeletion: false
+      controller: true
+      kind: OperatorCondition
+      name: oadp-operator.v1.0.16
+      uid: 5427ac72-b41c-425b-9c7c-03283c11a792
+    resourceVersion: "449089437"
+    uid: 97dd2e96-ca10-4f0b-a0ca-ccbde386b9b0
+  rules:
+  - apiGroups:
+    - operators.coreos.com
+    resourceNames:
+    - oadp-operator.v1.0.16
+    resources:
+    - operatorconditions
+    verbs:
+    - get
+    - update
+    - patch
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: Role
+  metadata:
+    creationTimestamp: "2024-07-11T14:22:56Z"
+    labels:
+      olm.owner: oadp-operator.v1.0.16
+      olm.owner.kind: ClusterServiceVersion
+      olm.owner.namespace: openshift-migration
+      operators.coreos.com/redhat-oadp-operator.openshift-migration: ""
+    name: oadp-operator.v1.0.16-openshift-adp-controller-manager-894b6bd48
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: operators.coreos.com/v1alpha1
+      blockOwnerDeletion: false
+      controller: false
+      kind: ClusterServiceVersion
+      name: oadp-operator.v1.0.16
+      uid: 5f287fe9-f79a-466a-b87f-e751cf75fac3
+    resourceVersion: "449089676"
+    uid: e4f749c7-7170-41fc-923c-5ab7c33093bf
+  rules:
+  - apiGroups:
+    - ""
+    resources:
+    - configmaps
+    verbs:
+    - get
+    - list
+    - watch
+    - create
+    - update
+    - patch
+    - delete
+  - apiGroups:
+    - coordination.k8s.io
+    resources:
+    - leases
+    verbs:
+    - get
+    - list
+    - watch
+    - create
+    - update
+    - patch
+    - delete
+  - apiGroups:
+    - ""
+    resources:
+    - events
+    verbs:
+    - create
+    - patch
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: Role
+  metadata:
+    creationTimestamp: "2023-05-12T20:25:45Z"
+    name: prometheus-k8s
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: migration.openshift.io/v1alpha1
+      kind: MigrationController
+      name: migration-controller
+      uid: 6c83ac9d-343f-4bbd-82b5-65232ad8f08e
+    resourceVersion: "2280972"
+    uid: ee78bdb4-2e39-4cc8-b152-e264c1b3b77e
+  rules:
+  - apiGroups:
+    - ""
+    resources:
+    - services
+    - endpoints
+    - pods
+    verbs:
+    - get
+    - list
+    - watch
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

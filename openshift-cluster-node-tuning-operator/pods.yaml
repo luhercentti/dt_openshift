@@ -1,0 +1,3465 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.130.0.8"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.130.0.8"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/scc: anyuid
+    creationTimestamp: "2023-05-04T21:36:09Z"
+    generateName: cluster-node-tuning-operator-6f865f5964-
+    labels:
+      name: cluster-node-tuning-operator
+      pod-template-hash: 6f865f5964
+    name: cluster-node-tuning-operator-6f865f5964-kv525
+    namespace: openshift-cluster-node-tuning-operator
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: cluster-node-tuning-operator-6f865f5964
+      uid: 3b74dd6f-7318-4f19-b6da-e70c3408201e
+    resourceVersion: "114617797"
+    uid: 99b9b219-3065-452a-a9d7-7316858d852b
+  spec:
+    containers:
+    - args:
+      - -v=0
+      command:
+      - cluster-node-tuning-operator
+      env:
+      - name: RELEASE_VERSION
+        value: 4.10.53
+      - name: WATCH_NAMESPACE
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: metadata.namespace
+      - name: POD_NAME
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: metadata.name
+      - name: RESYNC_PERIOD
+        value: "600"
+      - name: CLUSTER_NODE_TUNED_IMAGE
+        value: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:f200032b3959b8e70f502cb5bb67a761933d09e1e859b70c9bf44c5f63f258bd
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:f200032b3959b8e70f502cb5bb67a761933d09e1e859b70c9bf44c5f63f258bd
+      imagePullPolicy: IfNotPresent
+      name: cluster-node-tuning-operator
+      ports:
+      - containerPort: 60000
+        name: metrics
+        protocol: TCP
+      resources:
+        requests:
+          cpu: 10m
+          memory: 20Mi
+      securityContext:
+        capabilities:
+          drop:
+          - MKNOD
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: FallbackToLogsOnError
+      volumeMounts:
+      - mountPath: /etc/secrets
+        name: node-tuning-operator-tls
+      - mountPath: /var/run/configmaps/trusted-ca/
+        name: trusted-ca
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-5t6hh
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    nodeName: ocp4azu-sj2sl-master-1
+    nodeSelector:
+      node-role.kubernetes.io/master: ""
+    preemptionPolicy: PreemptLowerPriority
+    priority: 2000000000
+    priorityClassName: system-cluster-critical
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      runAsNonRoot: true
+      runAsUser: 499
+      seLinuxOptions:
+        level: s0:c13,c7
+    serviceAccount: cluster-node-tuning-operator
+    serviceAccountName: cluster-node-tuning-operator
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/master
+      operator: Exists
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 120
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 120
+    - effect: NoSchedule
+      key: node.kubernetes.io/memory-pressure
+      operator: Exists
+    volumes:
+    - name: node-tuning-operator-tls
+      secret:
+        defaultMode: 420
+        secretName: node-tuning-operator-tls
+    - configMap:
+        defaultMode: 420
+        items:
+        - key: ca-bundle.crt
+          path: tls-ca-bundle.pem
+        name: trusted-ca
+        optional: true
+      name: trusted-ca
+    - name: kube-api-access-5t6hh
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-04T21:40:05Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-11T18:26:27Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-11T18:26:27Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-04T21:40:05Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://2a7ed5b1e1db548e6cc35c947e38702731c4ec400abfc62d455945644a771471
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:f200032b3959b8e70f502cb5bb67a761933d09e1e859b70c9bf44c5f63f258bd
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:f200032b3959b8e70f502cb5bb67a761933d09e1e859b70c9bf44c5f63f258bd
+      lastState: {}
+      name: cluster-node-tuning-operator
+      ready: true
+      restartCount: 3
+      started: true
+      state:
+        running:
+          startedAt: "2023-05-11T18:26:27Z"
+    hostIP: 10.80.80.8
+    phase: Running
+    podIP: 10.130.0.8
+    podIPs:
+    - ip: 10.130.0.8
+    qosClass: Burstable
+    startTime: "2023-05-04T21:40:05Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      openshift.io/scc: privileged
+    creationTimestamp: "2023-05-16T16:46:16Z"
+    generateName: tuned-
+    labels:
+      controller-revision-hash: 85d656b77d
+      openshift-app: tuned
+      pod-template-generation: "1"
+    name: tuned-4ggw5
+    namespace: openshift-cluster-node-tuning-operator
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DaemonSet
+      name: tuned
+      uid: cd1975a8-d592-42ce-8743-28aeefc762d0
+    resourceVersion: "467286805"
+    uid: 1e8d69fc-943d-4eec-81dd-03da4c32cdfa
+  spec:
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchFields:
+            - key: metadata.name
+              operator: In
+              values:
+              - ocp4azu-sj2sl-infra-brazilsouth3-pfrpx
+    containers:
+    - command:
+      - /var/lib/tuned/bin/run
+      - start
+      env:
+      - name: WATCH_NAMESPACE
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: metadata.namespace
+      - name: OCP_NODE_NAME
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: spec.nodeName
+      - name: RESYNC_PERIOD
+        value: "600"
+      - name: RELEASE_VERSION
+        value: 4.10.53
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:f200032b3959b8e70f502cb5bb67a761933d09e1e859b70c9bf44c5f63f258bd
+      imagePullPolicy: IfNotPresent
+      lifecycle:
+        preStop:
+          exec:
+            command:
+            - /var/lib/tuned/bin/run
+            - stop
+      name: tuned
+      resources:
+        requests:
+          cpu: 10m
+          memory: 50Mi
+      securityContext:
+        privileged: true
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: FallbackToLogsOnError
+      volumeMounts:
+      - mountPath: /var/lib/tuned/profiles-data
+        name: var-lib-tuned-profiles-data
+      - mountPath: /etc/modprobe.d
+        name: etc
+        subPath: modprobe.d
+      - mountPath: /etc/sysconfig
+        name: etc
+        subPath: sysconfig
+      - mountPath: /etc/sysctl.d
+        name: etc
+        readOnly: true
+        subPath: sysctl.d
+      - mountPath: /etc/sysctl.conf
+        name: etc
+        readOnly: true
+        subPath: sysctl.conf
+      - mountPath: /etc/systemd
+        name: etc
+        subPath: systemd
+      - mountPath: /sys
+        name: sys
+      - mountPath: /var/run/dbus
+        name: var-run-dbus
+        readOnly: true
+      - mountPath: /run/systemd/system
+        name: run-systemd-system
+        readOnly: true
+      - mountPath: /lib/modules
+        name: lib-modules
+        readOnly: true
+      - mountPath: /host
+        name: host
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-hgsbx
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    hostIPC: true
+    hostNetwork: true
+    hostPID: true
+    imagePullSecrets:
+    - name: tuned-dockercfg-c5hdz
+    nodeName: ocp4azu-sj2sl-infra-brazilsouth3-pfrpx
+    nodeSelector:
+      kubernetes.io/os: linux
+    preemptionPolicy: PreemptLowerPriority
+    priority: 2000001000
+    priorityClassName: system-node-critical
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: tuned
+    serviceAccountName: tuned
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - operator: Exists
+    volumes:
+    - hostPath:
+        path: /etc
+        type: Directory
+      name: etc
+    - hostPath:
+        path: /sys
+        type: Directory
+      name: sys
+    - hostPath:
+        path: /var/run/dbus
+        type: Directory
+      name: var-run-dbus
+    - hostPath:
+        path: /run/systemd/system
+        type: Directory
+      name: run-systemd-system
+    - hostPath:
+        path: /lib/modules
+        type: Directory
+      name: lib-modules
+    - hostPath:
+        path: /
+        type: Directory
+      name: host
+    - configMap:
+        defaultMode: 420
+        items:
+        - key: tuned-profiles-data
+          path: tuned-profiles.yaml
+        name: tuned-profiles
+        optional: true
+      name: var-lib-tuned-profiles-data
+    - name: kube-api-access-hgsbx
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-16T16:46:17Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-16T16:46:35Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-16T16:46:35Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-16T16:46:16Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://9703c746abc23ec1c4e29bb89260a3ef7faed11df763160a9f64c718edad7dd4
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:f200032b3959b8e70f502cb5bb67a761933d09e1e859b70c9bf44c5f63f258bd
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:f200032b3959b8e70f502cb5bb67a761933d09e1e859b70c9bf44c5f63f258bd
+      lastState: {}
+      name: tuned
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2023-05-16T16:46:34Z"
+    hostIP: 10.80.80.16
+    phase: Running
+    podIP: 10.80.80.16
+    podIPs:
+    - ip: 10.80.80.16
+    qosClass: Burstable
+    startTime: "2023-05-16T16:46:17Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      openshift.io/scc: privileged
+    creationTimestamp: "2023-05-25T13:39:12Z"
+    generateName: tuned-
+    labels:
+      controller-revision-hash: 85d656b77d
+      openshift-app: tuned
+      pod-template-generation: "1"
+    name: tuned-4pk5f
+    namespace: openshift-cluster-node-tuning-operator
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DaemonSet
+      name: tuned
+      uid: cd1975a8-d592-42ce-8743-28aeefc762d0
+    resourceVersion: "472847008"
+    uid: c8c3a913-8e81-415a-9e99-45348c6a8188
+  spec:
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchFields:
+            - key: metadata.name
+              operator: In
+              values:
+              - ocp4azu-sj2sl-worker-prod-brazilsouth2-xbz5z
+    containers:
+    - command:
+      - /var/lib/tuned/bin/run
+      - start
+      env:
+      - name: WATCH_NAMESPACE
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: metadata.namespace
+      - name: OCP_NODE_NAME
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: spec.nodeName
+      - name: RESYNC_PERIOD
+        value: "600"
+      - name: RELEASE_VERSION
+        value: 4.10.53
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:f200032b3959b8e70f502cb5bb67a761933d09e1e859b70c9bf44c5f63f258bd
+      imagePullPolicy: IfNotPresent
+      lifecycle:
+        preStop:
+          exec:
+            command:
+            - /var/lib/tuned/bin/run
+            - stop
+      name: tuned
+      resources:
+        requests:
+          cpu: 10m
+          memory: 50Mi
+      securityContext:
+        privileged: true
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: FallbackToLogsOnError
+      volumeMounts:
+      - mountPath: /var/lib/tuned/profiles-data
+        name: var-lib-tuned-profiles-data
+      - mountPath: /etc/modprobe.d
+        name: etc
+        subPath: modprobe.d
+      - mountPath: /etc/sysconfig
+        name: etc
+        subPath: sysconfig
+      - mountPath: /etc/sysctl.d
+        name: etc
+        readOnly: true
+        subPath: sysctl.d
+      - mountPath: /etc/sysctl.conf
+        name: etc
+        readOnly: true
+        subPath: sysctl.conf
+      - mountPath: /etc/systemd
+        name: etc
+        subPath: systemd
+      - mountPath: /sys
+        name: sys
+      - mountPath: /var/run/dbus
+        name: var-run-dbus
+        readOnly: true
+      - mountPath: /run/systemd/system
+        name: run-systemd-system
+        readOnly: true
+      - mountPath: /lib/modules
+        name: lib-modules
+        readOnly: true
+      - mountPath: /host
+        name: host
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-fjtdr
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    hostIPC: true
+    hostNetwork: true
+    hostPID: true
+    imagePullSecrets:
+    - name: tuned-dockercfg-c5hdz
+    nodeName: ocp4azu-sj2sl-worker-prod-brazilsouth2-xbz5z
+    nodeSelector:
+      kubernetes.io/os: linux
+    preemptionPolicy: PreemptLowerPriority
+    priority: 2000001000
+    priorityClassName: system-node-critical
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: tuned
+    serviceAccountName: tuned
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - operator: Exists
+    volumes:
+    - hostPath:
+        path: /etc
+        type: Directory
+      name: etc
+    - hostPath:
+        path: /sys
+        type: Directory
+      name: sys
+    - hostPath:
+        path: /var/run/dbus
+        type: Directory
+      name: var-run-dbus
+    - hostPath:
+        path: /run/systemd/system
+        type: Directory
+      name: run-systemd-system
+    - hostPath:
+        path: /lib/modules
+        type: Directory
+      name: lib-modules
+    - hostPath:
+        path: /
+        type: Directory
+      name: host
+    - configMap:
+        defaultMode: 420
+        items:
+        - key: tuned-profiles-data
+          path: tuned-profiles.yaml
+        name: tuned-profiles
+        optional: true
+      name: var-lib-tuned-profiles-data
+    - name: kube-api-access-fjtdr
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-25T13:39:12Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-25T13:39:31Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-25T13:39:31Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-25T13:39:12Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://f768116ebd0f3221db4a8ed5ff1f64df0f0efb83fb3fc17b4707493e2e122775
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:f200032b3959b8e70f502cb5bb67a761933d09e1e859b70c9bf44c5f63f258bd
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:f200032b3959b8e70f502cb5bb67a761933d09e1e859b70c9bf44c5f63f258bd
+      lastState: {}
+      name: tuned
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2023-05-25T13:39:30Z"
+    hostIP: 10.80.80.23
+    phase: Running
+    podIP: 10.80.80.23
+    podIPs:
+    - ip: 10.80.80.23
+    qosClass: Burstable
+    startTime: "2023-05-25T13:39:12Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      openshift.io/scc: privileged
+    creationTimestamp: "2023-06-05T02:11:56Z"
+    generateName: tuned-
+    labels:
+      controller-revision-hash: 85d656b77d
+      openshift-app: tuned
+      pod-template-generation: "1"
+    name: tuned-829xd
+    namespace: openshift-cluster-node-tuning-operator
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DaemonSet
+      name: tuned
+      uid: cd1975a8-d592-42ce-8743-28aeefc762d0
+    resourceVersion: "466147453"
+    uid: d06c748f-ae1c-4ac0-8c43-075e8d0bf583
+  spec:
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchFields:
+            - key: metadata.name
+              operator: In
+              values:
+              - ocp4azu-sj2sl-worker-prod-brazilsouth3-vmmxw
+    containers:
+    - command:
+      - /var/lib/tuned/bin/run
+      - start
+      env:
+      - name: WATCH_NAMESPACE
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: metadata.namespace
+      - name: OCP_NODE_NAME
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: spec.nodeName
+      - name: RESYNC_PERIOD
+        value: "600"
+      - name: RELEASE_VERSION
+        value: 4.10.53
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:f200032b3959b8e70f502cb5bb67a761933d09e1e859b70c9bf44c5f63f258bd
+      imagePullPolicy: IfNotPresent
+      lifecycle:
+        preStop:
+          exec:
+            command:
+            - /var/lib/tuned/bin/run
+            - stop
+      name: tuned
+      resources:
+        requests:
+          cpu: 10m
+          memory: 50Mi
+      securityContext:
+        privileged: true
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: FallbackToLogsOnError
+      volumeMounts:
+      - mountPath: /var/lib/tuned/profiles-data
+        name: var-lib-tuned-profiles-data
+      - mountPath: /etc/modprobe.d
+        name: etc
+        subPath: modprobe.d
+      - mountPath: /etc/sysconfig
+        name: etc
+        subPath: sysconfig
+      - mountPath: /etc/sysctl.d
+        name: etc
+        readOnly: true
+        subPath: sysctl.d
+      - mountPath: /etc/sysctl.conf
+        name: etc
+        readOnly: true
+        subPath: sysctl.conf
+      - mountPath: /etc/systemd
+        name: etc
+        subPath: systemd
+      - mountPath: /sys
+        name: sys
+      - mountPath: /var/run/dbus
+        name: var-run-dbus
+        readOnly: true
+      - mountPath: /run/systemd/system
+        name: run-systemd-system
+        readOnly: true
+      - mountPath: /lib/modules
+        name: lib-modules
+        readOnly: true
+      - mountPath: /host
+        name: host
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-jgpr9
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    hostIPC: true
+    hostNetwork: true
+    hostPID: true
+    imagePullSecrets:
+    - name: tuned-dockercfg-c5hdz
+    nodeName: ocp4azu-sj2sl-worker-prod-brazilsouth3-vmmxw
+    nodeSelector:
+      kubernetes.io/os: linux
+    preemptionPolicy: PreemptLowerPriority
+    priority: 2000001000
+    priorityClassName: system-node-critical
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: tuned
+    serviceAccountName: tuned
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - operator: Exists
+    volumes:
+    - hostPath:
+        path: /etc
+        type: Directory
+      name: etc
+    - hostPath:
+        path: /sys
+        type: Directory
+      name: sys
+    - hostPath:
+        path: /var/run/dbus
+        type: Directory
+      name: var-run-dbus
+    - hostPath:
+        path: /run/systemd/system
+        type: Directory
+      name: run-systemd-system
+    - hostPath:
+        path: /lib/modules
+        type: Directory
+      name: lib-modules
+    - hostPath:
+        path: /
+        type: Directory
+      name: host
+    - configMap:
+        defaultMode: 420
+        items:
+        - key: tuned-profiles-data
+          path: tuned-profiles.yaml
+        name: tuned-profiles
+        optional: true
+      name: var-lib-tuned-profiles-data
+    - name: kube-api-access-jgpr9
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-06-05T02:11:57Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2024-01-17T22:38:51Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2024-01-17T22:38:51Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-06-05T02:11:57Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://41dd27ed4a587a2b9d2f0f21770c21ec7a8fe5e040510fc0efe11ef21851feca
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:f200032b3959b8e70f502cb5bb67a761933d09e1e859b70c9bf44c5f63f258bd
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:f200032b3959b8e70f502cb5bb67a761933d09e1e859b70c9bf44c5f63f258bd
+      lastState: {}
+      name: tuned
+      ready: true
+      restartCount: 1
+      started: true
+      state:
+        running:
+          startedAt: "2024-01-17T22:38:51Z"
+    hostIP: 10.80.80.18
+    phase: Running
+    podIP: 10.80.80.18
+    podIPs:
+    - ip: 10.80.80.18
+    qosClass: Burstable
+    startTime: "2023-06-05T02:11:57Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      openshift.io/scc: privileged
+    creationTimestamp: "2023-05-25T14:39:41Z"
+    generateName: tuned-
+    labels:
+      controller-revision-hash: 85d656b77d
+      openshift-app: tuned
+      pod-template-generation: "1"
+    name: tuned-c9jsw
+    namespace: openshift-cluster-node-tuning-operator
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DaemonSet
+      name: tuned
+      uid: cd1975a8-d592-42ce-8743-28aeefc762d0
+    resourceVersion: "476624903"
+    uid: 5b856861-c36d-49c9-8dce-8a7b0e79fdb4
+  spec:
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchFields:
+            - key: metadata.name
+              operator: In
+              values:
+              - ocp4azu-sj2sl-worker-noprod-dev-brazilsouth1-vlxcp
+    containers:
+    - command:
+      - /var/lib/tuned/bin/run
+      - start
+      env:
+      - name: WATCH_NAMESPACE
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: metadata.namespace
+      - name: OCP_NODE_NAME
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: spec.nodeName
+      - name: RESYNC_PERIOD
+        value: "600"
+      - name: RELEASE_VERSION
+        value: 4.10.53
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:f200032b3959b8e70f502cb5bb67a761933d09e1e859b70c9bf44c5f63f258bd
+      imagePullPolicy: IfNotPresent
+      lifecycle:
+        preStop:
+          exec:
+            command:
+            - /var/lib/tuned/bin/run
+            - stop
+      name: tuned
+      resources:
+        requests:
+          cpu: 10m
+          memory: 50Mi
+      securityContext:
+        privileged: true
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: FallbackToLogsOnError
+      volumeMounts:
+      - mountPath: /var/lib/tuned/profiles-data
+        name: var-lib-tuned-profiles-data
+      - mountPath: /etc/modprobe.d
+        name: etc
+        subPath: modprobe.d
+      - mountPath: /etc/sysconfig
+        name: etc
+        subPath: sysconfig
+      - mountPath: /etc/sysctl.d
+        name: etc
+        readOnly: true
+        subPath: sysctl.d
+      - mountPath: /etc/sysctl.conf
+        name: etc
+        readOnly: true
+        subPath: sysctl.conf
+      - mountPath: /etc/systemd
+        name: etc
+        subPath: systemd
+      - mountPath: /sys
+        name: sys
+      - mountPath: /var/run/dbus
+        name: var-run-dbus
+        readOnly: true
+      - mountPath: /run/systemd/system
+        name: run-systemd-system
+        readOnly: true
+      - mountPath: /lib/modules
+        name: lib-modules
+        readOnly: true
+      - mountPath: /host
+        name: host
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-s8wg4
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    hostIPC: true
+    hostNetwork: true
+    hostPID: true
+    imagePullSecrets:
+    - name: tuned-dockercfg-c5hdz
+    nodeName: ocp4azu-sj2sl-worker-noprod-dev-brazilsouth1-vlxcp
+    nodeSelector:
+      kubernetes.io/os: linux
+    preemptionPolicy: PreemptLowerPriority
+    priority: 2000001000
+    priorityClassName: system-node-critical
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: tuned
+    serviceAccountName: tuned
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - operator: Exists
+    volumes:
+    - hostPath:
+        path: /etc
+        type: Directory
+      name: etc
+    - hostPath:
+        path: /sys
+        type: Directory
+      name: sys
+    - hostPath:
+        path: /var/run/dbus
+        type: Directory
+      name: var-run-dbus
+    - hostPath:
+        path: /run/systemd/system
+        type: Directory
+      name: run-systemd-system
+    - hostPath:
+        path: /lib/modules
+        type: Directory
+      name: lib-modules
+    - hostPath:
+        path: /
+        type: Directory
+      name: host
+    - configMap:
+        defaultMode: 420
+        items:
+        - key: tuned-profiles-data
+          path: tuned-profiles.yaml
+        name: tuned-profiles
+        optional: true
+      name: var-lib-tuned-profiles-data
+    - name: kube-api-access-s8wg4
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-25T14:39:42Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-25T14:40:02Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-25T14:40:02Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-25T14:39:41Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://b30d59b1f56f316b1eac792e9586b90671337d4794258347e2269ff296f3412f
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:f200032b3959b8e70f502cb5bb67a761933d09e1e859b70c9bf44c5f63f258bd
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:f200032b3959b8e70f502cb5bb67a761933d09e1e859b70c9bf44c5f63f258bd
+      lastState: {}
+      name: tuned
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2023-05-25T14:40:02Z"
+    hostIP: 10.80.80.5
+    phase: Running
+    podIP: 10.80.80.5
+    podIPs:
+    - ip: 10.80.80.5
+    qosClass: Burstable
+    startTime: "2023-05-25T14:39:42Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      openshift.io/scc: privileged
+    creationTimestamp: "2023-05-16T17:01:43Z"
+    generateName: tuned-
+    labels:
+      controller-revision-hash: 85d656b77d
+      openshift-app: tuned
+      pod-template-generation: "1"
+    name: tuned-ccqtv
+    namespace: openshift-cluster-node-tuning-operator
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DaemonSet
+      name: tuned
+      uid: cd1975a8-d592-42ce-8743-28aeefc762d0
+    resourceVersion: "458211570"
+    uid: aa9f8641-e268-4009-b227-ca237bbb8491
+  spec:
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchFields:
+            - key: metadata.name
+              operator: In
+              values:
+              - ocp4azu-sj2sl-infra-brazilsouth2-ptg7h
+    containers:
+    - command:
+      - /var/lib/tuned/bin/run
+      - start
+      env:
+      - name: WATCH_NAMESPACE
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: metadata.namespace
+      - name: OCP_NODE_NAME
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: spec.nodeName
+      - name: RESYNC_PERIOD
+        value: "600"
+      - name: RELEASE_VERSION
+        value: 4.10.53
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:f200032b3959b8e70f502cb5bb67a761933d09e1e859b70c9bf44c5f63f258bd
+      imagePullPolicy: IfNotPresent
+      lifecycle:
+        preStop:
+          exec:
+            command:
+            - /var/lib/tuned/bin/run
+            - stop
+      name: tuned
+      resources:
+        requests:
+          cpu: 10m
+          memory: 50Mi
+      securityContext:
+        privileged: true
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: FallbackToLogsOnError
+      volumeMounts:
+      - mountPath: /var/lib/tuned/profiles-data
+        name: var-lib-tuned-profiles-data
+      - mountPath: /etc/modprobe.d
+        name: etc
+        subPath: modprobe.d
+      - mountPath: /etc/sysconfig
+        name: etc
+        subPath: sysconfig
+      - mountPath: /etc/sysctl.d
+        name: etc
+        readOnly: true
+        subPath: sysctl.d
+      - mountPath: /etc/sysctl.conf
+        name: etc
+        readOnly: true
+        subPath: sysctl.conf
+      - mountPath: /etc/systemd
+        name: etc
+        subPath: systemd
+      - mountPath: /sys
+        name: sys
+      - mountPath: /var/run/dbus
+        name: var-run-dbus
+        readOnly: true
+      - mountPath: /run/systemd/system
+        name: run-systemd-system
+        readOnly: true
+      - mountPath: /lib/modules
+        name: lib-modules
+        readOnly: true
+      - mountPath: /host
+        name: host
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-5lm2w
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    hostIPC: true
+    hostNetwork: true
+    hostPID: true
+    imagePullSecrets:
+    - name: tuned-dockercfg-c5hdz
+    nodeName: ocp4azu-sj2sl-infra-brazilsouth2-ptg7h
+    nodeSelector:
+      kubernetes.io/os: linux
+    preemptionPolicy: PreemptLowerPriority
+    priority: 2000001000
+    priorityClassName: system-node-critical
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: tuned
+    serviceAccountName: tuned
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - operator: Exists
+    volumes:
+    - hostPath:
+        path: /etc
+        type: Directory
+      name: etc
+    - hostPath:
+        path: /sys
+        type: Directory
+      name: sys
+    - hostPath:
+        path: /var/run/dbus
+        type: Directory
+      name: var-run-dbus
+    - hostPath:
+        path: /run/systemd/system
+        type: Directory
+      name: run-systemd-system
+    - hostPath:
+        path: /lib/modules
+        type: Directory
+      name: lib-modules
+    - hostPath:
+        path: /
+        type: Directory
+      name: host
+    - configMap:
+        defaultMode: 420
+        items:
+        - key: tuned-profiles-data
+          path: tuned-profiles.yaml
+        name: tuned-profiles
+        optional: true
+      name: var-lib-tuned-profiles-data
+    - name: kube-api-access-5lm2w
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-16T17:01:44Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-16T17:02:03Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-16T17:02:03Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-16T17:01:43Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://f4e0b1e462d4e1e8cd71212a952ee180d425852416a2c13ceb5d4a164e856ae6
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:f200032b3959b8e70f502cb5bb67a761933d09e1e859b70c9bf44c5f63f258bd
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:f200032b3959b8e70f502cb5bb67a761933d09e1e859b70c9bf44c5f63f258bd
+      lastState: {}
+      name: tuned
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2023-05-16T17:02:03Z"
+    hostIP: 10.80.80.12
+    phase: Running
+    podIP: 10.80.80.12
+    podIPs:
+    - ip: 10.80.80.12
+    qosClass: Burstable
+    startTime: "2023-05-16T17:01:44Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      openshift.io/scc: privileged
+    creationTimestamp: "2023-05-04T21:41:26Z"
+    generateName: tuned-
+    labels:
+      controller-revision-hash: 85d656b77d
+      openshift-app: tuned
+      pod-template-generation: "1"
+    name: tuned-dftm6
+    namespace: openshift-cluster-node-tuning-operator
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DaemonSet
+      name: tuned
+      uid: cd1975a8-d592-42ce-8743-28aeefc762d0
+    resourceVersion: "465633625"
+    uid: 25e02091-e8d9-4139-a962-a98010c09d36
+  spec:
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchFields:
+            - key: metadata.name
+              operator: In
+              values:
+              - ocp4azu-sj2sl-master-2
+    containers:
+    - command:
+      - /var/lib/tuned/bin/run
+      - start
+      env:
+      - name: WATCH_NAMESPACE
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: metadata.namespace
+      - name: OCP_NODE_NAME
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: spec.nodeName
+      - name: RESYNC_PERIOD
+        value: "600"
+      - name: RELEASE_VERSION
+        value: 4.10.53
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:f200032b3959b8e70f502cb5bb67a761933d09e1e859b70c9bf44c5f63f258bd
+      imagePullPolicy: IfNotPresent
+      lifecycle:
+        preStop:
+          exec:
+            command:
+            - /var/lib/tuned/bin/run
+            - stop
+      name: tuned
+      resources:
+        requests:
+          cpu: 10m
+          memory: 50Mi
+      securityContext:
+        privileged: true
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: FallbackToLogsOnError
+      volumeMounts:
+      - mountPath: /var/lib/tuned/profiles-data
+        name: var-lib-tuned-profiles-data
+      - mountPath: /etc/modprobe.d
+        name: etc
+        subPath: modprobe.d
+      - mountPath: /etc/sysconfig
+        name: etc
+        subPath: sysconfig
+      - mountPath: /etc/sysctl.d
+        name: etc
+        readOnly: true
+        subPath: sysctl.d
+      - mountPath: /etc/sysctl.conf
+        name: etc
+        readOnly: true
+        subPath: sysctl.conf
+      - mountPath: /etc/systemd
+        name: etc
+        subPath: systemd
+      - mountPath: /sys
+        name: sys
+      - mountPath: /var/run/dbus
+        name: var-run-dbus
+        readOnly: true
+      - mountPath: /run/systemd/system
+        name: run-systemd-system
+        readOnly: true
+      - mountPath: /lib/modules
+        name: lib-modules
+        readOnly: true
+      - mountPath: /host
+        name: host
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-lh6wr
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    hostIPC: true
+    hostNetwork: true
+    hostPID: true
+    nodeName: ocp4azu-sj2sl-master-2
+    nodeSelector:
+      kubernetes.io/os: linux
+    preemptionPolicy: PreemptLowerPriority
+    priority: 2000001000
+    priorityClassName: system-node-critical
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: tuned
+    serviceAccountName: tuned
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - operator: Exists
+    volumes:
+    - hostPath:
+        path: /etc
+        type: Directory
+      name: etc
+    - hostPath:
+        path: /sys
+        type: Directory
+      name: sys
+    - hostPath:
+        path: /var/run/dbus
+        type: Directory
+      name: var-run-dbus
+    - hostPath:
+        path: /run/systemd/system
+        type: Directory
+      name: run-systemd-system
+    - hostPath:
+        path: /lib/modules
+        type: Directory
+      name: lib-modules
+    - hostPath:
+        path: /
+        type: Directory
+      name: host
+    - configMap:
+        defaultMode: 420
+        items:
+        - key: tuned-profiles-data
+          path: tuned-profiles.yaml
+        name: tuned-profiles
+        optional: true
+      name: var-lib-tuned-profiles-data
+    - name: kube-api-access-lh6wr
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-04T21:41:27Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-11T18:26:13Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-11T18:26:13Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-04T21:41:27Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://cca4b03e61a1db0af8f08d2176333373a4bfa15a27d477af666a03f2cfc52744
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:f200032b3959b8e70f502cb5bb67a761933d09e1e859b70c9bf44c5f63f258bd
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:f200032b3959b8e70f502cb5bb67a761933d09e1e859b70c9bf44c5f63f258bd
+      lastState: {}
+      name: tuned
+      ready: true
+      restartCount: 3
+      started: true
+      state:
+        running:
+          startedAt: "2023-05-11T18:26:13Z"
+    hostIP: 10.80.80.7
+    phase: Running
+    podIP: 10.80.80.7
+    podIPs:
+    - ip: 10.80.80.7
+    qosClass: Burstable
+    startTime: "2023-05-04T21:41:27Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      openshift.io/scc: privileged
+    creationTimestamp: "2023-05-25T13:31:43Z"
+    generateName: tuned-
+    labels:
+      controller-revision-hash: 85d656b77d
+      openshift-app: tuned
+      pod-template-generation: "1"
+    name: tuned-fpbq2
+    namespace: openshift-cluster-node-tuning-operator
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DaemonSet
+      name: tuned
+      uid: cd1975a8-d592-42ce-8743-28aeefc762d0
+    resourceVersion: "467404366"
+    uid: 62b5895f-2fda-4df1-a089-e61c42965e0d
+  spec:
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchFields:
+            - key: metadata.name
+              operator: In
+              values:
+              - ocp4azu-sj2sl-worker-noprod-qa-brazilsouth2-rglbf
+    containers:
+    - command:
+      - /var/lib/tuned/bin/run
+      - start
+      env:
+      - name: WATCH_NAMESPACE
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: metadata.namespace
+      - name: OCP_NODE_NAME
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: spec.nodeName
+      - name: RESYNC_PERIOD
+        value: "600"
+      - name: RELEASE_VERSION
+        value: 4.10.53
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:f200032b3959b8e70f502cb5bb67a761933d09e1e859b70c9bf44c5f63f258bd
+      imagePullPolicy: IfNotPresent
+      lifecycle:
+        preStop:
+          exec:
+            command:
+            - /var/lib/tuned/bin/run
+            - stop
+      name: tuned
+      resources:
+        requests:
+          cpu: 10m
+          memory: 50Mi
+      securityContext:
+        privileged: true
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: FallbackToLogsOnError
+      volumeMounts:
+      - mountPath: /var/lib/tuned/profiles-data
+        name: var-lib-tuned-profiles-data
+      - mountPath: /etc/modprobe.d
+        name: etc
+        subPath: modprobe.d
+      - mountPath: /etc/sysconfig
+        name: etc
+        subPath: sysconfig
+      - mountPath: /etc/sysctl.d
+        name: etc
+        readOnly: true
+        subPath: sysctl.d
+      - mountPath: /etc/sysctl.conf
+        name: etc
+        readOnly: true
+        subPath: sysctl.conf
+      - mountPath: /etc/systemd
+        name: etc
+        subPath: systemd
+      - mountPath: /sys
+        name: sys
+      - mountPath: /var/run/dbus
+        name: var-run-dbus
+        readOnly: true
+      - mountPath: /run/systemd/system
+        name: run-systemd-system
+        readOnly: true
+      - mountPath: /lib/modules
+        name: lib-modules
+        readOnly: true
+      - mountPath: /host
+        name: host
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-hlcmd
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    hostIPC: true
+    hostNetwork: true
+    hostPID: true
+    imagePullSecrets:
+    - name: tuned-dockercfg-c5hdz
+    nodeName: ocp4azu-sj2sl-worker-noprod-qa-brazilsouth2-rglbf
+    nodeSelector:
+      kubernetes.io/os: linux
+    preemptionPolicy: PreemptLowerPriority
+    priority: 2000001000
+    priorityClassName: system-node-critical
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: tuned
+    serviceAccountName: tuned
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - operator: Exists
+    volumes:
+    - hostPath:
+        path: /etc
+        type: Directory
+      name: etc
+    - hostPath:
+        path: /sys
+        type: Directory
+      name: sys
+    - hostPath:
+        path: /var/run/dbus
+        type: Directory
+      name: var-run-dbus
+    - hostPath:
+        path: /run/systemd/system
+        type: Directory
+      name: run-systemd-system
+    - hostPath:
+        path: /lib/modules
+        type: Directory
+      name: lib-modules
+    - hostPath:
+        path: /
+        type: Directory
+      name: host
+    - configMap:
+        defaultMode: 420
+        items:
+        - key: tuned-profiles-data
+          path: tuned-profiles.yaml
+        name: tuned-profiles
+        optional: true
+      name: var-lib-tuned-profiles-data
+    - name: kube-api-access-hlcmd
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-25T13:31:44Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-25T13:32:03Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-25T13:32:03Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-25T13:31:43Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://7da688c14da4e036899fdd56fb88015ead0ccec3334590dacb4dc1cd240ccf53
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:f200032b3959b8e70f502cb5bb67a761933d09e1e859b70c9bf44c5f63f258bd
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:f200032b3959b8e70f502cb5bb67a761933d09e1e859b70c9bf44c5f63f258bd
+      lastState: {}
+      name: tuned
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2023-05-25T13:32:03Z"
+    hostIP: 10.80.80.22
+    phase: Running
+    podIP: 10.80.80.22
+    podIPs:
+    - ip: 10.80.80.22
+    qosClass: Burstable
+    startTime: "2023-05-25T13:31:44Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      openshift.io/scc: privileged
+    creationTimestamp: "2023-05-25T13:26:47Z"
+    generateName: tuned-
+    labels:
+      controller-revision-hash: 85d656b77d
+      openshift-app: tuned
+      pod-template-generation: "1"
+    name: tuned-gmknj
+    namespace: openshift-cluster-node-tuning-operator
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DaemonSet
+      name: tuned
+      uid: cd1975a8-d592-42ce-8743-28aeefc762d0
+    resourceVersion: "472917978"
+    uid: 7b232327-7478-4279-8e7a-083ea63dc7b5
+  spec:
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchFields:
+            - key: metadata.name
+              operator: In
+              values:
+              - ocp4azu-sj2sl-worker-noprod-qa-brazilsouth1-2s77x
+    containers:
+    - command:
+      - /var/lib/tuned/bin/run
+      - start
+      env:
+      - name: WATCH_NAMESPACE
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: metadata.namespace
+      - name: OCP_NODE_NAME
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: spec.nodeName
+      - name: RESYNC_PERIOD
+        value: "600"
+      - name: RELEASE_VERSION
+        value: 4.10.53
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:f200032b3959b8e70f502cb5bb67a761933d09e1e859b70c9bf44c5f63f258bd
+      imagePullPolicy: IfNotPresent
+      lifecycle:
+        preStop:
+          exec:
+            command:
+            - /var/lib/tuned/bin/run
+            - stop
+      name: tuned
+      resources:
+        requests:
+          cpu: 10m
+          memory: 50Mi
+      securityContext:
+        privileged: true
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: FallbackToLogsOnError
+      volumeMounts:
+      - mountPath: /var/lib/tuned/profiles-data
+        name: var-lib-tuned-profiles-data
+      - mountPath: /etc/modprobe.d
+        name: etc
+        subPath: modprobe.d
+      - mountPath: /etc/sysconfig
+        name: etc
+        subPath: sysconfig
+      - mountPath: /etc/sysctl.d
+        name: etc
+        readOnly: true
+        subPath: sysctl.d
+      - mountPath: /etc/sysctl.conf
+        name: etc
+        readOnly: true
+        subPath: sysctl.conf
+      - mountPath: /etc/systemd
+        name: etc
+        subPath: systemd
+      - mountPath: /sys
+        name: sys
+      - mountPath: /var/run/dbus
+        name: var-run-dbus
+        readOnly: true
+      - mountPath: /run/systemd/system
+        name: run-systemd-system
+        readOnly: true
+      - mountPath: /lib/modules
+        name: lib-modules
+        readOnly: true
+      - mountPath: /host
+        name: host
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-7zwwt
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    hostIPC: true
+    hostNetwork: true
+    hostPID: true
+    imagePullSecrets:
+    - name: tuned-dockercfg-c5hdz
+    nodeName: ocp4azu-sj2sl-worker-noprod-qa-brazilsouth1-2s77x
+    nodeSelector:
+      kubernetes.io/os: linux
+    preemptionPolicy: PreemptLowerPriority
+    priority: 2000001000
+    priorityClassName: system-node-critical
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: tuned
+    serviceAccountName: tuned
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - operator: Exists
+    volumes:
+    - hostPath:
+        path: /etc
+        type: Directory
+      name: etc
+    - hostPath:
+        path: /sys
+        type: Directory
+      name: sys
+    - hostPath:
+        path: /var/run/dbus
+        type: Directory
+      name: var-run-dbus
+    - hostPath:
+        path: /run/systemd/system
+        type: Directory
+      name: run-systemd-system
+    - hostPath:
+        path: /lib/modules
+        type: Directory
+      name: lib-modules
+    - hostPath:
+        path: /
+        type: Directory
+      name: host
+    - configMap:
+        defaultMode: 420
+        items:
+        - key: tuned-profiles-data
+          path: tuned-profiles.yaml
+        name: tuned-profiles
+        optional: true
+      name: var-lib-tuned-profiles-data
+    - name: kube-api-access-7zwwt
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-25T13:26:47Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-25T13:27:08Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-25T13:27:08Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-25T13:26:47Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://67664fd9ef9ef2df681ffa45b620a7eea38e3287e27121013657e1bae2ad4aa1
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:f200032b3959b8e70f502cb5bb67a761933d09e1e859b70c9bf44c5f63f258bd
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:f200032b3959b8e70f502cb5bb67a761933d09e1e859b70c9bf44c5f63f258bd
+      lastState: {}
+      name: tuned
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2023-05-25T13:27:07Z"
+    hostIP: 10.80.80.28
+    phase: Running
+    podIP: 10.80.80.28
+    podIPs:
+    - ip: 10.80.80.28
+    qosClass: Burstable
+    startTime: "2023-05-25T13:26:47Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      openshift.io/scc: privileged
+    creationTimestamp: "2023-05-25T20:10:15Z"
+    generateName: tuned-
+    labels:
+      controller-revision-hash: 85d656b77d
+      openshift-app: tuned
+      pod-template-generation: "1"
+    name: tuned-j74kn
+    namespace: openshift-cluster-node-tuning-operator
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DaemonSet
+      name: tuned
+      uid: cd1975a8-d592-42ce-8743-28aeefc762d0
+    resourceVersion: "428583660"
+    uid: 1cd344e7-d400-4f06-add8-bd93b21a6f9e
+  spec:
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchFields:
+            - key: metadata.name
+              operator: In
+              values:
+              - ocp4azu-sj2sl-worker-prod-brazilsouth2-gmw4z
+    containers:
+    - command:
+      - /var/lib/tuned/bin/run
+      - start
+      env:
+      - name: WATCH_NAMESPACE
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: metadata.namespace
+      - name: OCP_NODE_NAME
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: spec.nodeName
+      - name: RESYNC_PERIOD
+        value: "600"
+      - name: RELEASE_VERSION
+        value: 4.10.53
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:f200032b3959b8e70f502cb5bb67a761933d09e1e859b70c9bf44c5f63f258bd
+      imagePullPolicy: IfNotPresent
+      lifecycle:
+        preStop:
+          exec:
+            command:
+            - /var/lib/tuned/bin/run
+            - stop
+      name: tuned
+      resources:
+        requests:
+          cpu: 10m
+          memory: 50Mi
+      securityContext:
+        privileged: true
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: FallbackToLogsOnError
+      volumeMounts:
+      - mountPath: /var/lib/tuned/profiles-data
+        name: var-lib-tuned-profiles-data
+      - mountPath: /etc/modprobe.d
+        name: etc
+        subPath: modprobe.d
+      - mountPath: /etc/sysconfig
+        name: etc
+        subPath: sysconfig
+      - mountPath: /etc/sysctl.d
+        name: etc
+        readOnly: true
+        subPath: sysctl.d
+      - mountPath: /etc/sysctl.conf
+        name: etc
+        readOnly: true
+        subPath: sysctl.conf
+      - mountPath: /etc/systemd
+        name: etc
+        subPath: systemd
+      - mountPath: /sys
+        name: sys
+      - mountPath: /var/run/dbus
+        name: var-run-dbus
+        readOnly: true
+      - mountPath: /run/systemd/system
+        name: run-systemd-system
+        readOnly: true
+      - mountPath: /lib/modules
+        name: lib-modules
+        readOnly: true
+      - mountPath: /host
+        name: host
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-466qr
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    hostIPC: true
+    hostNetwork: true
+    hostPID: true
+    imagePullSecrets:
+    - name: tuned-dockercfg-c5hdz
+    nodeName: ocp4azu-sj2sl-worker-prod-brazilsouth2-gmw4z
+    nodeSelector:
+      kubernetes.io/os: linux
+    preemptionPolicy: PreemptLowerPriority
+    priority: 2000001000
+    priorityClassName: system-node-critical
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: tuned
+    serviceAccountName: tuned
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - operator: Exists
+    volumes:
+    - hostPath:
+        path: /etc
+        type: Directory
+      name: etc
+    - hostPath:
+        path: /sys
+        type: Directory
+      name: sys
+    - hostPath:
+        path: /var/run/dbus
+        type: Directory
+      name: var-run-dbus
+    - hostPath:
+        path: /run/systemd/system
+        type: Directory
+      name: run-systemd-system
+    - hostPath:
+        path: /lib/modules
+        type: Directory
+      name: lib-modules
+    - hostPath:
+        path: /
+        type: Directory
+      name: host
+    - configMap:
+        defaultMode: 420
+        items:
+        - key: tuned-profiles-data
+          path: tuned-profiles.yaml
+        name: tuned-profiles
+        optional: true
+      name: var-lib-tuned-profiles-data
+    - name: kube-api-access-466qr
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-25T20:10:16Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-25T20:10:36Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-25T20:10:36Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-25T20:10:15Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://013f544c7cc061a19d5034973fa4efe07bee4dfeacc4275623896adf5e462a02
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:f200032b3959b8e70f502cb5bb67a761933d09e1e859b70c9bf44c5f63f258bd
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:f200032b3959b8e70f502cb5bb67a761933d09e1e859b70c9bf44c5f63f258bd
+      lastState: {}
+      name: tuned
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2023-05-25T20:10:35Z"
+    hostIP: 10.80.80.17
+    phase: Running
+    podIP: 10.80.80.17
+    podIPs:
+    - ip: 10.80.80.17
+    qosClass: Burstable
+    startTime: "2023-05-25T20:10:16Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      openshift.io/scc: privileged
+    creationTimestamp: "2023-05-25T13:39:04Z"
+    generateName: tuned-
+    labels:
+      controller-revision-hash: 85d656b77d
+      openshift-app: tuned
+      pod-template-generation: "1"
+    name: tuned-jcgbx
+    namespace: openshift-cluster-node-tuning-operator
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DaemonSet
+      name: tuned
+      uid: cd1975a8-d592-42ce-8743-28aeefc762d0
+    resourceVersion: "491646503"
+    uid: a9358564-854b-494c-84b2-c71632dc94f5
+  spec:
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchFields:
+            - key: metadata.name
+              operator: In
+              values:
+              - ocp4azu-sj2sl-worker-prod-brazilsouth1-lks8v
+    containers:
+    - command:
+      - /var/lib/tuned/bin/run
+      - start
+      env:
+      - name: WATCH_NAMESPACE
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: metadata.namespace
+      - name: OCP_NODE_NAME
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: spec.nodeName
+      - name: RESYNC_PERIOD
+        value: "600"
+      - name: RELEASE_VERSION
+        value: 4.10.53
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:f200032b3959b8e70f502cb5bb67a761933d09e1e859b70c9bf44c5f63f258bd
+      imagePullPolicy: IfNotPresent
+      lifecycle:
+        preStop:
+          exec:
+            command:
+            - /var/lib/tuned/bin/run
+            - stop
+      name: tuned
+      resources:
+        requests:
+          cpu: 10m
+          memory: 50Mi
+      securityContext:
+        privileged: true
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: FallbackToLogsOnError
+      volumeMounts:
+      - mountPath: /var/lib/tuned/profiles-data
+        name: var-lib-tuned-profiles-data
+      - mountPath: /etc/modprobe.d
+        name: etc
+        subPath: modprobe.d
+      - mountPath: /etc/sysconfig
+        name: etc
+        subPath: sysconfig
+      - mountPath: /etc/sysctl.d
+        name: etc
+        readOnly: true
+        subPath: sysctl.d
+      - mountPath: /etc/sysctl.conf
+        name: etc
+        readOnly: true
+        subPath: sysctl.conf
+      - mountPath: /etc/systemd
+        name: etc
+        subPath: systemd
+      - mountPath: /sys
+        name: sys
+      - mountPath: /var/run/dbus
+        name: var-run-dbus
+        readOnly: true
+      - mountPath: /run/systemd/system
+        name: run-systemd-system
+        readOnly: true
+      - mountPath: /lib/modules
+        name: lib-modules
+        readOnly: true
+      - mountPath: /host
+        name: host
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-cwsq7
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    hostIPC: true
+    hostNetwork: true
+    hostPID: true
+    imagePullSecrets:
+    - name: tuned-dockercfg-c5hdz
+    nodeName: ocp4azu-sj2sl-worker-prod-brazilsouth1-lks8v
+    nodeSelector:
+      kubernetes.io/os: linux
+    preemptionPolicy: PreemptLowerPriority
+    priority: 2000001000
+    priorityClassName: system-node-critical
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: tuned
+    serviceAccountName: tuned
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - operator: Exists
+    volumes:
+    - hostPath:
+        path: /etc
+        type: Directory
+      name: etc
+    - hostPath:
+        path: /sys
+        type: Directory
+      name: sys
+    - hostPath:
+        path: /var/run/dbus
+        type: Directory
+      name: var-run-dbus
+    - hostPath:
+        path: /run/systemd/system
+        type: Directory
+      name: run-systemd-system
+    - hostPath:
+        path: /lib/modules
+        type: Directory
+      name: lib-modules
+    - hostPath:
+        path: /
+        type: Directory
+      name: host
+    - configMap:
+        defaultMode: 420
+        items:
+        - key: tuned-profiles-data
+          path: tuned-profiles.yaml
+        name: tuned-profiles
+        optional: true
+      name: var-lib-tuned-profiles-data
+    - name: kube-api-access-cwsq7
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-25T13:39:04Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-25T13:39:25Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-25T13:39:25Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-25T13:39:04Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://948823863c080898856b0defdf84b2d813bf260d4bab090898a17baa8c141930
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:f200032b3959b8e70f502cb5bb67a761933d09e1e859b70c9bf44c5f63f258bd
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:f200032b3959b8e70f502cb5bb67a761933d09e1e859b70c9bf44c5f63f258bd
+      lastState: {}
+      name: tuned
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2023-05-25T13:39:24Z"
+    hostIP: 10.80.80.19
+    phase: Running
+    podIP: 10.80.80.19
+    podIPs:
+    - ip: 10.80.80.19
+    qosClass: Burstable
+    startTime: "2023-05-25T13:39:04Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      openshift.io/scc: privileged
+    creationTimestamp: "2023-05-04T21:41:27Z"
+    generateName: tuned-
+    labels:
+      controller-revision-hash: 85d656b77d
+      openshift-app: tuned
+      pod-template-generation: "1"
+    name: tuned-klhnw
+    namespace: openshift-cluster-node-tuning-operator
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DaemonSet
+      name: tuned
+      uid: cd1975a8-d592-42ce-8743-28aeefc762d0
+    resourceVersion: "1605400"
+    uid: 609ab172-b30a-4af5-9887-2de9b2cab1c6
+  spec:
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchFields:
+            - key: metadata.name
+              operator: In
+              values:
+              - ocp4azu-sj2sl-master-0
+    containers:
+    - command:
+      - /var/lib/tuned/bin/run
+      - start
+      env:
+      - name: WATCH_NAMESPACE
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: metadata.namespace
+      - name: OCP_NODE_NAME
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: spec.nodeName
+      - name: RESYNC_PERIOD
+        value: "600"
+      - name: RELEASE_VERSION
+        value: 4.10.53
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:f200032b3959b8e70f502cb5bb67a761933d09e1e859b70c9bf44c5f63f258bd
+      imagePullPolicy: IfNotPresent
+      lifecycle:
+        preStop:
+          exec:
+            command:
+            - /var/lib/tuned/bin/run
+            - stop
+      name: tuned
+      resources:
+        requests:
+          cpu: 10m
+          memory: 50Mi
+      securityContext:
+        privileged: true
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: FallbackToLogsOnError
+      volumeMounts:
+      - mountPath: /var/lib/tuned/profiles-data
+        name: var-lib-tuned-profiles-data
+      - mountPath: /etc/modprobe.d
+        name: etc
+        subPath: modprobe.d
+      - mountPath: /etc/sysconfig
+        name: etc
+        subPath: sysconfig
+      - mountPath: /etc/sysctl.d
+        name: etc
+        readOnly: true
+        subPath: sysctl.d
+      - mountPath: /etc/sysctl.conf
+        name: etc
+        readOnly: true
+        subPath: sysctl.conf
+      - mountPath: /etc/systemd
+        name: etc
+        subPath: systemd
+      - mountPath: /sys
+        name: sys
+      - mountPath: /var/run/dbus
+        name: var-run-dbus
+        readOnly: true
+      - mountPath: /run/systemd/system
+        name: run-systemd-system
+        readOnly: true
+      - mountPath: /lib/modules
+        name: lib-modules
+        readOnly: true
+      - mountPath: /host
+        name: host
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-pgbs4
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    hostIPC: true
+    hostNetwork: true
+    hostPID: true
+    nodeName: ocp4azu-sj2sl-master-0
+    nodeSelector:
+      kubernetes.io/os: linux
+    preemptionPolicy: PreemptLowerPriority
+    priority: 2000001000
+    priorityClassName: system-node-critical
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: tuned
+    serviceAccountName: tuned
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - operator: Exists
+    volumes:
+    - hostPath:
+        path: /etc
+        type: Directory
+      name: etc
+    - hostPath:
+        path: /sys
+        type: Directory
+      name: sys
+    - hostPath:
+        path: /var/run/dbus
+        type: Directory
+      name: var-run-dbus
+    - hostPath:
+        path: /run/systemd/system
+        type: Directory
+      name: run-systemd-system
+    - hostPath:
+        path: /lib/modules
+        type: Directory
+      name: lib-modules
+    - hostPath:
+        path: /
+        type: Directory
+      name: host
+    - configMap:
+        defaultMode: 420
+        items:
+        - key: tuned-profiles-data
+          path: tuned-profiles.yaml
+        name: tuned-profiles
+        optional: true
+      name: var-lib-tuned-profiles-data
+    - name: kube-api-access-pgbs4
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-04T21:41:27Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-11T18:26:13Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-11T18:26:13Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-04T21:41:27Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://3e623208c7ed012a6b0193e049081e3ae94d8bc9569548eefac818645168fc14
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:f200032b3959b8e70f502cb5bb67a761933d09e1e859b70c9bf44c5f63f258bd
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:f200032b3959b8e70f502cb5bb67a761933d09e1e859b70c9bf44c5f63f258bd
+      lastState: {}
+      name: tuned
+      ready: true
+      restartCount: 3
+      started: true
+      state:
+        running:
+          startedAt: "2023-05-11T18:26:13Z"
+    hostIP: 10.80.80.6
+    phase: Running
+    podIP: 10.80.80.6
+    podIPs:
+    - ip: 10.80.80.6
+    qosClass: Burstable
+    startTime: "2023-05-04T21:41:27Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      openshift.io/scc: privileged
+    creationTimestamp: "2023-05-25T14:41:57Z"
+    generateName: tuned-
+    labels:
+      controller-revision-hash: 85d656b77d
+      openshift-app: tuned
+      pod-template-generation: "1"
+    name: tuned-kzfqt
+    namespace: openshift-cluster-node-tuning-operator
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DaemonSet
+      name: tuned
+      uid: cd1975a8-d592-42ce-8743-28aeefc762d0
+    resourceVersion: "476624534"
+    uid: 7abf7b78-8a68-463d-9631-5af247dd71ad
+  spec:
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchFields:
+            - key: metadata.name
+              operator: In
+              values:
+              - ocp4azu-sj2sl-worker-noprod-dev-brazilsouth2-4dm6s
+    containers:
+    - command:
+      - /var/lib/tuned/bin/run
+      - start
+      env:
+      - name: WATCH_NAMESPACE
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: metadata.namespace
+      - name: OCP_NODE_NAME
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: spec.nodeName
+      - name: RESYNC_PERIOD
+        value: "600"
+      - name: RELEASE_VERSION
+        value: 4.10.53
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:f200032b3959b8e70f502cb5bb67a761933d09e1e859b70c9bf44c5f63f258bd
+      imagePullPolicy: IfNotPresent
+      lifecycle:
+        preStop:
+          exec:
+            command:
+            - /var/lib/tuned/bin/run
+            - stop
+      name: tuned
+      resources:
+        requests:
+          cpu: 10m
+          memory: 50Mi
+      securityContext:
+        privileged: true
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: FallbackToLogsOnError
+      volumeMounts:
+      - mountPath: /var/lib/tuned/profiles-data
+        name: var-lib-tuned-profiles-data
+      - mountPath: /etc/modprobe.d
+        name: etc
+        subPath: modprobe.d
+      - mountPath: /etc/sysconfig
+        name: etc
+        subPath: sysconfig
+      - mountPath: /etc/sysctl.d
+        name: etc
+        readOnly: true
+        subPath: sysctl.d
+      - mountPath: /etc/sysctl.conf
+        name: etc
+        readOnly: true
+        subPath: sysctl.conf
+      - mountPath: /etc/systemd
+        name: etc
+        subPath: systemd
+      - mountPath: /sys
+        name: sys
+      - mountPath: /var/run/dbus
+        name: var-run-dbus
+        readOnly: true
+      - mountPath: /run/systemd/system
+        name: run-systemd-system
+        readOnly: true
+      - mountPath: /lib/modules
+        name: lib-modules
+        readOnly: true
+      - mountPath: /host
+        name: host
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-z6q6g
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    hostIPC: true
+    hostNetwork: true
+    hostPID: true
+    imagePullSecrets:
+    - name: tuned-dockercfg-c5hdz
+    nodeName: ocp4azu-sj2sl-worker-noprod-dev-brazilsouth2-4dm6s
+    nodeSelector:
+      kubernetes.io/os: linux
+    preemptionPolicy: PreemptLowerPriority
+    priority: 2000001000
+    priorityClassName: system-node-critical
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: tuned
+    serviceAccountName: tuned
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - operator: Exists
+    volumes:
+    - hostPath:
+        path: /etc
+        type: Directory
+      name: etc
+    - hostPath:
+        path: /sys
+        type: Directory
+      name: sys
+    - hostPath:
+        path: /var/run/dbus
+        type: Directory
+      name: var-run-dbus
+    - hostPath:
+        path: /run/systemd/system
+        type: Directory
+      name: run-systemd-system
+    - hostPath:
+        path: /lib/modules
+        type: Directory
+      name: lib-modules
+    - hostPath:
+        path: /
+        type: Directory
+      name: host
+    - configMap:
+        defaultMode: 420
+        items:
+        - key: tuned-profiles-data
+          path: tuned-profiles.yaml
+        name: tuned-profiles
+        optional: true
+      name: var-lib-tuned-profiles-data
+    - name: kube-api-access-z6q6g
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-25T14:41:58Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2024-05-02T14:24:43Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2024-05-02T14:24:43Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-25T14:41:57Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://5f1af517a5da954a58793a31a5e86c2a742bf76481dd3d023feee0162b3fad19
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:f200032b3959b8e70f502cb5bb67a761933d09e1e859b70c9bf44c5f63f258bd
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:f200032b3959b8e70f502cb5bb67a761933d09e1e859b70c9bf44c5f63f258bd
+      lastState: {}
+      name: tuned
+      ready: true
+      restartCount: 1
+      started: true
+      state:
+        running:
+          startedAt: "2024-05-02T14:24:43Z"
+    hostIP: 10.80.80.9
+    phase: Running
+    podIP: 10.80.80.9
+    podIPs:
+    - ip: 10.80.80.9
+    qosClass: Burstable
+    startTime: "2023-05-25T14:41:58Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      openshift.io/scc: privileged
+    creationTimestamp: "2023-05-04T21:41:27Z"
+    generateName: tuned-
+    labels:
+      controller-revision-hash: 85d656b77d
+      openshift-app: tuned
+      pod-template-generation: "1"
+    name: tuned-qdnw4
+    namespace: openshift-cluster-node-tuning-operator
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DaemonSet
+      name: tuned
+      uid: cd1975a8-d592-42ce-8743-28aeefc762d0
+    resourceVersion: "114617809"
+    uid: 96c01603-c6f0-4cb6-9ccf-3a703e270de6
+  spec:
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchFields:
+            - key: metadata.name
+              operator: In
+              values:
+              - ocp4azu-sj2sl-master-1
+    containers:
+    - command:
+      - /var/lib/tuned/bin/run
+      - start
+      env:
+      - name: WATCH_NAMESPACE
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: metadata.namespace
+      - name: OCP_NODE_NAME
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: spec.nodeName
+      - name: RESYNC_PERIOD
+        value: "600"
+      - name: RELEASE_VERSION
+        value: 4.10.53
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:f200032b3959b8e70f502cb5bb67a761933d09e1e859b70c9bf44c5f63f258bd
+      imagePullPolicy: IfNotPresent
+      lifecycle:
+        preStop:
+          exec:
+            command:
+            - /var/lib/tuned/bin/run
+            - stop
+      name: tuned
+      resources:
+        requests:
+          cpu: 10m
+          memory: 50Mi
+      securityContext:
+        privileged: true
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: FallbackToLogsOnError
+      volumeMounts:
+      - mountPath: /var/lib/tuned/profiles-data
+        name: var-lib-tuned-profiles-data
+      - mountPath: /etc/modprobe.d
+        name: etc
+        subPath: modprobe.d
+      - mountPath: /etc/sysconfig
+        name: etc
+        subPath: sysconfig
+      - mountPath: /etc/sysctl.d
+        name: etc
+        readOnly: true
+        subPath: sysctl.d
+      - mountPath: /etc/sysctl.conf
+        name: etc
+        readOnly: true
+        subPath: sysctl.conf
+      - mountPath: /etc/systemd
+        name: etc
+        subPath: systemd
+      - mountPath: /sys
+        name: sys
+      - mountPath: /var/run/dbus
+        name: var-run-dbus
+        readOnly: true
+      - mountPath: /run/systemd/system
+        name: run-systemd-system
+        readOnly: true
+      - mountPath: /lib/modules
+        name: lib-modules
+        readOnly: true
+      - mountPath: /host
+        name: host
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-vjhv7
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    hostIPC: true
+    hostNetwork: true
+    hostPID: true
+    nodeName: ocp4azu-sj2sl-master-1
+    nodeSelector:
+      kubernetes.io/os: linux
+    preemptionPolicy: PreemptLowerPriority
+    priority: 2000001000
+    priorityClassName: system-node-critical
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: tuned
+    serviceAccountName: tuned
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - operator: Exists
+    volumes:
+    - hostPath:
+        path: /etc
+        type: Directory
+      name: etc
+    - hostPath:
+        path: /sys
+        type: Directory
+      name: sys
+    - hostPath:
+        path: /var/run/dbus
+        type: Directory
+      name: var-run-dbus
+    - hostPath:
+        path: /run/systemd/system
+        type: Directory
+      name: run-systemd-system
+    - hostPath:
+        path: /lib/modules
+        type: Directory
+      name: lib-modules
+    - hostPath:
+        path: /
+        type: Directory
+      name: host
+    - configMap:
+        defaultMode: 420
+        items:
+        - key: tuned-profiles-data
+          path: tuned-profiles.yaml
+        name: tuned-profiles
+        optional: true
+      name: var-lib-tuned-profiles-data
+    - name: kube-api-access-vjhv7
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-04T21:41:27Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-11T18:26:19Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-11T18:26:19Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-04T21:41:27Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://b9bccd5e022ee9d1d7fe322f8d0f230c0a77db26376d562c341f55e4c75b16ae
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:f200032b3959b8e70f502cb5bb67a761933d09e1e859b70c9bf44c5f63f258bd
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:f200032b3959b8e70f502cb5bb67a761933d09e1e859b70c9bf44c5f63f258bd
+      lastState: {}
+      name: tuned
+      ready: true
+      restartCount: 3
+      started: true
+      state:
+        running:
+          startedAt: "2023-05-11T18:26:19Z"
+    hostIP: 10.80.80.8
+    phase: Running
+    podIP: 10.80.80.8
+    podIPs:
+    - ip: 10.80.80.8
+    qosClass: Burstable
+    startTime: "2023-05-04T21:41:27Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      openshift.io/scc: privileged
+    creationTimestamp: "2023-05-25T19:26:47Z"
+    generateName: tuned-
+    labels:
+      controller-revision-hash: 85d656b77d
+      openshift-app: tuned
+      pod-template-generation: "1"
+    name: tuned-sdxgh
+    namespace: openshift-cluster-node-tuning-operator
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DaemonSet
+      name: tuned
+      uid: cd1975a8-d592-42ce-8743-28aeefc762d0
+    resourceVersion: "380476228"
+    uid: a50b68e0-9be4-4c04-9777-959a47003a71
+  spec:
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchFields:
+            - key: metadata.name
+              operator: In
+              values:
+              - ocp4azu-sj2sl-worker-prod-brazilsouth1-mjsb5
+    containers:
+    - command:
+      - /var/lib/tuned/bin/run
+      - start
+      env:
+      - name: WATCH_NAMESPACE
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: metadata.namespace
+      - name: OCP_NODE_NAME
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: spec.nodeName
+      - name: RESYNC_PERIOD
+        value: "600"
+      - name: RELEASE_VERSION
+        value: 4.10.53
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:f200032b3959b8e70f502cb5bb67a761933d09e1e859b70c9bf44c5f63f258bd
+      imagePullPolicy: IfNotPresent
+      lifecycle:
+        preStop:
+          exec:
+            command:
+            - /var/lib/tuned/bin/run
+            - stop
+      name: tuned
+      resources:
+        requests:
+          cpu: 10m
+          memory: 50Mi
+      securityContext:
+        privileged: true
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: FallbackToLogsOnError
+      volumeMounts:
+      - mountPath: /var/lib/tuned/profiles-data
+        name: var-lib-tuned-profiles-data
+      - mountPath: /etc/modprobe.d
+        name: etc
+        subPath: modprobe.d
+      - mountPath: /etc/sysconfig
+        name: etc
+        subPath: sysconfig
+      - mountPath: /etc/sysctl.d
+        name: etc
+        readOnly: true
+        subPath: sysctl.d
+      - mountPath: /etc/sysctl.conf
+        name: etc
+        readOnly: true
+        subPath: sysctl.conf
+      - mountPath: /etc/systemd
+        name: etc
+        subPath: systemd
+      - mountPath: /sys
+        name: sys
+      - mountPath: /var/run/dbus
+        name: var-run-dbus
+        readOnly: true
+      - mountPath: /run/systemd/system
+        name: run-systemd-system
+        readOnly: true
+      - mountPath: /lib/modules
+        name: lib-modules
+        readOnly: true
+      - mountPath: /host
+        name: host
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-j6djr
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    hostIPC: true
+    hostNetwork: true
+    hostPID: true
+    imagePullSecrets:
+    - name: tuned-dockercfg-c5hdz
+    nodeName: ocp4azu-sj2sl-worker-prod-brazilsouth1-mjsb5
+    nodeSelector:
+      kubernetes.io/os: linux
+    preemptionPolicy: PreemptLowerPriority
+    priority: 2000001000
+    priorityClassName: system-node-critical
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: tuned
+    serviceAccountName: tuned
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - operator: Exists
+    volumes:
+    - hostPath:
+        path: /etc
+        type: Directory
+      name: etc
+    - hostPath:
+        path: /sys
+        type: Directory
+      name: sys
+    - hostPath:
+        path: /var/run/dbus
+        type: Directory
+      name: var-run-dbus
+    - hostPath:
+        path: /run/systemd/system
+        type: Directory
+      name: run-systemd-system
+    - hostPath:
+        path: /lib/modules
+        type: Directory
+      name: lib-modules
+    - hostPath:
+        path: /
+        type: Directory
+      name: host
+    - configMap:
+        defaultMode: 420
+        items:
+        - key: tuned-profiles-data
+          path: tuned-profiles.yaml
+        name: tuned-profiles
+        optional: true
+      name: var-lib-tuned-profiles-data
+    - name: kube-api-access-j6djr
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-25T19:26:48Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-25T19:27:10Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-25T19:27:10Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-25T19:26:47Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://0c13163f7d2a36215435a38d5536d88602117ee45e64246ff1a8de02978ec3c1
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:f200032b3959b8e70f502cb5bb67a761933d09e1e859b70c9bf44c5f63f258bd
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:f200032b3959b8e70f502cb5bb67a761933d09e1e859b70c9bf44c5f63f258bd
+      lastState: {}
+      name: tuned
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2023-05-25T19:27:09Z"
+    hostIP: 10.80.80.13
+    phase: Running
+    podIP: 10.80.80.13
+    podIPs:
+    - ip: 10.80.80.13
+    qosClass: Burstable
+    startTime: "2023-05-25T19:26:48Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      openshift.io/scc: privileged
+    creationTimestamp: "2023-05-17T18:14:31Z"
+    generateName: tuned-
+    labels:
+      controller-revision-hash: 85d656b77d
+      openshift-app: tuned
+      pod-template-generation: "1"
+    name: tuned-zk4dm
+    namespace: openshift-cluster-node-tuning-operator
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DaemonSet
+      name: tuned
+      uid: cd1975a8-d592-42ce-8743-28aeefc762d0
+    resourceVersion: "460420445"
+    uid: 9f6efbce-f304-4cbf-9adb-fd513b0cb0ff
+  spec:
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchFields:
+            - key: metadata.name
+              operator: In
+              values:
+              - ocp4azu-sj2sl-infra-brazilsouth1-5zvnf
+    containers:
+    - command:
+      - /var/lib/tuned/bin/run
+      - start
+      env:
+      - name: WATCH_NAMESPACE
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: metadata.namespace
+      - name: OCP_NODE_NAME
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: spec.nodeName
+      - name: RESYNC_PERIOD
+        value: "600"
+      - name: RELEASE_VERSION
+        value: 4.10.53
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:f200032b3959b8e70f502cb5bb67a761933d09e1e859b70c9bf44c5f63f258bd
+      imagePullPolicy: IfNotPresent
+      lifecycle:
+        preStop:
+          exec:
+            command:
+            - /var/lib/tuned/bin/run
+            - stop
+      name: tuned
+      resources:
+        requests:
+          cpu: 10m
+          memory: 50Mi
+      securityContext:
+        privileged: true
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: FallbackToLogsOnError
+      volumeMounts:
+      - mountPath: /var/lib/tuned/profiles-data
+        name: var-lib-tuned-profiles-data
+      - mountPath: /etc/modprobe.d
+        name: etc
+        subPath: modprobe.d
+      - mountPath: /etc/sysconfig
+        name: etc
+        subPath: sysconfig
+      - mountPath: /etc/sysctl.d
+        name: etc
+        readOnly: true
+        subPath: sysctl.d
+      - mountPath: /etc/sysctl.conf
+        name: etc
+        readOnly: true
+        subPath: sysctl.conf
+      - mountPath: /etc/systemd
+        name: etc
+        subPath: systemd
+      - mountPath: /sys
+        name: sys
+      - mountPath: /var/run/dbus
+        name: var-run-dbus
+        readOnly: true
+      - mountPath: /run/systemd/system
+        name: run-systemd-system
+        readOnly: true
+      - mountPath: /lib/modules
+        name: lib-modules
+        readOnly: true
+      - mountPath: /host
+        name: host
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-r7sfl
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    hostIPC: true
+    hostNetwork: true
+    hostPID: true
+    imagePullSecrets:
+    - name: tuned-dockercfg-c5hdz
+    nodeName: ocp4azu-sj2sl-infra-brazilsouth1-5zvnf
+    nodeSelector:
+      kubernetes.io/os: linux
+    preemptionPolicy: PreemptLowerPriority
+    priority: 2000001000
+    priorityClassName: system-node-critical
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: tuned
+    serviceAccountName: tuned
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - operator: Exists
+    volumes:
+    - hostPath:
+        path: /etc
+        type: Directory
+      name: etc
+    - hostPath:
+        path: /sys
+        type: Directory
+      name: sys
+    - hostPath:
+        path: /var/run/dbus
+        type: Directory
+      name: var-run-dbus
+    - hostPath:
+        path: /run/systemd/system
+        type: Directory
+      name: run-systemd-system
+    - hostPath:
+        path: /lib/modules
+        type: Directory
+      name: lib-modules
+    - hostPath:
+        path: /
+        type: Directory
+      name: host
+    - configMap:
+        defaultMode: 420
+        items:
+        - key: tuned-profiles-data
+          path: tuned-profiles.yaml
+        name: tuned-profiles
+        optional: true
+      name: var-lib-tuned-profiles-data
+    - name: kube-api-access-r7sfl
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-17T18:14:31Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-17T18:14:50Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-17T18:14:50Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-17T18:14:31Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://ffaf26c9adc7b99c7f1bf519f8d1f1a320648a7f19aa46bbda46cd76ccdf1093
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:f200032b3959b8e70f502cb5bb67a761933d09e1e859b70c9bf44c5f63f258bd
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:f200032b3959b8e70f502cb5bb67a761933d09e1e859b70c9bf44c5f63f258bd
+      lastState: {}
+      name: tuned
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2023-05-17T18:14:49Z"
+    hostIP: 10.80.80.11
+    phase: Running
+    podIP: 10.80.80.11
+    podIPs:
+    - ip: 10.80.80.11
+    qosClass: Burstable
+    startTime: "2023-05-17T18:14:31Z"
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

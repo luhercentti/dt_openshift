@@ -1,0 +1,294 @@
+apiVersion: v1
+items:
+- apiVersion: apps/v1
+  data:
+    spec:
+      template:
+        $patch: replace
+        metadata:
+          creationTimestamp: null
+          labels:
+            app: postgresql
+            chart: postgresql-8.2.0
+            heritage: Helm
+            release: sonarqube
+            role: master
+          name: sonarqube-postgresql
+        spec:
+          containers:
+          - env:
+            - name: BITNAMI_DEBUG
+              value: "false"
+            - name: POSTGRESQL_PORT_NUMBER
+              value: "5432"
+            - name: POSTGRESQL_VOLUME_DIR
+              value: /bitnami/postgresql
+            - name: PGDATA
+              value: /bitnami/postgresql/data
+            - name: POSTGRES_USER
+              value: sonarUser
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: postgresql-password
+                  name: sonarqube-postgresql
+            - name: POSTGRES_DB
+              value: sonarDB
+            - name: POSTGRESQL_ENABLE_LDAP
+              value: "no"
+            - name: test
+              value: "0"
+            image: docker.io/bitnami/postgresql:11.6.0-debian-10-r0
+            imagePullPolicy: IfNotPresent
+            livenessProbe:
+              exec:
+                command:
+                - /bin/sh
+                - -c
+                - exec pg_isready -U "sonarUser" -d "sonarDB" -h 127.0.0.1 -p 5432
+              failureThreshold: 6
+              initialDelaySeconds: 30
+              periodSeconds: 10
+              successThreshold: 1
+              timeoutSeconds: 5
+            name: sonarqube-postgresql
+            ports:
+            - containerPort: 5432
+              name: tcp-postgresql
+              protocol: TCP
+            readinessProbe:
+              exec:
+                command:
+                - /bin/sh
+                - -c
+                - -e
+                - |
+                  exec pg_isready -U "sonarUser" -d "sonarDB" -h 127.0.0.1 -p 5432
+                  [ -f /opt/bitnami/postgresql/tmp/.initialized ] || [ -f /bitnami/postgresql/.initialized ]
+              failureThreshold: 6
+              initialDelaySeconds: 5
+              periodSeconds: 10
+              successThreshold: 1
+              timeoutSeconds: 5
+            resources:
+              requests:
+                cpu: 250m
+                memory: 256Mi
+            securityContext:
+              runAsUser: 1001
+            terminationMessagePath: /dev/termination-log
+            terminationMessagePolicy: File
+            volumeMounts:
+            - mountPath: /dev/shm
+              name: dshm
+            - mountPath: /bitnami/postgresql
+              name: data
+          dnsPolicy: ClusterFirst
+          initContainers:
+          - command:
+            - /bin/sh
+            - -c
+            - |
+              mkdir -p /bitnami/postgresql/data
+              chmod 700 /bitnami/postgresql/data
+              find /bitnami/postgresql -mindepth 0 -maxdepth 1 -not -name ".snapshot" -not -name "lost+found" | \
+                xargs chown -R 1001:1001
+              chmod -R 777 /dev/shm
+            image: docker.io/bitnami/minideb:stretch
+            imagePullPolicy: Always
+            name: init-chmod-data
+            resources:
+              requests:
+                cpu: 250m
+                memory: 256Mi
+            securityContext:
+              runAsUser: 0
+            terminationMessagePath: /dev/termination-log
+            terminationMessagePolicy: File
+            volumeMounts:
+            - mountPath: /bitnami/postgresql
+              name: data
+            - mountPath: /dev/shm
+              name: dshm
+          restartPolicy: Always
+          schedulerName: default-scheduler
+          securityContext:
+            fsGroup: 1001
+          terminationGracePeriodSeconds: 30
+          volumes:
+          - emptyDir:
+              medium: Memory
+            name: dshm
+  kind: ControllerRevision
+  metadata:
+    creationTimestamp: "2023-06-03T20:16:43Z"
+    labels:
+      app: postgresql
+      chart: postgresql-8.2.0
+      controller.kubernetes.io/hash: "2815697603"
+      heritage: Helm
+      migration.openshift.io/migrated-by-migmigration: 4066e18a-7c09-4930-a1fd-19e7058b887b
+      migration.openshift.io/migrated-by-migplan: adcc6565-a1ee-4eee-a8d6-19a7e8841033
+      release: sonarqube
+      role: master
+      velero.io/backup-name: migration-85fa4-initial-h496m
+      velero.io/restore-name: migration-85fa4-final-wmd58
+    name: sonarqube-postgresql-6d59bfcb47
+    namespace: cicd
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: StatefulSet
+      name: sonarqube-postgresql
+      uid: 66d442e2-2b0d-4431-a693-794a76bb9219
+    resourceVersion: "19235237"
+    uid: 9468bf7a-9c0f-4ca6-bf51-68585d9acb57
+  revision: 2
+- apiVersion: apps/v1
+  data:
+    spec:
+      template:
+        $patch: replace
+        metadata:
+          creationTimestamp: null
+          labels:
+            app: postgresql
+            chart: postgresql-8.2.0
+            heritage: Helm
+            release: sonarqube
+            role: master
+          name: sonarqube-postgresql
+        spec:
+          containers:
+          - env:
+            - name: BITNAMI_DEBUG
+              value: "false"
+            - name: POSTGRESQL_PORT_NUMBER
+              value: "5432"
+            - name: POSTGRESQL_VOLUME_DIR
+              value: /bitnami/postgresql
+            - name: PGDATA
+              value: /bitnami/postgresql/data
+            - name: POSTGRES_USER
+              value: sonarUser
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: postgresql-password
+                  name: sonarqube-postgresql
+            - name: POSTGRES_DB
+              value: sonarDB
+            - name: POSTGRESQL_ENABLE_LDAP
+              value: "no"
+            image: docker.io/bitnami/postgresql:11.6.0-debian-10-r0
+            imagePullPolicy: IfNotPresent
+            livenessProbe:
+              exec:
+                command:
+                - /bin/sh
+                - -c
+                - exec pg_isready -U "sonarUser" -d "sonarDB" -h 127.0.0.1 -p 5432
+              failureThreshold: 6
+              initialDelaySeconds: 30
+              periodSeconds: 10
+              successThreshold: 1
+              timeoutSeconds: 5
+            name: sonarqube-postgresql
+            ports:
+            - containerPort: 5432
+              name: tcp-postgresql
+              protocol: TCP
+            readinessProbe:
+              exec:
+                command:
+                - /bin/sh
+                - -c
+                - -e
+                - |
+                  exec pg_isready -U "sonarUser" -d "sonarDB" -h 127.0.0.1 -p 5432
+                  [ -f /opt/bitnami/postgresql/tmp/.initialized ] || [ -f /bitnami/postgresql/.initialized ]
+              failureThreshold: 6
+              initialDelaySeconds: 5
+              periodSeconds: 10
+              successThreshold: 1
+              timeoutSeconds: 5
+            resources:
+              requests:
+                cpu: 250m
+                memory: 256Mi
+            securityContext:
+              runAsUser: 1001
+            terminationMessagePath: /dev/termination-log
+            terminationMessagePolicy: File
+            volumeMounts:
+            - mountPath: /dev/shm
+              name: dshm
+            - mountPath: /bitnami/postgresql
+              name: data
+          dnsPolicy: ClusterFirst
+          initContainers:
+          - command:
+            - /bin/sh
+            - -c
+            - |
+              mkdir -p /bitnami/postgresql/data
+              chmod 700 /bitnami/postgresql/data
+              find /bitnami/postgresql -mindepth 0 -maxdepth 1 -not -name ".snapshot" -not -name "lost+found" | \
+                xargs chown -R 1001:1001
+              chmod -R 777 /dev/shm
+            image: docker.io/bitnami/minideb:stretch
+            imagePullPolicy: Always
+            name: init-chmod-data
+            resources:
+              requests:
+                cpu: 250m
+                memory: 256Mi
+            securityContext:
+              runAsUser: 0
+            terminationMessagePath: /dev/termination-log
+            terminationMessagePolicy: File
+            volumeMounts:
+            - mountPath: /bitnami/postgresql
+              name: data
+            - mountPath: /dev/shm
+              name: dshm
+          restartPolicy: Always
+          schedulerName: default-scheduler
+          securityContext:
+            fsGroup: 1001
+          terminationGracePeriodSeconds: 30
+          volumes:
+          - emptyDir:
+              medium: Memory
+            name: dshm
+  kind: ControllerRevision
+  metadata:
+    creationTimestamp: "2023-06-03T20:16:43Z"
+    labels:
+      app: postgresql
+      chart: postgresql-8.2.0
+      controller.kubernetes.io/hash: "561371709"
+      heritage: Helm
+      migration.openshift.io/migrated-by-migmigration: 4066e18a-7c09-4930-a1fd-19e7058b887b
+      migration.openshift.io/migrated-by-migplan: adcc6565-a1ee-4eee-a8d6-19a7e8841033
+      release: sonarqube
+      role: master
+      velero.io/backup-name: migration-85fa4-initial-h496m
+      velero.io/restore-name: migration-85fa4-final-wmd58
+    name: sonarqube-postgresql-9b57c5c4f
+    namespace: cicd
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: StatefulSet
+      name: sonarqube-postgresql
+      uid: 66d442e2-2b0d-4431-a693-794a76bb9219
+    resourceVersion: "19235238"
+    uid: cf8967a0-fb32-4277-8484-f67089ccf38d
+  revision: 3
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

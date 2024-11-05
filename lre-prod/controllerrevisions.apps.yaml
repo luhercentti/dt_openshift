@@ -1,0 +1,264 @@
+apiVersion: v1
+items:
+- apiVersion: apps/v1
+  data:
+    spec:
+      template:
+        $patch: replace
+        metadata:
+          creationTimestamp: null
+          labels:
+            ActiveMQArtemis: lre-broker
+            application: lre-broker-app
+          name: lre-broker
+          namespace: lre-prod
+        spec:
+          containers:
+          - command:
+            - /opt/amq/bin/launch.sh
+            - start
+            env:
+            - name: AMQ_ROLE
+              value: admin
+            - name: AMQ_NAME
+              value: amq-broker
+            - name: AMQ_TRANSPORTS
+            - name: AMQ_QUEUES
+            - name: AMQ_ADDRESSES
+            - name: AMQ_GLOBAL_MAX_SIZE
+              value: 100 mb
+            - name: AMQ_REQUIRE_LOGIN
+              value: "true"
+            - name: AMQ_EXTRA_ARGS
+              value: --no-autotune
+            - name: AMQ_ANYCAST_PREFIX
+            - name: AMQ_MULTICAST_PREFIX
+            - name: POD_NAMESPACE
+            - name: AMQ_JOURNAL_TYPE
+              value: nio
+            - name: TRIGGERED_ROLL_COUNT
+              value: "0"
+            - name: PING_SVC_NAME
+              value: lre-broker-ping-svc
+            - name: OPENSHIFT_DNS_PING_SERVICE_PORT
+              value: "7800"
+            - name: AMQ_DATA_DIR
+              value: /opt/lre-broker/data
+            - name: AMQ_DATA_DIR_LOGGING
+              value: "true"
+            - name: AMQ_CLUSTERED
+              value: "true"
+            - name: AMQ_ENABLE_JOLOKIA_AGENT
+              value: "false"
+            - name: AMQ_ENABLE_MANAGEMENT_RBAC
+              value: "false"
+            - name: CONFIG_BROKER
+              value: "false"
+            - name: CONFIG_INSTANCE_DIR
+              value: /amq/init/config
+            - name: AMQ_USER
+              valueFrom:
+                secretKeyRef:
+                  key: AMQ_USER
+                  name: lre-broker-credentials-secret
+            - name: AMQ_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: AMQ_PASSWORD
+                  name: lre-broker-credentials-secret
+            - name: AMQ_CLUSTER_USER
+              valueFrom:
+                secretKeyRef:
+                  key: AMQ_CLUSTER_USER
+                  name: lre-broker-credentials-secret
+            - name: AMQ_CLUSTER_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: AMQ_CLUSTER_PASSWORD
+                  name: lre-broker-credentials-secret
+            - name: AMQ_ACCEPTORS
+              valueFrom:
+                secretKeyRef:
+                  key: AMQ_ACCEPTORS
+                  name: lre-broker-netty-secret
+            - name: AMQ_CONNECTORS
+              valueFrom:
+                secretKeyRef:
+                  key: AMQ_CONNECTORS
+                  name: lre-broker-netty-secret
+            - name: AMQ_CONSOLE_ARGS
+              valueFrom:
+                secretKeyRef:
+                  key: AMQ_CONSOLE_ARGS
+                  name: lre-broker-console-secret
+            image: registry.redhat.io/amq7/amq-broker@sha256:b3999dc888e8038d0736275c615f5dd3f0a71382ef3d4d7b63720760dc9540a5
+            imagePullPolicy: IfNotPresent
+            livenessProbe:
+              failureThreshold: 3
+              initialDelaySeconds: 30
+              periodSeconds: 10
+              successThreshold: 1
+              tcpSocket:
+                port: 8161
+              timeoutSeconds: 5
+            name: lre-broker-container
+            readinessProbe:
+              exec:
+                command:
+                - /bin/bash
+                - -c
+                - /opt/amq/bin/readinessProbe.sh
+              failureThreshold: 3
+              initialDelaySeconds: 30
+              periodSeconds: 10
+              successThreshold: 1
+              timeoutSeconds: 5
+            resources: {}
+            terminationMessagePath: /dev/termination-log
+            terminationMessagePolicy: File
+            volumeMounts:
+            - mountPath: /opt/lre-broker/data
+              name: lre-broker
+            - mountPath: /etc/lre-broker-amqp-secret-volume
+              name: lre-broker-amqp-secret-volume
+              readOnly: true
+            - mountPath: /etc/lre-broker-console-secret-volume
+              name: lre-broker-console-secret-volume
+              readOnly: true
+            - mountPath: /amq/init/config
+              name: amq-cfg-dir
+          dnsPolicy: ClusterFirst
+          initContainers:
+          - args:
+            - -c
+            - /opt/amq/bin/launch.sh && /opt/amq-broker/script/default.sh
+            command:
+            - /bin/bash
+            env:
+            - name: AMQ_ROLE
+              value: admin
+            - name: AMQ_NAME
+              value: amq-broker
+            - name: AMQ_TRANSPORTS
+            - name: AMQ_QUEUES
+            - name: AMQ_ADDRESSES
+            - name: AMQ_GLOBAL_MAX_SIZE
+              value: 100 mb
+            - name: AMQ_REQUIRE_LOGIN
+              value: "true"
+            - name: AMQ_EXTRA_ARGS
+              value: --no-autotune
+            - name: AMQ_ANYCAST_PREFIX
+            - name: AMQ_MULTICAST_PREFIX
+            - name: POD_NAMESPACE
+            - name: AMQ_JOURNAL_TYPE
+              value: nio
+            - name: TRIGGERED_ROLL_COUNT
+              value: "0"
+            - name: PING_SVC_NAME
+              value: lre-broker-ping-svc
+            - name: OPENSHIFT_DNS_PING_SERVICE_PORT
+              value: "7800"
+            - name: AMQ_DATA_DIR
+              value: /opt/lre-broker/data
+            - name: AMQ_DATA_DIR_LOGGING
+              value: "true"
+            - name: AMQ_CLUSTERED
+              value: "true"
+            - name: AMQ_ENABLE_JOLOKIA_AGENT
+              value: "false"
+            - name: AMQ_ENABLE_MANAGEMENT_RBAC
+              value: "false"
+            - name: RUN_BROKER
+              value: "false"
+            - name: CONFIG_INSTANCE_DIR
+              value: /amq/init/config
+            - name: AMQ_USER
+              valueFrom:
+                secretKeyRef:
+                  key: AMQ_USER
+                  name: lre-broker-credentials-secret
+            - name: AMQ_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: AMQ_PASSWORD
+                  name: lre-broker-credentials-secret
+            - name: AMQ_CLUSTER_USER
+              valueFrom:
+                secretKeyRef:
+                  key: AMQ_CLUSTER_USER
+                  name: lre-broker-credentials-secret
+            - name: AMQ_CLUSTER_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: AMQ_CLUSTER_PASSWORD
+                  name: lre-broker-credentials-secret
+            - name: AMQ_ACCEPTORS
+              valueFrom:
+                secretKeyRef:
+                  key: AMQ_ACCEPTORS
+                  name: lre-broker-netty-secret
+            - name: AMQ_CONNECTORS
+              valueFrom:
+                secretKeyRef:
+                  key: AMQ_CONNECTORS
+                  name: lre-broker-netty-secret
+            - name: AMQ_CONSOLE_ARGS
+              valueFrom:
+                secretKeyRef:
+                  key: AMQ_CONSOLE_ARGS
+                  name: lre-broker-console-secret
+            image: registry.redhat.io/amq7/amq-broker-init-rhel7@sha256:8fd83a3951640295586ea4e4dda1783fd2be2d1ec48e39e0536c68acd9edafa2
+            imagePullPolicy: IfNotPresent
+            name: lre-broker-container-init
+            resources: {}
+            terminationMessagePath: /dev/termination-log
+            terminationMessagePolicy: File
+            volumeMounts:
+            - mountPath: /amq/init/config
+              name: amq-cfg-dir
+          restartPolicy: Always
+          schedulerName: default-scheduler
+          securityContext: {}
+          terminationGracePeriodSeconds: 60
+          volumes:
+          - name: lre-broker
+            persistentVolumeClaim:
+              claimName: lre-broker
+          - name: lre-broker-amqp-secret-volume
+            secret:
+              defaultMode: 420
+              secretName: lre-broker-amqp-secret
+          - name: lre-broker-console-secret-volume
+            secret:
+              defaultMode: 420
+              secretName: lre-broker-console-secret
+          - emptyDir: {}
+            name: amq-cfg-dir
+  kind: ControllerRevision
+  metadata:
+    creationTimestamp: "2023-06-05T15:38:09Z"
+    labels:
+      ActiveMQArtemis: lre-broker
+      application: lre-broker-app
+      controller.kubernetes.io/hash: "1221601933"
+      migration.openshift.io/migrated-by-migmigration: 0ccd2f67-7ac7-4be0-a33f-fe509b3b234f
+      migration.openshift.io/migrated-by-migplan: 650c7753-846f-4da6-a5a7-eff123c536a8
+      velero.io/backup-name: migration-e3183-initial-mpd46
+      velero.io/restore-name: migration-e3183-final-ltssc
+    name: lre-broker-ss-5665b45f77
+    namespace: lre-prod
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: StatefulSet
+      name: lre-broker-ss
+      uid: b54698ce-d200-43ea-91ea-296a6e94826f
+    resourceVersion: "20852036"
+    uid: 1173fa0e-1140-4936-9ba9-e4ade0e1ab04
+  revision: 1
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

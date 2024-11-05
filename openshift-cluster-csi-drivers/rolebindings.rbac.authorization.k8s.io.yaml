@@ -1,0 +1,96 @@
+apiVersion: v1
+items:
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: RoleBinding
+  metadata:
+    creationTimestamp: "2023-05-04T21:40:31Z"
+    name: azure-disk-csi-driver-operator-rolebinding
+    namespace: openshift-cluster-csi-drivers
+    resourceVersion: "5055"
+    uid: 0964b585-4fbe-49b4-89b4-59394d987ff4
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: Role
+    name: azure-disk-csi-driver-operator-role
+  subjects:
+  - kind: ServiceAccount
+    name: azure-disk-csi-driver-operator
+    namespace: openshift-cluster-csi-drivers
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: RoleBinding
+  metadata:
+    creationTimestamp: "2023-05-04T21:40:45Z"
+    name: azure-disk-csi-driver-prometheus
+    namespace: openshift-cluster-csi-drivers
+    resourceVersion: "6157"
+    uid: bc23e0dd-4de5-45d3-a0c9-8dae6ed306f2
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: Role
+    name: azure-disk-csi-driver-prometheus
+  subjects:
+  - kind: ServiceAccount
+    name: prometheus-k8s
+    namespace: openshift-monitoring
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/description: Allows deploymentconfigs in this namespace to rollout
+        pods in this namespace.  It is auto-managed by a controller; remove subjects
+        to disable.
+    creationTimestamp: "2023-05-04T21:45:19Z"
+    name: system:deployers
+    namespace: openshift-cluster-csi-drivers
+    resourceVersion: "13822"
+    uid: 7003f84b-d418-41f3-a91b-6457ffe60cab
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: ClusterRole
+    name: system:deployer
+  subjects:
+  - kind: ServiceAccount
+    name: deployer
+    namespace: openshift-cluster-csi-drivers
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/description: Allows builds in this namespace to push images to
+        this namespace.  It is auto-managed by a controller; remove subjects to disable.
+    creationTimestamp: "2023-05-04T21:45:18Z"
+    name: system:image-builders
+    namespace: openshift-cluster-csi-drivers
+    resourceVersion: "13659"
+    uid: 65ada82b-a643-40e7-9ffc-aa5c497ffd55
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: ClusterRole
+    name: system:image-builder
+  subjects:
+  - kind: ServiceAccount
+    name: builder
+    namespace: openshift-cluster-csi-drivers
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/description: Allows all pods in this namespace to pull images from
+        this namespace.  It is auto-managed by a controller; remove subjects to disable.
+    creationTimestamp: "2023-05-04T21:45:18Z"
+    name: system:image-pullers
+    namespace: openshift-cluster-csi-drivers
+    resourceVersion: "13503"
+    uid: d898f75d-381a-4565-b69f-9770a72b2f15
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: ClusterRole
+    name: system:image-puller
+  subjects:
+  - apiGroup: rbac.authorization.k8s.io
+    kind: Group
+    name: system:serviceaccounts:openshift-cluster-csi-drivers
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

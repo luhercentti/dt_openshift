@@ -1,0 +1,93 @@
+apiVersion: v1
+items:
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: Role
+  metadata:
+    creationTimestamp: "2023-05-26T02:42:54Z"
+    labels:
+      migration.openshift.io/migrated-by-migmigration: e38d34ca-b64b-4f51-8661-6ba7d05484a6
+      migration.openshift.io/migrated-by-migplan: ec0923fa-4d06-4a8b-a67a-a32b23d75ede
+      velero.io/backup-name: migration-fc7c1-initial-wskdq
+      velero.io/restore-name: migration-fc7c1-final-6g8n2
+    name: amq-broker-operator
+    namespace: lre-qa
+    resourceVersion: "11895844"
+    uid: 58156d47-2e00-4885-9514-8fbf06e6cc5c
+  rules:
+  - apiGroups:
+    - ""
+    resources:
+    - configmaps
+    - endpoints
+    - events
+    - persistentvolumeclaims
+    - pods
+    - routes
+    - secrets
+    - services
+    verbs:
+    - '*'
+  - apiGroups:
+    - ""
+    resources:
+    - namespaces
+    verbs:
+    - get
+  - apiGroups:
+    - apps
+    resources:
+    - daemonsets
+    - deployments
+    - replicasets
+    - statefulsets
+    verbs:
+    - '*'
+  - apiGroups:
+    - monitoring.coreos.com
+    resources:
+    - servicemonitors
+    verbs:
+    - create
+    - get
+  - apiGroups:
+    - broker.amq.io
+    resources:
+    - '*'
+    - activemqartemis
+    - activemqartemisaddresses
+    - activemqartemisscaledowns
+    verbs:
+    - '*'
+  - apiGroups:
+    - route.openshift.io
+    resources:
+    - routes
+    - routes/custom-host
+    - routes/status
+    verbs:
+    - create
+    - delete
+    - get
+    - list
+    - update
+    - watch
+  - apiGroups:
+    - extensions
+    resources:
+    - ingresses
+    verbs:
+    - create
+    - delete
+    - get
+    - list
+    - watch
+  - apiGroups:
+    - apps
+    resources:
+    - deployments/finalizers
+    verbs:
+    - update
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

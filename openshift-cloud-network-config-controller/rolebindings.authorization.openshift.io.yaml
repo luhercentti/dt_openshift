@@ -1,0 +1,91 @@
+apiVersion: v1
+items:
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    creationTimestamp: "2023-05-04T21:39:32Z"
+    name: cloud-network-config-controller-rb
+    namespace: openshift-cloud-network-config-controller
+    ownerReferences:
+    - apiVersion: operator.openshift.io/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Network
+      name: cluster
+      uid: 5513ebe5-e5fd-4f40-8857-5fcd3d31efca
+    resourceVersion: "2933"
+    uid: 8c712c62-3dba-448d-8091-51be573ec579
+  roleRef:
+    name: cloud-network-config-controller
+    namespace: openshift-cloud-network-config-controller
+  subjects:
+  - kind: ServiceAccount
+    name: cloud-network-config-controller
+    namespace: openshift-cloud-network-config-controller
+  userNames:
+  - system:serviceaccount:openshift-cloud-network-config-controller:cloud-network-config-controller
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/description: Allows deploymentconfigs in this namespace to rollout
+        pods in this namespace.  It is auto-managed by a controller; remove subjects
+        to disable.
+    creationTimestamp: "2023-05-04T21:45:19Z"
+    name: system:deployers
+    namespace: openshift-cloud-network-config-controller
+    resourceVersion: "13832"
+    uid: dca663bf-f84d-4539-8dcf-d9c35768d231
+  roleRef:
+    name: system:deployer
+  subjects:
+  - kind: ServiceAccount
+    name: deployer
+    namespace: openshift-cloud-network-config-controller
+  userNames:
+  - system:serviceaccount:openshift-cloud-network-config-controller:deployer
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/description: Allows builds in this namespace to push images to
+        this namespace.  It is auto-managed by a controller; remove subjects to disable.
+    creationTimestamp: "2023-05-04T21:45:18Z"
+    name: system:image-builders
+    namespace: openshift-cloud-network-config-controller
+    resourceVersion: "13662"
+    uid: 37de061c-d6b0-47eb-aafb-d4935563e35f
+  roleRef:
+    name: system:image-builder
+  subjects:
+  - kind: ServiceAccount
+    name: builder
+    namespace: openshift-cloud-network-config-controller
+  userNames:
+  - system:serviceaccount:openshift-cloud-network-config-controller:builder
+- apiVersion: authorization.openshift.io/v1
+  groupNames:
+  - system:serviceaccounts:openshift-cloud-network-config-controller
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/description: Allows all pods in this namespace to pull images from
+        this namespace.  It is auto-managed by a controller; remove subjects to disable.
+    creationTimestamp: "2023-05-04T21:45:18Z"
+    name: system:image-pullers
+    namespace: openshift-cloud-network-config-controller
+    resourceVersion: "13520"
+    uid: 5a71b4f5-1a38-4e92-9183-85d05278dbbe
+  roleRef:
+    name: system:image-puller
+  subjects:
+  - kind: SystemGroup
+    name: system:serviceaccounts:openshift-cloud-network-config-controller
+  userNames: null
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

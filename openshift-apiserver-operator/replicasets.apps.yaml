@@ -1,0 +1,121 @@
+apiVersion: v1
+items:
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "1"
+      deployment.kubernetes.io/revision: "1"
+      exclude.release.openshift.io/internal-openshift-hosted: "true"
+      include.release.openshift.io/self-managed-high-availability: "true"
+      include.release.openshift.io/single-node-developer: "true"
+    creationTimestamp: "2023-05-04T21:35:50Z"
+    generation: 1
+    labels:
+      app: openshift-apiserver-operator
+      pod-template-hash: d8bc55bdb
+    name: openshift-apiserver-operator-d8bc55bdb
+    namespace: openshift-apiserver-operator
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: openshift-apiserver-operator
+      uid: 6931db8c-3363-4408-acfb-34505e72108b
+    resourceVersion: "369060095"
+    uid: 3a8715ab-f95f-4dfb-879f-3f0907469741
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: openshift-apiserver-operator
+        pod-template-hash: d8bc55bdb
+    template:
+      metadata:
+        annotations:
+          target.workload.openshift.io/management: '{"effect": "PreferredDuringScheduling"}'
+        creationTimestamp: null
+        labels:
+          app: openshift-apiserver-operator
+          pod-template-hash: d8bc55bdb
+        name: openshift-apiserver-operator
+      spec:
+        containers:
+        - args:
+          - --config=/var/run/configmaps/config/config.yaml
+          command:
+          - cluster-openshift-apiserver-operator
+          - operator
+          env:
+          - name: IMAGE
+            value: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:d507731fa59fc5abdb71e4e1c0ae7a178fdedd46b6957d029b616e3f8a0bf6fe
+          - name: OPERATOR_IMAGE
+            value: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:b3e539cf9f172d2ca4c2b853ca632c51e76dcb274bc755c5d35a1210e384d349
+          - name: OPERATOR_IMAGE_VERSION
+            value: 4.10.53
+          - name: OPERAND_IMAGE_VERSION
+            value: 4.10.53
+          - name: KUBE_APISERVER_OPERATOR_IMAGE
+            value: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:b4793ed9d1180c1cffa75b20a52772aaf764aa88d83c624b84bc05734ac77c8b
+          image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:b3e539cf9f172d2ca4c2b853ca632c51e76dcb274bc755c5d35a1210e384d349
+          imagePullPolicy: IfNotPresent
+          name: openshift-apiserver-operator
+          ports:
+          - containerPort: 8443
+            name: metrics
+            protocol: TCP
+          resources:
+            requests:
+              cpu: 10m
+              memory: 50Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: FallbackToLogsOnError
+          volumeMounts:
+          - mountPath: /var/run/configmaps/config
+            name: config
+          - mountPath: /var/run/secrets/serving-cert
+            name: serving-cert
+        dnsPolicy: ClusterFirst
+        nodeSelector:
+          node-role.kubernetes.io/master: ""
+        priorityClassName: system-cluster-critical
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: openshift-apiserver-operator
+        serviceAccountName: openshift-apiserver-operator
+        terminationGracePeriodSeconds: 30
+        tolerations:
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/master
+          operator: Exists
+        - effect: NoExecute
+          key: node.kubernetes.io/unreachable
+          operator: Exists
+          tolerationSeconds: 120
+        - effect: NoExecute
+          key: node.kubernetes.io/not-ready
+          operator: Exists
+          tolerationSeconds: 120
+        volumes:
+        - name: serving-cert
+          secret:
+            defaultMode: 420
+            optional: true
+            secretName: openshift-apiserver-operator-serving-cert
+        - configMap:
+            defaultMode: 420
+            name: openshift-apiserver-operator-config
+          name: config
+  status:
+    availableReplicas: 1
+    fullyLabeledReplicas: 1
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

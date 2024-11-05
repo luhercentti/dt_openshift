@@ -1,0 +1,214 @@
+apiVersion: v1
+items:
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: Role
+  metadata:
+    creationTimestamp: "2023-05-15T18:37:49Z"
+    name: cluster-logging.v5.6.5
+    namespace: openshift-logging
+    ownerReferences:
+    - apiVersion: operators.coreos.com/v2
+      blockOwnerDeletion: false
+      controller: true
+      kind: OperatorCondition
+      name: cluster-logging.v5.6.5
+      uid: c4284849-bb7d-4bb3-832b-2995b34d9328
+    resourceVersion: "4139668"
+    uid: c8fbae85-c33f-4f52-ab4e-69467caefd43
+  rules:
+  - apiGroups:
+    - operators.coreos.com
+    resourceNames:
+    - cluster-logging.v5.6.5
+    resources:
+    - operatorconditions
+    verbs:
+    - get
+    - update
+    - patch
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: Role
+  metadata:
+    creationTimestamp: "2023-05-15T18:37:51Z"
+    labels:
+      olm.owner: cluster-logging.v5.6.5
+      olm.owner.kind: ClusterServiceVersion
+      olm.owner.namespace: openshift-logging
+      operators.coreos.com/cluster-logging.openshift-logging: ""
+    name: cluster-logging.v5.6.5-cluster-logging-operator-5c6549c878
+    namespace: openshift-logging
+    ownerReferences:
+    - apiVersion: operators.coreos.com/v1alpha1
+      blockOwnerDeletion: false
+      controller: false
+      kind: ClusterServiceVersion
+      name: cluster-logging.v5.6.5
+      uid: 728f7a6d-ca6d-4102-9f2d-dc70c4a6883d
+    resourceVersion: "4139918"
+    uid: 1120d6ef-e3a7-4128-9018-7f3f949c6f84
+  rules:
+  - apiGroups:
+    - logging.openshift.io
+    resources:
+    - '*'
+    verbs:
+    - '*'
+  - apiGroups:
+    - ""
+    resources:
+    - pods
+    - services
+    - endpoints
+    - persistentvolumeclaims
+    - events
+    - configmaps
+    - secrets
+    - serviceaccounts
+    - serviceaccounts/finalizers
+    - services/finalizers
+    - namespaces
+    verbs:
+    - '*'
+  - apiGroups:
+    - apps
+    resources:
+    - deployments
+    - daemonsets
+    - replicasets
+    - statefulsets
+    verbs:
+    - '*'
+  - apiGroups:
+    - route.openshift.io
+    resources:
+    - routes
+    - routes/custom-host
+    verbs:
+    - '*'
+  - apiGroups:
+    - batch
+    resources:
+    - cronjobs
+    verbs:
+    - '*'
+  - apiGroups:
+    - rbac.authorization.k8s.io
+    resources:
+    - roles
+    - rolebindings
+    verbs:
+    - '*'
+  - apiGroups:
+    - monitoring.coreos.com
+    resources:
+    - servicemonitors
+    - prometheusrules
+    verbs:
+    - '*'
+  - apiGroups:
+    - apps
+    resourceNames:
+    - cluster-logging-operator
+    resources:
+    - deployments/finalizers
+    verbs:
+    - update
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: Role
+  metadata:
+    creationTimestamp: "2023-05-15T20:18:56Z"
+    name: elasticsearch-index-management
+    namespace: openshift-logging
+    ownerReferences:
+    - apiVersion: logging.openshift.io/v1
+      controller: true
+      kind: Elasticsearch
+      name: elasticsearch
+      uid: 2ae98126-4c52-4543-90f0-f736c6651f74
+    resourceVersion: "4183684"
+    uid: ee71f3ac-f978-4a44-91c8-00ad1016d25c
+  rules:
+  - apiGroups:
+    - elasticsearch.openshift.io
+    resources:
+    - indices
+    verbs:
+    - '*'
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: Role
+  metadata:
+    creationTimestamp: "2023-05-12T16:46:19Z"
+    name: elasticsearch-metrics
+    namespace: openshift-logging
+    resourceVersion: "2183211"
+    uid: f49739c9-fbaa-4480-aba6-49c193c0900f
+  rules:
+  - apiGroups:
+    - elasticsearch.openshift.io
+    resources:
+    - metrics
+    verbs:
+    - get
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: Role
+  metadata:
+    creationTimestamp: "2023-05-12T16:46:19Z"
+    name: elasticsearch-restricted
+    namespace: openshift-logging
+    resourceVersion: "2183208"
+    uid: fc22ee63-82b3-4c37-8bd2-198ed8d351f1
+  rules:
+  - apiGroups:
+    - security.openshift.io
+    resourceNames:
+    - elasticsearch-scc
+    resources:
+    - securitycontextconstraints
+    verbs:
+    - use
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: Role
+  metadata:
+    creationTimestamp: "2023-05-12T16:41:30Z"
+    name: log-collector-privileged
+    namespace: openshift-logging
+    resourceVersion: "2180907"
+    uid: de880195-3fea-45f0-8f1c-c353ec809ee1
+  rules:
+  - apiGroups:
+    - security.openshift.io
+    resourceNames:
+    - log-collector-scc
+    resources:
+    - securitycontextconstraints
+    verbs:
+    - use
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: Role
+  metadata:
+    creationTimestamp: "2023-05-12T16:41:30Z"
+    name: prometheus
+    namespace: openshift-logging
+    resourceVersion: "2180905"
+    uid: 639b9a52-a16f-4fb8-97aa-5c333a2f125b
+  rules:
+  - apiGroups:
+    - ""
+    resources:
+    - pods
+    - services
+    - endpoints
+    verbs:
+    - get
+    - list
+    - watch
+  - apiGroups:
+    - ""
+    resources:
+    - configmaps
+    verbs:
+    - get
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

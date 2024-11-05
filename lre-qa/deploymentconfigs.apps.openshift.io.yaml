@@ -1,0 +1,212 @@
+apiVersion: v1
+items:
+- apiVersion: apps.openshift.io/v1
+  kind: DeploymentConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftWebConsole
+      openshift.io/migration-registry: 172.30.232.232:5000
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-26T02:42:52Z"
+    generation: 2
+    labels:
+      app: front-lre
+      migration.openshift.io/migrated-by-migmigration: e38d34ca-b64b-4f51-8661-6ba7d05484a6
+      migration.openshift.io/migrated-by-migplan: ec0923fa-4d06-4a8b-a67a-a32b23d75ede
+      velero.io/backup-name: migration-fc7c1-initial-wskdq
+      velero.io/restore-name: migration-fc7c1-final-6g8n2
+    name: front-lre
+    namespace: lre-qa
+    resourceVersion: "476624904"
+    uid: 766c0f57-6fa1-47d0-a9c9-5dc89c4211b4
+  spec:
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      deploymentconfig: front-lre
+    strategy:
+      activeDeadlineSeconds: 21600
+      resources: {}
+      rollingParams:
+        intervalSeconds: 1
+        maxSurge: 25%
+        maxUnavailable: 25%
+        timeoutSeconds: 600
+        updatePeriodSeconds: 1
+      type: Rolling
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: front-lre
+          deploymentconfig: front-lre
+      spec:
+        containers:
+        - env:
+          - name: REACT_APP_VALIDA_EMPLEADOR
+            value: http://srv0003-api-fiscalizacion-qa.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/empleador
+          - name: REACT_APP_DECLARACIONES
+            value: http://srv0002-api-fiscalizacion-qa.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/declaracion
+          - name: REACT_APP_CARGA_DECLARACION
+            value: http://srv0001-v2-api-fiscalizacion-qa.api-cloud.dirtrab.cl/fiscalizacion/remuneracion/declaracion
+          - name: REACT_APP_PDF_INSTRUCCIONES
+            value: https://static-content-dev.api.dirtrab.cl/dt-docs/lre/lre_instrucciones_de_carga.pdf
+          - name: REACT_APP_VALIDA_TOKEN
+            value: http://proxy-serv-token-portalinstitucional-qa.api.dirtrab.cl/api/Autenticacion/token/validar
+          - name: REACT_APP_LRE_SERVICE
+            value: https://lre-services-live-qa.api.dirtrab.cl/fiscalizacion/remuneracion
+          image: image-registry.openshift-image-registry.svc:5000/lre-qa/front-lre@sha256:1055194350b5755cd34927f91b09c8e8a3b147d30fc09e1ba7d1ccf71b3028b3
+          imagePullPolicy: Always
+          name: front-lre
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+    test: false
+    triggers:
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+        - front-lre
+        from:
+          kind: ImageStreamTag
+          name: front-lre:latest
+          namespace: lre-qa
+        lastTriggeredImage: image-registry.openshift-image-registry.svc:5000/lre-qa/front-lre@sha256:1055194350b5755cd34927f91b09c8e8a3b147d30fc09e1ba7d1ccf71b3028b3
+      type: ImageChange
+    - type: ConfigChange
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2023-05-26T02:42:56Z"
+      lastUpdateTime: "2023-05-26T02:43:14Z"
+      message: replication controller "front-lre-1" successfully rolled out
+      reason: NewReplicationControllerAvailable
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: "2024-07-24T20:18:02Z"
+      lastUpdateTime: "2024-07-24T20:18:02Z"
+      message: Deployment config has minimum availability.
+      status: "True"
+      type: Available
+    details:
+      causes:
+      - type: ConfigChange
+      message: config change
+    latestVersion: 1
+    observedGeneration: 2
+    readyReplicas: 1
+    replicas: 1
+    unavailableReplicas: 0
+    updatedReplicas: 1
+- apiVersion: apps.openshift.io/v1
+  kind: DeploymentConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftNewApp
+      openshift.io/migration-registry: 172.30.232.232:5000
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-26T02:42:52Z"
+    generation: 4
+    labels:
+      app: product-lre
+      migration.openshift.io/migrated-by-migmigration: e38d34ca-b64b-4f51-8661-6ba7d05484a6
+      migration.openshift.io/migrated-by-migplan: ec0923fa-4d06-4a8b-a67a-a32b23d75ede
+      velero.io/backup-name: migration-fc7c1-initial-wskdq
+      velero.io/restore-name: migration-fc7c1-final-6g8n2
+    name: product-lre
+    namespace: lre-qa
+    resourceVersion: "467404218"
+    uid: 4a49b587-9b93-4c94-95e3-b41bd6722d8a
+  spec:
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      app: product-lre
+      deploymentconfig: product-lre
+    strategy:
+      activeDeadlineSeconds: 21600
+      resources: {}
+      rollingParams:
+        intervalSeconds: 1
+        maxSurge: 25%
+        maxUnavailable: 25%
+        timeoutSeconds: 600
+        updatePeriodSeconds: 1
+      type: Rolling
+    template:
+      metadata:
+        annotations:
+          openshift.io/generated-by: OpenShiftNewApp
+        creationTimestamp: null
+        labels:
+          app: product-lre
+          deploymentconfig: product-lre
+      spec:
+        containers:
+        - image: image-registry.openshift-image-registry.svc:5000/lre-qa/product-lre@sha256:31bdb1957c631e57b3a7c92018ee1da70150fa1a429baa5aedd35d2a41d20fc8
+          imagePullPolicy: Always
+          name: product-lre
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+    test: false
+    triggers:
+    - imageChangeParams:
+        containerNames:
+        - product-lre
+        from:
+          kind: ImageStreamTag
+          name: product-lre:latest
+          namespace: lre-qa
+        lastTriggeredImage: image-registry.openshift-image-registry.svc:5000/lre-qa/product-lre@sha256:31bdb1957c631e57b3a7c92018ee1da70150fa1a429baa5aedd35d2a41d20fc8
+      type: ImageChange
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2023-10-17T14:02:12Z"
+      lastUpdateTime: "2023-10-17T14:02:17Z"
+      message: replication controller "product-lre-3" successfully rolled out
+      reason: NewReplicationControllerAvailable
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: "2024-07-20T09:47:43Z"
+      lastUpdateTime: "2024-07-20T09:47:43Z"
+      message: Deployment config has minimum availability.
+      status: "True"
+      type: Available
+    details:
+      causes:
+      - type: Manual
+      message: manual change
+    latestVersion: 3
+    observedGeneration: 4
+    readyReplicas: 1
+    replicas: 1
+    unavailableReplicas: 0
+    updatedReplicas: 1
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

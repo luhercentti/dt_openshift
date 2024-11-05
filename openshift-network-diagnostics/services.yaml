@@ -1,0 +1,77 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      include.release.openshift.io/self-managed-high-availability: "true"
+    creationTimestamp: "2023-05-04T21:39:44Z"
+    labels:
+      app: network-check-source
+    name: network-check-source
+    namespace: openshift-network-diagnostics
+    ownerReferences:
+    - apiVersion: operator.openshift.io/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Network
+      name: cluster
+      uid: 5513ebe5-e5fd-4f40-8857-5fcd3d31efca
+    resourceVersion: "3329"
+    uid: 4f5d7166-9879-4a45-8e34-bb78dfc1e6c5
+  spec:
+    clusterIP: None
+    clusterIPs:
+    - None
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: check-endpoints
+      port: 17698
+      protocol: TCP
+      targetPort: 17698
+    selector:
+      app: network-check-source
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    creationTimestamp: "2023-05-04T21:39:44Z"
+    name: network-check-target
+    namespace: openshift-network-diagnostics
+    ownerReferences:
+    - apiVersion: operator.openshift.io/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Network
+      name: cluster
+      uid: 5513ebe5-e5fd-4f40-8857-5fcd3d31efca
+    resourceVersion: "3350"
+    uid: be4f4857-f82b-47fc-a144-7e58eaa2fcc6
+  spec:
+    clusterIP: 172.30.245.5
+    clusterIPs:
+    - 172.30.245.5
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 8080
+    selector:
+      app: network-check-target
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

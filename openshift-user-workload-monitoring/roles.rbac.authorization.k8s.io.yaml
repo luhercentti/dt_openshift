@@ -1,0 +1,64 @@
+apiVersion: v1
+items:
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: Role
+  metadata:
+    creationTimestamp: "2023-05-04T21:49:25Z"
+    labels:
+      app.kubernetes.io/component: prometheus
+      app.kubernetes.io/instance: k8s
+      app.kubernetes.io/name: prometheus
+      app.kubernetes.io/part-of: openshift-monitoring
+      app.kubernetes.io/version: 2.32.1
+    name: prometheus-k8s
+    namespace: openshift-user-workload-monitoring
+    resourceVersion: "21560"
+    uid: dc617d3c-322e-428c-a4e6-319182544367
+  rules:
+  - apiGroups:
+    - ""
+    resources:
+    - services
+    - endpoints
+    - pods
+    verbs:
+    - get
+    - list
+    - watch
+  - apiGroups:
+    - extensions
+    resources:
+    - ingresses
+    verbs:
+    - get
+    - list
+    - watch
+  - apiGroups:
+    - networking.k8s.io
+    resources:
+    - ingresses
+    verbs:
+    - get
+    - list
+    - watch
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: Role
+  metadata:
+    creationTimestamp: "2023-05-04T21:41:44Z"
+    name: user-workload-monitoring-config-edit
+    namespace: openshift-user-workload-monitoring
+    resourceVersion: "8822"
+    uid: adb0c7c5-2c55-4844-85f3-29e7c66cff7b
+  rules:
+  - apiGroups:
+    - ""
+    resourceNames:
+    - user-workload-monitoring-config
+    resources:
+    - configmaps
+    verbs:
+    - '*'
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

@@ -1,0 +1,336 @@
+apiVersion: v1
+items:
+- apiVersion: batch/v1
+  kind: CronJob
+  metadata:
+    creationTimestamp: "2023-05-15T20:18:56Z"
+    generation: 1
+    labels:
+      component: indexManagement
+      logging-infra: indexManagement
+      provider: openshift
+    name: elasticsearch-im-app
+    namespace: openshift-logging
+    ownerReferences:
+    - apiVersion: logging.openshift.io/v1
+      controller: true
+      kind: Elasticsearch
+      name: elasticsearch
+      uid: 2ae98126-4c52-4543-90f0-f736c6651f74
+    resourceVersion: "494941073"
+    uid: bab77617-3aef-49fb-a4b2-378d2b9bc132
+  spec:
+    concurrencyPolicy: Forbid
+    failedJobsHistoryLimit: 1
+    jobTemplate:
+      metadata:
+        creationTimestamp: null
+      spec:
+        backoffLimit: 0
+        parallelism: 1
+        template:
+          metadata:
+            creationTimestamp: null
+            labels:
+              component: indexManagement
+              logging-infra: indexManagement
+              provider: openshift
+            name: indexmanagement
+            namespace: openshift-logging
+          spec:
+            containers:
+            - args:
+              - -c
+              - ./delete-then-rollover
+              command:
+              - bash
+              env:
+              - name: POLICY_MAPPING
+                value: app
+              - name: MIN_AGE
+                value: "86400000"
+              - name: NAMESPACE_SPECS
+              - name: DISK_THRESHOLD
+                value: "0"
+              - name: PAYLOAD
+                value: eyJjb25kaXRpb25zIjp7Im1heF9hZ2UiOiIxaCIsIm1heF9kb2NzIjoxMjI4ODAwMDAsIm1heF9zaXplIjoiMTIwZ2IifX0=
+              - name: ES_SERVICE
+                value: https://elasticsearch:9200
+              image: registry.redhat.io/openshift-logging/logging-curator5-rhel8@sha256:57e89eaefe887ebef720f52249a582c502687720ed50716f3339482f63993901
+              imagePullPolicy: IfNotPresent
+              name: indexmanagement
+              resources:
+                requests:
+                  cpu: 100m
+                  memory: 32Mi
+              securityContext:
+                allowPrivilegeEscalation: false
+                capabilities:
+                  drop:
+                  - ALL
+              terminationMessagePath: /dev/termination-log
+              terminationMessagePolicy: File
+              volumeMounts:
+              - mountPath: /etc/indexmanagement/keys
+                name: certs
+                readOnly: true
+              - mountPath: /tmp/scripts
+                name: scripts
+              workingDir: /tmp/scripts
+            dnsPolicy: ClusterFirst
+            nodeSelector:
+              kubernetes.io/os: linux
+              node-role.kubernetes.io/infra: ""
+            restartPolicy: Never
+            schedulerName: default-scheduler
+            securityContext:
+              runAsNonRoot: true
+            serviceAccount: elasticsearch
+            serviceAccountName: elasticsearch
+            terminationGracePeriodSeconds: 300
+            tolerations:
+            - effect: NoSchedule
+              key: node-role.kubernetes.io/infra
+              value: reserved
+            - effect: NoExecute
+              key: node-role.kubernetes.io/infra
+              value: reserved
+            volumes:
+            - name: certs
+              secret:
+                defaultMode: 420
+                secretName: elasticsearch
+            - configMap:
+                defaultMode: 511
+                name: indexmanagement-scripts
+              name: scripts
+    schedule: '*/15 * * * *'
+    successfulJobsHistoryLimit: 1
+    suspend: false
+  status:
+    lastScheduleTime: "2024-08-02T14:30:00Z"
+    lastSuccessfulTime: "2024-08-02T14:30:08Z"
+- apiVersion: batch/v1
+  kind: CronJob
+  metadata:
+    creationTimestamp: "2023-05-15T20:18:56Z"
+    generation: 1
+    labels:
+      component: indexManagement
+      logging-infra: indexManagement
+      provider: openshift
+    name: elasticsearch-im-audit
+    namespace: openshift-logging
+    ownerReferences:
+    - apiVersion: logging.openshift.io/v1
+      controller: true
+      kind: Elasticsearch
+      name: elasticsearch
+      uid: 2ae98126-4c52-4543-90f0-f736c6651f74
+    resourceVersion: "494941017"
+    uid: ac66f4d9-f717-42d7-8384-bce76477349f
+  spec:
+    concurrencyPolicy: Forbid
+    failedJobsHistoryLimit: 1
+    jobTemplate:
+      metadata:
+        creationTimestamp: null
+      spec:
+        backoffLimit: 0
+        parallelism: 1
+        template:
+          metadata:
+            creationTimestamp: null
+            labels:
+              component: indexManagement
+              logging-infra: indexManagement
+              provider: openshift
+            name: indexmanagement
+            namespace: openshift-logging
+          spec:
+            containers:
+            - args:
+              - -c
+              - ./delete-then-rollover
+              command:
+              - bash
+              env:
+              - name: POLICY_MAPPING
+                value: audit
+              - name: MIN_AGE
+                value: "345600000"
+              - name: NAMESPACE_SPECS
+              - name: DISK_THRESHOLD
+                value: "0"
+              - name: PAYLOAD
+                value: eyJjb25kaXRpb25zIjp7Im1heF9hZ2UiOiI0aCIsIm1heF9kb2NzIjoxMjI4ODAwMDAsIm1heF9zaXplIjoiMTIwZ2IifX0=
+              - name: ES_SERVICE
+                value: https://elasticsearch:9200
+              image: registry.redhat.io/openshift-logging/logging-curator5-rhel8@sha256:57e89eaefe887ebef720f52249a582c502687720ed50716f3339482f63993901
+              imagePullPolicy: IfNotPresent
+              name: indexmanagement
+              resources:
+                requests:
+                  cpu: 100m
+                  memory: 32Mi
+              securityContext:
+                allowPrivilegeEscalation: false
+                capabilities:
+                  drop:
+                  - ALL
+              terminationMessagePath: /dev/termination-log
+              terminationMessagePolicy: File
+              volumeMounts:
+              - mountPath: /etc/indexmanagement/keys
+                name: certs
+                readOnly: true
+              - mountPath: /tmp/scripts
+                name: scripts
+              workingDir: /tmp/scripts
+            dnsPolicy: ClusterFirst
+            nodeSelector:
+              kubernetes.io/os: linux
+              node-role.kubernetes.io/infra: ""
+            restartPolicy: Never
+            schedulerName: default-scheduler
+            securityContext:
+              runAsNonRoot: true
+            serviceAccount: elasticsearch
+            serviceAccountName: elasticsearch
+            terminationGracePeriodSeconds: 300
+            tolerations:
+            - effect: NoSchedule
+              key: node-role.kubernetes.io/infra
+              value: reserved
+            - effect: NoExecute
+              key: node-role.kubernetes.io/infra
+              value: reserved
+            volumes:
+            - name: certs
+              secret:
+                defaultMode: 420
+                secretName: elasticsearch
+            - configMap:
+                defaultMode: 511
+                name: indexmanagement-scripts
+              name: scripts
+    schedule: '*/15 * * * *'
+    successfulJobsHistoryLimit: 1
+    suspend: false
+  status:
+    lastScheduleTime: "2024-08-02T14:30:00Z"
+    lastSuccessfulTime: "2024-08-02T14:30:06Z"
+- apiVersion: batch/v1
+  kind: CronJob
+  metadata:
+    creationTimestamp: "2023-05-15T20:18:56Z"
+    generation: 1
+    labels:
+      component: indexManagement
+      logging-infra: indexManagement
+      provider: openshift
+    name: elasticsearch-im-infra
+    namespace: openshift-logging
+    ownerReferences:
+    - apiVersion: logging.openshift.io/v1
+      controller: true
+      kind: Elasticsearch
+      name: elasticsearch
+      uid: 2ae98126-4c52-4543-90f0-f736c6651f74
+    resourceVersion: "494941018"
+    uid: 46a97d62-0151-46be-853e-26576e1a0c0e
+  spec:
+    concurrencyPolicy: Forbid
+    failedJobsHistoryLimit: 1
+    jobTemplate:
+      metadata:
+        creationTimestamp: null
+      spec:
+        backoffLimit: 0
+        parallelism: 1
+        template:
+          metadata:
+            creationTimestamp: null
+            labels:
+              component: indexManagement
+              logging-infra: indexManagement
+              provider: openshift
+            name: indexmanagement
+            namespace: openshift-logging
+          spec:
+            containers:
+            - args:
+              - -c
+              - ./delete-then-rollover
+              command:
+              - bash
+              env:
+              - name: POLICY_MAPPING
+                value: infra
+              - name: MIN_AGE
+                value: "345600000"
+              - name: NAMESPACE_SPECS
+              - name: DISK_THRESHOLD
+                value: "0"
+              - name: PAYLOAD
+                value: eyJjb25kaXRpb25zIjp7Im1heF9hZ2UiOiI0aCIsIm1heF9kb2NzIjoxMjI4ODAwMDAsIm1heF9zaXplIjoiMTIwZ2IifX0=
+              - name: ES_SERVICE
+                value: https://elasticsearch:9200
+              image: registry.redhat.io/openshift-logging/logging-curator5-rhel8@sha256:57e89eaefe887ebef720f52249a582c502687720ed50716f3339482f63993901
+              imagePullPolicy: IfNotPresent
+              name: indexmanagement
+              resources:
+                requests:
+                  cpu: 100m
+                  memory: 32Mi
+              securityContext:
+                allowPrivilegeEscalation: false
+                capabilities:
+                  drop:
+                  - ALL
+              terminationMessagePath: /dev/termination-log
+              terminationMessagePolicy: File
+              volumeMounts:
+              - mountPath: /etc/indexmanagement/keys
+                name: certs
+                readOnly: true
+              - mountPath: /tmp/scripts
+                name: scripts
+              workingDir: /tmp/scripts
+            dnsPolicy: ClusterFirst
+            nodeSelector:
+              kubernetes.io/os: linux
+              node-role.kubernetes.io/infra: ""
+            restartPolicy: Never
+            schedulerName: default-scheduler
+            securityContext:
+              runAsNonRoot: true
+            serviceAccount: elasticsearch
+            serviceAccountName: elasticsearch
+            terminationGracePeriodSeconds: 300
+            tolerations:
+            - effect: NoSchedule
+              key: node-role.kubernetes.io/infra
+              value: reserved
+            - effect: NoExecute
+              key: node-role.kubernetes.io/infra
+              value: reserved
+            volumes:
+            - name: certs
+              secret:
+                defaultMode: 420
+                secretName: elasticsearch
+            - configMap:
+                defaultMode: 511
+                name: indexmanagement-scripts
+              name: scripts
+    schedule: '*/15 * * * *'
+    successfulJobsHistoryLimit: 1
+    suspend: false
+  status:
+    lastScheduleTime: "2024-08-02T14:30:00Z"
+    lastSuccessfulTime: "2024-08-02T14:30:06Z"
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

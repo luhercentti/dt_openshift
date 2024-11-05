@@ -1,0 +1,51 @@
+apiVersion: v1
+items:
+- apiVersion: logging.openshift.io/v1
+  kind: Kibana
+  metadata:
+    creationTimestamp: "2023-05-15T20:18:28Z"
+    generation: 1
+    name: kibana
+    namespace: openshift-logging
+    ownerReferences:
+    - apiVersion: logging.openshift.io/v1
+      controller: true
+      kind: ClusterLogging
+      name: instance
+      uid: bb2ae1b1-01e5-4ac0-b0dd-cfd009c2ceac
+    resourceVersion: "458219134"
+    uid: 1833afe9-ac10-4bd4-aded-48bfc4297f24
+  spec:
+    managementState: Managed
+    nodeSelector:
+      node-role.kubernetes.io/infra: ""
+    proxy:
+      resources: {}
+    replicas: 1
+    resources:
+      limits:
+        memory: 736Mi
+      requests:
+        cpu: 100m
+        memory: 736Mi
+    tolerations:
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/infra
+      value: reserved
+    - effect: NoExecute
+      key: node-role.kubernetes.io/infra
+      value: reserved
+  status:
+  - deployment: kibana
+    pods:
+      failed: []
+      notReady: []
+      ready:
+      - kibana-b6969687b-qbgrx
+    replicaSets:
+    - kibana-b6969687b
+    replicas: 1
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

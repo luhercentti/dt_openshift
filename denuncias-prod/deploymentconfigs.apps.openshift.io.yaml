@@ -1,0 +1,689 @@
+apiVersion: v1
+items:
+- apiVersion: apps.openshift.io/v1
+  kind: DeploymentConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftWebConsole
+      openshift.io/migration-registry: ""
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-23T15:44:18Z"
+    generation: 2
+    labels:
+      app: api-integracion
+      migration.openshift.io/migrated-by-migmigration: 76860916-2889-42b2-b3cf-627f0e3c9911
+      migration.openshift.io/migrated-by-migplan: 19adcece-7178-4e54-99cc-22dd4003dc83
+      velero.io/backup-name: migration-9de6e-initial-sdb6w
+      velero.io/restore-name: migration-9de6e-final-gmwtj
+    name: api-integracion
+    namespace: denuncias-prod
+    resourceVersion: "10025752"
+    uid: 3b968b8f-abfc-491b-8792-0aba3e341b0d
+  spec:
+    replicas: 0
+    revisionHistoryLimit: 10
+    selector:
+      app: api-integracion
+      deploymentconfig: api-integracion
+    strategy:
+      activeDeadlineSeconds: 21600
+      resources: {}
+      rollingParams:
+        intervalSeconds: 1
+        maxSurge: 25%
+        maxUnavailable: 25%
+        timeoutSeconds: 600
+        updatePeriodSeconds: 1
+      type: Rolling
+    template:
+      metadata:
+        annotations:
+          openshift.io/generated-by: OpenShiftWebConsole
+        creationTimestamp: null
+        labels:
+          app: api-integracion
+          deploymentconfig: api-integracion
+      spec:
+        containers:
+        - env:
+          - name: TZ
+            value: America/Santiago
+          - name: CorsConfig
+            value: '{"PolicyOrigin": "*"}'
+          image: image-registry.openshift-image-registry.svc:5000/denuncias-dev/api-integracion-prod@sha256:238b0bfec1352862e41bf61b8d5bf1280099640aa0d2ad307ed919d3d21fc5d6
+          imagePullPolicy: Always
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /api/health
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 5
+          name: api-integracion
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /api/health
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 5
+          resources:
+            limits:
+              cpu: 300m
+              memory: 300Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+    test: false
+    triggers:
+    - type: ConfigChange
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+        - api-integracion
+        from:
+          kind: ImageStreamTag
+          name: api-integracion-prod:latest
+          namespace: denuncias-dev
+        lastTriggeredImage: image-registry.openshift-image-registry.svc:5000/denuncias-dev/api-integracion-prod@sha256:238b0bfec1352862e41bf61b8d5bf1280099640aa0d2ad307ed919d3d21fc5d6
+      type: ImageChange
+  status:
+    availableReplicas: 0
+    conditions:
+    - lastTransitionTime: "2023-05-23T15:44:18Z"
+      lastUpdateTime: "2023-05-23T15:44:18Z"
+      message: Deployment config does not have minimum availability.
+      status: "False"
+      type: Available
+    - lastTransitionTime: "2023-05-23T21:13:05Z"
+      lastUpdateTime: "2023-05-23T21:13:05Z"
+      message: replication controller "api-integracion-1" has failed progressing
+      reason: ProgressDeadlineExceeded
+      status: "False"
+      type: Progressing
+    details:
+      causes:
+      - type: ConfigChange
+      message: config change
+    latestVersion: 1
+    observedGeneration: 2
+    replicas: 0
+    unavailableReplicas: 0
+    updatedReplicas: 0
+- apiVersion: apps.openshift.io/v1
+  kind: DeploymentConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftWebConsole
+      openshift.io/migration-registry: ""
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-23T15:44:18Z"
+    generation: 2
+    labels:
+      app: dptc-serv001-denuncia
+      migration.openshift.io/migrated-by-migmigration: 76860916-2889-42b2-b3cf-627f0e3c9911
+      migration.openshift.io/migrated-by-migplan: 19adcece-7178-4e54-99cc-22dd4003dc83
+      velero.io/backup-name: migration-9de6e-initial-sdb6w
+      velero.io/restore-name: migration-9de6e-final-gmwtj
+    name: dptc-serv001-denuncia
+    namespace: denuncias-prod
+    resourceVersion: "10025865"
+    uid: 83aa334b-dcb6-41d4-963b-c9af7efefc95
+  spec:
+    replicas: 0
+    revisionHistoryLimit: 10
+    selector:
+      app: dptc-serv001-denuncia
+      deploymentconfig: dptc-serv001-denuncia
+    strategy:
+      activeDeadlineSeconds: 21600
+      resources: {}
+      rollingParams:
+        intervalSeconds: 1
+        maxSurge: 25%
+        maxUnavailable: 25%
+        timeoutSeconds: 600
+        updatePeriodSeconds: 1
+      type: Rolling
+    template:
+      metadata:
+        annotations:
+          openshift.io/generated-by: OpenShiftWebConsole
+        creationTimestamp: null
+        labels:
+          app: dptc-serv001-denuncia
+          deploymentconfig: dptc-serv001-denuncia
+      spec:
+        containers:
+        - env:
+          - name: TZ
+            value: America/Santiago
+          - name: DATABASE_HOST
+            value: lst-chaiten
+          - name: DATABASE_PORT
+            value: "1433"
+          - name: DATABASE_DATABASE
+            value: DenunciaTerminoContrato
+          - name: DATABASE_USERNAME
+            value: UserDenunciaTerminoContrato
+          - name: DATABASE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: DATABASE_PASSWORD
+                name: denuncia-termino-contrato-bd-password
+          - name: PROXY_TIMEOUT
+            value: "240000"
+          - name: PROXY_MAX_REDIRECTS
+            value: "5"
+          - name: URL_ENDPOINT_EMPLEADOR
+            value: http://dptc-serv002-bff.denuncias-prod.svc:8080/api/metadata/empleadores/
+          - name: URL_ENDPOINT_PERSONA
+            value: http://dptc-serv002-bff.denuncias-prod.svc:8080/api/metadata/personas/
+          - name: URL_ENDPOINT_FULLMETADATA
+            value: http://dptc-serv002-bff.denuncias-prod.svc:8080/api/metadata/formulario/full
+          - name: URL_ENDPOINT_NUMERADOR
+            value: http://proxy001-serv-externos.denuncias-prod.svc:8080/api/numerador/identificadorSolicutudes
+          - name: URL_ENDPOINT_SEND_EMAIL
+            value: http://proxy001-serv-externos.denuncias-prod.svc:8080/api/correos
+          - name: DEFAULT_PAGE_SIZE
+            value: "100"
+          - name: EMAIL_REMITENTE
+            value: no-reply@dt.gob.cl
+          - name: TEMPLATE_EMAIL_TITULO
+            value: COMPROBANTE DE SOLICITUD DE @@NombreTramite
+          - name: TEMPLATE_EMAIL_NOMBRE_TRAMITE
+            value: RECLAMO ADMINISTRATIVO
+          - name: MENSAJE_OBSERVACIONES_DUPLICADOS
+            value: Un reclamo similar ya existe, a nivel nacional o regional
+          - name: USERID_TOKEN_KEY
+            value: UserId
+          image: image-registry.openshift-image-registry.svc:5000/denuncias-dev/dptc-serv001-den-prod@sha256:6439f0a3d3c517a967b48782bdd1aebfb67a7a88623b306dd5a484cd1f5b7b4a
+          imagePullPolicy: Always
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /api/health
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 5
+          name: dptc-serv001-denuncia
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /api/health
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 5
+          resources:
+            limits:
+              cpu: 300m
+              memory: 300Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+    test: false
+    triggers:
+    - type: ConfigChange
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+        - dptc-serv001-denuncia
+        from:
+          kind: ImageStreamTag
+          name: dptc-serv001-den-prod:latest
+          namespace: denuncias-dev
+        lastTriggeredImage: image-registry.openshift-image-registry.svc:5000/denuncias-dev/dptc-serv001-den-prod@sha256:6439f0a3d3c517a967b48782bdd1aebfb67a7a88623b306dd5a484cd1f5b7b4a
+      type: ImageChange
+  status:
+    availableReplicas: 0
+    conditions:
+    - lastTransitionTime: "2023-05-23T15:44:18Z"
+      lastUpdateTime: "2023-05-23T15:44:18Z"
+      message: Deployment config does not have minimum availability.
+      status: "False"
+      type: Available
+    - lastTransitionTime: "2023-05-23T21:13:14Z"
+      lastUpdateTime: "2023-05-23T21:13:14Z"
+      message: replication controller "dptc-serv001-denuncia-1" has failed progressing
+      reason: ProgressDeadlineExceeded
+      status: "False"
+      type: Progressing
+    details:
+      causes:
+      - type: ConfigChange
+      message: config change
+    latestVersion: 1
+    observedGeneration: 2
+    replicas: 0
+    unavailableReplicas: 0
+    updatedReplicas: 0
+- apiVersion: apps.openshift.io/v1
+  kind: DeploymentConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftWebConsole
+      openshift.io/migration-registry: ""
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-23T15:44:18Z"
+    generation: 2
+    labels:
+      app: dptc-serv002-bff
+      migration.openshift.io/migrated-by-migmigration: 76860916-2889-42b2-b3cf-627f0e3c9911
+      migration.openshift.io/migrated-by-migplan: 19adcece-7178-4e54-99cc-22dd4003dc83
+      velero.io/backup-name: migration-9de6e-initial-sdb6w
+      velero.io/restore-name: migration-9de6e-final-gmwtj
+    name: dptc-serv002-bff
+    namespace: denuncias-prod
+    resourceVersion: "10025869"
+    uid: 762cf00f-0ae3-4387-9e15-5e2a7d61c5ae
+  spec:
+    replicas: 0
+    revisionHistoryLimit: 10
+    selector:
+      app: dptc-serv002-bff
+      deploymentconfig: dptc-serv002-bff
+    strategy:
+      activeDeadlineSeconds: 21600
+      resources: {}
+      rollingParams:
+        intervalSeconds: 1
+        maxSurge: 25%
+        maxUnavailable: 25%
+        timeoutSeconds: 600
+        updatePeriodSeconds: 1
+      type: Rolling
+    template:
+      metadata:
+        annotations:
+          openshift.io/generated-by: OpenShiftWebConsole
+        creationTimestamp: null
+        labels:
+          app: dptc-serv002-bff
+          deploymentconfig: dptc-serv002-bff
+      spec:
+        containers:
+        - env:
+          - name: TZ
+            value: America/Santiago
+          - name: DATABASE_HOST
+            value: lst-chaiten
+          - name: DATABASE_PORT
+            value: "1433"
+          - name: DATABASE_DATABASE
+            value: DenunciaTerminoContrato
+          - name: DATABASE_USERNAME
+            value: UserDenunciaTerminoContrato
+          - name: DATABASE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: DATABASE_PASSWORD
+                name: denuncia-termino-contrato-bd-password
+          - name: PROXY_TIMEOUT
+            value: "120000"
+          - name: PROXY_MAX_REDIRECTS
+            value: "5"
+          - name: URL_ENDPOINT_COMUNAS
+            value: http://proxy001-serv-externos.denuncias-prod.svc:8080/api/metadata/distribucionTerritorial/Comunas
+          - name: URL_ENDPOINT_COMUNASREGION
+            value: http://proxy001-serv-externos.denuncias-prod.svc:8080/api/metadata/distribucionTerritorial/RegionProvinciaComunas
+          - name: URL_ENDPOINT_REGIONES
+            value: http://proxy001-serv-externos.denuncias-prod.svc:8080/api/metadata/distribucionTerritorial/Regiones
+          - name: URL_ENDPOINT_AFP
+            value: http://proxy001-serv-externos.denuncias-prod.svc:8080/api/metadata/publico/afp
+          - name: URL_ENDPOINT_ISAPRES
+            value: http://proxy001-serv-externos.denuncias-prod.svc:8080/api/metadata/publico/isapres
+          - name: URL_ENDPOINT_NACIONALIDADES
+            value: http://proxy001-serv-externos.denuncias-prod.svc:8080/api/metadata/publico/nacionalidades
+          - name: URL_ENDPOINT_EMPLEADOR
+            value: http://proxy001-serv-externos.denuncias-prod.svc:8080/api/metadata/maestroEmpresa/empleador?rut=
+          - name: URL_ENDPOINT_PERSONA
+            value: http://proxy001-serv-externos.denuncias-prod.svc:8080/api/metadata/registroCivil/persona?rut=
+          - name: CACHE_TTL_SECONDS_DEFAULT
+            value: "86400"
+          - name: CACHE_MAX_ITEMS
+            value: "10"
+          - name: USERID_TOKEN_KEY
+            value: UserId
+          image: image-registry.openshift-image-registry.svc:5000/denuncias-dev/dptc-serv002-bff-prod@sha256:a70228d9e492b2438bdb2298bc9da495ebd947aaa74ea8de691a1375ac0000f2
+          imagePullPolicy: Always
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /api/health
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 10
+          name: dptc-serv002-bff
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /api/health
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 10
+          resources:
+            limits:
+              cpu: 200m
+              memory: 300Mi
+            requests:
+              cpu: 100m
+              memory: 100Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+    test: false
+    triggers:
+    - type: ConfigChange
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+        - dptc-serv002-bff
+        from:
+          kind: ImageStreamTag
+          name: dptc-serv002-bff-prod:latest
+          namespace: denuncias-dev
+        lastTriggeredImage: image-registry.openshift-image-registry.svc:5000/denuncias-dev/dptc-serv002-bff-prod@sha256:a70228d9e492b2438bdb2298bc9da495ebd947aaa74ea8de691a1375ac0000f2
+      type: ImageChange
+  status:
+    availableReplicas: 0
+    conditions:
+    - lastTransitionTime: "2023-05-23T15:44:18Z"
+      lastUpdateTime: "2023-05-23T15:44:18Z"
+      message: Deployment config does not have minimum availability.
+      status: "False"
+      type: Available
+    - lastTransitionTime: "2023-05-23T21:13:14Z"
+      lastUpdateTime: "2023-05-23T21:13:14Z"
+      message: replication controller "dptc-serv002-bff-1" has failed progressing
+      reason: ProgressDeadlineExceeded
+      status: "False"
+      type: Progressing
+    details:
+      causes:
+      - type: ConfigChange
+      message: config change
+    latestVersion: 1
+    observedGeneration: 2
+    replicas: 0
+    unavailableReplicas: 0
+    updatedReplicas: 0
+- apiVersion: apps.openshift.io/v1
+  kind: DeploymentConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftWebConsole
+      openshift.io/migration-registry: ""
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-23T15:44:18Z"
+    generation: 2
+    labels:
+      app: front001-denuncias
+      migration.openshift.io/migrated-by-migmigration: 76860916-2889-42b2-b3cf-627f0e3c9911
+      migration.openshift.io/migrated-by-migplan: 19adcece-7178-4e54-99cc-22dd4003dc83
+      velero.io/backup-name: migration-9de6e-initial-sdb6w
+      velero.io/restore-name: migration-9de6e-final-gmwtj
+    name: front001-denuncias
+    namespace: denuncias-prod
+    resourceVersion: "10025870"
+    uid: da22fbae-34bf-4bc9-b1a8-3cd8c7e8abf0
+  spec:
+    replicas: 0
+    revisionHistoryLimit: 10
+    selector:
+      app: front001-denuncias
+      deploymentconfig: front001-denuncias
+    strategy:
+      activeDeadlineSeconds: 21600
+      resources: {}
+      rollingParams:
+        intervalSeconds: 1
+        maxSurge: 25%
+        maxUnavailable: 25%
+        timeoutSeconds: 600
+        updatePeriodSeconds: 1
+      type: Rolling
+    template:
+      metadata:
+        annotations:
+          openshift.io/generated-by: OpenShiftWebConsole
+        creationTimestamp: null
+        labels:
+          app: front001-denuncias
+          deploymentconfig: front001-denuncias
+      spec:
+        containers:
+        - env:
+          - name: TZ
+            value: America/Santiago
+          image: image-registry.openshift-image-registry.svc:5000/denuncias-dev/front001-denuncias-prod@sha256:9bf6aa4af89adfa3828891c7690583c046ef625aa058c683cc274ef9a28279eb
+          imagePullPolicy: Always
+          name: front001-denuncias
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources:
+            limits:
+              cpu: 100m
+              memory: 100Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+    test: false
+    triggers:
+    - type: ConfigChange
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+        - front001-denuncias
+        from:
+          kind: ImageStreamTag
+          name: front001-denuncias-prod:latest
+          namespace: denuncias-dev
+        lastTriggeredImage: image-registry.openshift-image-registry.svc:5000/denuncias-dev/front001-denuncias-prod@sha256:9bf6aa4af89adfa3828891c7690583c046ef625aa058c683cc274ef9a28279eb
+      type: ImageChange
+  status:
+    availableReplicas: 0
+    conditions:
+    - lastTransitionTime: "2023-05-23T15:44:18Z"
+      lastUpdateTime: "2023-05-23T15:44:18Z"
+      message: Deployment config does not have minimum availability.
+      status: "False"
+      type: Available
+    - lastTransitionTime: "2023-05-23T21:13:14Z"
+      lastUpdateTime: "2023-05-23T21:13:14Z"
+      message: replication controller "front001-denuncias-1" has failed progressing
+      reason: ProgressDeadlineExceeded
+      status: "False"
+      type: Progressing
+    details:
+      causes:
+      - type: ConfigChange
+      message: config change
+    latestVersion: 1
+    observedGeneration: 2
+    replicas: 0
+    unavailableReplicas: 0
+    updatedReplicas: 0
+- apiVersion: apps.openshift.io/v1
+  kind: DeploymentConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftWebConsole
+      openshift.io/migration-registry: ""
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-23T15:44:18Z"
+    generation: 2
+    labels:
+      app: proxy001-serv-externos
+      migration.openshift.io/migrated-by-migmigration: 76860916-2889-42b2-b3cf-627f0e3c9911
+      migration.openshift.io/migrated-by-migplan: 19adcece-7178-4e54-99cc-22dd4003dc83
+      velero.io/backup-name: migration-9de6e-initial-sdb6w
+      velero.io/restore-name: migration-9de6e-final-gmwtj
+    name: proxy001-serv-externos
+    namespace: denuncias-prod
+    resourceVersion: "10025946"
+    uid: 727cabb3-dadb-4f20-9a77-0fd407fe0b3b
+  spec:
+    replicas: 0
+    revisionHistoryLimit: 10
+    selector:
+      app: proxy001-serv-externos
+      deploymentconfig: proxy001-serv-externos
+    strategy:
+      activeDeadlineSeconds: 21600
+      resources: {}
+      rollingParams:
+        intervalSeconds: 1
+        maxSurge: 25%
+        maxUnavailable: 25%
+        timeoutSeconds: 600
+        updatePeriodSeconds: 1
+      type: Rolling
+    template:
+      metadata:
+        annotations:
+          openshift.io/generated-by: OpenShiftWebConsole
+        creationTimestamp: null
+        labels:
+          app: proxy001-serv-externos
+          deploymentconfig: proxy001-serv-externos
+      spec:
+        containers:
+        - env:
+          - name: TZ
+            value: America/Santiago
+          image: image-registry.openshift-image-registry.svc:5000/denuncias-dev/proxy001-serv-ext-prod@sha256:6d3ddad8c66825f520291c0ed5c7397af29ece1596e445140683853716cdcd13
+          imagePullPolicy: Always
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /api/health
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 15
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 5
+          name: proxy001-serv-externos
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /api/health
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 15
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 5
+          resources:
+            limits:
+              cpu: 300m
+              memory: 300Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+    test: false
+    triggers:
+    - type: ConfigChange
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+        - proxy001-serv-externos
+        from:
+          kind: ImageStreamTag
+          name: proxy001-serv-ext-prod:latest
+          namespace: denuncias-dev
+        lastTriggeredImage: image-registry.openshift-image-registry.svc:5000/denuncias-dev/proxy001-serv-ext-prod@sha256:6d3ddad8c66825f520291c0ed5c7397af29ece1596e445140683853716cdcd13
+      type: ImageChange
+  status:
+    availableReplicas: 0
+    conditions:
+    - lastTransitionTime: "2023-05-23T15:44:18Z"
+      lastUpdateTime: "2023-05-23T15:44:18Z"
+      message: Deployment config does not have minimum availability.
+      status: "False"
+      type: Available
+    - lastTransitionTime: "2023-05-23T21:13:20Z"
+      lastUpdateTime: "2023-05-23T21:13:20Z"
+      message: replication controller "proxy001-serv-externos-1" has failed progressing
+      reason: ProgressDeadlineExceeded
+      status: "False"
+      type: Progressing
+    details:
+      causes:
+      - type: ConfigChange
+      message: config change
+    latestVersion: 1
+    observedGeneration: 2
+    replicas: 0
+    unavailableReplicas: 0
+    updatedReplicas: 0
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

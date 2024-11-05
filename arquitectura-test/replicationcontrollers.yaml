@@ -1,0 +1,588 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: ReplicationController
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/original-replicas: "1"
+      openshift.io/deployer-pod.completed-at: 2023-06-14 14:36:58 +0000 UTC
+      openshift.io/deployer-pod.created-at: 2023-06-14 14:36:46 +0000 UTC
+      openshift.io/deployer-pod.name: trackdt-1-deploy
+      openshift.io/deployment-config.latest-version: "1"
+      openshift.io/deployment-config.name: trackdt
+      openshift.io/deployment.phase: Complete
+      openshift.io/deployment.replicas: "1"
+      openshift.io/deployment.status-reason: config change
+      openshift.io/encoded-deployment-config: |
+        {"kind":"DeploymentConfig","apiVersion":"apps.openshift.io/v1","metadata":{"name":"trackdt","namespace":"arquitectura-test","uid":"0f9fab59-2e18-48fa-a912-51eb645c3ffd","resourceVersion":"28543365","generation":2,"creationTimestamp":"2023-06-14T14:20:32Z","labels":{"app":"trackdt"},"annotations":{"openshift.io/generated-by":"OpenShiftNewApp"},"managedFields":[{"manager":"oc.exe","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-06-14T14:20:32Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{".":{},"f:openshift.io/generated-by":{}},"f:labels":{".":{},"f:app":{}}},"f:spec":{"f:replicas":{},"f:selector":{".":{},"f:app":{},"f:deploymentconfig":{}},"f:strategy":{"f:activeDeadlineSeconds":{},"f:rollingParams":{".":{},"f:intervalSeconds":{},"f:maxSurge":{},"f:maxUnavailable":{},"f:timeoutSeconds":{},"f:updatePeriodSeconds":{}},"f:type":{}},"f:template":{".":{},"f:metadata":{".":{},"f:annotations":{".":{},"f:openshift.io/generated-by":{}},"f:creationTimestamp":{},"f:labels":{".":{},"f:app":{},"f:deploymentconfig":{}}},"f:spec":{".":{},"f:containers":{".":{},"k:{\"name\":\"trackdt\"}":{".":{},"f:imagePullPolicy":{},"f:name":{},"f:ports":{".":{},"k:{\"containerPort\":8080,\"protocol\":\"TCP\"}":{".":{},"f:containerPort":{},"f:protocol":{}}},"f:resources":{},"f:terminationMessagePath":{},"f:terminationMessagePolicy":{}}},"f:dnsPolicy":{},"f:restartPolicy":{},"f:schedulerName":{},"f:securityContext":{},"f:terminationGracePeriodSeconds":{}}}}}},{"manager":"openshift-controller-manager","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-06-14T14:36:46Z","fieldsType":"FieldsV1","fieldsV1":{"f:spec":{"f:template":{"f:spec":{"f:containers":{"k:{\"name\":\"trackdt\"}":{"f:image":{}}}}},"f:triggers":{}}}},{"manager":"openshift-controller-manager","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-06-14T14:36:46Z","fieldsType":"FieldsV1","fieldsV1":{"f:status":{"f:conditions":{".":{},"k:{\"type\":\"Available\"}":{".":{},"f:lastTransitionTime":{},"f:lastUpdateTime":{},"f:message":{},"f:status":{},"f:type":{}}},"f:details":{".":{},"f:causes":{},"f:message":{}},"f:latestVersion":{},"f:observedGeneration":{}}},"subresource":"status"}]},"spec":{"strategy":{"type":"Rolling","rollingParams":{"updatePeriodSeconds":1,"intervalSeconds":1,"timeoutSeconds":600,"maxUnavailable":"25%","maxSurge":"25%"},"resources":{},"activeDeadlineSeconds":21600},"triggers":[{"type":"ConfigChange"},{"type":"ImageChange","imageChangeParams":{"automatic":true,"containerNames":["trackdt"],"from":{"kind":"ImageStreamTag","namespace":"arquitectura-test","name":"trackdt:latest"},"lastTriggeredImage":"image-registry.openshift-image-registry.svc:5000/arquitectura-test/trackdt@sha256:4177de4f2c050e198b834abaf4a8988087878b6b049208a75b87aca11b56d34c"}}],"replicas":1,"revisionHistoryLimit":10,"test":false,"selector":{"app":"trackdt","deploymentconfig":"trackdt"},"template":{"metadata":{"creationTimestamp":null,"labels":{"app":"trackdt","deploymentconfig":"trackdt"},"annotations":{"openshift.io/generated-by":"OpenShiftNewApp"}},"spec":{"containers":[{"name":"trackdt","image":"image-registry.openshift-image-registry.svc:5000/arquitectura-test/trackdt@sha256:4177de4f2c050e198b834abaf4a8988087878b6b049208a75b87aca11b56d34c","ports":[{"containerPort":8080,"protocol":"TCP"}],"resources":{},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File","imagePullPolicy":"Always"}],"restartPolicy":"Always","terminationGracePeriodSeconds":30,"dnsPolicy":"ClusterFirst","securityContext":{},"schedulerName":"default-scheduler"}}},"status":{"latestVersion":1,"observedGeneration":1,"replicas":0,"updatedReplicas":0,"availableReplicas":0,"unavailableReplicas":0,"details":{"message":"config change","causes":[{"type":"ConfigChange"}]},"conditions":[{"type":"Available","status":"False","lastUpdateTime":"2023-06-14T14:20:32Z","lastTransitionTime":"2023-06-14T14:20:32Z","message":"Deployment config does not have minimum availability."}]}}
+    creationTimestamp: "2023-06-14T14:36:46Z"
+    generation: 6
+    labels:
+      app: trackdt
+      openshift.io/deployment-config.name: trackdt
+    name: trackdt-1
+    namespace: arquitectura-test
+    ownerReferences:
+    - apiVersion: apps.openshift.io/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DeploymentConfig
+      name: trackdt
+      uid: 0f9fab59-2e18-48fa-a912-51eb645c3ffd
+    resourceVersion: "28552339"
+    uid: 96710127-d9d1-469e-8061-ec9930b23789
+  spec:
+    replicas: 0
+    selector:
+      app: trackdt
+      deployment: trackdt-1
+      deploymentconfig: trackdt
+    template:
+      metadata:
+        annotations:
+          openshift.io/deployment-config.latest-version: "1"
+          openshift.io/deployment-config.name: trackdt
+          openshift.io/deployment.name: trackdt-1
+          openshift.io/generated-by: OpenShiftNewApp
+        creationTimestamp: null
+        labels:
+          app: trackdt
+          deployment: trackdt-1
+          deploymentconfig: trackdt
+      spec:
+        containers:
+        - env:
+          - name: NODE_DEV
+            value: Development
+          image: image-registry.openshift-image-registry.svc:5000/arquitectura-test/trackdt@sha256:4177de4f2c050e198b834abaf4a8988087878b6b049208a75b87aca11b56d34c
+          imagePullPolicy: Always
+          name: trackdt
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    observedGeneration: 6
+    replicas: 0
+- apiVersion: v1
+  kind: ReplicationController
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/original-replicas: "1"
+      openshift.io/deployer-pod.completed-at: 2023-06-14 14:51:15 +0000 UTC
+      openshift.io/deployer-pod.created-at: 2023-06-14 14:48:13 +0000 UTC
+      openshift.io/deployer-pod.name: trackdt-2-deploy
+      openshift.io/deployment-config.latest-version: "2"
+      openshift.io/deployment-config.name: trackdt
+      openshift.io/deployment.phase: Complete
+      openshift.io/deployment.replicas: ""
+      openshift.io/deployment.status-reason: image change
+      openshift.io/encoded-deployment-config: |
+        {"kind":"DeploymentConfig","apiVersion":"apps.openshift.io/v1","metadata":{"name":"trackdt","namespace":"arquitectura-test","uid":"0f9fab59-2e18-48fa-a912-51eb645c3ffd","resourceVersion":"28550367","generation":5,"creationTimestamp":"2023-06-14T14:20:32Z","labels":{"app":"trackdt"},"annotations":{"openshift.io/generated-by":"OpenShiftNewApp"},"managedFields":[{"manager":"oc.exe","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-06-14T14:20:32Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{".":{},"f:openshift.io/generated-by":{}},"f:labels":{".":{},"f:app":{}}},"f:spec":{"f:replicas":{},"f:selector":{".":{},"f:app":{},"f:deploymentconfig":{}},"f:strategy":{"f:activeDeadlineSeconds":{},"f:rollingParams":{".":{},"f:intervalSeconds":{},"f:maxSurge":{},"f:maxUnavailable":{},"f:timeoutSeconds":{},"f:updatePeriodSeconds":{}},"f:type":{}},"f:template":{".":{},"f:metadata":{".":{},"f:annotations":{".":{},"f:openshift.io/generated-by":{}},"f:creationTimestamp":{},"f:labels":{".":{},"f:app":{},"f:deploymentconfig":{}}},"f:spec":{".":{},"f:containers":{".":{},"k:{\"name\":\"trackdt\"}":{".":{},"f:imagePullPolicy":{},"f:name":{},"f:ports":{".":{},"k:{\"containerPort\":8080,\"protocol\":\"TCP\"}":{".":{},"f:containerPort":{},"f:protocol":{}}},"f:resources":{},"f:terminationMessagePath":{},"f:terminationMessagePolicy":{}}},"f:dnsPolicy":{},"f:restartPolicy":{},"f:schedulerName":{},"f:securityContext":{},"f:terminationGracePeriodSeconds":{}}}}}},{"manager":"openshift-controller-manager","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-06-14T14:36:46Z","fieldsType":"FieldsV1","fieldsV1":{"f:spec":{"f:template":{"f:spec":{"f:containers":{"k:{\"name\":\"trackdt\"}":{"f:image":{}}}}},"f:triggers":{}}}},{"manager":"openshift-controller-manager","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-06-14T14:46:39Z","fieldsType":"FieldsV1","fieldsV1":{"f:status":{"f:availableReplicas":{},"f:conditions":{".":{},"k:{\"type\":\"Available\"}":{".":{},"f:lastTransitionTime":{},"f:lastUpdateTime":{},"f:message":{},"f:status":{},"f:type":{}},"k:{\"type\":\"Progressing\"}":{".":{},"f:lastTransitionTime":{},"f:lastUpdateTime":{},"f:message":{},"f:reason":{},"f:status":{},"f:type":{}}},"f:details":{".":{},"f:causes":{},"f:message":{}},"f:latestVersion":{},"f:observedGeneration":{},"f:replicas":{},"f:unavailableReplicas":{},"f:updatedReplicas":{}}},"subresource":"status"}]},"spec":{"strategy":{"type":"Rolling","rollingParams":{"updatePeriodSeconds":1,"intervalSeconds":1,"timeoutSeconds":600,"maxUnavailable":"25%","maxSurge":"25%"},"resources":{},"activeDeadlineSeconds":21600},"triggers":[{"type":"ConfigChange"},{"type":"ImageChange","imageChangeParams":{"automatic":true,"containerNames":["trackdt"],"from":{"kind":"ImageStreamTag","namespace":"arquitectura-test","name":"trackdt:latest"},"lastTriggeredImage":"image-registry.openshift-image-registry.svc:5000/arquitectura-test/trackdt@sha256:ce8cb59d4c8ebf2a44ec66183f8f641b7f5bd0d3cd6d0d99a9f773c5a3574c9b"}}],"replicas":1,"revisionHistoryLimit":10,"test":false,"selector":{"app":"trackdt","deploymentconfig":"trackdt"},"template":{"metadata":{"creationTimestamp":null,"labels":{"app":"trackdt","deploymentconfig":"trackdt"},"annotations":{"openshift.io/generated-by":"OpenShiftNewApp"}},"spec":{"containers":[{"name":"trackdt","image":"image-registry.openshift-image-registry.svc:5000/arquitectura-test/trackdt@sha256:ce8cb59d4c8ebf2a44ec66183f8f641b7f5bd0d3cd6d0d99a9f773c5a3574c9b","ports":[{"containerPort":8080,"protocol":"TCP"}],"resources":{},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File","imagePullPolicy":"Always"}],"restartPolicy":"Always","terminationGracePeriodSeconds":30,"dnsPolicy":"ClusterFirst","securityContext":{},"schedulerName":"default-scheduler"}}},"status":{"latestVersion":2,"observedGeneration":4,"replicas":1,"updatedReplicas":1,"availableReplicas":0,"unavailableReplicas":1,"details":{"message":"image change","causes":[{"type":"ImageChange","imageTrigger":{"from":{"kind":"DockerImage","name":"image-registry.openshift-image-registry.svc:5000/arquitectura-test/trackdt@sha256:ce8cb59d4c8ebf2a44ec66183f8f641b7f5bd0d3cd6d0d99a9f773c5a3574c9b"}}}]},"conditions":[{"type":"Progressing","status":"True","lastUpdateTime":"2023-06-14T14:37:04Z","lastTransitionTime":"2023-06-14T14:37:04Z","reason":"NewReplicationControllerAvailable","message":"replication controller \"trackdt-1\" successfully rolled out"},{"type":"Available","status":"False","lastUpdateTime":"2023-06-14T14:46:39Z","lastTransitionTime":"2023-06-14T14:46:39Z","message":"Deployment config does not have minimum availability."}]}}
+    creationTimestamp: "2023-06-14T14:48:13Z"
+    generation: 3
+    labels:
+      app: trackdt
+      openshift.io/deployment-config.name: trackdt
+    name: trackdt-2
+    namespace: arquitectura-test
+    ownerReferences:
+    - apiVersion: apps.openshift.io/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DeploymentConfig
+      name: trackdt
+      uid: 0f9fab59-2e18-48fa-a912-51eb645c3ffd
+    resourceVersion: "28556057"
+    uid: 921b8dfe-c69a-47ed-b904-30b6fb790faa
+  spec:
+    replicas: 0
+    selector:
+      app: trackdt
+      deployment: trackdt-2
+      deploymentconfig: trackdt
+    template:
+      metadata:
+        annotations:
+          openshift.io/deployment-config.latest-version: "2"
+          openshift.io/deployment-config.name: trackdt
+          openshift.io/deployment.name: trackdt-2
+          openshift.io/generated-by: OpenShiftNewApp
+        creationTimestamp: null
+        labels:
+          app: trackdt
+          deployment: trackdt-2
+          deploymentconfig: trackdt
+      spec:
+        containers:
+        - image: image-registry.openshift-image-registry.svc:5000/arquitectura-test/trackdt@sha256:ce8cb59d4c8ebf2a44ec66183f8f641b7f5bd0d3cd6d0d99a9f773c5a3574c9b
+          imagePullPolicy: Always
+          name: trackdt
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    observedGeneration: 3
+    replicas: 0
+- apiVersion: v1
+  kind: ReplicationController
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/original-replicas: "1"
+      openshift.io/deployer-pod.completed-at: 2023-06-14 14:57:16 +0000 UTC
+      openshift.io/deployer-pod.created-at: 2023-06-14 14:57:08 +0000 UTC
+      openshift.io/deployer-pod.name: trackdt-3-deploy
+      openshift.io/deployment-config.latest-version: "3"
+      openshift.io/deployment-config.name: trackdt
+      openshift.io/deployment.phase: Complete
+      openshift.io/deployment.replicas: ""
+      openshift.io/deployment.status-reason: config change
+      openshift.io/encoded-deployment-config: |
+        {"kind":"DeploymentConfig","apiVersion":"apps.openshift.io/v1","metadata":{"name":"trackdt","namespace":"arquitectura-test","uid":"0f9fab59-2e18-48fa-a912-51eb645c3ffd","resourceVersion":"28555944","generation":8,"creationTimestamp":"2023-06-14T14:20:32Z","labels":{"app":"trackdt"},"annotations":{"openshift.io/generated-by":"OpenShiftNewApp"},"managedFields":[{"manager":"oc.exe","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-06-14T14:20:32Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{".":{},"f:openshift.io/generated-by":{}},"f:labels":{".":{},"f:app":{}}},"f:spec":{"f:replicas":{},"f:selector":{".":{},"f:app":{},"f:deploymentconfig":{}},"f:strategy":{"f:activeDeadlineSeconds":{},"f:rollingParams":{".":{},"f:intervalSeconds":{},"f:maxSurge":{},"f:maxUnavailable":{},"f:timeoutSeconds":{},"f:updatePeriodSeconds":{}},"f:type":{}},"f:template":{".":{},"f:metadata":{".":{},"f:annotations":{".":{},"f:openshift.io/generated-by":{}},"f:creationTimestamp":{},"f:labels":{".":{},"f:app":{},"f:deploymentconfig":{}}},"f:spec":{".":{},"f:containers":{".":{},"k:{\"name\":\"trackdt\"}":{".":{},"f:imagePullPolicy":{},"f:name":{},"f:ports":{".":{},"k:{\"containerPort\":8080,\"protocol\":\"TCP\"}":{".":{},"f:containerPort":{},"f:protocol":{}}},"f:resources":{},"f:terminationMessagePath":{},"f:terminationMessagePolicy":{}}},"f:dnsPolicy":{},"f:restartPolicy":{},"f:schedulerName":{},"f:securityContext":{},"f:terminationGracePeriodSeconds":{}}}}}},{"manager":"openshift-controller-manager","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-06-14T14:36:46Z","fieldsType":"FieldsV1","fieldsV1":{"f:spec":{"f:template":{"f:spec":{"f:containers":{"k:{\"name\":\"trackdt\"}":{"f:image":{}}}}},"f:triggers":{}}}},{"manager":"Mozilla","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-06-14T14:56:38Z","fieldsType":"FieldsV1","fieldsV1":{"f:spec":{"f:template":{"f:spec":{"f:containers":{"k:{\"name\":\"trackdt\"}":{"f:env":{".":{},"k:{\"name\":\"NODE_ENV\"}":{".":{},"f:name":{},"f:value":{}}}}}}}}}},{"manager":"openshift-controller-manager","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-06-14T14:57:06Z","fieldsType":"FieldsV1","fieldsV1":{"f:status":{"f:availableReplicas":{},"f:conditions":{".":{},"k:{\"type\":\"Available\"}":{".":{},"f:lastTransitionTime":{},"f:lastUpdateTime":{},"f:message":{},"f:status":{},"f:type":{}},"k:{\"type\":\"Progressing\"}":{".":{},"f:lastTransitionTime":{},"f:lastUpdateTime":{},"f:message":{},"f:reason":{},"f:status":{},"f:type":{}}},"f:details":{".":{},"f:causes":{},"f:message":{}},"f:latestVersion":{},"f:observedGeneration":{},"f:replicas":{},"f:unavailableReplicas":{},"f:updatedReplicas":{}}},"subresource":"status"}]},"spec":{"strategy":{"type":"Rolling","rollingParams":{"updatePeriodSeconds":1,"intervalSeconds":1,"timeoutSeconds":600,"maxUnavailable":"25%","maxSurge":"25%"},"resources":{},"activeDeadlineSeconds":21600},"triggers":[{"type":"ConfigChange"},{"type":"ImageChange","imageChangeParams":{"automatic":true,"containerNames":["trackdt"],"from":{"kind":"ImageStreamTag","namespace":"arquitectura-test","name":"trackdt:latest"},"lastTriggeredImage":"image-registry.openshift-image-registry.svc:5000/arquitectura-test/trackdt@sha256:ce8cb59d4c8ebf2a44ec66183f8f641b7f5bd0d3cd6d0d99a9f773c5a3574c9b"}}],"replicas":1,"revisionHistoryLimit":10,"test":false,"selector":{"app":"trackdt","deploymentconfig":"trackdt"},"template":{"metadata":{"creationTimestamp":null,"labels":{"app":"trackdt","deploymentconfig":"trackdt"},"annotations":{"openshift.io/generated-by":"OpenShiftNewApp"}},"spec":{"containers":[{"name":"trackdt","image":"image-registry.openshift-image-registry.svc:5000/arquitectura-test/trackdt@sha256:ce8cb59d4c8ebf2a44ec66183f8f641b7f5bd0d3cd6d0d99a9f773c5a3574c9b","ports":[{"containerPort":8080,"protocol":"TCP"}],"env":[{"name":"NODE_ENV","value":"development"}],"resources":{},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File","imagePullPolicy":"Always"}],"restartPolicy":"Always","terminationGracePeriodSeconds":30,"dnsPolicy":"ClusterFirst","securityContext":{},"schedulerName":"default-scheduler"}}},"status":{"latestVersion":3,"observedGeneration":7,"replicas":1,"updatedReplicas":1,"availableReplicas":0,"unavailableReplicas":1,"details":{"message":"config change","causes":[{"type":"ConfigChange"}]},"conditions":[{"type":"Progressing","status":"True","lastUpdateTime":"2023-06-14T14:51:18Z","lastTransitionTime":"2023-06-14T14:51:13Z","reason":"NewReplicationControllerAvailable","message":"replication controller \"trackdt-2\" successfully rolled out"},{"type":"Available","status":"False","lastUpdateTime":"2023-06-14T14:57:06Z","lastTransitionTime":"2023-06-14T14:57:06Z","message":"Deployment config does not have minimum availability."}]}}
+    creationTimestamp: "2023-06-14T14:57:08Z"
+    generation: 3
+    labels:
+      app: trackdt
+      openshift.io/deployment-config.name: trackdt
+    name: trackdt-3
+    namespace: arquitectura-test
+    ownerReferences:
+    - apiVersion: apps.openshift.io/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DeploymentConfig
+      name: trackdt
+      uid: 0f9fab59-2e18-48fa-a912-51eb645c3ffd
+    resourceVersion: "28561029"
+    uid: ad159902-00c7-4fac-b224-b2feadd3ef5a
+  spec:
+    replicas: 0
+    selector:
+      app: trackdt
+      deployment: trackdt-3
+      deploymentconfig: trackdt
+    template:
+      metadata:
+        annotations:
+          openshift.io/deployment-config.latest-version: "3"
+          openshift.io/deployment-config.name: trackdt
+          openshift.io/deployment.name: trackdt-3
+          openshift.io/generated-by: OpenShiftNewApp
+        creationTimestamp: null
+        labels:
+          app: trackdt
+          deployment: trackdt-3
+          deploymentconfig: trackdt
+      spec:
+        containers:
+        - env:
+          - name: NODE_ENV
+            value: development
+          image: image-registry.openshift-image-registry.svc:5000/arquitectura-test/trackdt@sha256:ce8cb59d4c8ebf2a44ec66183f8f641b7f5bd0d3cd6d0d99a9f773c5a3574c9b
+          imagePullPolicy: Always
+          name: trackdt
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    observedGeneration: 3
+    replicas: 0
+- apiVersion: v1
+  kind: ReplicationController
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/original-replicas: "1"
+      openshift.io/deployer-pod.completed-at: 2023-06-14 15:04:52 +0000 UTC
+      openshift.io/deployer-pod.created-at: 2023-06-14 14:58:44 +0000 UTC
+      openshift.io/deployer-pod.name: trackdt-4-deploy
+      openshift.io/deployment-config.latest-version: "4"
+      openshift.io/deployment-config.name: trackdt
+      openshift.io/deployment.phase: Complete
+      openshift.io/deployment.replicas: ""
+      openshift.io/deployment.status-reason: config change
+      openshift.io/encoded-deployment-config: |
+        {"kind":"DeploymentConfig","apiVersion":"apps.openshift.io/v1","metadata":{"name":"trackdt","namespace":"arquitectura-test","uid":"0f9fab59-2e18-48fa-a912-51eb645c3ffd","resourceVersion":"28556964","generation":9,"creationTimestamp":"2023-06-14T14:20:32Z","labels":{"app":"trackdt"},"annotations":{"openshift.io/generated-by":"OpenShiftNewApp"},"managedFields":[{"manager":"oc.exe","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-06-14T14:20:32Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{".":{},"f:openshift.io/generated-by":{}},"f:labels":{".":{},"f:app":{}}},"f:spec":{"f:replicas":{},"f:selector":{".":{},"f:app":{},"f:deploymentconfig":{}},"f:strategy":{"f:activeDeadlineSeconds":{},"f:rollingParams":{".":{},"f:intervalSeconds":{},"f:maxSurge":{},"f:maxUnavailable":{},"f:timeoutSeconds":{},"f:updatePeriodSeconds":{}},"f:type":{}},"f:template":{".":{},"f:metadata":{".":{},"f:annotations":{".":{},"f:openshift.io/generated-by":{}},"f:creationTimestamp":{},"f:labels":{".":{},"f:app":{},"f:deploymentconfig":{}}},"f:spec":{".":{},"f:containers":{".":{},"k:{\"name\":\"trackdt\"}":{".":{},"f:imagePullPolicy":{},"f:name":{},"f:ports":{".":{},"k:{\"containerPort\":8080,\"protocol\":\"TCP\"}":{".":{},"f:containerPort":{},"f:protocol":{}}},"f:resources":{},"f:terminationMessagePath":{},"f:terminationMessagePolicy":{}}},"f:dnsPolicy":{},"f:restartPolicy":{},"f:schedulerName":{},"f:securityContext":{},"f:terminationGracePeriodSeconds":{}}}}}},{"manager":"openshift-controller-manager","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-06-14T14:36:46Z","fieldsType":"FieldsV1","fieldsV1":{"f:spec":{"f:template":{"f:spec":{"f:containers":{"k:{\"name\":\"trackdt\"}":{"f:image":{}}}}},"f:triggers":{}}}},{"manager":"Mozilla","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-06-14T14:56:38Z","fieldsType":"FieldsV1","fieldsV1":{"f:spec":{"f:template":{"f:spec":{"f:containers":{"k:{\"name\":\"trackdt\"}":{"f:env":{".":{},"k:{\"name\":\"NODE_ENV\"}":{".":{},"f:name":{},"f:value":{}}}}}}}}}},{"manager":"openshift-controller-manager","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-06-14T14:57:57Z","fieldsType":"FieldsV1","fieldsV1":{"f:status":{"f:availableReplicas":{},"f:conditions":{".":{},"k:{\"type\":\"Available\"}":{".":{},"f:lastTransitionTime":{},"f:lastUpdateTime":{},"f:message":{},"f:status":{},"f:type":{}},"k:{\"type\":\"Progressing\"}":{".":{},"f:lastTransitionTime":{},"f:lastUpdateTime":{},"f:message":{},"f:reason":{},"f:status":{},"f:type":{}}},"f:details":{".":{},"f:causes":{},"f:message":{}},"f:latestVersion":{},"f:observedGeneration":{},"f:replicas":{},"f:unavailableReplicas":{},"f:updatedReplicas":{}}},"subresource":"status"}]},"spec":{"strategy":{"type":"Rolling","rollingParams":{"updatePeriodSeconds":1,"intervalSeconds":1,"timeoutSeconds":600,"maxUnavailable":"25%","maxSurge":"25%"},"resources":{},"activeDeadlineSeconds":21600},"triggers":[{"type":"ConfigChange"},{"type":"ImageChange","imageChangeParams":{"automatic":true,"containerNames":["trackdt"],"from":{"kind":"ImageStreamTag","namespace":"arquitectura-test","name":"trackdt:latest"},"lastTriggeredImage":"image-registry.openshift-image-registry.svc:5000/arquitectura-test/trackdt@sha256:ce8cb59d4c8ebf2a44ec66183f8f641b7f5bd0d3cd6d0d99a9f773c5a3574c9b"}}],"replicas":1,"revisionHistoryLimit":10,"test":false,"selector":{"app":"trackdt","deploymentconfig":"trackdt"},"template":{"metadata":{"creationTimestamp":null,"labels":{"app":"trackdt","deploymentconfig":"trackdt"},"annotations":{"openshift.io/generated-by":"OpenShiftNewApp"}},"spec":{"containers":[{"name":"trackdt","image":"image-registry.openshift-image-registry.svc:5000/arquitectura-test/trackdt@sha256:ce8cb59d4c8ebf2a44ec66183f8f641b7f5bd0d3cd6d0d99a9f773c5a3574c9b","ports":[{"containerPort":8080,"protocol":"TCP"}],"env":[{"name":"NODE_ENV","value":"node run dev"}],"resources":{},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File","imagePullPolicy":"Always"}],"restartPolicy":"Always","terminationGracePeriodSeconds":30,"dnsPolicy":"ClusterFirst","securityContext":{},"schedulerName":"default-scheduler"}}},"status":{"latestVersion":4,"observedGeneration":8,"replicas":1,"updatedReplicas":1,"availableReplicas":0,"unavailableReplicas":1,"details":{"message":"config change","causes":[{"type":"ConfigChange"}]},"conditions":[{"type":"Progressing","status":"True","lastUpdateTime":"2023-06-14T14:57:19Z","lastTransitionTime":"2023-06-14T14:57:14Z","reason":"NewReplicationControllerAvailable","message":"replication controller \"trackdt-3\" successfully rolled out"},{"type":"Available","status":"False","lastUpdateTime":"2023-06-14T14:57:57Z","lastTransitionTime":"2023-06-14T14:57:57Z","message":"Deployment config does not have minimum availability."}]}}
+    creationTimestamp: "2023-06-14T14:58:44Z"
+    generation: 3
+    labels:
+      app: trackdt
+      openshift.io/deployment-config.name: trackdt
+    name: trackdt-4
+    namespace: arquitectura-test
+    ownerReferences:
+    - apiVersion: apps.openshift.io/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DeploymentConfig
+      name: trackdt
+      uid: 0f9fab59-2e18-48fa-a912-51eb645c3ffd
+    resourceVersion: "28563348"
+    uid: 4737bc93-dd52-4975-91aa-c928ac9d2c23
+  spec:
+    replicas: 0
+    selector:
+      app: trackdt
+      deployment: trackdt-4
+      deploymentconfig: trackdt
+    template:
+      metadata:
+        annotations:
+          openshift.io/deployment-config.latest-version: "4"
+          openshift.io/deployment-config.name: trackdt
+          openshift.io/deployment.name: trackdt-4
+          openshift.io/generated-by: OpenShiftNewApp
+        creationTimestamp: null
+        labels:
+          app: trackdt
+          deployment: trackdt-4
+          deploymentconfig: trackdt
+      spec:
+        containers:
+        - env:
+          - name: NODE_ENV
+            value: node run dev
+          image: image-registry.openshift-image-registry.svc:5000/arquitectura-test/trackdt@sha256:ce8cb59d4c8ebf2a44ec66183f8f641b7f5bd0d3cd6d0d99a9f773c5a3574c9b
+          imagePullPolicy: Always
+          name: trackdt
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    observedGeneration: 3
+    replicas: 0
+- apiVersion: v1
+  kind: ReplicationController
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/desired-replicas: "1"
+      kubectl.kubernetes.io/update-source-id: trackdt-4:4737bc93-dd52-4975-91aa-c928ac9d2c23
+      openshift.io/deployer-pod.completed-at: 2023-06-14 15:08:04 +0000 UTC
+      openshift.io/deployer-pod.created-at: 2023-06-14 15:07:25 +0000 UTC
+      openshift.io/deployer-pod.name: trackdt-5-deploy
+      openshift.io/deployment-config.latest-version: "5"
+      openshift.io/deployment-config.name: trackdt
+      openshift.io/deployment.cancelled: "true"
+      openshift.io/deployment.phase: Failed
+      openshift.io/deployment.replicas: "0"
+      openshift.io/deployment.status-reason: newer deployment was found running
+      openshift.io/encoded-deployment-config: |
+        {"kind":"DeploymentConfig","apiVersion":"apps.openshift.io/v1","metadata":{"name":"trackdt","namespace":"arquitectura-test","uid":"0f9fab59-2e18-48fa-a912-51eb645c3ffd","resourceVersion":"28562592","generation":10,"creationTimestamp":"2023-06-14T14:20:32Z","labels":{"app":"trackdt"},"annotations":{"openshift.io/generated-by":"OpenShiftNewApp"},"managedFields":[{"manager":"oc.exe","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-06-14T14:20:32Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{".":{},"f:openshift.io/generated-by":{}},"f:labels":{".":{},"f:app":{}}},"f:spec":{"f:replicas":{},"f:selector":{".":{},"f:app":{},"f:deploymentconfig":{}},"f:strategy":{"f:activeDeadlineSeconds":{},"f:rollingParams":{".":{},"f:intervalSeconds":{},"f:maxSurge":{},"f:maxUnavailable":{},"f:timeoutSeconds":{},"f:updatePeriodSeconds":{}},"f:type":{}},"f:template":{".":{},"f:metadata":{".":{},"f:annotations":{".":{},"f:openshift.io/generated-by":{}},"f:creationTimestamp":{},"f:labels":{".":{},"f:app":{},"f:deploymentconfig":{}}},"f:spec":{".":{},"f:containers":{".":{},"k:{\"name\":\"trackdt\"}":{".":{},"f:imagePullPolicy":{},"f:name":{},"f:ports":{".":{},"k:{\"containerPort\":8080,\"protocol\":\"TCP\"}":{".":{},"f:containerPort":{},"f:protocol":{}}},"f:resources":{},"f:terminationMessagePath":{},"f:terminationMessagePolicy":{}}},"f:dnsPolicy":{},"f:restartPolicy":{},"f:schedulerName":{},"f:securityContext":{},"f:terminationGracePeriodSeconds":{}}}}}},{"manager":"openshift-controller-manager","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-06-14T14:36:46Z","fieldsType":"FieldsV1","fieldsV1":{"f:spec":{"f:template":{"f:spec":{"f:containers":{"k:{\"name\":\"trackdt\"}":{"f:image":{}}}}},"f:triggers":{}}}},{"manager":"openshift-controller-manager","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-06-14T15:04:51Z","fieldsType":"FieldsV1","fieldsV1":{"f:status":{"f:availableReplicas":{},"f:conditions":{".":{},"k:{\"type\":\"Available\"}":{".":{},"f:lastTransitionTime":{},"f:lastUpdateTime":{},"f:message":{},"f:status":{},"f:type":{}},"k:{\"type\":\"Progressing\"}":{".":{},"f:lastTransitionTime":{},"f:lastUpdateTime":{},"f:message":{},"f:reason":{},"f:status":{},"f:type":{}}},"f:details":{".":{},"f:causes":{},"f:message":{}},"f:latestVersion":{},"f:observedGeneration":{},"f:replicas":{},"f:unavailableReplicas":{},"f:updatedReplicas":{}}},"subresource":"status"},{"manager":"Mozilla","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-06-14T15:07:25Z","fieldsType":"FieldsV1","fieldsV1":{"f:spec":{"f:template":{"f:spec":{"f:containers":{"k:{\"name\":\"trackdt\"}":{"f:command":{},"f:env":{".":{},"k:{\"name\":\"NODE_ENV\"}":{".":{},"f:name":{},"f:value":{}}}}}}}}}}]},"spec":{"strategy":{"type":"Rolling","rollingParams":{"updatePeriodSeconds":1,"intervalSeconds":1,"timeoutSeconds":600,"maxUnavailable":"25%","maxSurge":"25%"},"resources":{},"activeDeadlineSeconds":21600},"triggers":[{"type":"ConfigChange"},{"type":"ImageChange","imageChangeParams":{"automatic":true,"containerNames":["trackdt"],"from":{"kind":"ImageStreamTag","namespace":"arquitectura-test","name":"trackdt:latest"},"lastTriggeredImage":"image-registry.openshift-image-registry.svc:5000/arquitectura-test/trackdt@sha256:ce8cb59d4c8ebf2a44ec66183f8f641b7f5bd0d3cd6d0d99a9f773c5a3574c9b"}}],"replicas":1,"revisionHistoryLimit":10,"test":false,"selector":{"app":"trackdt","deploymentconfig":"trackdt"},"template":{"metadata":{"creationTimestamp":null,"labels":{"app":"trackdt","deploymentconfig":"trackdt"},"annotations":{"openshift.io/generated-by":"OpenShiftNewApp"}},"spec":{"containers":[{"name":"trackdt","image":"image-registry.openshift-image-registry.svc:5000/arquitectura-test/trackdt@sha256:ce8cb59d4c8ebf2a44ec66183f8f641b7f5bd0d3cd6d0d99a9f773c5a3574c9b","command":["node","run","dev"],"ports":[{"containerPort":8080,"protocol":"TCP"}],"env":[{"name":"NODE_ENV","value":"node run dev"}],"resources":{},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File","imagePullPolicy":"Always"}],"restartPolicy":"Always","terminationGracePeriodSeconds":30,"dnsPolicy":"ClusterFirst","securityContext":{},"schedulerName":"default-scheduler"}}},"status":{"latestVersion":5,"observedGeneration":9,"replicas":1,"updatedReplicas":1,"availableReplicas":0,"unavailableReplicas":1,"details":{"message":"config change","causes":[{"type":"ConfigChange"}]},"conditions":[{"type":"Available","status":"False","lastUpdateTime":"2023-06-14T15:04:51Z","lastTransitionTime":"2023-06-14T15:04:51Z","message":"Deployment config does not have minimum availability."},{"type":"Progressing","status":"True","lastUpdateTime":"2023-06-14T15:04:55Z","lastTransitionTime":"2023-06-14T15:04:50Z","reason":"NewReplicationControllerAvailable","message":"replication controller \"trackdt-4\" successfully rolled out"}]}}
+    creationTimestamp: "2023-06-14T15:07:25Z"
+    generation: 3
+    labels:
+      app: trackdt
+      openshift.io/deployment-config.name: trackdt
+    name: trackdt-5
+    namespace: arquitectura-test
+    ownerReferences:
+    - apiVersion: apps.openshift.io/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DeploymentConfig
+      name: trackdt
+      uid: 0f9fab59-2e18-48fa-a912-51eb645c3ffd
+    resourceVersion: "28563136"
+    uid: a8e3ab91-920c-4d66-98eb-d8812f4e13a6
+  spec:
+    replicas: 0
+    selector:
+      app: trackdt
+      deployment: trackdt-5
+      deploymentconfig: trackdt
+    template:
+      metadata:
+        annotations:
+          openshift.io/deployment-config.latest-version: "5"
+          openshift.io/deployment-config.name: trackdt
+          openshift.io/deployment.name: trackdt-5
+          openshift.io/generated-by: OpenShiftNewApp
+        creationTimestamp: null
+        labels:
+          app: trackdt
+          deployment: trackdt-5
+          deploymentconfig: trackdt
+      spec:
+        containers:
+        - command:
+          - node
+          - run
+          - dev
+          env:
+          - name: NODE_ENV
+            value: node run dev
+          image: image-registry.openshift-image-registry.svc:5000/arquitectura-test/trackdt@sha256:ce8cb59d4c8ebf2a44ec66183f8f641b7f5bd0d3cd6d0d99a9f773c5a3574c9b
+          imagePullPolicy: Always
+          name: trackdt
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    observedGeneration: 3
+    replicas: 0
+- apiVersion: v1
+  kind: ReplicationController
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/original-replicas: "1"
+      openshift.io/deployer-pod.completed-at: 2023-06-14 15:08:28 +0000 UTC
+      openshift.io/deployer-pod.created-at: 2023-06-14 15:08:05 +0000 UTC
+      openshift.io/deployer-pod.name: trackdt-6-deploy
+      openshift.io/deployment-config.latest-version: "6"
+      openshift.io/deployment-config.name: trackdt
+      openshift.io/deployment.phase: Complete
+      openshift.io/deployment.replicas: ""
+      openshift.io/deployment.status-reason: config change
+      openshift.io/encoded-deployment-config: |
+        {"kind":"DeploymentConfig","apiVersion":"apps.openshift.io/v1","metadata":{"name":"trackdt","namespace":"arquitectura-test","uid":"0f9fab59-2e18-48fa-a912-51eb645c3ffd","resourceVersion":"28563070","generation":11,"creationTimestamp":"2023-06-14T14:20:32Z","labels":{"app":"trackdt"},"annotations":{"openshift.io/generated-by":"OpenShiftNewApp"},"managedFields":[{"manager":"oc.exe","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-06-14T14:20:32Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{".":{},"f:openshift.io/generated-by":{}},"f:labels":{".":{},"f:app":{}}},"f:spec":{"f:replicas":{},"f:selector":{".":{},"f:app":{},"f:deploymentconfig":{}},"f:strategy":{"f:activeDeadlineSeconds":{},"f:rollingParams":{".":{},"f:intervalSeconds":{},"f:maxSurge":{},"f:maxUnavailable":{},"f:timeoutSeconds":{},"f:updatePeriodSeconds":{}},"f:type":{}},"f:template":{".":{},"f:metadata":{".":{},"f:annotations":{".":{},"f:openshift.io/generated-by":{}},"f:creationTimestamp":{},"f:labels":{".":{},"f:app":{},"f:deploymentconfig":{}}},"f:spec":{".":{},"f:containers":{".":{},"k:{\"name\":\"trackdt\"}":{".":{},"f:imagePullPolicy":{},"f:name":{},"f:ports":{".":{},"k:{\"containerPort\":8080,\"protocol\":\"TCP\"}":{".":{},"f:containerPort":{},"f:protocol":{}}},"f:resources":{},"f:terminationMessagePath":{},"f:terminationMessagePolicy":{}}},"f:dnsPolicy":{},"f:restartPolicy":{},"f:schedulerName":{},"f:securityContext":{},"f:terminationGracePeriodSeconds":{}}}}}},{"manager":"openshift-controller-manager","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-06-14T14:36:46Z","fieldsType":"FieldsV1","fieldsV1":{"f:spec":{"f:template":{"f:spec":{"f:containers":{"k:{\"name\":\"trackdt\"}":{"f:image":{}}}}},"f:triggers":{}}}},{"manager":"Mozilla","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-06-14T15:07:25Z","fieldsType":"FieldsV1","fieldsV1":{"f:spec":{"f:template":{"f:spec":{"f:containers":{"k:{\"name\":\"trackdt\"}":{"f:command":{}}}}}}}},{"manager":"openshift-controller-manager","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-06-14T15:07:29Z","fieldsType":"FieldsV1","fieldsV1":{"f:status":{"f:availableReplicas":{},"f:conditions":{".":{},"k:{\"type\":\"Available\"}":{".":{},"f:lastTransitionTime":{},"f:lastUpdateTime":{},"f:message":{},"f:status":{},"f:type":{}},"k:{\"type\":\"Progressing\"}":{".":{},"f:lastTransitionTime":{},"f:lastUpdateTime":{},"f:message":{},"f:reason":{},"f:status":{},"f:type":{}}},"f:details":{".":{},"f:causes":{},"f:message":{}},"f:latestVersion":{},"f:observedGeneration":{},"f:replicas":{},"f:unavailableReplicas":{},"f:updatedReplicas":{}}},"subresource":"status"}]},"spec":{"strategy":{"type":"Rolling","rollingParams":{"updatePeriodSeconds":1,"intervalSeconds":1,"timeoutSeconds":600,"maxUnavailable":"25%","maxSurge":"25%"},"resources":{},"activeDeadlineSeconds":21600},"triggers":[{"type":"ConfigChange"},{"type":"ImageChange","imageChangeParams":{"automatic":true,"containerNames":["trackdt"],"from":{"kind":"ImageStreamTag","namespace":"arquitectura-test","name":"trackdt:latest"},"lastTriggeredImage":"image-registry.openshift-image-registry.svc:5000/arquitectura-test/trackdt@sha256:ce8cb59d4c8ebf2a44ec66183f8f641b7f5bd0d3cd6d0d99a9f773c5a3574c9b"}}],"replicas":1,"revisionHistoryLimit":10,"test":false,"selector":{"app":"trackdt","deploymentconfig":"trackdt"},"template":{"metadata":{"creationTimestamp":null,"labels":{"app":"trackdt","deploymentconfig":"trackdt"},"annotations":{"openshift.io/generated-by":"OpenShiftNewApp"}},"spec":{"containers":[{"name":"trackdt","image":"image-registry.openshift-image-registry.svc:5000/arquitectura-test/trackdt@sha256:ce8cb59d4c8ebf2a44ec66183f8f641b7f5bd0d3cd6d0d99a9f773c5a3574c9b","command":["node","run","dev"],"ports":[{"containerPort":8080,"protocol":"TCP"}],"resources":{},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File","imagePullPolicy":"Always"}],"restartPolicy":"Always","terminationGracePeriodSeconds":30,"dnsPolicy":"ClusterFirst","securityContext":{},"schedulerName":"default-scheduler"}}},"status":{"latestVersion":6,"observedGeneration":10,"replicas":2,"updatedReplicas":1,"availableReplicas":0,"unavailableReplicas":2,"details":{"message":"config change","causes":[{"type":"ConfigChange"}]},"conditions":[{"type":"Available","status":"False","lastUpdateTime":"2023-06-14T15:04:51Z","lastTransitionTime":"2023-06-14T15:04:51Z","message":"Deployment config does not have minimum availability."},{"type":"Progressing","status":"True","lastUpdateTime":"2023-06-14T15:07:29Z","lastTransitionTime":"2023-06-14T15:07:29Z","reason":"ReplicationControllerUpdated","message":"replication controller \"trackdt-5\" is progressing"}]}}
+    creationTimestamp: "2023-06-14T15:08:05Z"
+    generation: 3
+    labels:
+      app: trackdt
+      openshift.io/deployment-config.name: trackdt
+    name: trackdt-6
+    namespace: arquitectura-test
+    ownerReferences:
+    - apiVersion: apps.openshift.io/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DeploymentConfig
+      name: trackdt
+      uid: 0f9fab59-2e18-48fa-a912-51eb645c3ffd
+    resourceVersion: "28563700"
+    uid: 30ea54cb-0667-40bc-a017-09df8940d352
+  spec:
+    replicas: 0
+    selector:
+      app: trackdt
+      deployment: trackdt-6
+      deploymentconfig: trackdt
+    template:
+      metadata:
+        annotations:
+          openshift.io/deployment-config.latest-version: "6"
+          openshift.io/deployment-config.name: trackdt
+          openshift.io/deployment.name: trackdt-6
+          openshift.io/generated-by: OpenShiftNewApp
+        creationTimestamp: null
+        labels:
+          app: trackdt
+          deployment: trackdt-6
+          deploymentconfig: trackdt
+      spec:
+        containers:
+        - command:
+          - node
+          - run
+          - dev
+          image: image-registry.openshift-image-registry.svc:5000/arquitectura-test/trackdt@sha256:ce8cb59d4c8ebf2a44ec66183f8f641b7f5bd0d3cd6d0d99a9f773c5a3574c9b
+          imagePullPolicy: Always
+          name: trackdt
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    observedGeneration: 3
+    replicas: 0
+- apiVersion: v1
+  kind: ReplicationController
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/original-replicas: "1"
+      openshift.io/deployer-pod.completed-at: 2023-06-14 15:08:57 +0000 UTC
+      openshift.io/deployer-pod.created-at: 2023-06-14 15:08:48 +0000 UTC
+      openshift.io/deployer-pod.name: trackdt-7-deploy
+      openshift.io/deployment-config.latest-version: "7"
+      openshift.io/deployment-config.name: trackdt
+      openshift.io/deployment.phase: Complete
+      openshift.io/deployment.replicas: ""
+      openshift.io/deployment.status-reason: config change
+      openshift.io/encoded-deployment-config: |
+        {"kind":"DeploymentConfig","apiVersion":"apps.openshift.io/v1","metadata":{"name":"trackdt","namespace":"arquitectura-test","uid":"0f9fab59-2e18-48fa-a912-51eb645c3ffd","resourceVersion":"28563579","generation":12,"creationTimestamp":"2023-06-14T14:20:32Z","labels":{"app":"trackdt"},"annotations":{"openshift.io/generated-by":"OpenShiftNewApp"},"managedFields":[{"manager":"oc.exe","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-06-14T14:20:32Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{".":{},"f:openshift.io/generated-by":{}},"f:labels":{".":{},"f:app":{}}},"f:spec":{"f:replicas":{},"f:selector":{".":{},"f:app":{},"f:deploymentconfig":{}},"f:strategy":{"f:activeDeadlineSeconds":{},"f:rollingParams":{".":{},"f:intervalSeconds":{},"f:maxSurge":{},"f:maxUnavailable":{},"f:timeoutSeconds":{},"f:updatePeriodSeconds":{}},"f:type":{}},"f:template":{".":{},"f:metadata":{".":{},"f:annotations":{".":{},"f:openshift.io/generated-by":{}},"f:creationTimestamp":{},"f:labels":{".":{},"f:app":{},"f:deploymentconfig":{}}},"f:spec":{".":{},"f:containers":{".":{},"k:{\"name\":\"trackdt\"}":{".":{},"f:imagePullPolicy":{},"f:name":{},"f:ports":{".":{},"k:{\"containerPort\":8080,\"protocol\":\"TCP\"}":{".":{},"f:containerPort":{},"f:protocol":{}}},"f:resources":{},"f:terminationMessagePath":{},"f:terminationMessagePolicy":{}}},"f:dnsPolicy":{},"f:restartPolicy":{},"f:schedulerName":{},"f:securityContext":{},"f:terminationGracePeriodSeconds":{}}}}}},{"manager":"openshift-controller-manager","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-06-14T14:36:46Z","fieldsType":"FieldsV1","fieldsV1":{"f:spec":{"f:template":{"f:spec":{"f:containers":{"k:{\"name\":\"trackdt\"}":{"f:image":{}}}}},"f:triggers":{}}}},{"manager":"Mozilla","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-06-14T15:07:25Z","fieldsType":"FieldsV1","fieldsV1":{"f:spec":{"f:template":{"f:spec":{"f:containers":{"k:{\"name\":\"trackdt\"}":{"f:command":{}}}}}}}},{"manager":"openshift-controller-manager","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-06-14T15:08:27Z","fieldsType":"FieldsV1","fieldsV1":{"f:status":{"f:availableReplicas":{},"f:conditions":{".":{},"k:{\"type\":\"Available\"}":{".":{},"f:lastTransitionTime":{},"f:lastUpdateTime":{},"f:message":{},"f:status":{},"f:type":{}},"k:{\"type\":\"Progressing\"}":{".":{},"f:lastTransitionTime":{},"f:lastUpdateTime":{},"f:message":{},"f:reason":{},"f:status":{},"f:type":{}}},"f:details":{".":{},"f:causes":{},"f:message":{}},"f:latestVersion":{},"f:observedGeneration":{},"f:replicas":{},"f:unavailableReplicas":{},"f:updatedReplicas":{}}},"subresource":"status"}]},"spec":{"strategy":{"type":"Rolling","rollingParams":{"updatePeriodSeconds":1,"intervalSeconds":1,"timeoutSeconds":600,"maxUnavailable":"25%","maxSurge":"25%"},"resources":{},"activeDeadlineSeconds":21600},"triggers":[{"type":"ConfigChange"},{"type":"ImageChange","imageChangeParams":{"automatic":true,"containerNames":["trackdt"],"from":{"kind":"ImageStreamTag","namespace":"arquitectura-test","name":"trackdt:latest"},"lastTriggeredImage":"image-registry.openshift-image-registry.svc:5000/arquitectura-test/trackdt@sha256:ce8cb59d4c8ebf2a44ec66183f8f641b7f5bd0d3cd6d0d99a9f773c5a3574c9b"}}],"replicas":1,"revisionHistoryLimit":10,"test":false,"selector":{"app":"trackdt","deploymentconfig":"trackdt"},"template":{"metadata":{"creationTimestamp":null,"labels":{"app":"trackdt","deploymentconfig":"trackdt"},"annotations":{"openshift.io/generated-by":"OpenShiftNewApp"}},"spec":{"containers":[{"name":"trackdt","image":"image-registry.openshift-image-registry.svc:5000/arquitectura-test/trackdt@sha256:ce8cb59d4c8ebf2a44ec66183f8f641b7f5bd0d3cd6d0d99a9f773c5a3574c9b","command":["npm","run","dev"],"ports":[{"containerPort":8080,"protocol":"TCP"}],"resources":{},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File","imagePullPolicy":"Always"}],"restartPolicy":"Always","terminationGracePeriodSeconds":30,"dnsPolicy":"ClusterFirst","securityContext":{},"schedulerName":"default-scheduler"}}},"status":{"latestVersion":7,"observedGeneration":11,"replicas":1,"updatedReplicas":1,"availableReplicas":0,"unavailableReplicas":1,"details":{"message":"config change","causes":[{"type":"ConfigChange"}]},"conditions":[{"type":"Available","status":"False","lastUpdateTime":"2023-06-14T15:08:27Z","lastTransitionTime":"2023-06-14T15:08:27Z","message":"Deployment config does not have minimum availability."},{"type":"Progressing","status":"True","lastUpdateTime":"2023-06-14T15:08:31Z","lastTransitionTime":"2023-06-14T15:08:26Z","reason":"NewReplicationControllerAvailable","message":"replication controller \"trackdt-6\" successfully rolled out"}]}}
+    creationTimestamp: "2023-06-14T15:08:48Z"
+    generation: 3
+    labels:
+      app: trackdt
+      openshift.io/deployment-config.name: trackdt
+    name: trackdt-7
+    namespace: arquitectura-test
+    ownerReferences:
+    - apiVersion: apps.openshift.io/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DeploymentConfig
+      name: trackdt
+      uid: 0f9fab59-2e18-48fa-a912-51eb645c3ffd
+    resourceVersion: "28582140"
+    uid: 3595ab67-b90e-4b54-9977-341f4d740167
+  spec:
+    replicas: 0
+    selector:
+      app: trackdt
+      deployment: trackdt-7
+      deploymentconfig: trackdt
+    template:
+      metadata:
+        annotations:
+          openshift.io/deployment-config.latest-version: "7"
+          openshift.io/deployment-config.name: trackdt
+          openshift.io/deployment.name: trackdt-7
+          openshift.io/generated-by: OpenShiftNewApp
+        creationTimestamp: null
+        labels:
+          app: trackdt
+          deployment: trackdt-7
+          deploymentconfig: trackdt
+      spec:
+        containers:
+        - command:
+          - npm
+          - run
+          - dev
+          image: image-registry.openshift-image-registry.svc:5000/arquitectura-test/trackdt@sha256:ce8cb59d4c8ebf2a44ec66183f8f641b7f5bd0d3cd6d0d99a9f773c5a3574c9b
+          imagePullPolicy: Always
+          name: trackdt
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    observedGeneration: 3
+    replicas: 0
+- apiVersion: v1
+  kind: ReplicationController
+  metadata:
+    annotations:
+      openshift.io/deployer-pod.completed-at: 2023-06-14 15:39:54 +0000 UTC
+      openshift.io/deployer-pod.created-at: 2023-06-14 15:39:43 +0000 UTC
+      openshift.io/deployer-pod.name: trackdt-8-deploy
+      openshift.io/deployment-config.latest-version: "8"
+      openshift.io/deployment-config.name: trackdt
+      openshift.io/deployment.phase: Complete
+      openshift.io/deployment.replicas: ""
+      openshift.io/deployment.status-reason: config change
+      openshift.io/encoded-deployment-config: |
+        {"kind":"DeploymentConfig","apiVersion":"apps.openshift.io/v1","metadata":{"name":"trackdt","namespace":"arquitectura-test","uid":"0f9fab59-2e18-48fa-a912-51eb645c3ffd","resourceVersion":"28582017","generation":13,"creationTimestamp":"2023-06-14T14:20:32Z","labels":{"app":"trackdt"},"annotations":{"openshift.io/generated-by":"OpenShiftNewApp"},"managedFields":[{"manager":"oc.exe","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-06-14T14:20:32Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{".":{},"f:openshift.io/generated-by":{}},"f:labels":{".":{},"f:app":{}}},"f:spec":{"f:replicas":{},"f:selector":{".":{},"f:app":{},"f:deploymentconfig":{}},"f:strategy":{"f:activeDeadlineSeconds":{},"f:rollingParams":{".":{},"f:intervalSeconds":{},"f:maxSurge":{},"f:maxUnavailable":{},"f:timeoutSeconds":{},"f:updatePeriodSeconds":{}},"f:type":{}},"f:template":{".":{},"f:metadata":{".":{},"f:annotations":{".":{},"f:openshift.io/generated-by":{}},"f:creationTimestamp":{},"f:labels":{".":{},"f:app":{},"f:deploymentconfig":{}}},"f:spec":{".":{},"f:containers":{".":{},"k:{\"name\":\"trackdt\"}":{".":{},"f:imagePullPolicy":{},"f:name":{},"f:ports":{".":{},"k:{\"containerPort\":8080,\"protocol\":\"TCP\"}":{".":{},"f:containerPort":{},"f:protocol":{}}},"f:resources":{},"f:terminationMessagePath":{},"f:terminationMessagePolicy":{}}},"f:dnsPolicy":{},"f:restartPolicy":{},"f:schedulerName":{},"f:securityContext":{},"f:terminationGracePeriodSeconds":{}}}}}},{"manager":"openshift-controller-manager","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-06-14T14:36:46Z","fieldsType":"FieldsV1","fieldsV1":{"f:spec":{"f:template":{"f:spec":{"f:containers":{"k:{\"name\":\"trackdt\"}":{"f:image":{}}}}},"f:triggers":{}}}},{"manager":"openshift-controller-manager","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-06-14T15:08:55Z","fieldsType":"FieldsV1","fieldsV1":{"f:status":{"f:availableReplicas":{},"f:conditions":{".":{},"k:{\"type\":\"Available\"}":{".":{},"f:lastTransitionTime":{},"f:lastUpdateTime":{},"f:message":{},"f:status":{},"f:type":{}},"k:{\"type\":\"Progressing\"}":{".":{},"f:lastTransitionTime":{},"f:lastUpdateTime":{},"f:message":{},"f:reason":{},"f:status":{},"f:type":{}}},"f:details":{".":{},"f:causes":{},"f:message":{}},"f:latestVersion":{},"f:observedGeneration":{},"f:readyReplicas":{},"f:replicas":{},"f:unavailableReplicas":{},"f:updatedReplicas":{}}},"subresource":"status"},{"manager":"Mozilla","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-06-14T15:39:43Z","fieldsType":"FieldsV1","fieldsV1":{"f:spec":{"f:template":{"f:spec":{"f:containers":{"k:{\"name\":\"trackdt\"}":{"f:command":{},"f:resources":{"f:limits":{".":{},"f:cpu":{},"f:memory":{}},"f:requests":{".":{},"f:cpu":{},"f:memory":{}}}}}}}}}}]},"spec":{"strategy":{"type":"Rolling","rollingParams":{"updatePeriodSeconds":1,"intervalSeconds":1,"timeoutSeconds":600,"maxUnavailable":"25%","maxSurge":"25%"},"resources":{},"activeDeadlineSeconds":21600},"triggers":[{"type":"ConfigChange"},{"type":"ImageChange","imageChangeParams":{"automatic":true,"containerNames":["trackdt"],"from":{"kind":"ImageStreamTag","namespace":"arquitectura-test","name":"trackdt:latest"},"lastTriggeredImage":"image-registry.openshift-image-registry.svc:5000/arquitectura-test/trackdt@sha256:ce8cb59d4c8ebf2a44ec66183f8f641b7f5bd0d3cd6d0d99a9f773c5a3574c9b"}}],"replicas":1,"revisionHistoryLimit":10,"test":false,"selector":{"app":"trackdt","deploymentconfig":"trackdt"},"template":{"metadata":{"creationTimestamp":null,"labels":{"app":"trackdt","deploymentconfig":"trackdt"},"annotations":{"openshift.io/generated-by":"OpenShiftNewApp"}},"spec":{"containers":[{"name":"trackdt","image":"image-registry.openshift-image-registry.svc:5000/arquitectura-test/trackdt@sha256:ce8cb59d4c8ebf2a44ec66183f8f641b7f5bd0d3cd6d0d99a9f773c5a3574c9b","command":["npm","run","dev"],"ports":[{"containerPort":8080,"protocol":"TCP"}],"resources":{"limits":{"cpu":"50m","memory":"200Mi"},"requests":{"cpu":"25m","memory":"80Mi"}},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File","imagePullPolicy":"Always"}],"restartPolicy":"Always","terminationGracePeriodSeconds":30,"dnsPolicy":"ClusterFirst","securityContext":{},"schedulerName":"default-scheduler"}}},"status":{"latestVersion":8,"observedGeneration":12,"replicas":1,"updatedReplicas":1,"availableReplicas":1,"unavailableReplicas":0,"details":{"message":"config change","causes":[{"type":"ConfigChange"}]},"conditions":[{"type":"Available","status":"True","lastUpdateTime":"2023-06-14T15:08:55Z","lastTransitionTime":"2023-06-14T15:08:55Z","message":"Deployment config has minimum availability."},{"type":"Progressing","status":"True","lastUpdateTime":"2023-06-14T15:09:00Z","lastTransitionTime":"2023-06-14T15:08:55Z","reason":"NewReplicationControllerAvailable","message":"replication controller \"trackdt-7\" successfully rolled out"}],"readyReplicas":1}}
+    creationTimestamp: "2023-06-14T15:39:43Z"
+    generation: 8
+    labels:
+      app: trackdt
+      openshift.io/deployment-config.name: trackdt
+    name: trackdt-8
+    namespace: arquitectura-test
+    ownerReferences:
+    - apiVersion: apps.openshift.io/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DeploymentConfig
+      name: trackdt
+      uid: 0f9fab59-2e18-48fa-a912-51eb645c3ffd
+    resourceVersion: "472917986"
+    uid: 469981e8-0327-4d8a-a5b8-be298e673ec3
+  spec:
+    replicas: 1
+    selector:
+      app: trackdt
+      deployment: trackdt-8
+      deploymentconfig: trackdt
+    template:
+      metadata:
+        annotations:
+          openshift.io/deployment-config.latest-version: "8"
+          openshift.io/deployment-config.name: trackdt
+          openshift.io/deployment.name: trackdt-8
+          openshift.io/generated-by: OpenShiftNewApp
+        creationTimestamp: null
+        labels:
+          app: trackdt
+          deployment: trackdt-8
+          deploymentconfig: trackdt
+      spec:
+        containers:
+        - command:
+          - npm
+          - run
+          - dev
+          image: image-registry.openshift-image-registry.svc:5000/arquitectura-test/trackdt@sha256:ce8cb59d4c8ebf2a44ec66183f8f641b7f5bd0d3cd6d0d99a9f773c5a3574c9b
+          imagePullPolicy: Always
+          name: trackdt
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources:
+            limits:
+              cpu: 50m
+              memory: 200Mi
+            requests:
+              cpu: 25m
+              memory: 80Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    availableReplicas: 1
+    fullyLabeledReplicas: 1
+    observedGeneration: 8
+    readyReplicas: 1
+    replicas: 1
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

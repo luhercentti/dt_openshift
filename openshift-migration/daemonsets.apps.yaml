@@ -1,0 +1,135 @@
+apiVersion: v1
+items:
+- apiVersion: apps/v1
+  kind: DaemonSet
+  metadata:
+    annotations:
+      deprecated.daemonset.template.generation: "8"
+    creationTimestamp: "2023-05-12T20:25:40Z"
+    generation: 8
+    labels:
+      component: velero
+    name: restic
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: oadp.openshift.io/v1alpha1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DataProtectionApplication
+      name: velero
+      uid: 2243f0dc-d566-45ae-9332-0148894804c0
+    resourceVersion: "491646532"
+    uid: 3738eeca-16de-493c-af80-524c883dbee8
+  spec:
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        component: velero
+        name: restic
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app.kubernetes.io/part-of: openshift-migration
+          component: velero
+          name: restic
+      spec:
+        containers:
+        - args:
+          - restic
+          - server
+          command:
+          - /velero
+          env:
+          - name: NODE_NAME
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: spec.nodeName
+          - name: VELERO_NAMESPACE
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+          - name: VELERO_SCRATCH_DIR
+            value: /scratch
+          - name: AWS_SHARED_CREDENTIALS_FILE
+            value: /credentials/cloud
+          - name: GOOGLE_APPLICATION_CREDENTIALS
+            value: /credentials-gcp/cloud
+          - name: AZURE_CREDENTIALS_FILE
+            value: /credentials-azure/cloud
+          image: registry.redhat.io/oadp/oadp-velero-rhel8@sha256:9b681de9e02cb402e24fa10dce66b36d02702b82ece9dff511bb6c7d1e6c9c31
+          imagePullPolicy: Always
+          name: restic
+          resources:
+            limits:
+              cpu: "1"
+              memory: 512Mi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+          securityContext:
+            privileged: true
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /host_pods
+            mountPropagation: HostToContainer
+            name: host-pods
+          - mountPath: /scratch
+            name: scratch
+          - mountPath: /etc/ssl/certs
+            name: certs
+          - mountPath: /credentials
+            name: cloud-credentials
+          - mountPath: /credentials-gcp
+            name: cloud-credentials-gcp
+          - mountPath: /credentials-azure
+            name: cloud-credentials-azure
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext:
+          runAsUser: 0
+        serviceAccount: velero
+        serviceAccountName: velero
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - hostPath:
+            path: /var/lib/kubelet/pods
+            type: ""
+          name: host-pods
+        - emptyDir: {}
+          name: scratch
+        - emptyDir: {}
+          name: certs
+        - name: cloud-credentials
+          secret:
+            defaultMode: 420
+            secretName: cloud-credentials
+        - name: cloud-credentials-gcp
+          secret:
+            defaultMode: 420
+            secretName: cloud-credentials-gcp
+        - name: cloud-credentials-azure
+          secret:
+            defaultMode: 420
+            secretName: cloud-credentials-azure
+    updateStrategy:
+      rollingUpdate:
+        maxSurge: 0
+        maxUnavailable: 1
+      type: RollingUpdate
+  status:
+    currentNumberScheduled: 9
+    desiredNumberScheduled: 9
+    numberAvailable: 9
+    numberMisscheduled: 0
+    numberReady: 9
+    observedGeneration: 8
+    updatedNumberScheduled: 9
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

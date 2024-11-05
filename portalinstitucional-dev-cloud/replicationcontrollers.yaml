@@ -1,0 +1,75 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: ReplicationController
+  metadata:
+    annotations:
+      openshift.io/deployer-pod.completed-at: 2023-05-18 22:13:56 +0000 UTC
+      openshift.io/deployer-pod.created-at: 2023-05-18 22:13:53 +0000 UTC
+      openshift.io/deployer-pod.name: mi-escritorio-ux-v4-1-deploy
+      openshift.io/deployment-config.latest-version: "1"
+      openshift.io/deployment-config.name: mi-escritorio-ux-v4
+      openshift.io/deployment.phase: Complete
+      openshift.io/deployment.replicas: "0"
+      openshift.io/deployment.status-reason: config change
+      openshift.io/encoded-deployment-config: |
+        {"kind":"DeploymentConfig","apiVersion":"apps.openshift.io/v1","metadata":{"name":"mi-escritorio-ux-v4","namespace":"portalinstitucional-dev-cloud","uid":"19cb8162-36c3-4675-b6fd-052adb0e82df","resourceVersion":"6309416","generation":2,"creationTimestamp":"2023-05-18T22:13:52Z","labels":{"app":"mi-escritorio-ux-v4","migration.openshift.io/migrated-by-migmigration":"fec3ec19-481f-46b7-9ae7-bff48fdea7a1","migration.openshift.io/migrated-by-migplan":"115bf39f-32dd-46ac-8d1e-ac95f44b53ed","velero.io/backup-name":"migration-17781-initial-hpqdg","velero.io/restore-name":"migration-17781-final-nbzfx"},"annotations":{"openshift.io/backup-registry-hostname":"docker-registry.default.svc:5000","openshift.io/backup-server-version":"1.11","openshift.io/generated-by":"OpenShiftWebConsole","openshift.io/migration-registry":"172.30.176.178:5000","openshift.io/restore-registry-hostname":"image-registry.openshift-image-registry.svc:5000","openshift.io/restore-server-version":"1.23"},"managedFields":[{"manager":"velero-server","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-05-18T22:13:52Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{".":{},"f:openshift.io/backup-registry-hostname":{},"f:openshift.io/backup-server-version":{},"f:openshift.io/generated-by":{},"f:openshift.io/migration-registry":{},"f:openshift.io/restore-registry-hostname":{},"f:openshift.io/restore-server-version":{}},"f:labels":{".":{},"f:app":{},"f:migration.openshift.io/migrated-by-migmigration":{},"f:migration.openshift.io/migrated-by-migplan":{},"f:velero.io/backup-name":{},"f:velero.io/restore-name":{}}},"f:spec":{"f:selector":{".":{},"f:deploymentconfig":{}},"f:strategy":{"f:activeDeadlineSeconds":{},"f:rollingParams":{".":{},"f:intervalSeconds":{},"f:maxSurge":{},"f:maxUnavailable":{},"f:timeoutSeconds":{},"f:updatePeriodSeconds":{}},"f:type":{}},"f:template":{".":{},"f:metadata":{".":{},"f:creationTimestamp":{},"f:labels":{".":{},"f:app":{},"f:deploymentconfig":{}}},"f:spec":{".":{},"f:containers":{".":{},"k:{\"name\":\"mi-escritorio-ux-v4\"}":{".":{},"f:image":{},"f:imagePullPolicy":{},"f:name":{},"f:ports":{".":{},"k:{\"containerPort\":8080,\"protocol\":\"TCP\"}":{".":{},"f:containerPort":{},"f:protocol":{}}},"f:resources":{},"f:terminationMessagePath":{},"f:terminationMessagePolicy":{}}},"f:dnsPolicy":{},"f:restartPolicy":{},"f:schedulerName":{},"f:securityContext":{},"f:terminationGracePeriodSeconds":{}}}}}},{"manager":"openshift-controller-manager","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-05-18T22:13:53Z","fieldsType":"FieldsV1","fieldsV1":{"f:spec":{"f:triggers":{}}}},{"manager":"openshift-controller-manager","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-05-18T22:13:53Z","fieldsType":"FieldsV1","fieldsV1":{"f:status":{"f:conditions":{".":{},"k:{\"type\":\"Available\"}":{".":{},"f:lastTransitionTime":{},"f:lastUpdateTime":{},"f:message":{},"f:status":{},"f:type":{}}},"f:details":{".":{},"f:causes":{},"f:message":{}},"f:latestVersion":{},"f:observedGeneration":{}}},"subresource":"status"}]},"spec":{"strategy":{"type":"Rolling","rollingParams":{"updatePeriodSeconds":1,"intervalSeconds":1,"timeoutSeconds":600,"maxUnavailable":"25%","maxSurge":"25%"},"resources":{},"activeDeadlineSeconds":21600},"triggers":[{"type":"ImageChange","imageChangeParams":{"automatic":true,"containerNames":["mi-escritorio-ux-v4"],"from":{"kind":"ImageStreamTag","namespace":"portalinstitucional-dev-cloud","name":"mi-escritorio-ux-v4:latest"},"lastTriggeredImage":"image-registry.openshift-image-registry.svc:5000/portalinstitucional-dev-cloud/mi-escritorio-ux-v4@sha256:e861fa9410ad96d0c20607e6ead5c9d505763c089bf81eae95b811987dfb5e26"}},{"type":"ConfigChange"}],"replicas":0,"revisionHistoryLimit":10,"test":false,"selector":{"deploymentconfig":"mi-escritorio-ux-v4"},"template":{"metadata":{"creationTimestamp":null,"labels":{"app":"mi-escritorio-ux-v4","deploymentconfig":"mi-escritorio-ux-v4"}},"spec":{"containers":[{"name":"mi-escritorio-ux-v4","image":"image-registry.openshift-image-registry.svc:5000/portalinstitucional-dev-cloud/mi-escritorio-ux-v4@sha256:e861fa9410ad96d0c20607e6ead5c9d505763c089bf81eae95b811987dfb5e26","ports":[{"containerPort":8080,"protocol":"TCP"}],"resources":{},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File","imagePullPolicy":"Always"}],"restartPolicy":"Always","terminationGracePeriodSeconds":30,"dnsPolicy":"ClusterFirst","securityContext":{},"schedulerName":"default-scheduler"}}},"status":{"latestVersion":1,"observedGeneration":1,"replicas":0,"updatedReplicas":0,"availableReplicas":0,"unavailableReplicas":0,"details":{"message":"config change","causes":[{"type":"ConfigChange"}]},"conditions":[{"type":"Available","status":"False","lastUpdateTime":"2023-05-18T22:13:52Z","lastTransitionTime":"2023-05-18T22:13:52Z","message":"Deployment config does not have minimum availability."}]}}
+    creationTimestamp: "2023-05-18T22:13:53Z"
+    generation: 1
+    labels:
+      app: mi-escritorio-ux-v4
+      migration.openshift.io/migrated-by-migmigration: fec3ec19-481f-46b7-9ae7-bff48fdea7a1
+      migration.openshift.io/migrated-by-migplan: 115bf39f-32dd-46ac-8d1e-ac95f44b53ed
+      openshift.io/deployment-config.name: mi-escritorio-ux-v4
+      velero.io/backup-name: migration-17781-initial-hpqdg
+      velero.io/restore-name: migration-17781-final-nbzfx
+    name: mi-escritorio-ux-v4-1
+    namespace: portalinstitucional-dev-cloud
+    ownerReferences:
+    - apiVersion: apps.openshift.io/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DeploymentConfig
+      name: mi-escritorio-ux-v4
+      uid: 19cb8162-36c3-4675-b6fd-052adb0e82df
+    resourceVersion: "6309500"
+    uid: 794ae5f0-227d-4a77-8052-860184dad1ba
+  spec:
+    replicas: 0
+    selector:
+      deployment: mi-escritorio-ux-v4-1
+      deploymentconfig: mi-escritorio-ux-v4
+    template:
+      metadata:
+        annotations:
+          openshift.io/deployment-config.latest-version: "1"
+          openshift.io/deployment-config.name: mi-escritorio-ux-v4
+          openshift.io/deployment.name: mi-escritorio-ux-v4-1
+        creationTimestamp: null
+        labels:
+          app: mi-escritorio-ux-v4
+          deployment: mi-escritorio-ux-v4-1
+          deploymentconfig: mi-escritorio-ux-v4
+      spec:
+        containers:
+        - image: image-registry.openshift-image-registry.svc:5000/portalinstitucional-dev-cloud/mi-escritorio-ux-v4@sha256:e861fa9410ad96d0c20607e6ead5c9d505763c089bf81eae95b811987dfb5e26
+          imagePullPolicy: Always
+          name: mi-escritorio-ux-v4
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    observedGeneration: 1
+    replicas: 0
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

@@ -1,0 +1,145 @@
+apiVersion: v1
+items:
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "1"
+      include.release.openshift.io/self-managed-high-availability: "true"
+      include.release.openshift.io/single-node-developer: "true"
+    creationTimestamp: "2023-05-04T21:43:19Z"
+    generation: 1
+    name: cluster-samples-operator
+    namespace: openshift-cluster-samples-operator
+    ownerReferences:
+    - apiVersion: config.openshift.io/v1
+      kind: ClusterVersion
+      name: version
+      uid: 5d92b52f-9fff-4a6e-b815-398b934115ad
+    resourceVersion: "369058946"
+    uid: 99f203e8-56d9-43fe-b70c-9a02c0e37e78
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        name: cluster-samples-operator
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        annotations:
+          target.workload.openshift.io/management: '{"effect": "PreferredDuringScheduling"}'
+        creationTimestamp: null
+        labels:
+          name: cluster-samples-operator
+      spec:
+        containers:
+        - command:
+          - cluster-samples-operator
+          env:
+          - name: WATCH_NAMESPACE
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+          - name: OPERATOR_NAME
+            value: cluster-samples-operator
+          - name: RELEASE_VERSION
+            value: 4.10.53
+          - name: IMAGE_JENKINS
+            value: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:902246da403bf7ff1f6f3cf531dce445c0289d3b2b01a26f6008926ec2068077
+          - name: IMAGE_AGENT_BASE
+            value: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:299ddfb176a538474767909fe22a6cb09c109b197c00e2cc2898556a3dda6b6f
+          - name: IMAGE_AGENT_NODEJS
+            value: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:e1e2adfbfa864bb847b223f72f21368a6f5a566ece72e2073e06eecdf65807bd
+          - name: IMAGE_AGENT_MAVEN
+            value: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:b568176c4286286796f67acf71ced3516bc686e76175c63b294de7804d418b91
+          image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:67b8855091ff7447c95554a42ef3278bcd2bd27df939a9ea46fec12b3e5dff2d
+          imagePullPolicy: IfNotPresent
+          name: cluster-samples-operator
+          ports:
+          - containerPort: 60000
+            name: metrics
+            protocol: TCP
+          resources:
+            requests:
+              cpu: 10m
+              memory: 50Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /etc/secrets
+            name: samples-operator-tls
+        - args:
+          - --namespace=openshift-cluster-samples-operator
+          - --process-name=cluster-samples-operator
+          - --termination-grace-period=30s
+          - --files=/etc/secrets/tls.crt,/etc/secrets/tls.key
+          command:
+          - cluster-samples-operator-watch
+          - file-watcher-watchdog
+          image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:67b8855091ff7447c95554a42ef3278bcd2bd27df939a9ea46fec12b3e5dff2d
+          imagePullPolicy: IfNotPresent
+          name: cluster-samples-operator-watch
+          resources:
+            requests:
+              cpu: 10m
+              memory: 50Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        nodeSelector:
+          node-role.kubernetes.io/master: ""
+        priorityClassName: system-cluster-critical
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: cluster-samples-operator
+        serviceAccountName: cluster-samples-operator
+        shareProcessNamespace: true
+        terminationGracePeriodSeconds: 30
+        tolerations:
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/master
+          operator: Exists
+        - effect: NoExecute
+          key: node.kubernetes.io/unreachable
+          operator: Exists
+          tolerationSeconds: 120
+        - effect: NoExecute
+          key: node.kubernetes.io/not-ready
+          operator: Exists
+          tolerationSeconds: 120
+        volumes:
+        - name: samples-operator-tls
+          secret:
+            defaultMode: 420
+            secretName: samples-operator-tls
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2023-05-04T21:43:19Z"
+      lastUpdateTime: "2023-05-04T21:43:27Z"
+      message: ReplicaSet "cluster-samples-operator-c86ccdfb7" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: "2024-06-02T21:41:05Z"
+      lastUpdateTime: "2024-06-02T21:41:05Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

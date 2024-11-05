@@ -1,0 +1,72 @@
+apiVersion: v1
+items:
+- apiVersion: route.openshift.io/v1
+  kind: Route
+  metadata:
+    annotations:
+      openshift.io/host.generated: "true"
+    creationTimestamp: "2023-05-04T21:53:31Z"
+    labels:
+      app: console
+    name: console
+    namespace: openshift-console
+    resourceVersion: "25895"
+    uid: a010a69b-5e8e-4f8c-b367-fd30b7422d67
+  spec:
+    host: console-openshift-console.apps.ocp4azu.dirtrab.cl
+    port:
+      targetPort: https
+    tls:
+      insecureEdgeTerminationPolicy: Redirect
+      termination: reencrypt
+    to:
+      kind: Service
+      name: console
+      weight: 100
+    wildcardPolicy: None
+  status:
+    ingress:
+    - conditions:
+      - lastTransitionTime: "2023-05-04T21:53:32Z"
+        status: "True"
+        type: Admitted
+      host: console-openshift-console.apps.ocp4azu.dirtrab.cl
+      routerCanonicalHostname: router-default.apps.ocp4azu.dirtrab.cl
+      routerName: default
+      wildcardPolicy: None
+- apiVersion: route.openshift.io/v1
+  kind: Route
+  metadata:
+    annotations:
+      openshift.io/host.generated: "true"
+    creationTimestamp: "2023-05-04T21:53:32Z"
+    name: downloads
+    namespace: openshift-console
+    resourceVersion: "25899"
+    uid: 0b29e157-f25b-4356-9f39-6b91c8016ca9
+  spec:
+    host: downloads-openshift-console.apps.ocp4azu.dirtrab.cl
+    port:
+      targetPort: http
+    tls:
+      insecureEdgeTerminationPolicy: Redirect
+      termination: edge
+    to:
+      kind: Service
+      name: downloads
+      weight: 100
+    wildcardPolicy: None
+  status:
+    ingress:
+    - conditions:
+      - lastTransitionTime: "2023-05-04T21:53:32Z"
+        status: "True"
+        type: Admitted
+      host: downloads-openshift-console.apps.ocp4azu.dirtrab.cl
+      routerCanonicalHostname: router-default.apps.ocp4azu.dirtrab.cl
+      routerName: default
+      wildcardPolicy: None
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

@@ -1,0 +1,195 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Service
+  metadata:
+    creationTimestamp: "2023-05-04T21:41:40Z"
+    labels:
+      olm.service-spec-hash: 676574974f
+    name: certified-operators
+    namespace: openshift-marketplace
+    ownerReferences:
+    - apiVersion: operators.coreos.com/v1alpha1
+      blockOwnerDeletion: false
+      controller: false
+      kind: CatalogSource
+      name: certified-operators
+      uid: 14ab831a-f34b-4eae-950f-ccba5ec642ea
+    resourceVersion: "8494"
+    uid: 6aefad00-e88c-4d1e-94fd-bce94530c6ab
+  spec:
+    clusterIP: 172.30.161.196
+    clusterIPs:
+    - 172.30.161.196
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: grpc
+      port: 50051
+      protocol: TCP
+      targetPort: 50051
+    selector:
+      olm.catalogSource: certified-operators
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    creationTimestamp: "2023-05-04T21:41:41Z"
+    labels:
+      olm.service-spec-hash: 79986496d9
+    name: community-operators
+    namespace: openshift-marketplace
+    ownerReferences:
+    - apiVersion: operators.coreos.com/v1alpha1
+      blockOwnerDeletion: false
+      controller: false
+      kind: CatalogSource
+      name: community-operators
+      uid: e71e9d76-ad65-4875-a648-02788f03ab63
+    resourceVersion: "8536"
+    uid: 2dbd83a1-aac4-4072-a6d6-b3b50f2328c5
+  spec:
+    clusterIP: 172.30.215.151
+    clusterIPs:
+    - 172.30.215.151
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: grpc
+      port: 50051
+      protocol: TCP
+      targetPort: 50051
+    selector:
+      olm.catalogSource: community-operators
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      include.release.openshift.io/ibm-cloud-managed: "true"
+      include.release.openshift.io/self-managed-high-availability: "true"
+      include.release.openshift.io/single-node-developer: "true"
+      service.alpha.openshift.io/serving-cert-secret-name: marketplace-operator-metrics
+      service.alpha.openshift.io/serving-cert-signed-by: openshift-service-serving-signer@1683236429
+      service.beta.openshift.io/serving-cert-signed-by: openshift-service-serving-signer@1683236429
+    creationTimestamp: "2023-05-04T21:35:51Z"
+    labels:
+      name: marketplace-operator
+    name: marketplace-operator-metrics
+    namespace: openshift-marketplace
+    ownerReferences:
+    - apiVersion: config.openshift.io/v1
+      kind: ClusterVersion
+      name: version
+      uid: 5d92b52f-9fff-4a6e-b815-398b934115ad
+    resourceVersion: "5923"
+    uid: 40fb3053-e4fc-4d11-b282-52bac08643da
+  spec:
+    clusterIP: 172.30.52.163
+    clusterIPs:
+    - 172.30.52.163
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: metrics
+      port: 8383
+      protocol: TCP
+      targetPort: 8383
+    - name: https-metrics
+      port: 8081
+      protocol: TCP
+      targetPort: 8081
+    selector:
+      name: marketplace-operator
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    creationTimestamp: "2023-05-04T21:41:41Z"
+    labels:
+      olm.service-spec-hash: fc99d9bdb
+    name: redhat-marketplace
+    namespace: openshift-marketplace
+    ownerReferences:
+    - apiVersion: operators.coreos.com/v1alpha1
+      blockOwnerDeletion: false
+      controller: false
+      kind: CatalogSource
+      name: redhat-marketplace
+      uid: 71d912a3-f47e-42e4-bbcf-119447846ea6
+    resourceVersion: "8521"
+    uid: 84b7c9c8-6e54-4bb6-9091-2916868145be
+  spec:
+    clusterIP: 172.30.50.245
+    clusterIPs:
+    - 172.30.50.245
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: grpc
+      port: 50051
+      protocol: TCP
+      targetPort: 50051
+    selector:
+      olm.catalogSource: redhat-marketplace
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    creationTimestamp: "2023-05-04T21:41:40Z"
+    labels:
+      olm.service-spec-hash: f6ff9c676
+    name: redhat-operators
+    namespace: openshift-marketplace
+    ownerReferences:
+    - apiVersion: operators.coreos.com/v1alpha1
+      blockOwnerDeletion: false
+      controller: false
+      kind: CatalogSource
+      name: redhat-operators
+      uid: 22f75936-542c-492c-a037-eeba1a25d24b
+    resourceVersion: "8498"
+    uid: 46d292d2-3fa4-48c2-8a80-7d87f195a901
+  spec:
+    clusterIP: 172.30.160.191
+    clusterIPs:
+    - 172.30.160.191
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: grpc
+      port: 50051
+      protocol: TCP
+      targetPort: 50051
+    selector:
+      olm.catalogSource: redhat-operators
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

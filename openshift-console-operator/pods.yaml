@@ -1,0 +1,220 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.129.0.37"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.129.0.37"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/scc: restricted
+    creationTimestamp: "2024-06-30T06:24:39Z"
+    generateName: console-operator-645d8f5ccb-
+    labels:
+      name: console-operator
+      pod-template-hash: 645d8f5ccb
+    name: console-operator-645d8f5ccb-j29rw
+    namespace: openshift-console-operator
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: console-operator-645d8f5ccb
+      uid: e1acdf53-a4b8-4f2b-926c-2c3eb4dd3005
+    resourceVersion: "425754554"
+    uid: 797c0485-ea21-43a1-a175-09340cd87861
+  spec:
+    containers:
+    - args:
+      - -v=2
+      - --config=/var/run/configmaps/config/controller-config.yaml
+      command:
+      - console
+      - operator
+      env:
+      - name: CONSOLE_IMAGE
+        value: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:eae9114b14071c50a1996b95eccf6fad8df53c5cc689dce069dec466413430d4
+      - name: DOWNLOADS_IMAGE
+        value: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:ade57a60744eaf9a5f64f9cbb1d0043be90ebffac72e5bb43df7832dfd860b2f
+      - name: RELEASE_VERSION
+        value: 4.10.53
+      - name: OPERATOR_NAME
+        value: console-operator
+      - name: POD_NAME
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: metadata.name
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:c7f02b64d349c8a399754f03bff288efe2c7aadbbb405fa1548df36d809c3423
+      imagePullPolicy: IfNotPresent
+      livenessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /healthz
+          port: 8443
+          scheme: HTTPS
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 1
+      name: console-operator
+      ports:
+      - containerPort: 60000
+        name: metrics
+        protocol: TCP
+      readinessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /readyz
+          port: 8443
+          scheme: HTTPS
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 1
+      resources:
+        requests:
+          cpu: 10m
+          memory: 100Mi
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000630000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: FallbackToLogsOnError
+      volumeMounts:
+      - mountPath: /var/run/configmaps/config
+        name: config
+      - mountPath: /var/run/secrets/serving-cert
+        name: serving-cert
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-qx8vb
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: console-operator-dockercfg-8kbd6
+    nodeName: ocp4azu-sj2sl-master-0
+    nodeSelector:
+      node-role.kubernetes.io/master: ""
+    preemptionPolicy: PreemptLowerPriority
+    priority: 2000000000
+    priorityClassName: system-cluster-critical
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000630000
+      seLinuxOptions:
+        level: s0:c25,c15
+    serviceAccount: console-operator
+    serviceAccountName: console-operator
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/master
+      operator: Exists
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 120
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 120
+    - effect: NoSchedule
+      key: node.kubernetes.io/memory-pressure
+      operator: Exists
+    volumes:
+    - configMap:
+        defaultMode: 420
+        name: console-operator-config
+      name: config
+    - name: serving-cert
+      secret:
+        defaultMode: 420
+        optional: true
+        secretName: serving-cert
+    - name: kube-api-access-qx8vb
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2024-06-30T06:24:39Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2024-06-30T06:24:50Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2024-06-30T06:24:50Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2024-06-30T06:24:39Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://79b73e252c4d6a81130fde8497a11001a232c15278c125b773333e402b789a83
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:c7f02b64d349c8a399754f03bff288efe2c7aadbbb405fa1548df36d809c3423
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:c7f02b64d349c8a399754f03bff288efe2c7aadbbb405fa1548df36d809c3423
+      lastState: {}
+      name: console-operator
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2024-06-30T06:24:49Z"
+    hostIP: 10.80.80.6
+    phase: Running
+    podIP: 10.129.0.37
+    podIPs:
+    - ip: 10.129.0.37
+    qosClass: Burstable
+    startTime: "2024-06-30T06:24:39Z"
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

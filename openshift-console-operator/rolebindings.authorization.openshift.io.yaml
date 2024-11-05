@@ -1,0 +1,119 @@
+apiVersion: v1
+items:
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    annotations:
+      include.release.openshift.io/ibm-cloud-managed: "true"
+      include.release.openshift.io/self-managed-high-availability: "true"
+      include.release.openshift.io/single-node-developer: "true"
+    creationTimestamp: "2023-05-04T21:53:22Z"
+    name: console-operator
+    namespace: openshift-console-operator
+    ownerReferences:
+    - apiVersion: config.openshift.io/v1
+      kind: ClusterVersion
+      name: version
+      uid: 5d92b52f-9fff-4a6e-b815-398b934115ad
+    resourceVersion: "25744"
+    uid: 6e7ff7ea-6713-4981-b9a0-cce4470403fb
+  roleRef:
+    name: console-operator
+    namespace: openshift-console-operator
+  subjects:
+  - kind: ServiceAccount
+    name: console-operator
+  userNames:
+  - system:serviceaccount:openshift-console-operator:console-operator
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    annotations:
+      include.release.openshift.io/ibm-cloud-managed: "true"
+      include.release.openshift.io/self-managed-high-availability: "true"
+      include.release.openshift.io/single-node-developer: "true"
+    creationTimestamp: "2023-05-04T21:53:18Z"
+    name: prometheus-k8s
+    namespace: openshift-console-operator
+    ownerReferences:
+    - apiVersion: config.openshift.io/v1
+      kind: ClusterVersion
+      name: version
+      uid: 5d92b52f-9fff-4a6e-b815-398b934115ad
+    resourceVersion: "25661"
+    uid: 0660788e-a75a-4c0f-a866-8dd18d61a748
+  roleRef:
+    name: prometheus-k8s
+    namespace: openshift-console-operator
+  subjects:
+  - kind: ServiceAccount
+    name: prometheus-k8s
+    namespace: openshift-monitoring
+  userNames:
+  - system:serviceaccount:openshift-monitoring:prometheus-k8s
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/description: Allows deploymentconfigs in this namespace to rollout
+        pods in this namespace.  It is auto-managed by a controller; remove subjects
+        to disable.
+    creationTimestamp: "2023-05-04T21:53:14Z"
+    name: system:deployers
+    namespace: openshift-console-operator
+    resourceVersion: "25592"
+    uid: ed3aca6d-b715-44d2-821b-358b2955160d
+  roleRef:
+    name: system:deployer
+  subjects:
+  - kind: ServiceAccount
+    name: deployer
+    namespace: openshift-console-operator
+  userNames:
+  - system:serviceaccount:openshift-console-operator:deployer
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/description: Allows builds in this namespace to push images to
+        this namespace.  It is auto-managed by a controller; remove subjects to disable.
+    creationTimestamp: "2023-05-04T21:53:14Z"
+    name: system:image-builders
+    namespace: openshift-console-operator
+    resourceVersion: "25591"
+    uid: 30297e65-bd53-47ef-af9d-724244969863
+  roleRef:
+    name: system:image-builder
+  subjects:
+  - kind: ServiceAccount
+    name: builder
+    namespace: openshift-console-operator
+  userNames:
+  - system:serviceaccount:openshift-console-operator:builder
+- apiVersion: authorization.openshift.io/v1
+  groupNames:
+  - system:serviceaccounts:openshift-console-operator
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/description: Allows all pods in this namespace to pull images from
+        this namespace.  It is auto-managed by a controller; remove subjects to disable.
+    creationTimestamp: "2023-05-04T21:53:14Z"
+    name: system:image-pullers
+    namespace: openshift-console-operator
+    resourceVersion: "25588"
+    uid: 28ca9300-e93e-4ce1-8f9e-2e7880efeee6
+  roleRef:
+    name: system:image-puller
+  subjects:
+  - kind: SystemGroup
+    name: system:serviceaccounts:openshift-console-operator
+  userNames: null
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

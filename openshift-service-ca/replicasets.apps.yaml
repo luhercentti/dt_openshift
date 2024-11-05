@@ -1,0 +1,215 @@
+apiVersion: v1
+items:
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "1"
+      deployment.kubernetes.io/revision: "1"
+      operator.openshift.io/pull-spec: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:6c80ee7d9e97893321cf2b45aa3c3bf09d20bfa575f7c9b2e6fa50318f8f4281
+    creationTimestamp: "2023-05-04T21:40:31Z"
+    generation: 2
+    labels:
+      app: service-ca
+      pod-template-hash: b589f4c4
+      service-ca: "true"
+    name: service-ca-b589f4c4
+    namespace: openshift-service-ca
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: service-ca
+      uid: 228b75f7-e2a0-4235-8f12-710294256a42
+    resourceVersion: "369058011"
+    uid: bc6f5c22-40dd-4729-87f8-2d5a02aa82fd
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        app: service-ca
+        pod-template-hash: b589f4c4
+        service-ca: "true"
+    template:
+      metadata:
+        annotations:
+          target.workload.openshift.io/management: '{"effect": "PreferredDuringScheduling"}'
+        creationTimestamp: null
+        labels:
+          app: service-ca
+          pod-template-hash: b589f4c4
+          service-ca: "true"
+        name: service-ca
+      spec:
+        containers:
+        - args:
+          - -v=2
+          command:
+          - service-ca-operator
+          - controller
+          image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:6c80ee7d9e97893321cf2b45aa3c3bf09d20bfa575f7c9b2e6fa50318f8f4281
+          imagePullPolicy: IfNotPresent
+          name: service-ca-controller
+          ports:
+          - containerPort: 8443
+            protocol: TCP
+          resources:
+            requests:
+              cpu: 10m
+              memory: 120Mi
+          securityContext:
+            runAsNonRoot: true
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/run/secrets/signing-key
+            name: signing-key
+          - mountPath: /var/run/configmaps/signing-cabundle
+            name: signing-cabundle
+        dnsPolicy: ClusterFirst
+        nodeSelector:
+          node-role.kubernetes.io/master: ""
+        priorityClassName: system-cluster-critical
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: service-ca
+        serviceAccountName: service-ca
+        terminationGracePeriodSeconds: 30
+        tolerations:
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/master
+          operator: Exists
+        - effect: NoExecute
+          key: node.kubernetes.io/unreachable
+          operator: Exists
+          tolerationSeconds: 120
+        - effect: NoExecute
+          key: node.kubernetes.io/not-ready
+          operator: Exists
+          tolerationSeconds: 120
+        volumes:
+        - name: signing-key
+          secret:
+            defaultMode: 420
+            secretName: signing-key
+        - configMap:
+            defaultMode: 420
+            name: signing-cabundle
+          name: signing-cabundle
+  status:
+    observedGeneration: 2
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "1"
+      deployment.kubernetes.io/revision: "2"
+      operator.openshift.io/force: 8351a209-45ee-4f86-9d4b-928bacf9606b
+      operator.openshift.io/pull-spec: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:6c80ee7d9e97893321cf2b45aa3c3bf09d20bfa575f7c9b2e6fa50318f8f4281
+    creationTimestamp: "2024-06-02T21:40:44Z"
+    generation: 1
+    labels:
+      app: service-ca
+      pod-template-hash: f99cd879f
+      service-ca: "true"
+    name: service-ca-f99cd879f
+    namespace: openshift-service-ca
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: service-ca
+      uid: 228b75f7-e2a0-4235-8f12-710294256a42
+    resourceVersion: "369058155"
+    uid: daf5e1db-0b2e-41f4-9235-072ed1ad78bc
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: service-ca
+        pod-template-hash: f99cd879f
+        service-ca: "true"
+    template:
+      metadata:
+        annotations:
+          operator.openshift.io/force: 8351a209-45ee-4f86-9d4b-928bacf9606b
+          target.workload.openshift.io/management: '{"effect": "PreferredDuringScheduling"}'
+        creationTimestamp: null
+        labels:
+          app: service-ca
+          pod-template-hash: f99cd879f
+          service-ca: "true"
+        name: service-ca
+      spec:
+        containers:
+        - args:
+          - -v=2
+          command:
+          - service-ca-operator
+          - controller
+          image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:6c80ee7d9e97893321cf2b45aa3c3bf09d20bfa575f7c9b2e6fa50318f8f4281
+          imagePullPolicy: IfNotPresent
+          name: service-ca-controller
+          ports:
+          - containerPort: 8443
+            protocol: TCP
+          resources:
+            requests:
+              cpu: 10m
+              memory: 120Mi
+          securityContext:
+            runAsNonRoot: true
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/run/secrets/signing-key
+            name: signing-key
+          - mountPath: /var/run/configmaps/signing-cabundle
+            name: signing-cabundle
+        dnsPolicy: ClusterFirst
+        nodeSelector:
+          node-role.kubernetes.io/master: ""
+        priorityClassName: system-cluster-critical
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: service-ca
+        serviceAccountName: service-ca
+        terminationGracePeriodSeconds: 30
+        tolerations:
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/master
+          operator: Exists
+        - effect: NoExecute
+          key: node.kubernetes.io/unreachable
+          operator: Exists
+          tolerationSeconds: 120
+        - effect: NoExecute
+          key: node.kubernetes.io/not-ready
+          operator: Exists
+          tolerationSeconds: 120
+        volumes:
+        - name: signing-key
+          secret:
+            defaultMode: 420
+            secretName: signing-key
+        - configMap:
+            defaultMode: 420
+            name: signing-cabundle
+          name: signing-cabundle
+  status:
+    availableReplicas: 1
+    fullyLabeledReplicas: 1
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

@@ -1,0 +1,604 @@
+apiVersion: v1
+items:
+- apiVersion: apps.openshift.io/v1
+  kind: DeploymentConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftWebConsole
+      openshift.io/migration-registry: ""
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-22T19:40:49Z"
+    generation: 2
+    labels:
+      app: api-integracion
+      migration.openshift.io/migrated-by-migmigration: 7d6e62b2-bb11-4fde-bd11-ef8b44259562
+      migration.openshift.io/migrated-by-migplan: 5ae88ccd-2300-4fae-80eb-6d8c6ca3cb33
+      velero.io/backup-name: migration-71619-initial-wppgl
+      velero.io/restore-name: migration-71619-final-2qxzl
+    name: api-integracion
+    namespace: ministrosdefe-qa
+    resourceVersion: "9215870"
+    uid: 56aef223-a684-4fad-970d-6488ce53a6fe
+  spec:
+    replicas: 0
+    revisionHistoryLimit: 10
+    selector:
+      app: api-integracion
+      deploymentconfig: api-integracion
+    strategy:
+      activeDeadlineSeconds: 21600
+      resources: {}
+      rollingParams:
+        intervalSeconds: 1
+        maxSurge: 25%
+        maxUnavailable: 25%
+        timeoutSeconds: 600
+        updatePeriodSeconds: 1
+      type: Rolling
+    template:
+      metadata:
+        annotations:
+          openshift.io/generated-by: OpenShiftWebConsole
+        creationTimestamp: null
+        labels:
+          app: api-integracion
+          deploymentconfig: api-integracion
+      spec:
+        containers:
+        - env:
+          - name: TZ
+            value: America/Santiago
+          - name: CorsConfig
+            value: '{"PolicyOrigin": "*"}'
+          image: image-registry.openshift-image-registry.svc:5000/ministrosdefe-dev/api-integracion-qa@sha256:2cc8ad19e75d7f9d8a23348d7310d93e323ee8044e4843061c52abf0c9b61194
+          imagePullPolicy: Always
+          name: api-integracion
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+    test: false
+    triggers:
+    - type: ConfigChange
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+        - api-integracion
+        from:
+          kind: ImageStreamTag
+          name: api-integracion-qa:latest
+          namespace: ministrosdefe-dev
+        lastTriggeredImage: image-registry.openshift-image-registry.svc:5000/ministrosdefe-dev/api-integracion-qa@sha256:2cc8ad19e75d7f9d8a23348d7310d93e323ee8044e4843061c52abf0c9b61194
+      type: ImageChange
+  status:
+    availableReplicas: 0
+    conditions:
+    - lastTransitionTime: "2023-05-22T19:40:49Z"
+      lastUpdateTime: "2023-05-22T19:40:49Z"
+      message: Deployment config does not have minimum availability.
+      status: "False"
+      type: Available
+    - lastTransitionTime: "2023-05-22T20:04:52Z"
+      lastUpdateTime: "2023-05-22T20:04:52Z"
+      message: replication controller "api-integracion-1" successfully rolled out
+      reason: NewReplicationControllerAvailable
+      status: "True"
+      type: Progressing
+    details:
+      causes:
+      - type: ConfigChange
+      message: config change
+    latestVersion: 1
+    observedGeneration: 2
+    replicas: 0
+    unavailableReplicas: 0
+    updatedReplicas: 0
+- apiVersion: apps.openshift.io/v1
+  kind: DeploymentConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftWebConsole
+      openshift.io/migration-registry: ""
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-22T19:40:49Z"
+    generation: 2
+    labels:
+      app: djtrl-serv001-decl
+      migration.openshift.io/migrated-by-migmigration: 7d6e62b2-bb11-4fde-bd11-ef8b44259562
+      migration.openshift.io/migrated-by-migplan: 5ae88ccd-2300-4fae-80eb-6d8c6ca3cb33
+      velero.io/backup-name: migration-71619-initial-wppgl
+      velero.io/restore-name: migration-71619-final-2qxzl
+    name: djtrl-serv001-decl
+    namespace: ministrosdefe-qa
+    resourceVersion: "9215857"
+    uid: 9907fef6-7005-4498-85a7-69aa7058ea61
+  spec:
+    replicas: 0
+    revisionHistoryLimit: 10
+    selector:
+      app: djtrl-serv001-decl
+      deploymentconfig: djtrl-serv001-decl
+    strategy:
+      activeDeadlineSeconds: 21600
+      resources: {}
+      rollingParams:
+        intervalSeconds: 1
+        maxSurge: 25%
+        maxUnavailable: 25%
+        timeoutSeconds: 600
+        updatePeriodSeconds: 1
+      type: Rolling
+    template:
+      metadata:
+        annotations:
+          openshift.io/generated-by: OpenShiftWebConsole
+        creationTimestamp: null
+        labels:
+          app: djtrl-serv001-decl
+          deploymentconfig: djtrl-serv001-decl
+      spec:
+        containers:
+        - env:
+          - name: TZ
+            value: America/Santiago
+          - name: DATABASE_HOST
+            value: sql-bd-dtqa
+          - name: DATABASE_PORT
+            value: "1433"
+          - name: DATABASE_DATABASE
+            value: MinistroDeFe
+          - name: DATABASE_USERNAME
+            value: UserMinistroDeFe
+          - name: DATABASE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: DATABASE_PASSWORD
+                name: ministros-de-fe-bd-password-qa
+          - name: PROXY_TIMEOUT
+            value: "120000"
+          - name: DESACTIVAR_VALIDACION_RUT_TOKEN
+            value: "true"
+          - name: URL_ENDPOINT_FULLMETADATA
+            value: http://djtrl-serv002-bff.ministrosdefe-qa.svc:8080/api/metadata/formulario/full
+          - name: URL_ENDPOINT_NUMERADOR_SOLICITUD
+            value: http://proxy001-serv-externos.ministrosdefe-qa.svc:8080/api/numerador/identificadorSolicutudes
+          - name: URL_ENDPOINT_NUMERADOR_SERIE_DOCUMENTAL
+            value: http://proxy001-serv-externos.ministrosdefe-qa.svc:8080/api/numerador/identificadorSerieDocumental
+          - name: URL_ENDPOINT_SEND_EMAIL
+            value: http://proxy001-serv-externos.ministrosdefe-qa.svc:8080/api/correos
+          - name: URL_ENDPOINT_GESTOR_DOCUMENTAL_SAVE
+            value: http://proxy001-serv-externos.ministrosdefe-qa.svc:8080/api/gestorDocumental
+          - name: URL_ENDPOINT_GESTOR_DOCUMENTAL_GET
+            value: http://proxy001-serv-externos.ministrosdefe-qa.svc:8080/api/gestorDocumental/archivo
+          - name: FIRMADOR_URL_CALLBACK
+            value: http://proxy001-ministros-de-fe-qa.api-cloud.dirtrab.cl/api/notificaciones/correo/declaraciones
+          - name: RUT_FIRMADOR
+            value: 11744893-2
+          - name: NOMBRE_FIRMADOR
+            value: Rodrigo Trullen Jara
+          - name: DJ_FILE_NAME
+            value: dj_termino_relacion_laboral.pdf
+          - name: EMAIL_ASUNTO
+            value: Declaración Jurada Término Relación Laboral
+          - name: EMAIL_REMITENTE
+            value: no-reply@dt.gob.cl
+          - name: EMAIL_TEMPLATE_TITULO
+            value: Notificación de ingreso declaración jurada de término de contrato
+          image: image-registry.openshift-image-registry.svc:5000/ministrosdefe-dev/djtrl-serv001-decl-qa@sha256:49002e49c0360b063926a40823979eb80b781b4cb9c3c06f2fa0716d17ddbbea
+          imagePullPolicy: Always
+          name: djtrl-serv001-decl
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources:
+            limits:
+              cpu: 300m
+              memory: 300Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+    test: false
+    triggers:
+    - type: ConfigChange
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+        - djtrl-serv001-decl
+        from:
+          kind: ImageStreamTag
+          name: djtrl-serv001-decl-qa:latest
+          namespace: ministrosdefe-dev
+        lastTriggeredImage: image-registry.openshift-image-registry.svc:5000/ministrosdefe-dev/djtrl-serv001-decl-qa@sha256:49002e49c0360b063926a40823979eb80b781b4cb9c3c06f2fa0716d17ddbbea
+      type: ImageChange
+  status:
+    availableReplicas: 0
+    conditions:
+    - lastTransitionTime: "2023-05-22T19:40:49Z"
+      lastUpdateTime: "2023-05-22T19:40:49Z"
+      message: Deployment config does not have minimum availability.
+      status: "False"
+      type: Available
+    - lastTransitionTime: "2023-05-22T20:04:51Z"
+      lastUpdateTime: "2023-05-22T20:04:51Z"
+      message: replication controller "djtrl-serv001-decl-1" successfully rolled out
+      reason: NewReplicationControllerAvailable
+      status: "True"
+      type: Progressing
+    details:
+      causes:
+      - type: ConfigChange
+      message: config change
+    latestVersion: 1
+    observedGeneration: 2
+    replicas: 0
+    unavailableReplicas: 0
+    updatedReplicas: 0
+- apiVersion: apps.openshift.io/v1
+  kind: DeploymentConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftWebConsole
+      openshift.io/migration-registry: ""
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-22T19:40:50Z"
+    generation: 2
+    labels:
+      app: djtrl-serv002-bff
+      migration.openshift.io/migrated-by-migmigration: 7d6e62b2-bb11-4fde-bd11-ef8b44259562
+      migration.openshift.io/migrated-by-migplan: 5ae88ccd-2300-4fae-80eb-6d8c6ca3cb33
+      velero.io/backup-name: migration-71619-initial-wppgl
+      velero.io/restore-name: migration-71619-final-2qxzl
+    name: djtrl-serv002-bff
+    namespace: ministrosdefe-qa
+    resourceVersion: "9215829"
+    uid: 32e0aa7b-fa38-48a5-b685-1ba2e6881e2f
+  spec:
+    replicas: 0
+    revisionHistoryLimit: 10
+    selector:
+      app: djtrl-serv002-bff
+      deploymentconfig: djtrl-serv002-bff
+    strategy:
+      activeDeadlineSeconds: 21600
+      resources: {}
+      rollingParams:
+        intervalSeconds: 1
+        maxSurge: 25%
+        maxUnavailable: 25%
+        timeoutSeconds: 600
+        updatePeriodSeconds: 1
+      type: Rolling
+    template:
+      metadata:
+        annotations:
+          openshift.io/generated-by: OpenShiftWebConsole
+        creationTimestamp: null
+        labels:
+          app: djtrl-serv002-bff
+          deploymentconfig: djtrl-serv002-bff
+      spec:
+        containers:
+        - env:
+          - name: TZ
+            value: America/Santiago
+          - name: DATABASE_HOST
+            value: sql-bd-dtqa
+          - name: DATABASE_PORT
+            value: "1433"
+          - name: DATABASE_DATABASE
+            value: MinistroDeFe
+          - name: DATABASE_USERNAME
+            value: UserMinistroDeFe
+          - name: DATABASE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: DATABASE_PASSWORD
+                name: ministros-de-fe-bd-password-qa
+          - name: PROXY_TIMEOUT
+            value: "120000"
+          - name: PROXY_MAX_REDIRECTS
+            value: "5"
+          - name: DESACTIVAR_VALIDACION_RUT_TOKEN
+            value: "true"
+          - name: URL_ENDPOINT_COMUNAS
+            value: http://proxy001-serv-externos.ministrosdefe-qa.svc:8080/api/metadata/distribucionTerritorial/Comunas
+          - name: URL_ENDPOINT_COMUNASREGION
+            value: http://proxy001-serv-externos.ministrosdefe-qa.svc:8080/api/metadata/distribucionTerritorial/RegionProvinciaComunas
+          - name: URL_ENDPOINT_REGIONES
+            value: http://proxy001-serv-externos.ministrosdefe-qa.svc:8080/api/metadata/distribucionTerritorial/Regiones
+          - name: URL_ENDPOINT_AFP
+            value: http://proxy001-serv-externos.ministrosdefe-qa.svc:8080/api/metadata/publico/afp
+          - name: URL_ENDPOINT_EMPLEADOR
+            value: http://proxy001-serv-externos.ministrosdefe-qa.svc:8080/api/metadata/maestroEmpresa/empleador?rut=
+          - name: URL_ENDPOINT_PERSONA
+            value: http://proxy001-serv-externos.ministrosdefe-qa.svc:8080/api/metadata/registroCivil/persona?rut=
+          - name: URL_ENDPOINT_CAUSALTERMINOCONTRATO
+            value: http://proxy001-serv-externos.ministrosdefe-qa.svc:8080/api/metadata/publico/causalTerminoContrato
+          - name: CACHE_TTL_SECONDS_DEFAULT
+            value: "3600"
+          - name: CACHE_MAX_ITEMS
+            value: "10"
+          image: image-registry.openshift-image-registry.svc:5000/ministrosdefe-dev/djtrl-serv002-bff-qa@sha256:a513d172026d3caa8bb69ea1e8e401b3039f6a3dd72c5465b281cf4975cff559
+          imagePullPolicy: Always
+          name: djtrl-serv002-bff
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources:
+            limits:
+              cpu: 300m
+              memory: 300Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+    test: false
+    triggers:
+    - type: ConfigChange
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+        - djtrl-serv002-bff
+        from:
+          kind: ImageStreamTag
+          name: djtrl-serv002-bff-qa:latest
+          namespace: ministrosdefe-dev
+        lastTriggeredImage: image-registry.openshift-image-registry.svc:5000/ministrosdefe-dev/djtrl-serv002-bff-qa@sha256:a513d172026d3caa8bb69ea1e8e401b3039f6a3dd72c5465b281cf4975cff559
+      type: ImageChange
+  status:
+    availableReplicas: 0
+    conditions:
+    - lastTransitionTime: "2023-05-22T19:40:50Z"
+      lastUpdateTime: "2023-05-22T19:40:50Z"
+      message: Deployment config does not have minimum availability.
+      status: "False"
+      type: Available
+    - lastTransitionTime: "2023-05-22T20:04:49Z"
+      lastUpdateTime: "2023-05-22T20:04:49Z"
+      message: replication controller "djtrl-serv002-bff-1" successfully rolled out
+      reason: NewReplicationControllerAvailable
+      status: "True"
+      type: Progressing
+    details:
+      causes:
+      - type: ConfigChange
+      message: config change
+    latestVersion: 1
+    observedGeneration: 2
+    replicas: 0
+    unavailableReplicas: 0
+    updatedReplicas: 0
+- apiVersion: apps.openshift.io/v1
+  kind: DeploymentConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftWebConsole
+      openshift.io/migration-registry: ""
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-22T19:40:50Z"
+    generation: 2
+    labels:
+      app: front001-ministros-de-fe
+      migration.openshift.io/migrated-by-migmigration: 7d6e62b2-bb11-4fde-bd11-ef8b44259562
+      migration.openshift.io/migrated-by-migplan: 5ae88ccd-2300-4fae-80eb-6d8c6ca3cb33
+      velero.io/backup-name: migration-71619-initial-wppgl
+      velero.io/restore-name: migration-71619-final-2qxzl
+    name: front001-ministros-de-fe
+    namespace: ministrosdefe-qa
+    resourceVersion: "9215832"
+    uid: 67391007-2bb2-4c19-8bb6-c52844dba98a
+  spec:
+    replicas: 0
+    revisionHistoryLimit: 10
+    selector:
+      app: front001-ministros-de-fe
+      deploymentconfig: front001-ministros-de-fe
+    strategy:
+      activeDeadlineSeconds: 21600
+      resources: {}
+      rollingParams:
+        intervalSeconds: 1
+        maxSurge: 25%
+        maxUnavailable: 25%
+        timeoutSeconds: 600
+        updatePeriodSeconds: 1
+      type: Rolling
+    template:
+      metadata:
+        annotations:
+          openshift.io/generated-by: OpenShiftWebConsole
+        creationTimestamp: null
+        labels:
+          app: front001-ministros-de-fe
+          deploymentconfig: front001-ministros-de-fe
+      spec:
+        containers:
+        - env:
+          - name: TZ
+            value: America/Santiago
+          image: image-registry.openshift-image-registry.svc:5000/ministrosdefe-dev/front001-min-de-fe-qa@sha256:432598283546cd7277f23f9988501b8a2f682b59b6c596c8a1a1be2a3208e15f
+          imagePullPolicy: Always
+          name: front001-ministros-de-fe
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+    test: false
+    triggers:
+    - type: ConfigChange
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+        - front001-ministros-de-fe
+        from:
+          kind: ImageStreamTag
+          name: front001-min-de-fe-qa:latest
+          namespace: ministrosdefe-dev
+        lastTriggeredImage: image-registry.openshift-image-registry.svc:5000/ministrosdefe-dev/front001-min-de-fe-qa@sha256:432598283546cd7277f23f9988501b8a2f682b59b6c596c8a1a1be2a3208e15f
+      type: ImageChange
+  status:
+    availableReplicas: 0
+    conditions:
+    - lastTransitionTime: "2023-05-22T19:40:50Z"
+      lastUpdateTime: "2023-05-22T19:40:50Z"
+      message: Deployment config does not have minimum availability.
+      status: "False"
+      type: Available
+    - lastTransitionTime: "2023-05-22T20:04:49Z"
+      lastUpdateTime: "2023-05-22T20:04:49Z"
+      message: replication controller "front001-ministros-de-fe-1" successfully rolled
+        out
+      reason: NewReplicationControllerAvailable
+      status: "True"
+      type: Progressing
+    details:
+      causes:
+      - type: ConfigChange
+      message: config change
+    latestVersion: 1
+    observedGeneration: 2
+    replicas: 0
+    unavailableReplicas: 0
+    updatedReplicas: 0
+- apiVersion: apps.openshift.io/v1
+  kind: DeploymentConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftWebConsole
+      openshift.io/migration-registry: ""
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-22T19:40:50Z"
+    generation: 2
+    labels:
+      app: proxy001-serv-externos
+      migration.openshift.io/migrated-by-migmigration: 7d6e62b2-bb11-4fde-bd11-ef8b44259562
+      migration.openshift.io/migrated-by-migplan: 5ae88ccd-2300-4fae-80eb-6d8c6ca3cb33
+      velero.io/backup-name: migration-71619-initial-wppgl
+      velero.io/restore-name: migration-71619-final-2qxzl
+    name: proxy001-serv-externos
+    namespace: ministrosdefe-qa
+    resourceVersion: "9215846"
+    uid: 390522e2-7af4-45f5-be34-2bc3759b1715
+  spec:
+    replicas: 0
+    revisionHistoryLimit: 10
+    selector:
+      app: proxy001-serv-externos
+      deploymentconfig: proxy001-serv-externos
+    strategy:
+      activeDeadlineSeconds: 21600
+      resources: {}
+      rollingParams:
+        intervalSeconds: 1
+        maxSurge: 25%
+        maxUnavailable: 25%
+        timeoutSeconds: 600
+        updatePeriodSeconds: 1
+      type: Rolling
+    template:
+      metadata:
+        annotations:
+          openshift.io/generated-by: OpenShiftWebConsole
+        creationTimestamp: null
+        labels:
+          app: proxy001-serv-externos
+          deploymentconfig: proxy001-serv-externos
+      spec:
+        containers:
+        - env:
+          - name: TZ
+            value: America/Santiago
+          image: image-registry.openshift-image-registry.svc:5000/ministrosdefe-dev/proxy001-serv-ext-qa@sha256:09e67b4dd035e3bab0c59d15e168e5e238174f7ace2a1a542cfa938bd671cb7d
+          imagePullPolicy: Always
+          name: proxy001-serv-externos
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources:
+            limits:
+              cpu: 300m
+              memory: 300Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+    test: false
+    triggers:
+    - type: ConfigChange
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+        - proxy001-serv-externos
+        from:
+          kind: ImageStreamTag
+          name: proxy001-serv-ext-qa:latest
+          namespace: ministrosdefe-dev
+        lastTriggeredImage: image-registry.openshift-image-registry.svc:5000/ministrosdefe-dev/proxy001-serv-ext-qa@sha256:09e67b4dd035e3bab0c59d15e168e5e238174f7ace2a1a542cfa938bd671cb7d
+      type: ImageChange
+  status:
+    availableReplicas: 0
+    conditions:
+    - lastTransitionTime: "2023-05-22T19:40:50Z"
+      lastUpdateTime: "2023-05-22T19:40:50Z"
+      message: Deployment config does not have minimum availability.
+      status: "False"
+      type: Available
+    - lastTransitionTime: "2023-05-22T20:04:50Z"
+      lastUpdateTime: "2023-05-22T20:04:50Z"
+      message: replication controller "proxy001-serv-externos-1" successfully rolled
+        out
+      reason: NewReplicationControllerAvailable
+      status: "True"
+      type: Progressing
+    details:
+      causes:
+      - type: ConfigChange
+      message: config change
+    latestVersion: 1
+    observedGeneration: 2
+    replicas: 0
+    unavailableReplicas: 0
+    updatedReplicas: 0
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

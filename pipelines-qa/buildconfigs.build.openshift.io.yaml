@@ -1,0 +1,4551 @@
+apiVersion: v1
+items:
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/migration-registry: ""
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+      pipeline.alpha.openshift.io/uses: '[{"name": "jenkins", "namespace": "", "kind":
+        "DeploymentConfig"}]'
+    creationTimestamp: "2023-05-22T20:02:54Z"
+    generation: 1
+    labels:
+      app: cicd-pipeline
+      group: cicd
+      migration.openshift.io/migrated-by-migmigration: 83812283-da61-428b-8d35-e15d91aa764d
+      migration.openshift.io/migrated-by-migplan: 6b6402c2-9258-443b-83f4-8bb51f1d90f8
+      name: cicd-pipeline
+      template: cicd
+      velero.io/backup-name: migration-8d005-initial-6s92c
+      velero.io/restore-name: migration-8d005-final-jj2bc
+    name: cron0001-notificacionrecordatorios
+    namespace: pipelines-qa
+    resourceVersion: "9214486"
+    uid: 9400be23-3ed3-4cd9-b06a-ab90c828c85e
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: {}
+    output: {}
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      type: None
+    strategy:
+      jenkinsPipelineStrategy:
+        env:
+        - name: QA_PROJECT
+          value: api-fiscalizacion-qa
+        - name: ENABLE_QUAY
+          value: "false"
+        jenkinsfile: |
+          pipeline {
+            agent {
+              label 'maven'
+            }
+            stages {
+              stage('Clonando repo y Compilando') {
+                  steps {
+                      git([url: 'https://dirtrab.visualstudio.com/Libro%20Remuneraciones%20Electronico/_git/CRON0001-NotificacionRecordatorios',
+                      branch: 'develop',
+                      credentialsId: 'azure_credenciales_id'])
+                  script {
+                      def pom = readMavenPom file: 'pom.xml'
+                      version = pom.version
+                  }
+                  sh "mvn -s configuration/settings.xml install -DskipTests=true"
+                }
+              }
+              stage('Creando Image Builder') {
+                when {
+                  expression {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        return !openshift.selector("bc", "cron0001-notificacionrec").exists();
+                      }
+                    }
+                  }
+                }
+                steps {
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        openshift.newBuild("--name=cron0001-notificacionrec", "--image-stream=redhat-openjdk18-openshift:1.4", "--binary=true")
+                      }
+                    }
+                  }
+                }
+              }
+              stage('Construyendo imagen') {
+                steps {
+                  sh "rm -rf oc-build && mkdir -p oc-build/deployments"
+                  sh "cp target/CRON0001-NotificacionRecordatorios-1.0.jar oc-build/deployments/CRON0001-NotificacionRecordatorios.jar"
+
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        openshift.selector("bc", "cron0001-notificacionrec").startBuild("--from-dir=oc-build", "--wait=true")
+                      }
+                    }
+                  }
+                  sh "sleep 10"
+                }
+              }
+              stage('Creando en QA') {
+                when {
+                  expression {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        return !openshift.selector('dc', 'cron0001-notificacionrec').exists()
+                      }
+                    }
+                  }
+                }
+                steps {
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        def app = openshift.newApp("cron0001-notificacionrec:latest")
+                        app.narrow("svc").expose();
+                        def dc = openshift.selector("dc", "cron0001-notificacionrec")
+                        while (dc.object().spec.replicas != dc.object().status.availableReplicas) {
+                            sleep 10
+                        }
+                        openshift.set("triggers", "dc/cron0001-notificacionrec", "--manual")
+                      }
+                      sh "sleep 40"
+                    }
+                  }
+                }
+              }
+              stage('Desplegando en QA') {
+                steps {
+                sh "sleep 10"
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        openshift.selector("dc", "cron0001-notificacionrec").rollout().latest();
+                      }
+                      sh "sleep 15"
+                    }
+                  }
+                }
+              }
+            }
+          }
+      type: JenkinsPipeline
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - github:
+        secret: vJU0CXQe
+      type: GitHub
+    - generic:
+        secret: vJU0CXQe
+      type: Generic
+  status:
+    lastVersion: 0
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/migration-registry: ""
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+      pipeline.alpha.openshift.io/uses: '[{"name": "jenkins", "namespace": "", "kind":
+        "DeploymentConfig"}]'
+    creationTimestamp: "2023-05-22T20:02:55Z"
+    generation: 1
+    labels:
+      app: cicd-pipeline
+      group: cicd
+      migration.openshift.io/migrated-by-migmigration: 83812283-da61-428b-8d35-e15d91aa764d
+      migration.openshift.io/migrated-by-migplan: 6b6402c2-9258-443b-83f4-8bb51f1d90f8
+      name: cicd-pipeline
+      template: cicd
+      velero.io/backup-name: migration-8d005-initial-6s92c
+      velero.io/restore-name: migration-8d005-final-jj2bc
+    name: cron0005-cargarutdatagrid
+    namespace: pipelines-qa
+    resourceVersion: "9214488"
+    uid: 9ff54d6d-45cd-449e-aaed-4b6710b713af
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: {}
+    output: {}
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      type: None
+    strategy:
+      jenkinsPipelineStrategy:
+        env:
+        - name: QA_PROJECT
+          value: api-fiscalizacion-qa
+        - name: ENABLE_QUAY
+          value: "false"
+        jenkinsfile: |
+          pipeline {
+            agent {
+              label 'maven'
+            }
+            stages {
+              stage('Clonando repo y Compilando') {
+                  steps {
+                      git([url: 'https://dirtrab.visualstudio.com/Libro%20Remuneraciones%20Electronico/_git/CRON0005-CargaRutDatagrid',
+                      branch: 'develop',
+                      credentialsId: 'azure_credenciales_id'])
+                  script {
+                      def pom = readMavenPom file: 'pom.xml'
+                      version = pom.version
+                  }
+                  sh "mvn -s configuration/settings.xml install -DskipTests=true"
+                }
+              }
+              stage('Creando Image Builder') {
+                when {
+                  expression {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        return !openshift.selector("bc", "cron0005-cargarutdatagrid").exists();
+                      }
+                    }
+                  }
+                }
+                steps {
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        openshift.newBuild("--name=cron0005-cargarutdatagrid", "--image-stream=redhat-openjdk18-openshift:1.4", "--binary=true")
+                      }
+                    }
+                  }
+                }
+              }
+              stage('Construyendo imagen') {
+                steps {
+                  sh "rm -rf oc-build && mkdir -p oc-build/deployments"
+                  sh "cp target/CRON0005-CargaRutDatagrid-1.0.jar oc-build/deployments/CRON0005-CargaRutDatagrid.jar"
+
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        openshift.selector("bc", "cron0005-cargarutdatagrid").startBuild("--from-dir=oc-build", "--wait=true")
+                      }
+                    }
+                  }
+                  sh "sleep 10"
+                }
+              }
+              stage('Creando en QA') {
+                when {
+                  expression {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        return !openshift.selector('dc', 'cron0005-cargarutdatagrid').exists()
+                      }
+                    }
+                  }
+                }
+                steps {
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        def app = openshift.newApp("cron0005-cargarutdatagrid:latest")
+                        app.narrow("svc").expose();
+                        def dc = openshift.selector("dc", "cron0005-cargarutdatagrid")
+                        while (dc.object().spec.replicas != dc.object().status.availableReplicas) {
+                            sleep 10
+                        }
+                        openshift.set("triggers", "dc/cron0005-cargarutdatagrid", "--manual")
+                      }
+                      sh "sleep 40"
+                    }
+                  }
+                }
+              }
+              stage('Desplegando en QA') {
+                steps {
+                sh "sleep 10"
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        openshift.selector("dc", "cron0005-cargarutdatagrid").rollout().latest();
+                      }
+                      sh "sleep 15"
+                    }
+                  }
+                }
+              }
+            }
+          }
+      type: JenkinsPipeline
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - github:
+        secret: vJU0CXQe
+      type: GitHub
+    - generic:
+        secret: vJU0CXQe
+      type: Generic
+  status:
+    lastVersion: 0
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/migration-registry: ""
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+      pipeline.alpha.openshift.io/uses: '[{"name": "jenkins", "namespace": "", "kind":
+        "DeploymentConfig"}]'
+    creationTimestamp: "2023-05-22T20:02:55Z"
+    generation: 1
+    labels:
+      app: cicd-pipeline
+      group: cicd
+      migration.openshift.io/migrated-by-migmigration: 83812283-da61-428b-8d35-e15d91aa764d
+      migration.openshift.io/migrated-by-migplan: 6b6402c2-9258-443b-83f4-8bb51f1d90f8
+      name: cicd-pipeline
+      template: cicd
+      velero.io/backup-name: migration-8d005-initial-6s92c
+      velero.io/restore-name: migration-8d005-final-jj2bc
+    name: csr0001-validacionesfondo
+    namespace: pipelines-qa
+    resourceVersion: "9214492"
+    uid: 69595a5a-ffab-4138-ba91-950e4001cb4f
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: {}
+    output: {}
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      type: None
+    strategy:
+      jenkinsPipelineStrategy:
+        env:
+        - name: QA_PROJECT
+          value: api-fiscalizacion-qa
+        - name: ENABLE_QUAY
+          value: "false"
+        jenkinsfile: |-
+          pipeline {
+            agent {
+              label 'maven'
+            }
+            stages {
+              stage('Clonando repo y Compilando') {
+                  steps {
+                      git([url: 'https://dirtrab.visualstudio.com/Libro%20Remuneraciones%20Electronico/_git/CSR0001-ValidacionesFondo',
+                      branch: 'develop',
+                      credentialsId: 'azure_credenciales_id'])
+                  script {
+                      def pom = readMavenPom file: 'pom.xml'
+                      version = pom.version
+                  }
+                  sh "mvn -s configuration/settings.xml install -DskipTests=true"
+                }
+              }
+              stage('Creando Image Builder') {
+                when {
+                  expression {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        return !openshift.selector("bc", "csr0001-validacionesfond").exists();
+                      }
+                    }
+                  }
+                }
+                steps {
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        openshift.newBuild("--name=csr0001-validacionesfond", "--image-stream=redhat-openjdk18-openshift:1.4", "--binary=true")
+                      }
+                    }
+                  }
+                }
+              }
+              stage('Construyendo imagen') {
+                steps {
+                  sh "rm -rf oc-build && mkdir -p oc-build/deployments"
+                  sh "cp target/CSR0001-ValidacionesFondo-1.0.jar oc-build/deployments/CSR0001-ValidacionesFondo.jar"
+
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        openshift.selector("bc", "csr0001-validacionesfond").startBuild("--from-dir=oc-build", "--wait=true")
+                      }
+                    }
+                  }
+                  sh "sleep 10"
+                }
+              }
+              stage('Creando en QA') {
+                when {
+                  expression {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        return !openshift.selector('dc', 'csr0001-validacionesfond').exists()
+                      }
+                    }
+                  }
+                }
+                steps {
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        def app = openshift.newApp("csr0001-validacionesfond:latest")
+                        app.narrow("svc").expose();
+                        def dc = openshift.selector("dc", "csr0001-validacionesfond")
+                        while (dc.object().spec.replicas != dc.object().status.availableReplicas) {
+                            sleep 10
+                        }
+                        openshift.set("triggers", "dc/csr0001-validacionesfond", "--manual")
+                      }
+                      sh "sleep 40"
+                    }
+                  }
+                }
+              }
+              stage('Desplegando en QA') {
+                steps {
+                sh "sleep 30"
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        openshift.selector("dc", "csr0001-validacionesfond").rollout().latest();
+                      }
+                      sh "sleep 15"
+                    }
+                  }
+                }
+              }
+            }
+          }
+      type: JenkinsPipeline
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - github:
+        secret: vJU0CXQe
+      type: GitHub
+    - generic:
+        secret: vJU0CXQe
+      type: Generic
+  status:
+    lastVersion: 0
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"build.openshift.io/v1","kind":"BuildConfig","metadata":{"annotations":{"pipeline.alpha.openshift.io/uses":"[{\"name\": \"jenkins\", \"namespace\": \"\", \"kind\": \"DeploymentConfig\"}]"},"labels":{"app":"cicd-pipeline","group":"cicd","name":"cicd-pipeline","template":"cicd"},"name":"csr0001-validacionesfondo-v2","namespace":"pipelines-qa"},"spec":{"failedBuildsHistoryLimit":5,"nodeSelector":{},"output":{},"postCommit":{},"resources":{},"runPolicy":"Serial","source":{"type":"None"},"strategy":{"jenkinsPipelineStrategy":{"env":[{"name":"QA_PROJECT","value":"api-fiscalizacion-qa"},{"name":"ENABLE_QUAY","value":"false"}],"jenkinsfile":"pipeline {\n  agent {\n    label 'maven'\n  }\n  stages {\n    stage('Clonando repo y Compilando') {\n        steps {\n            git([url: 'https://dirtrab.visualstudio.com/Libro%20Remuneraciones%20Electronico/_git/CSR0001-ValidacionesFondo-v2',\n            branch: 'develop',\n            credentialsId: 'azure_credenciales_id'])\n        script {\n            def pom = readMavenPom file: 'pom.xml'\n            version = pom.version\n        }\n        sh \"mvn -s configuration/settings.xml install -DskipTests=true\"\n      }\n    }\n    stage('Creando Image Builder') {\n      when {\n        expression {\n          openshift.withCluster() {\n            openshift.withProject(env.QA_PROJECT) {\n              return !openshift.selector(\"bc\", \"csr0001-validacionesfondo-v2\").exists();\n            }\n          }\n        }\n      }\n      steps {\n        script {\n          openshift.withCluster() {\n            openshift.withProject(env.QA_PROJECT) {\n              openshift.newBuild(\"--name=csr0001-validacionesfondo-v2\", \"--image-stream=redhat-openjdk18-openshift:1.4\", \"--binary=true\")\n            }\n          }\n        }\n      }\n    }\n    stage('Construyendo imagen') {\n      steps {\n        sh \"rm -rf oc-build \u0026\u0026 mkdir -p oc-build/deployments\"\n        sh \"cp target/CSR0001-ValidacionesFondo-v2-1.0.0.jar oc-build/deployments/CSR0001-ValidacionesFondo-v2.jar\"\n\n        script {\n          openshift.withCluster() {\n            openshift.withProject(env.QA_PROJECT) {\n              openshift.selector(\"bc\", \"csr0001-validacionesfondo-v2\").startBuild(\"--from-dir=oc-build\", \"--wait=true\")\n            }\n          }\n        }\n        sh \"sleep 10\"\n      }\n    }\n    stage('Creando en QA') {\n      when {\n        expression {\n          openshift.withCluster() {\n            openshift.withProject(env.QA_PROJECT) {\n              return !openshift.selector('dc', 'csr0001-validacionesfondo-v2').exists()\n            }\n          }\n        }\n      }\n      steps {\n        script {\n          openshift.withCluster() {\n            openshift.withProject(env.QA_PROJECT) {\n              def app = openshift.newApp(\"csr0001-validacionesfondo-v2:latest\")\n              app.narrow(\"svc\").expose();\n              def dc = openshift.selector(\"dc\", \"csr0001-validacionesfondo-v2\")\n              while (dc.object().spec.replicas != dc.object().status.availableReplicas) {\n                  sleep 10\n              }\n              openshift.set(\"triggers\", \"dc/csr0001-validacionesfondo-v2\", \"--manual\")\n            }\n            sh \"sleep 40\"\n          }\n        }\n      }\n    }\n    stage('Desplegando en QA') {\n      steps {\n      sh \"sleep 30\"\n        script {\n          openshift.withCluster() {\n            openshift.withProject(env.QA_PROJECT) {\n              openshift.selector(\"dc\", \"csr0001-validacionesfondo-v2\").rollout().latest();\n            }\n            sh \"sleep 15\"\n          }\n        }\n      }\n    }\n  }\n}\n"},"type":"JenkinsPipeline"},"successfulBuildsHistoryLimit":5,"triggers":[{"github":{"secret":"vJU0CXQe"},"type":"GitHub"},{"generic":{"secret":"vJU0CXQe"},"type":"Generic"}]}}
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/migration-registry: ""
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+      pipeline.alpha.openshift.io/uses: '[{"name": "jenkins", "namespace": "", "kind":
+        "DeploymentConfig"}]'
+    creationTimestamp: "2023-05-22T20:02:55Z"
+    generation: 1
+    labels:
+      app: cicd-pipeline
+      group: cicd
+      migration.openshift.io/migrated-by-migmigration: 83812283-da61-428b-8d35-e15d91aa764d
+      migration.openshift.io/migrated-by-migplan: 6b6402c2-9258-443b-83f4-8bb51f1d90f8
+      name: cicd-pipeline
+      template: cicd
+      velero.io/backup-name: migration-8d005-initial-6s92c
+      velero.io/restore-name: migration-8d005-final-jj2bc
+    name: csr0001-validacionesfondo-v2
+    namespace: pipelines-qa
+    resourceVersion: "9214491"
+    uid: 633a5c63-feb3-4c2c-a36b-261b817b1c70
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: {}
+    output: {}
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      type: None
+    strategy:
+      jenkinsPipelineStrategy:
+        env:
+        - name: QA_PROJECT
+          value: api-fiscalizacion-qa
+        - name: ENABLE_QUAY
+          value: "false"
+        jenkinsfile: |
+          pipeline {
+            agent {
+              label 'maven'
+            }
+            stages {
+              stage('Clonando repo y Compilando') {
+                  steps {
+                      git([url: 'https://dirtrab.visualstudio.com/Libro%20Remuneraciones%20Electronico/_git/CSR0001-ValidacionesFondo-v2',
+                      branch: 'develop',
+                      credentialsId: 'azure_credenciales_id'])
+                  script {
+                      def pom = readMavenPom file: 'pom.xml'
+                      version = pom.version
+                  }
+                  sh "mvn -s configuration/settings.xml install -DskipTests=true"
+                }
+              }
+              stage('Creando Image Builder') {
+                when {
+                  expression {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        return !openshift.selector("bc", "csr0001-validacionesfondo-v2").exists();
+                      }
+                    }
+                  }
+                }
+                steps {
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        openshift.newBuild("--name=csr0001-validacionesfondo-v2", "--image-stream=redhat-openjdk18-openshift:1.4", "--binary=true")
+                      }
+                    }
+                  }
+                }
+              }
+              stage('Construyendo imagen') {
+                steps {
+                  sh "rm -rf oc-build && mkdir -p oc-build/deployments"
+                  sh "cp target/CSR0001-ValidacionesFondo-v2-1.0.0.jar oc-build/deployments/CSR0001-ValidacionesFondo-v2.jar"
+
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        openshift.selector("bc", "csr0001-validacionesfondo-v2").startBuild("--from-dir=oc-build", "--wait=true")
+                      }
+                    }
+                  }
+                  sh "sleep 10"
+                }
+              }
+              stage('Creando en QA') {
+                when {
+                  expression {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        return !openshift.selector('dc', 'csr0001-validacionesfondo-v2').exists()
+                      }
+                    }
+                  }
+                }
+                steps {
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        def app = openshift.newApp("csr0001-validacionesfondo-v2:latest")
+                        app.narrow("svc").expose();
+                        def dc = openshift.selector("dc", "csr0001-validacionesfondo-v2")
+                        while (dc.object().spec.replicas != dc.object().status.availableReplicas) {
+                            sleep 10
+                        }
+                        openshift.set("triggers", "dc/csr0001-validacionesfondo-v2", "--manual")
+                      }
+                      sh "sleep 40"
+                    }
+                  }
+                }
+              }
+              stage('Desplegando en QA') {
+                steps {
+                sh "sleep 30"
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        openshift.selector("dc", "csr0001-validacionesfondo-v2").rollout().latest();
+                      }
+                      sh "sleep 15"
+                    }
+                  }
+                }
+              }
+            }
+          }
+      type: JenkinsPipeline
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - github:
+        secret: vJU0CXQe
+      type: GitHub
+    - generic:
+        secret: vJU0CXQe
+      type: Generic
+  status:
+    lastVersion: 0
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/migration-registry: ""
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+      pipeline.alpha.openshift.io/uses: '[{"name": "jenkins", "namespace": "", "kind":
+        "DeploymentConfig"}]'
+    creationTimestamp: "2023-05-22T20:02:55Z"
+    generation: 2
+    labels:
+      app: cicd-pipeline
+      group: cicd
+      migration.openshift.io/migrated-by-migmigration: 83812283-da61-428b-8d35-e15d91aa764d
+      migration.openshift.io/migrated-by-migplan: 6b6402c2-9258-443b-83f4-8bb51f1d90f8
+      name: cicd-pipeline
+      template: cicd
+      velero.io/backup-name: migration-8d005-initial-6s92c
+      velero.io/restore-name: migration-8d005-final-jj2bc
+    name: csr0001-validacionesfondoextra
+    namespace: pipelines-qa
+    resourceVersion: "136547514"
+    uid: 7759b306-fe8a-4eb4-8ad0-7f210a1183be
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: {}
+    output: {}
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      type: None
+    strategy:
+      jenkinsPipelineStrategy:
+        env:
+        - name: DEV_PROJECT
+          value: api-fiscalizacion-dev
+        - name: QA_PROJECT
+          value: api-fiscalizacion-qa
+        - name: ENABLE_QUAY
+          value: "false"
+        jenkinsfile: |
+          pipeline {
+            agent {
+              label 'maven'
+            }
+            stages {
+              stage('Clonando repo y Compilando') {
+                  steps {
+                      git([url: 'https://dirtrab.visualstudio.com/Libro%20Remuneraciones%20Electronico/_git/CSR0001-ValidacionesFondo-v2',
+                      branch: 'develop',
+                      credentialsId: 'azure_credenciales_id'])
+                  script {
+                      def pom = readMavenPom file: 'pom.xml'
+                      version = pom.version
+                  }
+                  sh "mvn -s configuration/settings.xml install -DskipTests=true"
+                }
+              }
+              stage('Creando Image Builder') {
+                when {
+                  expression {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        return !openshift.selector("bc", "csr0001-validacionesfondoextra").exists();
+                      }
+                    }
+                  }
+                }
+                steps {
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        openshift.newBuild("--name=csr0001-validacionesfondoextra", "--image-stream=redhat-openjdk18-openshift:1.4", "--binary=true")
+                      }
+                    }
+                  }
+                }
+              }
+              stage('Construyendo imagen') {
+                steps {
+                  sh "rm -rf oc-build && mkdir -p oc-build/deployments"
+                  sh "cp target/CSR0001-ValidacionesFondo-v2-1.0.0.jar oc-build/deployments/CSR0001-ValidacionesFondo-v2.jar"
+
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        openshift.selector("bc", "csr0001-validacionesfondoextra").startBuild("--from-dir=oc-build", "--wait=true")
+                      }
+                    }
+                  }
+                  sh "sleep 10"
+                }
+              }
+              stage('Creando en QA') {
+                when {
+                  expression {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        return !openshift.selector('dc', 'csr0001-validacionesfondoextra').exists()
+                      }
+                    }
+                  }
+                }
+                steps {
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        def app = openshift.newApp("csr0001-validacionesfondoextra:latest")
+                        app.narrow("svc").expose();
+                        def dc = openshift.selector("dc", "csr0001-validacionesfondoextra")
+                        while (dc.object().spec.replicas != dc.object().status.availableReplicas) {
+                            sleep 10
+                        }
+                        openshift.set("triggers", "dc/csr0001-validacionesfondoextra", "--manual")
+                      }
+                      sh "sleep 40"
+                    }
+                  }
+                }
+              }
+              stage('Desplegando en QA') {
+                steps {
+                sh "sleep 30"
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        openshift.selector("dc", "csr0001-validacionesfondoextra").rollout().latest();
+                      }
+                      sh "sleep 15"
+                    }
+                  }
+                }
+              }
+            }
+          }
+      type: JenkinsPipeline
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - github:
+        secret: vJU0CXQe
+      type: GitHub
+    - generic:
+        secret: vJU0CXQe
+      type: Generic
+  status:
+    lastVersion: 1
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/migration-registry: ""
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+      pipeline.alpha.openshift.io/uses: '[{"name": "jenkins", "namespace": "", "kind":
+        "DeploymentConfig"}]'
+    creationTimestamp: "2023-05-22T20:02:55Z"
+    generation: 2
+    labels:
+      app: cicd-pipeline
+      group: cicd
+      migration.openshift.io/migrated-by-migmigration: 83812283-da61-428b-8d35-e15d91aa764d
+      migration.openshift.io/migrated-by-migplan: 6b6402c2-9258-443b-83f4-8bb51f1d90f8
+      name: cicd-pipeline
+      template: cicd
+      velero.io/backup-name: migration-8d005-initial-6s92c
+      velero.io/restore-name: migration-8d005-final-jj2bc
+    name: csr0001-validacionesfondolarge
+    namespace: pipelines-qa
+    resourceVersion: "136542803"
+    uid: 68e10271-316b-4f3a-96bc-147401672a6a
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: {}
+    output: {}
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      type: None
+    strategy:
+      jenkinsPipelineStrategy:
+        env:
+        - name: DEV_PROJECT
+          value: api-fiscalizacion-dev
+        - name: QA_PROJECT
+          value: api-fiscalizacion-qa
+        - name: ENABLE_QUAY
+          value: "false"
+        jenkinsfile: |
+          pipeline {
+            agent {
+              label 'maven'
+            }
+            stages {
+              stage('Clonando repo y Compilando') {
+                  steps {
+                      git([url: 'https://dirtrab.visualstudio.com/Libro%20Remuneraciones%20Electronico/_git/CSR0001-ValidacionesFondo-v2',
+                      branch: 'develop',
+                      credentialsId: 'azure_credenciales_id'])
+                  script {
+                      def pom = readMavenPom file: 'pom.xml'
+                      version = pom.version
+                  }
+                  sh "mvn -s configuration/settings.xml install -DskipTests=true"
+                }
+              }
+              stage('Creando Image Builder') {
+                when {
+                  expression {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        return !openshift.selector("bc", "csr0001-validacionesfondolarge").exists();
+                      }
+                    }
+                  }
+                }
+                steps {
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        openshift.newBuild("--name=csr0001-validacionesfondolarge", "--image-stream=redhat-openjdk18-openshift:1.4", "--binary=true")
+                      }
+                    }
+                  }
+                }
+              }
+              stage('Construyendo imagen') {
+                steps {
+                  sh "rm -rf oc-build && mkdir -p oc-build/deployments"
+                  sh "cp target/CSR0001-ValidacionesFondo-v2-1.0.0.jar oc-build/deployments/CSR0001-ValidacionesFondo-v2.jar"
+
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        openshift.selector("bc", "csr0001-validacionesfondolarge").startBuild("--from-dir=oc-build", "--wait=true")
+                      }
+                    }
+                  }
+                  sh "sleep 10"
+                }
+              }
+              stage('Creando en QA') {
+                when {
+                  expression {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        return !openshift.selector('dc', 'csr0001-validacionesfondolarge').exists()
+                      }
+                    }
+                  }
+                }
+                steps {
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        def app = openshift.newApp("csr0001-validacionesfondolarge:latest")
+                        app.narrow("svc").expose();
+                        def dc = openshift.selector("dc", "csr0001-validacionesfondolarge")
+                        while (dc.object().spec.replicas != dc.object().status.availableReplicas) {
+                            sleep 10
+                        }
+                        openshift.set("triggers", "dc/csr0001-validacionesfondolarge", "--manual")
+                      }
+                      sh "sleep 40"
+                    }
+                  }
+                }
+              }
+              stage('Desplegando en QA') {
+                steps {
+                sh "sleep 30"
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        openshift.selector("dc", "csr0001-validacionesfondolarge").rollout().latest();
+                      }
+                      sh "sleep 15"
+                    }
+                  }
+                }
+              }
+            }
+          }
+      type: JenkinsPipeline
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - github:
+        secret: vJU0CXQe
+      type: GitHub
+    - generic:
+        secret: vJU0CXQe
+      type: Generic
+  status:
+    lastVersion: 1
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/migration-registry: ""
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+      pipeline.alpha.openshift.io/uses: '[{"name": "jenkins", "namespace": "", "kind":
+        "DeploymentConfig"}]'
+    creationTimestamp: "2023-05-22T20:02:55Z"
+    generation: 2
+    labels:
+      app: cicd-pipeline
+      group: cicd
+      migration.openshift.io/migrated-by-migmigration: 83812283-da61-428b-8d35-e15d91aa764d
+      migration.openshift.io/migrated-by-migplan: 6b6402c2-9258-443b-83f4-8bb51f1d90f8
+      name: cicd-pipeline
+      template: cicd
+      velero.io/backup-name: migration-8d005-initial-6s92c
+      velero.io/restore-name: migration-8d005-final-jj2bc
+    name: csr0001-validacionesfondomedium
+    namespace: pipelines-qa
+    resourceVersion: "136538748"
+    uid: dce887ee-9511-4a3a-bbdf-1493f647f563
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: {}
+    output: {}
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      type: None
+    strategy:
+      jenkinsPipelineStrategy:
+        env:
+        - name: DEV_PROJECT
+          value: api-fiscalizacion-dev
+        - name: QA_PROJECT
+          value: api-fiscalizacion-qa
+        - name: ENABLE_QUAY
+          value: "false"
+        jenkinsfile: |
+          pipeline {
+            agent {
+              label 'maven'
+            }
+            stages {
+              stage('Clonando repo y Compilando') {
+                  steps {
+                      git([url: 'https://dirtrab.visualstudio.com/Libro%20Remuneraciones%20Electronico/_git/CSR0001-ValidacionesFondo-v2',
+                      branch: 'develop',
+                      credentialsId: 'azure_credenciales_id'])
+                  script {
+                      def pom = readMavenPom file: 'pom.xml'
+                      version = pom.version
+                  }
+                  sh "mvn -s configuration/settings.xml install -DskipTests=true"
+                }
+              }
+              stage('Creando Image Builder') {
+                when {
+                  expression {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        return !openshift.selector("bc", "csr0001-validacionesfondomedium").exists();
+                      }
+                    }
+                  }
+                }
+                steps {
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        openshift.newBuild("--name=csr0001-validacionesfondomedium", "--image-stream=redhat-openjdk18-openshift:1.4", "--binary=true")
+                      }
+                    }
+                  }
+                }
+              }
+              stage('Construyendo imagen') {
+                steps {
+                  sh "rm -rf oc-build && mkdir -p oc-build/deployments"
+                  sh "cp target/CSR0001-ValidacionesFondo-v2-1.0.0.jar oc-build/deployments/CSR0001-ValidacionesFondo-v2.jar"
+
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        openshift.selector("bc", "csr0001-validacionesfondomedium").startBuild("--from-dir=oc-build", "--wait=true")
+                      }
+                    }
+                  }
+                  sh "sleep 10"
+                }
+              }
+              stage('Creando en QA') {
+                when {
+                  expression {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        return !openshift.selector('dc', 'csr0001-validacionesfondomedium').exists()
+                      }
+                    }
+                  }
+                }
+                steps {
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        def app = openshift.newApp("csr0001-validacionesfondomedium:latest")
+                        app.narrow("svc").expose();
+                        def dc = openshift.selector("dc", "csr0001-validacionesfondomedium")
+                        while (dc.object().spec.replicas != dc.object().status.availableReplicas) {
+                            sleep 10
+                        }
+                        openshift.set("triggers", "dc/csr0001-validacionesfondomedium", "--manual")
+                      }
+                      sh "sleep 40"
+                    }
+                  }
+                }
+              }
+              stage('Desplegando en QA') {
+                steps {
+                sh "sleep 30"
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        openshift.selector("dc", "csr0001-validacionesfondomedium").rollout().latest();
+                      }
+                      sh "sleep 15"
+                    }
+                  }
+                }
+              }
+            }
+          }
+      type: JenkinsPipeline
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - github:
+        secret: vJU0CXQe
+      type: GitHub
+    - generic:
+        secret: vJU0CXQe
+      type: Generic
+  status:
+    lastVersion: 1
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/migration-registry: ""
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+      pipeline.alpha.openshift.io/uses: '[{"name": "jenkins", "namespace": "", "kind":
+        "DeploymentConfig"}]'
+    creationTimestamp: "2023-05-22T20:02:55Z"
+    generation: 2
+    labels:
+      app: cicd-pipeline
+      group: cicd
+      migration.openshift.io/migrated-by-migmigration: 83812283-da61-428b-8d35-e15d91aa764d
+      migration.openshift.io/migrated-by-migplan: 6b6402c2-9258-443b-83f4-8bb51f1d90f8
+      name: cicd-pipeline
+      template: cicd
+      velero.io/backup-name: migration-8d005-initial-6s92c
+      velero.io/restore-name: migration-8d005-final-jj2bc
+    name: csr0001-validacionesfondosmall
+    namespace: pipelines-qa
+    resourceVersion: "136493721"
+    uid: 296b793a-646b-428e-ab9d-4e706c85b5f5
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: {}
+    output: {}
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      type: None
+    strategy:
+      jenkinsPipelineStrategy:
+        env:
+        - name: DEV_PROJECT
+          value: api-fiscalizacion-dev
+        - name: QA_PROJECT
+          value: api-fiscalizacion-qa
+        - name: ENABLE_QUAY
+          value: "false"
+        jenkinsfile: |
+          pipeline {
+            agent {
+              label 'maven'
+            }
+            stages {
+              stage('Clonando repo y Compilando') {
+                  steps {
+                      git([url: 'https://dirtrab.visualstudio.com/Libro%20Remuneraciones%20Electronico/_git/CSR0001-ValidacionesFondo-v2',
+                      branch: 'feature/agrega_campo_observaciones_json',
+                      credentialsId: 'vsts'])
+                  script {
+                      def pom = readMavenPom file: 'pom.xml'
+                      version = pom.version
+                  }
+                  sh "mvn -s configuration/settings.xml install -DskipTests=true"
+                }
+              }
+              stage('Creando Image Builder') {
+                when {
+                  expression {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        return !openshift.selector("bc", "csr0001-validacionesfondosmall").exists();
+                      }
+                    }
+                  }
+                }
+                steps {
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        openshift.newBuild("--name=csr0001-validacionesfondosmall", "--image-stream=redhat-openjdk18-openshift:1.4", "--binary=true")
+                      }
+                    }
+                  }
+                }
+              }
+              stage('Construyendo imagen') {
+                steps {
+                  sh "rm -rf oc-build && mkdir -p oc-build/deployments"
+                  sh "cp target/CSR0001-ValidacionesFondo-v2-1.0.0.jar oc-build/deployments/CSR0001-ValidacionesFondo-v2.jar"
+
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        openshift.selector("bc", "csr0001-validacionesfondosmall").startBuild("--from-dir=oc-build", "--wait=true")
+                      }
+                    }
+                  }
+                  sh "sleep 10"
+                }
+              }
+              stage('Creando en QA') {
+                when {
+                  expression {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        return !openshift.selector('dc', 'csr0001-validacionesfondosmall').exists()
+                      }
+                    }
+                  }
+                }
+                steps {
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        def app = openshift.newApp("csr0001-validacionesfondosmall:latest")
+                        app.narrow("svc").expose();
+                        def dc = openshift.selector("dc", "csr0001-validacionesfondosmall")
+                        while (dc.object().spec.replicas != dc.object().status.availableReplicas) {
+                            sleep 10
+                        }
+                        openshift.set("triggers", "dc/csr0001-validacionesfondosmall", "--manual")
+                      }
+                      sh "sleep 40"
+                    }
+                  }
+                }
+              }
+              stage('Desplegando en QA') {
+                steps {
+                sh "sleep 30"
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        openshift.selector("dc", "csr0001-validacionesfondosmall").rollout().latest();
+                      }
+                      sh "sleep 15"
+                    }
+                  }
+                }
+              }
+            }
+          }
+      type: JenkinsPipeline
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - github:
+        secret: vJU0CXQe
+      type: GitHub
+    - generic:
+        secret: vJU0CXQe
+      type: Generic
+  status:
+    lastVersion: 1
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/migration-registry: ""
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+      pipeline.alpha.openshift.io/uses: '[{"name": "jenkins", "namespace": "", "kind":
+        "DeploymentConfig"}]'
+    creationTimestamp: "2023-05-22T20:02:55Z"
+    generation: 1
+    labels:
+      app: cicd-pipeline
+      group: cicd
+      migration.openshift.io/migrated-by-migmigration: 83812283-da61-428b-8d35-e15d91aa764d
+      migration.openshift.io/migrated-by-migplan: 6b6402c2-9258-443b-83f4-8bb51f1d90f8
+      name: cicd-pipeline
+      template: cicd
+      velero.io/backup-name: migration-8d005-initial-6s92c
+      velero.io/restore-name: migration-8d005-final-jj2bc
+    name: csr0002-cargaarchivodeclaracion
+    namespace: pipelines-qa
+    resourceVersion: "9214500"
+    uid: 9e9ca54d-fcf1-4977-b34c-6cad38c8106c
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: {}
+    output: {}
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      type: None
+    strategy:
+      jenkinsPipelineStrategy:
+        env:
+        - name: QA_PROJECT
+          value: api-fiscalizacion-qa
+        - name: ENABLE_QUAY
+          value: "false"
+        jenkinsfile: |
+          pipeline {
+            agent {
+              label 'maven'
+            }
+            stages {
+              stage('Clonando repo y Compilando') {
+                  steps {
+                      git([url: 'https://dirtrab.visualstudio.com/Libro%20Remuneraciones%20Electronico/_git/CSR0002-CargaArchivoDeclaracion',
+                      branch: 'bugfix/salto_linea',
+                      credentialsId: 'azure_credenciales_id'])
+                  script {
+                      def pom = readMavenPom file: 'pom.xml'
+                      version = pom.version
+                  }
+                  sh "mvn -s configuration/settings.xml install -DskipTests=true"
+                }
+              }
+              stage('Creando Image Builder') {
+                when {
+                  expression {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        return !openshift.selector("bc", "csr0002-cargaarchivodecl").exists();
+                      }
+                    }
+                  }
+                }
+                steps {
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        openshift.newBuild("--name=csr0002-cargaarchivodecl", "--image-stream=redhat-openjdk18-openshift:1.4", "--binary=true")
+                      }
+                    }
+                  }
+                }
+              }
+              stage('Construyendo imagen') {
+                steps {
+                  sh "rm -rf oc-build && mkdir -p oc-build/deployments"
+                  sh "cp target/CSR0002-CargaArchivoDeclaracion-1.0.jar oc-build/deployments/CSR0002-CargaArchivoDeclaracion.jar"
+
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        openshift.selector("bc", "csr0002-cargaarchivodecl").startBuild("--from-dir=oc-build", "--wait=true")
+                      }
+                    }
+                  }
+                  sh "sleep 10"
+                }
+              }
+              stage('Creando en QA') {
+                when {
+                  expression {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        return !openshift.selector('dc', 'csr0002-cargaarchivodecl').exists()
+                      }
+                    }
+                  }
+                }
+                steps {
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        def app = openshift.newApp("csr0002-cargaarchivodecl:latest")
+                        app.narrow("svc").expose();
+                        def dc = openshift.selector("dc", "csr0002-cargaarchivodecl")
+                        while (dc.object().spec.replicas != dc.object().status.availableReplicas) {
+                            sleep 10
+                        }
+                        openshift.set("triggers", "dc/csr0002-cargaarchivodecl", "--manual")
+                      }
+                      sh "sleep 40"
+                    }
+                  }
+                }
+              }
+              stage('Desplegando en QA') {
+                steps {
+                sh "sleep 20"
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        openshift.selector("dc", "csr0002-cargaarchivodecl").rollout().latest();
+                      }
+                      sh "sleep 15"
+                    }
+                  }
+                }
+              }
+            }
+          }
+      type: JenkinsPipeline
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - github:
+        secret: vJU0CXQe
+      type: GitHub
+    - generic:
+        secret: vJU0CXQe
+      type: Generic
+  status:
+    lastVersion: 0
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/migration-registry: ""
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-22T20:02:55Z"
+    generation: 2
+    labels:
+      app: cicd-pipeline
+      group: cicd
+      migration.openshift.io/migrated-by-migmigration: 83812283-da61-428b-8d35-e15d91aa764d
+      migration.openshift.io/migrated-by-migplan: 6b6402c2-9258-443b-83f4-8bb51f1d90f8
+      name: cicd-pipeline
+      template: cicd
+      velero.io/backup-name: migration-8d005-initial-6s92c
+      velero.io/restore-name: migration-8d005-final-jj2bc
+    name: csr0002-cargaarchivoextra
+    namespace: pipelines-qa
+    resourceVersion: "136563627"
+    uid: 43a2bf69-efb9-471b-9e23-f8617538d550
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: {}
+    output: {}
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      type: None
+    strategy:
+      jenkinsPipelineStrategy:
+        env:
+        - name: DEV_PROJECT
+          value: api-fiscalizacion-dev
+        - name: QA_PROJECT
+          value: api-fiscalizacion-qa
+        - name: ENABLE_QUAY
+          value: "false"
+        jenkinsfile: |
+          pipeline {
+            agent {
+              label 'maven'
+            }
+            stages {
+              stage('Clonando repo y Compilando') {
+                  steps {
+                      git([url: 'https://dirtrab.visualstudio.com/Libro%20Remuneraciones%20Electronico/_git/CSR0002-CargaArchivoDeclaracion',
+                      branch: 'develop',
+                      credentialsId: 'azure_credenciales_id'])
+                  script {
+                      def pom = readMavenPom file: 'pom.xml'
+                      version = pom.version
+                  }
+                  sh "mvn -s configuration/settings.xml install -DskipTests=true"
+                }
+              }
+              stage('Creando Image Builder') {
+                when {
+                  expression {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        return !openshift.selector("bc", "csr0002-cargaarchivoextra").exists();
+                      }
+                    }
+                  }
+                }
+                steps {
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        openshift.newBuild("--name=csr0002-cargaarchivoextra", "--image-stream=redhat-openjdk18-openshift:1.4", "--binary=true")
+                      }
+                    }
+                  }
+                }
+              }
+              stage('Construyendo imagen') {
+                steps {
+                  sh "rm -rf oc-build && mkdir -p oc-build/deployments"
+                  sh "cp target/CSR0002-CargaArchivoDeclaracion-1.0.jar oc-build/deployments/CSR0002-CargaArchivoDeclaracion.jar"
+
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        openshift.selector("bc", "csr0002-cargaarchivoextra").startBuild("--from-dir=oc-build", "--wait=true")
+                      }
+                    }
+                  }
+                  sh "sleep 10"
+                }
+              }
+              stage('Creando en QA') {
+                when {
+                  expression {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        return !openshift.selector('dc', 'csr0002-cargaarchivoextra').exists()
+                      }
+                    }
+                  }
+                }
+                steps {
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        def app = openshift.newApp("csr0002-cargaarchivoextra:latest")
+                        app.narrow("svc").expose();
+                        def dc = openshift.selector("dc", "csr0002-cargaarchivoextra")
+                        while (dc.object().spec.replicas != dc.object().status.availableReplicas) {
+                            sleep 10
+                        }
+                        openshift.set("triggers", "dc/csr0002-cargaarchivolarge", "--manual")
+                      }
+                      sh "sleep 40"
+                    }
+                  }
+                }
+              }
+              stage('Desplegando en QA') {
+                steps {
+                sh "sleep 20"
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        openshift.selector("dc", "csr0002-cargaarchivoextra").rollout().latest();
+                      }
+                      sh "sleep 15"
+                    }
+                  }
+                }
+              }
+            }
+          }
+      type: JenkinsPipeline
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - github:
+        secret: vJU0CXQe
+      type: GitHub
+    - generic:
+        secret: vJU0CXQe
+      type: Generic
+  status:
+    lastVersion: 1
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/migration-registry: ""
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-22T20:02:55Z"
+    generation: 2
+    labels:
+      app: cicd-pipeline
+      group: cicd
+      migration.openshift.io/migrated-by-migmigration: 83812283-da61-428b-8d35-e15d91aa764d
+      migration.openshift.io/migrated-by-migplan: 6b6402c2-9258-443b-83f4-8bb51f1d90f8
+      name: cicd-pipeline
+      template: cicd
+      velero.io/backup-name: migration-8d005-initial-6s92c
+      velero.io/restore-name: migration-8d005-final-jj2bc
+    name: csr0002-cargaarchivolarge
+    namespace: pipelines-qa
+    resourceVersion: "136560787"
+    uid: 8e9fa2cc-7b07-4ac8-a94d-c45588ee395d
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: {}
+    output: {}
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      type: None
+    strategy:
+      jenkinsPipelineStrategy:
+        env:
+        - name: DEV_PROJECT
+          value: api-fiscalizacion-dev
+        - name: QA_PROJECT
+          value: api-fiscalizacion-qa
+        - name: ENABLE_QUAY
+          value: "false"
+        jenkinsfile: |
+          pipeline {
+            agent {
+              label 'maven'
+            }
+            stages {
+              stage('Clonando repo y Compilando') {
+                  steps {
+                      git([url: 'https://dirtrab.visualstudio.com/Libro%20Remuneraciones%20Electronico/_git/CSR0002-CargaArchivoDeclaracion',
+                      branch: 'develop',
+                      credentialsId: 'azure_credenciales_id'])
+                  script {
+                      def pom = readMavenPom file: 'pom.xml'
+                      version = pom.version
+                  }
+                  sh "mvn -s configuration/settings.xml install -DskipTests=true"
+                }
+              }
+              stage('Creando Image Builder') {
+                when {
+                  expression {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        return !openshift.selector("bc", "csr0002-cargaarchivolarge").exists();
+                      }
+                    }
+                  }
+                }
+                steps {
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        openshift.newBuild("--name=csr0002-cargaarchivolarge", "--image-stream=redhat-openjdk18-openshift:1.4", "--binary=true")
+                      }
+                    }
+                  }
+                }
+              }
+              stage('Construyendo imagen') {
+                steps {
+                  sh "rm -rf oc-build && mkdir -p oc-build/deployments"
+                  sh "cp target/CSR0002-CargaArchivoDeclaracion-1.0.jar oc-build/deployments/CSR0002-CargaArchivoDeclaracion.jar"
+
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        openshift.selector("bc", "csr0002-cargaarchivolarge").startBuild("--from-dir=oc-build", "--wait=true")
+                      }
+                    }
+                  }
+                  sh "sleep 10"
+                }
+              }
+              stage('Creando en QA') {
+                when {
+                  expression {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        return !openshift.selector('dc', 'csr0002-cargaarchivolarge').exists()
+                      }
+                    }
+                  }
+                }
+                steps {
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        def app = openshift.newApp("csr0002-cargaarchivolarge:latest")
+                        app.narrow("svc").expose();
+                        def dc = openshift.selector("dc", "csr0002-cargaarchivolarge")
+                        while (dc.object().spec.replicas != dc.object().status.availableReplicas) {
+                            sleep 10
+                        }
+                        openshift.set("triggers", "dc/csr0002-cargaarchivolarge", "--manual")
+                      }
+                      sh "sleep 40"
+                    }
+                  }
+                }
+              }
+              stage('Desplegando en QA') {
+                steps {
+                sh "sleep 20"
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        openshift.selector("dc", "csr0002-cargaarchivolarge").rollout().latest();
+                      }
+                      sh "sleep 15"
+                    }
+                  }
+                }
+              }
+            }
+          }
+      type: JenkinsPipeline
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - github:
+        secret: vJU0CXQe
+      type: GitHub
+    - generic:
+        secret: vJU0CXQe
+      type: Generic
+  status:
+    lastVersion: 1
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/migration-registry: ""
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-22T20:02:55Z"
+    generation: 2
+    labels:
+      app: cicd-pipeline
+      group: cicd
+      migration.openshift.io/migrated-by-migmigration: 83812283-da61-428b-8d35-e15d91aa764d
+      migration.openshift.io/migrated-by-migplan: 6b6402c2-9258-443b-83f4-8bb51f1d90f8
+      name: cicd-pipeline
+      template: cicd
+      velero.io/backup-name: migration-8d005-initial-6s92c
+      velero.io/restore-name: migration-8d005-final-jj2bc
+    name: csr0002-cargaarchivomedium
+    namespace: pipelines-qa
+    resourceVersion: "136554453"
+    uid: 7cdc9f3a-3d01-4a19-9443-f5011dea5bb5
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: {}
+    output: {}
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      type: None
+    strategy:
+      jenkinsPipelineStrategy:
+        env:
+        - name: DEV_PROJECT
+          value: api-fiscalizacion-dev
+        - name: QA_PROJECT
+          value: api-fiscalizacion-qa
+        - name: ENABLE_QUAY
+          value: "false"
+        jenkinsfile: |
+          pipeline {
+            agent {
+              label 'maven'
+            }
+            stages {
+              stage('Clonando repo y Compilando') {
+                  steps {
+                      git([url: 'https://dirtrab.visualstudio.com/Libro%20Remuneraciones%20Electronico/_git/CSR0002-CargaArchivoDeclaracion',
+                      branch: 'bugfix/salto_linea',
+                      credentialsId: 'azure_credenciales_id'])
+                  script {
+                      def pom = readMavenPom file: 'pom.xml'
+                      version = pom.version
+                  }
+                  sh "mvn -s configuration/settings.xml install -DskipTests=true"
+                }
+              }
+              stage('Creando Image Builder') {
+                when {
+                  expression {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        return !openshift.selector("bc", "csr0002-cargaarchivomedium").exists();
+                      }
+                    }
+                  }
+                }
+                steps {
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        openshift.newBuild("--name=csr0002-cargaarchivomedium", "--image-stream=redhat-openjdk18-openshift:1.4", "--binary=true")
+                      }
+                    }
+                  }
+                }
+              }
+              stage('Construyendo imagen') {
+                steps {
+                  sh "rm -rf oc-build && mkdir -p oc-build/deployments"
+                  sh "cp target/CSR0002-CargaArchivoDeclaracion-1.0.jar oc-build/deployments/CSR0002-CargaArchivoDeclaracion.jar"
+
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        openshift.selector("bc", "csr0002-cargaarchivomedium").startBuild("--from-dir=oc-build", "--wait=true")
+                      }
+                    }
+                  }
+                  sh "sleep 10"
+                }
+              }
+              stage('Creando en QA') {
+                when {
+                  expression {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        return !openshift.selector('dc', 'csr0002-cargaarchivomedium').exists()
+                      }
+                    }
+                  }
+                }
+                steps {
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        def app = openshift.newApp("csr0002-cargaarchivomedium:latest")
+                        app.narrow("svc").expose();
+                        def dc = openshift.selector("dc", "csr0002-cargaarchivomedium")
+                        while (dc.object().spec.replicas != dc.object().status.availableReplicas) {
+                            sleep 10
+                        }
+                        openshift.set("triggers", "dc/csr0002-cargaarchivomedium", "--manual")
+                      }
+                      sh "sleep 40"
+                    }
+                  }
+                }
+              }
+              stage('Desplegando en QA') {
+                steps {
+                sh "sleep 20"
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        openshift.selector("dc", "csr0002-cargaarchivomedium").rollout().latest();
+                      }
+                      sh "sleep 15"
+                    }
+                  }
+                }
+              }
+            }
+          }
+      type: JenkinsPipeline
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - github:
+        secret: vJU0CXQe
+      type: GitHub
+    - generic:
+        secret: vJU0CXQe
+      type: Generic
+  status:
+    lastVersion: 1
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/migration-registry: ""
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-22T20:02:55Z"
+    generation: 2
+    labels:
+      app: cicd-pipeline
+      group: cicd
+      migration.openshift.io/migrated-by-migmigration: 83812283-da61-428b-8d35-e15d91aa764d
+      migration.openshift.io/migrated-by-migplan: 6b6402c2-9258-443b-83f4-8bb51f1d90f8
+      name: cicd-pipeline
+      template: cicd
+      velero.io/backup-name: migration-8d005-initial-6s92c
+      velero.io/restore-name: migration-8d005-final-jj2bc
+    name: csr0002-cargaarchivosmall
+    namespace: pipelines-qa
+    resourceVersion: "136551302"
+    uid: 7bb3c371-a35a-40ba-8e52-5b92c8922bfd
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: {}
+    output: {}
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      type: None
+    strategy:
+      jenkinsPipelineStrategy:
+        env:
+        - name: DEV_PROJECT
+          value: api-fiscalizacion-dev
+        - name: QA_PROJECT
+          value: api-fiscalizacion-qa
+        - name: ENABLE_QUAY
+          value: "false"
+        jenkinsfile: |
+          pipeline {
+            agent {
+              label 'maven'
+            }
+            stages {
+              stage('Clonando repo y Compilando') {
+                  steps {
+                      git([url: 'https://dirtrab.visualstudio.com/Libro%20Remuneraciones%20Electronico/_git/CSR0002-CargaArchivoDeclaracion',
+                      branch: 'feature/sin_movimiento',
+                      credentialsId: 'azure_credenciales_id'])
+                  script {
+                      def pom = readMavenPom file: 'pom.xml'
+                      version = pom.version
+                  }
+                  sh "mvn -s configuration/settings.xml install -DskipTests=true"
+                }
+              }
+              stage('Creando Image Builder') {
+                when {
+                  expression {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        return !openshift.selector("bc", "csr0002-cargaarchivosmall").exists();
+                      }
+                    }
+                  }
+                }
+                steps {
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        openshift.newBuild("--name=csr0002-cargaarchivosmall", "--image-stream=redhat-openjdk18-openshift:1.4", "--binary=true")
+                      }
+                    }
+                  }
+                }
+              }
+              stage('Construyendo imagen') {
+                steps {
+                  sh "rm -rf oc-build && mkdir -p oc-build/deployments"
+                  sh "cp target/CSR0002-CargaArchivoDeclaracion-1.0.jar oc-build/deployments/CSR0002-CargaArchivoDeclaracion.jar"
+
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        openshift.selector("bc", "csr0002-cargaarchivosmall").startBuild("--from-dir=oc-build", "--wait=true")
+                      }
+                    }
+                  }
+                  sh "sleep 10"
+                }
+              }
+              stage('Creando en QA') {
+                when {
+                  expression {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        return !openshift.selector('dc', 'csr0002-cargaarchivosmall').exists()
+                      }
+                    }
+                  }
+                }
+                steps {
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        def app = openshift.newApp("csr0002-cargaarchivosmall:latest")
+                        app.narrow("svc").expose();
+                        def dc = openshift.selector("dc", "csr0002-cargaarchivosmall")
+                        while (dc.object().spec.replicas != dc.object().status.availableReplicas) {
+                            sleep 10
+                        }
+                        openshift.set("triggers", "dc/csr0002-cargaarchivosmall", "--manual")
+                      }
+                      sh "sleep 40"
+                    }
+                  }
+                }
+              }
+              stage('Desplegando en QA') {
+                steps {
+                sh "sleep 20"
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        openshift.selector("dc", "csr0002-cargaarchivosmall").rollout().latest();
+                      }
+                      sh "sleep 15"
+                    }
+                  }
+                }
+              }
+            }
+          }
+      type: JenkinsPipeline
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - github:
+        secret: vJU0CXQe
+      type: GitHub
+    - generic:
+        secret: vJU0CXQe
+      type: Generic
+  status:
+    lastVersion: 1
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/migration-registry: ""
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+      pipeline.alpha.openshift.io/uses: '[{"name": "jenkins", "namespace": "", "kind":
+        "DeploymentConfig"}]'
+    creationTimestamp: "2023-05-22T20:02:55Z"
+    generation: 2
+    labels:
+      app: cicd-pipeline
+      group: cicd
+      migration.openshift.io/migrated-by-migmigration: 83812283-da61-428b-8d35-e15d91aa764d
+      migration.openshift.io/migrated-by-migplan: 6b6402c2-9258-443b-83f4-8bb51f1d90f8
+      name: cicd-pipeline
+      template: cicd
+      velero.io/backup-name: migration-8d005-initial-6s92c
+      velero.io/restore-name: migration-8d005-final-jj2bc
+    name: csr0003-envioarchivodeclaracion
+    namespace: pipelines-qa
+    resourceVersion: "136566584"
+    uid: 02a1cc3e-fb7b-4ee0-bb37-62a875610b62
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: {}
+    output: {}
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      type: None
+    strategy:
+      jenkinsPipelineStrategy:
+        env:
+        - name: QA_PROJECT
+          value: api-fiscalizacion-qa
+        - name: ENABLE_QUAY
+          value: "false"
+        jenkinsfile: |
+          pipeline {
+            agent {
+              label 'maven'
+            }
+            stages {
+              stage('Clonando repo y Compilando') {
+                  steps {
+                      git([url: 'https://dirtrab.visualstudio.com/Libro%20Remuneraciones%20Electronico/_git/CSR0003-EnvioArchivoDeclaracion',
+                      branch: 'feature/test_restTemplate',
+                      credentialsId: 'azure_credenciales_id'])
+                  script {
+                      def pom = readMavenPom file: 'pom.xml'
+                      version = pom.version
+                  }
+                  sh "mvn -s configuration/settings.xml install -DskipTests=true"
+                }
+              }
+              stage('Creando Image Builder') {
+                when {
+                  expression {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        return !openshift.selector("bc", "csr0003-envioarchivodecl").exists();
+                      }
+                    }
+                  }
+                }
+                steps {
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        openshift.newBuild("--name=csr0003-envioarchivodecl", "--image-stream=redhat-openjdk18-openshift:1.4", "--binary=true")
+                      }
+                    }
+                  }
+                }
+              }
+              stage('Construyendo imagen') {
+                steps {
+                  sh "rm -rf oc-build && mkdir -p oc-build/deployments"
+                  sh "cp target/CSR0003-EnvioArchivoDeclaracion-1.0.jar oc-build/deployments/CSR0003-EnvioArchivoDeclaracion.jar"
+
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        openshift.selector("bc", "csr0003-envioarchivodecl").startBuild("--from-dir=oc-build", "--wait=true")
+                      }
+                    }
+                  }
+                  sh "sleep 10"
+                }
+              }
+              stage('Creando en QA') {
+                when {
+                  expression {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        return !openshift.selector('dc', 'csr0003-envioarchivodecl').exists()
+                      }
+                    }
+                  }
+                }
+                steps {
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        def app = openshift.newApp("csr0003-envioarchivodecl:latest")
+                        app.narrow("svc").expose();
+                        def dc = openshift.selector("dc", "csr0003-envioarchivodecl")
+                        while (dc.object().spec.replicas != dc.object().status.availableReplicas) {
+                            sleep 10
+                        }
+                        openshift.set("triggers", "dc/csr0003-envioarchivodecl", "--manual")
+                      }
+                      sh "sleep 40"
+                    }
+                  }
+                }
+              }
+              stage('Desplegando en QA') {
+                steps {
+                sh "sleep 20"
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        openshift.selector("dc", "csr0003-envioarchivodecl").rollout().latest();
+                      }
+                      sh "sleep 15"
+                    }
+                  }
+                }
+              }
+            }
+          }
+      type: JenkinsPipeline
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - github:
+        secret: vJU0CXQe
+      type: GitHub
+    - generic:
+        secret: vJU0CXQe
+      type: Generic
+  status:
+    lastVersion: 1
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/migration-registry: ""
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+      pipeline.alpha.openshift.io/uses: '[{"name": "jenkins", "namespace": "", "kind":
+        "DeploymentConfig"}]'
+    creationTimestamp: "2023-05-22T20:02:56Z"
+    generation: 2
+    labels:
+      app: cicd-pipeline
+      group: cicd
+      migration.openshift.io/migrated-by-migmigration: 83812283-da61-428b-8d35-e15d91aa764d
+      migration.openshift.io/migrated-by-migplan: 6b6402c2-9258-443b-83f4-8bb51f1d90f8
+      name: cicd-pipeline
+      template: cicd
+      velero.io/backup-name: migration-8d005-initial-6s92c
+      velero.io/restore-name: migration-8d005-final-jj2bc
+    name: csr0004-notificacioniteraciones
+    namespace: pipelines-qa
+    resourceVersion: "136575388"
+    uid: 700180c9-ec49-4a7f-a9b9-78c5ce2f13e2
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: {}
+    output: {}
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      type: None
+    strategy:
+      jenkinsPipelineStrategy:
+        env:
+        - name: QA_PROJECT
+          value: api-fiscalizacion-qa
+        - name: ENABLE_QUAY
+          value: "false"
+        jenkinsfile: |
+          pipeline {
+            agent {
+              label 'maven'
+            }
+            stages {
+              stage('Clonando repo y Compilando') {
+                  steps {
+                      git([url: 'https://dirtrab.visualstudio.com/Libro%20Remuneraciones%20Electronico/_git/CSR0004-NotificacionIteraciones',
+                      branch: 'develop',
+                      credentialsId: 'azure_credenciales_id'])
+                  script {
+                      def pom = readMavenPom file: 'pom.xml'
+                      version = pom.version
+                  }
+                  sh "mvn -s configuration/settings.xml install -DskipTests=true"
+                }
+              }
+              stage('Creando Image Builder') {
+                when {
+                  expression {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        return !openshift.selector("bc", "csr0004-notificacioniter").exists();
+                      }
+                    }
+                  }
+                }
+                steps {
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        openshift.newBuild("--name=csr0004-notificacioniter", "--image-stream=redhat-openjdk18-openshift:1.4", "--binary=true")
+                      }
+                    }
+                  }
+                }
+              }
+              stage('Construyendo imagen') {
+                steps {
+                  sh "rm -rf oc-build && mkdir -p oc-build/deployments"
+                  sh "cp target/CSR0004-NotificacionIteraciones-1.0.jar oc-build/deployments/CSR0004-NotificacionIteraciones.jar"
+
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        openshift.selector("bc", "csr0004-notificacioniter").startBuild("--from-dir=oc-build", "--wait=true")
+                      }
+                    }
+                  }
+                  sh "sleep 10"
+                }
+              }
+              stage('Creando en QA') {
+                when {
+                  expression {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        return !openshift.selector('dc', 'csr0004-notificacioniter').exists()
+                      }
+                    }
+                  }
+                }
+                steps {
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        def app = openshift.newApp("csr0004-notificacioniter:latest")
+                        app.narrow("svc").expose();
+                        def dc = openshift.selector("dc", "csr0004-notificacioniter")
+                        while (dc.object().spec.replicas != dc.object().status.availableReplicas) {
+                            sleep 10
+                        }
+                        openshift.set("triggers", "dc/csr0004-notificacioniter", "--manual")
+                      }
+                      sh "sleep 140"
+                    }
+                  }
+                }
+              }
+              stage('Desplegando en QA') {
+                steps {
+                sh "sleep 20"
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        openshift.selector("dc", "csr0004-notificacioniter").rollout().latest();
+                      }
+                      sh "sleep 10"
+                    }
+                  }
+                }
+              }
+            }
+          }
+      type: JenkinsPipeline
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - github:
+        secret: vJU0CXQe
+      type: GitHub
+    - generic:
+        secret: vJU0CXQe
+      type: Generic
+  status:
+    lastVersion: 1
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/migration-registry: ""
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+      pipeline.alpha.openshift.io/uses: '[{"name": "jenkins", "namespace": "", "kind":
+        "DeploymentConfig"}]'
+    creationTimestamp: "2023-05-22T20:02:56Z"
+    generation: 2
+    labels:
+      app: cicd-pipeline
+      group: cicd
+      migration.openshift.io/migrated-by-migmigration: 83812283-da61-428b-8d35-e15d91aa764d
+      migration.openshift.io/migrated-by-migplan: 6b6402c2-9258-443b-83f4-8bb51f1d90f8
+      name: cicd-pipeline
+      template: cicd
+      velero.io/backup-name: migration-8d005-initial-6s92c
+      velero.io/restore-name: migration-8d005-final-jj2bc
+    name: csr0005-manager
+    namespace: pipelines-qa
+    resourceVersion: "136572759"
+    uid: ca4a0d2e-bce3-4789-baea-8504962b418b
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: {}
+    output: {}
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      type: None
+    strategy:
+      jenkinsPipelineStrategy:
+        env:
+        - name: QA_PROJECT
+          value: api-fiscalizacion-qa
+        - name: ENABLE_QUAY
+          value: "false"
+        jenkinsfile: |
+          pipeline {
+            agent {
+              label 'maven'
+            }
+            stages {
+              stage('Clonando repo y Compilando') {
+                  steps {
+                      git([url: 'https://dirtrab.visualstudio.com/Libro%20Remuneraciones%20Electronico/_git/CSR0005-ManagerDeclaracion',
+                      branch: 'bugfix/quitar_consulta_costosa',
+                      credentialsId: 'azure_credenciales_id'])
+                  script {
+                      def pom = readMavenPom file: 'pom.xml'
+                      version = pom.version
+                  }
+                  sh "mvn -s configuration/settings.xml install -DskipTests=true"
+                }
+              }
+              stage('Creando Image Builder') {
+                when {
+                  expression {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        return !openshift.selector("bc", "csr0005-manager").exists();
+                      }
+                    }
+                  }
+                }
+                steps {
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        openshift.newBuild("--name=csr0005-manager", "--image-stream=redhat-openjdk18-openshift:1.4", "--binary=true")
+                      }
+                    }
+                  }
+                }
+              }
+              stage('Construyendo imagen') {
+                steps {
+                  sh "rm -rf oc-build && mkdir -p oc-build/deployments"
+                  sh "cp target/CSR0005-ManagerDeclaracion-1.0.jar oc-build/deployments/CSR0005-ManagerDeclaracion.jar"
+
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        openshift.selector("bc", "csr0005-manager").startBuild("--from-dir=oc-build", "--wait=true")
+                      }
+                    }
+                  }
+                  sh "sleep 10"
+                }
+              }
+              stage('Creando en QA') {
+                when {
+                  expression {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        return !openshift.selector('dc', 'csr0005-manager').exists()
+                      }
+                    }
+                  }
+                }
+                steps {
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        def app = openshift.newApp("csr0005-manager:latest")
+                        app.narrow("svc").expose();
+                        def dc = openshift.selector("dc", "csr0005-manager")
+                        while (dc.object().spec.replicas != dc.object().status.availableReplicas) {
+                            sleep 10
+                        }
+                        openshift.set("triggers", "dc/csr0005-manager", "--manual")
+                      }
+                      sh "sleep 40"
+                    }
+                  }
+                }
+              }
+              stage('Desplegando en QA') {
+                steps {
+                sh "sleep 20"
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        openshift.selector("dc", "csr0005-manager").rollout().latest();
+                      }
+                      sh "sleep 10"
+                    }
+                  }
+                }
+              }
+            }
+          }
+      type: JenkinsPipeline
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - github:
+        secret: vJU0CXQe
+      type: GitHub
+    - generic:
+        secret: vJU0CXQe
+      type: Generic
+  status:
+    lastVersion: 1
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"build.openshift.io/v1","kind":"BuildConfig","metadata":{"annotations":{"pipeline.alpha.openshift.io/uses":"[{\"name\": \"jenkins\", \"namespace\": \"\", \"kind\": \"DeploymentConfig\"}]"},"labels":{"app":"cicd-pipeline","group":"cicd","name":"cicd-pipeline","template":"cicd"},"name":"csr0006-excepciones","namespace":"pipelines-qa"},"spec":{"failedBuildsHistoryLimit":5,"nodeSelector":{},"output":{},"postCommit":{},"resources":{},"runPolicy":"Serial","source":{"type":"None"},"strategy":{"jenkinsPipelineStrategy":{"env":[{"name":"QA_PROJECT","value":"api-fiscalizacion-qa"},{"name":"ENABLE_QUAY","value":"false"}],"jenkinsfile":"pipeline {\n  agent {\n    label 'maven'\n  }\n  stages {\n    stage('Clonando repo y Compilando') {\n        steps {\n            git([url: 'https://dirtrab.visualstudio.com/Libro%20Remuneraciones%20Electronico/_git/CSR0006-Excepciones',\n            branch: 'develop',\n            credentialsId: 'azure_credenciales_id'])\n        script {\n            def pom = readMavenPom file: 'pom.xml'\n            version = pom.version\n        }\n        sh \"mvn -s configuration/settings.xml install -DskipTests=true\"\n      }\n    }\n    stage('Creando Image Builder') {\n      when {\n        expression {\n          openshift.withCluster() {\n            openshift.withProject(env.QA_PROJECT) {\n              return !openshift.selector(\"bc\", \"csr0006-excepciones\").exists();\n            }\n          }\n        }\n      }\n      steps {\n        script {\n          openshift.withCluster() {\n            openshift.withProject(env.QA_PROJECT) {\n              openshift.newBuild(\"--name=csr0006-excepciones\", \"--image-stream=redhat-openjdk18-openshift:1.4\", \"--binary=true\")\n            }\n          }\n        }\n      }\n    }\n    stage('Construyendo imagen') {\n      steps {\n        sh \"rm -rf oc-build \u0026\u0026 mkdir -p oc-build/deployments\"\n        sh \"cp target/CSR0006-Excepciones-1.0.jar oc-build/deployments/CSR0006-Excepciones.jar\"\n\n        script {\n          openshift.withCluster() {\n            openshift.withProject(env.QA_PROJECT) {\n              openshift.selector(\"bc\", \"csr0006-excepciones\").startBuild(\"--from-dir=oc-build\", \"--wait=true\")\n            }\n          }\n        }\n        sh \"sleep 10\"\n      }\n    }\n    stage('Creando en QA') {\n      when {\n        expression {\n          openshift.withCluster() {\n            openshift.withProject(env.QA_PROJECT) {\n              return !openshift.selector('dc', 'csr0006-excepciones').exists()\n            }\n          }\n        }\n      }\n      steps {\n        script {\n          openshift.withCluster() {\n            openshift.withProject(env.QA_PROJECT) {\n              def app = openshift.newApp(\"csr0006-excepciones:latest\")\n              app.narrow(\"svc\").expose();\n              def dc = openshift.selector(\"dc\", \"csr0006-excepciones\")\n              while (dc.object().spec.replicas != dc.object().status.availableReplicas) {\n                  sleep 10\n              }\n              openshift.set(\"triggers\", \"dc/csr0006-excepciones\", \"--manual\")\n            }\n            sh \"sleep 40\"\n          }\n        }\n      }\n    }\n    stage('Desplegando en QA') {\n      steps {\n      sh \"sleep 20\"\n        script {\n          openshift.withCluster() {\n            openshift.withProject(env.QA_PROJECT) {\n              openshift.selector(\"dc\", \"csr0006-excepciones\").rollout().latest();\n            }\n            sh \"sleep 10\"\n          }\n        }\n      }\n    }\n  }\n}\n"},"type":"JenkinsPipeline"},"successfulBuildsHistoryLimit":5,"triggers":[{"github":{"secret":"vJU0CXQe"},"type":"GitHub"},{"generic":{"secret":"vJU0CXQe"},"type":"Generic"}]}}
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/migration-registry: ""
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+      pipeline.alpha.openshift.io/uses: '[{"name": "jenkins", "namespace": "", "kind":
+        "DeploymentConfig"}]'
+    creationTimestamp: "2023-05-22T20:02:56Z"
+    generation: 2
+    labels:
+      app: cicd-pipeline
+      group: cicd
+      migration.openshift.io/migrated-by-migmigration: 83812283-da61-428b-8d35-e15d91aa764d
+      migration.openshift.io/migrated-by-migplan: 6b6402c2-9258-443b-83f4-8bb51f1d90f8
+      name: cicd-pipeline
+      template: cicd
+      velero.io/backup-name: migration-8d005-initial-6s92c
+      velero.io/restore-name: migration-8d005-final-jj2bc
+    name: csr0006-excepciones
+    namespace: pipelines-qa
+    resourceVersion: "136570137"
+    uid: 1b12d3fe-c86f-4f21-bb43-d4384aa3e722
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: {}
+    output: {}
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      type: None
+    strategy:
+      jenkinsPipelineStrategy:
+        env:
+        - name: QA_PROJECT
+          value: api-fiscalizacion-qa
+        - name: ENABLE_QUAY
+          value: "false"
+        jenkinsfile: |
+          pipeline {
+            agent {
+              label 'maven'
+            }
+            stages {
+              stage('Clonando repo y Compilando') {
+                  steps {
+                      git([url: 'https://dirtrab.visualstudio.com/Libro%20Remuneraciones%20Electronico/_git/CSR0006-Excepciones',
+                      branch: 'develop',
+                      credentialsId: 'azure_credenciales_id'])
+                  script {
+                      def pom = readMavenPom file: 'pom.xml'
+                      version = pom.version
+                  }
+                  sh "mvn -s configuration/settings.xml install -DskipTests=true"
+                }
+              }
+              stage('Creando Image Builder') {
+                when {
+                  expression {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        return !openshift.selector("bc", "csr0006-excepciones").exists();
+                      }
+                    }
+                  }
+                }
+                steps {
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        openshift.newBuild("--name=csr0006-excepciones", "--image-stream=redhat-openjdk18-openshift:1.4", "--binary=true")
+                      }
+                    }
+                  }
+                }
+              }
+              stage('Construyendo imagen') {
+                steps {
+                  sh "rm -rf oc-build && mkdir -p oc-build/deployments"
+                  sh "cp target/CSR0006-Excepciones-1.0.jar oc-build/deployments/CSR0006-Excepciones.jar"
+
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        openshift.selector("bc", "csr0006-excepciones").startBuild("--from-dir=oc-build", "--wait=true")
+                      }
+                    }
+                  }
+                  sh "sleep 10"
+                }
+              }
+              stage('Creando en QA') {
+                when {
+                  expression {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        return !openshift.selector('dc', 'csr0006-excepciones').exists()
+                      }
+                    }
+                  }
+                }
+                steps {
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        def app = openshift.newApp("csr0006-excepciones:latest")
+                        app.narrow("svc").expose();
+                        def dc = openshift.selector("dc", "csr0006-excepciones")
+                        while (dc.object().spec.replicas != dc.object().status.availableReplicas) {
+                            sleep 10
+                        }
+                        openshift.set("triggers", "dc/csr0006-excepciones", "--manual")
+                      }
+                      sh "sleep 40"
+                    }
+                  }
+                }
+              }
+              stage('Desplegando en QA') {
+                steps {
+                sh "sleep 20"
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        openshift.selector("dc", "csr0006-excepciones").rollout().latest();
+                      }
+                      sh "sleep 10"
+                    }
+                  }
+                }
+              }
+            }
+          }
+      type: JenkinsPipeline
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - github:
+        secret: vJU0CXQe
+      type: GitHub
+    - generic:
+        secret: vJU0CXQe
+      type: Generic
+  status:
+    lastVersion: 1
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/migration-registry: ""
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+      pipeline.alpha.openshift.io/uses: '[{"name": "jenkins", "namespace": "", "kind":
+        "DeploymentConfig"}]'
+    creationTimestamp: "2023-05-22T20:02:56Z"
+    generation: 2
+    labels:
+      app: cicd-pipeline
+      group: cicd
+      migration.openshift.io/migrated-by-migmigration: 83812283-da61-428b-8d35-e15d91aa764d
+      migration.openshift.io/migrated-by-migplan: 6b6402c2-9258-443b-83f4-8bb51f1d90f8
+      name: cicd-pipeline
+      template: cicd
+      velero.io/backup-name: migration-8d005-initial-6s92c
+      velero.io/restore-name: migration-8d005-final-jj2bc
+    name: product-lre
+    namespace: pipelines-qa
+    resourceVersion: "137154420"
+    uid: e5c2dd26-4d00-4a0b-bd36-3b05268a33d6
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: {}
+    output: {}
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      type: None
+    strategy:
+      jenkinsPipelineStrategy:
+        env:
+        - name: QA_PROJECT
+          value: lre-qa
+        - name: ENABLE_QUAY
+          value: "false"
+        jenkinsfile: "pipeline {\n  agent {\n    label 'nodejs'\n  }\n  stages {\n
+          \   stage('Clonando repo y Compilando') {\n      steps {\n          git([url:
+          'https://dirtrab.visualstudio.com/Libro%20Remuneraciones%20Electronico/_git/product-lre',\n
+          \         branch: 'feature/sin_movimiento',\n          credentialsId: 'vsts'])\n
+          \     }\n    }\n    stage('Creando Image Builder') {\n      when {\n        expression
+          {\n          openshift.withCluster() {\n            openshift.withProject(env.QA_PROJECT)
+          {\n              return !openshift.selector(\"bc\", \"product-lre\").exists();\n
+          \           }\n          }\n        }\n      }\n      steps {\n        script
+          {\n          openshift.withCluster() {\n            openshift.withProject(env.QA_PROJECT)
+          {\n              openshift.newBuild(\"--name=product-lre\", \"--image-stream=nodejs:10\",
+          \"--binary=true\")\n            }\n          }\n        }\n      }\n    }\n
+          \   stage('Construyendo imagen') {\n      steps {\n        script {\n          openshift.withCluster()
+          {\n            openshift.withProject(env.QA_PROJECT) {\n              openshift.selector(\"bc\",
+          \"product-lre\").startBuild(\"--from-dir=./\", \"--wait=true\")\n            }\n
+          \         }\n        }\n        sh \"sleep 10\"\n      }\n    }\n    stage('Creando
+          en qa') {\n      when {\n        expression {\n          openshift.withCluster()
+          {\n            openshift.withProject(env.QA_PROJECT) {\n              return
+          !openshift.selector('dc', 'product-lre').exists()\n            }\n          }\n
+          \       }\n      }\n      steps {\n        script {\n          openshift.withCluster()
+          {\n            openshift.withProject(env.QA_PROJECT) {\n              def
+          app = openshift.newApp(\"product-lre:latest\")\n              app.narrow(\"svc\").expose();\n
+          \             def dc = openshift.selector(\"dc\", \"product-lre\")\n              while
+          (dc.object().spec.replicas != dc.object().status.availableReplicas) {\n
+          \                 sleep 10\n              }\n              openshift.set(\"triggers\",
+          \"dc/product-lre\", \"--manual\")\n            }\n            sh \"sleep
+          30\"\n          }\n        }\n      }\n    }\n    stage('Desplegando en
+          qa') {\n      steps {\n        echo \"Deploy imagen\"\n        script {\n
+          \         openshift.withCluster() {\n            openshift.withProject(env.QA_PROJECT)
+          {\n            sh \"sleep 30\"\n              def rm = openshift.selector(\"dc\",
+          \"product-lre\").rollout().latest();\n              sh \"sleep 180\"\n              openshift.selector(\"dc\",
+          \"product-lre\").rollout().latest();\n              echo \"Deploy generado\"
+          \n            }\n            sh \"sleep 20\"\n          }\n        }\n      }\n
+          \   }\n  }\n}\n"
+      type: JenkinsPipeline
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - github:
+        secret: vJU0CXQe
+      type: GitHub
+    - generic:
+        secret: vJU0CXQe
+      type: Generic
+  status:
+    lastVersion: 1
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/migration-registry: ""
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+      pipeline.alpha.openshift.io/uses: '[{"name": "jenkins", "namespace": "", "kind":
+        "DeploymentConfig"}]'
+    creationTimestamp: "2023-05-22T20:02:56Z"
+    generation: 4
+    labels:
+      app: cicd-pipeline
+      group: cicd
+      migration.openshift.io/migrated-by-migmigration: 83812283-da61-428b-8d35-e15d91aa764d
+      migration.openshift.io/migrated-by-migplan: 6b6402c2-9258-443b-83f4-8bb51f1d90f8
+      name: cicd-pipeline
+      template: cicd
+      velero.io/backup-name: migration-8d005-initial-6s92c
+      velero.io/restore-name: migration-8d005-final-jj2bc
+    name: prox0001-registralibrorem
+    namespace: pipelines-qa
+    resourceVersion: "136363867"
+    uid: 4477d2d6-b29a-4a14-9b60-a4529d3b7d36
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: {}
+    output: {}
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      type: None
+    strategy:
+      jenkinsPipelineStrategy:
+        env:
+        - name: QA_PROJECT
+          value: api-fiscalizacion-qa
+        - name: ENABLE_QUAY
+          value: "false"
+        jenkinsfile: |
+          pipeline {
+            agent {
+              label 'maven'
+            }
+            stages {
+              stage('Clonando repo y Compilando') {
+                  steps {
+                      git([url: 'https://dirtrab.visualstudio.com/Libro%20Remuneraciones%20Electronico/_git/PRX0001-RegistraLibroRemumeracion',
+                      branch: 'feature/update_ws1_sii_202310',
+                      credentialsId: 'azure_credenciales_id'])
+                  script {
+                      def pom = readMavenPom file: 'pom.xml'
+                      version = pom.version
+                  }
+                  sh "mvn -s configuration/settings.xml install -DskipTests=true"
+                }
+              }
+              stage('Creando Image Builder') {
+                when {
+                  expression {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        return !openshift.selector("bc", "prox0001-registralibrore").exists();
+                      }
+                    }
+                  }
+                }
+                steps {
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        openshift.newBuild("--name=prox0001-registralibrore", "--image-stream=fuse7-java-openshift:1.3", "--binary=true")
+                      }
+                    }
+                  }
+                }
+              }
+              stage('Construyendo imagen') {
+                steps {
+                  sh "rm -rf oc-build && mkdir -p oc-build/deployments"
+                  sh "cp target/PRX0001-RegistraLibroRemumeracion-1.0.jar oc-build/deployments/PRX0001-RegistraLibroRemumeracion.jar"
+
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        openshift.selector("bc", "prox0001-registralibrore").startBuild("--from-dir=oc-build", "--wait=true")
+                      }
+                    }
+                  }
+                  sh "sleep 10"
+                }
+              }
+              stage('Creando en QA') {
+                when {
+                  expression {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        return !openshift.selector('dc', 'prox0001-registralibrore').exists()
+                      }
+                    }
+                  }
+                }
+                steps {
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        def app = openshift.newApp("prox0001-registralibrore:latest")
+                        app.narrow("svc").expose();
+                        def dc = openshift.selector("dc", "prox0001-registralibrore")
+                        while (dc.object().spec.replicas != dc.object().status.availableReplicas) {
+                            sleep 10
+                        }
+                        openshift.set("triggers", "dc/prox0001-registralibrore", "--manual")
+                      }
+                      sh "sleep 15"
+                    }
+                  }
+                }
+              }
+              stage('Desplegando en QA') {
+                steps {
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        openshift.selector("dc", "prox0001-registralibrore").rollout().latest();
+                      }
+                      sh "sleep 5"
+                    }
+                  }
+                }
+              }
+            }
+          }
+      type: JenkinsPipeline
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - github:
+        secret: vJU0CXQe
+      type: GitHub
+    - generic:
+        secret: vJU0CXQe
+      type: Generic
+  status:
+    lastVersion: 2
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/migration-registry: ""
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+      pipeline.alpha.openshift.io/uses: '[{"name": "jenkins", "namespace": "", "kind":
+        "DeploymentConfig"}]'
+    creationTimestamp: "2023-05-22T20:02:56Z"
+    generation: 2
+    labels:
+      app: cicd-pipeline
+      group: cicd
+      migration.openshift.io/migrated-by-migmigration: 83812283-da61-428b-8d35-e15d91aa764d
+      migration.openshift.io/migrated-by-migplan: 6b6402c2-9258-443b-83f4-8bb51f1d90f8
+      name: cicd-pipeline
+      template: cicd
+      velero.io/backup-name: migration-8d005-initial-6s92c
+      velero.io/restore-name: migration-8d005-final-jj2bc
+    name: prx0002-validareglas
+    namespace: pipelines-qa
+    resourceVersion: "136503825"
+    uid: 4477ce5e-7bc2-4d1e-940b-f02f359c646e
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: {}
+    output: {}
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      type: None
+    strategy:
+      jenkinsPipelineStrategy:
+        env:
+        - name: QA_PROJECT
+          value: api-fiscalizacion-qa
+        - name: ENABLE_QUAY
+          value: "false"
+        jenkinsfile: |
+          pipeline {
+            agent {
+              label 'maven'
+            }
+            stages {
+              stage('Clonando repo y Compilando') {
+                  steps {
+                      git([url: 'https://dirtrab.visualstudio.com/Libro%20Remuneraciones%20Electronico/_git/PRX0002-ValidaReglasLRE',
+                      branch: 'feature/desarrollo_2022',
+                      credentialsId: 'vsts'])
+                  script {
+                      def pom = readMavenPom file: 'pom.xml'
+                      version = pom.version
+                  }
+                  sh "mvn -s configuration/settings.xml install -DskipTests=true"
+                }
+              }
+              stage('Creando Image Builder') {
+                when {
+                  expression {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        return !openshift.selector("bc", "prx0002-validareglas").exists();
+                      }
+                    }
+                  }
+                }
+                steps {
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        openshift.newBuild("--name=prx0002-validareglas", "--image-stream=fuse7-java-openshift:1.3", "--binary=true")
+                      }
+                    }
+                  }
+                }
+              }
+              stage('Construyendo imagen') {
+                steps {
+                  sh "rm -rf oc-build && mkdir -p oc-build/deployments"
+                  sh "cp target/PRX0002-ValidaReglasLRE-1.0.jar oc-build/deployments/PRX0002-ValidaReglasLRE.jar"
+
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        openshift.selector("bc", "prx0002-validareglas").startBuild("--from-dir=oc-build", "--wait=true")
+                      }
+                    }
+                  }
+                  sh "sleep 10"
+                }
+              }
+              stage('Creando en QA') {
+                when {
+                  expression {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        return !openshift.selector('dc', 'prx0002-validareglas').exists()
+                      }
+                    }
+                  }
+                }
+                steps {
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        def app = openshift.newApp("prx0002-validareglas:latest")
+                        app.narrow("svc").expose();
+                        def dc = openshift.selector("dc", "prx0002-validareglas")
+                        while (dc.object().spec.replicas != dc.object().status.availableReplicas) {
+                            sleep 10
+                        }
+                        openshift.set("triggers", "dc/prx0002-validareglas", "--manual")
+                      }
+                      sh "sleep 40"
+                    }
+                  }
+                }
+              }
+              stage('Desplegando en QA') {
+                steps {
+                sh "sleep 20"
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        openshift.selector("dc", "prx0002-validareglas").rollout().latest();
+                      }
+                      sh "sleep 10"
+                    }
+                  }
+                }
+              }
+            }
+          }
+      type: JenkinsPipeline
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - github:
+        secret: vJU0CXQe
+      type: GitHub
+    - generic:
+        secret: vJU0CXQe
+      type: Generic
+  status:
+    lastVersion: 1
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/migration-registry: ""
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+      pipeline.alpha.openshift.io/uses: '[{"name": "jenkins", "namespace": "", "kind":
+        "DeploymentConfig"}]'
+    creationTimestamp: "2023-05-22T20:02:57Z"
+    generation: 2
+    labels:
+      app: cicd-pipeline
+      group: cicd
+      migration.openshift.io/migrated-by-migmigration: 83812283-da61-428b-8d35-e15d91aa764d
+      migration.openshift.io/migrated-by-migplan: 6b6402c2-9258-443b-83f4-8bb51f1d90f8
+      name: cicd-pipeline
+      template: cicd
+      velero.io/backup-name: migration-8d005-initial-6s92c
+      velero.io/restore-name: migration-8d005-final-jj2bc
+    name: prx0003-datospersonas
+    namespace: pipelines-qa
+    resourceVersion: "136532435"
+    uid: 0581ccfb-9db9-4bcb-8aff-ba8e189d3413
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: {}
+    output: {}
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      type: None
+    strategy:
+      jenkinsPipelineStrategy:
+        env:
+        - name: QA_PROJECT
+          value: api-fiscalizacion-qa
+        - name: ENABLE_QUAY
+          value: "false"
+        jenkinsfile: |
+          pipeline {
+            agent {
+              label 'maven'
+            }
+            stages {
+              stage('Clonando repo y Compilando') {
+                  steps {
+                      git([url: 'https://dirtrab.visualstudio.com/Libro%20Remuneraciones%20Electronico/_git/PRX0003-DatosPersona',
+                      branch: 'develop',
+                      credentialsId: 'azure_credenciales_id'])
+                  script {
+                      def pom = readMavenPom file: 'pom.xml'
+                      version = pom.version
+                  }
+                  sh "mvn -s configuration/settings.xml install -DskipTests=true"
+                }
+              }
+              stage('Creando Image Builder') {
+                when {
+                  expression {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        return !openshift.selector("bc", "prx0003-datosperson").exists();
+                      }
+                    }
+                  }
+                }
+                steps {
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        openshift.newBuild("--name=prx0003-datosperson", "--image-stream=fuse7-java-openshift:1.3", "--binary=true")
+                      }
+                    }
+                  }
+                }
+              }
+              stage('Construyendo imagen') {
+                steps {
+                  sh "rm -rf oc-build && mkdir -p oc-build/deployments"
+                  sh "cp target/PRX0003-DatosPersona-1.0.jar oc-build/deployments/PRX0003-DatosPersona.jar"
+
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        openshift.selector("bc", "prx0003-datosperson").startBuild("--from-dir=oc-build", "--wait=true")
+                      }
+                    }
+                  }
+                  sh "sleep 10"
+                }
+              }
+              stage('Creando en QA') {
+                when {
+                  expression {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        return !openshift.selector('dc', 'prx0003-datosperson').exists()
+                      }
+                    }
+                  }
+                }
+                steps {
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        def app = openshift.newApp("prx0003-datosperson:latest")
+                        app.narrow("svc").expose();
+                        def dc = openshift.selector("dc", "prx0003-datosperson")
+                        while (dc.object().spec.replicas != dc.object().status.availableReplicas) {
+                            sleep 10
+                        }
+                        openshift.set("triggers", "dc/prx0003-datosperson", "--manual")
+                      }
+                      sh "sleep 40"
+                    }
+                  }
+                }
+              }
+              stage('Desplegando en QA') {
+                steps {
+                sh "sleep 10"
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        openshift.selector("dc", "prx0003-datosperson").rollout().latest();
+                      }
+                      sh "sleep 5"
+                    }
+                  }
+                }
+              }
+            }
+          }
+      type: JenkinsPipeline
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - github:
+        secret: vJU0CXQe
+      type: GitHub
+    - generic:
+        secret: vJU0CXQe
+      type: Generic
+  status:
+    lastVersion: 1
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/migration-registry: ""
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+      pipeline.alpha.openshift.io/uses: '[{"name": "jenkins", "namespace": "", "kind":
+        "DeploymentConfig"}]'
+    creationTimestamp: "2023-05-22T20:02:57Z"
+    generation: 2
+    labels:
+      app: cicd-pipeline
+      group: cicd
+      migration.openshift.io/migrated-by-migmigration: 83812283-da61-428b-8d35-e15d91aa764d
+      migration.openshift.io/migrated-by-migplan: 6b6402c2-9258-443b-83f4-8bb51f1d90f8
+      name: cicd-pipeline
+      template: cicd
+      velero.io/backup-name: migration-8d005-initial-6s92c
+      velero.io/restore-name: migration-8d005-final-jj2bc
+    name: prx0003-datospersonas-datagrid
+    namespace: pipelines-qa
+    resourceVersion: "136528944"
+    uid: e40cd01c-09e7-4d88-b192-072e30debd8b
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: {}
+    output: {}
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      type: None
+    strategy:
+      jenkinsPipelineStrategy:
+        env:
+        - name: QA_PROJECT
+          value: api-fiscalizacion-qa
+        - name: ENABLE_QUAY
+          value: "false"
+        jenkinsfile: |
+          pipeline {
+            agent {
+              label 'maven'
+            }
+            stages {
+              stage('Clonando repo y Compilando') {
+                  steps {
+                      git([url: 'https://dirtrab.visualstudio.com/Libro%20Remuneraciones%20Electronico/_git/PRX0003-DatosPersona-Datagrid',
+                      branch: 'develop',
+                      credentialsId: 'azure_credenciales_id'])
+                  script {
+                      def pom = readMavenPom file: 'pom.xml'
+                      version = pom.version
+                  }
+                  sh "mvn -s configuration/settings.xml install -DskipTests=true"
+                }
+              }
+              stage('Creando Image Builder') {
+                when {
+                  expression {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        return !openshift.selector("bc", "prx0003-datospersona-datagrid").exists();
+                      }
+                    }
+                  }
+                }
+                steps {
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        openshift.newBuild("--name=prx0003-datospersona-datagrid", "--image-stream=fuse7-java-openshift:1.3", "--binary=true")
+                      }
+                    }
+                  }
+                }
+              }
+              stage('Construyendo imagen') {
+                steps {
+                  sh "rm -rf oc-build && mkdir -p oc-build/deployments"
+                  sh "cp target/PRX0003-DatosPersona-Datagrid-1.0.jar oc-build/deployments/PRX0003-DatosPersona-Datagrid.jar"
+
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        openshift.selector("bc", "prx0003-datospersona-datagrid").startBuild("--from-dir=oc-build", "--wait=true")
+                      }
+                    }
+                  }
+                  sh "sleep 10"
+                }
+              }
+              stage('Creando en QA') {
+                when {
+                  expression {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        return !openshift.selector('dc', 'prx0003-datospersona-datagrid').exists()
+                      }
+                    }
+                  }
+                }
+                steps {
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        def app = openshift.newApp("prx0003-datospersona-datagrid:latest")
+                        app.narrow("svc").expose();
+                        def dc = openshift.selector("dc", "prx0003-datospersona-datagrid")
+                        while (dc.object().spec.replicas != dc.object().status.availableReplicas) {
+                            sleep 10
+                        }
+                        openshift.set("triggers", "dc/prx0003-datospersona-datagrid", "--manual")
+                      }
+                      sh "sleep 40"
+                    }
+                  }
+                }
+              }
+              stage('Desplegando en QA') {
+                steps {
+                sh "sleep 10"
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        openshift.selector("dc", "prx0003-datospersona-datagrid").rollout().latest();
+                      }
+                      sh "sleep 5"
+                    }
+                  }
+                }
+              }
+            }
+          }
+      type: JenkinsPipeline
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - github:
+        secret: vJU0CXQe
+      type: GitHub
+    - generic:
+        secret: vJU0CXQe
+      type: Generic
+  status:
+    lastVersion: 1
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/migration-registry: ""
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+      pipeline.alpha.openshift.io/uses: '[{"name": "jenkins", "namespace": "", "kind":
+        "DeploymentConfig"}]'
+    creationTimestamp: "2023-05-22T20:02:57Z"
+    generation: 2
+    labels:
+      app: cicd-pipeline
+      group: cicd
+      migration.openshift.io/migrated-by-migmigration: 83812283-da61-428b-8d35-e15d91aa764d
+      migration.openshift.io/migrated-by-migplan: 6b6402c2-9258-443b-83f4-8bb51f1d90f8
+      name: cicd-pipeline
+      template: cicd
+      velero.io/backup-name: migration-8d005-initial-6s92c
+      velero.io/restore-name: migration-8d005-final-jj2bc
+    name: prx0004-enviarnotificacion
+    namespace: pipelines-qa
+    resourceVersion: "136536544"
+    uid: 1eaf0d58-73f8-460a-89d5-af1d1accd632
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: {}
+    output: {}
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      type: None
+    strategy:
+      jenkinsPipelineStrategy:
+        env:
+        - name: QA_PROJECT
+          value: api-fiscalizacion-qa
+        - name: ENABLE_QUAY
+          value: "false"
+        jenkinsfile: |
+          pipeline {
+            agent {
+              label 'maven'
+            }
+            stages {
+              stage('Clonando repo y Compilando') {
+                  steps {
+                      git([url: 'https://dirtrab.visualstudio.com/Libro%20Remuneraciones%20Electronico/_git/PRX0002-ValidaReglasLRE',
+                      branch: 'develop',
+                      credentialsId: 'azure_credenciales_id'])
+                  script {
+                      def pom = readMavenPom file: 'pom.xml'
+                      version = pom.version
+                  }
+                  sh "mvn -s configuration/settings.xml install -DskipTests=true"
+                }
+              }
+              stage('Creando Image Builder') {
+                when {
+                  expression {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        return !openshift.selector("bc", "prx0004-enviarnotificaci").exists();
+                      }
+                    }
+                  }
+                }
+                steps {
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        openshift.newBuild("--name=prx0004-enviarnotificaci", "--image-stream=fuse7-java-openshift:1.3", "--binary=true")
+                      }
+                    }
+                  }
+                }
+              }
+              stage('Construyendo imagen') {
+                steps {
+                  sh "rm -rf oc-build && mkdir -p oc-build/deployments"
+                  sh "cp target/PRX0004-EnviarNotificacion-1.0.0.jar oc-build/deployments/PRX0004-EnviarNotificacion.jar"
+
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        openshift.selector("bc", "prx0004-enviarnotificaci").startBuild("--from-dir=oc-build", "--wait=true")
+                      }
+                    }
+                  }
+                  sh "sleep 10"
+                }
+              }
+              stage('Creando en QA') {
+                when {
+                  expression {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        return !openshift.selector('dc', 'prx0004-enviarnotificaci').exists()
+                      }
+                    }
+                  }
+                }
+                steps {
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        def app = openshift.newApp("prx0004-enviarnotificaci:latest")
+                        app.narrow("svc").expose();
+                        def dc = openshift.selector("dc", "prx0004-enviarnotificaci")
+                        while (dc.object().spec.replicas != dc.object().status.availableReplicas) {
+                            sleep 10
+                        }
+                        openshift.set("triggers", "dc/prx0004-enviarnotificaci", "--manual")
+                      }
+                      sh "sleep 40"
+                    }
+                  }
+                }
+              }
+              stage('Desplegando en QA') {
+                steps {
+                sh "sleep 10"
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        openshift.selector("dc", "prx0004-enviarnotificaci").rollout().latest();
+                      }
+                      sh "sleep 15"
+                    }
+                  }
+                }
+              }
+            }
+          }
+      type: JenkinsPipeline
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - github:
+        secret: vJU0CXQe
+      type: GitHub
+    - generic:
+        secret: vJU0CXQe
+      type: Generic
+  status:
+    lastVersion: 1
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/migration-registry: ""
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+      pipeline.alpha.openshift.io/uses: '[{"name": "jenkins", "namespace": "", "kind":
+        "DeploymentConfig"}]'
+    creationTimestamp: "2023-05-22T20:02:57Z"
+    generation: 8
+    labels:
+      app: cicd-pipeline
+      group: cicd
+      migration.openshift.io/migrated-by-migmigration: 83812283-da61-428b-8d35-e15d91aa764d
+      migration.openshift.io/migrated-by-migplan: 6b6402c2-9258-443b-83f4-8bb51f1d90f8
+      name: cicd-pipeline
+      template: cicd
+      velero.io/backup-name: migration-8d005-initial-6s92c
+      velero.io/restore-name: migration-8d005-final-jj2bc
+    name: prx0005-validartoken
+    namespace: pipelines-qa
+    resourceVersion: "137176310"
+    uid: ef5f0efb-6d08-48e9-baec-efaa53267e8e
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: {}
+    output: {}
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      type: None
+    strategy:
+      jenkinsPipelineStrategy:
+        env:
+        - name: QA_PROJECT
+          value: api-fiscalizacion-qa
+        - name: ENABLE_QUAY
+          value: "false"
+        jenkinsfile: |
+          pipeline {
+            agent {
+              label 'maven'
+            }
+            stages {
+              stage('Clonando repo y Compilando') {
+                  steps {
+                      git([url: 'https://dirtrab@dev.azure.com/dirtrab/Libro%20Remuneraciones%20Electronico/_git/PRX0005-validarToken',
+                      branch: 'develop',
+                      credentialsId: '27ef6ef6-5f08-4d8a-88a5-9aef52f2105d'])
+                  script {
+                      def pom = readMavenPom file: 'pom.xml'
+                      version = pom.version
+                  }
+                  sh "mvn -s configuration/settings.xml install -DskipTests=true"
+                }
+              }
+              stage('Creando Image Builder') {
+                when {
+                  expression {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        return !openshift.selector("bc", "prx0005-validartoken").exists();
+                      }
+                    }
+                  }
+                }
+                steps {
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        openshift.newBuild("--name=prx0005-validartoken", "--image-stream=fuse7-java-openshift:1.3", "--binary=true")
+                      }
+                    }
+                  }
+                }
+              }
+              stage('Construyendo imagen') {
+                steps {
+                  sh "rm -rf oc-build && mkdir -p oc-build/deployments"
+                  sh "cp target/PRX0005-validarToken-1.0.jar oc-build/deployments/PRX0005-validarToken.jar"
+
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        openshift.selector("bc", "prx0005-validartoken").startBuild("--from-dir=oc-build", "--wait=true")
+                      }
+                    }
+                  }
+                  sh "sleep 10"
+                }
+              }
+              stage('Creando en QA') {
+                when {
+                  expression {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        return !openshift.selector('dc', 'prx0005-validartoken').exists()
+                      }
+                    }
+                  }
+                }
+                steps {
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        def app = openshift.newApp("prx0005-validartoken:latest")
+                        app.narrow("svc").expose();
+                        def dc = openshift.selector("dc", "prx0005-validartoken")
+                        while (dc.object().spec.replicas != dc.object().status.availableReplicas) {
+                            sleep 10
+                        }
+                        openshift.set("triggers", "dc/prx0005-validartoken", "--manual")
+                      }
+                      sh "sleep 40"
+                    }
+                  }
+                }
+              }
+              stage('Desplegando en QA') {
+                steps {
+                sh "sleep 10"
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        openshift.selector("dc", "prx0005-validartoken").rollout().latest();
+                      }
+                      sh "sleep 15"
+                    }
+                  }
+                }
+              }
+            }
+          }
+      type: JenkinsPipeline
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - github:
+        secret: vJU0CXQe
+      type: GitHub
+    - generic:
+        secret: vJU0CXQe
+      type: Generic
+  status:
+    lastVersion: 4
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/migration-registry: ""
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+      pipeline.alpha.openshift.io/uses: '[{"name": "jenkins", "namespace": "", "kind":
+        "DeploymentConfig"}]'
+    creationTimestamp: "2023-05-22T20:02:57Z"
+    generation: 2
+    labels:
+      app: cicd-pipeline
+      group: cicd
+      migration.openshift.io/migrated-by-migmigration: 83812283-da61-428b-8d35-e15d91aa764d
+      migration.openshift.io/migrated-by-migplan: 6b6402c2-9258-443b-83f4-8bb51f1d90f8
+      name: cicd-pipeline
+      template: cicd
+      velero.io/backup-name: migration-8d005-initial-6s92c
+      velero.io/restore-name: migration-8d005-final-jj2bc
+    name: srv0001-declaracioneslibroremuneraciones
+    namespace: pipelines-qa
+    resourceVersion: "136500900"
+    uid: c76573a6-d9ec-4be1-9763-710ab0921a8a
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: {}
+    output: {}
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      type: None
+    strategy:
+      jenkinsPipelineStrategy:
+        env:
+        - name: QA_PROJECT
+          value: api-fiscalizacion-qa
+        - name: ENABLE_QUAY
+          value: "false"
+        jenkinsfile: |
+          pipeline {
+            agent {
+              label 'maven'
+            }
+            stages {
+              stage('Clonando repo y Compilando') {
+                  steps {
+                      git([url: 'https://dirtrab.visualstudio.com/Libro%20Remuneraciones%20Electronico/_git/SRV0001-DeclaracionLibroRemuneraciones',
+                      branch: 'feature/sin_movimiento',
+                      credentialsId: 'vsts'])
+                  script {
+                      def pom = readMavenPom file: 'pom.xml'
+                      version = pom.version
+                  }
+                  sh "mvn -s configuration/settings.xml install -DskipTests=true"
+                }
+              }
+              stage('Creando Image Builder') {
+                when {
+                  expression {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        return !openshift.selector("bc", "srv0001-v2").exists();
+                      }
+                    }
+                  }
+                }
+                steps {
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        openshift.newBuild("--name=srv0001-v2", "--image-stream=redhat-openjdk18-openshift:1.4", "--binary=true")
+                      }
+                    }
+                  }
+                }
+              }
+              stage('Construyendo imagen') {
+                steps {
+                  sh "rm -rf oc-build && mkdir -p oc-build/deployments"
+                  sh "cp target/SRV0001-DeclaracionesLibroRemuneraciones-2.0.jar oc-build/deployments/SRV0001-DeclaracionesLibroRemuneraciones.jar"
+
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        openshift.selector("bc", "srv0001-v2").startBuild("--from-dir=oc-build", "--wait=true")
+                      }
+                    }
+                  }
+                  sh "sleep 10"
+                }
+              }
+              stage('Creando en QA') {
+                when {
+                  expression {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        return !openshift.selector('dc', 'srv0001-v2').exists()
+                      }
+                    }
+                  }
+                }
+                steps {
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        def app = openshift.newApp("srv0001-v2:latest")
+                        app.narrow("svc").expose();
+                        def dc = openshift.selector("dc", "srv0001-v2")
+                        while (dc.object().spec.replicas != dc.object().status.availableReplicas) {
+                            sleep 10
+                        }
+                        openshift.set("triggers", "dc/srv0001-v2", "--manual")
+                      }
+                      sh "sleep 40"
+                    }
+                  }
+                }
+              }
+              stage('Desplegando en QA') {
+                steps {
+                sh "sleep 10"
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        openshift.selector("dc", "srv0001-v2").rollout().latest();
+                      }
+                      sh "sleep 15"
+                    }
+                  }
+                }
+              }
+            }
+          }
+      type: JenkinsPipeline
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - github:
+        secret: vJU0CXQe
+      type: GitHub
+    - generic:
+        secret: vJU0CXQe
+      type: Generic
+  status:
+    lastVersion: 1
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/migration-registry: ""
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+      pipeline.alpha.openshift.io/uses: '[{"name": "jenkins", "namespace": "", "kind":
+        "DeploymentConfig"}]'
+    creationTimestamp: "2023-05-22T20:02:58Z"
+    generation: 2
+    labels:
+      app: cicd-pipeline
+      group: cicd
+      migration.openshift.io/migrated-by-migmigration: 83812283-da61-428b-8d35-e15d91aa764d
+      migration.openshift.io/migrated-by-migplan: 6b6402c2-9258-443b-83f4-8bb51f1d90f8
+      name: cicd-pipeline
+      template: cicd
+      velero.io/backup-name: migration-8d005-initial-6s92c
+      velero.io/restore-name: migration-8d005-final-jj2bc
+    name: srv0002-obtenerdeclaracioneslre
+    namespace: pipelines-qa
+    resourceVersion: "136508212"
+    uid: 4ed0fb7a-b16b-4761-bf98-14f875f6c66f
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: {}
+    output: {}
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      type: None
+    strategy:
+      jenkinsPipelineStrategy:
+        env:
+        - name: QA_PROJECT
+          value: api-fiscalizacion-qa
+        - name: ENABLE_QUAY
+          value: "false"
+        jenkinsfile: |
+          pipeline {
+            agent {
+              label 'maven'
+            }
+            stages {
+              stage('Clonando repo y Compilando') {
+                  steps {
+                      git([url: 'https://dirtrab.visualstudio.com/Libro%20Remuneraciones%20Electronico/_git/SRV0002-ObtenerDeclaracionesLRE',
+                      branch: 'feature/desarrollo_2022',
+                      credentialsId: 'vsts'])
+                  script {
+                      def pom = readMavenPom file: 'pom.xml'
+                      version = pom.version
+                  }
+                  sh "mvn -s configuration/settings.xml install -DskipTests=true"
+                }
+              }
+              stage('Creando Image Builder') {
+                when {
+                  expression {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        return !openshift.selector("bc", "srv0002").exists();
+                      }
+                    }
+                  }
+                }
+                steps {
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        openshift.newBuild("--name=srv0002", "--image-stream=redhat-openjdk18-openshift:1.4", "--binary=true")
+                      }
+                    }
+                  }
+                }
+              }
+              stage('Construyendo imagen') {
+                steps {
+                  sh "rm -rf oc-build && mkdir -p oc-build/deployments"
+                  sh "cp target/SRV0002-ObtenerDeclaracionesLRE-1.0.jar oc-build/deployments/SRV0002-ObtenerDeclaracionesLRE.jar"
+
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        openshift.selector("bc", "srv0002").startBuild("--from-dir=oc-build", "--wait=true")
+                      }
+                    }
+                  }
+                  sh "sleep 10"
+                }
+              }
+              stage('Creando en QA') {
+                when {
+                  expression {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        return !openshift.selector('dc', 'srv0002').exists()
+                      }
+                    }
+                  }
+                }
+                steps {
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        def app = openshift.newApp("srv0002:latest")
+                        app.narrow("svc").expose();
+                        def dc = openshift.selector("dc", "srv0002")
+                        while (dc.object().spec.replicas != dc.object().status.availableReplicas) {
+                            sleep 10
+                        }
+                        openshift.set("triggers", "dc/srv0002", "--manual")
+                      }
+                      sh "sleep 40"
+                    }
+                  }
+                }
+              }
+              stage('Desplegando en QA') {
+                steps {
+                sh "sleep 10"
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        openshift.selector("dc", "srv0002").rollout().latest();
+                      }
+                      sh "sleep 5"
+                    }
+                  }
+                }
+              }
+            }
+          }
+      type: JenkinsPipeline
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - github:
+        secret: vJU0CXQe
+      type: GitHub
+    - generic:
+        secret: vJU0CXQe
+      type: Generic
+  status:
+    lastVersion: 1
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/migration-registry: ""
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+      pipeline.alpha.openshift.io/uses: '[{"name": "jenkins", "namespace": "", "kind":
+        "DeploymentConfig"}]'
+    creationTimestamp: "2023-05-22T20:02:58Z"
+    generation: 3
+    labels:
+      app: cicd-pipeline
+      group: cicd
+      migration.openshift.io/migrated-by-migmigration: 83812283-da61-428b-8d35-e15d91aa764d
+      migration.openshift.io/migrated-by-migplan: 6b6402c2-9258-443b-83f4-8bb51f1d90f8
+      name: cicd-pipeline
+      template: cicd
+      velero.io/backup-name: migration-8d005-initial-6s92c
+      velero.io/restore-name: migration-8d005-final-jj2bc
+    name: srv0003-empleadores
+    namespace: pipelines-qa
+    resourceVersion: "271812544"
+    uid: 98df5c6a-f247-41af-abc1-c072f5f45ff7
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: {}
+    output: {}
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      type: None
+    strategy:
+      jenkinsPipelineStrategy:
+        env:
+        - name: QA_PROJECT
+          value: api-fiscalizacion-qa
+        - name: ENABLE_QUAY
+          value: "false"
+        jenkinsfile: |
+          pipeline {
+            agent {
+              label 'maven'
+            }
+            stages {
+              stage('Clonando repo y Compilando') {
+                  steps {
+                      git([url: 'https://dirtrab.visualstudio.com/Libro%20Remuneraciones%20Electronico/_git/SRV0003-Empleadores',
+                      branch: 'develop',
+                      credentialsId: 'vsts'])
+                  script {
+                      def pom = readMavenPom file: 'pom.xml'
+                      version = pom.version
+                  }
+                  sh "mvn -s configuration/settings.xml install -DskipTests=true"
+                }
+              }
+              stage('Creando Image Builder') {
+                when {
+                  expression {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        return !openshift.selector("bc", "srv0003").exists();
+                      }
+                    }
+                  }
+                }
+                steps {
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        openshift.newBuild("--name=srv0003", "--image-stream=redhat-openjdk18-openshift:1.4", "--binary=true")
+                      }
+                    }
+                  }
+                }
+              }
+              stage('Construyendo imagen') {
+                steps {
+                  sh "rm -rf oc-build && mkdir -p oc-build/deployments"
+                  sh "cp target/SRV0003-Empleadores-1.0.jar oc-build/deployments/SRV0003-Empleadores.jar"
+
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        openshift.selector("bc", "srv0003").startBuild("--from-dir=oc-build", "--wait=true")
+                      }
+                    }
+                  }
+                  sh "sleep 10"
+                }
+              }
+              stage('Creando en QA') {
+                when {
+                  expression {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        return !openshift.selector('dc', 'srv0003').exists()
+                      }
+                    }
+                  }
+                }
+                steps {
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        def app = openshift.newApp("srv0003:latest")
+                        app.narrow("svc").expose();
+                        def dc = openshift.selector("dc", "srv0003")
+                        while (dc.object().spec.replicas != dc.object().status.availableReplicas) {
+                            sleep 10
+                        }
+                        openshift.set("triggers", "dc/srv0003", "--manual")
+                      }
+                      sh "sleep 40"
+                    }
+                  }
+                }
+              }
+              stage('Desplegando en QA') {
+                steps {
+                sh "sleep 10"
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        openshift.selector("dc", "srv0003").rollout().latest();
+                      }
+                      sh "sleep 15"
+                    }
+                  }
+                }
+              }
+            }
+          }
+      type: JenkinsPipeline
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - github:
+        secret: vJU0CXQe
+      type: GitHub
+    - generic:
+        secret: vJU0CXQe
+      type: Generic
+  status:
+    lastVersion: 2
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/migration-registry: ""
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+      pipeline.alpha.openshift.io/uses: '[{"name": "jenkins", "namespace": "", "kind":
+        "DeploymentConfig"}]'
+    creationTimestamp: "2023-05-22T20:02:58Z"
+    generation: 2
+    labels:
+      app: cicd-pipeline
+      group: cicd
+      migration.openshift.io/migrated-by-migmigration: 83812283-da61-428b-8d35-e15d91aa764d
+      migration.openshift.io/migrated-by-migplan: 6b6402c2-9258-443b-83f4-8bb51f1d90f8
+      name: cicd-pipeline
+      template: cicd
+      velero.io/backup-name: migration-8d005-initial-6s92c
+      velero.io/restore-name: migration-8d005-final-jj2bc
+    name: srv0004-declaraciontransferencia
+    namespace: pipelines-qa
+    resourceVersion: "136514891"
+    uid: 4f943725-d497-4d12-bfa0-e90746a3d77e
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: {}
+    output: {}
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      type: None
+    strategy:
+      jenkinsPipelineStrategy:
+        env:
+        - name: QA_PROJECT
+          value: api-fiscalizacion-qa
+        - name: ENABLE_QUAY
+          value: "false"
+        jenkinsfile: |
+          pipeline {
+            agent {
+              label 'maven'
+            }
+            stages {
+              stage('Clonando repo y Compilando') {
+                  steps {
+                      git([url: 'https://dirtrab.visualstudio.com/Libro%20Remuneraciones%20Electronico/_git/SRV0004-DeclaracionTransferencia',
+                      branch: 'develop',
+                      credentialsId: 'azure_credenciales_id'])
+                  script {
+                      def pom = readMavenPom file: 'pom.xml'
+                      version = pom.version
+                  }
+                  sh "mvn -s configuration/settings.xml install -DskipTests=true"
+                }
+              }
+              stage('Creando Image Builder') {
+                when {
+                  expression {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        return !openshift.selector("bc", "srv0004-declaraciontrans").exists();
+                      }
+                    }
+                  }
+                }
+                steps {
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        openshift.newBuild("--name=srv0004-declaraciontrans", "--image-stream=redhat-openjdk18-openshift:1.4", "--binary=true")
+                      }
+                    }
+                  }
+                }
+              }
+              stage('Construyendo imagen') {
+                steps {
+                  sh "rm -rf oc-build && mkdir -p oc-build/deployments"
+                  sh "cp target/SRV0004-DeclaracionTransferencia-2.0.jar oc-build/deployments/SRV0004-DeclaracionTransferencia.jar"
+
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        openshift.selector("bc", "srv0004-declaraciontrans").startBuild("--from-dir=oc-build", "--wait=true")
+                      }
+                    }
+                  }
+                  sh "sleep 10"
+                }
+              }
+              stage('Creando en QA') {
+                when {
+                  expression {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        return !openshift.selector('dc', 'srv0004-declaraciontrans').exists()
+                      }
+                    }
+                  }
+                }
+                steps {
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        def app = openshift.newApp("srv0004-declaraciontrans:latest")
+                        app.narrow("svc").expose();
+                        def dc = openshift.selector("dc", "srv0004-declaraciontrans")
+                        while (dc.object().spec.replicas != dc.object().status.availableReplicas) {
+                            sleep 10
+                        }
+                        openshift.set("triggers", "dc/srv0004-declaraciontrans", "--manual")
+                      }
+                      sh "sleep 40"
+                    }
+                  }
+                }
+              }
+              stage('Desplegando en QA') {
+                steps {
+                sh "sleep 10"
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        openshift.selector("dc", "srv0004-declaraciontrans").rollout().latest();
+                      }
+                      sh "sleep 15"
+                    }
+                  }
+                }
+              }
+            }
+          }
+      type: JenkinsPipeline
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - github:
+        secret: vJU0CXQe
+      type: GitHub
+    - generic:
+        secret: vJU0CXQe
+      type: Generic
+  status:
+    lastVersion: 1
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/migration-registry: ""
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+      pipeline.alpha.openshift.io/uses: '[{"name": "jenkins", "namespace": "", "kind":
+        "DeploymentConfig"}]'
+    creationTimestamp: "2023-05-22T20:02:58Z"
+    generation: 2
+    labels:
+      app: cicd-pipeline
+      group: cicd
+      migration.openshift.io/migrated-by-migmigration: 83812283-da61-428b-8d35-e15d91aa764d
+      migration.openshift.io/migrated-by-migplan: 6b6402c2-9258-443b-83f4-8bb51f1d90f8
+      name: cicd-pipeline
+      template: cicd
+      velero.io/backup-name: migration-8d005-initial-6s92c
+      velero.io/restore-name: migration-8d005-final-jj2bc
+    name: srv0005-descargalre
+    namespace: pipelines-qa
+    resourceVersion: "136518223"
+    uid: c20908d4-cabb-47fc-8e08-e23e711d9522
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: {}
+    output: {}
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      type: None
+    strategy:
+      jenkinsPipelineStrategy:
+        env:
+        - name: QA_PROJECT
+          value: api-fiscalizacion-qa
+        - name: ENABLE_QUAY
+          value: "false"
+        jenkinsfile: |
+          pipeline {
+            agent {
+              label 'maven'
+            }
+            stages {
+              stage('Clonando repo y Compilando') {
+                  steps {
+                      git([url: 'https://dirtrab.visualstudio.com/Libro%20Remuneraciones%20Electronico/_git/SRV0005-DescargaLRE',
+                      branch: 'develop',
+                      credentialsId: 'azure_credenciales_id'])
+                  script {
+                      def pom = readMavenPom file: 'pom.xml'
+                      version = pom.version
+                  }
+                  sh "mvn -s configuration/settings.xml install -DskipTests=true"
+                }
+              }
+              stage('Creando Image Builder') {
+                when {
+                  expression {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        return !openshift.selector("bc", "srv0005-descargalre").exists();
+                      }
+                    }
+                  }
+                }
+                steps {
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        openshift.newBuild("--name=srv0005-descargalre", "--image-stream=redhat-openjdk18-openshift:1.4", "--binary=true")
+                      }
+                    }
+                  }
+                }
+              }
+              stage('Construyendo imagen') {
+                steps {
+                  sh "rm -rf oc-build && mkdir -p oc-build/deployments"
+                  sh "cp target/SRV0005-DescargaLRE-1.0.jar oc-build/deployments/SRV0005-DescargaLRE.jar"
+
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        openshift.selector("bc", "srv0005-descargalre").startBuild("--from-dir=oc-build", "--wait=true")
+                      }
+                    }
+                  }
+                  sh "sleep 10"
+                }
+              }
+              stage('Creando en QA') {
+                when {
+                  expression {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        return !openshift.selector('dc', 'srv0005-descargalre').exists()
+                      }
+                    }
+                  }
+                }
+                steps {
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        def app = openshift.newApp("srv0005-descargalre:latest")
+                        app.narrow("svc").expose();
+                        def dc = openshift.selector("dc", "srv0005-descargalre")
+                        while (dc.object().spec.replicas != dc.object().status.availableReplicas) {
+                            sleep 10
+                        }
+                        openshift.set("triggers", "dc/srv0005-descargalre", "--manual")
+                      }
+                      sh "sleep 40"
+                    }
+                  }
+                }
+              }
+              stage('Desplegando en QA') {
+                steps {
+                sh "sleep 10"
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        openshift.selector("dc", "srv0005-descargalre").rollout().latest();
+                      }
+                      sh "sleep 15"
+                    }
+                  }
+                }
+              }
+            }
+          }
+      type: JenkinsPipeline
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - github:
+        secret: vJU0CXQe
+      type: GitHub
+    - generic:
+        secret: vJU0CXQe
+      type: Generic
+  status:
+    lastVersion: 1
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/migration-registry: ""
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+      pipeline.alpha.openshift.io/uses: '[{"name": "jenkins", "namespace": "", "kind":
+        "DeploymentConfig"}]'
+    creationTimestamp: "2023-05-22T20:02:58Z"
+    generation: 2
+    labels:
+      app: cicd-pipeline
+      group: cicd
+      migration.openshift.io/migrated-by-migmigration: 83812283-da61-428b-8d35-e15d91aa764d
+      migration.openshift.io/migrated-by-migplan: 6b6402c2-9258-443b-83f4-8bb51f1d90f8
+      name: cicd-pipeline
+      template: cicd
+      velero.io/backup-name: migration-8d005-initial-6s92c
+      velero.io/restore-name: migration-8d005-final-jj2bc
+    name: srv0006-apimetadata
+    namespace: pipelines-qa
+    resourceVersion: "136520893"
+    uid: 0c4cec38-c136-4917-8742-8093ce7a15ee
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: {}
+    output: {}
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      type: None
+    strategy:
+      jenkinsPipelineStrategy:
+        env:
+        - name: QA_PROJECT
+          value: api-fiscalizacion-qa
+        - name: ENABLE_QUAY
+          value: "false"
+        jenkinsfile: |
+          pipeline {
+            agent {
+              label 'maven'
+            }
+            stages {
+              stage('Clonando repo y Compilando') {
+                  steps {
+                      git([url: 'https://dirtrab.visualstudio.com/Libro%20Remuneraciones%20Electronico/_git/SRV0006-ApiMetadata',
+                      branch: 'develop',
+                      credentialsId: 'azure_credenciales_id'])
+                  script {
+                      def pom = readMavenPom file: 'pom.xml'
+                      version = pom.version
+                  }
+                  sh "mvn -s configuration/settings.xml install -DskipTests=true"
+                }
+              }
+              stage('Creando Image Builder') {
+                when {
+                  expression {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        return !openshift.selector("bc", "srv0006-apimetadata").exists();
+                      }
+                    }
+                  }
+                }
+                steps {
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        openshift.newBuild("--name=srv0006-apimetadata", "--image-stream=redhat-openjdk18-openshift:1.4", "--binary=true")
+                      }
+                    }
+                  }
+                }
+              }
+              stage('Construyendo imagen') {
+                steps {
+                  sh "rm -rf oc-build && mkdir -p oc-build/deployments"
+                  sh "cp target/SRV0006-ApiMetadata-1.0.jar oc-build/deployments/SRV0006-ApiMetadata.jar"
+
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        openshift.selector("bc", "srv0006-apimetadata").startBuild("--from-dir=oc-build", "--wait=true")
+                      }
+                    }
+                  }
+                  sh "sleep 10"
+                }
+              }
+              stage('Creando en QA') {
+                when {
+                  expression {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        return !openshift.selector('dc', 'srv0006-apimetadata').exists()
+                      }
+                    }
+                  }
+                }
+                steps {
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        def app = openshift.newApp("srv0006-apimetadata:latest")
+                        app.narrow("svc").expose();
+                        def dc = openshift.selector("dc", "srv0006-apimetadata")
+                        while (dc.object().spec.replicas != dc.object().status.availableReplicas) {
+                            sleep 10
+                        }
+                        openshift.set("triggers", "dc/srv0006-apimetadata", "--manual")
+                      }
+                      sh "sleep 40"
+                    }
+                  }
+                }
+              }
+              stage('Desplegando en QA') {
+                steps {
+                sh "sleep 10"
+                  script {
+                    openshift.withCluster() {
+                      openshift.withProject(env.QA_PROJECT) {
+                        openshift.selector("dc", "srv0006-apimetadata").rollout().latest();
+                      }
+                      sh "sleep 15"
+                    }
+                  }
+                }
+              }
+            }
+          }
+      type: JenkinsPipeline
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - github:
+        secret: vJU0CXQe
+      type: GitHub
+    - generic:
+        secret: vJU0CXQe
+      type: Generic
+  status:
+    lastVersion: 1
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/migration-registry: ""
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+      pipeline.alpha.openshift.io/uses: '[{"name": "jenkins", "namespace": "", "kind":
+        "DeploymentConfig"}]'
+    creationTimestamp: "2023-05-22T20:02:59Z"
+    generation: 2
+    labels:
+      app: cicd-pipeline
+      group: cicd
+      migration.openshift.io/migrated-by-migmigration: 83812283-da61-428b-8d35-e15d91aa764d
+      migration.openshift.io/migrated-by-migplan: 6b6402c2-9258-443b-83f4-8bb51f1d90f8
+      name: cicd-pipeline
+      template: cicd
+      velero.io/backup-name: migration-8d005-initial-6s92c
+      velero.io/restore-name: migration-8d005-final-jj2bc
+    name: srv0007-bff
+    namespace: pipelines-qa
+    resourceVersion: "136523922"
+    uid: c1c1cada-6496-442c-aca2-713bca29d6d3
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: {}
+    output: {}
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      type: None
+    strategy:
+      jenkinsPipelineStrategy:
+        env:
+        - name: QA_PROJECT
+          value: api-fiscalizacion-qa
+        - name: ENABLE_QUAY
+          value: "false"
+        jenkinsfile: "def templateName = 'srv0007-bff' \npipeline {\n  agent {\n    label
+          'nodejs'\n  }\n  options {\n    timeout(time: 20, unit: 'MINUTES') \n  }\n
+          \ stages {\n    stage('preparando pipeline') {\n        steps {\n            script
+          {\n                openshift.withCluster() {\n                    openshift.withProject(env.QA_PROJECT)
+          {\n                        echo \"Using project: ${openshift.project()}\"\n
+          \                   }\n                }\n            }\n        }\n    }\n
+          \   stage('cleanup') {\n      steps {\n        script {\n            openshift.withCluster()
+          {\n                openshift.withProject(env.QA_PROJECT) {\n                  openshift.selector(\"all\",
+          [ template : templateName ]).delete() \n                  if (openshift.selector(\"secrets\",
+          templateName).exists()) { \n                    openshift.selector(\"secrets\",
+          templateName).delete()\n                  }\n                }\n            }\n
+          \       }\n      }\n    }\n    stage('build') {\n      steps {\n        script
+          {\n            openshift.withCluster() {\n                openshift.withProject(env.QA_PROJECT)
+          {\n                  def builds = openshift.selector(\"bc\", templateName)\n
+          \                 builds.startBuild()\n                  builds.logs(\"-f\")\n
+          \                 echo \"build terminado\"\n                  echo \"comenzando
+          deployment\"\n                }\n            }\n        }\n      }\n    }\n
+          \   stage('deploy') {\n      steps {\n        script {\n            openshift.withCluster()
+          {\n                openshift.withProject(env.QA_PROJECT) {\n                  //latest
+          no es necesario porque el build trigger el deploy\n                  //def
+          rm = openshift.selector(\"dc\", templateName).rollout().latest()\n                  //
+          this will wait until the desired replicas are available\n                  sh
+          \"sleep 15\"\n                  def dc = openshift.selector(\"dc\", templateName)\n
+          \                 dc.rollout().status()\n                }\n            }\n
+          \       }\n      }\n    }\n  }\n}\n"
+      type: JenkinsPipeline
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - github:
+        secret: vJU0CXQe
+      type: GitHub
+    - generic:
+        secret: vJU0CXQe
+      type: Generic
+  status:
+    lastVersion: 1
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/migration-registry: ""
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+      pipeline.alpha.openshift.io/uses: '[{"name": "jenkins", "namespace": "", "kind":
+        "DeploymentConfig"}]'
+    creationTimestamp: "2023-05-22T20:02:59Z"
+    generation: 2
+    labels:
+      app: cicd-pipeline
+      group: cicd
+      migration.openshift.io/migrated-by-migmigration: 83812283-da61-428b-8d35-e15d91aa764d
+      migration.openshift.io/migrated-by-migplan: 6b6402c2-9258-443b-83f4-8bb51f1d90f8
+      name: cicd-pipeline
+      template: cicd
+      velero.io/backup-name: migration-8d005-initial-6s92c
+      velero.io/restore-name: migration-8d005-final-jj2bc
+    name: srv0008-validaciones
+    namespace: pipelines-qa
+    resourceVersion: "136526214"
+    uid: ac577a6d-f0dc-4b61-905d-cd8756b074b0
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: {}
+    output: {}
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      type: None
+    strategy:
+      jenkinsPipelineStrategy:
+        env:
+        - name: QA_PROJECT
+          value: api-fiscalizacion-qa
+        - name: ENABLE_QUAY
+          value: "false"
+        jenkinsfile: "def templateName = 'srv0008-validaciones' \npipeline {\n  agent
+          {\n    label 'nodejs'\n  }\n  options {\n    timeout(time: 20, unit: 'MINUTES')
+          \n  }\n  stages {\n    stage('preparando pipeline') {\n        steps {\n
+          \           script {\n                openshift.withCluster() {\n                    openshift.withProject(env.QA_PROJECT)
+          {\n                        echo \"Using project: ${openshift.project()}\"\n
+          \                   }\n                }\n            }\n        }\n    }\n
+          \   stage('cleanup') {\n      steps {\n        script {\n            openshift.withCluster()
+          {\n                openshift.withProject(env.QA_PROJECT) {\n                  openshift.selector(\"all\",
+          [ template : templateName ]).delete() \n                  if (openshift.selector(\"secrets\",
+          templateName).exists()) { \n                    openshift.selector(\"secrets\",
+          templateName).delete()\n                  }\n                }\n            }\n
+          \       }\n      }\n    }\n    stage('build') {\n      steps {\n        script
+          {\n            openshift.withCluster() {\n                openshift.withProject(env.QA_PROJECT)
+          {\n                  def builds = openshift.selector(\"bc\", templateName)\n
+          \                 builds.startBuild()\n                  builds.logs(\"-f\")\n
+          \                 echo \"build terminado\"\n                  echo \"comenzando
+          deployment\"\n                }\n            }\n        }\n      }\n    }\n
+          \   stage('deploy') {\n      steps {\n        script {\n            openshift.withCluster()
+          {\n                openshift.withProject(env.QA_PROJECT) {\n                  //latest
+          no es necesario porque el build trigger el deploy\n                  //def
+          rm = openshift.selector(\"dc\", templateName).rollout().latest()\n                  //
+          this will wait until the desired replicas are available\n                  sh
+          \"sleep 15\"\n                  def dc = openshift.selector(\"dc\", templateName)\n
+          \                 dc.rollout().status()\n                }\n            }\n
+          \       }\n      }\n    }\n  }\n}\n"
+      type: JenkinsPipeline
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - github:
+        secret: vJU0CXQe
+      type: GitHub
+    - generic:
+        secret: vJU0CXQe
+      type: Generic
+  status:
+    lastVersion: 1
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

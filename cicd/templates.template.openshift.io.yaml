@@ -1,0 +1,484 @@
+apiVersion: v1
+items:
+- apiVersion: template.openshift.io/v1
+  kind: Template
+  labels:
+    template: nexus3-persistent-template
+  metadata:
+    annotations:
+      description: Sonatype Nexus 3 persistent template
+      tags: ci,nexus
+    creationTimestamp: "2023-06-03T20:16:50Z"
+    labels:
+      migration.openshift.io/migrated-by-migmigration: 4066e18a-7c09-4930-a1fd-19e7058b887b
+      migration.openshift.io/migrated-by-migplan: adcc6565-a1ee-4eee-a8d6-19a7e8841033
+      velero.io/backup-name: migration-85fa4-initial-h496m
+      velero.io/restore-name: migration-85fa4-final-wmd58
+    name: nexus3-persistent
+    namespace: cicd
+    resourceVersion: "19235239"
+    uid: ca060dae-560e-44b7-a307-70f46d6d1e80
+  objects:
+  - apiVersion: v1
+    kind: ImageStream
+    metadata:
+      labels:
+        app: ${SERVICE_NAME}
+      name: ${SERVICE_NAME}
+    spec:
+      tags:
+      - from:
+          kind: DockerImage
+          name: docker.io/sonatype/nexus3:${NEXUS_VERSION}
+        name: ${NEXUS_VERSION}
+  - apiVersion: v1
+    kind: DeploymentConfig
+    metadata:
+      labels:
+        app: ${SERVICE_NAME}
+      name: ${SERVICE_NAME}
+    spec:
+      replicas: 1
+      selector:
+        deploymentconfig: ${SERVICE_NAME}
+      strategy:
+        recreateParams:
+          post:
+            execNewPod:
+              command:
+              - /bin/bash
+              - -c
+              - curl -o /tmp/nexus-functions -s https://raw.githubusercontent.com/OpenShiftDemos/nexus/master/scripts/nexus-functions;
+                source /tmp/nexus-functions; add_nexus3_redhat_repos admin admin123
+                http://${SERVICE_NAME}:8081
+              containerName: ${SERVICE_NAME}
+            failurePolicy: Abort
+          timeoutSeconds: 1200
+        type: Recreate
+      template:
+        metadata:
+          labels:
+            deploymentconfig: ${SERVICE_NAME}
+        spec:
+          containers:
+          - env:
+            - name: CONTEXT_PATH
+              value: /
+            image: ' '
+            imagePullPolicy: IfNotPresent
+            livenessProbe:
+              exec:
+                command:
+                - echo
+                - ok
+              failureThreshold: 3
+              initialDelaySeconds: 30
+              periodSeconds: 10
+              successThreshold: 1
+              timeoutSeconds: 1
+            name: ${SERVICE_NAME}
+            ports:
+            - containerPort: 8081
+              protocol: TCP
+            readinessProbe:
+              failureThreshold: 3
+              httpGet:
+                path: /
+                port: 8081
+                scheme: HTTP
+              initialDelaySeconds: 30
+              periodSeconds: 10
+              successThreshold: 1
+              timeoutSeconds: 1
+            resources:
+              limits:
+                memory: ${MAX_MEMORY}
+              requests:
+                memory: 512Mi
+            terminationMessagePath: /dev/termination-log
+            volumeMounts:
+            - mountPath: /nexus-data
+              name: ${SERVICE_NAME}-data
+          dnsPolicy: ClusterFirst
+          restartPolicy: Always
+          securityContext: {}
+          terminationGracePeriodSeconds: 30
+          volumes:
+          - name: ${SERVICE_NAME}-data
+            persistentVolumeClaim:
+              claimName: ${SERVICE_NAME}-pv
+      test: false
+      triggers:
+      - type: ConfigChange
+      - imageChangeParams:
+          automatic: true
+          containerNames:
+          - ${SERVICE_NAME}
+          from:
+            kind: ImageStreamTag
+            name: ${SERVICE_NAME}:${NEXUS_VERSION}
+        type: ImageChange
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      labels:
+        app: ${SERVICE_NAME}
+      name: ${SERVICE_NAME}
+    spec:
+      ports:
+      - name: 8081-tcp
+        port: 8081
+        protocol: TCP
+        targetPort: 8081
+      selector:
+        deploymentconfig: ${SERVICE_NAME}
+      sessionAffinity: None
+      type: ClusterIP
+  - apiVersion: v1
+    kind: Route
+    metadata:
+      labels:
+        app: ${SERVICE_NAME}
+      name: ${SERVICE_NAME}
+    spec:
+      port:
+        targetPort: 8081-tcp
+      to:
+        kind: Service
+        name: ${SERVICE_NAME}
+        weight: 100
+  - apiVersion: v1
+    kind: PersistentVolumeClaim
+    metadata:
+      labels:
+        app: ${SERVICE_NAME}
+      name: ${SERVICE_NAME}-pv
+    spec:
+      accessModes:
+      - ReadWriteOnce
+      resources:
+        requests:
+          storage: ${VOLUME_CAPACITY}
+  parameters:
+  - displayName: Sonatype Nexus service name
+    name: SERVICE_NAME
+    required: true
+    value: nexus
+  - displayName: Sonatype Nexus version
+    name: NEXUS_VERSION
+    required: true
+    value: 3.6.0
+  - description: Volume space available for Sonatype Nexus e.g. 512Mi, 2Gi
+    displayName: Volume Space for Nexus
+    name: VOLUME_CAPACITY
+    required: true
+    value: 2Gi
+  - description: Max memory allocated to the Nexus pod
+    displayName: Max Memory
+    name: MAX_MEMORY
+    required: true
+    value: 1Gi
+- apiVersion: template.openshift.io/v1
+  kind: Template
+  message: 'Login to SonarQube with the default admin user: admin/admin'
+  metadata:
+    annotations:
+      description: The SonarQube OpenShift template
+      tags: instant-app,sonarqube
+    creationTimestamp: "2023-06-03T20:16:50Z"
+    labels:
+      migration.openshift.io/migrated-by-migmigration: 4066e18a-7c09-4930-a1fd-19e7058b887b
+      migration.openshift.io/migrated-by-migplan: adcc6565-a1ee-4eee-a8d6-19a7e8841033
+      velero.io/backup-name: migration-85fa4-initial-h496m
+      velero.io/restore-name: migration-85fa4-final-wmd58
+    name: sonarqube
+    namespace: cicd
+    resourceVersion: "19235244"
+    uid: a58bf73c-d381-45d3-8ee7-db73fabe8136
+  objects:
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      labels:
+        app: sonarqube
+      name: sonarqube
+    spec:
+      ports:
+      - name: sonarqube
+        port: 9000
+        protocol: TCP
+        targetPort: 9000
+      selector:
+        app: sonarqube
+        deploymentconfig: sonarqube
+      sessionAffinity: None
+      type: ClusterIP
+  - apiVersion: v1
+    kind: Route
+    metadata:
+      annotations:
+        description: Route for SonarQube's http service.
+      labels:
+        app: sonarqube
+      name: sonarqube
+    spec:
+      to:
+        kind: Service
+        name: sonarqube
+  - apiVersion: v1
+    kind: ImageStream
+    metadata:
+      labels:
+        app: sonarqube
+      name: sonarqube
+    spec:
+      tags:
+      - annotations:
+          description: The SonarQube Docker image
+          tags: sonarqube
+        from:
+          kind: DockerImage
+          name: openshiftdemos/sonarqube:${SONARQUBE_VERSION}
+        importPolicy: {}
+        name: ${SONARQUBE_VERSION}
+  - apiVersion: v1
+    kind: DeploymentConfig
+    metadata:
+      labels:
+        app: sonarqube
+        deploymentconfig: sonarqube
+      name: sonarqube
+    spec:
+      replicas: 1
+      selector:
+        app: sonarqube
+        deploymentconfig: sonarqube
+      strategy:
+        resources: {}
+        rollingParams:
+          intervalSeconds: 1
+          maxSurge: 25%
+          maxUnavailable: 25%
+          timeoutSeconds: 600
+          updatePeriodSeconds: 1
+        type: Rolling
+      template:
+        metadata:
+          annotations:
+            openshift.io/container.sonarqube.image.entrypoint: '["./bin/run.sh"]'
+          creationTimestamp: null
+          labels:
+            app: sonarqube
+            deploymentconfig: sonarqube
+        spec:
+          containers:
+          - env:
+            - name: SONARQUBE_JDBC_PASSWORD
+              value: ${POSTGRESQL_PASSWORD}
+            - name: SONARQUBE_JDBC_URL
+              value: jdbc:postgresql://postgresql-sonarqube/sonar
+            - name: SONARQUBE_JDBC_USERNAME
+              value: sonar
+            image: ' '
+            imagePullPolicy: IfNotPresent
+            livenessProbe:
+              failureThreshold: 3
+              httpGet:
+                path: /
+                port: 9000
+              initialDelaySeconds: 60
+              periodSeconds: 20
+              successThreshold: 1
+              timeoutSeconds: 5
+            name: sonarqube
+            ports:
+            - containerPort: 9000
+              protocol: TCP
+            readinessProbe:
+              failureThreshold: 3
+              httpGet:
+                path: /
+                port: 9000
+              initialDelaySeconds: 60
+              periodSeconds: 20
+              successThreshold: 1
+              timeoutSeconds: 5
+            resources:
+              limits:
+                cpu: 1
+                memory: 2Gi
+              requests:
+                cpu: 200m
+                memory: 1Gi
+            terminationMessagePath: /dev/termination-log
+            volumeMounts:
+            - mountPath: /opt/sonarqube/data
+              name: sonarqube-data
+          dnsPolicy: ClusterFirst
+          restartPolicy: Always
+          securityContext: {}
+          terminationGracePeriodSeconds: 30
+          volumes:
+          - name: sonarqube-data
+            persistentVolumeClaim:
+              claimName: sonarqube-data
+      triggers:
+      - type: ConfigChange
+      - imageChangeParams:
+          automatic: true
+          containerNames:
+          - sonarqube
+          from:
+            kind: ImageStreamTag
+            name: sonarqube:${SONARQUBE_VERSION}
+        type: ImageChange
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      labels:
+        app: sonarqube
+      name: postgresql-sonarqube
+    spec:
+      ports:
+      - name: postgresql
+        port: 5432
+        protocol: TCP
+        targetPort: 5432
+      selector:
+        app: sonarqube
+        deploymentconfig: postgresql-sonarqube
+      sessionAffinity: None
+      type: ClusterIP
+  - apiVersion: v1
+    kind: DeploymentConfig
+    metadata:
+      labels:
+        app: sonarqube
+        deploymentconfig: postgresql-sonarqube
+      name: postgresql-sonarqube
+    spec:
+      replicas: 1
+      selector:
+        app: sonarqube
+        deploymentconfig: postgresql-sonarqube
+      strategy:
+        recreateParams:
+          timeoutSeconds: 600
+        resources: {}
+        type: Recreate
+      template:
+        metadata:
+          labels:
+            app: sonarqube
+            deploymentconfig: postgresql-sonarqube
+        spec:
+          containers:
+          - env:
+            - name: POSTGRESQL_USER
+              value: sonar
+            - name: POSTGRESQL_PASSWORD
+              value: ${POSTGRESQL_PASSWORD}
+            - name: POSTGRESQL_DATABASE
+              value: sonar
+            image: ' '
+            imagePullPolicy: IfNotPresent
+            livenessProbe:
+              failureThreshold: 3
+              initialDelaySeconds: 30
+              periodSeconds: 10
+              successThreshold: 1
+              tcpSocket:
+                port: 5432
+              timeoutSeconds: 1
+            name: postgresql
+            ports:
+            - containerPort: 5432
+              protocol: TCP
+            readinessProbe:
+              exec:
+                command:
+                - /bin/sh
+                - -i
+                - -c
+                - psql -h 127.0.0.1 -U $POSTGRESQL_USER -q -d $POSTGRESQL_DATABASE
+                  -c 'SELECT 1'
+              failureThreshold: 3
+              initialDelaySeconds: 5
+              periodSeconds: 10
+              successThreshold: 1
+              timeoutSeconds: 1
+            resources:
+              limits:
+                memory: 256Mi
+            securityContext:
+              capabilities: {}
+              privileged: false
+            terminationMessagePath: /dev/termination-log
+            volumeMounts:
+            - mountPath: /var/lib/pgsql/data
+              name: postgresql-data
+          dnsPolicy: ClusterFirst
+          restartPolicy: Always
+          securityContext: {}
+          terminationGracePeriodSeconds: 30
+          volumes:
+          - name: postgresql-data
+            persistentVolumeClaim:
+              claimName: postgresql-sonarqube-data
+      test: false
+      triggers:
+      - imageChangeParams:
+          automatic: true
+          containerNames:
+          - postgresql
+          from:
+            kind: ImageStreamTag
+            name: postgresql:9.5
+            namespace: openshift
+        type: ImageChange
+      - type: ConfigChange
+  - apiVersion: v1
+    kind: PersistentVolumeClaim
+    metadata:
+      name: postgresql-sonarqube-data
+    spec:
+      accessModes:
+      - ReadWriteOnce
+      resources:
+        requests:
+          storage: ${POSTGRESQL_VOLUME_CAPACITY}
+  - apiVersion: v1
+    kind: PersistentVolumeClaim
+    metadata:
+      name: sonarqube-data
+    spec:
+      accessModes:
+      - ReadWriteOnce
+      resources:
+        requests:
+          storage: ${SONAR_VOLUME_CAPACITY}
+  parameters:
+  - displayName: SonarQube version
+    name: SONARQUBE_VERSION
+    required: true
+    value: "6.7"
+  - description: Password for SonarQube Server PostgreSQL backend
+    displayName: SonarQube's PostgreSQL Password
+    from: '[a-zA-Z0-9]{16}'
+    generate: expression
+    name: POSTGRESQL_PASSWORD
+    required: true
+  - description: Volume space available for PostgreSQL
+    displayName: PostgreSQL Volume Capacity
+    name: POSTGRESQL_VOLUME_CAPACITY
+    required: true
+    value: 2Gi
+  - description: Volume space available for SonarQube
+    displayName: SonarQube Volume Capacity
+    name: SONAR_VOLUME_CAPACITY
+    required: true
+    value: 5Gi
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

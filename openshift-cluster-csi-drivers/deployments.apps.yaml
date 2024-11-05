@@ -1,0 +1,528 @@
+apiVersion: v1
+items:
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      config.openshift.io/inject-proxy: csi-driver
+      config.openshift.io/inject-proxy-cabundle: csi-driver
+      deployment.kubernetes.io/revision: "2"
+      operator.openshift.io/dep-a73daa595e295ca7d8427e87174f8ef126bf0: O1lK1A==
+      operator.openshift.io/dep-dbaaae624f02c6147fa5a24970efcccc4341e: HGm2IA==
+      operator.openshift.io/spec-hash: 6e720a91f3e81a9ee06de87c088daf083ed3a639ff984d0a1b25843a28a83932
+    creationTimestamp: "2023-05-04T21:40:40Z"
+    generation: 2
+    name: azure-disk-csi-driver-controller
+    namespace: openshift-cluster-csi-drivers
+    resourceVersion: "425759139"
+    uid: e7011e62-f657-4e0f-bfe7-ccfcea31773e
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 2
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: azure-disk-csi-driver-controller
+    strategy:
+      rollingUpdate:
+        maxSurge: 0
+        maxUnavailable: 1
+      type: RollingUpdate
+    template:
+      metadata:
+        annotations:
+          operator.openshift.io/dep-a73daa595e295ca7d8427e87174f8ef126bf0: O1lK1A==
+          operator.openshift.io/dep-dbaaae624f02c6147fa5a24970efcccc4341e: HGm2IA==
+        creationTimestamp: null
+        labels:
+          app: azure-disk-csi-driver-controller
+      spec:
+        affinity:
+          podAntiAffinity:
+            preferredDuringSchedulingIgnoredDuringExecution:
+            - podAffinityTerm:
+                labelSelector:
+                  matchLabels:
+                    app: azure-disk-csi-driver-controller
+                topologyKey: kubernetes.io/hostname
+              weight: 100
+        containers:
+        - args:
+          - --endpoint=$(CSI_ENDPOINT)
+          - --logtostderr
+          - --metrics-address=localhost:8201
+          - --v=2
+          - --cloud-config-secret-name=""
+          - --cloud-config-secret-namespace=""
+          env:
+          - name: AZURE_CREDENTIAL_FILE
+            value: /etc/kubernetes/cloud.conf
+          - name: CSI_ENDPOINT
+            value: unix:///var/lib/csi/sockets/pluginproxy/csi.sock
+          image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:d78f962ef12c22dfb1a6b2cc4da0d3d5a6ecabde1e30260e53323309076eff7c
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            failureThreshold: 5
+            httpGet:
+              path: /healthz
+              port: healthz
+              scheme: HTTP
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 3
+          name: csi-driver
+          ports:
+          - containerPort: 10301
+            hostPort: 10301
+            name: healthz
+            protocol: TCP
+          resources:
+            requests:
+              cpu: 10m
+              memory: 50Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/lib/csi/sockets/pluginproxy/
+            name: socket-dir
+          - mountPath: /etc/kubernetes/
+            name: merged-cloud-config
+            readOnly: true
+          - mountPath: /var/lib/waagent/ManagedIdentity-Settings
+            name: msi
+            readOnly: true
+          - mountPath: /etc/pki/ca-trust/extracted/pem
+            name: non-standard-root-system-trust-ca-bundle
+            readOnly: true
+        - args:
+          - --secure-listen-address=0.0.0.0:9201
+          - --upstream=http://127.0.0.1:8201/
+          - --tls-cert-file=/etc/tls/private/tls.crt
+          - --tls-private-key-file=/etc/tls/private/tls.key
+          - --logtostderr=true
+          image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:d253bc69fdc967c1fc1543b01deddacd4eefe816cc9ed4541ea3673e35321753
+          imagePullPolicy: IfNotPresent
+          name: driver-kube-rbac-proxy
+          ports:
+          - containerPort: 9201
+            hostPort: 9201
+            name: driver-m
+            protocol: TCP
+          resources:
+            requests:
+              cpu: 10m
+              memory: 20Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /etc/tls/private
+            name: metrics-serving-cert
+        - args:
+          - --csi-address=$(ADDRESS)
+          - --default-fstype=ext4
+          - --feature-gates=Topology=true
+          - --http-endpoint=localhost:8202
+          - --timeout=15s
+          - --leader-election
+          - --leader-election-lease-duration=137s
+          - --leader-election-renew-deadline=107s
+          - --leader-election-retry-period=26s
+          - --v=2
+          env:
+          - name: ADDRESS
+            value: /var/lib/csi/sockets/pluginproxy/csi.sock
+          image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:8b086f4e7d87d43eca79028879dce115f8a2fe13fb17eab37a8fb509bf2ccc52
+          imagePullPolicy: IfNotPresent
+          name: csi-provisioner
+          resources:
+            requests:
+              cpu: 10m
+              memory: 50Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/lib/csi/sockets/pluginproxy/
+            name: socket-dir
+        - args:
+          - --secure-listen-address=0.0.0.0:9202
+          - --upstream=http://127.0.0.1:8202/
+          - --tls-cert-file=/etc/tls/private/tls.crt
+          - --tls-private-key-file=/etc/tls/private/tls.key
+          - --logtostderr=true
+          image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:d253bc69fdc967c1fc1543b01deddacd4eefe816cc9ed4541ea3673e35321753
+          imagePullPolicy: IfNotPresent
+          name: provisioner-kube-rbac-proxy
+          ports:
+          - containerPort: 9202
+            hostPort: 9202
+            name: provisioner-m
+            protocol: TCP
+          resources:
+            requests:
+              cpu: 10m
+              memory: 20Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /etc/tls/private
+            name: metrics-serving-cert
+        - args:
+          - --csi-address=$(ADDRESS)
+          - --http-endpoint=localhost:8203
+          - --timeout=120s
+          - --leader-election
+          - --leader-election-lease-duration=137s
+          - --leader-election-renew-deadline=107s
+          - --leader-election-retry-period=26s
+          - --v=2
+          env:
+          - name: ADDRESS
+            value: /var/lib/csi/sockets/pluginproxy/csi.sock
+          image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:29174679b0bbd6d7014d72aa723d10c96695ea52654bccf97516966dbd1fc2ac
+          imagePullPolicy: IfNotPresent
+          name: csi-attacher
+          resources:
+            requests:
+              cpu: 10m
+              memory: 50Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/lib/csi/sockets/pluginproxy/
+            name: socket-dir
+        - args:
+          - --secure-listen-address=0.0.0.0:9203
+          - --upstream=http://127.0.0.1:8203/
+          - --tls-cert-file=/etc/tls/private/tls.crt
+          - --tls-private-key-file=/etc/tls/private/tls.key
+          - --logtostderr=true
+          image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:d253bc69fdc967c1fc1543b01deddacd4eefe816cc9ed4541ea3673e35321753
+          imagePullPolicy: IfNotPresent
+          name: attacher-kube-rbac-proxy
+          ports:
+          - containerPort: 9203
+            hostPort: 9203
+            name: attacher-m
+            protocol: TCP
+          resources:
+            requests:
+              cpu: 10m
+              memory: 20Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /etc/tls/private
+            name: metrics-serving-cert
+        - args:
+          - --csi-address=$(ADDRESS)
+          - --http-endpoint=localhost:8204
+          - --leader-election
+          - --leader-election-lease-duration=137s
+          - --leader-election-renew-deadline=107s
+          - --leader-election-retry-period=26s
+          - --v=2
+          env:
+          - name: ADDRESS
+            value: /var/lib/csi/sockets/pluginproxy/csi.sock
+          image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:00b67980ea5c780118daf5d602324861eb9f0aa5fdf392e857ebf366a65f564d
+          imagePullPolicy: IfNotPresent
+          name: csi-resizer
+          resources:
+            requests:
+              cpu: 10m
+              memory: 50Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/lib/csi/sockets/pluginproxy/
+            name: socket-dir
+        - args:
+          - --secure-listen-address=0.0.0.0:9204
+          - --upstream=http://127.0.0.1:8204/
+          - --tls-cert-file=/etc/tls/private/tls.crt
+          - --tls-private-key-file=/etc/tls/private/tls.key
+          - --logtostderr=true
+          image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:d253bc69fdc967c1fc1543b01deddacd4eefe816cc9ed4541ea3673e35321753
+          imagePullPolicy: IfNotPresent
+          name: resizer-kube-rbac-proxy
+          ports:
+          - containerPort: 9204
+            hostPort: 9204
+            name: resizer-m
+            protocol: TCP
+          resources:
+            requests:
+              cpu: 10m
+              memory: 20Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /etc/tls/private
+            name: metrics-serving-cert
+        - args:
+          - --csi-address=$(ADDRESS)
+          - --metrics-address=localhost:8205
+          - --leader-election
+          - --leader-election-lease-duration=137s
+          - --leader-election-renew-deadline=107s
+          - --leader-election-retry-period=26s
+          - --v=2
+          env:
+          - name: ADDRESS
+            value: /var/lib/csi/sockets/pluginproxy/csi.sock
+          image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:63f9af8bb8e44752588dda8b5503bfa613efc9e6c1ad46b44c697229b95af71e
+          imagePullPolicy: IfNotPresent
+          name: csi-snapshotter
+          resources:
+            requests:
+              cpu: 10m
+              memory: 50Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/lib/csi/sockets/pluginproxy/
+            name: socket-dir
+        - args:
+          - --secure-listen-address=0.0.0.0:9205
+          - --upstream=http://127.0.0.1:8205/
+          - --tls-cert-file=/etc/tls/private/tls.crt
+          - --tls-private-key-file=/etc/tls/private/tls.key
+          - --logtostderr=true
+          image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:d253bc69fdc967c1fc1543b01deddacd4eefe816cc9ed4541ea3673e35321753
+          imagePullPolicy: IfNotPresent
+          name: snapshotter-kube-rbac-proxy
+          ports:
+          - containerPort: 9205
+            hostPort: 9205
+            name: snapshotter-m
+            protocol: TCP
+          resources:
+            requests:
+              cpu: 10m
+              memory: 20Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /etc/tls/private
+            name: metrics-serving-cert
+        - args:
+          - --csi-address=$(ADDRESS)
+          - --probe-timeout=3s
+          - --health-port=10301
+          - --v=2
+          env:
+          - name: ADDRESS
+            value: /var/lib/csi/sockets/pluginproxy/csi.sock
+          image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:2a51cb97a82a78758dc08ff4053add576906e56f21367a0662107a1076e3eaa4
+          imagePullPolicy: IfNotPresent
+          name: csi-liveness-probe
+          resources:
+            requests:
+              cpu: 10m
+              memory: 50Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/lib/csi/sockets/pluginproxy/
+            name: socket-dir
+        dnsPolicy: ClusterFirst
+        hostNetwork: true
+        initContainers:
+        - args:
+          - --cloud-config-file-path=/etc/cloud-config/cloud.conf
+          - --output-file-path=/etc/merged-cloud-config/cloud.conf
+          command:
+          - /azure-config-credentials-injector
+          env:
+          - name: AZURE_CLIENT_ID
+            valueFrom:
+              secretKeyRef:
+                key: azure_client_id
+                name: azure-disk-credentials
+          - name: AZURE_CLIENT_SECRET
+            valueFrom:
+              secretKeyRef:
+                key: azure_client_secret
+                name: azure-disk-credentials
+          image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:be2ef4ed52fd39bafa210ed1409c102c5a1bf2c3e8f9529114929c6af16fb9c0
+          imagePullPolicy: IfNotPresent
+          name: azure-inject-credentials
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /etc/cloud-config
+            name: host-cloud-config
+            readOnly: true
+          - mountPath: /etc/merged-cloud-config
+            name: merged-cloud-config
+        nodeSelector:
+          node-role.kubernetes.io/master: ""
+        priorityClassName: system-cluster-critical
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: azure-disk-csi-driver-controller-sa
+        serviceAccountName: azure-disk-csi-driver-controller-sa
+        terminationGracePeriodSeconds: 30
+        tolerations:
+        - key: CriticalAddonsOnly
+          operator: Exists
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/master
+          operator: Exists
+        volumes:
+        - emptyDir: {}
+          name: socket-dir
+        - hostPath:
+            path: /etc/kubernetes/
+            type: ""
+          name: host-cloud-config
+        - hostPath:
+            path: /var/lib/waagent/ManagedIdentity-Settings
+            type: ""
+          name: msi
+        - name: metrics-serving-cert
+          secret:
+            defaultMode: 420
+            secretName: azure-disk-csi-driver-controller-metrics-serving-cert
+        - emptyDir: {}
+          name: merged-cloud-config
+        - configMap:
+            defaultMode: 420
+            items:
+            - key: ca-bundle.crt
+              path: tls-ca-bundle.pem
+            name: azure-disk-csi-driver-trusted-ca-bundle
+          name: non-standard-root-system-trust-ca-bundle
+  status:
+    availableReplicas: 2
+    conditions:
+    - lastTransitionTime: "2023-05-04T21:41:21Z"
+      lastUpdateTime: "2023-05-04T21:41:21Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    - lastTransitionTime: "2023-05-04T21:40:40Z"
+      lastUpdateTime: "2023-05-04T21:41:51Z"
+      message: ReplicaSet "azure-disk-csi-driver-controller-7fcf94989f" has successfully
+        progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    observedGeneration: 2
+    readyReplicas: 2
+    replicas: 2
+    updatedReplicas: 2
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      config.openshift.io/inject-proxy: azure-disk-csi-driver-operator
+      deployment.kubernetes.io/revision: "1"
+      operator.openshift.io/spec-hash: 6cf3293957b0c1b3ac157f1e9c44c54191a3a1ec2191e563d7e7f62a04dd23d7
+    creationTimestamp: "2023-05-04T21:40:31Z"
+    generation: 1
+    name: azure-disk-csi-driver-operator
+    namespace: openshift-cluster-csi-drivers
+    resourceVersion: "5770"
+    uid: 07ed4430-13e8-487d-8a82-017751ef7750
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        name: azure-disk-csi-driver-operator
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        annotations:
+          target.workload.openshift.io/management: '{"effect": "PreferredDuringScheduling"}'
+        creationTimestamp: null
+        labels:
+          name: azure-disk-csi-driver-operator
+      spec:
+        containers:
+        - args:
+          - start
+          - -v=2
+          env:
+          - name: DRIVER_IMAGE
+            value: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:d78f962ef12c22dfb1a6b2cc4da0d3d5a6ecabde1e30260e53323309076eff7c
+          - name: PROVISIONER_IMAGE
+            value: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:8b086f4e7d87d43eca79028879dce115f8a2fe13fb17eab37a8fb509bf2ccc52
+          - name: ATTACHER_IMAGE
+            value: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:29174679b0bbd6d7014d72aa723d10c96695ea52654bccf97516966dbd1fc2ac
+          - name: RESIZER_IMAGE
+            value: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:00b67980ea5c780118daf5d602324861eb9f0aa5fdf392e857ebf366a65f564d
+          - name: SNAPSHOTTER_IMAGE
+            value: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:63f9af8bb8e44752588dda8b5503bfa613efc9e6c1ad46b44c697229b95af71e
+          - name: NODE_DRIVER_REGISTRAR_IMAGE
+            value: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:1847d8560861bf7876e0758c9e542649d12f61f2e78d5f4d1aa76ed9a242198b
+          - name: LIVENESS_PROBE_IMAGE
+            value: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:2a51cb97a82a78758dc08ff4053add576906e56f21367a0662107a1076e3eaa4
+          - name: KUBE_RBAC_PROXY_IMAGE
+            value: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:d253bc69fdc967c1fc1543b01deddacd4eefe816cc9ed4541ea3673e35321753
+          - name: CLUSTER_CLOUD_CONTROLLER_MANAGER_OPERATOR_IMAGE
+            value: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:be2ef4ed52fd39bafa210ed1409c102c5a1bf2c3e8f9529114929c6af16fb9c0
+          - name: POD_NAME
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.name
+          image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:0bcd46fc1d1be46e17a28cddc8af2d6e00b24cac1e44619c5d4c53144bc403ef
+          imagePullPolicy: IfNotPresent
+          name: azure-disk-csi-driver-operator
+          resources:
+            requests:
+              cpu: 10m
+              memory: 50Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        nodeSelector:
+          node-role.kubernetes.io/master: ""
+        priorityClassName: system-cluster-critical
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: azure-disk-csi-driver-operator
+        serviceAccountName: azure-disk-csi-driver-operator
+        terminationGracePeriodSeconds: 30
+        tolerations:
+        - key: CriticalAddonsOnly
+          operator: Exists
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/master
+          operator: Exists
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2023-05-04T21:40:40Z"
+      lastUpdateTime: "2023-05-04T21:40:40Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    - lastTransitionTime: "2023-05-04T21:40:31Z"
+      lastUpdateTime: "2023-05-04T21:40:40Z"
+      message: ReplicaSet "azure-disk-csi-driver-operator-6f45ccbcb5" has successfully
+        progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

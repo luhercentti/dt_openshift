@@ -1,0 +1,594 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: ReplicationController
+  metadata:
+    annotations:
+      openshift.io/deployer-pod.completed-at: 2023-05-22 20:04:41 +0000 UTC
+      openshift.io/deployer-pod.created-at: 2023-05-22 19:36:38 +0000 UTC
+      openshift.io/deployer-pod.name: api-integracion-1-deploy
+      openshift.io/deployment-config.latest-version: "1"
+      openshift.io/deployment-config.name: api-integracion
+      openshift.io/deployment.phase: Complete
+      openshift.io/deployment.replicas: "0"
+      openshift.io/deployment.status-reason: config change
+      openshift.io/encoded-deployment-config: |
+        {"kind":"DeploymentConfig","apiVersion":"apps.openshift.io/v1","metadata":{"name":"api-integracion","namespace":"denuncias-qa","uid":"04542ddb-8685-4c72-83da-b985d6c7a594","resourceVersion":"9199087","generation":2,"creationTimestamp":"2023-05-22T19:36:37Z","labels":{"app":"api-integracion","migration.openshift.io/migrated-by-migmigration":"f7c420f5-e043-45c4-9c59-f5c8ea87984b","migration.openshift.io/migrated-by-migplan":"4744b907-f899-4d99-9c40-21dc5fe59e15","velero.io/backup-name":"migration-d8805-initial-56dz6","velero.io/restore-name":"migration-d8805-final-6n79s"},"annotations":{"openshift.io/backup-registry-hostname":"docker-registry.default.svc:5000","openshift.io/backup-server-version":"1.11","openshift.io/generated-by":"OpenShiftWebConsole","openshift.io/migration-registry":"","openshift.io/restore-registry-hostname":"image-registry.openshift-image-registry.svc:5000","openshift.io/restore-server-version":"1.23"},"managedFields":[{"manager":"velero-server","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-05-22T19:36:37Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{".":{},"f:openshift.io/backup-registry-hostname":{},"f:openshift.io/backup-server-version":{},"f:openshift.io/generated-by":{},"f:openshift.io/migration-registry":{},"f:openshift.io/restore-registry-hostname":{},"f:openshift.io/restore-server-version":{}},"f:labels":{".":{},"f:app":{},"f:migration.openshift.io/migrated-by-migmigration":{},"f:migration.openshift.io/migrated-by-migplan":{},"f:velero.io/backup-name":{},"f:velero.io/restore-name":{}}},"f:spec":{"f:selector":{".":{},"f:app":{},"f:deploymentconfig":{}},"f:strategy":{"f:activeDeadlineSeconds":{},"f:rollingParams":{".":{},"f:intervalSeconds":{},"f:maxSurge":{},"f:maxUnavailable":{},"f:timeoutSeconds":{},"f:updatePeriodSeconds":{}},"f:type":{}},"f:template":{".":{},"f:metadata":{".":{},"f:annotations":{".":{},"f:openshift.io/generated-by":{}},"f:creationTimestamp":{},"f:labels":{".":{},"f:app":{},"f:deploymentconfig":{}}},"f:spec":{".":{},"f:containers":{".":{},"k:{\"name\":\"api-integracion\"}":{".":{},"f:env":{".":{},"k:{\"name\":\"CorsConfig\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"TZ\"}":{".":{},"f:name":{},"f:value":{}}},"f:image":{},"f:imagePullPolicy":{},"f:name":{},"f:ports":{".":{},"k:{\"containerPort\":8080,\"protocol\":\"TCP\"}":{".":{},"f:containerPort":{},"f:protocol":{}}},"f:resources":{".":{},"f:limits":{".":{},"f:cpu":{},"f:memory":{}}},"f:terminationMessagePath":{},"f:terminationMessagePolicy":{}}},"f:dnsPolicy":{},"f:restartPolicy":{},"f:schedulerName":{},"f:securityContext":{},"f:terminationGracePeriodSeconds":{}}}}}},{"manager":"openshift-controller-manager","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-05-22T19:36:38Z","fieldsType":"FieldsV1","fieldsV1":{"f:spec":{"f:triggers":{}}}},{"manager":"openshift-controller-manager","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-05-22T19:36:38Z","fieldsType":"FieldsV1","fieldsV1":{"f:status":{"f:conditions":{".":{},"k:{\"type\":\"Available\"}":{".":{},"f:lastTransitionTime":{},"f:lastUpdateTime":{},"f:message":{},"f:status":{},"f:type":{}}},"f:details":{".":{},"f:causes":{},"f:message":{}},"f:latestVersion":{},"f:observedGeneration":{}}},"subresource":"status"}]},"spec":{"strategy":{"type":"Rolling","rollingParams":{"updatePeriodSeconds":1,"intervalSeconds":1,"timeoutSeconds":600,"maxUnavailable":"25%","maxSurge":"25%"},"resources":{},"activeDeadlineSeconds":21600},"triggers":[{"type":"ConfigChange"},{"type":"ImageChange","imageChangeParams":{"automatic":true,"containerNames":["api-integracion"],"from":{"kind":"ImageStreamTag","namespace":"denuncias-dev","name":"api-integracion-qa:latest"},"lastTriggeredImage":"image-registry.openshift-image-registry.svc:5000/denuncias-dev/api-integracion-qa@sha256:f8a8870bcd063620e8611cc4a578283d12ac53f32bb680c9228a98c894880b25"}}],"replicas":0,"revisionHistoryLimit":10,"test":false,"selector":{"app":"api-integracion","deploymentconfig":"api-integracion"},"template":{"metadata":{"creationTimestamp":null,"labels":{"app":"api-integracion","deploymentconfig":"api-integracion"},"annotations":{"openshift.io/generated-by":"OpenShiftWebConsole"}},"spec":{"containers":[{"name":"api-integracion","image":"image-registry.openshift-image-registry.svc:5000/denuncias-dev/api-integracion-qa@sha256:f8a8870bcd063620e8611cc4a578283d12ac53f32bb680c9228a98c894880b25","ports":[{"containerPort":8080,"protocol":"TCP"}],"env":[{"name":"TZ","value":"America/Santiago"},{"name":"CorsConfig","value":"{\"PolicyOrigin\": \"*\"}"}],"resources":{"limits":{"cpu":"300m","memory":"300Mi"}},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File","imagePullPolicy":"Always"}],"restartPolicy":"Always","terminationGracePeriodSeconds":30,"dnsPolicy":"ClusterFirst","securityContext":{},"schedulerName":"default-scheduler"}}},"status":{"latestVersion":1,"observedGeneration":1,"replicas":0,"updatedReplicas":0,"availableReplicas":0,"unavailableReplicas":0,"details":{"message":"config change","causes":[{"type":"ConfigChange"}]},"conditions":[{"type":"Available","status":"False","lastUpdateTime":"2023-05-22T19:36:37Z","lastTransitionTime":"2023-05-22T19:36:37Z","message":"Deployment config does not have minimum availability."}]}}
+    creationTimestamp: "2023-05-22T19:36:38Z"
+    generation: 1
+    labels:
+      app: api-integracion
+      migration.openshift.io/migrated-by-migmigration: f7c420f5-e043-45c4-9c59-f5c8ea87984b
+      migration.openshift.io/migrated-by-migplan: 4744b907-f899-4d99-9c40-21dc5fe59e15
+      openshift.io/deployment-config.name: api-integracion
+      velero.io/backup-name: migration-d8805-initial-56dz6
+      velero.io/restore-name: migration-d8805-final-6n79s
+    name: api-integracion-1
+    namespace: denuncias-qa
+    ownerReferences:
+    - apiVersion: apps.openshift.io/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DeploymentConfig
+      name: api-integracion
+      uid: 04542ddb-8685-4c72-83da-b985d6c7a594
+    resourceVersion: "9215791"
+    uid: 12a90722-6345-4772-998f-9afca305a28c
+  spec:
+    replicas: 0
+    selector:
+      app: api-integracion
+      deployment: api-integracion-1
+      deploymentconfig: api-integracion
+    template:
+      metadata:
+        annotations:
+          openshift.io/deployment-config.latest-version: "1"
+          openshift.io/deployment-config.name: api-integracion
+          openshift.io/deployment.name: api-integracion-1
+          openshift.io/generated-by: OpenShiftWebConsole
+        creationTimestamp: null
+        labels:
+          app: api-integracion
+          deployment: api-integracion-1
+          deploymentconfig: api-integracion
+      spec:
+        containers:
+        - env:
+          - name: TZ
+            value: America/Santiago
+          - name: CorsConfig
+            value: '{"PolicyOrigin": "*"}'
+          image: image-registry.openshift-image-registry.svc:5000/denuncias-dev/api-integracion-qa@sha256:f8a8870bcd063620e8611cc4a578283d12ac53f32bb680c9228a98c894880b25
+          imagePullPolicy: Always
+          name: api-integracion
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources:
+            limits:
+              cpu: 300m
+              memory: 300Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    observedGeneration: 1
+    replicas: 0
+- apiVersion: v1
+  kind: ReplicationController
+  metadata:
+    annotations:
+      openshift.io/deployer-pod.completed-at: 2023-05-22 20:04:41 +0000 UTC
+      openshift.io/deployer-pod.created-at: 2023-05-22 19:36:38 +0000 UTC
+      openshift.io/deployer-pod.name: dptc-cron001-reportes-1-deploy
+      openshift.io/deployment-config.latest-version: "1"
+      openshift.io/deployment-config.name: dptc-cron001-reportes
+      openshift.io/deployment.phase: Complete
+      openshift.io/deployment.replicas: "0"
+      openshift.io/deployment.status-reason: config change
+      openshift.io/encoded-deployment-config: |
+        {"kind":"DeploymentConfig","apiVersion":"apps.openshift.io/v1","metadata":{"name":"dptc-cron001-reportes","namespace":"denuncias-qa","uid":"4ec0f8e3-9c4b-402a-8b41-d3773203bb78","resourceVersion":"9199095","generation":2,"creationTimestamp":"2023-05-22T19:36:37Z","labels":{"app":"dptc-cron001-reportes","migration.openshift.io/migrated-by-migmigration":"f7c420f5-e043-45c4-9c59-f5c8ea87984b","migration.openshift.io/migrated-by-migplan":"4744b907-f899-4d99-9c40-21dc5fe59e15","velero.io/backup-name":"migration-d8805-initial-56dz6","velero.io/restore-name":"migration-d8805-final-6n79s"},"annotations":{"openshift.io/backup-registry-hostname":"docker-registry.default.svc:5000","openshift.io/backup-server-version":"1.11","openshift.io/generated-by":"OpenShiftWebConsole","openshift.io/migration-registry":"","openshift.io/restore-registry-hostname":"image-registry.openshift-image-registry.svc:5000","openshift.io/restore-server-version":"1.23"},"managedFields":[{"manager":"velero-server","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-05-22T19:36:37Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{".":{},"f:openshift.io/backup-registry-hostname":{},"f:openshift.io/backup-server-version":{},"f:openshift.io/generated-by":{},"f:openshift.io/migration-registry":{},"f:openshift.io/restore-registry-hostname":{},"f:openshift.io/restore-server-version":{}},"f:labels":{".":{},"f:app":{},"f:migration.openshift.io/migrated-by-migmigration":{},"f:migration.openshift.io/migrated-by-migplan":{},"f:velero.io/backup-name":{},"f:velero.io/restore-name":{}}},"f:spec":{"f:selector":{".":{},"f:app":{},"f:deploymentconfig":{}},"f:strategy":{"f:activeDeadlineSeconds":{},"f:rollingParams":{".":{},"f:intervalSeconds":{},"f:maxSurge":{},"f:maxUnavailable":{},"f:timeoutSeconds":{},"f:updatePeriodSeconds":{}},"f:type":{}},"f:template":{".":{},"f:metadata":{".":{},"f:annotations":{".":{},"f:openshift.io/generated-by":{}},"f:creationTimestamp":{},"f:labels":{".":{},"f:app":{},"f:deploymentconfig":{}}},"f:spec":{".":{},"f:containers":{".":{},"k:{\"name\":\"dptc-cron001-reportes\"}":{".":{},"f:env":{".":{},"k:{\"name\":\"APP_PORT\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"CRON_REPORTES_DIAS_ADELANTE_DATA_DIARIO\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"CRON_REPORTES_DIAS_ADELANTE_DATA_SEMANAL\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"CRON_REPORTES_DIAS_ATRAS_DATA_DIARIO\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"CRON_REPORTES_DIAS_ATRAS_DATA_SEMANAL\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"CRON_REPORTES_EJECUCION_JSON\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"CRON_REPORTES_HORA_INICIO\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"CRON_REPORTES_HORA_TERMINO\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"DATABASE_DATABASE\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"DATABASE_HOST\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"DATABASE_PASSWORD\"}":{".":{},"f:name":{},"f:valueFrom":{".":{},"f:secretKeyRef":{}}},"k:{\"name\":\"DATABASE_PORT\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"DATABASE_USERNAME\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"EMAIL_REMITENTE\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"PROXY_MAX_REDIRECTS\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"PROXY_TIMEOUT\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"TEMPLATE_EMAIL_NOMBRE_TRAMITE\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"TEMPLATE_EMAIL_TITULO\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"TZ\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"URL_ENDPOINT_DATA_REPORTES\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"URL_ENDPOINT_FULLMETADATA\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"URL_ENDPOINT_SEND_EMAIL\"}":{".":{},"f:name":{},"f:value":{}}},"f:image":{},"f:imagePullPolicy":{},"f:name":{},"f:ports":{".":{},"k:{\"containerPort\":8080,\"protocol\":\"TCP\"}":{".":{},"f:containerPort":{},"f:protocol":{}}},"f:resources":{},"f:terminationMessagePath":{},"f:terminationMessagePolicy":{}}},"f:dnsPolicy":{},"f:restartPolicy":{},"f:schedulerName":{},"f:securityContext":{},"f:terminationGracePeriodSeconds":{}}}}}},{"manager":"openshift-controller-manager","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-05-22T19:36:38Z","fieldsType":"FieldsV1","fieldsV1":{"f:spec":{"f:triggers":{}}}},{"manager":"openshift-controller-manager","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-05-22T19:36:38Z","fieldsType":"FieldsV1","fieldsV1":{"f:status":{"f:conditions":{".":{},"k:{\"type\":\"Available\"}":{".":{},"f:lastTransitionTime":{},"f:lastUpdateTime":{},"f:message":{},"f:status":{},"f:type":{}}},"f:details":{".":{},"f:causes":{},"f:message":{}},"f:latestVersion":{},"f:observedGeneration":{}}},"subresource":"status"}]},"spec":{"strategy":{"type":"Rolling","rollingParams":{"updatePeriodSeconds":1,"intervalSeconds":1,"timeoutSeconds":600,"maxUnavailable":"25%","maxSurge":"25%"},"resources":{},"activeDeadlineSeconds":21600},"triggers":[{"type":"ConfigChange"},{"type":"ImageChange","imageChangeParams":{"automatic":true,"containerNames":["dptc-cron001-reportes"],"from":{"kind":"ImageStreamTag","namespace":"denuncias-dev","name":"dptc-cron001-reportes-qa:latest"},"lastTriggeredImage":"image-registry.openshift-image-registry.svc:5000/denuncias-dev/dptc-cron001-reportes-qa@sha256:3a512acaccb45af49978c4017e22a4a06de1198ae2de0261f43df3885507c379"}}],"replicas":0,"revisionHistoryLimit":10,"test":false,"selector":{"app":"dptc-cron001-reportes","deploymentconfig":"dptc-cron001-reportes"},"template":{"metadata":{"creationTimestamp":null,"labels":{"app":"dptc-cron001-reportes","deploymentconfig":"dptc-cron001-reportes"},"annotations":{"openshift.io/generated-by":"OpenShiftWebConsole"}},"spec":{"containers":[{"name":"dptc-cron001-reportes","image":"image-registry.openshift-image-registry.svc:5000/denuncias-dev/dptc-cron001-reportes-qa@sha256:3a512acaccb45af49978c4017e22a4a06de1198ae2de0261f43df3885507c379","ports":[{"containerPort":8080,"protocol":"TCP"}],"env":[{"name":"TZ","value":"America/Santiago"},{"name":"APP_PORT","value":"8080"},{"name":"PROXY_TIMEOUT","value":"300000"},{"name":"PROXY_MAX_REDIRECTS","value":"5"},{"name":"CRON_REPORTES_EJECUCION_JSON","value":"{\"configs\":[{\"cron\":\"0 5 19 * * *\",\"tipoReporte\":\"diario\"},{\"cron\":\"0 10 19 * * *\",\"tipoReporte\":\"diario\"},{\"cron\":\"0 0 3 * * *\",\"tipoReporte\":\"diario\"},{\"cron\":\"0 0 4 * * *\",\"tipoReporte\":\"diario\"},{\"cron\":\"0 15 19 * * *\",\"tipoReporte\":\"semanal\"},{\"cron\":\"0 20 19 * * *\",\"tipoReporte\":\"semanal\"},{\"cron\":\"0 15 3 * * *\",\"tipoReporte\":\"semanal\"},{\"cron\":\"0 15 4 * * *\",\"tipoReporte\":\"semanal\"}]}"},{"name":"CRON_REPORTES_DIAS_ATRAS_DATA_DIARIO","value":"1"},{"name":"CRON_REPORTES_DIAS_ADELANTE_DATA_DIARIO","value":"0"},{"name":"CRON_REPORTES_DIAS_ATRAS_DATA_SEMANAL","value":"7"},{"name":"CRON_REPORTES_DIAS_ADELANTE_DATA_SEMANAL","value":"0"},{"name":"CRON_REPORTES_HORA_INICIO","value":"03:00:00.000"},{"name":"CRON_REPORTES_HORA_TERMINO","value":"02:59:59.999"},{"name":"URL_ENDPOINT_DATA_REPORTES","value":"http://dptc-serv001-denuncia.denuncias-qa.svc:8080/api/reportes/denuncias/terminoContrato"},{"name":"URL_ENDPOINT_SEND_EMAIL","value":"http://proxy001-serv-externos.denuncias-qa.svc:8080/api/correos"},{"name":"URL_ENDPOINT_FULLMETADATA","value":"http://dptc-serv002-bff.denuncias-qa.svc:8080/api/metadata/formulario/full"},{"name":"EMAIL_REMITENTE","value":"no-reply@dt.gob.cl"},{"name":"TEMPLATE_EMAIL_TITULO","value":"QA - Reporte @@TipoReporte @@NombreTramite"},{"name":"TEMPLATE_EMAIL_NOMBRE_TRAMITE","value":"Formulario Especial de Reclamo Administrativo"},{"name":"DATABASE_HOST","value":"sql-bd-dtqa"},{"name":"DATABASE_PORT","value":"1433"},{"name":"DATABASE_USERNAME","value":"UserDenunciaTerminoContrato"},{"name":"DATABASE_DATABASE","value":"DenunciaTerminoContrato"},{"name":"DATABASE_PASSWORD","valueFrom":{"secretKeyRef":{"name":"denuncia-termino-contrato-bd-password-qa","key":"DATABASE_PASSWORD"}}}],"resources":{},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File","imagePullPolicy":"Always"}],"restartPolicy":"Always","terminationGracePeriodSeconds":30,"dnsPolicy":"ClusterFirst","securityContext":{},"schedulerName":"default-scheduler"}}},"status":{"latestVersion":1,"observedGeneration":1,"replicas":0,"updatedReplicas":0,"availableReplicas":0,"unavailableReplicas":0,"details":{"message":"config change","causes":[{"type":"ConfigChange"}]},"conditions":[{"type":"Available","status":"False","lastUpdateTime":"2023-05-22T19:36:37Z","lastTransitionTime":"2023-05-22T19:36:37Z","message":"Deployment config does not have minimum availability."}]}}
+    creationTimestamp: "2023-05-22T19:36:38Z"
+    generation: 1
+    labels:
+      app: dptc-cron001-reportes
+      migration.openshift.io/migrated-by-migmigration: f7c420f5-e043-45c4-9c59-f5c8ea87984b
+      migration.openshift.io/migrated-by-migplan: 4744b907-f899-4d99-9c40-21dc5fe59e15
+      openshift.io/deployment-config.name: dptc-cron001-reportes
+      velero.io/backup-name: migration-d8805-initial-56dz6
+      velero.io/restore-name: migration-d8805-final-6n79s
+    name: dptc-cron001-reportes-1
+    namespace: denuncias-qa
+    ownerReferences:
+    - apiVersion: apps.openshift.io/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DeploymentConfig
+      name: dptc-cron001-reportes
+      uid: 4ec0f8e3-9c4b-402a-8b41-d3773203bb78
+    resourceVersion: "9215809"
+    uid: d6e9798f-e95c-4f08-9f44-1be46d6b45c0
+  spec:
+    replicas: 0
+    selector:
+      app: dptc-cron001-reportes
+      deployment: dptc-cron001-reportes-1
+      deploymentconfig: dptc-cron001-reportes
+    template:
+      metadata:
+        annotations:
+          openshift.io/deployment-config.latest-version: "1"
+          openshift.io/deployment-config.name: dptc-cron001-reportes
+          openshift.io/deployment.name: dptc-cron001-reportes-1
+          openshift.io/generated-by: OpenShiftWebConsole
+        creationTimestamp: null
+        labels:
+          app: dptc-cron001-reportes
+          deployment: dptc-cron001-reportes-1
+          deploymentconfig: dptc-cron001-reportes
+      spec:
+        containers:
+        - env:
+          - name: TZ
+            value: America/Santiago
+          - name: APP_PORT
+            value: "8080"
+          - name: PROXY_TIMEOUT
+            value: "300000"
+          - name: PROXY_MAX_REDIRECTS
+            value: "5"
+          - name: CRON_REPORTES_EJECUCION_JSON
+            value: '{"configs":[{"cron":"0 5 19 * * *","tipoReporte":"diario"},{"cron":"0
+              10 19 * * *","tipoReporte":"diario"},{"cron":"0 0 3 * * *","tipoReporte":"diario"},{"cron":"0
+              0 4 * * *","tipoReporte":"diario"},{"cron":"0 15 19 * * *","tipoReporte":"semanal"},{"cron":"0
+              20 19 * * *","tipoReporte":"semanal"},{"cron":"0 15 3 * * *","tipoReporte":"semanal"},{"cron":"0
+              15 4 * * *","tipoReporte":"semanal"}]}'
+          - name: CRON_REPORTES_DIAS_ATRAS_DATA_DIARIO
+            value: "1"
+          - name: CRON_REPORTES_DIAS_ADELANTE_DATA_DIARIO
+            value: "0"
+          - name: CRON_REPORTES_DIAS_ATRAS_DATA_SEMANAL
+            value: "7"
+          - name: CRON_REPORTES_DIAS_ADELANTE_DATA_SEMANAL
+            value: "0"
+          - name: CRON_REPORTES_HORA_INICIO
+            value: "03:00:00.000"
+          - name: CRON_REPORTES_HORA_TERMINO
+            value: "02:59:59.999"
+          - name: URL_ENDPOINT_DATA_REPORTES
+            value: http://dptc-serv001-denuncia.denuncias-qa.svc:8080/api/reportes/denuncias/terminoContrato
+          - name: URL_ENDPOINT_SEND_EMAIL
+            value: http://proxy001-serv-externos.denuncias-qa.svc:8080/api/correos
+          - name: URL_ENDPOINT_FULLMETADATA
+            value: http://dptc-serv002-bff.denuncias-qa.svc:8080/api/metadata/formulario/full
+          - name: EMAIL_REMITENTE
+            value: no-reply@dt.gob.cl
+          - name: TEMPLATE_EMAIL_TITULO
+            value: QA - Reporte @@TipoReporte @@NombreTramite
+          - name: TEMPLATE_EMAIL_NOMBRE_TRAMITE
+            value: Formulario Especial de Reclamo Administrativo
+          - name: DATABASE_HOST
+            value: sql-bd-dtqa
+          - name: DATABASE_PORT
+            value: "1433"
+          - name: DATABASE_USERNAME
+            value: UserDenunciaTerminoContrato
+          - name: DATABASE_DATABASE
+            value: DenunciaTerminoContrato
+          - name: DATABASE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: DATABASE_PASSWORD
+                name: denuncia-termino-contrato-bd-password-qa
+          image: image-registry.openshift-image-registry.svc:5000/denuncias-dev/dptc-cron001-reportes-qa@sha256:3a512acaccb45af49978c4017e22a4a06de1198ae2de0261f43df3885507c379
+          imagePullPolicy: Always
+          name: dptc-cron001-reportes
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    observedGeneration: 1
+    replicas: 0
+- apiVersion: v1
+  kind: ReplicationController
+  metadata:
+    annotations:
+      openshift.io/deployer-pod.completed-at: 2023-05-22 20:04:45 +0000 UTC
+      openshift.io/deployer-pod.created-at: 2023-05-22 19:36:37 +0000 UTC
+      openshift.io/deployer-pod.name: dptc-serv001-denuncia-1-deploy
+      openshift.io/deployment-config.latest-version: "1"
+      openshift.io/deployment-config.name: dptc-serv001-denuncia
+      openshift.io/deployment.phase: Complete
+      openshift.io/deployment.replicas: "0"
+      openshift.io/deployment.status-reason: config change
+      openshift.io/encoded-deployment-config: |
+        {"kind":"DeploymentConfig","apiVersion":"apps.openshift.io/v1","metadata":{"name":"dptc-serv001-denuncia","namespace":"denuncias-qa","uid":"5523ce70-05ea-4cd3-9213-fa5bf2792782","resourceVersion":"9199035","generation":2,"creationTimestamp":"2023-05-22T19:36:37Z","labels":{"app":"dptc-serv001-denuncia","migration.openshift.io/migrated-by-migmigration":"f7c420f5-e043-45c4-9c59-f5c8ea87984b","migration.openshift.io/migrated-by-migplan":"4744b907-f899-4d99-9c40-21dc5fe59e15","velero.io/backup-name":"migration-d8805-initial-56dz6","velero.io/restore-name":"migration-d8805-final-6n79s"},"annotations":{"openshift.io/backup-registry-hostname":"docker-registry.default.svc:5000","openshift.io/backup-server-version":"1.11","openshift.io/generated-by":"OpenShiftWebConsole","openshift.io/migration-registry":"","openshift.io/restore-registry-hostname":"image-registry.openshift-image-registry.svc:5000","openshift.io/restore-server-version":"1.23"},"managedFields":[{"manager":"openshift-controller-manager","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-05-22T19:36:37Z","fieldsType":"FieldsV1","fieldsV1":{"f:spec":{"f:triggers":{}}}},{"manager":"openshift-controller-manager","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-05-22T19:36:37Z","fieldsType":"FieldsV1","fieldsV1":{"f:status":{"f:details":{".":{},"f:causes":{},"f:message":{}},"f:latestVersion":{}}},"subresource":"status"},{"manager":"velero-server","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-05-22T19:36:37Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{".":{},"f:openshift.io/backup-registry-hostname":{},"f:openshift.io/backup-server-version":{},"f:openshift.io/generated-by":{},"f:openshift.io/migration-registry":{},"f:openshift.io/restore-registry-hostname":{},"f:openshift.io/restore-server-version":{}},"f:labels":{".":{},"f:app":{},"f:migration.openshift.io/migrated-by-migmigration":{},"f:migration.openshift.io/migrated-by-migplan":{},"f:velero.io/backup-name":{},"f:velero.io/restore-name":{}}},"f:spec":{"f:selector":{".":{},"f:app":{},"f:deploymentconfig":{}},"f:strategy":{"f:activeDeadlineSeconds":{},"f:rollingParams":{".":{},"f:intervalSeconds":{},"f:maxSurge":{},"f:maxUnavailable":{},"f:timeoutSeconds":{},"f:updatePeriodSeconds":{}},"f:type":{}},"f:template":{".":{},"f:metadata":{".":{},"f:annotations":{".":{},"f:openshift.io/generated-by":{}},"f:creationTimestamp":{},"f:labels":{".":{},"f:app":{},"f:deploymentconfig":{}}},"f:spec":{".":{},"f:containers":{".":{},"k:{\"name\":\"dptc-serv001-denuncia\"}":{".":{},"f:env":{".":{},"k:{\"name\":\"DATABASE_DATABASE\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"DATABASE_HOST\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"DATABASE_PASSWORD\"}":{".":{},"f:name":{},"f:valueFrom":{".":{},"f:secretKeyRef":{}}},"k:{\"name\":\"DATABASE_PORT\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"DATABASE_USERNAME\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"DEFAULT_PAGE_SIZE\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"DESACTIVAR_VALIDACION_RUT_TOKEN\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"EMAIL_REMITENTE\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"MENSAJE_OBSERVACIONES_DUPLICADOS\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"PROXY_MAX_REDIRECTS\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"PROXY_TIMEOUT\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"TEMPLATE_EMAIL_NOMBRE_TRAMITE\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"TEMPLATE_EMAIL_TITULO\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"TZ\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"URL_ENDPOINT_EMPLEADOR\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"URL_ENDPOINT_FULLMETADATA\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"URL_ENDPOINT_NUMERADOR\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"URL_ENDPOINT_PERSONA\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"URL_ENDPOINT_SEND_EMAIL\"}":{".":{},"f:name":{},"f:value":{}}},"f:image":{},"f:imagePullPolicy":{},"f:name":{},"f:ports":{".":{},"k:{\"containerPort\":8080,\"protocol\":\"TCP\"}":{".":{},"f:containerPort":{},"f:protocol":{}}},"f:resources":{".":{},"f:limits":{".":{},"f:cpu":{},"f:memory":{}}},"f:terminationMessagePath":{},"f:terminationMessagePolicy":{}}},"f:dnsPolicy":{},"f:restartPolicy":{},"f:schedulerName":{},"f:securityContext":{},"f:terminationGracePeriodSeconds":{}}}}}}]},"spec":{"strategy":{"type":"Rolling","rollingParams":{"updatePeriodSeconds":1,"intervalSeconds":1,"timeoutSeconds":600,"maxUnavailable":"25%","maxSurge":"25%"},"resources":{},"activeDeadlineSeconds":21600},"triggers":[{"type":"ConfigChange"},{"type":"ImageChange","imageChangeParams":{"automatic":true,"containerNames":["dptc-serv001-denuncia"],"from":{"kind":"ImageStreamTag","namespace":"denuncias-dev","name":"dptc-serv001-denuncia-qa:latest"},"lastTriggeredImage":"image-registry.openshift-image-registry.svc:5000/denuncias-dev/dptc-serv001-denuncia-qa@sha256:b334d9d4544e038f678c613eb5f88f9492bc807a2f8cb73355a2e222f27c4031"}}],"replicas":0,"revisionHistoryLimit":10,"test":false,"selector":{"app":"dptc-serv001-denuncia","deploymentconfig":"dptc-serv001-denuncia"},"template":{"metadata":{"creationTimestamp":null,"labels":{"app":"dptc-serv001-denuncia","deploymentconfig":"dptc-serv001-denuncia"},"annotations":{"openshift.io/generated-by":"OpenShiftWebConsole"}},"spec":{"containers":[{"name":"dptc-serv001-denuncia","image":"image-registry.openshift-image-registry.svc:5000/denuncias-dev/dptc-serv001-denuncia-qa@sha256:b334d9d4544e038f678c613eb5f88f9492bc807a2f8cb73355a2e222f27c4031","ports":[{"containerPort":8080,"protocol":"TCP"}],"env":[{"name":"TZ","value":"America/Santiago"},{"name":"DATABASE_HOST","value":"sql-bd-dtqa"},{"name":"DATABASE_PORT","value":"1433"},{"name":"DATABASE_DATABASE","value":"DenunciaTerminoContrato"},{"name":"DATABASE_USERNAME","value":"UserDenunciaTerminoContrato"},{"name":"DATABASE_PASSWORD","valueFrom":{"secretKeyRef":{"name":"denuncia-termino-contrato-bd-password-qa","key":"DATABASE_PASSWORD"}}},{"name":"PROXY_TIMEOUT","value":"120000"},{"name":"PROXY_MAX_REDIRECTS","value":"5"},{"name":"URL_ENDPOINT_EMPLEADOR","value":"http://dptc-serv002-bff.denuncias-qa.svc:8080/api/metadata/empleadores/"},{"name":"URL_ENDPOINT_PERSONA","value":"http://dptc-serv002-bff.denuncias-qa.svc:8080/api/metadata/personas/"},{"name":"URL_ENDPOINT_FULLMETADATA","value":"http://dptc-serv002-bff.denuncias-qa.svc:8080/api/metadata/formulario/full"},{"name":"URL_ENDPOINT_NUMERADOR","value":"http://proxy001-serv-externos.denuncias-qa.svc:8080/api/numerador/identificadorSolicutudes"},{"name":"DEFAULT_PAGE_SIZE","value":"100"},{"name":"DESACTIVAR_VALIDACION_RUT_TOKEN","value":"true"},{"name":"URL_ENDPOINT_SEND_EMAIL","value":"http://proxy001-serv-externos.denuncias-qa.svc:8080/api/correos"},{"name":"EMAIL_REMITENTE","value":"no-reply@dt.gob.cl"},{"name":"TEMPLATE_EMAIL_TITULO","value":"COMPROBANTE DE SOLICITUD DE @@NombreTramite"},{"name":"TEMPLATE_EMAIL_NOMBRE_TRAMITE","value":"RECLAMO ADMINISTRATIVO"},{"name":"MENSAJE_OBSERVACIONES_DUPLICADOS","value":"Un reclamo similar ya existe, a nivel nacional o regional"}],"resources":{"limits":{"cpu":"200m","memory":"300Mi"}},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File","imagePullPolicy":"Always"}],"restartPolicy":"Always","terminationGracePeriodSeconds":30,"dnsPolicy":"ClusterFirst","securityContext":{},"schedulerName":"default-scheduler"}}},"status":{"latestVersion":1,"observedGeneration":0,"replicas":0,"updatedReplicas":0,"availableReplicas":0,"unavailableReplicas":0,"details":{"message":"config change","causes":[{"type":"ConfigChange"}]}}}
+    creationTimestamp: "2023-05-22T19:36:37Z"
+    generation: 1
+    labels:
+      app: dptc-serv001-denuncia
+      migration.openshift.io/migrated-by-migmigration: f7c420f5-e043-45c4-9c59-f5c8ea87984b
+      migration.openshift.io/migrated-by-migplan: 4744b907-f899-4d99-9c40-21dc5fe59e15
+      openshift.io/deployment-config.name: dptc-serv001-denuncia
+      velero.io/backup-name: migration-d8805-initial-56dz6
+      velero.io/restore-name: migration-d8805-final-6n79s
+    name: dptc-serv001-denuncia-1
+    namespace: denuncias-qa
+    ownerReferences:
+    - apiVersion: apps.openshift.io/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DeploymentConfig
+      name: dptc-serv001-denuncia
+      uid: 5523ce70-05ea-4cd3-9213-fa5bf2792782
+    resourceVersion: "9215842"
+    uid: 187f723d-25eb-44fd-a70d-9196f73077e7
+  spec:
+    replicas: 0
+    selector:
+      app: dptc-serv001-denuncia
+      deployment: dptc-serv001-denuncia-1
+      deploymentconfig: dptc-serv001-denuncia
+    template:
+      metadata:
+        annotations:
+          openshift.io/deployment-config.latest-version: "1"
+          openshift.io/deployment-config.name: dptc-serv001-denuncia
+          openshift.io/deployment.name: dptc-serv001-denuncia-1
+          openshift.io/generated-by: OpenShiftWebConsole
+        creationTimestamp: null
+        labels:
+          app: dptc-serv001-denuncia
+          deployment: dptc-serv001-denuncia-1
+          deploymentconfig: dptc-serv001-denuncia
+      spec:
+        containers:
+        - env:
+          - name: TZ
+            value: America/Santiago
+          - name: DATABASE_HOST
+            value: sql-bd-dtqa
+          - name: DATABASE_PORT
+            value: "1433"
+          - name: DATABASE_DATABASE
+            value: DenunciaTerminoContrato
+          - name: DATABASE_USERNAME
+            value: UserDenunciaTerminoContrato
+          - name: DATABASE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: DATABASE_PASSWORD
+                name: denuncia-termino-contrato-bd-password-qa
+          - name: PROXY_TIMEOUT
+            value: "120000"
+          - name: PROXY_MAX_REDIRECTS
+            value: "5"
+          - name: URL_ENDPOINT_EMPLEADOR
+            value: http://dptc-serv002-bff.denuncias-qa.svc:8080/api/metadata/empleadores/
+          - name: URL_ENDPOINT_PERSONA
+            value: http://dptc-serv002-bff.denuncias-qa.svc:8080/api/metadata/personas/
+          - name: URL_ENDPOINT_FULLMETADATA
+            value: http://dptc-serv002-bff.denuncias-qa.svc:8080/api/metadata/formulario/full
+          - name: URL_ENDPOINT_NUMERADOR
+            value: http://proxy001-serv-externos.denuncias-qa.svc:8080/api/numerador/identificadorSolicutudes
+          - name: DEFAULT_PAGE_SIZE
+            value: "100"
+          - name: DESACTIVAR_VALIDACION_RUT_TOKEN
+            value: "true"
+          - name: URL_ENDPOINT_SEND_EMAIL
+            value: http://proxy001-serv-externos.denuncias-qa.svc:8080/api/correos
+          - name: EMAIL_REMITENTE
+            value: no-reply@dt.gob.cl
+          - name: TEMPLATE_EMAIL_TITULO
+            value: COMPROBANTE DE SOLICITUD DE @@NombreTramite
+          - name: TEMPLATE_EMAIL_NOMBRE_TRAMITE
+            value: RECLAMO ADMINISTRATIVO
+          - name: MENSAJE_OBSERVACIONES_DUPLICADOS
+            value: Un reclamo similar ya existe, a nivel nacional o regional
+          image: image-registry.openshift-image-registry.svc:5000/denuncias-dev/dptc-serv001-denuncia-qa@sha256:b334d9d4544e038f678c613eb5f88f9492bc807a2f8cb73355a2e222f27c4031
+          imagePullPolicy: Always
+          name: dptc-serv001-denuncia
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources:
+            limits:
+              cpu: 200m
+              memory: 300Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    observedGeneration: 1
+    replicas: 0
+- apiVersion: v1
+  kind: ReplicationController
+  metadata:
+    annotations:
+      openshift.io/deployer-pod.completed-at: 2023-05-22 20:04:42 +0000 UTC
+      openshift.io/deployer-pod.created-at: 2023-05-22 19:36:37 +0000 UTC
+      openshift.io/deployer-pod.name: dptc-serv002-bff-1-deploy
+      openshift.io/deployment-config.latest-version: "1"
+      openshift.io/deployment-config.name: dptc-serv002-bff
+      openshift.io/deployment.phase: Complete
+      openshift.io/deployment.replicas: "0"
+      openshift.io/deployment.status-reason: config change
+      openshift.io/encoded-deployment-config: |
+        {"kind":"DeploymentConfig","apiVersion":"apps.openshift.io/v1","metadata":{"name":"dptc-serv002-bff","namespace":"denuncias-qa","uid":"4a5267a8-1ad1-46e1-a815-280dafe737a2","resourceVersion":"9199044","generation":2,"creationTimestamp":"2023-05-22T19:36:37Z","labels":{"app":"dptc-serv002-bff","migration.openshift.io/migrated-by-migmigration":"f7c420f5-e043-45c4-9c59-f5c8ea87984b","migration.openshift.io/migrated-by-migplan":"4744b907-f899-4d99-9c40-21dc5fe59e15","velero.io/backup-name":"migration-d8805-initial-56dz6","velero.io/restore-name":"migration-d8805-final-6n79s"},"annotations":{"openshift.io/backup-registry-hostname":"docker-registry.default.svc:5000","openshift.io/backup-server-version":"1.11","openshift.io/generated-by":"OpenShiftWebConsole","openshift.io/migration-registry":"","openshift.io/restore-registry-hostname":"image-registry.openshift-image-registry.svc:5000","openshift.io/restore-server-version":"1.23"},"managedFields":[{"manager":"openshift-controller-manager","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-05-22T19:36:37Z","fieldsType":"FieldsV1","fieldsV1":{"f:spec":{"f:triggers":{}}}},{"manager":"openshift-controller-manager","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-05-22T19:36:37Z","fieldsType":"FieldsV1","fieldsV1":{"f:status":{"f:details":{".":{},"f:causes":{},"f:message":{}},"f:latestVersion":{}}},"subresource":"status"},{"manager":"velero-server","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-05-22T19:36:37Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{".":{},"f:openshift.io/backup-registry-hostname":{},"f:openshift.io/backup-server-version":{},"f:openshift.io/generated-by":{},"f:openshift.io/migration-registry":{},"f:openshift.io/restore-registry-hostname":{},"f:openshift.io/restore-server-version":{}},"f:labels":{".":{},"f:app":{},"f:migration.openshift.io/migrated-by-migmigration":{},"f:migration.openshift.io/migrated-by-migplan":{},"f:velero.io/backup-name":{},"f:velero.io/restore-name":{}}},"f:spec":{"f:selector":{".":{},"f:app":{},"f:deploymentconfig":{}},"f:strategy":{"f:activeDeadlineSeconds":{},"f:rollingParams":{".":{},"f:intervalSeconds":{},"f:maxSurge":{},"f:maxUnavailable":{},"f:timeoutSeconds":{},"f:updatePeriodSeconds":{}},"f:type":{}},"f:template":{".":{},"f:metadata":{".":{},"f:annotations":{".":{},"f:openshift.io/generated-by":{}},"f:creationTimestamp":{},"f:labels":{".":{},"f:app":{},"f:deploymentconfig":{}}},"f:spec":{".":{},"f:containers":{".":{},"k:{\"name\":\"dptc-serv002-bff\"}":{".":{},"f:env":{".":{},"k:{\"name\":\"CACHE_MAX_ITEMS\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"CACHE_TTL_SECONDS_DEFAULT\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"DATABASE_DATABASE\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"DATABASE_HOST\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"DATABASE_PASSWORD\"}":{".":{},"f:name":{},"f:valueFrom":{".":{},"f:secretKeyRef":{}}},"k:{\"name\":\"DATABASE_PORT\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"DATABASE_USERNAME\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"DESACTIVAR_VALIDACION_RUT_TOKEN\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"PROXY_MAX_REDIRECTS\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"PROXY_TIMEOUT\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"TZ\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"URL_ENDPOINT_AFP\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"URL_ENDPOINT_COMUNAS\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"URL_ENDPOINT_COMUNASREGION\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"URL_ENDPOINT_EMPLEADOR\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"URL_ENDPOINT_ISAPRES\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"URL_ENDPOINT_NACIONALIDADES\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"URL_ENDPOINT_PERSONA\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"URL_ENDPOINT_REGIONES\"}":{".":{},"f:name":{},"f:value":{}}},"f:image":{},"f:imagePullPolicy":{},"f:name":{},"f:ports":{".":{},"k:{\"containerPort\":8080,\"protocol\":\"TCP\"}":{".":{},"f:containerPort":{},"f:protocol":{}}},"f:resources":{".":{},"f:limits":{".":{},"f:cpu":{},"f:memory":{}}},"f:terminationMessagePath":{},"f:terminationMessagePolicy":{}}},"f:dnsPolicy":{},"f:restartPolicy":{},"f:schedulerName":{},"f:securityContext":{},"f:terminationGracePeriodSeconds":{}}}}}}]},"spec":{"strategy":{"type":"Rolling","rollingParams":{"updatePeriodSeconds":1,"intervalSeconds":1,"timeoutSeconds":600,"maxUnavailable":"25%","maxSurge":"25%"},"resources":{},"activeDeadlineSeconds":21600},"triggers":[{"type":"ConfigChange"},{"type":"ImageChange","imageChangeParams":{"automatic":true,"containerNames":["dptc-serv002-bff"],"from":{"kind":"ImageStreamTag","namespace":"denuncias-dev","name":"dptc-serv002-bff-qa:latest"},"lastTriggeredImage":"image-registry.openshift-image-registry.svc:5000/denuncias-dev/dptc-serv002-bff-qa@sha256:426a84aeb24d294709793a0524be73f8760adc6a57c96336d4de6e552672f9fe"}}],"replicas":0,"revisionHistoryLimit":10,"test":false,"selector":{"app":"dptc-serv002-bff","deploymentconfig":"dptc-serv002-bff"},"template":{"metadata":{"creationTimestamp":null,"labels":{"app":"dptc-serv002-bff","deploymentconfig":"dptc-serv002-bff"},"annotations":{"openshift.io/generated-by":"OpenShiftWebConsole"}},"spec":{"containers":[{"name":"dptc-serv002-bff","image":"image-registry.openshift-image-registry.svc:5000/denuncias-dev/dptc-serv002-bff-qa@sha256:426a84aeb24d294709793a0524be73f8760adc6a57c96336d4de6e552672f9fe","ports":[{"containerPort":8080,"protocol":"TCP"}],"env":[{"name":"TZ","value":"America/Santiago"},{"name":"DATABASE_HOST","value":"sql-bd-dtqa"},{"name":"DATABASE_PORT","value":"1433"},{"name":"DATABASE_DATABASE","value":"DenunciaTerminoContrato"},{"name":"DATABASE_USERNAME","value":"UserDenunciaTerminoContrato"},{"name":"DATABASE_PASSWORD","valueFrom":{"secretKeyRef":{"name":"denuncia-termino-contrato-bd-password-qa","key":"DATABASE_PASSWORD"}}},{"name":"PROXY_TIMEOUT","value":"30000"},{"name":"PROXY_MAX_REDIRECTS","value":"5"},{"name":"DESACTIVAR_VALIDACION_RUT_TOKEN","value":"true"},{"name":"URL_ENDPOINT_COMUNAS","value":"http://proxy001-serv-externos.denuncias-qa.svc:8080/api/metadata/distribucionTerritorial/Comunas"},{"name":"URL_ENDPOINT_COMUNASREGION","value":"http://proxy001-serv-externos.denuncias-qa.svc:8080/api/metadata/distribucionTerritorial/RegionProvinciaComunas"},{"name":"URL_ENDPOINT_REGIONES","value":"http://proxy001-serv-externos.denuncias-qa.svc:8080/api/metadata/distribucionTerritorial/Regiones"},{"name":"URL_ENDPOINT_AFP","value":"http://proxy001-serv-externos.denuncias-qa.svc:8080/api/metadata/publico/afp"},{"name":"URL_ENDPOINT_ISAPRES","value":"http://proxy001-serv-externos.denuncias-qa.svc:8080/api/metadata/publico/isapres"},{"name":"URL_ENDPOINT_NACIONALIDADES","value":"http://proxy001-serv-externos.denuncias-qa.svc:8080/api/metadata/publico/nacionalidades"},{"name":"URL_ENDPOINT_EMPLEADOR","value":"http://proxy001-serv-externos.denuncias-qa.svc:8080/api/metadata/maestroEmpresa/empleador?rut="},{"name":"URL_ENDPOINT_PERSONA","value":"http://proxy001-serv-externos.denuncias-qa.svc:8080/api/metadata/registroCivil/persona?rut="},{"name":"CACHE_TTL_SECONDS_DEFAULT","value":"86400"},{"name":"CACHE_MAX_ITEMS","value":"10"}],"resources":{"limits":{"cpu":"200m","memory":"300Mi"}},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File","imagePullPolicy":"Always"}],"restartPolicy":"Always","terminationGracePeriodSeconds":30,"dnsPolicy":"ClusterFirst","securityContext":{},"schedulerName":"default-scheduler"}}},"status":{"latestVersion":1,"observedGeneration":0,"replicas":0,"updatedReplicas":0,"availableReplicas":0,"unavailableReplicas":0,"details":{"message":"config change","causes":[{"type":"ConfigChange"}]}}}
+    creationTimestamp: "2023-05-22T19:36:37Z"
+    generation: 1
+    labels:
+      app: dptc-serv002-bff
+      migration.openshift.io/migrated-by-migmigration: f7c420f5-e043-45c4-9c59-f5c8ea87984b
+      migration.openshift.io/migrated-by-migplan: 4744b907-f899-4d99-9c40-21dc5fe59e15
+      openshift.io/deployment-config.name: dptc-serv002-bff
+      velero.io/backup-name: migration-d8805-initial-56dz6
+      velero.io/restore-name: migration-d8805-final-6n79s
+    name: dptc-serv002-bff-1
+    namespace: denuncias-qa
+    ownerReferences:
+    - apiVersion: apps.openshift.io/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DeploymentConfig
+      name: dptc-serv002-bff
+      uid: 4a5267a8-1ad1-46e1-a815-280dafe737a2
+    resourceVersion: "9215813"
+    uid: 96b3cd84-5c40-4844-86d4-e7aa831f5039
+  spec:
+    replicas: 0
+    selector:
+      app: dptc-serv002-bff
+      deployment: dptc-serv002-bff-1
+      deploymentconfig: dptc-serv002-bff
+    template:
+      metadata:
+        annotations:
+          openshift.io/deployment-config.latest-version: "1"
+          openshift.io/deployment-config.name: dptc-serv002-bff
+          openshift.io/deployment.name: dptc-serv002-bff-1
+          openshift.io/generated-by: OpenShiftWebConsole
+        creationTimestamp: null
+        labels:
+          app: dptc-serv002-bff
+          deployment: dptc-serv002-bff-1
+          deploymentconfig: dptc-serv002-bff
+      spec:
+        containers:
+        - env:
+          - name: TZ
+            value: America/Santiago
+          - name: DATABASE_HOST
+            value: sql-bd-dtqa
+          - name: DATABASE_PORT
+            value: "1433"
+          - name: DATABASE_DATABASE
+            value: DenunciaTerminoContrato
+          - name: DATABASE_USERNAME
+            value: UserDenunciaTerminoContrato
+          - name: DATABASE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: DATABASE_PASSWORD
+                name: denuncia-termino-contrato-bd-password-qa
+          - name: PROXY_TIMEOUT
+            value: "30000"
+          - name: PROXY_MAX_REDIRECTS
+            value: "5"
+          - name: DESACTIVAR_VALIDACION_RUT_TOKEN
+            value: "true"
+          - name: URL_ENDPOINT_COMUNAS
+            value: http://proxy001-serv-externos.denuncias-qa.svc:8080/api/metadata/distribucionTerritorial/Comunas
+          - name: URL_ENDPOINT_COMUNASREGION
+            value: http://proxy001-serv-externos.denuncias-qa.svc:8080/api/metadata/distribucionTerritorial/RegionProvinciaComunas
+          - name: URL_ENDPOINT_REGIONES
+            value: http://proxy001-serv-externos.denuncias-qa.svc:8080/api/metadata/distribucionTerritorial/Regiones
+          - name: URL_ENDPOINT_AFP
+            value: http://proxy001-serv-externos.denuncias-qa.svc:8080/api/metadata/publico/afp
+          - name: URL_ENDPOINT_ISAPRES
+            value: http://proxy001-serv-externos.denuncias-qa.svc:8080/api/metadata/publico/isapres
+          - name: URL_ENDPOINT_NACIONALIDADES
+            value: http://proxy001-serv-externos.denuncias-qa.svc:8080/api/metadata/publico/nacionalidades
+          - name: URL_ENDPOINT_EMPLEADOR
+            value: http://proxy001-serv-externos.denuncias-qa.svc:8080/api/metadata/maestroEmpresa/empleador?rut=
+          - name: URL_ENDPOINT_PERSONA
+            value: http://proxy001-serv-externos.denuncias-qa.svc:8080/api/metadata/registroCivil/persona?rut=
+          - name: CACHE_TTL_SECONDS_DEFAULT
+            value: "86400"
+          - name: CACHE_MAX_ITEMS
+            value: "10"
+          image: image-registry.openshift-image-registry.svc:5000/denuncias-dev/dptc-serv002-bff-qa@sha256:426a84aeb24d294709793a0524be73f8760adc6a57c96336d4de6e552672f9fe
+          imagePullPolicy: Always
+          name: dptc-serv002-bff
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources:
+            limits:
+              cpu: 200m
+              memory: 300Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    observedGeneration: 1
+    replicas: 0
+- apiVersion: v1
+  kind: ReplicationController
+  metadata:
+    annotations:
+      openshift.io/deployer-pod.completed-at: 2023-05-22 20:04:47 +0000 UTC
+      openshift.io/deployer-pod.created-at: 2023-05-22 19:36:37 +0000 UTC
+      openshift.io/deployer-pod.name: front001-denuncias-1-deploy
+      openshift.io/deployment-config.latest-version: "1"
+      openshift.io/deployment-config.name: front001-denuncias
+      openshift.io/deployment.phase: Complete
+      openshift.io/deployment.replicas: "0"
+      openshift.io/deployment.status-reason: config change
+      openshift.io/encoded-deployment-config: |
+        {"kind":"DeploymentConfig","apiVersion":"apps.openshift.io/v1","metadata":{"name":"front001-denuncias","namespace":"denuncias-qa","uid":"dffffde5-ec69-4a7a-a0d9-0f6a5cb52449","resourceVersion":"9199051","generation":2,"creationTimestamp":"2023-05-22T19:36:37Z","labels":{"app":"front001-denuncias","migration.openshift.io/migrated-by-migmigration":"f7c420f5-e043-45c4-9c59-f5c8ea87984b","migration.openshift.io/migrated-by-migplan":"4744b907-f899-4d99-9c40-21dc5fe59e15","velero.io/backup-name":"migration-d8805-initial-56dz6","velero.io/restore-name":"migration-d8805-final-6n79s"},"annotations":{"openshift.io/backup-registry-hostname":"docker-registry.default.svc:5000","openshift.io/backup-server-version":"1.11","openshift.io/generated-by":"OpenShiftWebConsole","openshift.io/migration-registry":"","openshift.io/restore-registry-hostname":"image-registry.openshift-image-registry.svc:5000","openshift.io/restore-server-version":"1.23"},"managedFields":[{"manager":"openshift-controller-manager","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-05-22T19:36:37Z","fieldsType":"FieldsV1","fieldsV1":{"f:spec":{"f:triggers":{}}}},{"manager":"openshift-controller-manager","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-05-22T19:36:37Z","fieldsType":"FieldsV1","fieldsV1":{"f:status":{"f:details":{".":{},"f:causes":{},"f:message":{}},"f:latestVersion":{}}},"subresource":"status"},{"manager":"velero-server","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-05-22T19:36:37Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{".":{},"f:openshift.io/backup-registry-hostname":{},"f:openshift.io/backup-server-version":{},"f:openshift.io/generated-by":{},"f:openshift.io/migration-registry":{},"f:openshift.io/restore-registry-hostname":{},"f:openshift.io/restore-server-version":{}},"f:labels":{".":{},"f:app":{},"f:migration.openshift.io/migrated-by-migmigration":{},"f:migration.openshift.io/migrated-by-migplan":{},"f:velero.io/backup-name":{},"f:velero.io/restore-name":{}}},"f:spec":{"f:selector":{".":{},"f:app":{},"f:deploymentconfig":{}},"f:strategy":{"f:activeDeadlineSeconds":{},"f:rollingParams":{".":{},"f:intervalSeconds":{},"f:maxSurge":{},"f:maxUnavailable":{},"f:timeoutSeconds":{},"f:updatePeriodSeconds":{}},"f:type":{}},"f:template":{".":{},"f:metadata":{".":{},"f:annotations":{".":{},"f:openshift.io/generated-by":{}},"f:creationTimestamp":{},"f:labels":{".":{},"f:app":{},"f:deploymentconfig":{}}},"f:spec":{".":{},"f:containers":{".":{},"k:{\"name\":\"front001-denuncias\"}":{".":{},"f:env":{".":{},"k:{\"name\":\"TZ\"}":{".":{},"f:name":{},"f:value":{}}},"f:image":{},"f:imagePullPolicy":{},"f:name":{},"f:ports":{".":{},"k:{\"containerPort\":8080,\"protocol\":\"TCP\"}":{".":{},"f:containerPort":{},"f:protocol":{}}},"f:resources":{".":{},"f:limits":{".":{},"f:cpu":{},"f:memory":{}}},"f:terminationMessagePath":{},"f:terminationMessagePolicy":{}}},"f:dnsPolicy":{},"f:restartPolicy":{},"f:schedulerName":{},"f:securityContext":{},"f:terminationGracePeriodSeconds":{}}}}}}]},"spec":{"strategy":{"type":"Rolling","rollingParams":{"updatePeriodSeconds":1,"intervalSeconds":1,"timeoutSeconds":600,"maxUnavailable":"25%","maxSurge":"25%"},"resources":{},"activeDeadlineSeconds":21600},"triggers":[{"type":"ConfigChange"},{"type":"ImageChange","imageChangeParams":{"automatic":true,"containerNames":["front001-denuncias"],"from":{"kind":"ImageStreamTag","namespace":"denuncias-dev","name":"front001-denuncias-qa:latest"},"lastTriggeredImage":"image-registry.openshift-image-registry.svc:5000/denuncias-dev/front001-denuncias-qa@sha256:58430f67272fc030d029783ae69212146fea26395812d462d1c7bfd4030140cd"}}],"replicas":0,"revisionHistoryLimit":10,"test":false,"selector":{"app":"front001-denuncias","deploymentconfig":"front001-denuncias"},"template":{"metadata":{"creationTimestamp":null,"labels":{"app":"front001-denuncias","deploymentconfig":"front001-denuncias"},"annotations":{"openshift.io/generated-by":"OpenShiftWebConsole"}},"spec":{"containers":[{"name":"front001-denuncias","image":"image-registry.openshift-image-registry.svc:5000/denuncias-dev/front001-denuncias-qa@sha256:58430f67272fc030d029783ae69212146fea26395812d462d1c7bfd4030140cd","ports":[{"containerPort":8080,"protocol":"TCP"}],"env":[{"name":"TZ","value":"America/Santiago"}],"resources":{"limits":{"cpu":"100m","memory":"100Mi"}},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File","imagePullPolicy":"Always"}],"restartPolicy":"Always","terminationGracePeriodSeconds":30,"dnsPolicy":"ClusterFirst","securityContext":{},"schedulerName":"default-scheduler"}}},"status":{"latestVersion":1,"observedGeneration":0,"replicas":0,"updatedReplicas":0,"availableReplicas":0,"unavailableReplicas":0,"details":{"message":"config change","causes":[{"type":"ConfigChange"}]}}}
+    creationTimestamp: "2023-05-22T19:36:37Z"
+    generation: 1
+    labels:
+      app: front001-denuncias
+      migration.openshift.io/migrated-by-migmigration: f7c420f5-e043-45c4-9c59-f5c8ea87984b
+      migration.openshift.io/migrated-by-migplan: 4744b907-f899-4d99-9c40-21dc5fe59e15
+      openshift.io/deployment-config.name: front001-denuncias
+      velero.io/backup-name: migration-d8805-initial-56dz6
+      velero.io/restore-name: migration-d8805-final-6n79s
+    name: front001-denuncias-1
+    namespace: denuncias-qa
+    ownerReferences:
+    - apiVersion: apps.openshift.io/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DeploymentConfig
+      name: front001-denuncias
+      uid: dffffde5-ec69-4a7a-a0d9-0f6a5cb52449
+    resourceVersion: "9215872"
+    uid: 0bb9da11-e9c1-4240-874f-138496d7e832
+  spec:
+    replicas: 0
+    selector:
+      app: front001-denuncias
+      deployment: front001-denuncias-1
+      deploymentconfig: front001-denuncias
+    template:
+      metadata:
+        annotations:
+          openshift.io/deployment-config.latest-version: "1"
+          openshift.io/deployment-config.name: front001-denuncias
+          openshift.io/deployment.name: front001-denuncias-1
+          openshift.io/generated-by: OpenShiftWebConsole
+        creationTimestamp: null
+        labels:
+          app: front001-denuncias
+          deployment: front001-denuncias-1
+          deploymentconfig: front001-denuncias
+      spec:
+        containers:
+        - env:
+          - name: TZ
+            value: America/Santiago
+          image: image-registry.openshift-image-registry.svc:5000/denuncias-dev/front001-denuncias-qa@sha256:58430f67272fc030d029783ae69212146fea26395812d462d1c7bfd4030140cd
+          imagePullPolicy: Always
+          name: front001-denuncias
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources:
+            limits:
+              cpu: 100m
+              memory: 100Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    observedGeneration: 1
+    replicas: 0
+- apiVersion: v1
+  kind: ReplicationController
+  metadata:
+    annotations:
+      openshift.io/deployer-pod.completed-at: 2023-05-22 20:04:46 +0000 UTC
+      openshift.io/deployer-pod.created-at: 2023-05-22 19:36:38 +0000 UTC
+      openshift.io/deployer-pod.name: proxy001-serv-externos-1-deploy
+      openshift.io/deployment-config.latest-version: "1"
+      openshift.io/deployment-config.name: proxy001-serv-externos
+      openshift.io/deployment.phase: Complete
+      openshift.io/deployment.replicas: "0"
+      openshift.io/deployment.status-reason: config change
+      openshift.io/encoded-deployment-config: |
+        {"kind":"DeploymentConfig","apiVersion":"apps.openshift.io/v1","metadata":{"name":"proxy001-serv-externos","namespace":"denuncias-qa","uid":"80f7b900-1aa4-4a57-befb-1fc90956efa2","resourceVersion":"9199119","generation":2,"creationTimestamp":"2023-05-22T19:36:37Z","labels":{"app":"proxy001-serv-externos","migration.openshift.io/migrated-by-migmigration":"f7c420f5-e043-45c4-9c59-f5c8ea87984b","migration.openshift.io/migrated-by-migplan":"4744b907-f899-4d99-9c40-21dc5fe59e15","velero.io/backup-name":"migration-d8805-initial-56dz6","velero.io/restore-name":"migration-d8805-final-6n79s"},"annotations":{"openshift.io/backup-registry-hostname":"docker-registry.default.svc:5000","openshift.io/backup-server-version":"1.11","openshift.io/generated-by":"OpenShiftWebConsole","openshift.io/migration-registry":"","openshift.io/restore-registry-hostname":"image-registry.openshift-image-registry.svc:5000","openshift.io/restore-server-version":"1.23"},"managedFields":[{"manager":"velero-server","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-05-22T19:36:37Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{".":{},"f:openshift.io/backup-registry-hostname":{},"f:openshift.io/backup-server-version":{},"f:openshift.io/generated-by":{},"f:openshift.io/migration-registry":{},"f:openshift.io/restore-registry-hostname":{},"f:openshift.io/restore-server-version":{}},"f:labels":{".":{},"f:app":{},"f:migration.openshift.io/migrated-by-migmigration":{},"f:migration.openshift.io/migrated-by-migplan":{},"f:velero.io/backup-name":{},"f:velero.io/restore-name":{}}},"f:spec":{"f:selector":{".":{},"f:app":{},"f:deploymentconfig":{}},"f:strategy":{"f:activeDeadlineSeconds":{},"f:rollingParams":{".":{},"f:intervalSeconds":{},"f:maxSurge":{},"f:maxUnavailable":{},"f:timeoutSeconds":{},"f:updatePeriodSeconds":{}},"f:type":{}},"f:template":{".":{},"f:metadata":{".":{},"f:annotations":{".":{},"f:openshift.io/generated-by":{}},"f:creationTimestamp":{},"f:labels":{".":{},"f:app":{},"f:deploymentconfig":{}}},"f:spec":{".":{},"f:containers":{".":{},"k:{\"name\":\"proxy001-serv-externos\"}":{".":{},"f:env":{".":{},"k:{\"name\":\"TZ\"}":{".":{},"f:name":{},"f:value":{}}},"f:image":{},"f:imagePullPolicy":{},"f:name":{},"f:ports":{".":{},"k:{\"containerPort\":8080,\"protocol\":\"TCP\"}":{".":{},"f:containerPort":{},"f:protocol":{}}},"f:resources":{".":{},"f:limits":{".":{},"f:cpu":{},"f:memory":{}}},"f:terminationMessagePath":{},"f:terminationMessagePolicy":{}}},"f:dnsPolicy":{},"f:restartPolicy":{},"f:schedulerName":{},"f:securityContext":{},"f:terminationGracePeriodSeconds":{}}}}}},{"manager":"openshift-controller-manager","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-05-22T19:36:38Z","fieldsType":"FieldsV1","fieldsV1":{"f:spec":{"f:triggers":{}}}},{"manager":"openshift-controller-manager","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-05-22T19:36:38Z","fieldsType":"FieldsV1","fieldsV1":{"f:status":{"f:conditions":{".":{},"k:{\"type\":\"Available\"}":{".":{},"f:lastTransitionTime":{},"f:lastUpdateTime":{},"f:message":{},"f:status":{},"f:type":{}}},"f:details":{".":{},"f:causes":{},"f:message":{}},"f:latestVersion":{},"f:observedGeneration":{}}},"subresource":"status"}]},"spec":{"strategy":{"type":"Rolling","rollingParams":{"updatePeriodSeconds":1,"intervalSeconds":1,"timeoutSeconds":600,"maxUnavailable":"25%","maxSurge":"25%"},"resources":{},"activeDeadlineSeconds":21600},"triggers":[{"type":"ConfigChange"},{"type":"ImageChange","imageChangeParams":{"automatic":true,"containerNames":["proxy001-serv-externos"],"from":{"kind":"ImageStreamTag","namespace":"denuncias-dev","name":"proxy001-serv-ext-qa:latest"},"lastTriggeredImage":"image-registry.openshift-image-registry.svc:5000/denuncias-dev/proxy001-serv-ext-qa@sha256:e4ebc531da3ecbb037bdcd7eff175ff5445c4b48b2817f5819d600352dfbcc07"}}],"replicas":0,"revisionHistoryLimit":10,"test":false,"selector":{"app":"proxy001-serv-externos","deploymentconfig":"proxy001-serv-externos"},"template":{"metadata":{"creationTimestamp":null,"labels":{"app":"proxy001-serv-externos","deploymentconfig":"proxy001-serv-externos"},"annotations":{"openshift.io/generated-by":"OpenShiftWebConsole"}},"spec":{"containers":[{"name":"proxy001-serv-externos","image":"image-registry.openshift-image-registry.svc:5000/denuncias-dev/proxy001-serv-ext-qa@sha256:e4ebc531da3ecbb037bdcd7eff175ff5445c4b48b2817f5819d600352dfbcc07","ports":[{"containerPort":8080,"protocol":"TCP"}],"env":[{"name":"TZ","value":"America/Santiago"}],"resources":{"limits":{"cpu":"300m","memory":"300Mi"}},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File","imagePullPolicy":"Always"}],"restartPolicy":"Always","terminationGracePeriodSeconds":30,"dnsPolicy":"ClusterFirst","securityContext":{},"schedulerName":"default-scheduler"}}},"status":{"latestVersion":1,"observedGeneration":1,"replicas":0,"updatedReplicas":0,"availableReplicas":0,"unavailableReplicas":0,"details":{"message":"config change","causes":[{"type":"ConfigChange"}]},"conditions":[{"type":"Available","status":"False","lastUpdateTime":"2023-05-22T19:36:37Z","lastTransitionTime":"2023-05-22T19:36:37Z","message":"Deployment config does not have minimum availability."}]}}
+    creationTimestamp: "2023-05-22T19:36:38Z"
+    generation: 1
+    labels:
+      app: proxy001-serv-externos
+      migration.openshift.io/migrated-by-migmigration: f7c420f5-e043-45c4-9c59-f5c8ea87984b
+      migration.openshift.io/migrated-by-migplan: 4744b907-f899-4d99-9c40-21dc5fe59e15
+      openshift.io/deployment-config.name: proxy001-serv-externos
+      velero.io/backup-name: migration-d8805-initial-56dz6
+      velero.io/restore-name: migration-d8805-final-6n79s
+    name: proxy001-serv-externos-1
+    namespace: denuncias-qa
+    ownerReferences:
+    - apiVersion: apps.openshift.io/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DeploymentConfig
+      name: proxy001-serv-externos
+      uid: 80f7b900-1aa4-4a57-befb-1fc90956efa2
+    resourceVersion: "9215858"
+    uid: 2d3487b2-0c79-4e35-93da-cc5c3c4783f8
+  spec:
+    replicas: 0
+    selector:
+      app: proxy001-serv-externos
+      deployment: proxy001-serv-externos-1
+      deploymentconfig: proxy001-serv-externos
+    template:
+      metadata:
+        annotations:
+          openshift.io/deployment-config.latest-version: "1"
+          openshift.io/deployment-config.name: proxy001-serv-externos
+          openshift.io/deployment.name: proxy001-serv-externos-1
+          openshift.io/generated-by: OpenShiftWebConsole
+        creationTimestamp: null
+        labels:
+          app: proxy001-serv-externos
+          deployment: proxy001-serv-externos-1
+          deploymentconfig: proxy001-serv-externos
+      spec:
+        containers:
+        - env:
+          - name: TZ
+            value: America/Santiago
+          image: image-registry.openshift-image-registry.svc:5000/denuncias-dev/proxy001-serv-ext-qa@sha256:e4ebc531da3ecbb037bdcd7eff175ff5445c4b48b2817f5819d600352dfbcc07
+          imagePullPolicy: Always
+          name: proxy001-serv-externos
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources:
+            limits:
+              cpu: 300m
+              memory: 300Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    observedGeneration: 1
+    replicas: 0
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

@@ -1,0 +1,120 @@
+apiVersion: v1
+items:
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "1"
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/migration-registry: 172.30.164.193:5000
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-25T13:37:37Z"
+    generation: 1
+    labels:
+      name: amq-broker-operator
+      pod-template-hash: 78cbb94f44
+    name: amq-broker-operator-78cbb94f44
+    namespace: lre-dev
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: amq-broker-operator
+      uid: 15c66a73-792b-4f68-9999-f190cd3686c5
+    resourceVersion: "467404239"
+    uid: 20c9f43b-409d-43b2-8ad6-b1db33bbd21d
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        name: amq-broker-operator
+        pod-template-hash: 78cbb94f44
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          name: amq-broker-operator
+          pod-template-hash: 78cbb94f44
+      spec:
+        containers:
+        - args:
+          - --zap-level info
+          - --zap-encoder console
+          command:
+          - /home/amq-broker-operator/bin/entrypoint
+          env:
+          - name: OPERATOR_NAME
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.labels['name']
+          - name: POD_NAME
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.name
+          - name: WATCH_NAMESPACE
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+          - name: RELATED_IMAGE_ActiveMQ_Artemis_Broker_Init_770
+            value: registry.redhat.io/amq7/amq-broker-init-rhel7@sha256:b194c366a940f34aa86454f84f1a8ec3b2670456033882f4ef7f514da3f290c5
+          - name: RELATED_IMAGE_ActiveMQ_Artemis_Broker_Init_780
+            value: registry.redhat.io/amq7/amq-broker-init-rhel7@sha256:a83f896a0f2f048495b9bd9e5eabb620d450ab525b3ca6125c88a5a541d2653f
+          - name: RELATED_IMAGE_ActiveMQ_Artemis_Broker_Init_781
+            value: registry.redhat.io/amq7/amq-broker-init-rhel7@sha256:16b649b60ab0dcf93e4e0953033337bb651f99c2d1a1f11fff56ae8b93f5fefc
+          - name: RELATED_IMAGE_ActiveMQ_Artemis_Broker_Init_782
+            value: registry.redhat.io/amq7/amq-broker-init-rhel7@sha256:3267f2235f8721366a72a42dbb8ac26e6e296bf269b62bc6ab5339e25fdce817
+          - name: RELATED_IMAGE_ActiveMQ_Artemis_Broker_Init_783
+            value: registry.redhat.io/amq7/amq-broker-init-rhel7@sha256:296a577c87e51b6a51b4603f5ecd9eb757c51301e7154b72ca231a4612db125e
+          - name: RELATED_IMAGE_ActiveMQ_Artemis_Broker_Init_784
+            value: registry.redhat.io/amq7/amq-broker-init-rhel7@sha256:832f3fc92f0a643e62c70190862c953e19e37559704ef9330e5049d25214635e
+          - name: RELATED_IMAGE_ActiveMQ_Artemis_Broker_Init_785
+            value: registry.redhat.io/amq7/amq-broker-init-rhel7@sha256:856749a6512bd100e1ff297c055dac14323224c007e11869dbebddfd89b28d7f
+          - name: RELATED_IMAGE_ActiveMQ_Artemis_Broker_Init_786
+            value: registry.redhat.io/amq7/amq-broker-init-rhel7@sha256:8fd83a3951640295586ea4e4dda1783fd2be2d1ec48e39e0536c68acd9edafa2
+          - name: RELATED_IMAGE_ActiveMQ_Artemis_Broker_Kubernetes_770
+            value: registry.redhat.io/amq7/amq-broker@sha256:6cdd36d43872146e852daadae6882370f657a60a3b1e88318767fa9641f5e882
+          - name: RELATED_IMAGE_ActiveMQ_Artemis_Broker_Kubernetes_780
+            value: registry.redhat.io/amq7/amq-broker@sha256:a6a2fd548f4e89151a8e7d4bacb7380d0076bbd1b1f5bc5555f2e95e19e1441f
+          - name: RELATED_IMAGE_ActiveMQ_Artemis_Broker_Kubernetes_781
+            value: registry.redhat.io/amq7/amq-broker@sha256:836b70b8a1d1c855d2dbb843e667fae94da639e352d344327f298015c2404d98
+          - name: RELATED_IMAGE_ActiveMQ_Artemis_Broker_Kubernetes_782
+            value: registry.redhat.io/amq7/amq-broker@sha256:5dc83278496e1c0401aab5dafdc266b94e5458e47125c455b7edc74f9ee4e816
+          - name: RELATED_IMAGE_ActiveMQ_Artemis_Broker_Kubernetes_783
+            value: registry.redhat.io/amq7/amq-broker@sha256:69651fe3b101ae6d20290c2a54e0f8eb373d145c52a5c57b35a6bcf059872c3a
+          - name: RELATED_IMAGE_ActiveMQ_Artemis_Broker_Kubernetes_784
+            value: registry.redhat.io/amq7/amq-broker@sha256:c3914b565bd1802f90721c86692a214d01dc629d2bd9038cefc14784a44a4b5b
+          - name: RELATED_IMAGE_ActiveMQ_Artemis_Broker_Kubernetes_785
+            value: registry.redhat.io/amq7/amq-broker@sha256:e034d06de88e06fe5164851dcce75dbd3b713cc47903eee45275a7fd8dc63ebc
+          - name: RELATED_IMAGE_ActiveMQ_Artemis_Broker_Kubernetes_786
+            value: registry.redhat.io/amq7/amq-broker@sha256:b3999dc888e8038d0736275c615f5dd3f0a71382ef3d4d7b63720760dc9540a5
+          image: registry.redhat.io/amq7/amq-broker-rhel7-operator@sha256:166425c902bb481eddab8757cbe4308a3a69d865a167eb9c8927785feaee0b04
+          imagePullPolicy: IfNotPresent
+          name: amq-broker-operator
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: amq-broker-operator
+        serviceAccountName: amq-broker-operator
+        terminationGracePeriodSeconds: 30
+  status:
+    availableReplicas: 1
+    fullyLabeledReplicas: 1
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

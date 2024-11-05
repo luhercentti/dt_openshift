@@ -1,0 +1,70 @@
+apiVersion: v1
+items:
+- apiVersion: route.openshift.io/v1
+  kind: Route
+  metadata:
+    annotations:
+      imageregistry.openshift.io: "true"
+      imageregistry.operator.openshift.io/checksum: sha256:9ad8062fa1490a315ca448ad2a9e23999fb490a65caa1e44f21ca6e663d95cf0
+      openshift.io/host.generated: "true"
+    creationTimestamp: "2023-07-07T16:17:55Z"
+    name: default-route
+    namespace: openshift-image-registry
+    resourceVersion: "48309053"
+    uid: be8c18c5-6a18-4f48-95c9-38db80d7d46f
+  spec:
+    host: default-route-openshift-image-registry.api-cloud.dirtrab.cl
+    tls:
+      termination: reencrypt
+    to:
+      kind: Service
+      name: image-registry
+      weight: 100
+    wildcardPolicy: None
+  status:
+    ingress:
+    - conditions:
+      - lastTransitionTime: "2023-07-07T16:17:55Z"
+        status: "True"
+        type: Admitted
+      host: default-route-openshift-image-registry.api-cloud.dirtrab.cl
+      routerCanonicalHostname: router-default.apps.ocp4azu.dirtrab.cl
+      routerName: default
+      wildcardPolicy: None
+- apiVersion: route.openshift.io/v1
+  kind: Route
+  metadata:
+    annotations:
+      openshift.io/host.generated: "true"
+    creationTimestamp: "2023-07-06T19:13:45Z"
+    labels:
+      docker-registry: default
+    name: image-registry
+    namespace: openshift-image-registry
+    resourceVersion: "48380095"
+    uid: 899eb646-a56d-4ac0-92ad-f8106ffa33fc
+  spec:
+    host: image-registry-openshift-image-registry.apps.ocp4azu.dirtrab.cl
+    port:
+      targetPort: 5000-tcp
+    tls:
+      termination: reencrypt
+    to:
+      kind: Service
+      name: image-registry
+      weight: 100
+    wildcardPolicy: None
+  status:
+    ingress:
+    - conditions:
+      - lastTransitionTime: "2023-07-07T18:10:53Z"
+        status: "True"
+        type: Admitted
+      host: image-registry-openshift-image-registry.apps.ocp4azu.dirtrab.cl
+      routerCanonicalHostname: router-default.apps.ocp4azu.dirtrab.cl
+      routerName: default
+      wildcardPolicy: None
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

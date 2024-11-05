@@ -1,0 +1,301 @@
+apiVersion: v1
+items:
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "1"
+    creationTimestamp: "2023-05-11T19:14:13Z"
+    generation: 14
+    labels:
+      name: elasticsearch-operator
+      olm.deployment-spec-hash: 57965c4777
+      olm.owner: elasticsearch-operator.v5.6.5
+      olm.owner.kind: ClusterServiceVersion
+      olm.owner.namespace: openshift-operators-redhat
+      operators.coreos.com/elasticsearch-operator.openshift-operators-redhat: ""
+    name: elasticsearch-operator
+    namespace: openshift-operators-redhat
+    ownerReferences:
+    - apiVersion: operators.coreos.com/v1alpha1
+      blockOwnerDeletion: false
+      controller: false
+      kind: ClusterServiceVersion
+      name: elasticsearch-operator.v5.6.5
+      uid: 132b7e4d-1c98-475c-8b48-ee146545811c
+    resourceVersion: "476624570"
+    uid: 29c0deb5-3656-4c21-9d05-40755fe03e7f
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 1
+    selector:
+      matchLabels:
+        name: elasticsearch-operator
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        annotations:
+          alm-examples: |-
+            [
+              {
+                "apiVersion": "logging.openshift.io/v1",
+                "kind": "Elasticsearch",
+                "metadata": {
+                  "name": "elasticsearch"
+                },
+                "spec": {
+                  "indexManagement": {
+                    "mappings": [
+                      {
+                        "aliases": [
+                          "infra",
+                          "logs.infra"
+                        ],
+                        "name": "infra",
+                        "policyRef": "infra-policy"
+                      }
+                    ],
+                    "policies": [
+                      {
+                        "name": "infra-policy",
+                        "phases": {
+                          "delete": {
+                            "minAge": "2d",
+                            "namespaceSpec": [
+                              {
+                                "minAge": "5h",
+                                "namespace": "openshift-monitoring"
+                              }
+                            ],
+                            "pruneNamespacesInterval": "24h"
+                          },
+                          "hot": {
+                            "actions": {
+                              "rollover": {
+                                "maxAge": "8h"
+                              }
+                            }
+                          }
+                        },
+                        "pollInterval": "30m"
+                      }
+                    ]
+                  },
+                  "managementState": "Managed",
+                  "nodeSpec": {
+                    "resources": {
+                      "limits": {
+                        "memory": "1Gi"
+                      },
+                      "requests": {
+                        "cpu": "100m",
+                        "memory": "512Mi"
+                      }
+                    }
+                  },
+                  "nodes": [
+                    {
+                      "nodeCount": 1,
+                      "roles": [
+                        "client",
+                        "data",
+                        "master"
+                      ],
+                      "storage": {
+                        "size": "20G"
+                      }
+                    }
+                  ],
+                  "redundancyPolicy": "ZeroRedundancy"
+                }
+              },
+              {
+                "apiVersion": "logging.openshift.io/v1",
+                "kind": "Kibana",
+                "metadata": {
+                  "name": "kibana"
+                },
+                "spec": {
+                  "managementState": "Managed",
+                  "nodeSelector": {},
+                  "replicas": 1,
+                  "resources": {
+                    "limits": {
+                      "memory": "512Mi"
+                    },
+                    "requests": {
+                      "memory": "512Mi"
+                    }
+                  }
+                }
+              }
+            ]
+          capabilities: Full Lifecycle
+          categories: OpenShift Optional, Logging & Tracing
+          certified: "false"
+          containerImage: registry.redhat.io/openshift-logging/elasticsearch-rhel8-operator@sha256:ea8fb6a703594eb177f0e8af6f339aaa156b9991c7992818cb480261e4a7f188
+          createdAt: "2020-11-04T08:00:00Z"
+          description: |
+            The Elasticsearch Operator for OCP provides a means for configuring and managing an Elasticsearch cluster for tracing and cluster logging.
+            ## Prerequisites and Requirements
+            ### Elasticsearch Operator Namespace
+            The Elasticsearch Operator must be deployed to the global operator group namespace
+            ### Memory Considerations
+            Elasticsearch is a memory intensive application.  The initial
+            set of OCP nodes may not be large enough to support the Elasticsearch cluster.  Additional OCP nodes must be added
+            to the OCP cluster if you desire to run with the recommended (or better) memory. Each ES node can operate with a
+            lower memory setting though this is not recommended for production deployments.
+          kubectl.kubernetes.io/default-container: elasticsearch-operator
+          olm.operatorGroup: openshift-operators-redhat-wx7sn
+          olm.operatorNamespace: openshift-operators-redhat
+          olm.skipRange: '>=4.6.0-0 <5.6.5'
+          olm.targetNamespaces: ""
+          operatorframework.io/cluster-monitoring: "true"
+          operatorframework.io/properties: '{"properties":[{"type":"olm.maxOpenShiftVersion","value":4.14},{"type":"olm.package","value":{"packageName":"elasticsearch-operator","version":"5.6.5"}},{"type":"olm.gvk","value":{"group":"logging.openshift.io","kind":"Elasticsearch","version":"v1"}},{"type":"olm.gvk","value":{"group":"logging.openshift.io","kind":"Kibana","version":"v1"}}]}'
+          operatorframework.io/suggested-namespace: openshift-operators-redhat
+          operators.openshift.io/infrastructure-features: '["disconnected","proxy-aware"]'
+          operators.openshift.io/valid-subscription: '["OpenShift Container Platform",
+            "OpenShift Platform Plus"]'
+          operators.operatorframework.io/builder: operator-sdk-unknown
+          operators.operatorframework.io/project_layout: go.kubebuilder.io/v3
+          support: AOS Cluster Logging, Jaeger
+        creationTimestamp: null
+        labels:
+          name: elasticsearch-operator
+      spec:
+        containers:
+        - args:
+          - --secure-listen-address=0.0.0.0:8443
+          - --upstream=http://127.0.0.1:8080/
+          - --logtostderr=true
+          - --tls-cert-file=/var/run/secrets/serving-cert/tls.crt
+          - --tls-private-key-file=/var/run/secrets/serving-cert/tls.key
+          - --v=2
+          env:
+          - name: OPERATOR_CONDITION_NAME
+            value: elasticsearch-operator.v5.6.5
+          image: registry.redhat.io/openshift4/ose-kube-rbac-proxy@sha256:c9b7a51fccd409451fe5cae7bd15abc00e10c9ac1a2e97232172d39134db9254
+          imagePullPolicy: IfNotPresent
+          name: kube-rbac-proxy
+          ports:
+          - containerPort: 8443
+            name: https
+            protocol: TCP
+          resources: {}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - ALL
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/run/secrets/serving-cert
+            name: elasticsearch-operator-metrics-cert
+        - args:
+          - --health-probe-bind-address=:8081
+          - --metrics-bind-address=127.0.0.1:8080
+          command:
+          - elasticsearch-operator
+          env:
+          - name: WATCH_NAMESPACE
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.annotations['olm.targetNamespaces']
+          - name: POD_NAME
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.name
+          - name: OPERATOR_NAME
+            value: elasticsearch-operator
+          - name: RELATED_IMAGE_ELASTICSEARCH_PROXY
+            value: registry.redhat.io/openshift-logging/elasticsearch-proxy-rhel8@sha256:b69d200a83ce2ea3757f73791b3337e757523a1d8839fad0a1bf186bc48a5d2c
+          - name: RELATED_IMAGE_ELASTICSEARCH
+            value: registry.redhat.io/openshift-logging/elasticsearch6-rhel8@sha256:5a9c84a1961faf89faef2a2b3f25b4dc9dd1acbf8cf81a6830b7e5105636df43
+          - name: RELATED_IMAGE_KIBANA
+            value: registry.redhat.io/openshift-logging/kibana6-rhel8@sha256:78bf3d6755fc735636c930b3cedd3c42ec3d580b8cb8c5776617b8d6165162d9
+          - name: RELATED_IMAGE_CURATOR
+            value: registry.redhat.io/openshift-logging/logging-curator5-rhel8@sha256:57e89eaefe887ebef720f52249a582c502687720ed50716f3339482f63993901
+          - name: OPERATOR_CONDITION_NAME
+            value: elasticsearch-operator.v5.6.5
+          image: registry.redhat.io/openshift-logging/elasticsearch-rhel8-operator@sha256:ea8fb6a703594eb177f0e8af6f339aaa156b9991c7992818cb480261e4a7f188
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /healthz
+              port: 8081
+              scheme: HTTP
+            initialDelaySeconds: 15
+            periodSeconds: 20
+            successThreshold: 1
+            timeoutSeconds: 1
+          name: elasticsearch-operator
+          ports:
+          - containerPort: 8080
+            name: http
+            protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /readyz
+              port: 8081
+              scheme: HTTP
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources: {}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - ALL
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        nodeSelector:
+          kubernetes.io/os: linux
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext:
+          runAsNonRoot: true
+        serviceAccount: elasticsearch-operator
+        serviceAccountName: elasticsearch-operator
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - name: elasticsearch-operator-metrics-cert
+          secret:
+            defaultMode: 420
+            optional: true
+            secretName: elasticsearch-operator-metrics
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2023-05-11T19:14:13Z"
+      lastUpdateTime: "2023-05-11T19:14:43Z"
+      message: ReplicaSet "elasticsearch-operator-f8568749b" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: "2024-07-24T20:17:57Z"
+      lastUpdateTime: "2024-07-24T20:17:57Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    observedGeneration: 14
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

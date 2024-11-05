@@ -1,0 +1,948 @@
+apiVersion: v1
+items:
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      config.openshift.io/inject-proxy: cluster-image-registry-operator
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "1"
+      include.release.openshift.io/self-managed-high-availability: "true"
+      include.release.openshift.io/single-node-developer: "true"
+    creationTimestamp: "2023-05-04T21:36:18Z"
+    generation: 1
+    labels:
+      name: cluster-image-registry-operator
+      pod-template-hash: 56df9997c7
+    name: cluster-image-registry-operator-56df9997c7
+    namespace: openshift-image-registry
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: cluster-image-registry-operator
+      uid: 4efa3577-3c68-4d30-a82a-dbb1efd81d3e
+    resourceVersion: "369060944"
+    uid: 6818b848-842f-4680-93d3-3beed94222e2
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        name: cluster-image-registry-operator
+        pod-template-hash: 56df9997c7
+    template:
+      metadata:
+        annotations:
+          target.workload.openshift.io/management: '{"effect": "PreferredDuringScheduling"}'
+        creationTimestamp: null
+        labels:
+          name: cluster-image-registry-operator
+          pod-template-hash: 56df9997c7
+      spec:
+        containers:
+        - args:
+          - --files=/var/run/configmaps/trusted-ca/tls-ca-bundle.pem
+          - --files=/etc/secrets/tls.crt
+          - --files=/etc/secrets/tls.key
+          env:
+          - name: RELEASE_VERSION
+            value: 4.10.53
+          - name: WATCH_NAMESPACE
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+          - name: OPERATOR_NAME
+            value: cluster-image-registry-operator
+          - name: IMAGE
+            value: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:3999153d06444463a5e3ea41e2d58fed5967674e67b0c9b24983dc8436a97d89
+          - name: IMAGE_PRUNER
+            value: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:0ac9b5c2bf8e08f15e5d239a34102b09fd77985579ecece9d915a814c2e6405b
+          - name: AZURE_ENVIRONMENT_FILEPATH
+            value: /tmp/azurestackcloud.json
+          image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:68617d7e658432680aa01e588813fc85251092539981ebef13ba9753659f5eb8
+          imagePullPolicy: IfNotPresent
+          name: cluster-image-registry-operator
+          ports:
+          - containerPort: 60000
+            name: metrics
+            protocol: TCP
+          resources:
+            requests:
+              cpu: 10m
+              memory: 50Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/run/configmaps/trusted-ca/
+            name: trusted-ca
+          - mountPath: /etc/secrets
+            name: image-registry-operator-tls
+          - mountPath: /var/run/secrets/openshift/serviceaccount
+            name: bound-sa-token
+            readOnly: true
+        dnsPolicy: ClusterFirst
+        nodeSelector:
+          node-role.kubernetes.io/master: ""
+        priorityClassName: system-cluster-critical
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: cluster-image-registry-operator
+        serviceAccountName: cluster-image-registry-operator
+        shareProcessNamespace: false
+        terminationGracePeriodSeconds: 30
+        tolerations:
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/master
+          operator: Exists
+        - effect: NoExecute
+          key: node.kubernetes.io/unreachable
+          operator: Exists
+          tolerationSeconds: 120
+        - effect: NoExecute
+          key: node.kubernetes.io/not-ready
+          operator: Exists
+          tolerationSeconds: 120
+        volumes:
+        - name: image-registry-operator-tls
+          secret:
+            defaultMode: 420
+            secretName: image-registry-operator-tls
+        - configMap:
+            defaultMode: 420
+            items:
+            - key: ca-bundle.crt
+              path: tls-ca-bundle.pem
+            name: trusted-ca
+            optional: true
+          name: trusted-ca
+        - name: bound-sa-token
+          projected:
+            defaultMode: 420
+            sources:
+            - serviceAccountToken:
+                audience: openshift
+                expirationSeconds: 3600
+                path: token
+  status:
+    availableReplicas: 1
+    fullyLabeledReplicas: 1
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "1"
+      deployment.kubernetes.io/revision: "4"
+      imageregistry.operator.openshift.io/checksum: sha256:5e8bde656de1cc45dd9a694b9b83e7d187977231fb99dbac7aef5e6dd0d26861
+      operator.openshift.io/spec-hash: 867043ceedfc6b6f357532c57d895297d577933fe1c4cdbac28d6ede0f628026
+      release.openshift.io/version: 4.10.53
+    creationTimestamp: "2023-05-05T17:36:25Z"
+    generation: 1
+    labels:
+      docker-registry: default
+      pod-template-hash: 655c865b7f
+    name: image-registry-655c865b7f
+    namespace: openshift-image-registry
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: image-registry
+      uid: fbc9dc73-a880-4894-8ee7-a17eae768b2d
+    resourceVersion: "467286831"
+    uid: df33871a-c6ab-450a-b9da-68dcd103a247
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        docker-registry: default
+        pod-template-hash: 655c865b7f
+    template:
+      metadata:
+        annotations:
+          imageregistry.operator.openshift.io/dependencies-checksum: sha256:90eef16bac76520b4f0249d4fae85d79cd04cb25dd761e7bb6eee398acaec1a1
+          target.workload.openshift.io/management: '{"effect": "PreferredDuringScheduling"}'
+        creationTimestamp: null
+        labels:
+          docker-registry: default
+          pod-template-hash: 655c865b7f
+      spec:
+        affinity:
+          podAntiAffinity:
+            preferredDuringSchedulingIgnoredDuringExecution:
+            - podAffinityTerm:
+                labelSelector:
+                  matchLabels:
+                    docker-registry: default
+                namespaces:
+                - openshift-image-registry
+                topologyKey: kubernetes.io/hostname
+              weight: 100
+        containers:
+        - command:
+          - /bin/sh
+          - -c
+          - mkdir -p /etc/pki/ca-trust/extracted/edk2 /etc/pki/ca-trust/extracted/java
+            /etc/pki/ca-trust/extracted/openssl /etc/pki/ca-trust/extracted/pem &&
+            update-ca-trust extract && exec /usr/bin/dockerregistry
+          env:
+          - name: REGISTRY_STORAGE
+            value: azure
+          - name: REGISTRY_STORAGE_AZURE_CONTAINER
+            value: ocp4azu-sj2sl-image-registry-egjrsopxakivkybwaddppfrjsixhtpqai
+          - name: REGISTRY_STORAGE_AZURE_ACCOUNTNAME
+            value: imageregistryocp4az7snbw
+          - name: REGISTRY_STORAGE_AZURE_ACCOUNTKEY
+            valueFrom:
+              secretKeyRef:
+                key: REGISTRY_STORAGE_AZURE_ACCOUNTKEY
+                name: image-registry-private-configuration
+          - name: REGISTRY_STORAGE_AZURE_REALM
+            value: core.windows.net
+          - name: REGISTRY_HTTP_ADDR
+            value: :5000
+          - name: REGISTRY_HTTP_NET
+            value: tcp
+          - name: REGISTRY_HTTP_SECRET
+            value: fee6c0c1691f6b2bc782bb26263b339be5274b2953cf7bd8e5df32f9c4b716ad38689eba7c31ad97a6db800f975ea833d1b57ccc086ff1317b507425dc77aba2
+          - name: REGISTRY_LOG_LEVEL
+            value: info
+          - name: REGISTRY_OPENSHIFT_QUOTA_ENABLED
+            value: "true"
+          - name: REGISTRY_STORAGE_CACHE_BLOBDESCRIPTOR
+            value: inmemory
+          - name: REGISTRY_STORAGE_DELETE_ENABLED
+            value: "true"
+          - name: REGISTRY_OPENSHIFT_METRICS_ENABLED
+            value: "true"
+          - name: REGISTRY_OPENSHIFT_SERVER_ADDR
+            value: image-registry.openshift-image-registry.svc:5000
+          - name: REGISTRY_HTTP_TLS_CERTIFICATE
+            value: /etc/secrets/tls.crt
+          - name: REGISTRY_HTTP_TLS_KEY
+            value: /etc/secrets/tls.key
+          image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:3999153d06444463a5e3ea41e2d58fed5967674e67b0c9b24983dc8436a97d89
+          imagePullPolicy: IfNotPresent
+          lifecycle:
+            preStop:
+              exec:
+                command:
+                - sleep
+                - "25"
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /healthz
+              port: 5000
+              scheme: HTTPS
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 5
+          name: registry
+          ports:
+          - containerPort: 5000
+            protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /healthz
+              port: 5000
+              scheme: HTTPS
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 5
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /etc/secrets
+            name: registry-tls
+          - mountPath: /etc/pki/ca-trust/extracted
+            name: ca-trust-extracted
+          - mountPath: /etc/pki/ca-trust/source/anchors
+            name: registry-certificates
+          - mountPath: /usr/share/pki/ca-trust-source
+            name: trusted-ca
+          - mountPath: /var/lib/kubelet/
+            name: installation-pull-secrets
+          - mountPath: /var/run/secrets/openshift/serviceaccount
+            name: bound-sa-token
+            readOnly: true
+        dnsPolicy: ClusterFirst
+        nodeSelector:
+          kubernetes.io/os: linux
+          node-role.kubernetes.io/infra: ""
+        priorityClassName: system-cluster-critical
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext:
+          fsGroup: 1000300000
+          fsGroupChangePolicy: OnRootMismatch
+        serviceAccount: registry
+        serviceAccountName: registry
+        terminationGracePeriodSeconds: 55
+        tolerations:
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/infra
+          value: reserved
+        - effect: NoExecute
+          key: node-role.kubernetes.io/infra
+          value: reserved
+        volumes:
+        - name: registry-tls
+          projected:
+            defaultMode: 420
+            sources:
+            - secret:
+                name: image-registry-tls
+        - emptyDir: {}
+          name: ca-trust-extracted
+        - configMap:
+            defaultMode: 420
+            name: image-registry-certificates
+          name: registry-certificates
+        - configMap:
+            defaultMode: 420
+            items:
+            - key: ca-bundle.crt
+              path: anchors/ca-bundle.crt
+            name: trusted-ca
+            optional: true
+          name: trusted-ca
+        - name: installation-pull-secrets
+          secret:
+            defaultMode: 420
+            items:
+            - key: .dockerconfigjson
+              path: config.json
+            optional: true
+            secretName: installation-pull-secrets
+        - name: bound-sa-token
+          projected:
+            defaultMode: 420
+            sources:
+            - serviceAccountToken:
+                audience: openshift
+                expirationSeconds: 3600
+                path: token
+  status:
+    availableReplicas: 1
+    fullyLabeledReplicas: 1
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "2"
+      deployment.kubernetes.io/max-replicas: "3"
+      deployment.kubernetes.io/revision: "2"
+      imageregistry.operator.openshift.io/checksum: sha256:20647458f854801cb540f25e6e9a47c9e8cf84997d2569b9f1fa425aa978ee94
+      operator.openshift.io/spec-hash: 5cac78b7f01c38e6e2b60396c7f09cbfc0d51cdfa52259b085a43cf5bc039090
+      release.openshift.io/version: 4.10.53
+    creationTimestamp: "2023-05-04T21:48:49Z"
+    generation: 4
+    labels:
+      docker-registry: default
+      pod-template-hash: 6db5bb546
+    name: image-registry-6db5bb546
+    namespace: openshift-image-registry
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: image-registry
+      uid: fbc9dc73-a880-4894-8ee7-a17eae768b2d
+    resourceVersion: "112695"
+    uid: 794bb9d4-6817-4e00-a76a-59c962025483
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        docker-registry: default
+        pod-template-hash: 6db5bb546
+    template:
+      metadata:
+        annotations:
+          imageregistry.operator.openshift.io/dependencies-checksum: sha256:90eef16bac76520b4f0249d4fae85d79cd04cb25dd761e7bb6eee398acaec1a1
+          target.workload.openshift.io/management: '{"effect": "PreferredDuringScheduling"}'
+        creationTimestamp: null
+        labels:
+          docker-registry: default
+          pod-template-hash: 6db5bb546
+      spec:
+        affinity:
+          podAntiAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchLabels:
+                  docker-registry: default
+              namespaces:
+              - openshift-image-registry
+              topologyKey: kubernetes.io/hostname
+        containers:
+        - command:
+          - /bin/sh
+          - -c
+          - mkdir -p /etc/pki/ca-trust/extracted/edk2 /etc/pki/ca-trust/extracted/java
+            /etc/pki/ca-trust/extracted/openssl /etc/pki/ca-trust/extracted/pem &&
+            update-ca-trust extract && exec /usr/bin/dockerregistry
+          env:
+          - name: REGISTRY_STORAGE
+            value: azure
+          - name: REGISTRY_STORAGE_AZURE_CONTAINER
+            value: ocp4azu-sj2sl-image-registry-egjrsopxakivkybwaddppfrjsixhtpqai
+          - name: REGISTRY_STORAGE_AZURE_ACCOUNTNAME
+            value: imageregistryocp4az7snbw
+          - name: REGISTRY_STORAGE_AZURE_ACCOUNTKEY
+            valueFrom:
+              secretKeyRef:
+                key: REGISTRY_STORAGE_AZURE_ACCOUNTKEY
+                name: image-registry-private-configuration
+          - name: REGISTRY_STORAGE_AZURE_REALM
+            value: core.windows.net
+          - name: REGISTRY_HTTP_ADDR
+            value: :5000
+          - name: REGISTRY_HTTP_NET
+            value: tcp
+          - name: REGISTRY_HTTP_SECRET
+            value: fee6c0c1691f6b2bc782bb26263b339be5274b2953cf7bd8e5df32f9c4b716ad38689eba7c31ad97a6db800f975ea833d1b57ccc086ff1317b507425dc77aba2
+          - name: REGISTRY_LOG_LEVEL
+            value: info
+          - name: REGISTRY_OPENSHIFT_QUOTA_ENABLED
+            value: "true"
+          - name: REGISTRY_STORAGE_CACHE_BLOBDESCRIPTOR
+            value: inmemory
+          - name: REGISTRY_STORAGE_DELETE_ENABLED
+            value: "true"
+          - name: REGISTRY_OPENSHIFT_METRICS_ENABLED
+            value: "true"
+          - name: REGISTRY_OPENSHIFT_SERVER_ADDR
+            value: image-registry.openshift-image-registry.svc:5000
+          - name: REGISTRY_HTTP_TLS_CERTIFICATE
+            value: /etc/secrets/tls.crt
+          - name: REGISTRY_HTTP_TLS_KEY
+            value: /etc/secrets/tls.key
+          image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:3999153d06444463a5e3ea41e2d58fed5967674e67b0c9b24983dc8436a97d89
+          imagePullPolicy: IfNotPresent
+          lifecycle:
+            preStop:
+              exec:
+                command:
+                - sleep
+                - "25"
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /healthz
+              port: 5000
+              scheme: HTTPS
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 5
+          name: registry
+          ports:
+          - containerPort: 5000
+            protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /healthz
+              port: 5000
+              scheme: HTTPS
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 5
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /etc/secrets
+            name: registry-tls
+          - mountPath: /etc/pki/ca-trust/extracted
+            name: ca-trust-extracted
+          - mountPath: /etc/pki/ca-trust/source/anchors
+            name: registry-certificates
+          - mountPath: /usr/share/pki/ca-trust-source
+            name: trusted-ca
+          - mountPath: /var/lib/kubelet/
+            name: installation-pull-secrets
+          - mountPath: /var/run/secrets/openshift/serviceaccount
+            name: bound-sa-token
+            readOnly: true
+        dnsPolicy: ClusterFirst
+        nodeSelector:
+          kubernetes.io/os: linux
+        priorityClassName: system-cluster-critical
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext:
+          fsGroup: 1000300000
+          fsGroupChangePolicy: OnRootMismatch
+        serviceAccount: registry
+        serviceAccountName: registry
+        terminationGracePeriodSeconds: 55
+        volumes:
+        - name: registry-tls
+          projected:
+            defaultMode: 420
+            sources:
+            - secret:
+                name: image-registry-tls
+        - emptyDir: {}
+          name: ca-trust-extracted
+        - configMap:
+            defaultMode: 420
+            name: image-registry-certificates
+          name: registry-certificates
+        - configMap:
+            defaultMode: 420
+            items:
+            - key: ca-bundle.crt
+              path: anchors/ca-bundle.crt
+            name: trusted-ca
+            optional: true
+          name: trusted-ca
+        - name: installation-pull-secrets
+          secret:
+            defaultMode: 420
+            items:
+            - key: .dockerconfigjson
+              path: config.json
+            optional: true
+            secretName: installation-pull-secrets
+        - name: bound-sa-token
+          projected:
+            defaultMode: 420
+            sources:
+            - serviceAccountToken:
+                audience: openshift
+                expirationSeconds: 3600
+                path: token
+  status:
+    observedGeneration: 4
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "1"
+      deployment.kubernetes.io/revision: "3"
+      imageregistry.operator.openshift.io/checksum: sha256:60e7f4d68fdc8975afb97724d1ac7f2c53356ed9d467b18e0e0a1a152c4dc85f
+      operator.openshift.io/spec-hash: 3ead1927388cfdc54a8a6d951611785fe4c0e64ff1fe242c2f7b9c222a50607d
+      release.openshift.io/version: 4.10.53
+    creationTimestamp: "2023-05-05T17:31:21Z"
+    generation: 4
+    labels:
+      docker-registry: default
+      pod-template-hash: 986cbc6bf
+    name: image-registry-986cbc6bf
+    namespace: openshift-image-registry
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: image-registry
+      uid: fbc9dc73-a880-4894-8ee7-a17eae768b2d
+    resourceVersion: "114372"
+    uid: fa88f874-8a24-4d5d-a73d-cb52d03af821
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        docker-registry: default
+        pod-template-hash: 986cbc6bf
+    template:
+      metadata:
+        annotations:
+          imageregistry.operator.openshift.io/dependencies-checksum: sha256:90eef16bac76520b4f0249d4fae85d79cd04cb25dd761e7bb6eee398acaec1a1
+          target.workload.openshift.io/management: '{"effect": "PreferredDuringScheduling"}'
+        creationTimestamp: null
+        labels:
+          docker-registry: default
+          pod-template-hash: 986cbc6bf
+      spec:
+        affinity:
+          podAntiAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchLabels:
+                  docker-registry: default
+              namespaces:
+              - openshift-image-registry
+              topologyKey: kubernetes.io/hostname
+        containers:
+        - command:
+          - /bin/sh
+          - -c
+          - mkdir -p /etc/pki/ca-trust/extracted/edk2 /etc/pki/ca-trust/extracted/java
+            /etc/pki/ca-trust/extracted/openssl /etc/pki/ca-trust/extracted/pem &&
+            update-ca-trust extract && exec /usr/bin/dockerregistry
+          env:
+          - name: REGISTRY_STORAGE
+            value: azure
+          - name: REGISTRY_STORAGE_AZURE_CONTAINER
+            value: ocp4azu-sj2sl-image-registry-egjrsopxakivkybwaddppfrjsixhtpqai
+          - name: REGISTRY_STORAGE_AZURE_ACCOUNTNAME
+            value: imageregistryocp4az7snbw
+          - name: REGISTRY_STORAGE_AZURE_ACCOUNTKEY
+            valueFrom:
+              secretKeyRef:
+                key: REGISTRY_STORAGE_AZURE_ACCOUNTKEY
+                name: image-registry-private-configuration
+          - name: REGISTRY_STORAGE_AZURE_REALM
+            value: core.windows.net
+          - name: REGISTRY_HTTP_ADDR
+            value: :5000
+          - name: REGISTRY_HTTP_NET
+            value: tcp
+          - name: REGISTRY_HTTP_SECRET
+            value: fee6c0c1691f6b2bc782bb26263b339be5274b2953cf7bd8e5df32f9c4b716ad38689eba7c31ad97a6db800f975ea833d1b57ccc086ff1317b507425dc77aba2
+          - name: REGISTRY_LOG_LEVEL
+            value: info
+          - name: REGISTRY_OPENSHIFT_QUOTA_ENABLED
+            value: "true"
+          - name: REGISTRY_STORAGE_CACHE_BLOBDESCRIPTOR
+            value: inmemory
+          - name: REGISTRY_STORAGE_DELETE_ENABLED
+            value: "true"
+          - name: REGISTRY_OPENSHIFT_METRICS_ENABLED
+            value: "true"
+          - name: REGISTRY_OPENSHIFT_SERVER_ADDR
+            value: image-registry.openshift-image-registry.svc:5000
+          - name: REGISTRY_HTTP_TLS_CERTIFICATE
+            value: /etc/secrets/tls.crt
+          - name: REGISTRY_HTTP_TLS_KEY
+            value: /etc/secrets/tls.key
+          image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:3999153d06444463a5e3ea41e2d58fed5967674e67b0c9b24983dc8436a97d89
+          imagePullPolicy: IfNotPresent
+          lifecycle:
+            preStop:
+              exec:
+                command:
+                - sleep
+                - "25"
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /healthz
+              port: 5000
+              scheme: HTTPS
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 5
+          name: registry
+          ports:
+          - containerPort: 5000
+            protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /healthz
+              port: 5000
+              scheme: HTTPS
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 5
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /etc/secrets
+            name: registry-tls
+          - mountPath: /etc/pki/ca-trust/extracted
+            name: ca-trust-extracted
+          - mountPath: /etc/pki/ca-trust/source/anchors
+            name: registry-certificates
+          - mountPath: /usr/share/pki/ca-trust-source
+            name: trusted-ca
+          - mountPath: /var/lib/kubelet/
+            name: installation-pull-secrets
+          - mountPath: /var/run/secrets/openshift/serviceaccount
+            name: bound-sa-token
+            readOnly: true
+        dnsPolicy: ClusterFirst
+        nodeSelector:
+          kubernetes.io/os: linux
+          node-role.kubernetes.io/infra: ""
+        priorityClassName: system-cluster-critical
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext:
+          fsGroup: 1000300000
+          fsGroupChangePolicy: OnRootMismatch
+        serviceAccount: registry
+        serviceAccountName: registry
+        terminationGracePeriodSeconds: 55
+        tolerations:
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/infra
+          value: reserved
+        - effect: NoExecute
+          key: node-role.kubernetes.io/infra
+          value: reserved
+        volumes:
+        - name: registry-tls
+          projected:
+            defaultMode: 420
+            sources:
+            - secret:
+                name: image-registry-tls
+        - emptyDir: {}
+          name: ca-trust-extracted
+        - configMap:
+            defaultMode: 420
+            name: image-registry-certificates
+          name: registry-certificates
+        - configMap:
+            defaultMode: 420
+            items:
+            - key: ca-bundle.crt
+              path: anchors/ca-bundle.crt
+            name: trusted-ca
+            optional: true
+          name: trusted-ca
+        - name: installation-pull-secrets
+          secret:
+            defaultMode: 420
+            items:
+            - key: .dockerconfigjson
+              path: config.json
+            optional: true
+            secretName: installation-pull-secrets
+        - name: bound-sa-token
+          projected:
+            defaultMode: 420
+            sources:
+            - serviceAccountToken:
+                audience: openshift
+                expirationSeconds: 3600
+                path: token
+  status:
+    observedGeneration: 4
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "2"
+      deployment.kubernetes.io/max-replicas: "3"
+      deployment.kubernetes.io/revision: "1"
+      imageregistry.operator.openshift.io/checksum: sha256:4029039ee46221f383a8f06982a88f6fb23756f460bf610c344e95e10fb22335
+      operator.openshift.io/spec-hash: 503edc851b9ff5a1caf40e59320f18aadceaaee78a06601a7c0c9931766835a4
+      release.openshift.io/version: 4.10.53
+    creationTimestamp: "2023-05-04T21:48:48Z"
+    generation: 3
+    labels:
+      docker-registry: default
+      pod-template-hash: bcf8c46d8
+    name: image-registry-bcf8c46d8
+    namespace: openshift-image-registry
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: image-registry
+      uid: fbc9dc73-a880-4894-8ee7-a17eae768b2d
+    resourceVersion: "20891"
+    uid: bda46c3a-45bc-4dee-a693-635ecc379c27
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        docker-registry: default
+        pod-template-hash: bcf8c46d8
+    template:
+      metadata:
+        annotations:
+          imageregistry.operator.openshift.io/dependencies-checksum: sha256:38fbb12c8bc79a6ad2cf3ae4920c39c97d8e4118c80d461f8406ac68210fc0a5
+          target.workload.openshift.io/management: '{"effect": "PreferredDuringScheduling"}'
+        creationTimestamp: null
+        labels:
+          docker-registry: default
+          pod-template-hash: bcf8c46d8
+      spec:
+        affinity:
+          podAntiAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchLabels:
+                  docker-registry: default
+              namespaces:
+              - openshift-image-registry
+              topologyKey: kubernetes.io/hostname
+        containers:
+        - command:
+          - /bin/sh
+          - -c
+          - mkdir -p /etc/pki/ca-trust/extracted/edk2 /etc/pki/ca-trust/extracted/java
+            /etc/pki/ca-trust/extracted/openssl /etc/pki/ca-trust/extracted/pem &&
+            update-ca-trust extract && exec /usr/bin/dockerregistry
+          env:
+          - name: REGISTRY_STORAGE
+            value: azure
+          - name: REGISTRY_STORAGE_AZURE_CONTAINER
+            value: ocp4azu-sj2sl-image-registry-egjrsopxakivkybwaddppfrjsixhtpqai
+          - name: REGISTRY_STORAGE_AZURE_ACCOUNTNAME
+            value: imageregistryocp4az7snbw
+          - name: REGISTRY_STORAGE_AZURE_ACCOUNTKEY
+            valueFrom:
+              secretKeyRef:
+                key: REGISTRY_STORAGE_AZURE_ACCOUNTKEY
+                name: image-registry-private-configuration
+          - name: REGISTRY_STORAGE_AZURE_REALM
+            value: core.windows.net
+          - name: REGISTRY_HTTP_ADDR
+            value: :5000
+          - name: REGISTRY_HTTP_NET
+            value: tcp
+          - name: REGISTRY_HTTP_SECRET
+            value: fee6c0c1691f6b2bc782bb26263b339be5274b2953cf7bd8e5df32f9c4b716ad38689eba7c31ad97a6db800f975ea833d1b57ccc086ff1317b507425dc77aba2
+          - name: REGISTRY_LOG_LEVEL
+            value: info
+          - name: REGISTRY_OPENSHIFT_QUOTA_ENABLED
+            value: "true"
+          - name: REGISTRY_STORAGE_CACHE_BLOBDESCRIPTOR
+            value: inmemory
+          - name: REGISTRY_STORAGE_DELETE_ENABLED
+            value: "true"
+          - name: REGISTRY_OPENSHIFT_METRICS_ENABLED
+            value: "true"
+          - name: REGISTRY_OPENSHIFT_SERVER_ADDR
+            value: image-registry.openshift-image-registry.svc:5000
+          - name: REGISTRY_HTTP_TLS_CERTIFICATE
+            value: /etc/secrets/tls.crt
+          - name: REGISTRY_HTTP_TLS_KEY
+            value: /etc/secrets/tls.key
+          image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:3999153d06444463a5e3ea41e2d58fed5967674e67b0c9b24983dc8436a97d89
+          imagePullPolicy: IfNotPresent
+          lifecycle:
+            preStop:
+              exec:
+                command:
+                - sleep
+                - "25"
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /healthz
+              port: 5000
+              scheme: HTTPS
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 5
+          name: registry
+          ports:
+          - containerPort: 5000
+            protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /healthz
+              port: 5000
+              scheme: HTTPS
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 5
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /etc/secrets
+            name: registry-tls
+          - mountPath: /etc/pki/ca-trust/extracted
+            name: ca-trust-extracted
+          - mountPath: /etc/pki/ca-trust/source/anchors
+            name: registry-certificates
+          - mountPath: /usr/share/pki/ca-trust-source
+            name: trusted-ca
+          - mountPath: /var/lib/kubelet/
+            name: installation-pull-secrets
+          - mountPath: /var/run/secrets/openshift/serviceaccount
+            name: bound-sa-token
+            readOnly: true
+        dnsPolicy: ClusterFirst
+        nodeSelector:
+          kubernetes.io/os: linux
+        priorityClassName: system-cluster-critical
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext:
+          fsGroup: 1000300000
+          fsGroupChangePolicy: OnRootMismatch
+        serviceAccount: registry
+        serviceAccountName: registry
+        terminationGracePeriodSeconds: 55
+        volumes:
+        - name: registry-tls
+          projected:
+            defaultMode: 420
+            sources:
+            - secret:
+                name: image-registry-tls
+        - emptyDir: {}
+          name: ca-trust-extracted
+        - configMap:
+            defaultMode: 420
+            name: image-registry-certificates
+          name: registry-certificates
+        - configMap:
+            defaultMode: 420
+            items:
+            - key: ca-bundle.crt
+              path: anchors/ca-bundle.crt
+            name: trusted-ca
+            optional: true
+          name: trusted-ca
+        - name: installation-pull-secrets
+          secret:
+            defaultMode: 420
+            items:
+            - key: .dockerconfigjson
+              path: config.json
+            optional: true
+            secretName: installation-pull-secrets
+        - name: bound-sa-token
+          projected:
+            defaultMode: 420
+            sources:
+            - serviceAccountToken:
+                audience: openshift
+                expirationSeconds: 3600
+                path: token
+  status:
+    observedGeneration: 3
+    replicas: 0
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

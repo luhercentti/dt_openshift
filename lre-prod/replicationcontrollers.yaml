@@ -1,0 +1,421 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: ReplicationController
+  metadata:
+    annotations:
+      openshift.io/deployer-pod.completed-at: 2023-06-05 15:38:57 +0000 UTC
+      openshift.io/deployer-pod.created-at: 2023-06-05 15:38:10 +0000 UTC
+      openshift.io/deployer-pod.name: api-integracion-1-deploy
+      openshift.io/deployment-config.latest-version: "1"
+      openshift.io/deployment-config.name: api-integracion
+      openshift.io/deployment.phase: Complete
+      openshift.io/deployment.replicas: "1"
+      openshift.io/deployment.status-reason: config change
+      openshift.io/encoded-deployment-config: |
+        {"kind":"DeploymentConfig","apiVersion":"apps.openshift.io/v1","metadata":{"name":"api-integracion","namespace":"lre-prod","uid":"a28366a6-76cd-4cdc-9292-e5dda78262a3","resourceVersion":"20851893","generation":2,"creationTimestamp":"2023-06-05T15:38:09Z","labels":{"app":"api-integracion","migration.openshift.io/migrated-by-migmigration":"0ccd2f67-7ac7-4be0-a33f-fe509b3b234f","migration.openshift.io/migrated-by-migplan":"650c7753-846f-4da6-a5a7-eff123c536a8","velero.io/backup-name":"migration-e3183-initial-mpd46","velero.io/restore-name":"migration-e3183-final-ltssc"},"annotations":{"openshift.io/backup-registry-hostname":"docker-registry.default.svc:5000","openshift.io/backup-server-version":"1.11","openshift.io/generated-by":"OpenShiftWebConsole","openshift.io/migration-registry":"172.30.95.90:5000","openshift.io/restore-registry-hostname":"image-registry.openshift-image-registry.svc:5000","openshift.io/restore-server-version":"1.23"},"managedFields":[{"manager":"velero-server","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-06-05T15:38:09Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{".":{},"f:openshift.io/backup-registry-hostname":{},"f:openshift.io/backup-server-version":{},"f:openshift.io/generated-by":{},"f:openshift.io/migration-registry":{},"f:openshift.io/restore-registry-hostname":{},"f:openshift.io/restore-server-version":{}},"f:labels":{".":{},"f:app":{},"f:migration.openshift.io/migrated-by-migmigration":{},"f:migration.openshift.io/migrated-by-migplan":{},"f:velero.io/backup-name":{},"f:velero.io/restore-name":{}}},"f:spec":{"f:replicas":{},"f:selector":{".":{},"f:app":{},"f:deploymentconfig":{}},"f:strategy":{"f:activeDeadlineSeconds":{},"f:rollingParams":{".":{},"f:intervalSeconds":{},"f:maxSurge":{},"f:maxUnavailable":{},"f:timeoutSeconds":{},"f:updatePeriodSeconds":{}},"f:type":{}},"f:template":{".":{},"f:metadata":{".":{},"f:annotations":{".":{},"f:openshift.io/generated-by":{}},"f:creationTimestamp":{},"f:labels":{".":{},"f:app":{},"f:deploymentconfig":{}}},"f:spec":{".":{},"f:containers":{".":{},"k:{\"name\":\"api-integracion\"}":{".":{},"f:env":{".":{},"k:{\"name\":\"CorsConfig\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"TZ\"}":{".":{},"f:name":{},"f:value":{}}},"f:image":{},"f:imagePullPolicy":{},"f:name":{},"f:ports":{".":{},"k:{\"containerPort\":8080,\"protocol\":\"TCP\"}":{".":{},"f:containerPort":{},"f:protocol":{}}},"f:resources":{".":{},"f:limits":{".":{},"f:cpu":{},"f:memory":{}},"f:requests":{".":{},"f:cpu":{},"f:memory":{}}},"f:terminationMessagePath":{},"f:terminationMessagePolicy":{}}},"f:dnsPolicy":{},"f:restartPolicy":{},"f:schedulerName":{},"f:securityContext":{},"f:terminationGracePeriodSeconds":{}}}}}},{"manager":"openshift-controller-manager","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-06-05T15:38:10Z","fieldsType":"FieldsV1","fieldsV1":{"f:spec":{"f:triggers":{}}}},{"manager":"openshift-controller-manager","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-06-05T15:38:10Z","fieldsType":"FieldsV1","fieldsV1":{"f:status":{"f:conditions":{".":{},"k:{\"type\":\"Available\"}":{".":{},"f:lastTransitionTime":{},"f:lastUpdateTime":{},"f:message":{},"f:status":{},"f:type":{}}},"f:details":{".":{},"f:causes":{},"f:message":{}},"f:latestVersion":{},"f:observedGeneration":{}}},"subresource":"status"}]},"spec":{"strategy":{"type":"Rolling","rollingParams":{"updatePeriodSeconds":1,"intervalSeconds":1,"timeoutSeconds":600,"maxUnavailable":"25%","maxSurge":"25%"},"resources":{},"activeDeadlineSeconds":21600},"triggers":[{"type":"ConfigChange"},{"type":"ImageChange","imageChangeParams":{"automatic":true,"containerNames":["api-integracion"],"from":{"kind":"ImageStreamTag","namespace":"lre-dev","name":"api-integracion-prod:latest"},"lastTriggeredImage":"image-registry.openshift-image-registry.svc:5000/lre-dev/api-integracion-prod@sha256:84ca7afaa05ef6609f40c296fee20bd7636285031bd28a27e75819a63b299f7e"}}],"replicas":1,"revisionHistoryLimit":10,"test":false,"selector":{"app":"api-integracion","deploymentconfig":"api-integracion"},"template":{"metadata":{"creationTimestamp":null,"labels":{"app":"api-integracion","deploymentconfig":"api-integracion"},"annotations":{"openshift.io/generated-by":"OpenShiftWebConsole"}},"spec":{"containers":[{"name":"api-integracion","image":"image-registry.openshift-image-registry.svc:5000/lre-dev/api-integracion-prod@sha256:84ca7afaa05ef6609f40c296fee20bd7636285031bd28a27e75819a63b299f7e","ports":[{"containerPort":8080,"protocol":"TCP"}],"env":[{"name":"TZ","value":"America/Santiago"},{"name":"CorsConfig","value":"{\"PolicyOrigin\": \"*\"}"}],"resources":{"limits":{"cpu":"100m","memory":"200Mi"},"requests":{"cpu":"10m","memory":"50Mi"}},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File","imagePullPolicy":"Always"}],"restartPolicy":"Always","terminationGracePeriodSeconds":30,"dnsPolicy":"ClusterFirst","securityContext":{},"schedulerName":"default-scheduler"}}},"status":{"latestVersion":1,"observedGeneration":1,"replicas":0,"updatedReplicas":0,"availableReplicas":0,"unavailableReplicas":0,"details":{"message":"config change","causes":[{"type":"ConfigChange"}]},"conditions":[{"type":"Available","status":"False","lastUpdateTime":"2023-06-05T15:38:09Z","lastTransitionTime":"2023-06-05T15:38:09Z","message":"Deployment config does not have minimum availability."}]}}
+    creationTimestamp: "2023-06-05T15:38:10Z"
+    generation: 10
+    labels:
+      app: api-integracion
+      migration.openshift.io/migrated-by-migmigration: 0ccd2f67-7ac7-4be0-a33f-fe509b3b234f
+      migration.openshift.io/migrated-by-migplan: 650c7753-846f-4da6-a5a7-eff123c536a8
+      openshift.io/deployment-config.name: api-integracion
+      velero.io/backup-name: migration-e3183-initial-mpd46
+      velero.io/restore-name: migration-e3183-final-ltssc
+    name: api-integracion-1
+    namespace: lre-prod
+    ownerReferences:
+    - apiVersion: apps.openshift.io/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DeploymentConfig
+      name: api-integracion
+      uid: a28366a6-76cd-4cdc-9292-e5dda78262a3
+    resourceVersion: "472847195"
+    uid: fd6e610d-db3c-4fe1-afaf-a6612e9bc9d5
+  spec:
+    replicas: 1
+    selector:
+      app: api-integracion
+      deployment: api-integracion-1
+      deploymentconfig: api-integracion
+    template:
+      metadata:
+        annotations:
+          openshift.io/deployment-config.latest-version: "1"
+          openshift.io/deployment-config.name: api-integracion
+          openshift.io/deployment.name: api-integracion-1
+          openshift.io/generated-by: OpenShiftWebConsole
+        creationTimestamp: null
+        labels:
+          app: api-integracion
+          deployment: api-integracion-1
+          deploymentconfig: api-integracion
+      spec:
+        containers:
+        - env:
+          - name: TZ
+            value: America/Santiago
+          - name: CorsConfig
+            value: '{"PolicyOrigin": "*"}'
+          image: image-registry.openshift-image-registry.svc:5000/lre-dev/api-integracion-prod@sha256:84ca7afaa05ef6609f40c296fee20bd7636285031bd28a27e75819a63b299f7e
+          imagePullPolicy: Always
+          name: api-integracion
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources:
+            limits:
+              cpu: 100m
+              memory: 200Mi
+            requests:
+              cpu: 10m
+              memory: 50Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    availableReplicas: 1
+    fullyLabeledReplicas: 1
+    observedGeneration: 10
+    readyReplicas: 1
+    replicas: 1
+- apiVersion: v1
+  kind: ReplicationController
+  metadata:
+    annotations:
+      openshift.io/deployer-pod.completed-at: 2023-06-05 15:38:57 +0000 UTC
+      openshift.io/deployer-pod.created-at: 2023-06-05 15:38:09 +0000 UTC
+      openshift.io/deployer-pod.name: lre-1-deploy
+      openshift.io/deployer-pod.started-at: 2023-06-05 15:38:09 +0000 UTC
+      openshift.io/deployment-config.latest-version: "1"
+      openshift.io/deployment-config.name: lre
+      openshift.io/deployment.phase: Complete
+      openshift.io/deployment.replicas: "1"
+      openshift.io/deployment.status-reason: config change
+      openshift.io/encoded-deployment-config: |
+        {"kind":"DeploymentConfig","apiVersion":"apps.openshift.io/v1","metadata":{"name":"lre","namespace":"lre-prod","uid":"68a1efd4-b847-4fef-9b10-7b49d9addf2e","resourceVersion":"20851841","generation":2,"creationTimestamp":"2023-06-05T15:38:09Z","labels":{"app":"lre","migration.openshift.io/migrated-by-migmigration":"0ccd2f67-7ac7-4be0-a33f-fe509b3b234f","migration.openshift.io/migrated-by-migplan":"650c7753-846f-4da6-a5a7-eff123c536a8","velero.io/backup-name":"migration-e3183-initial-mpd46","velero.io/restore-name":"migration-e3183-final-ltssc"},"annotations":{"openshift.io/backup-registry-hostname":"docker-registry.default.svc:5000","openshift.io/backup-server-version":"1.11","openshift.io/generated-by":"OpenShiftWebConsole","openshift.io/migration-registry":"172.30.95.90:5000","openshift.io/restore-registry-hostname":"image-registry.openshift-image-registry.svc:5000","openshift.io/restore-server-version":"1.23"},"managedFields":[{"manager":"openshift-controller-manager","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-06-05T15:38:09Z","fieldsType":"FieldsV1","fieldsV1":{"f:spec":{"f:triggers":{}}}},{"manager":"openshift-controller-manager","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-06-05T15:38:09Z","fieldsType":"FieldsV1","fieldsV1":{"f:status":{"f:details":{".":{},"f:causes":{},"f:message":{}},"f:latestVersion":{}}},"subresource":"status"},{"manager":"velero-server","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-06-05T15:38:09Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{".":{},"f:openshift.io/backup-registry-hostname":{},"f:openshift.io/backup-server-version":{},"f:openshift.io/generated-by":{},"f:openshift.io/migration-registry":{},"f:openshift.io/restore-registry-hostname":{},"f:openshift.io/restore-server-version":{}},"f:labels":{".":{},"f:app":{},"f:migration.openshift.io/migrated-by-migmigration":{},"f:migration.openshift.io/migrated-by-migplan":{},"f:velero.io/backup-name":{},"f:velero.io/restore-name":{}}},"f:spec":{"f:replicas":{},"f:selector":{".":{},"f:deploymentconfig":{}},"f:strategy":{"f:activeDeadlineSeconds":{},"f:rollingParams":{".":{},"f:intervalSeconds":{},"f:maxSurge":{},"f:maxUnavailable":{},"f:timeoutSeconds":{},"f:updatePeriodSeconds":{}},"f:type":{}},"f:template":{".":{},"f:metadata":{".":{},"f:creationTimestamp":{},"f:labels":{".":{},"f:app":{},"f:deploymentconfig":{}}},"f:spec":{".":{},"f:containers":{".":{},"k:{\"name\":\"lre\"}":{".":{},"f:env":{".":{},"k:{\"name\":\"REACT_APP_LRE_SERVICE\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_PDF_INSTRUCCIONES\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_VALIDA_TOKEN\"}":{".":{},"f:name":{},"f:value":{}}},"f:image":{},"f:imagePullPolicy":{},"f:name":{},"f:ports":{".":{},"k:{\"containerPort\":3000,\"protocol\":\"TCP\"}":{".":{},"f:containerPort":{},"f:protocol":{}}},"f:resources":{".":{},"f:limits":{".":{},"f:cpu":{},"f:memory":{}},"f:requests":{".":{},"f:cpu":{},"f:memory":{}}},"f:terminationMessagePath":{},"f:terminationMessagePolicy":{}}},"f:dnsPolicy":{},"f:restartPolicy":{},"f:schedulerName":{},"f:securityContext":{},"f:terminationGracePeriodSeconds":{}}}}}}]},"spec":{"strategy":{"type":"Rolling","rollingParams":{"updatePeriodSeconds":1,"intervalSeconds":1,"timeoutSeconds":600,"maxUnavailable":"25%","maxSurge":"25%"},"resources":{},"activeDeadlineSeconds":21600},"triggers":[{"type":"ImageChange","imageChangeParams":{"automatic":true,"containerNames":["lre"],"from":{"kind":"ImageStreamTag","namespace":"lre-prod","name":"lre:latest"},"lastTriggeredImage":"image-registry.openshift-image-registry.svc:5000/lre-prod/lre@sha256:8ea57d7d658d7bbc9f6d695d9898a2aa9bea3846ec02556676e8b271a27919cb"}},{"type":"ConfigChange"}],"replicas":1,"revisionHistoryLimit":10,"test":false,"selector":{"deploymentconfig":"lre"},"template":{"metadata":{"creationTimestamp":null,"labels":{"app":"lre","deploymentconfig":"lre"}},"spec":{"containers":[{"name":"lre","image":"image-registry.openshift-image-registry.svc:5000/lre-prod/lre@sha256:8ea57d7d658d7bbc9f6d695d9898a2aa9bea3846ec02556676e8b271a27919cb","ports":[{"containerPort":3000,"protocol":"TCP"}],"env":[{"name":"REACT_APP_LRE_SERVICE","value":"https://lre-services.api.dirtrab.cl/fiscalizacion/remuneracion"},{"name":"REACT_APP_VALIDA_TOKEN","value":"https://proxy-sso-portalinstitucional.api.dirtrab.cl/api/Autenticacion/token/validar"},{"name":"REACT_APP_PDF_INSTRUCCIONES","value":"https://static-content-dev.api.dirtrab.cl/dt-docs/lre/lre_instrucciones_de_carga.pdf"}],"resources":{"limits":{"cpu":"50m","memory":"200Mi"},"requests":{"cpu":"10m","memory":"100Mi"}},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File","imagePullPolicy":"Always"}],"restartPolicy":"Always","terminationGracePeriodSeconds":30,"dnsPolicy":"ClusterFirst","securityContext":{},"schedulerName":"default-scheduler"}}},"status":{"latestVersion":1,"observedGeneration":0,"replicas":0,"updatedReplicas":0,"availableReplicas":0,"unavailableReplicas":0,"details":{"message":"config change","causes":[{"type":"ConfigChange"}]}}}
+    creationTimestamp: "2023-06-05T15:38:09Z"
+    generation: 2
+    labels:
+      app: lre
+      migration.openshift.io/migrated-by-migmigration: 0ccd2f67-7ac7-4be0-a33f-fe509b3b234f
+      migration.openshift.io/migrated-by-migplan: 650c7753-846f-4da6-a5a7-eff123c536a8
+      openshift.io/deployment-config.name: lre
+      velero.io/backup-name: migration-e3183-initial-mpd46
+      velero.io/restore-name: migration-e3183-final-ltssc
+    name: lre-1
+    namespace: lre-prod
+    ownerReferences:
+    - apiVersion: apps.openshift.io/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DeploymentConfig
+      name: lre
+      uid: 68a1efd4-b847-4fef-9b10-7b49d9addf2e
+    resourceVersion: "428583514"
+    uid: 002f9d9e-35b4-4292-8782-b836ef4baf21
+  spec:
+    replicas: 1
+    selector:
+      deployment: lre-1
+      deploymentconfig: lre
+    template:
+      metadata:
+        annotations:
+          openshift.io/deployment-config.latest-version: "1"
+          openshift.io/deployment-config.name: lre
+          openshift.io/deployment.name: lre-1
+        creationTimestamp: null
+        labels:
+          app: lre
+          deployment: lre-1
+          deploymentconfig: lre
+      spec:
+        containers:
+        - env:
+          - name: REACT_APP_LRE_SERVICE
+            value: https://lre-services.api.dirtrab.cl/fiscalizacion/remuneracion
+          - name: REACT_APP_VALIDA_TOKEN
+            value: https://proxy-sso-portalinstitucional.api.dirtrab.cl/api/Autenticacion/token/validar
+          - name: REACT_APP_PDF_INSTRUCCIONES
+            value: https://static-content-dev.api.dirtrab.cl/dt-docs/lre/lre_instrucciones_de_carga.pdf
+          image: image-registry.openshift-image-registry.svc:5000/lre-prod/lre@sha256:8ea57d7d658d7bbc9f6d695d9898a2aa9bea3846ec02556676e8b271a27919cb
+          imagePullPolicy: Always
+          name: lre
+          ports:
+          - containerPort: 3000
+            protocol: TCP
+          resources:
+            limits:
+              cpu: 50m
+              memory: 200Mi
+            requests:
+              cpu: 10m
+              memory: 100Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    availableReplicas: 1
+    fullyLabeledReplicas: 1
+    observedGeneration: 2
+    readyReplicas: 1
+    replicas: 1
+- apiVersion: v1
+  kind: ReplicationController
+  metadata:
+    annotations:
+      openshift.io/deployer-pod.completed-at: 2023-06-05 15:38:56 +0000 UTC
+      openshift.io/deployer-pod.created-at: 2023-06-05 15:38:10 +0000 UTC
+      openshift.io/deployer-pod.name: lre-preprd-1-deploy
+      openshift.io/deployment-config.latest-version: "1"
+      openshift.io/deployment-config.name: lre-preprd
+      openshift.io/deployment.phase: Complete
+      openshift.io/deployment.replicas: "1"
+      openshift.io/deployment.status-reason: config change
+      openshift.io/encoded-deployment-config: |
+        {"kind":"DeploymentConfig","apiVersion":"apps.openshift.io/v1","metadata":{"name":"lre-preprd","namespace":"lre-prod","uid":"2a0dc09d-73c9-4c4f-95df-af220d4a8436","resourceVersion":"20851894","generation":2,"creationTimestamp":"2023-06-05T15:38:09Z","labels":{"app":"lre-preprd","migration.openshift.io/migrated-by-migmigration":"0ccd2f67-7ac7-4be0-a33f-fe509b3b234f","migration.openshift.io/migrated-by-migplan":"650c7753-846f-4da6-a5a7-eff123c536a8","velero.io/backup-name":"migration-e3183-initial-mpd46","velero.io/restore-name":"migration-e3183-final-ltssc"},"annotations":{"openshift.io/backup-registry-hostname":"docker-registry.default.svc:5000","openshift.io/backup-server-version":"1.11","openshift.io/generated-by":"OpenShiftWebConsole","openshift.io/migration-registry":"172.30.95.90:5000","openshift.io/restore-registry-hostname":"image-registry.openshift-image-registry.svc:5000","openshift.io/restore-server-version":"1.23"},"managedFields":[{"manager":"velero-server","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-06-05T15:38:09Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{".":{},"f:openshift.io/backup-registry-hostname":{},"f:openshift.io/backup-server-version":{},"f:openshift.io/generated-by":{},"f:openshift.io/migration-registry":{},"f:openshift.io/restore-registry-hostname":{},"f:openshift.io/restore-server-version":{}},"f:labels":{".":{},"f:app":{},"f:migration.openshift.io/migrated-by-migmigration":{},"f:migration.openshift.io/migrated-by-migplan":{},"f:velero.io/backup-name":{},"f:velero.io/restore-name":{}}},"f:spec":{"f:replicas":{},"f:selector":{".":{},"f:app":{},"f:deploymentconfig":{}},"f:strategy":{"f:activeDeadlineSeconds":{},"f:rollingParams":{".":{},"f:intervalSeconds":{},"f:maxSurge":{},"f:maxUnavailable":{},"f:timeoutSeconds":{},"f:updatePeriodSeconds":{}},"f:type":{}},"f:template":{".":{},"f:metadata":{".":{},"f:annotations":{".":{},"f:openshift.io/generated-by":{}},"f:creationTimestamp":{},"f:labels":{".":{},"f:app":{},"f:deploymentconfig":{}}},"f:spec":{".":{},"f:containers":{".":{},"k:{\"name\":\"lre-preprd\"}":{".":{},"f:env":{".":{},"k:{\"name\":\"REACT_APP_LRE_SERVICE\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_PDF_INSTRUCCIONES\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"REACT_APP_VALIDA_TOKEN\"}":{".":{},"f:name":{},"f:value":{}}},"f:image":{},"f:imagePullPolicy":{},"f:name":{},"f:ports":{".":{},"k:{\"containerPort\":8080,\"protocol\":\"TCP\"}":{".":{},"f:containerPort":{},"f:protocol":{}}},"f:resources":{},"f:terminationMessagePath":{},"f:terminationMessagePolicy":{}}},"f:dnsPolicy":{},"f:restartPolicy":{},"f:schedulerName":{},"f:securityContext":{},"f:terminationGracePeriodSeconds":{}}}}}},{"manager":"openshift-controller-manager","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-06-05T15:38:10Z","fieldsType":"FieldsV1","fieldsV1":{"f:spec":{"f:triggers":{}}}},{"manager":"openshift-controller-manager","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-06-05T15:38:10Z","fieldsType":"FieldsV1","fieldsV1":{"f:status":{"f:conditions":{".":{},"k:{\"type\":\"Available\"}":{".":{},"f:lastTransitionTime":{},"f:lastUpdateTime":{},"f:message":{},"f:status":{},"f:type":{}}},"f:details":{".":{},"f:causes":{},"f:message":{}},"f:latestVersion":{},"f:observedGeneration":{}}},"subresource":"status"}]},"spec":{"strategy":{"type":"Rolling","rollingParams":{"updatePeriodSeconds":1,"intervalSeconds":1,"timeoutSeconds":600,"maxUnavailable":"25%","maxSurge":"25%"},"resources":{},"activeDeadlineSeconds":21600},"triggers":[{"type":"ConfigChange"},{"type":"ImageChange","imageChangeParams":{"automatic":true,"containerNames":["lre-preprd"],"from":{"kind":"ImageStreamTag","namespace":"lre-prod","name":"lre:latest"},"lastTriggeredImage":"image-registry.openshift-image-registry.svc:5000/lre-prod/lre@sha256:8ea57d7d658d7bbc9f6d695d9898a2aa9bea3846ec02556676e8b271a27919cb"}}],"replicas":1,"revisionHistoryLimit":10,"test":false,"selector":{"app":"lre-preprd","deploymentconfig":"lre-preprd"},"template":{"metadata":{"creationTimestamp":null,"labels":{"app":"lre-preprd","deploymentconfig":"lre-preprd"},"annotations":{"openshift.io/generated-by":"OpenShiftWebConsole"}},"spec":{"containers":[{"name":"lre-preprd","image":"image-registry.openshift-image-registry.svc:5000/lre-prod/lre@sha256:8ea57d7d658d7bbc9f6d695d9898a2aa9bea3846ec02556676e8b271a27919cb","ports":[{"containerPort":8080,"protocol":"TCP"}],"env":[{"name":"REACT_APP_PDF_INSTRUCCIONES","value":"https://static-content-dev.api.dirtrab.cl/dt-docs/lre/lre_instrucciones_de_carga.pdf"},{"name":"REACT_APP_VALIDA_TOKEN","value":"https://proxy-sso-portalinstitucional.api.dirtrab.cl/api/Autenticacion/token/validar"},{"name":"REACT_APP_LRE_SERVICE","value":"https://lre-services.api.dirtrab.cl/fiscalizacion/remuneracion"}],"resources":{},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File","imagePullPolicy":"Always"}],"restartPolicy":"Always","terminationGracePeriodSeconds":30,"dnsPolicy":"ClusterFirst","securityContext":{},"schedulerName":"default-scheduler"}}},"status":{"latestVersion":1,"observedGeneration":1,"replicas":0,"updatedReplicas":0,"availableReplicas":0,"unavailableReplicas":0,"details":{"message":"config change","causes":[{"type":"ConfigChange"}]},"conditions":[{"type":"Available","status":"False","lastUpdateTime":"2023-06-05T15:38:09Z","lastTransitionTime":"2023-06-05T15:38:09Z","message":"Deployment config does not have minimum availability."}]}}
+    creationTimestamp: "2023-06-05T15:38:10Z"
+    generation: 2
+    labels:
+      app: lre-preprd
+      migration.openshift.io/migrated-by-migmigration: 0ccd2f67-7ac7-4be0-a33f-fe509b3b234f
+      migration.openshift.io/migrated-by-migplan: 650c7753-846f-4da6-a5a7-eff123c536a8
+      openshift.io/deployment-config.name: lre-preprd
+      velero.io/backup-name: migration-e3183-initial-mpd46
+      velero.io/restore-name: migration-e3183-final-ltssc
+    name: lre-preprd-1
+    namespace: lre-prod
+    ownerReferences:
+    - apiVersion: apps.openshift.io/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DeploymentConfig
+      name: lre-preprd
+      uid: 2a0dc09d-73c9-4c4f-95df-af220d4a8436
+    resourceVersion: "428583666"
+    uid: 409ae951-3720-4970-8aa7-db343ea1610f
+  spec:
+    replicas: 1
+    selector:
+      app: lre-preprd
+      deployment: lre-preprd-1
+      deploymentconfig: lre-preprd
+    template:
+      metadata:
+        annotations:
+          openshift.io/deployment-config.latest-version: "1"
+          openshift.io/deployment-config.name: lre-preprd
+          openshift.io/deployment.name: lre-preprd-1
+          openshift.io/generated-by: OpenShiftWebConsole
+        creationTimestamp: null
+        labels:
+          app: lre-preprd
+          deployment: lre-preprd-1
+          deploymentconfig: lre-preprd
+      spec:
+        containers:
+        - env:
+          - name: REACT_APP_PDF_INSTRUCCIONES
+            value: https://static-content-dev.api.dirtrab.cl/dt-docs/lre/lre_instrucciones_de_carga.pdf
+          - name: REACT_APP_VALIDA_TOKEN
+            value: https://proxy-sso-portalinstitucional.api.dirtrab.cl/api/Autenticacion/token/validar
+          - name: REACT_APP_LRE_SERVICE
+            value: https://lre-services.api.dirtrab.cl/fiscalizacion/remuneracion
+          image: image-registry.openshift-image-registry.svc:5000/lre-prod/lre@sha256:8ea57d7d658d7bbc9f6d695d9898a2aa9bea3846ec02556676e8b271a27919cb
+          imagePullPolicy: Always
+          name: lre-preprd
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    availableReplicas: 1
+    fullyLabeledReplicas: 1
+    observedGeneration: 2
+    readyReplicas: 1
+    replicas: 1
+- apiVersion: v1
+  kind: ReplicationController
+  metadata:
+    annotations:
+      openshift.io/deployer-pod.completed-at: 2023-06-06 16:49:30 +0000 UTC
+      openshift.io/deployer-pod.created-at: 2023-06-06 16:49:12 +0000 UTC
+      openshift.io/deployer-pod.name: product-lre-1-deploy
+      openshift.io/deployment-config.latest-version: "1"
+      openshift.io/deployment-config.name: product-lre
+      openshift.io/deployment.phase: Complete
+      openshift.io/deployment.replicas: "2"
+      openshift.io/deployment.status-reason: manual change
+      openshift.io/encoded-deployment-config: |
+        {"kind":"DeploymentConfig","apiVersion":"apps.openshift.io/v1","metadata":{"name":"product-lre","namespace":"lre-prod","uid":"44ff7c1d-5c4d-45d6-9037-3142b3b57a36","resourceVersion":"21760903","generation":2,"creationTimestamp":"2023-06-05T15:38:09Z","labels":{"app":"product-lre","migration.openshift.io/migrated-by-migmigration":"0ccd2f67-7ac7-4be0-a33f-fe509b3b234f","migration.openshift.io/migrated-by-migplan":"650c7753-846f-4da6-a5a7-eff123c536a8","velero.io/backup-name":"migration-e3183-initial-mpd46","velero.io/restore-name":"migration-e3183-final-ltssc"},"annotations":{"openshift.io/backup-registry-hostname":"docker-registry.default.svc:5000","openshift.io/backup-server-version":"1.11","openshift.io/generated-by":"OpenShiftNewApp","openshift.io/migration-registry":"172.30.95.90:5000","openshift.io/restore-registry-hostname":"image-registry.openshift-image-registry.svc:5000","openshift.io/restore-server-version":"1.23"},"managedFields":[{"manager":"openshift-controller-manager","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-06-05T15:38:09Z","fieldsType":"FieldsV1","fieldsV1":{"f:status":{"f:conditions":{".":{},"k:{\"type\":\"Available\"}":{".":{},"f:lastTransitionTime":{},"f:lastUpdateTime":{},"f:message":{},"f:status":{},"f:type":{}}},"f:observedGeneration":{}}},"subresource":"status"},{"manager":"velero-server","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-06-05T15:38:09Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{".":{},"f:openshift.io/backup-registry-hostname":{},"f:openshift.io/backup-server-version":{},"f:openshift.io/generated-by":{},"f:openshift.io/migration-registry":{},"f:openshift.io/restore-registry-hostname":{},"f:openshift.io/restore-server-version":{}},"f:labels":{".":{},"f:app":{},"f:migration.openshift.io/migrated-by-migmigration":{},"f:migration.openshift.io/migrated-by-migplan":{},"f:velero.io/backup-name":{},"f:velero.io/restore-name":{}}},"f:spec":{"f:replicas":{},"f:revisionHistoryLimit":{},"f:selector":{".":{},"f:app":{},"f:deploymentconfig":{}},"f:strategy":{"f:activeDeadlineSeconds":{},"f:rollingParams":{".":{},"f:intervalSeconds":{},"f:maxSurge":{},"f:maxUnavailable":{},"f:timeoutSeconds":{},"f:updatePeriodSeconds":{}},"f:type":{}},"f:template":{".":{},"f:metadata":{".":{},"f:annotations":{".":{},"f:openshift.io/generated-by":{}},"f:creationTimestamp":{},"f:labels":{".":{},"f:app":{},"f:deploymentconfig":{}}},"f:spec":{".":{},"f:containers":{".":{},"k:{\"name\":\"product-lre\"}":{".":{},"f:env":{".":{},"k:{\"name\":\"TZ\"}":{".":{},"f:name":{},"f:value":{}}},"f:image":{},"f:imagePullPolicy":{},"f:name":{},"f:ports":{".":{},"k:{\"containerPort\":8080,\"protocol\":\"TCP\"}":{".":{},"f:containerPort":{},"f:protocol":{}}},"f:resources":{".":{},"f:limits":{".":{},"f:cpu":{},"f:memory":{}},"f:requests":{".":{},"f:cpu":{},"f:memory":{}}},"f:terminationMessagePath":{},"f:terminationMessagePolicy":{}}},"f:dnsPolicy":{},"f:restartPolicy":{},"f:schedulerName":{},"f:securityContext":{},"f:terminationGracePeriodSeconds":{}}},"f:triggers":{}}}}]},"spec":{"strategy":{"type":"Rolling","rollingParams":{"updatePeriodSeconds":1,"intervalSeconds":1,"timeoutSeconds":600,"maxUnavailable":"25%","maxSurge":"25%"},"resources":{},"activeDeadlineSeconds":21600},"triggers":[{"type":"ImageChange","imageChangeParams":{"containerNames":["product-lre"],"from":{"kind":"ImageStreamTag","namespace":"lre-prod","name":"product-lre:latest"},"lastTriggeredImage":"image-registry.openshift-image-registry.svc:5000/lre-prod/product-lre@sha256:7b370bfa5c20841fe568fc38984fab08b26cccc8283b45cc215a814863f82a6a"}}],"replicas":2,"revisionHistoryLimit":10,"test":false,"selector":{"app":"product-lre","deploymentconfig":"product-lre"},"template":{"metadata":{"creationTimestamp":null,"labels":{"app":"product-lre","deploymentconfig":"product-lre"},"annotations":{"openshift.io/generated-by":"OpenShiftNewApp"}},"spec":{"containers":[{"name":"product-lre","image":"image-registry.openshift-image-registry.svc:5000/lre-prod/product-lre@sha256:7b370bfa5c20841fe568fc38984fab08b26cccc8283b45cc215a814863f82a6a","ports":[{"containerPort":8080,"protocol":"TCP"}],"env":[{"name":"TZ","value":"America/Santiago"}],"resources":{"limits":{"cpu":"50m","memory":"120Mi"},"requests":{"cpu":"10m","memory":"40Mi"}},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File","imagePullPolicy":"Always"}],"restartPolicy":"Always","terminationGracePeriodSeconds":30,"dnsPolicy":"ClusterFirst","securityContext":{},"schedulerName":"default-scheduler"}}},"status":{"latestVersion":1,"observedGeneration":1,"replicas":0,"updatedReplicas":0,"availableReplicas":0,"unavailableReplicas":0,"details":{"message":"manual change","causes":[{"type":"Manual"}]},"conditions":[{"type":"Available","status":"False","lastUpdateTime":"2023-06-05T15:38:09Z","lastTransitionTime":"2023-06-05T15:38:09Z","message":"Deployment config does not have minimum availability."}]}}
+    creationTimestamp: "2023-06-06T16:49:12Z"
+    generation: 10
+    labels:
+      app: product-lre
+      migration.openshift.io/migrated-by-migmigration: 0ccd2f67-7ac7-4be0-a33f-fe509b3b234f
+      migration.openshift.io/migrated-by-migplan: 650c7753-846f-4da6-a5a7-eff123c536a8
+      openshift.io/deployment-config.name: product-lre
+      velero.io/backup-name: migration-e3183-initial-mpd46
+      velero.io/restore-name: migration-e3183-final-ltssc
+    name: product-lre-1
+    namespace: lre-prod
+    ownerReferences:
+    - apiVersion: apps.openshift.io/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DeploymentConfig
+      name: product-lre
+      uid: 44ff7c1d-5c4d-45d6-9037-3142b3b57a36
+    resourceVersion: "472847167"
+    uid: 870f4cd7-f82d-4170-a953-d05dd4ed569e
+  spec:
+    replicas: 2
+    selector:
+      app: product-lre
+      deployment: product-lre-1
+      deploymentconfig: product-lre
+    template:
+      metadata:
+        annotations:
+          openshift.io/deployment-config.latest-version: "1"
+          openshift.io/deployment-config.name: product-lre
+          openshift.io/deployment.name: product-lre-1
+          openshift.io/generated-by: OpenShiftNewApp
+        creationTimestamp: null
+        labels:
+          app: product-lre
+          deployment: product-lre-1
+          deploymentconfig: product-lre
+      spec:
+        containers:
+        - env:
+          - name: TZ
+            value: America/Santiago
+          image: image-registry.openshift-image-registry.svc:5000/lre-prod/product-lre@sha256:7b370bfa5c20841fe568fc38984fab08b26cccc8283b45cc215a814863f82a6a
+          imagePullPolicy: Always
+          name: product-lre
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources:
+            limits:
+              cpu: 50m
+              memory: 120Mi
+            requests:
+              cpu: 10m
+              memory: 40Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    availableReplicas: 2
+    fullyLabeledReplicas: 2
+    observedGeneration: 10
+    readyReplicas: 2
+    replicas: 2
+- apiVersion: v1
+  kind: ReplicationController
+  metadata:
+    annotations:
+      openshift.io/deployer-pod.completed-at: 2023-06-06 16:50:07 +0000 UTC
+      openshift.io/deployer-pod.created-at: 2023-06-06 16:49:51 +0000 UTC
+      openshift.io/deployer-pod.name: product-lre-preprd-1-deploy
+      openshift.io/deployment-config.latest-version: "1"
+      openshift.io/deployment-config.name: product-lre-preprd
+      openshift.io/deployment.phase: Complete
+      openshift.io/deployment.replicas: "1"
+      openshift.io/deployment.status-reason: manual change
+      openshift.io/encoded-deployment-config: |
+        {"kind":"DeploymentConfig","apiVersion":"apps.openshift.io/v1","metadata":{"name":"product-lre-preprd","namespace":"lre-prod","uid":"7d06a5d8-8a08-40b8-90cd-c26d041d17ca","resourceVersion":"21761331","generation":2,"creationTimestamp":"2023-06-05T15:38:09Z","labels":{"app":"product-lre-preprd","migration.openshift.io/migrated-by-migmigration":"0ccd2f67-7ac7-4be0-a33f-fe509b3b234f","migration.openshift.io/migrated-by-migplan":"650c7753-846f-4da6-a5a7-eff123c536a8","velero.io/backup-name":"migration-e3183-initial-mpd46","velero.io/restore-name":"migration-e3183-final-ltssc"},"annotations":{"openshift.io/backup-registry-hostname":"docker-registry.default.svc:5000","openshift.io/backup-server-version":"1.11","openshift.io/generated-by":"OpenShiftNewApp","openshift.io/migration-registry":"172.30.95.90:5000","openshift.io/restore-registry-hostname":"image-registry.openshift-image-registry.svc:5000","openshift.io/restore-server-version":"1.23"},"managedFields":[{"manager":"openshift-controller-manager","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-06-05T15:38:09Z","fieldsType":"FieldsV1","fieldsV1":{"f:status":{"f:conditions":{".":{},"k:{\"type\":\"Available\"}":{".":{},"f:lastTransitionTime":{},"f:lastUpdateTime":{},"f:message":{},"f:status":{},"f:type":{}}},"f:observedGeneration":{}}},"subresource":"status"},{"manager":"velero-server","operation":"Update","apiVersion":"apps.openshift.io/v1","time":"2023-06-05T15:38:09Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{".":{},"f:openshift.io/backup-registry-hostname":{},"f:openshift.io/backup-server-version":{},"f:openshift.io/generated-by":{},"f:openshift.io/migration-registry":{},"f:openshift.io/restore-registry-hostname":{},"f:openshift.io/restore-server-version":{}},"f:labels":{".":{},"f:app":{},"f:migration.openshift.io/migrated-by-migmigration":{},"f:migration.openshift.io/migrated-by-migplan":{},"f:velero.io/backup-name":{},"f:velero.io/restore-name":{}}},"f:spec":{"f:replicas":{},"f:revisionHistoryLimit":{},"f:selector":{".":{},"f:app":{},"f:deploymentconfig":{}},"f:strategy":{"f:activeDeadlineSeconds":{},"f:rollingParams":{".":{},"f:intervalSeconds":{},"f:maxSurge":{},"f:maxUnavailable":{},"f:timeoutSeconds":{},"f:updatePeriodSeconds":{}},"f:type":{}},"f:template":{".":{},"f:metadata":{".":{},"f:annotations":{".":{},"f:openshift.io/generated-by":{}},"f:creationTimestamp":{},"f:labels":{".":{},"f:app":{},"f:deploymentconfig":{}}},"f:spec":{".":{},"f:containers":{".":{},"k:{\"name\":\"product-lre-preprd\"}":{".":{},"f:image":{},"f:imagePullPolicy":{},"f:name":{},"f:ports":{".":{},"k:{\"containerPort\":8080,\"protocol\":\"TCP\"}":{".":{},"f:containerPort":{},"f:protocol":{}}},"f:resources":{".":{},"f:limits":{".":{},"f:cpu":{},"f:memory":{}},"f:requests":{".":{},"f:cpu":{},"f:memory":{}}},"f:terminationMessagePath":{},"f:terminationMessagePolicy":{}}},"f:dnsPolicy":{},"f:restartPolicy":{},"f:schedulerName":{},"f:securityContext":{},"f:terminationGracePeriodSeconds":{}}},"f:triggers":{}}}}]},"spec":{"strategy":{"type":"Rolling","rollingParams":{"updatePeriodSeconds":1,"intervalSeconds":1,"timeoutSeconds":600,"maxUnavailable":"25%","maxSurge":"25%"},"resources":{},"activeDeadlineSeconds":21600},"triggers":[{"type":"ImageChange","imageChangeParams":{"containerNames":["product-lre-preprd"],"from":{"kind":"ImageStreamTag","namespace":"lre-prod","name":"product-lre-preprd:latest"},"lastTriggeredImage":"image-registry.openshift-image-registry.svc:5000/lre-prod/product-lre-preprd@sha256:32bd3300e190955919234c0f42a0f318ef9bdcb8e77dc7ed06a65b292b1dba0a"}}],"replicas":1,"revisionHistoryLimit":10,"test":false,"selector":{"app":"product-lre-preprd","deploymentconfig":"product-lre-preprd"},"template":{"metadata":{"creationTimestamp":null,"labels":{"app":"product-lre-preprd","deploymentconfig":"product-lre-preprd"},"annotations":{"openshift.io/generated-by":"OpenShiftNewApp"}},"spec":{"containers":[{"name":"product-lre-preprd","image":"image-registry.openshift-image-registry.svc:5000/lre-prod/product-lre-preprd@sha256:32bd3300e190955919234c0f42a0f318ef9bdcb8e77dc7ed06a65b292b1dba0a","ports":[{"containerPort":8080,"protocol":"TCP"}],"resources":{"limits":{"cpu":"120m","memory":"200Mi"},"requests":{"cpu":"20m","memory":"100Mi"}},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File","imagePullPolicy":"Always"}],"restartPolicy":"Always","terminationGracePeriodSeconds":30,"dnsPolicy":"ClusterFirst","securityContext":{},"schedulerName":"default-scheduler"}}},"status":{"latestVersion":1,"observedGeneration":1,"replicas":0,"updatedReplicas":0,"availableReplicas":0,"unavailableReplicas":0,"details":{"message":"manual change","causes":[{"type":"Manual"}]},"conditions":[{"type":"Available","status":"False","lastUpdateTime":"2023-06-05T15:38:09Z","lastTransitionTime":"2023-06-05T15:38:09Z","message":"Deployment config does not have minimum availability."}]}}
+    creationTimestamp: "2023-06-06T16:49:51Z"
+    generation: 2
+    labels:
+      app: product-lre-preprd
+      migration.openshift.io/migrated-by-migmigration: 0ccd2f67-7ac7-4be0-a33f-fe509b3b234f
+      migration.openshift.io/migrated-by-migplan: 650c7753-846f-4da6-a5a7-eff123c536a8
+      openshift.io/deployment-config.name: product-lre-preprd
+      velero.io/backup-name: migration-e3183-initial-mpd46
+      velero.io/restore-name: migration-e3183-final-ltssc
+    name: product-lre-preprd-1
+    namespace: lre-prod
+    ownerReferences:
+    - apiVersion: apps.openshift.io/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DeploymentConfig
+      name: product-lre-preprd
+      uid: 7d06a5d8-8a08-40b8-90cd-c26d041d17ca
+    resourceVersion: "380476266"
+    uid: 9e4a69f7-23b8-4d20-b21c-3c0d0bc16aa5
+  spec:
+    replicas: 1
+    selector:
+      app: product-lre-preprd
+      deployment: product-lre-preprd-1
+      deploymentconfig: product-lre-preprd
+    template:
+      metadata:
+        annotations:
+          openshift.io/deployment-config.latest-version: "1"
+          openshift.io/deployment-config.name: product-lre-preprd
+          openshift.io/deployment.name: product-lre-preprd-1
+          openshift.io/generated-by: OpenShiftNewApp
+        creationTimestamp: null
+        labels:
+          app: product-lre-preprd
+          deployment: product-lre-preprd-1
+          deploymentconfig: product-lre-preprd
+      spec:
+        containers:
+        - image: image-registry.openshift-image-registry.svc:5000/lre-prod/product-lre-preprd@sha256:32bd3300e190955919234c0f42a0f318ef9bdcb8e77dc7ed06a65b292b1dba0a
+          imagePullPolicy: Always
+          name: product-lre-preprd
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources:
+            limits:
+              cpu: 120m
+              memory: 200Mi
+            requests:
+              cpu: 20m
+              memory: 100Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    availableReplicas: 1
+    fullyLabeledReplicas: 1
+    observedGeneration: 2
+    readyReplicas: 1
+    replicas: 1
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

@@ -1,0 +1,1795 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      description: Provides a service for accessing the application over HTTPS or
+        Hot Rod protocol.
+      openshift.io/generated-by: OpenShiftNewApp
+      service.alpha.openshift.io/serving-cert-secret-name: service-certs
+      service.alpha.openshift.io/serving-cert-signed-by: openshift-service-serving-signer@1683236429
+      service.beta.openshift.io/serving-cert-signed-by: openshift-service-serving-signer@1683236429
+    creationTimestamp: "2023-05-24T19:12:02Z"
+    labels:
+      app: cache-service
+      application: cache-service
+      migration.openshift.io/migrated-by-migmigration: fb6d415b-403f-4870-9be1-ea5c70a277b4
+      migration.openshift.io/migrated-by-migplan: 939c18ea-060c-41cf-8cf0-870f4b31a246
+      template: cache-service
+      velero.io/backup-name: migration-2aa62-initial-wp7t9
+      velero.io/restore-name: migration-2aa62-final-cd6m2
+    name: cache-service
+    namespace: api-fiscalizacion-prod
+    resourceVersion: "10764542"
+    uid: e41803b7-cf8e-48b8-957b-530860c23b29
+  spec:
+    clusterIP: 172.30.176.190
+    clusterIPs:
+    - 172.30.176.190
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: hotrod
+      port: 11222
+      protocol: TCP
+      targetPort: 11222
+    - name: https
+      port: 8443
+      protocol: TCP
+      targetPort: 8443
+    selector:
+      deploymentConfig: cache-service
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      description: Provides a ping service for clustered applications.
+      openshift.io/generated-by: OpenShiftNewApp
+      service.alpha.kubernetes.io/tolerate-unready-endpoints: "true"
+    creationTimestamp: "2023-05-24T19:12:02Z"
+    labels:
+      app: cache-service
+      application: cache-service
+      migration.openshift.io/migrated-by-migmigration: fb6d415b-403f-4870-9be1-ea5c70a277b4
+      migration.openshift.io/migrated-by-migplan: 939c18ea-060c-41cf-8cf0-870f4b31a246
+      template: cache-service
+      velero.io/backup-name: migration-2aa62-initial-wp7t9
+      velero.io/restore-name: migration-2aa62-final-cd6m2
+    name: cache-service-ping
+    namespace: api-fiscalizacion-prod
+    resourceVersion: "10764521"
+    uid: 426e59e8-aba1-4f00-a02d-882c35fde92d
+  spec:
+    clusterIP: None
+    clusterIPs:
+    - None
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: ping
+      port: 8888
+      protocol: TCP
+      targetPort: 8888
+    selector:
+      deploymentConfig: cache-service
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftWebConsole
+    creationTimestamp: "2023-05-24T19:12:02Z"
+    labels:
+      app: cron0001-notificacionrec
+      migration.openshift.io/migrated-by-migmigration: fb6d415b-403f-4870-9be1-ea5c70a277b4
+      migration.openshift.io/migrated-by-migplan: 939c18ea-060c-41cf-8cf0-870f4b31a246
+      velero.io/backup-name: migration-2aa62-initial-wp7t9
+      velero.io/restore-name: migration-2aa62-final-cd6m2
+    name: cron0001-notificacionrec
+    namespace: api-fiscalizacion-prod
+    resourceVersion: "10764531"
+    uid: e159084b-3d13-4387-a53b-7b9edb2f7a7f
+  spec:
+    clusterIP: 172.30.200.107
+    clusterIPs:
+    - 172.30.200.107
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: 8080-tcp
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    - name: 8443-tcp
+      port: 8443
+      protocol: TCP
+      targetPort: 8443
+    - name: 8778-tcp
+      port: 8778
+      protocol: TCP
+      targetPort: 8778
+    selector:
+      deploymentconfig: cron0001-notificacionrec
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: "2023-05-24T19:12:02Z"
+    labels:
+      app: cron0005-cargarutdatagrid
+      migration.openshift.io/migrated-by-migmigration: fb6d415b-403f-4870-9be1-ea5c70a277b4
+      migration.openshift.io/migrated-by-migplan: 939c18ea-060c-41cf-8cf0-870f4b31a246
+      velero.io/backup-name: migration-2aa62-initial-wp7t9
+      velero.io/restore-name: migration-2aa62-final-cd6m2
+    name: cron0005-cargarutdatagrid
+    namespace: api-fiscalizacion-prod
+    resourceVersion: "10764534"
+    uid: 872215a8-03f4-4194-b700-fb694c41e9d7
+  spec:
+    clusterIP: 172.30.92.115
+    clusterIPs:
+    - 172.30.92.115
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: 8080-tcp
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    - name: 8443-tcp
+      port: 8443
+      protocol: TCP
+      targetPort: 8443
+    - name: 8778-tcp
+      port: 8778
+      protocol: TCP
+      targetPort: 8778
+    selector:
+      app: cron0005-cargarutdatagrid
+      deploymentconfig: cron0005-cargarutdatagrid
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftWebConsole
+    creationTimestamp: "2023-05-24T19:12:02Z"
+    labels:
+      app: cron003-enviospendientes
+      migration.openshift.io/migrated-by-migmigration: fb6d415b-403f-4870-9be1-ea5c70a277b4
+      migration.openshift.io/migrated-by-migplan: 939c18ea-060c-41cf-8cf0-870f4b31a246
+      velero.io/backup-name: migration-2aa62-initial-wp7t9
+      velero.io/restore-name: migration-2aa62-final-cd6m2
+    name: cron003-enviospendientes
+    namespace: api-fiscalizacion-prod
+    resourceVersion: "10764537"
+    uid: a97cbb1b-066e-4def-be22-79acfb55e863
+  spec:
+    clusterIP: 172.30.142.129
+    clusterIPs:
+    - 172.30.142.129
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: 8080-tcp
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    selector:
+      deploymentconfig: cron003-enviospendientes
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftWebConsole
+    creationTimestamp: "2023-05-24T19:12:02Z"
+    labels:
+      app: cron004-actestfinalizado
+      migration.openshift.io/migrated-by-migmigration: fb6d415b-403f-4870-9be1-ea5c70a277b4
+      migration.openshift.io/migrated-by-migplan: 939c18ea-060c-41cf-8cf0-870f4b31a246
+      velero.io/backup-name: migration-2aa62-initial-wp7t9
+      velero.io/restore-name: migration-2aa62-final-cd6m2
+    name: cron004-actestfinalizado
+    namespace: api-fiscalizacion-prod
+    resourceVersion: "10764545"
+    uid: d231612d-dde1-481a-b7ad-40723e8ac39c
+  spec:
+    clusterIP: 172.30.203.53
+    clusterIPs:
+    - 172.30.203.53
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: 8080-tcp
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    selector:
+      deploymentconfig: cron004-actestfinalizado
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftWebConsole
+    creationTimestamp: "2023-05-24T19:12:03Z"
+    labels:
+      app: csr0001-validacionesfond
+      migration.openshift.io/migrated-by-migmigration: fb6d415b-403f-4870-9be1-ea5c70a277b4
+      migration.openshift.io/migrated-by-migplan: 939c18ea-060c-41cf-8cf0-870f4b31a246
+      velero.io/backup-name: migration-2aa62-initial-wp7t9
+      velero.io/restore-name: migration-2aa62-final-cd6m2
+    name: csr0001-validacionesfond
+    namespace: api-fiscalizacion-prod
+    resourceVersion: "10764550"
+    uid: 5e2151dc-763e-4539-8139-f2f8275fdeea
+  spec:
+    clusterIP: 172.30.183.168
+    clusterIPs:
+    - 172.30.183.168
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: 8080-tcp
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    - name: 8443-tcp
+      port: 8443
+      protocol: TCP
+      targetPort: 8443
+    - name: 8778-tcp
+      port: 8778
+      protocol: TCP
+      targetPort: 8778
+    selector:
+      deploymentconfig: csr0001-validacionesfond
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: "2023-05-24T19:12:03Z"
+    labels:
+      app: csr0001-validacionesfondo-v2
+      migration.openshift.io/migrated-by-migmigration: fb6d415b-403f-4870-9be1-ea5c70a277b4
+      migration.openshift.io/migrated-by-migplan: 939c18ea-060c-41cf-8cf0-870f4b31a246
+      velero.io/backup-name: migration-2aa62-initial-wp7t9
+      velero.io/restore-name: migration-2aa62-final-cd6m2
+    name: csr0001-validacionesfondo-v2
+    namespace: api-fiscalizacion-prod
+    resourceVersion: "10764553"
+    uid: 4de9147a-9ac3-4acc-a603-83dfea71c34a
+  spec:
+    clusterIP: 172.30.13.120
+    clusterIPs:
+    - 172.30.13.120
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: 8080-tcp
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    - name: 8443-tcp
+      port: 8443
+      protocol: TCP
+      targetPort: 8443
+    - name: 8778-tcp
+      port: 8778
+      protocol: TCP
+      targetPort: 8778
+    selector:
+      app: csr0001-validacionesfondo-v2
+      deploymentconfig: csr0001-validacionesfondo-v2
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: "2023-05-24T19:12:03Z"
+    labels:
+      app: csr0001-validacionesfondoextra
+      migration.openshift.io/migrated-by-migmigration: fb6d415b-403f-4870-9be1-ea5c70a277b4
+      migration.openshift.io/migrated-by-migplan: 939c18ea-060c-41cf-8cf0-870f4b31a246
+      velero.io/backup-name: migration-2aa62-initial-wp7t9
+      velero.io/restore-name: migration-2aa62-final-cd6m2
+    name: csr0001-validacionesfondoextra
+    namespace: api-fiscalizacion-prod
+    resourceVersion: "10764558"
+    uid: e429b666-e6ac-462e-a787-fcbb527f4627
+  spec:
+    clusterIP: 172.30.233.54
+    clusterIPs:
+    - 172.30.233.54
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: 8080-tcp
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    - name: 8443-tcp
+      port: 8443
+      protocol: TCP
+      targetPort: 8443
+    - name: 8778-tcp
+      port: 8778
+      protocol: TCP
+      targetPort: 8778
+    selector:
+      app: csr0001-validacionesfondoextra
+      deploymentconfig: csr0001-validacionesfondoextra
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: "2023-05-24T19:12:03Z"
+    labels:
+      app: csr0001-validacionesfondolarge
+      migration.openshift.io/migrated-by-migmigration: fb6d415b-403f-4870-9be1-ea5c70a277b4
+      migration.openshift.io/migrated-by-migplan: 939c18ea-060c-41cf-8cf0-870f4b31a246
+      velero.io/backup-name: migration-2aa62-initial-wp7t9
+      velero.io/restore-name: migration-2aa62-final-cd6m2
+    name: csr0001-validacionesfondolarge
+    namespace: api-fiscalizacion-prod
+    resourceVersion: "10764564"
+    uid: b605637b-7fd7-4f4b-a6e2-90618cfc6b95
+  spec:
+    clusterIP: 172.30.203.25
+    clusterIPs:
+    - 172.30.203.25
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: 8080-tcp
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    - name: 8443-tcp
+      port: 8443
+      protocol: TCP
+      targetPort: 8443
+    - name: 8778-tcp
+      port: 8778
+      protocol: TCP
+      targetPort: 8778
+    selector:
+      app: csr0001-validacionesfondolarge
+      deploymentconfig: csr0001-validacionesfondolarge
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: "2023-05-24T19:12:03Z"
+    labels:
+      app: csr0001-validacionesfondomedium
+      migration.openshift.io/migrated-by-migmigration: fb6d415b-403f-4870-9be1-ea5c70a277b4
+      migration.openshift.io/migrated-by-migplan: 939c18ea-060c-41cf-8cf0-870f4b31a246
+      velero.io/backup-name: migration-2aa62-initial-wp7t9
+      velero.io/restore-name: migration-2aa62-final-cd6m2
+    name: csr0001-validacionesfondomedium
+    namespace: api-fiscalizacion-prod
+    resourceVersion: "10764568"
+    uid: e9caf070-34e3-450e-b9e6-d51e4d496663
+  spec:
+    clusterIP: 172.30.141.11
+    clusterIPs:
+    - 172.30.141.11
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: 8080-tcp
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    - name: 8443-tcp
+      port: 8443
+      protocol: TCP
+      targetPort: 8443
+    - name: 8778-tcp
+      port: 8778
+      protocol: TCP
+      targetPort: 8778
+    selector:
+      app: csr0001-validacionesfondomedium
+      deploymentconfig: csr0001-validacionesfondomedium
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: "2023-05-24T19:12:03Z"
+    labels:
+      app: csr0001-validacionesfondosmall
+      migration.openshift.io/migrated-by-migmigration: fb6d415b-403f-4870-9be1-ea5c70a277b4
+      migration.openshift.io/migrated-by-migplan: 939c18ea-060c-41cf-8cf0-870f4b31a246
+      velero.io/backup-name: migration-2aa62-initial-wp7t9
+      velero.io/restore-name: migration-2aa62-final-cd6m2
+    name: csr0001-validacionesfondosmall
+    namespace: api-fiscalizacion-prod
+    resourceVersion: "10764572"
+    uid: b4dde871-d9ea-4291-820e-87f5d0f1f2fc
+  spec:
+    clusterIP: 172.30.246.137
+    clusterIPs:
+    - 172.30.246.137
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: 8080-tcp
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    - name: 8443-tcp
+      port: 8443
+      protocol: TCP
+      targetPort: 8443
+    - name: 8778-tcp
+      port: 8778
+      protocol: TCP
+      targetPort: 8778
+    selector:
+      app: csr0001-validacionesfondosmall
+      deploymentconfig: csr0001-validacionesfondosmall
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: "2023-05-24T19:12:03Z"
+    labels:
+      app: csr0001-validacionesfondosmalltmp
+      migration.openshift.io/migrated-by-migmigration: fb6d415b-403f-4870-9be1-ea5c70a277b4
+      migration.openshift.io/migrated-by-migplan: 939c18ea-060c-41cf-8cf0-870f4b31a246
+      velero.io/backup-name: migration-2aa62-initial-wp7t9
+      velero.io/restore-name: migration-2aa62-final-cd6m2
+    name: csr0001-validacionesfondosmalltmp
+    namespace: api-fiscalizacion-prod
+    resourceVersion: "10764575"
+    uid: 14adb80a-2dea-4bd1-828a-fad9fa6d5b0f
+  spec:
+    clusterIP: 172.30.153.26
+    clusterIPs:
+    - 172.30.153.26
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: 8080-tcp
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    - name: 8443-tcp
+      port: 8443
+      protocol: TCP
+      targetPort: 8443
+    - name: 8778-tcp
+      port: 8778
+      protocol: TCP
+      targetPort: 8778
+    selector:
+      app: csr0001-validacionesfondosmalltmp
+      deploymentconfig: csr0001-validacionesfondosmalltmp
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftWebConsole
+    creationTimestamp: "2023-05-24T19:12:03Z"
+    labels:
+      app: csr0002-cargaarchivodecl
+      migration.openshift.io/migrated-by-migmigration: fb6d415b-403f-4870-9be1-ea5c70a277b4
+      migration.openshift.io/migrated-by-migplan: 939c18ea-060c-41cf-8cf0-870f4b31a246
+      velero.io/backup-name: migration-2aa62-initial-wp7t9
+      velero.io/restore-name: migration-2aa62-final-cd6m2
+    name: csr0002-cargaarchivodecl
+    namespace: api-fiscalizacion-prod
+    resourceVersion: "10764582"
+    uid: 6bd08f3f-0b66-4751-a0c5-ad1550b9af7a
+  spec:
+    clusterIP: 172.30.44.25
+    clusterIPs:
+    - 172.30.44.25
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: 8080-tcp
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    - name: 8443-tcp
+      port: 8443
+      protocol: TCP
+      targetPort: 8443
+    - name: 8778-tcp
+      port: 8778
+      protocol: TCP
+      targetPort: 8778
+    selector:
+      deploymentconfig: csr0002-cargaarchivodecl
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: "2023-05-24T19:12:03Z"
+    labels:
+      app: csr0002-cargaarchivoextra
+      migration.openshift.io/migrated-by-migmigration: fb6d415b-403f-4870-9be1-ea5c70a277b4
+      migration.openshift.io/migrated-by-migplan: 939c18ea-060c-41cf-8cf0-870f4b31a246
+      velero.io/backup-name: migration-2aa62-initial-wp7t9
+      velero.io/restore-name: migration-2aa62-final-cd6m2
+    name: csr0002-cargaarchivoextra
+    namespace: api-fiscalizacion-prod
+    resourceVersion: "10764587"
+    uid: 6356140b-85cd-4c1b-ab45-3c05b4f9b117
+  spec:
+    clusterIP: 172.30.8.1
+    clusterIPs:
+    - 172.30.8.1
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: 8080-tcp
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    - name: 8443-tcp
+      port: 8443
+      protocol: TCP
+      targetPort: 8443
+    - name: 8778-tcp
+      port: 8778
+      protocol: TCP
+      targetPort: 8778
+    selector:
+      app: csr0002-cargaarchivoextra
+      deploymentconfig: csr0002-cargaarchivoextra
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: "2023-05-24T19:12:03Z"
+    labels:
+      app: csr0002-cargaarchivolarge
+      migration.openshift.io/migrated-by-migmigration: fb6d415b-403f-4870-9be1-ea5c70a277b4
+      migration.openshift.io/migrated-by-migplan: 939c18ea-060c-41cf-8cf0-870f4b31a246
+      velero.io/backup-name: migration-2aa62-initial-wp7t9
+      velero.io/restore-name: migration-2aa62-final-cd6m2
+    name: csr0002-cargaarchivolarge
+    namespace: api-fiscalizacion-prod
+    resourceVersion: "10764591"
+    uid: f68212f3-d6b3-43e5-9910-6fbbf8f82c95
+  spec:
+    clusterIP: 172.30.242.137
+    clusterIPs:
+    - 172.30.242.137
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: 8080-tcp
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    - name: 8443-tcp
+      port: 8443
+      protocol: TCP
+      targetPort: 8443
+    - name: 8778-tcp
+      port: 8778
+      protocol: TCP
+      targetPort: 8778
+    selector:
+      app: csr0002-cargaarchivolarge
+      deploymentconfig: csr0002-cargaarchivolarge
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: "2023-05-24T19:12:03Z"
+    labels:
+      app: csr0002-cargaarchivomedium
+      migration.openshift.io/migrated-by-migmigration: fb6d415b-403f-4870-9be1-ea5c70a277b4
+      migration.openshift.io/migrated-by-migplan: 939c18ea-060c-41cf-8cf0-870f4b31a246
+      velero.io/backup-name: migration-2aa62-initial-wp7t9
+      velero.io/restore-name: migration-2aa62-final-cd6m2
+    name: csr0002-cargaarchivomedium
+    namespace: api-fiscalizacion-prod
+    resourceVersion: "10764595"
+    uid: 4871e971-091b-4d81-9d63-fd4c9020e320
+  spec:
+    clusterIP: 172.30.224.45
+    clusterIPs:
+    - 172.30.224.45
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: 8080-tcp
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    - name: 8443-tcp
+      port: 8443
+      protocol: TCP
+      targetPort: 8443
+    - name: 8778-tcp
+      port: 8778
+      protocol: TCP
+      targetPort: 8778
+    selector:
+      app: csr0002-cargaarchivomedium
+      deploymentconfig: csr0002-cargaarchivomedium
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: "2023-05-24T19:12:03Z"
+    labels:
+      app: csr0002-cargaarchivosmall
+      migration.openshift.io/migrated-by-migmigration: fb6d415b-403f-4870-9be1-ea5c70a277b4
+      migration.openshift.io/migrated-by-migplan: 939c18ea-060c-41cf-8cf0-870f4b31a246
+      velero.io/backup-name: migration-2aa62-initial-wp7t9
+      velero.io/restore-name: migration-2aa62-final-cd6m2
+    name: csr0002-cargaarchivosmall
+    namespace: api-fiscalizacion-prod
+    resourceVersion: "10764603"
+    uid: 5fb00766-6d7e-47c5-8b1e-0ed4e1f12034
+  spec:
+    clusterIP: 172.30.214.245
+    clusterIPs:
+    - 172.30.214.245
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: 8080-tcp
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    - name: 8443-tcp
+      port: 8443
+      protocol: TCP
+      targetPort: 8443
+    - name: 8778-tcp
+      port: 8778
+      protocol: TCP
+      targetPort: 8778
+    selector:
+      app: csr0002-cargaarchivosmall
+      deploymentconfig: csr0002-cargaarchivosmall
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: "2023-05-24T19:12:03Z"
+    labels:
+      app: csr0002-cargaarchivosmalltmp
+      migration.openshift.io/migrated-by-migmigration: fb6d415b-403f-4870-9be1-ea5c70a277b4
+      migration.openshift.io/migrated-by-migplan: 939c18ea-060c-41cf-8cf0-870f4b31a246
+      velero.io/backup-name: migration-2aa62-initial-wp7t9
+      velero.io/restore-name: migration-2aa62-final-cd6m2
+    name: csr0002-cargaarchivosmalltmp
+    namespace: api-fiscalizacion-prod
+    resourceVersion: "10764607"
+    uid: 3da1d5fb-de73-45bd-8dcd-f97d8a4cb987
+  spec:
+    clusterIP: 172.30.242.165
+    clusterIPs:
+    - 172.30.242.165
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: 8080-tcp
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    - name: 8443-tcp
+      port: 8443
+      protocol: TCP
+      targetPort: 8443
+    - name: 8778-tcp
+      port: 8778
+      protocol: TCP
+      targetPort: 8778
+    selector:
+      app: csr0002-cargaarchivosmalltmp
+      deploymentconfig: csr0002-cargaarchivosmalltmp
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftWebConsole
+    creationTimestamp: "2023-05-24T19:12:03Z"
+    labels:
+      app: csr0003-envioarchivodecl
+      migration.openshift.io/migrated-by-migmigration: fb6d415b-403f-4870-9be1-ea5c70a277b4
+      migration.openshift.io/migrated-by-migplan: 939c18ea-060c-41cf-8cf0-870f4b31a246
+      velero.io/backup-name: migration-2aa62-initial-wp7t9
+      velero.io/restore-name: migration-2aa62-final-cd6m2
+    name: csr0003-envioarchivodecl
+    namespace: api-fiscalizacion-prod
+    resourceVersion: "10764610"
+    uid: f7fdd49c-d45f-4ed7-bf8f-313b0ccb9211
+  spec:
+    clusterIP: 172.30.68.147
+    clusterIPs:
+    - 172.30.68.147
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: 8080-tcp
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    - name: 8443-tcp
+      port: 8443
+      protocol: TCP
+      targetPort: 8443
+    - name: 8778-tcp
+      port: 8778
+      protocol: TCP
+      targetPort: 8778
+    selector:
+      deploymentconfig: csr0003-envioarchivodecl
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftWebConsole
+    creationTimestamp: "2023-05-24T19:12:03Z"
+    labels:
+      app: csr0004-notificacioniter
+      migration.openshift.io/migrated-by-migmigration: fb6d415b-403f-4870-9be1-ea5c70a277b4
+      migration.openshift.io/migrated-by-migplan: 939c18ea-060c-41cf-8cf0-870f4b31a246
+      velero.io/backup-name: migration-2aa62-initial-wp7t9
+      velero.io/restore-name: migration-2aa62-final-cd6m2
+    name: csr0004-notificacioniter
+    namespace: api-fiscalizacion-prod
+    resourceVersion: "10764618"
+    uid: 33ef542a-73c8-4e2a-8e7e-8ae674cc57cc
+  spec:
+    clusterIP: 172.30.4.81
+    clusterIPs:
+    - 172.30.4.81
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: 8080-tcp
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    - name: 8443-tcp
+      port: 8443
+      protocol: TCP
+      targetPort: 8443
+    - name: 8778-tcp
+      port: 8778
+      protocol: TCP
+      targetPort: 8778
+    selector:
+      deploymentconfig: csr0004-notificacioniter
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: "2023-05-24T19:12:03Z"
+    labels:
+      app: csr0005-managerdec-big
+      migration.openshift.io/migrated-by-migmigration: fb6d415b-403f-4870-9be1-ea5c70a277b4
+      migration.openshift.io/migrated-by-migplan: 939c18ea-060c-41cf-8cf0-870f4b31a246
+      velero.io/backup-name: migration-2aa62-initial-wp7t9
+      velero.io/restore-name: migration-2aa62-final-cd6m2
+    name: csr0005-managerdec-big
+    namespace: api-fiscalizacion-prod
+    resourceVersion: "10764624"
+    uid: 5cfa732c-1ad5-49b9-8ac2-c1e2d270da45
+  spec:
+    clusterIP: 172.30.42.195
+    clusterIPs:
+    - 172.30.42.195
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: 8080-tcp
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    - name: 8443-tcp
+      port: 8443
+      protocol: TCP
+      targetPort: 8443
+    - name: 8778-tcp
+      port: 8778
+      protocol: TCP
+      targetPort: 8778
+    selector:
+      app: csr0005-managerdec-big
+      deploymentconfig: csr0005-managerdec-big
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftWebConsole
+    creationTimestamp: "2023-05-24T19:12:03Z"
+    labels:
+      app: csr0005-managerdeclaraci
+      migration.openshift.io/migrated-by-migmigration: fb6d415b-403f-4870-9be1-ea5c70a277b4
+      migration.openshift.io/migrated-by-migplan: 939c18ea-060c-41cf-8cf0-870f4b31a246
+      velero.io/backup-name: migration-2aa62-initial-wp7t9
+      velero.io/restore-name: migration-2aa62-final-cd6m2
+    name: csr0005-managerdeclaraci
+    namespace: api-fiscalizacion-prod
+    resourceVersion: "10764628"
+    uid: 7284051e-e296-4516-9a6d-ef9ee214365f
+  spec:
+    clusterIP: 172.30.248.226
+    clusterIPs:
+    - 172.30.248.226
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: 8080-tcp
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    - name: 8443-tcp
+      port: 8443
+      protocol: TCP
+      targetPort: 8443
+    - name: 8778-tcp
+      port: 8778
+      protocol: TCP
+      targetPort: 8778
+    selector:
+      deploymentconfig: csr0005-managerdeclaraci
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: "2023-05-24T19:12:03Z"
+    labels:
+      app: csr0006-excepciones
+      migration.openshift.io/migrated-by-migmigration: fb6d415b-403f-4870-9be1-ea5c70a277b4
+      migration.openshift.io/migrated-by-migplan: 939c18ea-060c-41cf-8cf0-870f4b31a246
+      velero.io/backup-name: migration-2aa62-initial-wp7t9
+      velero.io/restore-name: migration-2aa62-final-cd6m2
+    name: csr0006-excepciones
+    namespace: api-fiscalizacion-prod
+    resourceVersion: "10764632"
+    uid: 6b050708-ce4a-463f-b773-102d7a0410a2
+  spec:
+    clusterIP: 172.30.38.41
+    clusterIPs:
+    - 172.30.38.41
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: 8080-tcp
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    - name: 8443-tcp
+      port: 8443
+      protocol: TCP
+      targetPort: 8443
+    - name: 8778-tcp
+      port: 8778
+      protocol: TCP
+      targetPort: 8778
+    selector:
+      app: csr0006-excepciones
+      deploymentconfig: csr0006-excepciones
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: "2023-05-24T19:12:03Z"
+    labels:
+      app: prox0001-registralibrore
+      migration.openshift.io/migrated-by-migmigration: fb6d415b-403f-4870-9be1-ea5c70a277b4
+      migration.openshift.io/migrated-by-migplan: 939c18ea-060c-41cf-8cf0-870f4b31a246
+      velero.io/backup-name: migration-2aa62-initial-wp7t9
+      velero.io/restore-name: migration-2aa62-final-cd6m2
+    name: prox0001-registralibrore
+    namespace: api-fiscalizacion-prod
+    resourceVersion: "10764636"
+    uid: 026d72db-2ba1-4915-8529-c20da5c964a5
+  spec:
+    clusterIP: 172.30.55.102
+    clusterIPs:
+    - 172.30.55.102
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: 8080-tcp
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    selector:
+      app: prox0001-registralibrore
+      deploymentconfig: prox0001-registralibrore
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: "2023-05-24T19:12:03Z"
+    labels:
+      app: prox0001-registralibrott
+      migration.openshift.io/migrated-by-migmigration: fb6d415b-403f-4870-9be1-ea5c70a277b4
+      migration.openshift.io/migrated-by-migplan: 939c18ea-060c-41cf-8cf0-870f4b31a246
+      velero.io/backup-name: migration-2aa62-initial-wp7t9
+      velero.io/restore-name: migration-2aa62-final-cd6m2
+    name: prox0001-registralibrott
+    namespace: api-fiscalizacion-prod
+    resourceVersion: "10764641"
+    uid: 2125a85f-6cdf-46be-9498-bdc7ec8f6e1a
+  spec:
+    clusterIP: 172.30.183.181
+    clusterIPs:
+    - 172.30.183.181
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: 8778-tcp
+      port: 8778
+      protocol: TCP
+      targetPort: 8778
+    - name: 9779-tcp
+      port: 9779
+      protocol: TCP
+      targetPort: 9779
+    selector:
+      app: prox0001-registralibrott
+      deploymentconfig: prox0001-registralibrott
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftWebConsole
+    creationTimestamp: "2023-05-24T19:12:04Z"
+    labels:
+      app: prx0002-validareglaslre
+      migration.openshift.io/migrated-by-migmigration: fb6d415b-403f-4870-9be1-ea5c70a277b4
+      migration.openshift.io/migrated-by-migplan: 939c18ea-060c-41cf-8cf0-870f4b31a246
+      velero.io/backup-name: migration-2aa62-initial-wp7t9
+      velero.io/restore-name: migration-2aa62-final-cd6m2
+    name: prx0002-validareglaslre
+    namespace: api-fiscalizacion-prod
+    resourceVersion: "10764647"
+    uid: 3eefc9af-e19f-4ead-9406-b9e399f3b8b1
+  spec:
+    clusterIP: 172.30.137.254
+    clusterIPs:
+    - 172.30.137.254
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: 8080-tcp
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    - name: 8443-tcp
+      port: 8443
+      protocol: TCP
+      targetPort: 8443
+    - name: 8778-tcp
+      port: 8778
+      protocol: TCP
+      targetPort: 8778
+    selector:
+      deploymentconfig: prx0002-validareglaslre
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftWebConsole
+    creationTimestamp: "2023-05-24T19:12:04Z"
+    labels:
+      app: prx0003-datospersona
+      migration.openshift.io/migrated-by-migmigration: fb6d415b-403f-4870-9be1-ea5c70a277b4
+      migration.openshift.io/migrated-by-migplan: 939c18ea-060c-41cf-8cf0-870f4b31a246
+      velero.io/backup-name: migration-2aa62-initial-wp7t9
+      velero.io/restore-name: migration-2aa62-final-cd6m2
+    name: prx0003-datospersona
+    namespace: api-fiscalizacion-prod
+    resourceVersion: "10764656"
+    uid: e79d0b79-e4c1-4cf3-a93e-59a31dcb761b
+  spec:
+    clusterIP: 172.30.82.247
+    clusterIPs:
+    - 172.30.82.247
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: 8080-tcp
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    - name: 8443-tcp
+      port: 8443
+      protocol: TCP
+      targetPort: 8443
+    - name: 8778-tcp
+      port: 8778
+      protocol: TCP
+      targetPort: 8778
+    selector:
+      deploymentconfig: prx0003-datospersona
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: "2023-05-24T19:12:04Z"
+    labels:
+      app: prx0003-datospersona-datagrid
+      migration.openshift.io/migrated-by-migmigration: fb6d415b-403f-4870-9be1-ea5c70a277b4
+      migration.openshift.io/migrated-by-migplan: 939c18ea-060c-41cf-8cf0-870f4b31a246
+      velero.io/backup-name: migration-2aa62-initial-wp7t9
+      velero.io/restore-name: migration-2aa62-final-cd6m2
+    name: prx0003-datospersona-datagrid
+    namespace: api-fiscalizacion-prod
+    resourceVersion: "10764652"
+    uid: d0c8030b-9ca9-46c2-bd98-57a548ff7ea8
+  spec:
+    clusterIP: 172.30.34.187
+    clusterIPs:
+    - 172.30.34.187
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: 8778-tcp
+      port: 8778
+      protocol: TCP
+      targetPort: 8778
+    - name: 9779-tcp
+      port: 9779
+      protocol: TCP
+      targetPort: 9779
+    - name: 8080-tcp
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    selector:
+      app: prx0003-datospersona-datagrid
+      deploymentconfig: prx0003-datospersona-datagrid
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftWebConsole
+    creationTimestamp: "2023-05-24T19:12:04Z"
+    labels:
+      app: prx0004-enviarnotificaci
+      migration.openshift.io/migrated-by-migmigration: fb6d415b-403f-4870-9be1-ea5c70a277b4
+      migration.openshift.io/migrated-by-migplan: 939c18ea-060c-41cf-8cf0-870f4b31a246
+      velero.io/backup-name: migration-2aa62-initial-wp7t9
+      velero.io/restore-name: migration-2aa62-final-cd6m2
+    name: prx0004-enviarnotificaci
+    namespace: api-fiscalizacion-prod
+    resourceVersion: "10764662"
+    uid: 25e431b5-b380-4002-bea8-4a83e149359b
+  spec:
+    clusterIP: 172.30.220.34
+    clusterIPs:
+    - 172.30.220.34
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: 8080-tcp
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    - name: 8443-tcp
+      port: 8443
+      protocol: TCP
+      targetPort: 8443
+    - name: 8778-tcp
+      port: 8778
+      protocol: TCP
+      targetPort: 8778
+    selector:
+      deploymentconfig: prx0004-enviarnotificaci
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftWebConsole
+    creationTimestamp: "2023-05-24T19:12:04Z"
+    labels:
+      app: prx0005-validartoken
+      migration.openshift.io/migrated-by-migmigration: fb6d415b-403f-4870-9be1-ea5c70a277b4
+      migration.openshift.io/migrated-by-migplan: 939c18ea-060c-41cf-8cf0-870f4b31a246
+      velero.io/backup-name: migration-2aa62-initial-wp7t9
+      velero.io/restore-name: migration-2aa62-final-cd6m2
+    name: prx0005-validartoken
+    namespace: api-fiscalizacion-prod
+    resourceVersion: "10764667"
+    uid: 6e9ac63c-9345-4c25-9542-c72a4984903a
+  spec:
+    clusterIP: 172.30.88.73
+    clusterIPs:
+    - 172.30.88.73
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: 8080-tcp
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    - name: 8443-tcp
+      port: 8443
+      protocol: TCP
+      targetPort: 8443
+    - name: 8778-tcp
+      port: 8778
+      protocol: TCP
+      targetPort: 8778
+    selector:
+      deploymentconfig: prx0005-validartoken
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftWebConsole
+    creationTimestamp: "2023-05-24T19:12:04Z"
+    labels:
+      app: srv0001-declaracionlibro
+      migration.openshift.io/migrated-by-migmigration: fb6d415b-403f-4870-9be1-ea5c70a277b4
+      migration.openshift.io/migrated-by-migplan: 939c18ea-060c-41cf-8cf0-870f4b31a246
+      velero.io/backup-name: migration-2aa62-initial-wp7t9
+      velero.io/restore-name: migration-2aa62-final-cd6m2
+    name: srv0001-declaracionlibro
+    namespace: api-fiscalizacion-prod
+    resourceVersion: "10764670"
+    uid: cb6594dc-42b4-4f90-a39a-e47e5f523435
+  spec:
+    clusterIP: 172.30.78.209
+    clusterIPs:
+    - 172.30.78.209
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: 8080-tcp
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    - name: 8443-tcp
+      port: 8443
+      protocol: TCP
+      targetPort: 8443
+    - name: 8778-tcp
+      port: 8778
+      protocol: TCP
+      targetPort: 8778
+    selector:
+      deploymentconfig: srv0001-declaracionlibro
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftWebConsole
+    creationTimestamp: "2023-05-24T19:12:04Z"
+    labels:
+      app: srv0002-obtenerdeclaraci
+      migration.openshift.io/migrated-by-migmigration: fb6d415b-403f-4870-9be1-ea5c70a277b4
+      migration.openshift.io/migrated-by-migplan: 939c18ea-060c-41cf-8cf0-870f4b31a246
+      velero.io/backup-name: migration-2aa62-initial-wp7t9
+      velero.io/restore-name: migration-2aa62-final-cd6m2
+    name: srv0002-obtenerdeclaraci
+    namespace: api-fiscalizacion-prod
+    resourceVersion: "10764674"
+    uid: ef7aea3a-d71e-46ff-9bf5-42e3c5ebef99
+  spec:
+    clusterIP: 172.30.173.238
+    clusterIPs:
+    - 172.30.173.238
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: 8080-tcp
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    - name: 8443-tcp
+      port: 8443
+      protocol: TCP
+      targetPort: 8443
+    - name: 8778-tcp
+      port: 8778
+      protocol: TCP
+      targetPort: 8778
+    selector:
+      deploymentconfig: srv0002-obtenerdeclaraci
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftWebConsole
+    creationTimestamp: "2023-05-24T19:12:04Z"
+    labels:
+      app: srv0003-empleadores
+      migration.openshift.io/migrated-by-migmigration: fb6d415b-403f-4870-9be1-ea5c70a277b4
+      migration.openshift.io/migrated-by-migplan: 939c18ea-060c-41cf-8cf0-870f4b31a246
+      velero.io/backup-name: migration-2aa62-initial-wp7t9
+      velero.io/restore-name: migration-2aa62-final-cd6m2
+    name: srv0003-empleadores
+    namespace: api-fiscalizacion-prod
+    resourceVersion: "10764682"
+    uid: 66ba66bd-88d4-4c14-bb33-6ac0d7c64df0
+  spec:
+    clusterIP: 172.30.46.154
+    clusterIPs:
+    - 172.30.46.154
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: 8080-tcp
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    - name: 8443-tcp
+      port: 8443
+      protocol: TCP
+      targetPort: 8443
+    - name: 8778-tcp
+      port: 8778
+      protocol: TCP
+      targetPort: 8778
+    selector:
+      deploymentconfig: srv0003-empleadores
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftWebConsole
+    creationTimestamp: "2023-05-24T19:12:04Z"
+    labels:
+      app: srv0004-declaraciontrans
+      migration.openshift.io/migrated-by-migmigration: fb6d415b-403f-4870-9be1-ea5c70a277b4
+      migration.openshift.io/migrated-by-migplan: 939c18ea-060c-41cf-8cf0-870f4b31a246
+      velero.io/backup-name: migration-2aa62-initial-wp7t9
+      velero.io/restore-name: migration-2aa62-final-cd6m2
+    name: srv0004-declaraciontrans
+    namespace: api-fiscalizacion-prod
+    resourceVersion: "10764688"
+    uid: 0ada9470-5377-4281-b4f8-a48629d73038
+  spec:
+    clusterIP: 172.30.64.193
+    clusterIPs:
+    - 172.30.64.193
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: 8080-tcp
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    - name: 8443-tcp
+      port: 8443
+      protocol: TCP
+      targetPort: 8443
+    - name: 8778-tcp
+      port: 8778
+      protocol: TCP
+      targetPort: 8778
+    selector:
+      deploymentconfig: srv0004-declaraciontrans
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftWebConsole
+    creationTimestamp: "2023-05-24T19:12:04Z"
+    labels:
+      app: srv0005-descargalre
+      migration.openshift.io/migrated-by-migmigration: fb6d415b-403f-4870-9be1-ea5c70a277b4
+      migration.openshift.io/migrated-by-migplan: 939c18ea-060c-41cf-8cf0-870f4b31a246
+      velero.io/backup-name: migration-2aa62-initial-wp7t9
+      velero.io/restore-name: migration-2aa62-final-cd6m2
+    name: srv0005-descargalre
+    namespace: api-fiscalizacion-prod
+    resourceVersion: "10764695"
+    uid: f6bec2ef-3e9d-4ad9-b70a-716b5423fbde
+  spec:
+    clusterIP: 172.30.37.119
+    clusterIPs:
+    - 172.30.37.119
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: 8080-tcp
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    - name: 8443-tcp
+      port: 8443
+      protocol: TCP
+      targetPort: 8443
+    - name: 8778-tcp
+      port: 8778
+      protocol: TCP
+      targetPort: 8778
+    selector:
+      deploymentconfig: srv0005-descargalre
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftWebConsole
+    creationTimestamp: "2023-05-24T19:12:04Z"
+    labels:
+      app: srv0006-apimetadata
+      migration.openshift.io/migrated-by-migmigration: fb6d415b-403f-4870-9be1-ea5c70a277b4
+      migration.openshift.io/migrated-by-migplan: 939c18ea-060c-41cf-8cf0-870f4b31a246
+      velero.io/backup-name: migration-2aa62-initial-wp7t9
+      velero.io/restore-name: migration-2aa62-final-cd6m2
+    name: srv0006-apimetadata
+    namespace: api-fiscalizacion-prod
+    resourceVersion: "10764700"
+    uid: d914c045-585d-4f1e-861f-db4fe68478ec
+  spec:
+    clusterIP: 172.30.179.91
+    clusterIPs:
+    - 172.30.179.91
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: 8080-tcp
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    - name: 8443-tcp
+      port: 8443
+      protocol: TCP
+      targetPort: 8443
+    - name: 8778-tcp
+      port: 8778
+      protocol: TCP
+      targetPort: 8778
+    selector:
+      deploymentconfig: srv0006-apimetadata
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftWebConsole
+    creationTimestamp: "2023-05-24T19:12:04Z"
+    labels:
+      app: srv0007-bff
+      migration.openshift.io/migrated-by-migmigration: fb6d415b-403f-4870-9be1-ea5c70a277b4
+      migration.openshift.io/migrated-by-migplan: 939c18ea-060c-41cf-8cf0-870f4b31a246
+      velero.io/backup-name: migration-2aa62-initial-wp7t9
+      velero.io/restore-name: migration-2aa62-final-cd6m2
+    name: srv0007-bff
+    namespace: api-fiscalizacion-prod
+    resourceVersion: "10764705"
+    uid: d95124ae-cb38-4ba7-b23e-c12a785ecefc
+  spec:
+    clusterIP: 172.30.165.63
+    clusterIPs:
+    - 172.30.165.63
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: 8080-tcp
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    selector:
+      deploymentconfig: srv0007-bff
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftWebConsole
+    creationTimestamp: "2023-05-24T19:12:04Z"
+    labels:
+      app: srv0008-validaciones
+      migration.openshift.io/migrated-by-migmigration: fb6d415b-403f-4870-9be1-ea5c70a277b4
+      migration.openshift.io/migrated-by-migplan: 939c18ea-060c-41cf-8cf0-870f4b31a246
+      velero.io/backup-name: migration-2aa62-initial-wp7t9
+      velero.io/restore-name: migration-2aa62-final-cd6m2
+    name: srv0008-validaciones
+    namespace: api-fiscalizacion-prod
+    resourceVersion: "10764715"
+    uid: 37cda471-592f-4051-b11d-3857486091e8
+  spec:
+    clusterIP: 172.30.32.50
+    clusterIPs:
+    - 172.30.32.50
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: 8080-tcp
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    selector:
+      deploymentconfig: srv0008-validaciones
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftWebConsole
+    creationTimestamp: "2023-05-24T19:12:04Z"
+    labels:
+      app: srv0009-admnominatrabaj
+      migration.openshift.io/migrated-by-migmigration: fb6d415b-403f-4870-9be1-ea5c70a277b4
+      migration.openshift.io/migrated-by-migplan: 939c18ea-060c-41cf-8cf0-870f4b31a246
+      velero.io/backup-name: migration-2aa62-initial-wp7t9
+      velero.io/restore-name: migration-2aa62-final-cd6m2
+    name: srv0009-admnominatrabaj
+    namespace: api-fiscalizacion-prod
+    resourceVersion: "10764721"
+    uid: a6971d3f-0142-4c5a-a5ce-512d26d0c7f9
+  spec:
+    clusterIP: 172.30.44.116
+    clusterIPs:
+    - 172.30.44.116
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: 8080-tcp
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    selector:
+      deploymentconfig: srv0009-admnominatrabaj
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftWebConsole
+    creationTimestamp: "2023-05-24T19:12:04Z"
+    labels:
+      app: srv0010-decljson
+      migration.openshift.io/migrated-by-migmigration: fb6d415b-403f-4870-9be1-ea5c70a277b4
+      migration.openshift.io/migrated-by-migplan: 939c18ea-060c-41cf-8cf0-870f4b31a246
+      velero.io/backup-name: migration-2aa62-initial-wp7t9
+      velero.io/restore-name: migration-2aa62-final-cd6m2
+    name: srv0010-decljson
+    namespace: api-fiscalizacion-prod
+    resourceVersion: "10764725"
+    uid: c7ee62f2-1306-4ea5-af3a-37af81a02dcf
+  spec:
+    clusterIP: 172.30.5.74
+    clusterIPs:
+    - 172.30.5.74
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: 8080-tcp
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    selector:
+      deploymentconfig: srv0010-decljson
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftWebConsole
+    creationTimestamp: "2023-05-24T19:12:04Z"
+    labels:
+      app: srv0012-ctrleveventos
+      migration.openshift.io/migrated-by-migmigration: fb6d415b-403f-4870-9be1-ea5c70a277b4
+      migration.openshift.io/migrated-by-migplan: 939c18ea-060c-41cf-8cf0-870f4b31a246
+      velero.io/backup-name: migration-2aa62-initial-wp7t9
+      velero.io/restore-name: migration-2aa62-final-cd6m2
+    name: srv0012-ctrleveventos
+    namespace: api-fiscalizacion-prod
+    resourceVersion: "10764731"
+    uid: 5229fc3a-bb54-44cf-a94b-b0f5ec32f962
+  spec:
+    clusterIP: 172.30.25.65
+    clusterIPs:
+    - 172.30.25.65
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: 8080-tcp
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    selector:
+      deploymentconfig: srv0012-ctrleveventos
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftWebConsole
+    creationTimestamp: "2023-05-24T19:12:04Z"
+    labels:
+      app: srv0013-certificados-lre
+      migration.openshift.io/migrated-by-migmigration: fb6d415b-403f-4870-9be1-ea5c70a277b4
+      migration.openshift.io/migrated-by-migplan: 939c18ea-060c-41cf-8cf0-870f4b31a246
+      velero.io/backup-name: migration-2aa62-initial-wp7t9
+      velero.io/restore-name: migration-2aa62-final-cd6m2
+    name: srv0013-certificados-lre
+    namespace: api-fiscalizacion-prod
+    resourceVersion: "10764736"
+    uid: d03021c6-fd2c-491a-868f-9b207ab1d7d4
+  spec:
+    clusterIP: 172.30.52.191
+    clusterIPs:
+    - 172.30.52.191
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: 8080-tcp
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    selector:
+      deploymentconfig: srv0013-certificados-lre
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

@@ -1,0 +1,285 @@
+apiVersion: v1
+items:
+- apiVersion: apps.openshift.io/v1
+  kind: DeploymentConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftNewApp
+      openshift.io/migration-registry: ""
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-23T15:42:58Z"
+    generation: 4
+    labels:
+      app: 3scale-gateway
+      migration.openshift.io/migrated-by-migmigration: d7f82f83-36b7-40cb-9be8-845686ebb478
+      migration.openshift.io/migrated-by-migplan: 1981d423-880a-454f-b775-1c317fd4855d
+      velero.io/backup-name: migration-685ab-initial-9hwzb
+      velero.io/restore-name: migration-685ab-final-dbsdc
+    name: apicast-live-prod
+    namespace: apicast-prod
+    resourceVersion: "476624887"
+    uid: 96cc9764-5843-412c-b7a7-2c97c2d046f0
+  spec:
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      deploymentconfig: apicast-live-prod
+    strategy:
+      activeDeadlineSeconds: 21600
+      resources: {}
+      rollingParams:
+        intervalSeconds: 1
+        maxSurge: 25%
+        maxUnavailable: 25%
+        timeoutSeconds: 600
+        updatePeriodSeconds: 1
+      type: Rolling
+    template:
+      metadata:
+        annotations:
+          openshift.io/generated-by: OpenShiftNewApp
+          prometheus.io/port: "9421"
+          prometheus.io/scrape: "true"
+        creationTimestamp: null
+        labels:
+          app: 3scale-gateway
+          deploymentconfig: apicast-live-prod
+      spec:
+        containers:
+        - env:
+          - name: THREESCALE_PORTAL_ENDPOINT
+            valueFrom:
+              secretKeyRef:
+                key: password
+                name: apicast-configuration-url-secret
+          - name: THREESCALE_CONFIG_FILE
+          - name: THREESCALE_DEPLOYMENT_ENV
+            value: production
+          - name: RESOLVER
+          - name: APICAST_SERVICES_LIST
+          - name: APICAST_CONFIGURATION_LOADER
+            value: boot
+          - name: APICAST_LOG_LEVEL
+            value: debug
+          - name: APICAST_PATH_ROUTING
+            value: "false"
+          - name: APICAST_RESPONSE_CODES
+            value: "false"
+          - name: APICAST_CONFIGURATION_CACHE
+          - name: REDIS_URL
+          - name: APICAST_MANAGEMENT_API
+            value: status
+          - name: OPENSSL_VERIFY
+            value: "false"
+          - name: APICAST_OIDC_LOG_LEVEL
+            value: debug
+          image: registry.redhat.io/3scale-amp2/apicast-gateway-rhel7:3scale2.7
+          imagePullPolicy: IfNotPresent
+          name: apicast-live-prod
+          ports:
+          - containerPort: 8080
+            name: proxy
+            protocol: TCP
+          - containerPort: 8090
+            name: management
+            protocol: TCP
+          - containerPort: 9421
+            name: metrics
+            protocol: TCP
+          resources:
+            limits:
+              cpu: "1"
+              memory: 1Gi
+            requests:
+              cpu: 500m
+              memory: 200Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+    test: false
+    triggers:
+    - type: ConfigChange
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2024-04-09T17:36:33Z"
+      lastUpdateTime: "2024-04-09T17:36:37Z"
+      message: replication controller "apicast-live-prod-4" successfully rolled out
+      reason: NewReplicationControllerAvailable
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: "2024-07-24T20:18:02Z"
+      lastUpdateTime: "2024-07-24T20:18:02Z"
+      message: Deployment config has minimum availability.
+      status: "True"
+      type: Available
+    details:
+      causes:
+      - type: ConfigChange
+      message: config change
+    latestVersion: 4
+    observedGeneration: 4
+    readyReplicas: 1
+    replicas: 1
+    unavailableReplicas: 0
+    updatedReplicas: 1
+- apiVersion: apps.openshift.io/v1
+  kind: DeploymentConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftNewApp
+      openshift.io/migration-registry: ""
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-23T15:42:58Z"
+    generation: 8
+    labels:
+      app: 3scale-gateway
+      migration.openshift.io/migrated-by-migmigration: d7f82f83-36b7-40cb-9be8-845686ebb478
+      migration.openshift.io/migrated-by-migplan: 1981d423-880a-454f-b775-1c317fd4855d
+      velero.io/backup-name: migration-685ab-initial-9hwzb
+      velero.io/restore-name: migration-685ab-final-dbsdc
+    name: apicast-staging-prod
+    namespace: apicast-prod
+    resourceVersion: "491646495"
+    uid: 9f29eb2d-b055-4f68-95f2-5d309f3116af
+  spec:
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      deploymentconfig: apicast-staging-prod
+    strategy:
+      activeDeadlineSeconds: 21600
+      resources: {}
+      rollingParams:
+        intervalSeconds: 1
+        maxSurge: 25%
+        maxUnavailable: 25%
+        timeoutSeconds: 600
+        updatePeriodSeconds: 1
+      type: Rolling
+    template:
+      metadata:
+        annotations:
+          openshift.io/generated-by: OpenShiftNewApp
+          prometheus.io/port: "9421"
+          prometheus.io/scrape: "true"
+        creationTimestamp: null
+        labels:
+          app: 3scale-gateway
+          deploymentconfig: apicast-staging-prod
+      spec:
+        containers:
+        - env:
+          - name: THREESCALE_PORTAL_ENDPOINT
+            valueFrom:
+              secretKeyRef:
+                key: password
+                name: apicast-configuration-url-secret
+          - name: THREESCALE_CONFIG_FILE
+          - name: THREESCALE_DEPLOYMENT_ENV
+            value: sandbox
+          - name: RESOLVER
+          - name: APICAST_SERVICES_LIST
+          - name: APICAST_CONFIGURATION_LOADER
+            value: lazy
+          - name: APICAST_LOG_LEVEL
+            value: debug
+          - name: APICAST_PATH_ROUTING
+            value: "false"
+          - name: APICAST_RESPONSE_CODES
+            value: "false"
+          - name: APICAST_CONFIGURATION_CACHE
+          - name: REDIS_URL
+          - name: APICAST_MANAGEMENT_API
+            value: status
+          - name: OPENSSL_VERIFY
+            value: "false"
+          image: registry.redhat.io/3scale-amp2/apicast-gateway-rhel7:3scale2.7
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /status/live
+              port: management
+              scheme: HTTP
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 5
+          name: apicast-staging-prod
+          ports:
+          - containerPort: 8080
+            name: proxy
+            protocol: TCP
+          - containerPort: 8090
+            name: management
+            protocol: TCP
+          - containerPort: 9421
+            name: metrics
+            protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /status/ready
+              port: management
+              scheme: HTTP
+            initialDelaySeconds: 15
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 5
+          resources:
+            limits:
+              cpu: "1"
+              memory: 128Mi
+            requests:
+              cpu: 500m
+              memory: 64Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+    test: false
+    triggers:
+    - type: ConfigChange
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2024-07-26T22:30:08Z"
+      lastUpdateTime: "2024-07-26T22:30:13Z"
+      message: replication controller "apicast-staging-prod-6" successfully rolled
+        out
+      reason: NewReplicationControllerAvailable
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: "2024-08-01T00:37:44Z"
+      lastUpdateTime: "2024-08-01T00:37:44Z"
+      message: Deployment config has minimum availability.
+      status: "True"
+      type: Available
+    details:
+      causes:
+      - type: ConfigChange
+      message: config change
+    latestVersion: 6
+    observedGeneration: 8
+    readyReplicas: 1
+    replicas: 1
+    unavailableReplicas: 0
+    updatedReplicas: 1
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

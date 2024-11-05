@@ -1,0 +1,85 @@
+apiVersion: v1
+items:
+- apiVersion: route.openshift.io/v1
+  kind: Route
+  metadata:
+    annotations:
+      openshift.io/host.generated: "true"
+    creationTimestamp: "2023-05-12T20:25:50Z"
+    labels:
+      control-plane: controller-manager
+      controller-tools.k8s.io: "1.0"
+    name: discovery
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: migration.openshift.io/v1alpha1
+      kind: MigrationController
+      name: migration-controller
+      uid: 6c83ac9d-343f-4bbd-82b5-65232ad8f08e
+    resourceVersion: "2281027"
+    uid: 78f8ab21-7379-467e-a310-f888e0397b31
+  spec:
+    host: discovery-openshift-migration.apps.ocp4azu.dirtrab.cl
+    tls:
+      insecureEdgeTerminationPolicy: Redirect
+      termination: edge
+    to:
+      kind: Service
+      name: discovery
+      weight: 100
+    wildcardPolicy: None
+  status:
+    ingress:
+    - conditions:
+      - lastTransitionTime: "2023-05-12T20:25:50Z"
+        status: "True"
+        type: Admitted
+      host: discovery-openshift-migration.apps.ocp4azu.dirtrab.cl
+      routerCanonicalHostname: router-default.apps.ocp4azu.dirtrab.cl
+      routerName: default
+      wildcardPolicy: None
+- apiVersion: route.openshift.io/v1
+  kind: Route
+  metadata:
+    annotations:
+      haproxy.router.openshift.io/timeout: 300s
+      openshift.io/host.generated: "true"
+    creationTimestamp: "2023-05-12T20:25:48Z"
+    labels:
+      app: migration
+      service: migration
+    name: migration
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: migration.openshift.io/v1alpha1
+      kind: MigrationController
+      name: migration-controller
+      uid: 6c83ac9d-343f-4bbd-82b5-65232ad8f08e
+    resourceVersion: "2281003"
+    uid: 2164fee2-7fbd-4c21-b5e7-b5142bdf2526
+  spec:
+    host: migration-openshift-migration.apps.ocp4azu.dirtrab.cl
+    port:
+      targetPort: port-9000
+    tls:
+      insecureEdgeTerminationPolicy: Redirect
+      termination: edge
+    to:
+      kind: Service
+      name: migration-ui
+      weight: 100
+    wildcardPolicy: None
+  status:
+    ingress:
+    - conditions:
+      - lastTransitionTime: "2023-05-12T20:25:48Z"
+        status: "True"
+        type: Admitted
+      host: migration-openshift-migration.apps.ocp4azu.dirtrab.cl
+      routerCanonicalHostname: router-default.apps.ocp4azu.dirtrab.cl
+      routerName: default
+      wildcardPolicy: None
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

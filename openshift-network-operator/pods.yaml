@@ -1,0 +1,228 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    creationTimestamp: "2024-06-30T06:27:39Z"
+    generateName: network-operator-868f58859f-
+    labels:
+      name: network-operator
+      pod-template-hash: 868f58859f
+    name: network-operator-868f58859f-wwvz8
+    namespace: openshift-network-operator
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: network-operator-868f58859f
+      uid: 7698a8fe-a04a-43c3-b979-c2fe33780739
+    resourceVersion: "425758957"
+    uid: 172b88b1-1db3-4e3c-9157-2e2794ed017a
+  spec:
+    affinity:
+      podAntiAffinity:
+        preferredDuringSchedulingIgnoredDuringExecution:
+        - podAffinityTerm:
+            labelSelector:
+              matchLabels:
+                name: network-operator
+            topologyKey: kubernetes.io/hostname
+          weight: 100
+    containers:
+    - command:
+      - /bin/bash
+      - -c
+      - |
+        #!/bin/bash
+        set -o allexport
+        if [[ -f /etc/kubernetes/apiserver-url.env ]]; then
+          source /etc/kubernetes/apiserver-url.env
+        else
+          URL_ONLY_KUBECONFIG=/etc/kubernetes/kubeconfig
+        fi
+        exec /usr/bin/cluster-network-operator start --listen=0.0.0.0:9104
+      env:
+      - name: RELEASE_VERSION
+        value: 4.10.53
+      - name: SDN_IMAGE
+        value: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:8e8b4b5ac67750dd7c0dc9d83a7ddae6db4cceb6ad2989738fe4b1a2f4a72445
+      - name: KUBE_PROXY_IMAGE
+        value: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:c59a5dd6e226e861d3f3e999358f5af96a21429803a093689693c6b0398bb6a5
+      - name: KUBE_RBAC_PROXY_IMAGE
+        value: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:d253bc69fdc967c1fc1543b01deddacd4eefe816cc9ed4541ea3673e35321753
+      - name: MULTUS_IMAGE
+        value: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:686319d43039666afd0558e8c67b7a7602ed39702ad87bd73f08da583b811752
+      - name: MULTUS_ADMISSION_CONTROLLER_IMAGE
+        value: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:8bb2bc47d82b3b0da459400df8f606ad07ac01941bbd5ffb08119896fd9f5821
+      - name: CNI_PLUGINS_IMAGE
+        value: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:b34d78f3cf80208541c4ac9cc84d8393fef336537ab9258726a81a684b3a578d
+      - name: BOND_CNI_PLUGIN_IMAGE
+        value: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:afecfa73c9f829c5fccaca3b2f36c0fe381bbe02f9eef32bc4388be7bb3d7db6
+      - name: WHEREABOUTS_CNI_IMAGE
+        value: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:c073ed0650bc211b6c1c5c0a77d38a95a822fd877bc671ab505a47999c6c6297
+      - name: ROUTE_OVERRRIDE_CNI_IMAGE
+        value: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:16e6426a05c744b04ffc20e810a1c48465037f84b7412c27ccb1e5b7b922fa42
+      - name: MULTUS_NETWORKPOLICY_IMAGE
+        value: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:c7dd765223d1d94477050ba69449132db609d52b8e07c66dc4ca4902479cf62d
+      - name: OVN_IMAGE
+        value: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:1aa2fd3e71823082ce60cddb55871614238f3d4afad9062ce50f3242bc600ab0
+      - name: OVN_NB_RAFT_ELECTION_TIMER
+        value: "10"
+      - name: OVN_SB_RAFT_ELECTION_TIMER
+        value: "16"
+      - name: OVN_NORTHD_PROBE_INTERVAL
+        value: "10000"
+      - name: OVN_CONTROLLER_INACTIVITY_PROBE
+        value: "180000"
+      - name: OVN_NB_INACTIVITY_PROBE
+        value: "60000"
+      - name: EGRESS_ROUTER_CNI_IMAGE
+        value: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:974d6f1a4f0131d695aeb7b3c46ea4f9ce3ecae8da7b02a7045675171ef1d3ff
+      - name: KURYR_DAEMON_IMAGE
+        value: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:8637c2a562c164cfa4774bb2a864ecc289f1b29667ccbbdbaa7f4192927d3ece
+      - name: KURYR_CONTROLLER_IMAGE
+        value: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:488e41a8d639275e8d58300a7e5f210ace0759768a8917502cb894cbdaadb666
+      - name: NETWORK_METRICS_DAEMON_IMAGE
+        value: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:b70654bb15424f347a985f8e973171e9ff3667d069eaa1535ba02233682c7cc8
+      - name: NETWORK_CHECK_SOURCE_IMAGE
+        value: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:8bc10069f7e6e0ae3fafbef1beba94516ed91a8692de6fee7f17379687adb5cb
+      - name: NETWORK_CHECK_TARGET_IMAGE
+        value: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:8bc10069f7e6e0ae3fafbef1beba94516ed91a8692de6fee7f17379687adb5cb
+      - name: CLOUD_NETWORK_CONFIG_CONTROLLER_IMAGE
+        value: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:46e583311428f2b503d6d68feb7dfe3bcf3e534cfde109ba15e3ed79cb049b71
+      - name: POD_NAME
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: metadata.name
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:8bc10069f7e6e0ae3fafbef1beba94516ed91a8692de6fee7f17379687adb5cb
+      imagePullPolicy: IfNotPresent
+      name: network-operator
+      ports:
+      - containerPort: 9104
+        hostPort: 9104
+        name: cno
+        protocol: TCP
+      resources:
+        requests:
+          cpu: 10m
+          memory: 50Mi
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: FallbackToLogsOnError
+      volumeMounts:
+      - mountPath: /etc/kubernetes
+        name: host-etc-kube
+        readOnly: true
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-m9rlj
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    hostNetwork: true
+    imagePullSecrets:
+    - name: default-dockercfg-8sd2w
+    nodeName: ocp4azu-sj2sl-master-0
+    nodeSelector:
+      node-role.kubernetes.io/master: ""
+    preemptionPolicy: PreemptLowerPriority
+    priority: 2000000000
+    priorityClassName: system-cluster-critical
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      runAsNonRoot: true
+      runAsUser: 65534
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/master
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/network-unavailable
+      operator: Exists
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoSchedule
+      key: node.kubernetes.io/memory-pressure
+      operator: Exists
+    volumes:
+    - hostPath:
+        path: /etc/kubernetes
+        type: Directory
+      name: host-etc-kube
+    - name: kube-api-access-m9rlj
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2024-06-30T06:27:39Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2024-06-30T06:27:39Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2024-06-30T06:27:39Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2024-06-30T06:27:39Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://28a898f352a8a0feeecada6b45507246d58ca7ea43001c876aa9055aca93a868
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:8bc10069f7e6e0ae3fafbef1beba94516ed91a8692de6fee7f17379687adb5cb
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:8bc10069f7e6e0ae3fafbef1beba94516ed91a8692de6fee7f17379687adb5cb
+      lastState: {}
+      name: network-operator
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2024-06-30T06:27:39Z"
+    hostIP: 10.80.80.6
+    phase: Running
+    podIP: 10.80.80.6
+    podIPs:
+    - ip: 10.80.80.6
+    qosClass: Burstable
+    startTime: "2024-06-30T06:27:39Z"
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

@@ -1,0 +1,218 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.130.0.47"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.130.0.47"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/scc: restricted
+    creationTimestamp: "2023-05-04T21:36:20Z"
+    generateName: insights-operator-b99cc5fd6-
+    labels:
+      app: insights-operator
+      pod-template-hash: b99cc5fd6
+    name: insights-operator-b99cc5fd6-z8wqt
+    namespace: openshift-insights
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: insights-operator-b99cc5fd6
+      uid: 562a6fd1-4fb6-4aa8-bc54-eed805de354b
+    resourceVersion: "369059529"
+    uid: 735b26cf-5ba6-43cd-bff6-c616bb363ee1
+  spec:
+    containers:
+    - args:
+      - start
+      - -v=4
+      - --config=/etc/insights-operator/server.yaml
+      env:
+      - name: POD_NAME
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: metadata.name
+      - name: POD_NAMESPACE
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: metadata.namespace
+      - name: RELEASE_VERSION
+        value: 4.10.53
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:15fe2ebf1a6a3d11a22f2606aec6fc8ec4d6b4876ec68ea0e127054718b41a02
+      imagePullPolicy: IfNotPresent
+      name: insights-operator
+      ports:
+      - containerPort: 8443
+        name: https
+        protocol: TCP
+      resources:
+        requests:
+          cpu: 10m
+          memory: 30Mi
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000270000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: FallbackToLogsOnError
+      volumeMounts:
+      - mountPath: /var/lib/insights-operator
+        name: snapshots
+      - mountPath: /var/run/configmaps/trusted-ca-bundle
+        name: trusted-ca-bundle
+        readOnly: true
+      - mountPath: /var/run/configmaps/service-ca-bundle
+        name: service-ca-bundle
+        readOnly: true
+      - mountPath: /var/run/secrets/serving-cert
+        name: serving-cert
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-gsndc
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    nodeName: ocp4azu-sj2sl-master-1
+    nodeSelector:
+      beta.kubernetes.io/os: linux
+      node-role.kubernetes.io/master: ""
+    preemptionPolicy: PreemptLowerPriority
+    priority: 2000000000
+    priorityClassName: system-cluster-critical
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000270000
+      seLinuxOptions:
+        level: s0:c16,c15
+    serviceAccount: operator
+    serviceAccountName: operator
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/master
+      operator: Exists
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 900
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 900
+    - effect: NoSchedule
+      key: node.kubernetes.io/memory-pressure
+      operator: Exists
+    volumes:
+    - emptyDir: {}
+      name: snapshots
+    - configMap:
+        defaultMode: 420
+        name: trusted-ca-bundle
+        optional: true
+      name: trusted-ca-bundle
+    - configMap:
+        defaultMode: 420
+        name: service-ca-bundle
+        optional: true
+      name: service-ca-bundle
+    - name: serving-cert
+      secret:
+        defaultMode: 420
+        optional: true
+        secretName: openshift-insights-serving-cert
+    - name: kube-api-access-gsndc
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-04T21:40:05Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2024-06-02T21:41:22Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2024-06-02T21:41:22Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-04T21:40:05Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://f0e99707a3bd0630606c936b48d49892ee3fef0ad75bb2aa1bf2c9d2d3f66469
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:15fe2ebf1a6a3d11a22f2606aec6fc8ec4d6b4876ec68ea0e127054718b41a02
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:15fe2ebf1a6a3d11a22f2606aec6fc8ec4d6b4876ec68ea0e127054718b41a02
+      lastState:
+        terminated:
+          containerID: cri-o://7cf80d3565b144e39be54c732d3009f89d6d31dff3f6321ad8ca98392b04c54f
+          exitCode: 0
+          finishedAt: "2024-06-02T21:41:20Z"
+          reason: Completed
+          startedAt: "2023-05-11T18:26:40Z"
+      name: insights-operator
+      ready: true
+      restartCount: 5
+      started: true
+      state:
+        running:
+          startedAt: "2024-06-02T21:41:21Z"
+    hostIP: 10.80.80.8
+    phase: Running
+    podIP: 10.130.0.47
+    podIPs:
+    - ip: 10.130.0.47
+    qosClass: Burstable
+    startTime: "2023-05-04T21:40:05Z"
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

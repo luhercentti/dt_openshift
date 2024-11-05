@@ -1,0 +1,4948 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.131.19.161"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.131.19.161"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/deployment-config.name: apicast-production
+      openshift.io/deployment.name: apicast-production-3
+      openshift.io/scc: restricted
+    creationTimestamp: "2024-07-26T22:27:39Z"
+    labels:
+      openshift.io/deployer-pod-for.name: apicast-production-3
+    name: apicast-production-3-deploy
+    namespace: 3scale
+    ownerReferences:
+    - apiVersion: v1
+      kind: ReplicationController
+      name: apicast-production-3
+      uid: 762ed4f3-1536-44b8-9674-9252ae898842
+    resourceVersion: "480987510"
+    uid: 881112bd-0f7b-480a-8fce-ae8290ee7ad2
+  spec:
+    activeDeadlineSeconds: 21600
+    containers:
+    - env:
+      - name: OPENSHIFT_DEPLOYMENT_NAME
+        value: apicast-production-3
+      - name: OPENSHIFT_DEPLOYMENT_NAMESPACE
+        value: 3scale
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:6e42aa37bf05a8d5c1409a4ec39632234e783e6c92abe659f5e611860f073039
+      imagePullPolicy: IfNotPresent
+      name: deployment
+      resources: {}
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000980000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-cvmdf
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: deployer-dockercfg-4cpqn
+    nodeName: ocp4azu-sj2sl-worker-prod-brazilsouth1-lks8v
+    nodeSelector:
+      ambientes.dt.cl/prod: "true"
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Never
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000980000
+      seLinuxOptions:
+        level: s0:c31,c25
+    serviceAccount: deployer
+    serviceAccountName: deployer
+    shareProcessNamespace: false
+    terminationGracePeriodSeconds: 10
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - name: kube-api-access-cvmdf
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-26T22:27:39Z"
+      reason: PodCompleted
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-26T22:28:16Z"
+      reason: PodCompleted
+      status: "False"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-26T22:28:16Z"
+      reason: PodCompleted
+      status: "False"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-26T22:27:39Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://aa67928d51cccba03f5394adf0fae878af1ec2585b4fd2d9d85fbfa09f64accd
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:6e42aa37bf05a8d5c1409a4ec39632234e783e6c92abe659f5e611860f073039
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:6e42aa37bf05a8d5c1409a4ec39632234e783e6c92abe659f5e611860f073039
+      lastState: {}
+      name: deployment
+      ready: false
+      restartCount: 0
+      started: false
+      state:
+        terminated:
+          containerID: cri-o://aa67928d51cccba03f5394adf0fae878af1ec2585b4fd2d9d85fbfa09f64accd
+          exitCode: 0
+          finishedAt: "2024-07-26T22:28:16Z"
+          reason: Completed
+          startedAt: "2024-07-26T22:27:41Z"
+    hostIP: 10.80.80.19
+    phase: Succeeded
+    podIP: 10.131.19.161
+    podIPs:
+    - ip: 10.131.19.161
+    qosClass: BestEffort
+    startTime: "2024-07-26T22:27:39Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.131.19.162"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.131.19.162"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/deployment-config.latest-version: "3"
+      openshift.io/deployment-config.name: apicast-production
+      openshift.io/deployment.name: apicast-production-3
+      openshift.io/generated-by: OpenShiftNewApp
+      openshift.io/scc: restricted
+      prometheus.io/port: "9421"
+      prometheus.io/scrape: "true"
+    creationTimestamp: "2024-07-26T22:27:43Z"
+    generateName: apicast-production-3-
+    labels:
+      app: 3scale-api-management
+      deployment: apicast-production-3
+      deploymentConfig: apicast-production
+      deploymentconfig: apicast-production
+      threescale_component: apicast
+      threescale_component_element: production
+    name: apicast-production-3-k2lvj
+    namespace: 3scale
+    ownerReferences:
+    - apiVersion: v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicationController
+      name: apicast-production-3
+      uid: 762ed4f3-1536-44b8-9674-9252ae898842
+    resourceVersion: "491646516"
+    uid: 7a4efaa7-82c7-4bd6-9e48-7faed5477b0a
+  spec:
+    containers:
+    - env:
+      - name: THREESCALE_PORTAL_ENDPOINT
+        valueFrom:
+          secretKeyRef:
+            key: PROXY_CONFIGS_ENDPOINT
+            name: system-master-apicast
+      - name: BACKEND_ENDPOINT_OVERRIDE
+        valueFrom:
+          secretKeyRef:
+            key: service_endpoint
+            name: backend-listener
+      - name: APICAST_MANAGEMENT_API
+        valueFrom:
+          configMapKeyRef:
+            key: APICAST_MANAGEMENT_API
+            name: apicast-environment
+      - name: OPENSSL_VERIFY
+        valueFrom:
+          configMapKeyRef:
+            key: OPENSSL_VERIFY
+            name: apicast-environment
+      - name: APICAST_RESPONSE_CODES
+        valueFrom:
+          configMapKeyRef:
+            key: APICAST_RESPONSE_CODES
+            name: apicast-environment
+      - name: APICAST_CONFIGURATION_LOADER
+        value: lazy
+      - name: APICAST_CONFIGURATION_CACHE
+        value: "300"
+      - name: THREESCALE_DEPLOYMENT_ENV
+        value: production
+      - name: APICAST_OIDC_LOG_LEVEL
+        value: debug
+      - name: APICAST_LOG_LEVEL
+        value: debug
+      image: registry.redhat.io/3scale-amp2/apicast-gateway-rhel7@sha256:26700c6cb5f43fa8061cee274caef5561646995a0e7d803273f394d9cdda1391
+      imagePullPolicy: IfNotPresent
+      livenessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /status/live
+          port: 8090
+          scheme: HTTP
+        initialDelaySeconds: 10
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 5
+      name: apicast-production
+      ports:
+      - containerPort: 8080
+        protocol: TCP
+      - containerPort: 8090
+        protocol: TCP
+      - containerPort: 9421
+        name: metrics
+        protocol: TCP
+      readinessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /status/ready
+          port: 8090
+          scheme: HTTP
+        initialDelaySeconds: 15
+        periodSeconds: 30
+        successThreshold: 1
+        timeoutSeconds: 5
+      resources:
+        limits:
+          cpu: "1"
+          memory: 128Mi
+        requests:
+          cpu: 500m
+          memory: 64Mi
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000980000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-qpztx
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: threescale-registry-auth
+    - name: amp-dockercfg-pl5mb
+    initContainers:
+    - command:
+      - sh
+      - -c
+      - until $(curl --output /dev/null --silent --fail --head http://system-master:3000/status);
+        do sleep $SLEEP_SECONDS; done
+      env:
+      - name: SLEEP_SECONDS
+        value: "1"
+      image: registry.redhat.io/3scale-amp2/apicast-gateway-rhel7@sha256:26700c6cb5f43fa8061cee274caef5561646995a0e7d803273f394d9cdda1391
+      imagePullPolicy: Always
+      name: system-master-svc
+      resources: {}
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000980000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-qpztx
+        readOnly: true
+    nodeName: ocp4azu-sj2sl-worker-prod-brazilsouth1-lks8v
+    nodeSelector:
+      ambientes.dt.cl/prod: "true"
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000980000
+      seLinuxOptions:
+        level: s0:c31,c25
+    serviceAccount: amp
+    serviceAccountName: amp
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoSchedule
+      key: node.kubernetes.io/memory-pressure
+      operator: Exists
+    volumes:
+    - name: kube-api-access-qpztx
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-26T22:27:48Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-26T22:28:14Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-26T22:28:14Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-26T22:27:43Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://8ac9b90ee1fb661c98754230b055fc33233e85e83c4cc23e209190d46c679f3e
+      image: registry.redhat.io/3scale-amp2/apicast-gateway-rhel7:3scale2.7
+      imageID: registry.redhat.io/3scale-amp2/apicast-gateway-rhel7@sha256:26700c6cb5f43fa8061cee274caef5561646995a0e7d803273f394d9cdda1391
+      lastState: {}
+      name: apicast-production
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2024-07-26T22:27:48Z"
+    hostIP: 10.80.80.19
+    initContainerStatuses:
+    - containerID: cri-o://7998fc653a5e60e028e42c2ffb7516f93e1180b0fecbd3021282513f91e4231a
+      image: registry.redhat.io/3scale-amp2/apicast-gateway-rhel7:3scale2.7
+      imageID: registry.redhat.io/3scale-amp2/apicast-gateway-rhel7@sha256:26700c6cb5f43fa8061cee274caef5561646995a0e7d803273f394d9cdda1391
+      lastState: {}
+      name: system-master-svc
+      ready: true
+      restartCount: 0
+      state:
+        terminated:
+          containerID: cri-o://7998fc653a5e60e028e42c2ffb7516f93e1180b0fecbd3021282513f91e4231a
+          exitCode: 0
+          finishedAt: "2024-07-26T22:27:47Z"
+          reason: Completed
+          startedAt: "2024-07-26T22:27:47Z"
+    phase: Running
+    podIP: 10.131.19.162
+    podIPs:
+    - ip: 10.131.19.162
+    qosClass: Burstable
+    startTime: "2024-07-26T22:27:43Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.131.18.210"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.131.18.210"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/deployment-config.latest-version: "1"
+      openshift.io/deployment-config.name: apicast-staging
+      openshift.io/deployment.name: apicast-staging-1
+      openshift.io/generated-by: OpenShiftNewApp
+      openshift.io/scc: restricted
+      prometheus.io/port: "9421"
+      prometheus.io/scrape: "true"
+    creationTimestamp: "2024-07-23T20:01:12Z"
+    generateName: apicast-staging-1-
+    labels:
+      app: 3scale-api-management
+      deployment: apicast-staging-1
+      deploymentConfig: apicast-staging
+      deploymentconfig: apicast-staging
+      threescale_component: apicast
+      threescale_component_element: staging
+    name: apicast-staging-1-6ccph
+    namespace: 3scale
+    ownerReferences:
+    - apiVersion: v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicationController
+      name: apicast-staging-1
+      uid: 0dfec6e4-4dab-4bae-a30a-d673ae30c4b9
+    resourceVersion: "491646498"
+    uid: 2dec89ae-9aba-49d9-b077-9631e2d513a2
+  spec:
+    containers:
+    - env:
+      - name: THREESCALE_PORTAL_ENDPOINT
+        valueFrom:
+          secretKeyRef:
+            key: PROXY_CONFIGS_ENDPOINT
+            name: system-master-apicast
+      - name: BACKEND_ENDPOINT_OVERRIDE
+        valueFrom:
+          secretKeyRef:
+            key: service_endpoint
+            name: backend-listener
+      - name: APICAST_MANAGEMENT_API
+        valueFrom:
+          configMapKeyRef:
+            key: APICAST_MANAGEMENT_API
+            name: apicast-environment
+      - name: OPENSSL_VERIFY
+        valueFrom:
+          configMapKeyRef:
+            key: OPENSSL_VERIFY
+            name: apicast-environment
+      - name: APICAST_RESPONSE_CODES
+        valueFrom:
+          configMapKeyRef:
+            key: APICAST_RESPONSE_CODES
+            name: apicast-environment
+      - name: APICAST_CONFIGURATION_LOADER
+        value: lazy
+      - name: APICAST_CONFIGURATION_CACHE
+        value: "0"
+      - name: THREESCALE_DEPLOYMENT_ENV
+        value: staging
+      - name: APICAST_OIDC_LOG_LEVEL
+        value: debug
+      image: registry.redhat.io/3scale-amp2/apicast-gateway-rhel7@sha256:26700c6cb5f43fa8061cee274caef5561646995a0e7d803273f394d9cdda1391
+      imagePullPolicy: IfNotPresent
+      livenessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /status/live
+          port: 8090
+          scheme: HTTP
+        initialDelaySeconds: 10
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 5
+      name: apicast-staging
+      ports:
+      - containerPort: 8080
+        protocol: TCP
+      - containerPort: 8090
+        protocol: TCP
+      - containerPort: 9421
+        name: metrics
+        protocol: TCP
+      readinessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /status/ready
+          port: 8090
+          scheme: HTTP
+        initialDelaySeconds: 15
+        periodSeconds: 30
+        successThreshold: 1
+        timeoutSeconds: 5
+      resources:
+        limits:
+          cpu: 100m
+          memory: 128Mi
+        requests:
+          cpu: 50m
+          memory: 64Mi
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000980000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-q4c6d
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: threescale-registry-auth
+    - name: amp-dockercfg-pl5mb
+    nodeName: ocp4azu-sj2sl-worker-prod-brazilsouth1-lks8v
+    nodeSelector:
+      ambientes.dt.cl/prod: "true"
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000980000
+      seLinuxOptions:
+        level: s0:c31,c25
+    serviceAccount: amp
+    serviceAccountName: amp
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoSchedule
+      key: node.kubernetes.io/memory-pressure
+      operator: Exists
+    volumes:
+    - name: kube-api-access-q4c6d
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-23T20:01:12Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-23T20:01:42Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-23T20:01:42Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-23T20:01:12Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://58b2f248cc9af144650d31f14ab779e61fde667bd1597e27e4926d3fc1571f47
+      image: registry.redhat.io/3scale-amp2/apicast-gateway-rhel7:3scale2.7
+      imageID: registry.redhat.io/3scale-amp2/apicast-gateway-rhel7@sha256:26700c6cb5f43fa8061cee274caef5561646995a0e7d803273f394d9cdda1391
+      lastState: {}
+      name: apicast-staging
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2024-07-23T20:01:14Z"
+    hostIP: 10.80.80.19
+    phase: Running
+    podIP: 10.131.18.210
+    podIPs:
+    - ip: 10.131.18.210
+    qosClass: Burstable
+    startTime: "2024-07-23T20:01:12Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.128.20.31"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.128.20.31"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/deployment-config.latest-version: "1"
+      openshift.io/deployment-config.name: backend-cron
+      openshift.io/deployment.name: backend-cron-1
+      openshift.io/generated-by: OpenShiftNewApp
+      openshift.io/scc: restricted
+    creationTimestamp: "2023-06-04T23:50:52Z"
+    generateName: backend-cron-1-
+    labels:
+      app: 3scale-api-management
+      deployment: backend-cron-1
+      deploymentConfig: backend-cron
+      deploymentconfig: backend-cron
+      threescale_component: backend
+      threescale_component_element: cron
+    name: backend-cron-1-n24mg
+    namespace: 3scale
+    ownerReferences:
+    - apiVersion: v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicationController
+      name: backend-cron-1
+      uid: 7557d88b-6b5a-4b18-a56a-36362df12957
+    resourceVersion: "472847205"
+    uid: 70c8390d-334d-4bb7-b9b3-e01c6d214b21
+  spec:
+    containers:
+    - args:
+      - backend-cron
+      env:
+      - name: CONFIG_REDIS_PROXY
+        valueFrom:
+          secretKeyRef:
+            key: REDIS_STORAGE_URL
+            name: backend-redis
+      - name: CONFIG_REDIS_SENTINEL_HOSTS
+        valueFrom:
+          secretKeyRef:
+            key: REDIS_STORAGE_SENTINEL_HOSTS
+            name: backend-redis
+      - name: CONFIG_REDIS_SENTINEL_ROLE
+        valueFrom:
+          secretKeyRef:
+            key: REDIS_STORAGE_SENTINEL_ROLE
+            name: backend-redis
+      - name: CONFIG_QUEUES_MASTER_NAME
+        valueFrom:
+          secretKeyRef:
+            key: REDIS_QUEUES_URL
+            name: backend-redis
+      - name: CONFIG_QUEUES_SENTINEL_HOSTS
+        valueFrom:
+          secretKeyRef:
+            key: REDIS_QUEUES_SENTINEL_HOSTS
+            name: backend-redis
+      - name: CONFIG_QUEUES_SENTINEL_ROLE
+        valueFrom:
+          secretKeyRef:
+            key: REDIS_QUEUES_SENTINEL_ROLE
+            name: backend-redis
+      - name: RACK_ENV
+        valueFrom:
+          configMapKeyRef:
+            key: RACK_ENV
+            name: backend-environment
+      image: registry.redhat.io/3scale-amp2/backend-rhel7@sha256:d13c45ea48efd2a87cb5efb8b745b80a298cdb789e41995fbdedfcc0bfa6a5c5
+      imagePullPolicy: IfNotPresent
+      name: backend-cron
+      resources:
+        limits:
+          cpu: 150m
+          memory: 80Mi
+        requests:
+          cpu: 50m
+          memory: 40Mi
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000980000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-hjkd6
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: threescale-registry-auth
+    - name: amp-dockercfg-pl5mb
+    initContainers:
+    - command:
+      - /opt/app/entrypoint.sh
+      - sh
+      - -c
+      - until rake connectivity:redis_storage_queue_check; do sleep $SLEEP_SECONDS;
+        done
+      env:
+      - name: CONFIG_REDIS_PROXY
+        valueFrom:
+          secretKeyRef:
+            key: REDIS_STORAGE_URL
+            name: backend-redis
+      - name: CONFIG_REDIS_SENTINEL_HOSTS
+        valueFrom:
+          secretKeyRef:
+            key: REDIS_STORAGE_SENTINEL_HOSTS
+            name: backend-redis
+      - name: CONFIG_REDIS_SENTINEL_ROLE
+        valueFrom:
+          secretKeyRef:
+            key: REDIS_STORAGE_SENTINEL_ROLE
+            name: backend-redis
+      - name: CONFIG_QUEUES_MASTER_NAME
+        valueFrom:
+          secretKeyRef:
+            key: REDIS_QUEUES_URL
+            name: backend-redis
+      - name: CONFIG_QUEUES_SENTINEL_HOSTS
+        valueFrom:
+          secretKeyRef:
+            key: REDIS_QUEUES_SENTINEL_HOSTS
+            name: backend-redis
+      - name: CONFIG_QUEUES_SENTINEL_ROLE
+        valueFrom:
+          secretKeyRef:
+            key: REDIS_QUEUES_SENTINEL_ROLE
+            name: backend-redis
+      - name: RACK_ENV
+        valueFrom:
+          configMapKeyRef:
+            key: RACK_ENV
+            name: backend-environment
+      - name: SLEEP_SECONDS
+        value: "1"
+      image: registry.redhat.io/3scale-amp2/backend-rhel7@sha256:d13c45ea48efd2a87cb5efb8b745b80a298cdb789e41995fbdedfcc0bfa6a5c5
+      imagePullPolicy: Always
+      name: backend-redis-svc
+      resources: {}
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000980000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-hjkd6
+        readOnly: true
+    nodeName: ocp4azu-sj2sl-worker-prod-brazilsouth2-xbz5z
+    nodeSelector:
+      ambientes.dt.cl/prod: "true"
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000980000
+      seLinuxOptions:
+        level: s0:c31,c25
+    serviceAccount: amp
+    serviceAccountName: amp
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoSchedule
+      key: node.kubernetes.io/memory-pressure
+      operator: Exists
+    volumes:
+    - name: kube-api-access-hjkd6
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-06-04T23:53:07Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2023-06-04T23:53:08Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2023-06-04T23:53:08Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-06-04T23:50:52Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://06f08958707bf190c046c7ccafef71b74467d0824ee7b4e4a9463c65c5860380
+      image: registry.redhat.io/3scale-amp2/backend-rhel7@sha256:d13c45ea48efd2a87cb5efb8b745b80a298cdb789e41995fbdedfcc0bfa6a5c5
+      imageID: registry.redhat.io/3scale-amp2/backend-rhel7@sha256:d13c45ea48efd2a87cb5efb8b745b80a298cdb789e41995fbdedfcc0bfa6a5c5
+      lastState: {}
+      name: backend-cron
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2023-06-04T23:53:07Z"
+    hostIP: 10.80.80.23
+    initContainerStatuses:
+    - containerID: cri-o://6c0a089cdbede7233a54254f6f1531572d24fb0b836a8b1002451f290863c5d1
+      image: registry.redhat.io/3scale-amp2/backend-rhel7@sha256:d13c45ea48efd2a87cb5efb8b745b80a298cdb789e41995fbdedfcc0bfa6a5c5
+      imageID: registry.redhat.io/3scale-amp2/backend-rhel7@sha256:d13c45ea48efd2a87cb5efb8b745b80a298cdb789e41995fbdedfcc0bfa6a5c5
+      lastState: {}
+      name: backend-redis-svc
+      ready: true
+      restartCount: 0
+      state:
+        terminated:
+          containerID: cri-o://6c0a089cdbede7233a54254f6f1531572d24fb0b836a8b1002451f290863c5d1
+          exitCode: 0
+          finishedAt: "2023-06-04T23:53:07Z"
+          reason: Completed
+          startedAt: "2023-06-04T23:51:23Z"
+    phase: Running
+    podIP: 10.128.20.31
+    podIPs:
+    - ip: 10.128.20.31
+    qosClass: Burstable
+    startTime: "2023-06-04T23:50:52Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.130.22.34"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.130.22.34"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/deployment-config.latest-version: "1"
+      openshift.io/deployment-config.name: backend-listener
+      openshift.io/deployment.name: backend-listener-1
+      openshift.io/generated-by: OpenShiftNewApp
+      openshift.io/scc: restricted
+    creationTimestamp: "2023-06-04T23:50:52Z"
+    generateName: backend-listener-1-
+    labels:
+      app: 3scale-api-management
+      deployment: backend-listener-1
+      deploymentConfig: backend-listener
+      deploymentconfig: backend-listener
+      threescale_component: backend
+      threescale_component_element: listener
+    name: backend-listener-1-wm9kh
+    namespace: 3scale
+    ownerReferences:
+    - apiVersion: v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicationController
+      name: backend-listener-1
+      uid: 7f0a273e-0079-4178-ac87-d1d113a52c31
+    resourceVersion: "428583534"
+    uid: cdf00a12-cf82-49aa-882c-78a955097ecb
+  spec:
+    containers:
+    - args:
+      - bin/3scale_backend
+      - start
+      - -e
+      - production
+      - -p
+      - "3000"
+      - -x
+      - /dev/stdout
+      env:
+      - name: CONFIG_REDIS_PROXY
+        valueFrom:
+          secretKeyRef:
+            key: REDIS_STORAGE_URL
+            name: backend-redis
+      - name: CONFIG_REDIS_SENTINEL_HOSTS
+        valueFrom:
+          secretKeyRef:
+            key: REDIS_STORAGE_SENTINEL_HOSTS
+            name: backend-redis
+      - name: CONFIG_REDIS_SENTINEL_ROLE
+        valueFrom:
+          secretKeyRef:
+            key: REDIS_STORAGE_SENTINEL_ROLE
+            name: backend-redis
+      - name: CONFIG_QUEUES_MASTER_NAME
+        valueFrom:
+          secretKeyRef:
+            key: REDIS_QUEUES_URL
+            name: backend-redis
+      - name: CONFIG_QUEUES_SENTINEL_HOSTS
+        valueFrom:
+          secretKeyRef:
+            key: REDIS_QUEUES_SENTINEL_HOSTS
+            name: backend-redis
+      - name: CONFIG_QUEUES_SENTINEL_ROLE
+        valueFrom:
+          secretKeyRef:
+            key: REDIS_QUEUES_SENTINEL_ROLE
+            name: backend-redis
+      - name: RACK_ENV
+        valueFrom:
+          configMapKeyRef:
+            key: RACK_ENV
+            name: backend-environment
+      - name: PUMA_WORKERS
+        value: "16"
+      - name: CONFIG_INTERNAL_API_USER
+        valueFrom:
+          secretKeyRef:
+            key: username
+            name: backend-internal-api
+      - name: CONFIG_INTERNAL_API_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            key: password
+            name: backend-internal-api
+      image: registry.redhat.io/3scale-amp2/backend-rhel7@sha256:d13c45ea48efd2a87cb5efb8b745b80a298cdb789e41995fbdedfcc0bfa6a5c5
+      imagePullPolicy: IfNotPresent
+      livenessProbe:
+        failureThreshold: 3
+        initialDelaySeconds: 30
+        periodSeconds: 10
+        successThreshold: 1
+        tcpSocket:
+          port: 3000
+        timeoutSeconds: 1
+      name: backend-listener
+      ports:
+      - containerPort: 3000
+        protocol: TCP
+      readinessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /status
+          port: 3000
+          scheme: HTTP
+        initialDelaySeconds: 30
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 5
+      resources:
+        limits:
+          cpu: "1"
+          memory: 700Mi
+        requests:
+          cpu: 500m
+          memory: 550Mi
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000980000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-94kk7
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: threescale-registry-auth
+    - name: amp-dockercfg-pl5mb
+    nodeName: ocp4azu-sj2sl-worker-prod-brazilsouth2-gmw4z
+    nodeSelector:
+      ambientes.dt.cl/prod: "true"
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000980000
+      seLinuxOptions:
+        level: s0:c31,c25
+    serviceAccount: amp
+    serviceAccountName: amp
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoSchedule
+      key: node.kubernetes.io/memory-pressure
+      operator: Exists
+    volumes:
+    - name: kube-api-access-94kk7
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-06-04T23:50:52Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2023-06-04T23:52:32Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2023-06-04T23:52:32Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-06-04T23:50:52Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://9f6146a311ffcddfc9c0e58ea266521941738f6223b5b07af6a3708d23707c43
+      image: registry.redhat.io/3scale-amp2/backend-rhel7@sha256:d13c45ea48efd2a87cb5efb8b745b80a298cdb789e41995fbdedfcc0bfa6a5c5
+      imageID: registry.redhat.io/3scale-amp2/backend-rhel7@sha256:d13c45ea48efd2a87cb5efb8b745b80a298cdb789e41995fbdedfcc0bfa6a5c5
+      lastState: {}
+      name: backend-listener
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2023-06-04T23:51:56Z"
+    hostIP: 10.80.80.17
+    phase: Running
+    podIP: 10.130.22.34
+    podIPs:
+    - ip: 10.130.22.34
+    qosClass: Burstable
+    startTime: "2023-06-04T23:50:52Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.130.22.40"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.130.22.40"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/deployment-config.latest-version: "1"
+      openshift.io/deployment-config.name: backend-redis
+      openshift.io/deployment.name: backend-redis-1
+      openshift.io/generated-by: OpenShiftNewApp
+      openshift.io/scc: restricted
+    creationTimestamp: "2023-06-04T23:50:49Z"
+    generateName: backend-redis-1-
+    labels:
+      app: 3scale-api-management
+      deployment: backend-redis-1
+      deploymentConfig: backend-redis
+      deploymentconfig: backend-redis
+      threescale_component: backend
+      threescale_component_element: redis
+    name: backend-redis-1-rqqbh
+    namespace: 3scale
+    ownerReferences:
+    - apiVersion: v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicationController
+      name: backend-redis-1
+      uid: 6cbd9012-e2e3-40a9-b887-b609ba48f4d3
+    resourceVersion: "428583634"
+    uid: 5f96357a-c303-4cb9-a3fb-6f1147f3db9e
+  spec:
+    containers:
+    - args:
+      - /etc/redis.d/redis.conf
+      - --daemonize
+      - "no"
+      command:
+      - /opt/rh/rh-redis32/root/usr/bin/redis-server
+      image: registry.redhat.io/rhscl/redis-32-rhel7@sha256:a9bdf52384a222635efc0284db47d12fbde8c3d0fcb66517ba8eefad1d4e9dc9
+      imagePullPolicy: IfNotPresent
+      livenessProbe:
+        failureThreshold: 3
+        initialDelaySeconds: 10
+        periodSeconds: 10
+        successThreshold: 1
+        tcpSocket:
+          port: 6379
+        timeoutSeconds: 1
+      name: backend-redis
+      readinessProbe:
+        exec:
+          command:
+          - container-entrypoint
+          - bash
+          - -c
+          - redis-cli set liveness-probe "`date`" | grep OK
+        failureThreshold: 3
+        initialDelaySeconds: 10
+        periodSeconds: 30
+        successThreshold: 1
+        timeoutSeconds: 1
+      resources:
+        limits:
+          cpu: 200m
+          memory: 500Mi
+        requests:
+          cpu: 10m
+          memory: 100Mi
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000980000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/lib/redis/data
+        name: backend-redis-storage
+      - mountPath: /etc/redis.d/
+        name: redis-config
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-p47p2
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: threescale-registry-auth
+    - name: amp-dockercfg-pl5mb
+    nodeName: ocp4azu-sj2sl-worker-prod-brazilsouth2-gmw4z
+    nodeSelector:
+      ambientes.dt.cl/prod: "true"
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000980000
+      seLinuxOptions:
+        level: s0:c31,c25
+    serviceAccount: amp
+    serviceAccountName: amp
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoSchedule
+      key: node.kubernetes.io/memory-pressure
+      operator: Exists
+    volumes:
+    - name: backend-redis-storage
+      persistentVolumeClaim:
+        claimName: backend-redis-storage
+    - configMap:
+        defaultMode: 420
+        items:
+        - key: redis.conf
+          path: redis.conf
+        name: redis-config
+      name: redis-config
+    - name: kube-api-access-p47p2
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-06-04T23:50:49Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2023-06-04T23:53:06Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2023-06-04T23:53:06Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-06-04T23:50:49Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://e698d04ff0ba716f7c137ee079990a6fa82c7943b1ae9dfe166b279f39faab15
+      image: registry.redhat.io/rhscl/redis-32-rhel7@sha256:a9bdf52384a222635efc0284db47d12fbde8c3d0fcb66517ba8eefad1d4e9dc9
+      imageID: registry.redhat.io/rhscl/redis-32-rhel7@sha256:a9bdf52384a222635efc0284db47d12fbde8c3d0fcb66517ba8eefad1d4e9dc9
+      lastState: {}
+      name: backend-redis
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2023-06-04T23:52:32Z"
+    hostIP: 10.80.80.17
+    phase: Running
+    podIP: 10.130.22.40
+    podIPs:
+    - ip: 10.130.22.40
+    qosClass: Burstable
+    startTime: "2023-06-04T23:50:49Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.130.22.37"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.130.22.37"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/deployment-config.latest-version: "1"
+      openshift.io/deployment-config.name: backend-worker
+      openshift.io/deployment.name: backend-worker-1
+      openshift.io/generated-by: OpenShiftNewApp
+      openshift.io/scc: restricted
+    creationTimestamp: "2023-06-04T23:50:52Z"
+    generateName: backend-worker-1-
+    labels:
+      app: 3scale-api-management
+      deployment: backend-worker-1
+      deploymentConfig: backend-worker
+      deploymentconfig: backend-worker
+      threescale_component: backend
+      threescale_component_element: worker
+    name: backend-worker-1-t5vmk
+    namespace: 3scale
+    ownerReferences:
+    - apiVersion: v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicationController
+      name: backend-worker-1
+      uid: 1370f1c4-1c01-4495-9b02-e83eed9089aa
+    resourceVersion: "428583499"
+    uid: 5bfcd932-cef2-4643-8bf1-8360ae607383
+  spec:
+    containers:
+    - args:
+      - bin/3scale_backend_worker
+      - run
+      env:
+      - name: CONFIG_REDIS_PROXY
+        valueFrom:
+          secretKeyRef:
+            key: REDIS_STORAGE_URL
+            name: backend-redis
+      - name: CONFIG_REDIS_SENTINEL_HOSTS
+        valueFrom:
+          secretKeyRef:
+            key: REDIS_STORAGE_SENTINEL_HOSTS
+            name: backend-redis
+      - name: CONFIG_REDIS_SENTINEL_ROLE
+        valueFrom:
+          secretKeyRef:
+            key: REDIS_STORAGE_SENTINEL_ROLE
+            name: backend-redis
+      - name: CONFIG_QUEUES_MASTER_NAME
+        valueFrom:
+          secretKeyRef:
+            key: REDIS_QUEUES_URL
+            name: backend-redis
+      - name: CONFIG_QUEUES_SENTINEL_HOSTS
+        valueFrom:
+          secretKeyRef:
+            key: REDIS_QUEUES_SENTINEL_HOSTS
+            name: backend-redis
+      - name: CONFIG_QUEUES_SENTINEL_ROLE
+        valueFrom:
+          secretKeyRef:
+            key: REDIS_QUEUES_SENTINEL_ROLE
+            name: backend-redis
+      - name: RACK_ENV
+        valueFrom:
+          configMapKeyRef:
+            key: RACK_ENV
+            name: backend-environment
+      - name: CONFIG_EVENTS_HOOK
+        valueFrom:
+          secretKeyRef:
+            key: URL
+            name: system-events-hook
+      - name: CONFIG_EVENTS_HOOK_SHARED_SECRET
+        valueFrom:
+          secretKeyRef:
+            key: PASSWORD
+            name: system-events-hook
+      image: registry.redhat.io/3scale-amp2/backend-rhel7@sha256:d13c45ea48efd2a87cb5efb8b745b80a298cdb789e41995fbdedfcc0bfa6a5c5
+      imagePullPolicy: IfNotPresent
+      name: backend-worker
+      resources:
+        limits:
+          cpu: 400m
+          memory: 600Mi
+        requests:
+          cpu: 150m
+          memory: 50Mi
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000980000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-7h4f9
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: threescale-registry-auth
+    - name: amp-dockercfg-pl5mb
+    initContainers:
+    - command:
+      - /opt/app/entrypoint.sh
+      - sh
+      - -c
+      - until rake connectivity:redis_storage_queue_check; do sleep $SLEEP_SECONDS;
+        done
+      env:
+      - name: CONFIG_REDIS_PROXY
+        valueFrom:
+          secretKeyRef:
+            key: REDIS_STORAGE_URL
+            name: backend-redis
+      - name: CONFIG_REDIS_SENTINEL_HOSTS
+        valueFrom:
+          secretKeyRef:
+            key: REDIS_STORAGE_SENTINEL_HOSTS
+            name: backend-redis
+      - name: CONFIG_REDIS_SENTINEL_ROLE
+        valueFrom:
+          secretKeyRef:
+            key: REDIS_STORAGE_SENTINEL_ROLE
+            name: backend-redis
+      - name: CONFIG_QUEUES_MASTER_NAME
+        valueFrom:
+          secretKeyRef:
+            key: REDIS_QUEUES_URL
+            name: backend-redis
+      - name: CONFIG_QUEUES_SENTINEL_HOSTS
+        valueFrom:
+          secretKeyRef:
+            key: REDIS_QUEUES_SENTINEL_HOSTS
+            name: backend-redis
+      - name: CONFIG_QUEUES_SENTINEL_ROLE
+        valueFrom:
+          secretKeyRef:
+            key: REDIS_QUEUES_SENTINEL_ROLE
+            name: backend-redis
+      - name: RACK_ENV
+        valueFrom:
+          configMapKeyRef:
+            key: RACK_ENV
+            name: backend-environment
+      - name: SLEEP_SECONDS
+        value: "1"
+      image: registry.redhat.io/3scale-amp2/backend-rhel7@sha256:d13c45ea48efd2a87cb5efb8b745b80a298cdb789e41995fbdedfcc0bfa6a5c5
+      imagePullPolicy: Always
+      name: backend-redis-svc
+      resources: {}
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000980000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-7h4f9
+        readOnly: true
+    nodeName: ocp4azu-sj2sl-worker-prod-brazilsouth2-gmw4z
+    nodeSelector:
+      ambientes.dt.cl/prod: "true"
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000980000
+      seLinuxOptions:
+        level: s0:c31,c25
+    serviceAccount: amp
+    serviceAccountName: amp
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoSchedule
+      key: node.kubernetes.io/memory-pressure
+      operator: Exists
+    volumes:
+    - name: kube-api-access-7h4f9
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-06-04T23:53:07Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2023-06-04T23:53:08Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2023-06-04T23:53:08Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-06-04T23:50:52Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://322ad6255045c51026dcb73268b664319dfe41c46f600df061148c3fc3a52b23
+      image: registry.redhat.io/3scale-amp2/backend-rhel7@sha256:d13c45ea48efd2a87cb5efb8b745b80a298cdb789e41995fbdedfcc0bfa6a5c5
+      imageID: registry.redhat.io/3scale-amp2/backend-rhel7@sha256:d13c45ea48efd2a87cb5efb8b745b80a298cdb789e41995fbdedfcc0bfa6a5c5
+      lastState: {}
+      name: backend-worker
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2023-06-04T23:53:08Z"
+    hostIP: 10.80.80.17
+    initContainerStatuses:
+    - containerID: cri-o://f4bedb9b0ec42be19342c3109b0396e89f2927f0a266a515cee3071c97a8ca60
+      image: registry.redhat.io/3scale-amp2/backend-rhel7@sha256:d13c45ea48efd2a87cb5efb8b745b80a298cdb789e41995fbdedfcc0bfa6a5c5
+      imageID: registry.redhat.io/3scale-amp2/backend-rhel7@sha256:d13c45ea48efd2a87cb5efb8b745b80a298cdb789e41995fbdedfcc0bfa6a5c5
+      lastState: {}
+      name: backend-redis-svc
+      ready: true
+      restartCount: 0
+      state:
+        terminated:
+          containerID: cri-o://f4bedb9b0ec42be19342c3109b0396e89f2927f0a266a515cee3071c97a8ca60
+          exitCode: 0
+          finishedAt: "2023-06-04T23:53:07Z"
+          reason: Completed
+          startedAt: "2023-06-04T23:51:56Z"
+    phase: Running
+    podIP: 10.130.22.37
+    podIPs:
+    - ip: 10.130.22.37
+    qosClass: Burstable
+    startTime: "2023-06-04T23:50:52Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.131.18.165"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.131.18.165"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/deployment-config.latest-version: "1"
+      openshift.io/deployment-config.name: system-app
+      openshift.io/deployment.name: system-app-1
+      openshift.io/generated-by: OpenShiftNewApp
+      openshift.io/scc: restricted
+    creationTimestamp: "2024-07-23T17:21:48Z"
+    generateName: system-app-1-
+    labels:
+      app: 3scale-api-management
+      deployment: system-app-1
+      deploymentConfig: system-app
+      deploymentconfig: system-app
+      threescale_component: system
+      threescale_component_element: app
+    name: system-app-1-tzhsn
+    namespace: 3scale
+    ownerReferences:
+    - apiVersion: v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicationController
+      name: system-app-1
+      uid: 35c39291-bb40-4e5a-8c46-dc59caf6b26a
+    resourceVersion: "491646474"
+    uid: 5f177642-72b8-4ef1-8152-3a973fa9cc66
+  spec:
+    containers:
+    - args:
+      - env
+      - TENANT_MODE=master
+      - PORT=3002
+      - container-entrypoint
+      - bundle
+      - exec
+      - unicorn
+      - -c
+      - config/unicorn.rb
+      env:
+      - name: AMP_RELEASE
+        valueFrom:
+          configMapKeyRef:
+            key: AMP_RELEASE
+            name: system-environment
+      - name: APICAST_REGISTRY_URL
+        valueFrom:
+          configMapKeyRef:
+            key: APICAST_REGISTRY_URL
+            name: system-environment
+      - name: FORCE_SSL
+        valueFrom:
+          configMapKeyRef:
+            key: FORCE_SSL
+            name: system-environment
+      - name: PROVIDER_PLAN
+        valueFrom:
+          configMapKeyRef:
+            key: PROVIDER_PLAN
+            name: system-environment
+      - name: RAILS_ENV
+        valueFrom:
+          configMapKeyRef:
+            key: RAILS_ENV
+            name: system-environment
+      - name: RAILS_LOG_LEVEL
+        valueFrom:
+          configMapKeyRef:
+            key: RAILS_LOG_LEVEL
+            name: system-environment
+      - name: RAILS_LOG_TO_STDOUT
+        valueFrom:
+          configMapKeyRef:
+            key: RAILS_LOG_TO_STDOUT
+            name: system-environment
+      - name: SSL_CERT_DIR
+        valueFrom:
+          configMapKeyRef:
+            key: SSL_CERT_DIR
+            name: system-environment
+      - name: THINKING_SPHINX_PORT
+        valueFrom:
+          configMapKeyRef:
+            key: THINKING_SPHINX_PORT
+            name: system-environment
+      - name: THREESCALE_SANDBOX_PROXY_OPENSSL_VERIFY_MODE
+        valueFrom:
+          configMapKeyRef:
+            key: THREESCALE_SANDBOX_PROXY_OPENSSL_VERIFY_MODE
+            name: system-environment
+      - name: THREESCALE_SUPERDOMAIN
+        valueFrom:
+          configMapKeyRef:
+            key: THREESCALE_SUPERDOMAIN
+            name: system-environment
+      - name: DATABASE_URL
+        valueFrom:
+          secretKeyRef:
+            key: URL
+            name: system-database
+      - name: MASTER_DOMAIN
+        valueFrom:
+          secretKeyRef:
+            key: MASTER_DOMAIN
+            name: system-seed
+      - name: MASTER_USER
+        valueFrom:
+          secretKeyRef:
+            key: MASTER_USER
+            name: system-seed
+      - name: MASTER_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            key: MASTER_PASSWORD
+            name: system-seed
+      - name: ADMIN_ACCESS_TOKEN
+        valueFrom:
+          secretKeyRef:
+            key: ADMIN_ACCESS_TOKEN
+            name: system-seed
+      - name: USER_LOGIN
+        valueFrom:
+          secretKeyRef:
+            key: ADMIN_USER
+            name: system-seed
+      - name: USER_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            key: ADMIN_PASSWORD
+            name: system-seed
+      - name: USER_EMAIL
+        valueFrom:
+          secretKeyRef:
+            key: ADMIN_EMAIL
+            name: system-seed
+      - name: TENANT_NAME
+        valueFrom:
+          secretKeyRef:
+            key: TENANT_NAME
+            name: system-seed
+      - name: THINKING_SPHINX_ADDRESS
+        value: system-sphinx
+      - name: THINKING_SPHINX_CONFIGURATION_FILE
+        value: /tmp/sphinx.conf
+      - name: EVENTS_SHARED_SECRET
+        valueFrom:
+          secretKeyRef:
+            key: PASSWORD
+            name: system-events-hook
+      - name: RECAPTCHA_PUBLIC_KEY
+        valueFrom:
+          secretKeyRef:
+            key: PUBLIC_KEY
+            name: system-recaptcha
+      - name: RECAPTCHA_PRIVATE_KEY
+        valueFrom:
+          secretKeyRef:
+            key: PRIVATE_KEY
+            name: system-recaptcha
+      - name: SECRET_KEY_BASE
+        valueFrom:
+          secretKeyRef:
+            key: SECRET_KEY_BASE
+            name: system-app
+      - name: MEMCACHE_SERVERS
+        valueFrom:
+          secretKeyRef:
+            key: SERVERS
+            name: system-memcache
+      - name: REDIS_URL
+        valueFrom:
+          secretKeyRef:
+            key: URL
+            name: system-redis
+      - name: MESSAGE_BUS_REDIS_URL
+        valueFrom:
+          secretKeyRef:
+            key: MESSAGE_BUS_URL
+            name: system-redis
+      - name: REDIS_NAMESPACE
+        valueFrom:
+          secretKeyRef:
+            key: NAMESPACE
+            name: system-redis
+      - name: MESSAGE_BUS_REDIS_NAMESPACE
+        valueFrom:
+          secretKeyRef:
+            key: MESSAGE_BUS_NAMESPACE
+            name: system-redis
+      - name: REDIS_SENTINEL_HOSTS
+        valueFrom:
+          secretKeyRef:
+            key: SENTINEL_HOSTS
+            name: system-redis
+      - name: REDIS_SENTINEL_ROLE
+        valueFrom:
+          secretKeyRef:
+            key: SENTINEL_ROLE
+            name: system-redis
+      - name: MESSAGE_BUS_REDIS_SENTINEL_HOSTS
+        valueFrom:
+          secretKeyRef:
+            key: MESSAGE_BUS_SENTINEL_HOSTS
+            name: system-redis
+      - name: MESSAGE_BUS_REDIS_SENTINEL_ROLE
+        valueFrom:
+          secretKeyRef:
+            key: MESSAGE_BUS_SENTINEL_ROLE
+            name: system-redis
+      - name: BACKEND_REDIS_URL
+        valueFrom:
+          secretKeyRef:
+            key: REDIS_STORAGE_URL
+            name: backend-redis
+      - name: BACKEND_REDIS_SENTINEL_HOSTS
+        valueFrom:
+          secretKeyRef:
+            key: REDIS_STORAGE_SENTINEL_HOSTS
+            name: backend-redis
+      - name: BACKEND_REDIS_SENTINEL_ROLE
+        valueFrom:
+          secretKeyRef:
+            key: REDIS_STORAGE_SENTINEL_ROLE
+            name: backend-redis
+      - name: APICAST_BACKEND_ROOT_ENDPOINT
+        valueFrom:
+          secretKeyRef:
+            key: route_endpoint
+            name: backend-listener
+      - name: BACKEND_ROUTE
+        valueFrom:
+          secretKeyRef:
+            key: route_endpoint
+            name: backend-listener
+      - name: SMTP_ADDRESS
+        valueFrom:
+          configMapKeyRef:
+            key: address
+            name: smtp
+      - name: SMTP_USER_NAME
+        valueFrom:
+          configMapKeyRef:
+            key: username
+            name: smtp
+      - name: SMTP_PASSWORD
+        valueFrom:
+          configMapKeyRef:
+            key: password
+            name: smtp
+      - name: SMTP_DOMAIN
+        valueFrom:
+          configMapKeyRef:
+            key: domain
+            name: smtp
+      - name: SMTP_PORT
+        valueFrom:
+          configMapKeyRef:
+            key: port
+            name: smtp
+      - name: SMTP_AUTHENTICATION
+        valueFrom:
+          configMapKeyRef:
+            key: authentication
+            name: smtp
+      - name: SMTP_OPENSSL_VERIFY_MODE
+        valueFrom:
+          configMapKeyRef:
+            key: openssl.verify.mode
+            name: smtp
+      - name: APICAST_ACCESS_TOKEN
+        valueFrom:
+          secretKeyRef:
+            key: ACCESS_TOKEN
+            name: system-master-apicast
+      - name: ZYNC_AUTHENTICATION_TOKEN
+        valueFrom:
+          secretKeyRef:
+            key: ZYNC_AUTHENTICATION_TOKEN
+            name: zync
+      - name: CONFIG_INTERNAL_API_USER
+        valueFrom:
+          secretKeyRef:
+            key: username
+            name: backend-internal-api
+      - name: CONFIG_INTERNAL_API_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            key: password
+            name: backend-internal-api
+      image: registry.redhat.io/3scale-amp2/system-rhel7@sha256:abe1c074e975b6bf6a1f527a1820671636c393517f2f850f7299c24ae88ba2ab
+      imagePullPolicy: IfNotPresent
+      livenessProbe:
+        failureThreshold: 40
+        initialDelaySeconds: 40
+        periodSeconds: 10
+        successThreshold: 1
+        tcpSocket:
+          port: master
+        timeoutSeconds: 10
+      name: system-master
+      ports:
+      - containerPort: 3002
+        name: master
+        protocol: TCP
+      readinessProbe:
+        failureThreshold: 10
+        httpGet:
+          httpHeaders:
+          - name: X-Forwarded-Proto
+            value: https
+          path: /check.txt
+          port: master
+          scheme: HTTP
+        initialDelaySeconds: 60
+        periodSeconds: 30
+        successThreshold: 1
+        timeoutSeconds: 10
+      resources:
+        limits:
+          cpu: "1"
+          memory: 800Mi
+        requests:
+          cpu: 50m
+          memory: 600Mi
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000980000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /opt/system/public/system
+        name: system-storage
+      - mountPath: /opt/system-extra-configs
+        name: system-config
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-9q5xb
+        readOnly: true
+    - args:
+      - env
+      - TENANT_MODE=provider
+      - PORT=3000
+      - container-entrypoint
+      - bundle
+      - exec
+      - unicorn
+      - -c
+      - config/unicorn.rb
+      env:
+      - name: AMP_RELEASE
+        valueFrom:
+          configMapKeyRef:
+            key: AMP_RELEASE
+            name: system-environment
+      - name: APICAST_REGISTRY_URL
+        valueFrom:
+          configMapKeyRef:
+            key: APICAST_REGISTRY_URL
+            name: system-environment
+      - name: FORCE_SSL
+        valueFrom:
+          configMapKeyRef:
+            key: FORCE_SSL
+            name: system-environment
+      - name: PROVIDER_PLAN
+        valueFrom:
+          configMapKeyRef:
+            key: PROVIDER_PLAN
+            name: system-environment
+      - name: RAILS_ENV
+        valueFrom:
+          configMapKeyRef:
+            key: RAILS_ENV
+            name: system-environment
+      - name: RAILS_LOG_LEVEL
+        valueFrom:
+          configMapKeyRef:
+            key: RAILS_LOG_LEVEL
+            name: system-environment
+      - name: RAILS_LOG_TO_STDOUT
+        valueFrom:
+          configMapKeyRef:
+            key: RAILS_LOG_TO_STDOUT
+            name: system-environment
+      - name: SSL_CERT_DIR
+        valueFrom:
+          configMapKeyRef:
+            key: SSL_CERT_DIR
+            name: system-environment
+      - name: THINKING_SPHINX_PORT
+        valueFrom:
+          configMapKeyRef:
+            key: THINKING_SPHINX_PORT
+            name: system-environment
+      - name: THREESCALE_SANDBOX_PROXY_OPENSSL_VERIFY_MODE
+        valueFrom:
+          configMapKeyRef:
+            key: THREESCALE_SANDBOX_PROXY_OPENSSL_VERIFY_MODE
+            name: system-environment
+      - name: THREESCALE_SUPERDOMAIN
+        valueFrom:
+          configMapKeyRef:
+            key: THREESCALE_SUPERDOMAIN
+            name: system-environment
+      - name: DATABASE_URL
+        valueFrom:
+          secretKeyRef:
+            key: URL
+            name: system-database
+      - name: MASTER_DOMAIN
+        valueFrom:
+          secretKeyRef:
+            key: MASTER_DOMAIN
+            name: system-seed
+      - name: MASTER_USER
+        valueFrom:
+          secretKeyRef:
+            key: MASTER_USER
+            name: system-seed
+      - name: MASTER_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            key: MASTER_PASSWORD
+            name: system-seed
+      - name: ADMIN_ACCESS_TOKEN
+        valueFrom:
+          secretKeyRef:
+            key: ADMIN_ACCESS_TOKEN
+            name: system-seed
+      - name: USER_LOGIN
+        valueFrom:
+          secretKeyRef:
+            key: ADMIN_USER
+            name: system-seed
+      - name: USER_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            key: ADMIN_PASSWORD
+            name: system-seed
+      - name: USER_EMAIL
+        valueFrom:
+          secretKeyRef:
+            key: ADMIN_EMAIL
+            name: system-seed
+      - name: TENANT_NAME
+        valueFrom:
+          secretKeyRef:
+            key: TENANT_NAME
+            name: system-seed
+      - name: THINKING_SPHINX_ADDRESS
+        value: system-sphinx
+      - name: THINKING_SPHINX_CONFIGURATION_FILE
+        value: /tmp/sphinx.conf
+      - name: EVENTS_SHARED_SECRET
+        valueFrom:
+          secretKeyRef:
+            key: PASSWORD
+            name: system-events-hook
+      - name: RECAPTCHA_PUBLIC_KEY
+        valueFrom:
+          secretKeyRef:
+            key: PUBLIC_KEY
+            name: system-recaptcha
+      - name: RECAPTCHA_PRIVATE_KEY
+        valueFrom:
+          secretKeyRef:
+            key: PRIVATE_KEY
+            name: system-recaptcha
+      - name: SECRET_KEY_BASE
+        valueFrom:
+          secretKeyRef:
+            key: SECRET_KEY_BASE
+            name: system-app
+      - name: MEMCACHE_SERVERS
+        valueFrom:
+          secretKeyRef:
+            key: SERVERS
+            name: system-memcache
+      - name: REDIS_URL
+        valueFrom:
+          secretKeyRef:
+            key: URL
+            name: system-redis
+      - name: MESSAGE_BUS_REDIS_URL
+        valueFrom:
+          secretKeyRef:
+            key: MESSAGE_BUS_URL
+            name: system-redis
+      - name: REDIS_NAMESPACE
+        valueFrom:
+          secretKeyRef:
+            key: NAMESPACE
+            name: system-redis
+      - name: MESSAGE_BUS_REDIS_NAMESPACE
+        valueFrom:
+          secretKeyRef:
+            key: MESSAGE_BUS_NAMESPACE
+            name: system-redis
+      - name: REDIS_SENTINEL_HOSTS
+        valueFrom:
+          secretKeyRef:
+            key: SENTINEL_HOSTS
+            name: system-redis
+      - name: REDIS_SENTINEL_ROLE
+        valueFrom:
+          secretKeyRef:
+            key: SENTINEL_ROLE
+            name: system-redis
+      - name: MESSAGE_BUS_REDIS_SENTINEL_HOSTS
+        valueFrom:
+          secretKeyRef:
+            key: MESSAGE_BUS_SENTINEL_HOSTS
+            name: system-redis
+      - name: MESSAGE_BUS_REDIS_SENTINEL_ROLE
+        valueFrom:
+          secretKeyRef:
+            key: MESSAGE_BUS_SENTINEL_ROLE
+            name: system-redis
+      - name: BACKEND_REDIS_URL
+        valueFrom:
+          secretKeyRef:
+            key: REDIS_STORAGE_URL
+            name: backend-redis
+      - name: BACKEND_REDIS_SENTINEL_HOSTS
+        valueFrom:
+          secretKeyRef:
+            key: REDIS_STORAGE_SENTINEL_HOSTS
+            name: backend-redis
+      - name: BACKEND_REDIS_SENTINEL_ROLE
+        valueFrom:
+          secretKeyRef:
+            key: REDIS_STORAGE_SENTINEL_ROLE
+            name: backend-redis
+      - name: APICAST_BACKEND_ROOT_ENDPOINT
+        valueFrom:
+          secretKeyRef:
+            key: route_endpoint
+            name: backend-listener
+      - name: BACKEND_ROUTE
+        valueFrom:
+          secretKeyRef:
+            key: route_endpoint
+            name: backend-listener
+      - name: SMTP_ADDRESS
+        valueFrom:
+          configMapKeyRef:
+            key: address
+            name: smtp
+      - name: SMTP_USER_NAME
+        valueFrom:
+          configMapKeyRef:
+            key: username
+            name: smtp
+      - name: SMTP_PASSWORD
+        valueFrom:
+          configMapKeyRef:
+            key: password
+            name: smtp
+      - name: SMTP_DOMAIN
+        valueFrom:
+          configMapKeyRef:
+            key: domain
+            name: smtp
+      - name: SMTP_PORT
+        valueFrom:
+          configMapKeyRef:
+            key: port
+            name: smtp
+      - name: SMTP_AUTHENTICATION
+        valueFrom:
+          configMapKeyRef:
+            key: authentication
+            name: smtp
+      - name: SMTP_OPENSSL_VERIFY_MODE
+        valueFrom:
+          configMapKeyRef:
+            key: openssl.verify.mode
+            name: smtp
+      - name: APICAST_ACCESS_TOKEN
+        valueFrom:
+          secretKeyRef:
+            key: ACCESS_TOKEN
+            name: system-master-apicast
+      - name: ZYNC_AUTHENTICATION_TOKEN
+        valueFrom:
+          secretKeyRef:
+            key: ZYNC_AUTHENTICATION_TOKEN
+            name: zync
+      - name: CONFIG_INTERNAL_API_USER
+        valueFrom:
+          secretKeyRef:
+            key: username
+            name: backend-internal-api
+      - name: CONFIG_INTERNAL_API_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            key: password
+            name: backend-internal-api
+      image: registry.redhat.io/3scale-amp2/system-rhel7@sha256:abe1c074e975b6bf6a1f527a1820671636c393517f2f850f7299c24ae88ba2ab
+      imagePullPolicy: IfNotPresent
+      livenessProbe:
+        failureThreshold: 40
+        initialDelaySeconds: 40
+        periodSeconds: 10
+        successThreshold: 1
+        tcpSocket:
+          port: provider
+        timeoutSeconds: 10
+      name: system-provider
+      ports:
+      - containerPort: 3000
+        name: provider
+        protocol: TCP
+      readinessProbe:
+        failureThreshold: 10
+        httpGet:
+          httpHeaders:
+          - name: X-Forwarded-Proto
+            value: https
+          path: /check.txt
+          port: provider
+          scheme: HTTP
+        initialDelaySeconds: 60
+        periodSeconds: 30
+        successThreshold: 1
+        timeoutSeconds: 10
+      resources:
+        limits:
+          cpu: "1"
+          memory: 800Mi
+        requests:
+          cpu: 50m
+          memory: 600Mi
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000980000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /opt/system/public/system
+        name: system-storage
+      - mountPath: /opt/system-extra-configs
+        name: system-config
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-9q5xb
+        readOnly: true
+    - args:
+      - env
+      - PORT=3001
+      - container-entrypoint
+      - bundle
+      - exec
+      - unicorn
+      - -c
+      - config/unicorn.rb
+      env:
+      - name: AMP_RELEASE
+        valueFrom:
+          configMapKeyRef:
+            key: AMP_RELEASE
+            name: system-environment
+      - name: APICAST_REGISTRY_URL
+        valueFrom:
+          configMapKeyRef:
+            key: APICAST_REGISTRY_URL
+            name: system-environment
+      - name: FORCE_SSL
+        valueFrom:
+          configMapKeyRef:
+            key: FORCE_SSL
+            name: system-environment
+      - name: PROVIDER_PLAN
+        valueFrom:
+          configMapKeyRef:
+            key: PROVIDER_PLAN
+            name: system-environment
+      - name: RAILS_ENV
+        valueFrom:
+          configMapKeyRef:
+            key: RAILS_ENV
+            name: system-environment
+      - name: RAILS_LOG_LEVEL
+        valueFrom:
+          configMapKeyRef:
+            key: RAILS_LOG_LEVEL
+            name: system-environment
+      - name: RAILS_LOG_TO_STDOUT
+        valueFrom:
+          configMapKeyRef:
+            key: RAILS_LOG_TO_STDOUT
+            name: system-environment
+      - name: SSL_CERT_DIR
+        valueFrom:
+          configMapKeyRef:
+            key: SSL_CERT_DIR
+            name: system-environment
+      - name: THINKING_SPHINX_PORT
+        valueFrom:
+          configMapKeyRef:
+            key: THINKING_SPHINX_PORT
+            name: system-environment
+      - name: THREESCALE_SANDBOX_PROXY_OPENSSL_VERIFY_MODE
+        valueFrom:
+          configMapKeyRef:
+            key: THREESCALE_SANDBOX_PROXY_OPENSSL_VERIFY_MODE
+            name: system-environment
+      - name: THREESCALE_SUPERDOMAIN
+        valueFrom:
+          configMapKeyRef:
+            key: THREESCALE_SUPERDOMAIN
+            name: system-environment
+      - name: DATABASE_URL
+        valueFrom:
+          secretKeyRef:
+            key: URL
+            name: system-database
+      - name: MASTER_DOMAIN
+        valueFrom:
+          secretKeyRef:
+            key: MASTER_DOMAIN
+            name: system-seed
+      - name: MASTER_USER
+        valueFrom:
+          secretKeyRef:
+            key: MASTER_USER
+            name: system-seed
+      - name: MASTER_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            key: MASTER_PASSWORD
+            name: system-seed
+      - name: ADMIN_ACCESS_TOKEN
+        valueFrom:
+          secretKeyRef:
+            key: ADMIN_ACCESS_TOKEN
+            name: system-seed
+      - name: USER_LOGIN
+        valueFrom:
+          secretKeyRef:
+            key: ADMIN_USER
+            name: system-seed
+      - name: USER_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            key: ADMIN_PASSWORD
+            name: system-seed
+      - name: USER_EMAIL
+        valueFrom:
+          secretKeyRef:
+            key: ADMIN_EMAIL
+            name: system-seed
+      - name: TENANT_NAME
+        valueFrom:
+          secretKeyRef:
+            key: TENANT_NAME
+            name: system-seed
+      - name: THINKING_SPHINX_ADDRESS
+        value: system-sphinx
+      - name: THINKING_SPHINX_CONFIGURATION_FILE
+        value: /tmp/sphinx.conf
+      - name: EVENTS_SHARED_SECRET
+        valueFrom:
+          secretKeyRef:
+            key: PASSWORD
+            name: system-events-hook
+      - name: RECAPTCHA_PUBLIC_KEY
+        valueFrom:
+          secretKeyRef:
+            key: PUBLIC_KEY
+            name: system-recaptcha
+      - name: RECAPTCHA_PRIVATE_KEY
+        valueFrom:
+          secretKeyRef:
+            key: PRIVATE_KEY
+            name: system-recaptcha
+      - name: SECRET_KEY_BASE
+        valueFrom:
+          secretKeyRef:
+            key: SECRET_KEY_BASE
+            name: system-app
+      - name: MEMCACHE_SERVERS
+        valueFrom:
+          secretKeyRef:
+            key: SERVERS
+            name: system-memcache
+      - name: REDIS_URL
+        valueFrom:
+          secretKeyRef:
+            key: URL
+            name: system-redis
+      - name: MESSAGE_BUS_REDIS_URL
+        valueFrom:
+          secretKeyRef:
+            key: MESSAGE_BUS_URL
+            name: system-redis
+      - name: REDIS_NAMESPACE
+        valueFrom:
+          secretKeyRef:
+            key: NAMESPACE
+            name: system-redis
+      - name: MESSAGE_BUS_REDIS_NAMESPACE
+        valueFrom:
+          secretKeyRef:
+            key: MESSAGE_BUS_NAMESPACE
+            name: system-redis
+      - name: REDIS_SENTINEL_HOSTS
+        valueFrom:
+          secretKeyRef:
+            key: SENTINEL_HOSTS
+            name: system-redis
+      - name: REDIS_SENTINEL_ROLE
+        valueFrom:
+          secretKeyRef:
+            key: SENTINEL_ROLE
+            name: system-redis
+      - name: MESSAGE_BUS_REDIS_SENTINEL_HOSTS
+        valueFrom:
+          secretKeyRef:
+            key: MESSAGE_BUS_SENTINEL_HOSTS
+            name: system-redis
+      - name: MESSAGE_BUS_REDIS_SENTINEL_ROLE
+        valueFrom:
+          secretKeyRef:
+            key: MESSAGE_BUS_SENTINEL_ROLE
+            name: system-redis
+      - name: BACKEND_REDIS_URL
+        valueFrom:
+          secretKeyRef:
+            key: REDIS_STORAGE_URL
+            name: backend-redis
+      - name: BACKEND_REDIS_SENTINEL_HOSTS
+        valueFrom:
+          secretKeyRef:
+            key: REDIS_STORAGE_SENTINEL_HOSTS
+            name: backend-redis
+      - name: BACKEND_REDIS_SENTINEL_ROLE
+        valueFrom:
+          secretKeyRef:
+            key: REDIS_STORAGE_SENTINEL_ROLE
+            name: backend-redis
+      - name: APICAST_BACKEND_ROOT_ENDPOINT
+        valueFrom:
+          secretKeyRef:
+            key: route_endpoint
+            name: backend-listener
+      - name: BACKEND_ROUTE
+        valueFrom:
+          secretKeyRef:
+            key: route_endpoint
+            name: backend-listener
+      - name: SMTP_ADDRESS
+        valueFrom:
+          configMapKeyRef:
+            key: address
+            name: smtp
+      - name: SMTP_USER_NAME
+        valueFrom:
+          configMapKeyRef:
+            key: username
+            name: smtp
+      - name: SMTP_PASSWORD
+        valueFrom:
+          configMapKeyRef:
+            key: password
+            name: smtp
+      - name: SMTP_DOMAIN
+        valueFrom:
+          configMapKeyRef:
+            key: domain
+            name: smtp
+      - name: SMTP_PORT
+        valueFrom:
+          configMapKeyRef:
+            key: port
+            name: smtp
+      - name: SMTP_AUTHENTICATION
+        valueFrom:
+          configMapKeyRef:
+            key: authentication
+            name: smtp
+      - name: SMTP_OPENSSL_VERIFY_MODE
+        valueFrom:
+          configMapKeyRef:
+            key: openssl.verify.mode
+            name: smtp
+      - name: APICAST_ACCESS_TOKEN
+        valueFrom:
+          secretKeyRef:
+            key: ACCESS_TOKEN
+            name: system-master-apicast
+      - name: ZYNC_AUTHENTICATION_TOKEN
+        valueFrom:
+          secretKeyRef:
+            key: ZYNC_AUTHENTICATION_TOKEN
+            name: zync
+      - name: CONFIG_INTERNAL_API_USER
+        valueFrom:
+          secretKeyRef:
+            key: username
+            name: backend-internal-api
+      - name: CONFIG_INTERNAL_API_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            key: password
+            name: backend-internal-api
+      image: registry.redhat.io/3scale-amp2/system-rhel7@sha256:abe1c074e975b6bf6a1f527a1820671636c393517f2f850f7299c24ae88ba2ab
+      imagePullPolicy: IfNotPresent
+      livenessProbe:
+        failureThreshold: 40
+        initialDelaySeconds: 40
+        periodSeconds: 10
+        successThreshold: 1
+        tcpSocket:
+          port: developer
+        timeoutSeconds: 10
+      name: system-developer
+      ports:
+      - containerPort: 3001
+        name: developer
+        protocol: TCP
+      readinessProbe:
+        failureThreshold: 10
+        httpGet:
+          httpHeaders:
+          - name: X-Forwarded-Proto
+            value: https
+          path: /check.txt
+          port: developer
+          scheme: HTTP
+        initialDelaySeconds: 60
+        periodSeconds: 30
+        successThreshold: 1
+        timeoutSeconds: 10
+      resources:
+        limits:
+          cpu: "1"
+          memory: 800Mi
+        requests:
+          cpu: 50m
+          memory: 600Mi
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000980000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /opt/system/public/system
+        name: system-storage
+        readOnly: true
+      - mountPath: /opt/system-extra-configs
+        name: system-config
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-9q5xb
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: threescale-registry-auth
+    - name: amp-dockercfg-pl5mb
+    nodeName: ocp4azu-sj2sl-worker-prod-brazilsouth1-lks8v
+    nodeSelector:
+      ambientes.dt.cl/prod: "true"
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000980000
+      seLinuxOptions:
+        level: s0:c31,c25
+    serviceAccount: amp
+    serviceAccountName: amp
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoSchedule
+      key: node.kubernetes.io/memory-pressure
+      operator: Exists
+    volumes:
+    - name: system-storage
+      persistentVolumeClaim:
+        claimName: system-storage
+    - configMap:
+        defaultMode: 420
+        items:
+        - key: zync.yml
+          path: zync.yml
+        - key: rolling_updates.yml
+          path: rolling_updates.yml
+        - key: service_discovery.yml
+          path: service_discovery.yml
+        name: system
+      name: system-config
+    - name: kube-api-access-9q5xb
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-23T17:21:48Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-23T17:24:02Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-23T17:24:02Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-23T17:21:48Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://c67a1469ccef6a66cb13890df662cae35bc963f79809d23e478468f0db8a13cf
+      image: registry.redhat.io/3scale-amp2/system-rhel7@sha256:abe1c074e975b6bf6a1f527a1820671636c393517f2f850f7299c24ae88ba2ab
+      imageID: registry.redhat.io/3scale-amp2/system-rhel7@sha256:abe1c074e975b6bf6a1f527a1820671636c393517f2f850f7299c24ae88ba2ab
+      lastState: {}
+      name: system-developer
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2024-07-23T17:22:50Z"
+    - containerID: cri-o://4a27d7bf5544733e3c6a23df308eb6a8f59525f8531807be6d596c523c9b4577
+      image: registry.redhat.io/3scale-amp2/system-rhel7@sha256:abe1c074e975b6bf6a1f527a1820671636c393517f2f850f7299c24ae88ba2ab
+      imageID: registry.redhat.io/3scale-amp2/system-rhel7@sha256:abe1c074e975b6bf6a1f527a1820671636c393517f2f850f7299c24ae88ba2ab
+      lastState: {}
+      name: system-master
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2024-07-23T17:22:50Z"
+    - containerID: cri-o://94389b9974428a6aef5f97d3ee84bdf283ed63e1b12a2112ac7d7b4b5e60885b
+      image: registry.redhat.io/3scale-amp2/system-rhel7@sha256:abe1c074e975b6bf6a1f527a1820671636c393517f2f850f7299c24ae88ba2ab
+      imageID: registry.redhat.io/3scale-amp2/system-rhel7@sha256:abe1c074e975b6bf6a1f527a1820671636c393517f2f850f7299c24ae88ba2ab
+      lastState: {}
+      name: system-provider
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2024-07-23T17:22:50Z"
+    hostIP: 10.80.80.19
+    phase: Running
+    podIP: 10.131.18.165
+    podIPs:
+    - ip: 10.131.18.165
+    qosClass: Burstable
+    startTime: "2024-07-23T17:21:48Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.130.22.35"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.130.22.35"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/deployment-config.latest-version: "1"
+      openshift.io/deployment-config.name: system-memcache
+      openshift.io/deployment.name: system-memcache-1
+      openshift.io/generated-by: OpenShiftNewApp
+      openshift.io/scc: restricted
+    creationTimestamp: "2023-06-04T23:50:52Z"
+    generateName: system-memcache-1-
+    labels:
+      app: 3scale-api-management
+      deployment: system-memcache-1
+      deploymentConfig: system-memcache
+      deploymentconfig: system-memcache
+      threescale_component: system
+      threescale_component_element: memcache
+    name: system-memcache-1-rmbw9
+    namespace: 3scale
+    ownerReferences:
+    - apiVersion: v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicationController
+      name: system-memcache-1
+      uid: 71a2dc90-e312-4804-8b92-86cf28f594b2
+    resourceVersion: "428583574"
+    uid: aff7b529-81bb-4088-9451-646356345ae0
+  spec:
+    containers:
+    - command:
+      - memcached
+      - -m
+      - "64"
+      image: registry.redhat.io/3scale-amp2/memcached-rhel7@sha256:9c897d68eebb3a704756b9ddf32358c5b99786055aa1b94cc79be4b9cd3d3f03
+      imagePullPolicy: IfNotPresent
+      livenessProbe:
+        failureThreshold: 3
+        initialDelaySeconds: 10
+        periodSeconds: 10
+        successThreshold: 1
+        tcpSocket:
+          port: 11211
+        timeoutSeconds: 1
+      name: memcache
+      ports:
+      - containerPort: 11211
+        protocol: TCP
+      readinessProbe:
+        exec:
+          command:
+          - sh
+          - -c
+          - echo version | nc $HOSTNAME 11211 | grep VERSION
+        failureThreshold: 3
+        initialDelaySeconds: 10
+        periodSeconds: 30
+        successThreshold: 1
+        timeoutSeconds: 5
+      resources:
+        limits:
+          cpu: 250m
+          memory: 96Mi
+        requests:
+          cpu: 50m
+          memory: 64Mi
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000980000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-mcg4x
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: threescale-registry-auth
+    - name: amp-dockercfg-pl5mb
+    nodeName: ocp4azu-sj2sl-worker-prod-brazilsouth2-gmw4z
+    nodeSelector:
+      ambientes.dt.cl/prod: "true"
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000980000
+      seLinuxOptions:
+        level: s0:c31,c25
+    serviceAccount: amp
+    serviceAccountName: amp
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoSchedule
+      key: node.kubernetes.io/memory-pressure
+      operator: Exists
+    volumes:
+    - name: kube-api-access-mcg4x
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-06-04T23:50:52Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2023-06-04T23:52:23Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2023-06-04T23:52:23Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-06-04T23:50:52Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://e548fe3af014cbbef7eb03815f7968046514d2b3d909cda9c5d3d7437adc8b94
+      image: registry.redhat.io/3scale-amp2/memcached-rhel7@sha256:9c897d68eebb3a704756b9ddf32358c5b99786055aa1b94cc79be4b9cd3d3f03
+      imageID: registry.redhat.io/3scale-amp2/memcached-rhel7@sha256:9c897d68eebb3a704756b9ddf32358c5b99786055aa1b94cc79be4b9cd3d3f03
+      lastState: {}
+      name: memcache
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2023-06-04T23:51:56Z"
+    hostIP: 10.80.80.17
+    phase: Running
+    podIP: 10.130.22.35
+    podIPs:
+    - ip: 10.130.22.35
+    qosClass: Burstable
+    startTime: "2023-06-04T23:50:52Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.130.22.42"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.130.22.42"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/deployment-config.latest-version: "1"
+      openshift.io/deployment-config.name: system-mysql
+      openshift.io/deployment.name: system-mysql-1
+      openshift.io/generated-by: OpenShiftNewApp
+      openshift.io/scc: restricted
+    creationTimestamp: "2023-06-04T23:50:49Z"
+    generateName: system-mysql-1-
+    labels:
+      app: 3scale-api-management
+      deployment: system-mysql-1
+      deploymentConfig: system-mysql
+      deploymentconfig: system-mysql
+      threescale_component: system
+      threescale_component_element: mysql
+    name: system-mysql-1-5w2f8
+    namespace: 3scale
+    ownerReferences:
+    - apiVersion: v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicationController
+      name: system-mysql-1
+      uid: a1f721dd-dd75-4372-bace-087baf54b780
+    resourceVersion: "428583655"
+    uid: 8cd2b635-a76f-4e6b-b7a0-1c43d303a591
+  spec:
+    containers:
+    - env:
+      - name: MYSQL_USER
+        valueFrom:
+          secretKeyRef:
+            key: DB_USER
+            name: system-database
+      - name: MYSQL_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            key: DB_PASSWORD
+            name: system-database
+      - name: MYSQL_DATABASE
+        value: system
+      - name: MYSQL_ROOT_PASSWORD
+        value: jmba5xl1
+      - name: MYSQL_LOWER_CASE_TABLE_NAMES
+        value: "1"
+      - name: MYSQL_DEFAULTS_FILE
+        value: /etc/my-extra/my.cnf
+      image: registry.redhat.io/rhscl/mysql-57-rhel7@sha256:9a781abe7581cc141e14a7e404ec34125b3e89c008b14f4e7b41e094fd3049fe
+      imagePullPolicy: IfNotPresent
+      livenessProbe:
+        failureThreshold: 3
+        initialDelaySeconds: 30
+        periodSeconds: 10
+        successThreshold: 1
+        tcpSocket:
+          port: 3306
+        timeoutSeconds: 1
+      name: system-mysql
+      ports:
+      - containerPort: 3306
+        protocol: TCP
+      readinessProbe:
+        exec:
+          command:
+          - /bin/sh
+          - -i
+          - -c
+          - MYSQL_PWD="$MYSQL_PASSWORD" mysql -h 127.0.0.1 -u $MYSQL_USER -D $MYSQL_DATABASE
+            -e 'SELECT 1'
+        failureThreshold: 3
+        initialDelaySeconds: 10
+        periodSeconds: 30
+        successThreshold: 1
+        timeoutSeconds: 5
+      resources:
+        limits:
+          memory: 2Gi
+        requests:
+          cpu: 250m
+          memory: 512Mi
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000980000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/lib/mysql/data
+        name: mysql-storage
+      - mountPath: /etc/my-extra.d
+        name: mysql-extra-conf
+      - mountPath: /etc/my-extra
+        name: mysql-main-conf
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-xp85z
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: threescale-registry-auth
+    - name: amp-dockercfg-pl5mb
+    nodeName: ocp4azu-sj2sl-worker-prod-brazilsouth2-gmw4z
+    nodeSelector:
+      ambientes.dt.cl/prod: "true"
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000980000
+      seLinuxOptions:
+        level: s0:c31,c25
+    serviceAccount: amp
+    serviceAccountName: amp
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoSchedule
+      key: node.kubernetes.io/memory-pressure
+      operator: Exists
+    volumes:
+    - name: mysql-storage
+      persistentVolumeClaim:
+        claimName: mysql-storage
+    - configMap:
+        defaultMode: 420
+        name: mysql-extra-conf
+      name: mysql-extra-conf
+    - configMap:
+        defaultMode: 420
+        name: mysql-main-conf
+      name: mysql-main-conf
+    - name: kube-api-access-xp85z
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-06-04T23:50:49Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2023-06-04T23:52:48Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2023-06-04T23:52:48Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-06-04T23:50:49Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://7e47d5bb28d6e1731ce2589e210fd9a3a7f9b119268f1b517798c58c5f3b01da
+      image: registry.redhat.io/rhscl/mysql-57-rhel7@sha256:9a781abe7581cc141e14a7e404ec34125b3e89c008b14f4e7b41e094fd3049fe
+      imageID: registry.redhat.io/rhscl/mysql-57-rhel7@sha256:9a781abe7581cc141e14a7e404ec34125b3e89c008b14f4e7b41e094fd3049fe
+      lastState: {}
+      name: system-mysql
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2023-06-04T23:52:32Z"
+    hostIP: 10.80.80.17
+    phase: Running
+    podIP: 10.130.22.42
+    podIPs:
+    - ip: 10.130.22.42
+    qosClass: Burstable
+    startTime: "2023-06-04T23:50:49Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.130.22.41"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.130.22.41"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/deployment-config.latest-version: "1"
+      openshift.io/deployment-config.name: system-redis
+      openshift.io/deployment.name: system-redis-1
+      openshift.io/generated-by: OpenShiftNewApp
+      openshift.io/scc: restricted
+    creationTimestamp: "2023-06-04T23:50:49Z"
+    generateName: system-redis-1-
+    labels:
+      app: 3scale-api-management
+      deployment: system-redis-1
+      deploymentConfig: system-redis
+      deploymentconfig: system-redis
+      threescale_component: system
+      threescale_component_element: redis
+    name: system-redis-1-dkmvs
+    namespace: 3scale
+    ownerReferences:
+    - apiVersion: v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicationController
+      name: system-redis-1
+      uid: 816cc8a1-f827-4588-90f0-b7d865f50f16
+    resourceVersion: "428583515"
+    uid: 65ab8f00-2182-461e-bd3f-5a3069dde435
+  spec:
+    containers:
+    - args:
+      - /etc/redis.d/redis.conf
+      - --daemonize
+      - "no"
+      command:
+      - /opt/rh/rh-redis32/root/usr/bin/redis-server
+      image: registry.redhat.io/rhscl/redis-32-rhel7@sha256:a9bdf52384a222635efc0284db47d12fbde8c3d0fcb66517ba8eefad1d4e9dc9
+      imagePullPolicy: IfNotPresent
+      livenessProbe:
+        failureThreshold: 3
+        initialDelaySeconds: 10
+        periodSeconds: 5
+        successThreshold: 1
+        tcpSocket:
+          port: 6379
+        timeoutSeconds: 1
+      name: system-redis
+      readinessProbe:
+        exec:
+          command:
+          - container-entrypoint
+          - bash
+          - -c
+          - redis-cli set liveness-probe "`date`" | grep OK
+        failureThreshold: 3
+        initialDelaySeconds: 30
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 5
+      resources:
+        limits:
+          cpu: 500m
+          memory: 32Gi
+        requests:
+          cpu: 150m
+          memory: 256Mi
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000980000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/lib/redis/data
+        name: system-redis-storage
+      - mountPath: /etc/redis.d/
+        name: redis-config
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-5tnpv
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: threescale-registry-auth
+    - name: amp-dockercfg-pl5mb
+    nodeName: ocp4azu-sj2sl-worker-prod-brazilsouth2-gmw4z
+    nodeSelector:
+      ambientes.dt.cl/prod: "true"
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000980000
+      seLinuxOptions:
+        level: s0:c31,c25
+    serviceAccount: amp
+    serviceAccountName: amp
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoSchedule
+      key: node.kubernetes.io/memory-pressure
+      operator: Exists
+    volumes:
+    - name: system-redis-storage
+      persistentVolumeClaim:
+        claimName: system-redis-storage
+    - configMap:
+        defaultMode: 420
+        items:
+        - key: redis.conf
+          path: redis.conf
+        name: redis-config
+      name: redis-config
+    - name: kube-api-access-5tnpv
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-06-04T23:50:49Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2023-06-04T23:53:04Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2023-06-04T23:53:04Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-06-04T23:50:49Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://dfa227b5551575bdd7d9e4e582751d2c7172c5930dfae1490e9e50de5457967b
+      image: registry.redhat.io/rhscl/redis-32-rhel7@sha256:a9bdf52384a222635efc0284db47d12fbde8c3d0fcb66517ba8eefad1d4e9dc9
+      imageID: registry.redhat.io/rhscl/redis-32-rhel7@sha256:a9bdf52384a222635efc0284db47d12fbde8c3d0fcb66517ba8eefad1d4e9dc9
+      lastState: {}
+      name: system-redis
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2023-06-04T23:52:32Z"
+    hostIP: 10.80.80.17
+    phase: Running
+    podIP: 10.130.22.41
+    podIPs:
+    - ip: 10.130.22.41
+    qosClass: Burstable
+    startTime: "2023-06-04T23:50:49Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.130.22.38"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.130.22.38"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/deployment-config.latest-version: "1"
+      openshift.io/deployment-config.name: system-sidekiq
+      openshift.io/deployment.name: system-sidekiq-1
+      openshift.io/generated-by: OpenShiftNewApp
+      openshift.io/scc: restricted
+    creationTimestamp: "2023-06-04T23:50:53Z"
+    generateName: system-sidekiq-1-
+    labels:
+      app: 3scale-api-management
+      deployment: system-sidekiq-1
+      deploymentConfig: system-sidekiq
+      deploymentconfig: system-sidekiq
+      threescale_component: system
+      threescale_component_element: sidekiq
+    name: system-sidekiq-1-q89m7
+    namespace: 3scale
+    ownerReferences:
+    - apiVersion: v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicationController
+      name: system-sidekiq-1
+      uid: 038d346e-2dd4-4008-89ad-1319d6c5c83d
+    resourceVersion: "494378104"
+    uid: 3d918968-7812-4c74-af4b-549729455d2b
+  spec:
+    containers:
+    - args:
+      - rake
+      - sidekiq:worker
+      - RAILS_MAX_THREADS=25
+      env:
+      - name: AMP_RELEASE
+        valueFrom:
+          configMapKeyRef:
+            key: AMP_RELEASE
+            name: system-environment
+      - name: APICAST_REGISTRY_URL
+        valueFrom:
+          configMapKeyRef:
+            key: APICAST_REGISTRY_URL
+            name: system-environment
+      - name: FORCE_SSL
+        valueFrom:
+          configMapKeyRef:
+            key: FORCE_SSL
+            name: system-environment
+      - name: PROVIDER_PLAN
+        valueFrom:
+          configMapKeyRef:
+            key: PROVIDER_PLAN
+            name: system-environment
+      - name: RAILS_ENV
+        valueFrom:
+          configMapKeyRef:
+            key: RAILS_ENV
+            name: system-environment
+      - name: RAILS_LOG_LEVEL
+        valueFrom:
+          configMapKeyRef:
+            key: RAILS_LOG_LEVEL
+            name: system-environment
+      - name: RAILS_LOG_TO_STDOUT
+        valueFrom:
+          configMapKeyRef:
+            key: RAILS_LOG_TO_STDOUT
+            name: system-environment
+      - name: SSL_CERT_DIR
+        valueFrom:
+          configMapKeyRef:
+            key: SSL_CERT_DIR
+            name: system-environment
+      - name: THINKING_SPHINX_PORT
+        valueFrom:
+          configMapKeyRef:
+            key: THINKING_SPHINX_PORT
+            name: system-environment
+      - name: THREESCALE_SANDBOX_PROXY_OPENSSL_VERIFY_MODE
+        valueFrom:
+          configMapKeyRef:
+            key: THREESCALE_SANDBOX_PROXY_OPENSSL_VERIFY_MODE
+            name: system-environment
+      - name: THREESCALE_SUPERDOMAIN
+        valueFrom:
+          configMapKeyRef:
+            key: THREESCALE_SUPERDOMAIN
+            name: system-environment
+      - name: DATABASE_URL
+        valueFrom:
+          secretKeyRef:
+            key: URL
+            name: system-database
+      - name: MASTER_DOMAIN
+        valueFrom:
+          secretKeyRef:
+            key: MASTER_DOMAIN
+            name: system-seed
+      - name: MASTER_USER
+        valueFrom:
+          secretKeyRef:
+            key: MASTER_USER
+            name: system-seed
+      - name: MASTER_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            key: MASTER_PASSWORD
+            name: system-seed
+      - name: ADMIN_ACCESS_TOKEN
+        valueFrom:
+          secretKeyRef:
+            key: ADMIN_ACCESS_TOKEN
+            name: system-seed
+      - name: USER_LOGIN
+        valueFrom:
+          secretKeyRef:
+            key: ADMIN_USER
+            name: system-seed
+      - name: USER_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            key: ADMIN_PASSWORD
+            name: system-seed
+      - name: USER_EMAIL
+        valueFrom:
+          secretKeyRef:
+            key: ADMIN_EMAIL
+            name: system-seed
+      - name: TENANT_NAME
+        valueFrom:
+          secretKeyRef:
+            key: TENANT_NAME
+            name: system-seed
+      - name: THINKING_SPHINX_ADDRESS
+        value: system-sphinx
+      - name: THINKING_SPHINX_CONFIGURATION_FILE
+        value: /tmp/sphinx.conf
+      - name: EVENTS_SHARED_SECRET
+        valueFrom:
+          secretKeyRef:
+            key: PASSWORD
+            name: system-events-hook
+      - name: RECAPTCHA_PUBLIC_KEY
+        valueFrom:
+          secretKeyRef:
+            key: PUBLIC_KEY
+            name: system-recaptcha
+      - name: RECAPTCHA_PRIVATE_KEY
+        valueFrom:
+          secretKeyRef:
+            key: PRIVATE_KEY
+            name: system-recaptcha
+      - name: SECRET_KEY_BASE
+        valueFrom:
+          secretKeyRef:
+            key: SECRET_KEY_BASE
+            name: system-app
+      - name: MEMCACHE_SERVERS
+        valueFrom:
+          secretKeyRef:
+            key: SERVERS
+            name: system-memcache
+      - name: REDIS_URL
+        valueFrom:
+          secretKeyRef:
+            key: URL
+            name: system-redis
+      - name: MESSAGE_BUS_REDIS_URL
+        valueFrom:
+          secretKeyRef:
+            key: MESSAGE_BUS_URL
+            name: system-redis
+      - name: REDIS_NAMESPACE
+        valueFrom:
+          secretKeyRef:
+            key: NAMESPACE
+            name: system-redis
+      - name: MESSAGE_BUS_REDIS_NAMESPACE
+        valueFrom:
+          secretKeyRef:
+            key: MESSAGE_BUS_NAMESPACE
+            name: system-redis
+      - name: REDIS_SENTINEL_HOSTS
+        valueFrom:
+          secretKeyRef:
+            key: SENTINEL_HOSTS
+            name: system-redis
+      - name: REDIS_SENTINEL_ROLE
+        valueFrom:
+          secretKeyRef:
+            key: SENTINEL_ROLE
+            name: system-redis
+      - name: MESSAGE_BUS_REDIS_SENTINEL_HOSTS
+        valueFrom:
+          secretKeyRef:
+            key: MESSAGE_BUS_SENTINEL_HOSTS
+            name: system-redis
+      - name: MESSAGE_BUS_REDIS_SENTINEL_ROLE
+        valueFrom:
+          secretKeyRef:
+            key: MESSAGE_BUS_SENTINEL_ROLE
+            name: system-redis
+      - name: BACKEND_REDIS_URL
+        valueFrom:
+          secretKeyRef:
+            key: REDIS_STORAGE_URL
+            name: backend-redis
+      - name: BACKEND_REDIS_SENTINEL_HOSTS
+        valueFrom:
+          secretKeyRef:
+            key: REDIS_STORAGE_SENTINEL_HOSTS
+            name: backend-redis
+      - name: BACKEND_REDIS_SENTINEL_ROLE
+        valueFrom:
+          secretKeyRef:
+            key: REDIS_STORAGE_SENTINEL_ROLE
+            name: backend-redis
+      - name: APICAST_BACKEND_ROOT_ENDPOINT
+        valueFrom:
+          secretKeyRef:
+            key: route_endpoint
+            name: backend-listener
+      - name: BACKEND_ROUTE
+        valueFrom:
+          secretKeyRef:
+            key: route_endpoint
+            name: backend-listener
+      - name: SMTP_ADDRESS
+        valueFrom:
+          configMapKeyRef:
+            key: address
+            name: smtp
+      - name: SMTP_USER_NAME
+        valueFrom:
+          configMapKeyRef:
+            key: username
+            name: smtp
+      - name: SMTP_PASSWORD
+        valueFrom:
+          configMapKeyRef:
+            key: password
+            name: smtp
+      - name: SMTP_DOMAIN
+        valueFrom:
+          configMapKeyRef:
+            key: domain
+            name: smtp
+      - name: SMTP_PORT
+        valueFrom:
+          configMapKeyRef:
+            key: port
+            name: smtp
+      - name: SMTP_AUTHENTICATION
+        valueFrom:
+          configMapKeyRef:
+            key: authentication
+            name: smtp
+      - name: SMTP_OPENSSL_VERIFY_MODE
+        valueFrom:
+          configMapKeyRef:
+            key: openssl.verify.mode
+            name: smtp
+      - name: APICAST_ACCESS_TOKEN
+        valueFrom:
+          secretKeyRef:
+            key: ACCESS_TOKEN
+            name: system-master-apicast
+      - name: ZYNC_AUTHENTICATION_TOKEN
+        valueFrom:
+          secretKeyRef:
+            key: ZYNC_AUTHENTICATION_TOKEN
+            name: zync
+      - name: CONFIG_INTERNAL_API_USER
+        valueFrom:
+          secretKeyRef:
+            key: username
+            name: backend-internal-api
+      - name: CONFIG_INTERNAL_API_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            key: password
+            name: backend-internal-api
+      image: registry.redhat.io/3scale-amp2/system-rhel7@sha256:abe1c074e975b6bf6a1f527a1820671636c393517f2f850f7299c24ae88ba2ab
+      imagePullPolicy: IfNotPresent
+      name: system-sidekiq
+      resources:
+        limits:
+          cpu: "1"
+          memory: 2Gi
+        requests:
+          cpu: 100m
+          memory: 500Mi
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000980000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /opt/system/public/system
+        name: system-storage
+      - mountPath: /tmp
+        name: system-tmp
+      - mountPath: /opt/system-extra-configs
+        name: system-config
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-lvr5x
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: threescale-registry-auth
+    - name: amp-dockercfg-pl5mb
+    initContainers:
+    - command:
+      - bash
+      - -c
+      - bundle exec sh -c "until rake boot:redis && curl --output /dev/null --silent
+        --fail --head http://system-master:3000/status; do sleep $SLEEP_SECONDS; done"
+      env:
+      - name: REDIS_URL
+        valueFrom:
+          secretKeyRef:
+            key: URL
+            name: system-redis
+      - name: MESSAGE_BUS_REDIS_URL
+        valueFrom:
+          secretKeyRef:
+            key: MESSAGE_BUS_URL
+            name: system-redis
+      - name: REDIS_NAMESPACE
+        valueFrom:
+          secretKeyRef:
+            key: NAMESPACE
+            name: system-redis
+      - name: MESSAGE_BUS_REDIS_NAMESPACE
+        valueFrom:
+          secretKeyRef:
+            key: MESSAGE_BUS_NAMESPACE
+            name: system-redis
+      - name: REDIS_SENTINEL_HOSTS
+        valueFrom:
+          secretKeyRef:
+            key: SENTINEL_HOSTS
+            name: system-redis
+      - name: REDIS_SENTINEL_ROLE
+        valueFrom:
+          secretKeyRef:
+            key: SENTINEL_ROLE
+            name: system-redis
+      - name: MESSAGE_BUS_REDIS_SENTINEL_HOSTS
+        valueFrom:
+          secretKeyRef:
+            key: MESSAGE_BUS_SENTINEL_HOSTS
+            name: system-redis
+      - name: MESSAGE_BUS_REDIS_SENTINEL_ROLE
+        valueFrom:
+          secretKeyRef:
+            key: MESSAGE_BUS_SENTINEL_ROLE
+            name: system-redis
+      - name: SLEEP_SECONDS
+        value: "1"
+      image: registry.redhat.io/3scale-amp2/system-rhel7@sha256:abe1c074e975b6bf6a1f527a1820671636c393517f2f850f7299c24ae88ba2ab
+      imagePullPolicy: Always
+      name: check-svc
+      resources: {}
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000980000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-lvr5x
+        readOnly: true
+    nodeName: ocp4azu-sj2sl-worker-prod-brazilsouth2-gmw4z
+    nodeSelector:
+      ambientes.dt.cl/prod: "true"
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000980000
+      seLinuxOptions:
+        level: s0:c31,c25
+    serviceAccount: amp
+    serviceAccountName: amp
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoSchedule
+      key: node.kubernetes.io/memory-pressure
+      operator: Exists
+    volumes:
+    - emptyDir:
+        medium: Memory
+      name: system-tmp
+    - name: system-storage
+      persistentVolumeClaim:
+        claimName: system-storage
+    - configMap:
+        defaultMode: 420
+        items:
+        - key: zync.yml
+          path: zync.yml
+        - key: rolling_updates.yml
+          path: rolling_updates.yml
+        - key: service_discovery.yml
+          path: service_discovery.yml
+        name: system
+      name: system-config
+    - name: kube-api-access-lvr5x
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-06-04T23:55:31Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2024-08-02T08:03:51Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2024-08-02T08:03:51Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-06-04T23:50:53Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://1c87ddcb34a20bdcfda3ea4f8f43169fe2692f3dfdf462bfd65d1d570e6af2c0
+      image: registry.redhat.io/3scale-amp2/system-rhel7@sha256:abe1c074e975b6bf6a1f527a1820671636c393517f2f850f7299c24ae88ba2ab
+      imageID: registry.redhat.io/3scale-amp2/system-rhel7@sha256:abe1c074e975b6bf6a1f527a1820671636c393517f2f850f7299c24ae88ba2ab
+      lastState:
+        terminated:
+          containerID: cri-o://e2b8b685a183ad25aabc27aaddb4979d618a0861d530200f0ab0ca2d6acecf28
+          exitCode: 137
+          finishedAt: "2024-08-02T08:03:49Z"
+          reason: OOMKilled
+          startedAt: "2024-08-01T08:04:04Z"
+      name: system-sidekiq
+      ready: true
+      restartCount: 225
+      started: true
+      state:
+        running:
+          startedAt: "2024-08-02T08:03:51Z"
+    hostIP: 10.80.80.17
+    initContainerStatuses:
+    - containerID: cri-o://a813fe6c8320bd2fbc39b7421088c6f3e6f19eb112abc091bd60636f50b67021
+      image: registry.redhat.io/3scale-amp2/system-rhel7@sha256:abe1c074e975b6bf6a1f527a1820671636c393517f2f850f7299c24ae88ba2ab
+      imageID: registry.redhat.io/3scale-amp2/system-rhel7@sha256:abe1c074e975b6bf6a1f527a1820671636c393517f2f850f7299c24ae88ba2ab
+      lastState: {}
+      name: check-svc
+      ready: true
+      restartCount: 0
+      state:
+        terminated:
+          containerID: cri-o://a813fe6c8320bd2fbc39b7421088c6f3e6f19eb112abc091bd60636f50b67021
+          exitCode: 0
+          finishedAt: "2023-06-04T23:55:30Z"
+          reason: Completed
+          startedAt: "2023-06-04T23:52:32Z"
+    phase: Running
+    podIP: 10.130.22.38
+    podIPs:
+    - ip: 10.130.22.38
+    qosClass: Burstable
+    startTime: "2023-06-04T23:50:53Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.130.22.36"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.130.22.36"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/deployment-config.latest-version: "1"
+      openshift.io/deployment-config.name: system-sphinx
+      openshift.io/deployment.name: system-sphinx-1
+      openshift.io/generated-by: OpenShiftNewApp
+      openshift.io/scc: restricted
+    creationTimestamp: "2023-06-04T23:50:52Z"
+    generateName: system-sphinx-1-
+    labels:
+      app: 3scale-api-management
+      deployment: system-sphinx-1
+      deploymentConfig: system-sphinx
+      deploymentconfig: system-sphinx
+      threescale_component: system
+      threescale_component_element: sphinx
+    name: system-sphinx-1-v42v4
+    namespace: 3scale
+    ownerReferences:
+    - apiVersion: v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicationController
+      name: system-sphinx-1
+      uid: e68bba66-e7c1-4928-bf08-806b7443bdbd
+    resourceVersion: "428583544"
+    uid: ec7c65a9-d607-4e1a-b789-ce6f49220156
+  spec:
+    containers:
+    - args:
+      - rake
+      - openshift:thinking_sphinx:start
+      env:
+      - name: RAILS_ENV
+        valueFrom:
+          configMapKeyRef:
+            key: RAILS_ENV
+            name: system-environment
+      - name: DATABASE_URL
+        valueFrom:
+          secretKeyRef:
+            key: URL
+            name: system-database
+      - name: THINKING_SPHINX_ADDRESS
+        value: 0.0.0.0
+      - name: THINKING_SPHINX_CONFIGURATION_FILE
+        value: db/sphinx/production.conf
+      - name: THINKING_SPHINX_PID_FILE
+        value: db/sphinx/searchd.pid
+      - name: DELTA_INDEX_INTERVAL
+        value: "5"
+      - name: FULL_REINDEX_INTERVAL
+        value: "60"
+      - name: REDIS_URL
+        valueFrom:
+          secretKeyRef:
+            key: URL
+            name: system-redis
+      - name: MESSAGE_BUS_REDIS_URL
+        valueFrom:
+          secretKeyRef:
+            key: MESSAGE_BUS_URL
+            name: system-redis
+      - name: REDIS_NAMESPACE
+        valueFrom:
+          secretKeyRef:
+            key: NAMESPACE
+            name: system-redis
+      - name: MESSAGE_BUS_REDIS_NAMESPACE
+        valueFrom:
+          secretKeyRef:
+            key: MESSAGE_BUS_NAMESPACE
+            name: system-redis
+      - name: REDIS_SENTINEL_HOSTS
+        valueFrom:
+          secretKeyRef:
+            key: SENTINEL_HOSTS
+            name: system-redis
+      - name: REDIS_SENTINEL_ROLE
+        valueFrom:
+          secretKeyRef:
+            key: SENTINEL_ROLE
+            name: system-redis
+      - name: MESSAGE_BUS_REDIS_SENTINEL_HOSTS
+        valueFrom:
+          secretKeyRef:
+            key: MESSAGE_BUS_SENTINEL_HOSTS
+            name: system-redis
+      - name: MESSAGE_BUS_REDIS_SENTINEL_ROLE
+        valueFrom:
+          secretKeyRef:
+            key: MESSAGE_BUS_SENTINEL_ROLE
+            name: system-redis
+      image: registry.redhat.io/3scale-amp2/system-rhel7@sha256:abe1c074e975b6bf6a1f527a1820671636c393517f2f850f7299c24ae88ba2ab
+      imagePullPolicy: IfNotPresent
+      livenessProbe:
+        failureThreshold: 3
+        initialDelaySeconds: 60
+        periodSeconds: 10
+        successThreshold: 1
+        tcpSocket:
+          port: 9306
+        timeoutSeconds: 1
+      name: system-sphinx
+      resources:
+        limits:
+          cpu: "1"
+          memory: 512Mi
+        requests:
+          cpu: 80m
+          memory: 250Mi
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000980000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /opt/system/db/sphinx
+        name: system-sphinx-database
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-c54gx
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: threescale-registry-auth
+    - name: amp-dockercfg-pl5mb
+    initContainers:
+    - command:
+      - sh
+      - -c
+      - until $(curl --output /dev/null --silent --fail --head http://system-master:3000/status);
+        do sleep $SLEEP_SECONDS; done
+      env:
+      - name: SLEEP_SECONDS
+        value: "1"
+      image: registry.redhat.io/3scale-amp2/system-rhel7@sha256:abe1c074e975b6bf6a1f527a1820671636c393517f2f850f7299c24ae88ba2ab
+      imagePullPolicy: Always
+      name: system-master-svc
+      resources: {}
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000980000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-c54gx
+        readOnly: true
+    nodeName: ocp4azu-sj2sl-worker-prod-brazilsouth2-gmw4z
+    nodeSelector:
+      ambientes.dt.cl/prod: "true"
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000980000
+      seLinuxOptions:
+        level: s0:c31,c25
+    serviceAccount: amp
+    serviceAccountName: amp
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoSchedule
+      key: node.kubernetes.io/memory-pressure
+      operator: Exists
+    volumes:
+    - emptyDir: {}
+      name: system-sphinx-database
+    - name: kube-api-access-c54gx
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-06-04T23:54:45Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2023-06-04T23:54:46Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2023-06-04T23:54:46Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-06-04T23:50:52Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://26b00f689fb3c6f29e35c671ab3f22ea4b529b08bf4dbc662fac04d9041c5199
+      image: registry.redhat.io/3scale-amp2/system-rhel7@sha256:abe1c074e975b6bf6a1f527a1820671636c393517f2f850f7299c24ae88ba2ab
+      imageID: registry.redhat.io/3scale-amp2/system-rhel7@sha256:abe1c074e975b6bf6a1f527a1820671636c393517f2f850f7299c24ae88ba2ab
+      lastState: {}
+      name: system-sphinx
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2023-06-04T23:54:45Z"
+    hostIP: 10.80.80.17
+    initContainerStatuses:
+    - containerID: cri-o://8ad348a96013b18b660e57c5d1e0a1ac59c6456575b674c8496d630e6d8bfb3d
+      image: registry.redhat.io/3scale-amp2/system-rhel7@sha256:abe1c074e975b6bf6a1f527a1820671636c393517f2f850f7299c24ae88ba2ab
+      imageID: registry.redhat.io/3scale-amp2/system-rhel7@sha256:abe1c074e975b6bf6a1f527a1820671636c393517f2f850f7299c24ae88ba2ab
+      lastState: {}
+      name: system-master-svc
+      ready: true
+      restartCount: 0
+      state:
+        terminated:
+          containerID: cri-o://8ad348a96013b18b660e57c5d1e0a1ac59c6456575b674c8496d630e6d8bfb3d
+          exitCode: 0
+          finishedAt: "2023-06-04T23:54:44Z"
+          reason: Completed
+          startedAt: "2023-06-04T23:52:32Z"
+    phase: Running
+    podIP: 10.130.22.36
+    podIPs:
+    - ip: 10.130.22.36
+    qosClass: Burstable
+    startTime: "2023-06-04T23:50:52Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.130.22.33"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.130.22.33"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/deployment-config.latest-version: "1"
+      openshift.io/deployment-config.name: zync
+      openshift.io/deployment.name: zync-1
+      openshift.io/generated-by: OpenShiftNewApp
+      openshift.io/scc: restricted
+    creationTimestamp: "2023-06-04T23:50:51Z"
+    generateName: zync-1-
+    labels:
+      app: 3scale-api-management
+      deployment: zync-1
+      deploymentConfig: zync
+      deploymentconfig: zync
+      threescale_component: zync
+    name: zync-1-qpk7c
+    namespace: 3scale
+    ownerReferences:
+    - apiVersion: v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicationController
+      name: zync-1
+      uid: c12d6a3e-6007-47b2-a949-c6b18d7c3e2d
+    resourceVersion: "428583581"
+    uid: f41508ec-8565-4ace-9d4b-22f10d6082f1
+  spec:
+    containers:
+    - env:
+      - name: RAILS_LOG_TO_STDOUT
+        value: "true"
+      - name: RAILS_ENV
+        value: production
+      - name: DATABASE_URL
+        valueFrom:
+          secretKeyRef:
+            key: DATABASE_URL
+            name: zync
+      - name: SECRET_KEY_BASE
+        valueFrom:
+          secretKeyRef:
+            key: SECRET_KEY_BASE
+            name: zync
+      - name: ZYNC_AUTHENTICATION_TOKEN
+        valueFrom:
+          secretKeyRef:
+            key: ZYNC_AUTHENTICATION_TOKEN
+            name: zync
+      - name: POD_NAME
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: metadata.name
+      - name: POD_NAMESPACE
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: metadata.namespace
+      image: registry.redhat.io/3scale-amp2/zync-rhel7@sha256:90a18fccbc5481a1952841cf6497af3f1e5920310a7c469a26bb2d5b4032ef9f
+      imagePullPolicy: Always
+      livenessProbe:
+        failureThreshold: 10
+        httpGet:
+          path: /status/live
+          port: 8080
+          scheme: HTTP
+        initialDelaySeconds: 10
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 60
+      name: zync
+      ports:
+      - containerPort: 8080
+        protocol: TCP
+      readinessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /status/ready
+          port: 8080
+          scheme: HTTP
+        initialDelaySeconds: 100
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 10
+      resources:
+        limits:
+          cpu: "1"
+          memory: 512Mi
+        requests:
+          cpu: 150m
+          memory: 250M
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000980000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-78fnj
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: threescale-registry-auth
+    - name: amp-dockercfg-pl5mb
+    initContainers:
+    - command:
+      - bash
+      - -c
+      - bundle exec sh -c "until rake boot:db; do sleep $SLEEP_SECONDS; done"
+      env:
+      - name: SLEEP_SECONDS
+        value: "1"
+      - name: DATABASE_URL
+        valueFrom:
+          secretKeyRef:
+            key: DATABASE_URL
+            name: zync
+      image: registry.redhat.io/3scale-amp2/zync-rhel7@sha256:90a18fccbc5481a1952841cf6497af3f1e5920310a7c469a26bb2d5b4032ef9f
+      imagePullPolicy: Always
+      name: zync-db-svc
+      resources: {}
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000980000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-78fnj
+        readOnly: true
+    nodeName: ocp4azu-sj2sl-worker-prod-brazilsouth2-gmw4z
+    nodeSelector:
+      ambientes.dt.cl/prod: "true"
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000980000
+      seLinuxOptions:
+        level: s0:c31,c25
+    serviceAccount: amp
+    serviceAccountName: amp
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoSchedule
+      key: node.kubernetes.io/memory-pressure
+      operator: Exists
+    volumes:
+    - name: kube-api-access-78fnj
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-06-04T23:52:01Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2023-06-04T23:53:52Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2023-06-04T23:53:52Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-06-04T23:50:51Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://b5987750c5cf3cfcb23a5b203995a93e8be99e42f8aefbbd87ac5bf8f2335aed
+      image: registry.redhat.io/3scale-amp2/zync-rhel7@sha256:90a18fccbc5481a1952841cf6497af3f1e5920310a7c469a26bb2d5b4032ef9f
+      imageID: registry.redhat.io/3scale-amp2/zync-rhel7@sha256:90a18fccbc5481a1952841cf6497af3f1e5920310a7c469a26bb2d5b4032ef9f
+      lastState: {}
+      name: zync
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2023-06-04T23:52:12Z"
+    hostIP: 10.80.80.17
+    initContainerStatuses:
+    - containerID: cri-o://06a435112d8a138f84c17f79f0ec5fbb6f7b95b7c0830ac18417cf483409a32f
+      image: registry.redhat.io/3scale-amp2/zync-rhel7@sha256:90a18fccbc5481a1952841cf6497af3f1e5920310a7c469a26bb2d5b4032ef9f
+      imageID: registry.redhat.io/3scale-amp2/zync-rhel7@sha256:90a18fccbc5481a1952841cf6497af3f1e5920310a7c469a26bb2d5b4032ef9f
+      lastState: {}
+      name: zync-db-svc
+      ready: true
+      restartCount: 0
+      state:
+        terminated:
+          containerID: cri-o://06a435112d8a138f84c17f79f0ec5fbb6f7b95b7c0830ac18417cf483409a32f
+          exitCode: 0
+          finishedAt: "2023-06-04T23:52:00Z"
+          reason: Completed
+          startedAt: "2023-06-04T23:51:56Z"
+    phase: Running
+    podIP: 10.130.22.33
+    podIPs:
+    - ip: 10.130.22.33
+    qosClass: Burstable
+    startTime: "2023-06-04T23:50:51Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.130.22.22"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.130.22.22"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/deployment-config.latest-version: "1"
+      openshift.io/deployment-config.name: zync-database
+      openshift.io/deployment.name: zync-database-1
+      openshift.io/generated-by: OpenShiftNewApp
+      openshift.io/scc: restricted
+    creationTimestamp: "2023-06-04T23:50:48Z"
+    generateName: zync-database-1-
+    labels:
+      app: 3scale-api-management
+      deployment: zync-database-1
+      deploymentConfig: zync-database
+      deploymentconfig: zync-database
+      threescale_component: zync
+      threescale_component_element: database
+    name: zync-database-1-qn8qg
+    namespace: 3scale
+    ownerReferences:
+    - apiVersion: v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicationController
+      name: zync-database-1
+      uid: 50734aa6-1faf-438c-acfa-486320eed32c
+    resourceVersion: "428583566"
+    uid: 268e04a8-3312-4a89-9f04-f350612b5d0d
+  spec:
+    containers:
+    - env:
+      - name: POSTGRESQL_USER
+        value: zync
+      - name: POSTGRESQL_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            key: ZYNC_DATABASE_PASSWORD
+            name: zync
+      - name: POSTGRESQL_DATABASE
+        value: zync_production
+      image: registry.redhat.io/rhscl/postgresql-10-rhel7@sha256:e32991664f0efc3bf63e9b429ab3f95f626265af4463321f30e50bf91d057f1c
+      imagePullPolicy: IfNotPresent
+      livenessProbe:
+        failureThreshold: 3
+        initialDelaySeconds: 30
+        periodSeconds: 10
+        successThreshold: 1
+        tcpSocket:
+          port: 5432
+        timeoutSeconds: 1
+      name: postgresql
+      ports:
+      - containerPort: 5432
+        protocol: TCP
+      readinessProbe:
+        exec:
+          command:
+          - /bin/sh
+          - -i
+          - -c
+          - psql -h 127.0.0.1 -U zync -q -d zync_production -c 'SELECT 1'
+        failureThreshold: 3
+        initialDelaySeconds: 5
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 1
+      resources:
+        limits:
+          cpu: 250m
+          memory: 2G
+        requests:
+          cpu: 50m
+          memory: 250M
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000980000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/lib/pgsql/data
+        name: zync-database-data
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-8g4hc
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: threescale-registry-auth
+    - name: amp-dockercfg-pl5mb
+    nodeName: ocp4azu-sj2sl-worker-prod-brazilsouth2-gmw4z
+    nodeSelector:
+      ambientes.dt.cl/prod: "true"
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000980000
+      seLinuxOptions:
+        level: s0:c31,c25
+    serviceAccount: amp
+    serviceAccountName: amp
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoSchedule
+      key: node.kubernetes.io/memory-pressure
+      operator: Exists
+    volumes:
+    - emptyDir: {}
+      name: zync-database-data
+    - name: kube-api-access-8g4hc
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-06-04T23:50:48Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2023-06-04T23:51:09Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2023-06-04T23:51:09Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-06-04T23:50:48Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://7f29a0b9f6cb25cb4ac09f0106dc9328a6ac3e1b0cca50a2642d337c9b102972
+      image: registry.redhat.io/rhscl/postgresql-10-rhel7@sha256:e32991664f0efc3bf63e9b429ab3f95f626265af4463321f30e50bf91d057f1c
+      imageID: registry.redhat.io/rhscl/postgresql-10-rhel7@sha256:e32991664f0efc3bf63e9b429ab3f95f626265af4463321f30e50bf91d057f1c
+      lastState: {}
+      name: postgresql
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2023-06-04T23:51:04Z"
+    hostIP: 10.80.80.17
+    phase: Running
+    podIP: 10.130.22.22
+    podIPs:
+    - ip: 10.130.22.22
+    qosClass: Burstable
+    startTime: "2023-06-04T23:50:48Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.131.18.209"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.131.18.209"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/deployment-config.latest-version: "1"
+      openshift.io/deployment-config.name: zync-que
+      openshift.io/deployment.name: zync-que-1
+      openshift.io/generated-by: OpenShiftNewApp
+      openshift.io/scc: restricted
+      prometheus.io/port: "9394"
+      prometheus.io/scrape: "true"
+    creationTimestamp: "2024-07-23T20:00:46Z"
+    generateName: zync-que-1-
+    labels:
+      app: 3scale-api-management
+      deployment: zync-que-1
+      deploymentConfig: zync-que
+      deploymentconfig: zync-que
+    name: zync-que-1-cs26r
+    namespace: 3scale
+    ownerReferences:
+    - apiVersion: v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicationController
+      name: zync-que-1
+      uid: 1560cbe0-1d7b-49b7-b8c2-2c3e61d49603
+    resourceVersion: "491646533"
+    uid: 97c527d4-8af8-498c-94fa-54865f6925fb
+  spec:
+    containers:
+    - args:
+      - -c
+      - bundle exec rake 'que[--worker-count 10]'
+      command:
+      - /usr/bin/bash
+      env:
+      - name: RAILS_LOG_TO_STDOUT
+        value: "true"
+      - name: RAILS_ENV
+        value: production
+      - name: DATABASE_URL
+        valueFrom:
+          secretKeyRef:
+            key: DATABASE_URL
+            name: zync
+      - name: SECRET_KEY_BASE
+        valueFrom:
+          secretKeyRef:
+            key: SECRET_KEY_BASE
+            name: zync
+      - name: ZYNC_AUTHENTICATION_TOKEN
+        valueFrom:
+          secretKeyRef:
+            key: ZYNC_AUTHENTICATION_TOKEN
+            name: zync
+      - name: POD_NAME
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: metadata.name
+      - name: POD_NAMESPACE
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: metadata.namespace
+      image: registry.redhat.io/3scale-amp2/zync-rhel7@sha256:90a18fccbc5481a1952841cf6497af3f1e5920310a7c469a26bb2d5b4032ef9f
+      imagePullPolicy: Always
+      livenessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /metrics
+          port: 9394
+          scheme: HTTP
+        initialDelaySeconds: 10
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 60
+      name: que
+      ports:
+      - containerPort: 9394
+        name: metrics
+        protocol: TCP
+      resources:
+        limits:
+          cpu: "1"
+          memory: 512Mi
+        requests:
+          cpu: 250m
+          memory: 250M
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000980000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-ts4qz
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: threescale-registry-auth
+    - name: zync-que-sa-dockercfg-9m6h6
+    nodeName: ocp4azu-sj2sl-worker-prod-brazilsouth1-lks8v
+    nodeSelector:
+      ambientes.dt.cl/prod: "true"
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000980000
+      seLinuxOptions:
+        level: s0:c31,c25
+    serviceAccount: zync-que-sa
+    serviceAccountName: zync-que-sa
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoSchedule
+      key: node.kubernetes.io/memory-pressure
+      operator: Exists
+    volumes:
+    - name: kube-api-access-ts4qz
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-23T20:00:46Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-23T20:01:08Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-23T20:01:08Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-23T20:00:46Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://4bca5aa437dae5b8ce28edfe2ee70f528c1044f65328c9e8a04eb7a6bb913e85
+      image: registry.redhat.io/3scale-amp2/zync-rhel7@sha256:90a18fccbc5481a1952841cf6497af3f1e5920310a7c469a26bb2d5b4032ef9f
+      imageID: registry.redhat.io/3scale-amp2/zync-rhel7@sha256:90a18fccbc5481a1952841cf6497af3f1e5920310a7c469a26bb2d5b4032ef9f
+      lastState: {}
+      name: que
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2024-07-23T20:01:08Z"
+    hostIP: 10.80.80.19
+    phase: Running
+    podIP: 10.131.18.209
+    podIPs:
+    - ip: 10.131.18.209
+    qosClass: Burstable
+    startTime: "2024-07-23T20:00:46Z"
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

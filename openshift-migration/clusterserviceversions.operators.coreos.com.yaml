@@ -1,0 +1,2990 @@
+apiVersion: v1
+items:
+- apiVersion: operators.coreos.com/v1alpha1
+  kind: ClusterServiceVersion
+  metadata:
+    annotations:
+      alm-examples: |-
+        [
+          {
+            "apiVersion": "logging.openshift.io/v1",
+            "kind": "Elasticsearch",
+            "metadata": {
+              "name": "elasticsearch"
+            },
+            "spec": {
+              "indexManagement": {
+                "mappings": [
+                  {
+                    "aliases": [
+                      "infra",
+                      "logs.infra"
+                    ],
+                    "name": "infra",
+                    "policyRef": "infra-policy"
+                  }
+                ],
+                "policies": [
+                  {
+                    "name": "infra-policy",
+                    "phases": {
+                      "delete": {
+                        "minAge": "2d",
+                        "namespaceSpec": [
+                          {
+                            "minAge": "5h",
+                            "namespace": "openshift-monitoring"
+                          }
+                        ],
+                        "pruneNamespacesInterval": "24h"
+                      },
+                      "hot": {
+                        "actions": {
+                          "rollover": {
+                            "maxAge": "8h"
+                          }
+                        }
+                      }
+                    },
+                    "pollInterval": "30m"
+                  }
+                ]
+              },
+              "managementState": "Managed",
+              "nodeSpec": {
+                "resources": {
+                  "limits": {
+                    "memory": "1Gi"
+                  },
+                  "requests": {
+                    "cpu": "100m",
+                    "memory": "512Mi"
+                  }
+                }
+              },
+              "nodes": [
+                {
+                  "nodeCount": 1,
+                  "roles": [
+                    "client",
+                    "data",
+                    "master"
+                  ],
+                  "storage": {
+                    "size": "20G"
+                  }
+                }
+              ],
+              "redundancyPolicy": "ZeroRedundancy"
+            }
+          },
+          {
+            "apiVersion": "logging.openshift.io/v1",
+            "kind": "Kibana",
+            "metadata": {
+              "name": "kibana"
+            },
+            "spec": {
+              "managementState": "Managed",
+              "nodeSelector": {},
+              "replicas": 1,
+              "resources": {
+                "limits": {
+                  "memory": "512Mi"
+                },
+                "requests": {
+                  "memory": "512Mi"
+                }
+              }
+            }
+          }
+        ]
+      capabilities: Full Lifecycle
+      categories: OpenShift Optional, Logging & Tracing
+      certified: "false"
+      containerImage: registry.redhat.io/openshift-logging/elasticsearch-rhel8-operator@sha256:ea8fb6a703594eb177f0e8af6f339aaa156b9991c7992818cb480261e4a7f188
+      createdAt: "2020-11-04T08:00:00Z"
+      description: |
+        The Elasticsearch Operator for OCP provides a means for configuring and managing an Elasticsearch cluster for tracing and cluster logging.
+        ## Prerequisites and Requirements
+        ### Elasticsearch Operator Namespace
+        The Elasticsearch Operator must be deployed to the global operator group namespace
+        ### Memory Considerations
+        Elasticsearch is a memory intensive application.  The initial
+        set of OCP nodes may not be large enough to support the Elasticsearch cluster.  Additional OCP nodes must be added
+        to the OCP cluster if you desire to run with the recommended (or better) memory. Each ES node can operate with a
+        lower memory setting though this is not recommended for production deployments.
+      olm.operatorGroup: openshift-operators-redhat-wx7sn
+      olm.operatorNamespace: openshift-operators-redhat
+      olm.skipRange: '>=4.6.0-0 <5.6.5'
+      operatorframework.io/cluster-monitoring: "true"
+      operatorframework.io/properties: '{"properties":[{"type":"olm.maxOpenShiftVersion","value":4.14},{"type":"olm.package","value":{"packageName":"elasticsearch-operator","version":"5.6.5"}},{"type":"olm.gvk","value":{"group":"logging.openshift.io","kind":"Elasticsearch","version":"v1"}},{"type":"olm.gvk","value":{"group":"logging.openshift.io","kind":"Kibana","version":"v1"}}]}'
+      operatorframework.io/suggested-namespace: openshift-operators-redhat
+      operators.openshift.io/infrastructure-features: '["disconnected","proxy-aware"]'
+      operators.openshift.io/valid-subscription: '["OpenShift Container Platform",
+        "OpenShift Platform Plus"]'
+      operators.operatorframework.io/builder: operator-sdk-unknown
+      operators.operatorframework.io/project_layout: go.kubebuilder.io/v3
+      support: AOS Cluster Logging, Jaeger
+    creationTimestamp: "2023-05-11T19:14:21Z"
+    generation: 1
+    labels:
+      olm.copiedFrom: openshift-operators-redhat
+      operatorframework.io/arch.amd64: supported
+      operatorframework.io/arch.arm64: supported
+      operatorframework.io/arch.ppc64le: supported
+      operatorframework.io/arch.s390x: supported
+    name: elasticsearch-operator.v5.6.5
+    namespace: openshift-migration
+    resourceVersion: "476625228"
+    uid: 4547cd7d-f365-46fd-b8d4-00de854acbd2
+  spec:
+    apiservicedefinitions: {}
+    cleanup:
+      enabled: false
+    customresourcedefinitions:
+      owned:
+      - description: An Elasticsearch cluster instance
+        displayName: Elasticsearch
+        kind: Elasticsearch
+        name: elasticsearches.logging.openshift.io
+        resources:
+        - kind: ConfigMap
+          name: ""
+          version: v1
+        - kind: CronJob
+          name: ""
+          version: v1
+        - kind: Deployment
+          name: ""
+          version: v1
+        - kind: Pod
+          name: ""
+          version: v1
+        - kind: PrometheusRule
+          name: ""
+          version: v1
+        - kind: ReplicaSet
+          name: ""
+          version: v1
+        - kind: Role
+          name: ""
+          version: v1
+        - kind: RoleBinding
+          name: ""
+          version: v1
+        - kind: Route
+          name: ""
+          version: v1
+        - kind: Service
+          name: ""
+          version: v1
+        - kind: ServiceAccount
+          name: ""
+          version: v1
+        - kind: ServiceMonitor
+          name: ""
+          version: v1
+        - kind: StatefulSet
+          name: ""
+          version: v1
+        - kind: persistentvolumeclaims
+          name: ""
+          version: v1
+        specDescriptors:
+        - description: The resource requirements for the Elasticsearch nodes
+          displayName: Resource Requirements
+          path: nodeSpec.resources
+          x-descriptors:
+          - urn:alm:descriptor:com.tectonic.ui:resourceRequirements
+        statusDescriptors:
+        - description: The number of Active Primary Shards for the Elasticsearch Cluster
+          displayName: Active Primary Shards
+          path: cluster.activePrimaryShards
+          x-descriptors:
+          - urn:alm:descriptor:text
+        - description: The number of Active Shards for the Elasticsearch Cluster
+          displayName: Active Shards
+          path: cluster.activeShards
+          x-descriptors:
+          - urn:alm:descriptor:text
+        - description: The number of Initializing Shards for the Elasticsearch Cluster
+          displayName: Initializing Shards
+          path: cluster.initializingShards
+          x-descriptors:
+          - urn:alm:descriptor:text
+        - description: The number of Data Nodes for the Elasticsearch Cluster
+          displayName: Number of Data Nodes
+          path: cluster.numDataNodes
+          x-descriptors:
+          - urn:alm:descriptor:text
+        - description: The number of Nodes for the Elasticsearch Cluster
+          displayName: Number of Nodes
+          path: cluster.numNodes
+          x-descriptors:
+          - urn:alm:descriptor:text
+        - description: The number of Relocating Shards for the Elasticsearch Cluster
+          displayName: Relocating Shards
+          path: cluster.relocatingShards
+          x-descriptors:
+          - urn:alm:descriptor:text
+        - description: The current Status of the Elasticsearch Cluster
+          displayName: Status
+          path: cluster.status
+          x-descriptors:
+          - urn:alm:descriptor:io.kubernetes.phase
+        - description: The number of Unassigned Shards for the Elasticsearch Cluster
+          displayName: Unassigned Shards
+          path: cluster.unassignedShards
+          x-descriptors:
+          - urn:alm:descriptor:text
+        version: v1
+      - description: Kibana instance
+        displayName: Kibana
+        kind: Kibana
+        name: kibanas.logging.openshift.io
+        resources:
+        - kind: ConfigMap
+          name: ""
+          version: v1
+        - kind: ConsoleExternalLogLink
+          name: ""
+          version: v1
+        - kind: ConsoleLink
+          name: ""
+          version: v1
+        - kind: Deployment
+          name: ""
+          version: v1
+        - kind: Role
+          name: ""
+          version: v1
+        - kind: RoleBinding
+          name: ""
+          version: v1
+        - kind: Route
+          name: ""
+          version: v1
+        - kind: Service
+          name: ""
+          version: v1
+        - kind: ServiceAccount
+          name: ""
+          version: v1
+        specDescriptors:
+        - description: The node selector to use for the Kibana Visualization component
+          displayName: Kibana Node Selector
+          path: nodeSelector
+          x-descriptors:
+          - urn:alm:descriptor:com.tectonic.ui:nodeSelector
+        - description: The desired number of Kibana Pods for the Visualization component
+          displayName: Kibana Size
+          path: replicas
+          x-descriptors:
+          - urn:alm:descriptor:com.tectonic.ui:podCount
+        - description: The resource requirements for the Kibana nodes
+          displayName: Kibana Resource Requirements
+          path: resources
+        statusDescriptors:
+        - description: The status for each of the Kibana pods for the Visualization
+            component
+          displayName: Kibana Status
+          path: pods
+          x-descriptors:
+          - urn:alm:descriptor:com.tectonic.ui:podStatuses
+        version: v1
+    description: "The Elasticsearch Operator for OCP provides a means for configuring
+      and managing an Elasticsearch cluster for use in tracing \nand cluster logging
+      as well as a Kibana instance to connect to it.\nThis operator only supports
+      OCP Cluster Logging and Jaeger.  It is tightly coupled to each and is not currently
+      capable of\nbeing used as a general purpose manager of Elasticsearch clusters
+      running on OCP.\n\nPlease note: For a general purpose Elasticsearch operator,
+      please use Elastic's Elasticsearch (ECK) Operator [here](https://catalog.redhat.com/software/containers/elastic/eck-operator/5fabf6d1ecb52450895164be?container-tabs=gti)\n\nIt
+      is recommended that this operator be installed in the `openshift-operators-redhat`
+      namespace to \nproperly support the Cluster Logging and Jaeger use cases.\n\nOnce
+      installed, the operator provides the following features for **Elasticsearch**:\n*
+      **Create/Destroy**: Deploy an Elasticsearch cluster to the same namespace in
+      which the elasticsearch CR is created.\n* **Update**: Changes to the elasticsearch
+      CR will be scheduled and applied to the cluster in a controlled manner (most
+      often as a rolling upgrade).\n* **Cluster health**: The operator will periodically
+      poll the cluster to evaluate its current health (such as the number of active
+      shards and if any cluster nodes have reached their storage watermark usage).\n*
+      **Redeploys**: In the case where the provided secrets are updated, the Elasticsearch
+      Operator will schedule and perform a full cluster restart.\n* **Index management**:
+      The Elasticsearch Operator will create cronjobs to perform index management
+      such as roll over and deletion.\n\nOnce installed, the operator provides the
+      following features for **Kibana**:\n* **Create/Destroy**: Deploy a Kibana instance
+      to the same namespace in which the kibana CR is created (this should be the
+      same namespace as the elasticsearch CR).\n* **Update**: Changes to the kibana
+      CR will be scheduled and applied to the cluster in a controlled manner.\n* **Redeploys**:
+      In the case where the provided secrets are updated, the Elasticsearch Operator
+      will perform a restart.\n\n### Additionally provided features\n* Out of the
+      box multitenancy that is integrated with OCP user access control.\n* Document
+      Level Security\n* mTLS communication between Elasticsearch, Kibana, Index Management
+      cronjobs, and CLO's Fluentd\n* OCP prometheus dashboard for Elasticsearch clusters\n*
+      Prometheus Alerting rules  \n"
+    displayName: OpenShift Elasticsearch Operator
+    icon:
+    - base64data: PHN2ZyBpZD0iYWZiNDE1NDktYzU3MC00OWI3LTg1Y2QtNjU3NjAwZWRmMmUxIiBkYXRhLW5hbWU9IkxheWVyIDEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgdmlld0JveD0iMCAwIDcyMS4xNSA3MjEuMTUiPgogIDxkZWZzPgogICAgPHN0eWxlPgogICAgICAuYTQ0OGZkZWEtNGE0Yy00Njc4LTk3NmEtYzM3ODUzMDhhZTA2IHsKICAgICAgICBmaWxsOiAjZGIzOTI3OwogICAgICB9CgogICAgICAuZTEzMzA4YjgtNzQ4NS00Y2IwLTk3NjUtOGE1N2I5M2Y5MWE2IHsKICAgICAgICBmaWxsOiAjY2IzNzI4OwogICAgICB9CgogICAgICAuZTc3Mjg2ZjEtMjJkYS00NGQxLThlZmItMWQxNGIwY2NhZTYyIHsKICAgICAgICBmaWxsOiAjZmZmOwogICAgICB9CgogICAgICAuYTA0MjBjYWMtZWJlNi00YzE4LWI5ODEtYWJiYTBiYTliMzY1IHsKICAgICAgICBmaWxsOiAjZTVlNWU0OwogICAgICB9CiAgICA8L3N0eWxlPgogIDwvZGVmcz4KICA8Y2lyY2xlIGNsYXNzPSJhNDQ4ZmRlYS00YTRjLTQ2NzgtOTc2YS1jMzc4NTMwOGFlMDYiIGN4PSIzNjAuNTgiIGN5PSIzNjAuNTgiIHI9IjM1OC4yOCIvPgogIDxwYXRoIGNsYXNzPSJlMTMzMDhiOC03NDg1LTRjYjAtOTc2NS04YTU3YjkzZjkxYTYiIGQ9Ik02MTMuNTQsMTA3LjMsMTA2Ljg4LDYxNGMxNDAsMTM4LjUxLDM2NS44MiwxMzguMDYsNTA1LjI2LTEuMzlTNzUyLDI0Ny4zMyw2MTMuNTQsMTA3LjNaIi8+CiAgPGc+CiAgICA8Y2lyY2xlIGNsYXNzPSJlNzcyODZmMS0yMmRhLTQ0ZDEtOGVmYi0xZDE0YjBjY2FlNjIiIGN4PSIyMzQuNyIgY3k9IjM1Ny4zIiByPSI0Ny43MiIvPgogICAgPGNpcmNsZSBjbGFzcz0iZTc3Mjg2ZjEtMjJkYS00NGQxLThlZmItMWQxNGIwY2NhZTYyIiBjeD0iMjM0LjciIGN5PSIxODIuOTQiIHI9IjQ3LjcyIi8+CiAgICA8Y2lyY2xlIGNsYXNzPSJlNzcyODZmMS0yMmRhLTQ0ZDEtOGVmYi0xZDE0YjBjY2FlNjIiIGN4PSIyMzQuNyIgY3k9IjUzOC4yMSIgcj0iNDcuNzIiLz4KICA8L2c+CiAgPHBvbHlnb24gY2xhc3M9ImU3NzI4NmYxLTIyZGEtNDRkMS04ZWZiLTFkMTRiMGNjYWU2MiIgcG9pbnRzPSI0MzUuMTkgMzQ3LjMgMzkwLjU0IDM0Ny4zIDM5MC41NCAxNzIuOTQgMzE2LjE2IDE3Mi45NCAzMTYuMTYgMTkyLjk0IDM3MC41NCAxOTIuOTQgMzcwLjU0IDM0Ny4zIDMxNi4xNiAzNDcuMyAzMTYuMTYgMzY3LjMgMzcwLjU0IDM2Ny4zIDM3MC41NCA1MjEuNjcgMzE2LjE2IDUyMS42NyAzMTYuMTYgNTQxLjY3IDM5MC41NCA1NDEuNjcgMzkwLjU0IDM2Ny4zIDQzNS4xOSAzNjcuMyA0MzUuMTkgMzQ3LjMiLz4KICA8cG9seWdvbiBjbGFzcz0iZTc3Mjg2ZjEtMjJkYS00NGQxLThlZmItMWQxNGIwY2NhZTYyIiBwb2ludHM9IjU5OS43NCAzMTcuMDMgNTU3Ljk3IDMxNy4wMyA1NTAuOTcgMzE3LjAzIDU1MC45NyAzMTAuMDMgNTUwLjk3IDI2OC4yNiA1NTAuOTcgMjY4LjI2IDQ2NC4zNiAyNjguMjYgNDY0LjM2IDQ0Ni4zNCA1OTkuNzQgNDQ2LjM0IDU5OS43NCAzMTcuMDMgNTk5Ljc0IDMxNy4wMyIvPgogIDxwb2x5Z29uIGNsYXNzPSJhMDQyMGNhYy1lYmU2LTRjMTgtYjk4MS1hYmJhMGJhOWIzNjUiIHBvaW50cz0iNTk5Ljc0IDMxMC4wMyA1NTcuOTcgMjY4LjI2IDU1Ny45NyAzMTAuMDMgNTk5Ljc0IDMxMC4wMyIvPgo8L3N2Zz4K
+      mediatype: image/svg+xml
+    install:
+      spec:
+        clusterPermissions:
+        - rules:
+          - nonResourceURLs:
+            - /metrics
+            verbs:
+            - get
+          - apiGroups:
+            - apps
+            resources:
+            - daemonsets
+            - deployments
+            - replicasets
+            - statefulsets
+            verbs:
+            - '*'
+          - apiGroups:
+            - apps
+            resourceNames:
+            - elasticsearch-operator
+            resources:
+            - deployments/finalizers
+            verbs:
+            - update
+          - apiGroups:
+            - authentication.k8s.io
+            resources:
+            - subjectaccessreviews
+            - tokenreviews
+            verbs:
+            - create
+          - apiGroups:
+            - authorization.k8s.io
+            resources:
+            - subjectaccessreviews
+            verbs:
+            - create
+          - apiGroups:
+            - batch
+            resources:
+            - cronjobs
+            verbs:
+            - '*'
+          - apiGroups:
+            - config.openshift.io
+            resources:
+            - oauths
+            - proxies
+            verbs:
+            - get
+            - list
+            - watch
+          - apiGroups:
+            - console.openshift.io
+            resources:
+            - consoleexternalloglinks
+            - consolelinks
+            verbs:
+            - create
+            - delete
+            - get
+            - update
+          - apiGroups:
+            - coordination.k8s.io
+            resources:
+            - leases
+            verbs:
+            - create
+            - get
+            - update
+          - apiGroups:
+            - ""
+            resources:
+            - configmaps
+            - endpoints
+            - events
+            - persistentvolumeclaims
+            - pods
+            - pods/exec
+            - secrets
+            - serviceaccounts
+            - services
+            - services/finalizers
+            verbs:
+            - '*'
+          - apiGroups:
+            - image.openshift.io
+            resources:
+            - imagestreams
+            verbs:
+            - get
+            - list
+            - watch
+          - apiGroups:
+            - logging.openshift.io
+            resources:
+            - '*'
+            verbs:
+            - '*'
+          - apiGroups:
+            - monitoring.coreos.com
+            resources:
+            - prometheusrules
+            - servicemonitors
+            verbs:
+            - '*'
+          - apiGroups:
+            - networking.k8s.io
+            resources:
+            - networkpolicies
+            verbs:
+            - create
+            - delete
+          - apiGroups:
+            - oauth.openshift.io
+            resources:
+            - oauthclients
+            verbs:
+            - '*'
+          - apiGroups:
+            - rbac.authorization.k8s.io
+            resources:
+            - clusterrolebindings
+            - clusterroles
+            verbs:
+            - '*'
+          - apiGroups:
+            - rbac.authorization.k8s.io
+            resources:
+            - rolebindings
+            - roles
+            verbs:
+            - '*'
+          - apiGroups:
+            - route.openshift.io
+            resources:
+            - routes
+            - routes/custom-host
+            verbs:
+            - '*'
+          - apiGroups:
+            - security.openshift.io
+            resources:
+            - securitycontextconstraints
+            verbs:
+            - create
+            - get
+            - list
+            - update
+            - watch
+          serviceAccountName: elasticsearch-operator
+        deployments:
+        - label:
+            name: elasticsearch-operator
+          name: elasticsearch-operator
+          spec:
+            replicas: 1
+            selector:
+              matchLabels:
+                name: elasticsearch-operator
+            strategy: {}
+            template:
+              metadata:
+                annotations:
+                  kubectl.kubernetes.io/default-container: elasticsearch-operator
+                creationTimestamp: null
+                labels:
+                  name: elasticsearch-operator
+              spec:
+                containers:
+                - args:
+                  - --secure-listen-address=0.0.0.0:8443
+                  - --upstream=http://127.0.0.1:8080/
+                  - --logtostderr=true
+                  - --tls-cert-file=/var/run/secrets/serving-cert/tls.crt
+                  - --tls-private-key-file=/var/run/secrets/serving-cert/tls.key
+                  - --v=2
+                  image: registry.redhat.io/openshift4/ose-kube-rbac-proxy@sha256:c9b7a51fccd409451fe5cae7bd15abc00e10c9ac1a2e97232172d39134db9254
+                  name: kube-rbac-proxy
+                  ports:
+                  - containerPort: 8443
+                    name: https
+                    protocol: TCP
+                  resources: {}
+                  securityContext:
+                    allowPrivilegeEscalation: false
+                    capabilities:
+                      drop:
+                      - ALL
+                  volumeMounts:
+                  - mountPath: /var/run/secrets/serving-cert
+                    name: elasticsearch-operator-metrics-cert
+                - args:
+                  - --health-probe-bind-address=:8081
+                  - --metrics-bind-address=127.0.0.1:8080
+                  command:
+                  - elasticsearch-operator
+                  env:
+                  - name: WATCH_NAMESPACE
+                    valueFrom:
+                      fieldRef:
+                        fieldPath: metadata.annotations['olm.targetNamespaces']
+                  - name: POD_NAME
+                    valueFrom:
+                      fieldRef:
+                        fieldPath: metadata.name
+                  - name: OPERATOR_NAME
+                    value: elasticsearch-operator
+                  - name: RELATED_IMAGE_ELASTICSEARCH_PROXY
+                    value: registry.redhat.io/openshift-logging/elasticsearch-proxy-rhel8@sha256:b69d200a83ce2ea3757f73791b3337e757523a1d8839fad0a1bf186bc48a5d2c
+                  - name: RELATED_IMAGE_ELASTICSEARCH
+                    value: registry.redhat.io/openshift-logging/elasticsearch6-rhel8@sha256:5a9c84a1961faf89faef2a2b3f25b4dc9dd1acbf8cf81a6830b7e5105636df43
+                  - name: RELATED_IMAGE_KIBANA
+                    value: registry.redhat.io/openshift-logging/kibana6-rhel8@sha256:78bf3d6755fc735636c930b3cedd3c42ec3d580b8cb8c5776617b8d6165162d9
+                  - name: RELATED_IMAGE_CURATOR
+                    value: registry.redhat.io/openshift-logging/logging-curator5-rhel8@sha256:57e89eaefe887ebef720f52249a582c502687720ed50716f3339482f63993901
+                  image: registry.redhat.io/openshift-logging/elasticsearch-rhel8-operator@sha256:ea8fb6a703594eb177f0e8af6f339aaa156b9991c7992818cb480261e4a7f188
+                  imagePullPolicy: IfNotPresent
+                  livenessProbe:
+                    httpGet:
+                      path: /healthz
+                      port: 8081
+                    initialDelaySeconds: 15
+                    periodSeconds: 20
+                  name: elasticsearch-operator
+                  ports:
+                  - containerPort: 8080
+                    name: http
+                    protocol: TCP
+                  readinessProbe:
+                    httpGet:
+                      path: /readyz
+                      port: 8081
+                    initialDelaySeconds: 5
+                    periodSeconds: 10
+                  resources: {}
+                  securityContext:
+                    allowPrivilegeEscalation: false
+                    capabilities:
+                      drop:
+                      - ALL
+                nodeSelector:
+                  kubernetes.io/os: linux
+                securityContext:
+                  runAsNonRoot: true
+                serviceAccountName: elasticsearch-operator
+                volumes:
+                - name: elasticsearch-operator-metrics-cert
+                  secret:
+                    defaultMode: 420
+                    optional: true
+                    secretName: elasticsearch-operator-metrics
+      strategy: deployment
+    installModes:
+    - supported: true
+      type: OwnNamespace
+    - supported: false
+      type: SingleNamespace
+    - supported: false
+      type: MultiNamespace
+    - supported: true
+      type: AllNamespaces
+    keywords:
+    - elasticsearch
+    - jaeger
+    links:
+    - name: Elastic
+      url: https://www.elastic.co/
+    - name: Elasticsearch Operator
+      url: https://github.com/openshift/elasticsearch-operator
+    maintainers:
+    - email: aos-logging@redhat.com
+      name: Red Hat, AOS Logging
+    maturity: alpha
+    minKubeVersion: 1.18.3
+    provider:
+      name: Red Hat
+    relatedImages:
+    - image: registry.redhat.io/openshift-logging/elasticsearch-rhel8-operator@sha256:ea8fb6a703594eb177f0e8af6f339aaa156b9991c7992818cb480261e4a7f188
+      name: elasticsearch-rhel8-operator-ea8fb6a703594eb177f0e8af6f339aaa156b9991c7992818cb480261e4a7f188-annotation
+    - image: registry.redhat.io/openshift4/ose-kube-rbac-proxy@sha256:c9b7a51fccd409451fe5cae7bd15abc00e10c9ac1a2e97232172d39134db9254
+      name: kube-rbac-proxy
+    - image: registry.redhat.io/openshift-logging/elasticsearch-rhel8-operator@sha256:ea8fb6a703594eb177f0e8af6f339aaa156b9991c7992818cb480261e4a7f188
+      name: elasticsearch-operator
+    - image: registry.redhat.io/openshift-logging/elasticsearch-proxy-rhel8@sha256:b69d200a83ce2ea3757f73791b3337e757523a1d8839fad0a1bf186bc48a5d2c
+      name: elasticsearch_proxy
+    - image: registry.redhat.io/openshift-logging/elasticsearch6-rhel8@sha256:5a9c84a1961faf89faef2a2b3f25b4dc9dd1acbf8cf81a6830b7e5105636df43
+      name: elasticsearch
+    - image: registry.redhat.io/openshift-logging/kibana6-rhel8@sha256:78bf3d6755fc735636c930b3cedd3c42ec3d580b8cb8c5776617b8d6165162d9
+      name: kibana
+    - image: registry.redhat.io/openshift-logging/logging-curator5-rhel8@sha256:57e89eaefe887ebef720f52249a582c502687720ed50716f3339482f63993901
+      name: curator
+    replaces: elasticsearch-operator.v5.6.4
+    version: 5.6.5
+  status:
+    cleanup: {}
+    conditions:
+    - lastTransitionTime: "2024-07-11T23:22:17Z"
+      lastUpdateTime: "2024-07-11T23:22:17Z"
+      message: 'installing: waiting for deployment elasticsearch-operator to become
+        ready: deployment "elasticsearch-operator" not available: Deployment does
+        not have minimum availability.'
+      phase: Installing
+      reason: InstallWaiting
+    - lastTransitionTime: "2024-07-11T23:22:34Z"
+      lastUpdateTime: "2024-07-11T23:22:34Z"
+      message: install strategy completed with no errors
+      phase: Succeeded
+      reason: InstallSucceeded
+    - lastTransitionTime: "2024-07-12T03:46:18Z"
+      lastUpdateTime: "2024-07-12T03:46:18Z"
+      message: 'installing: waiting for deployment elasticsearch-operator to become
+        ready: deployment "elasticsearch-operator" not available: Deployment does
+        not have minimum availability.'
+      phase: Failed
+      reason: ComponentUnhealthy
+    - lastTransitionTime: "2024-07-12T03:46:18Z"
+      lastUpdateTime: "2024-07-12T03:46:18Z"
+      message: 'installing: waiting for deployment elasticsearch-operator to become
+        ready: deployment "elasticsearch-operator" not available: Deployment does
+        not have minimum availability.'
+      phase: Pending
+      reason: NeedsReinstall
+    - lastTransitionTime: "2024-07-12T03:46:18Z"
+      lastUpdateTime: "2024-07-12T03:46:18Z"
+      message: all requirements found, attempting install
+      phase: InstallReady
+      reason: AllRequirementsMet
+    - lastTransitionTime: "2024-07-12T03:46:18Z"
+      lastUpdateTime: "2024-07-12T03:46:18Z"
+      message: waiting for install components to report healthy
+      phase: Installing
+      reason: InstallSucceeded
+    - lastTransitionTime: "2024-07-12T03:46:18Z"
+      lastUpdateTime: "2024-07-12T03:46:18Z"
+      message: 'installing: waiting for deployment elasticsearch-operator to become
+        ready: deployment "elasticsearch-operator" not available: Deployment does
+        not have minimum availability.'
+      phase: Installing
+      reason: InstallWaiting
+    - lastTransitionTime: "2024-07-12T03:46:34Z"
+      lastUpdateTime: "2024-07-12T03:46:34Z"
+      message: install strategy completed with no errors
+      phase: Succeeded
+      reason: InstallSucceeded
+    - lastTransitionTime: "2024-07-12T03:51:23Z"
+      lastUpdateTime: "2024-07-12T03:51:23Z"
+      message: 'installing: waiting for deployment elasticsearch-operator to become
+        ready: deployment "elasticsearch-operator" not available: Deployment does
+        not have minimum availability.'
+      phase: Failed
+      reason: ComponentUnhealthy
+    - lastTransitionTime: "2024-07-12T03:51:24Z"
+      lastUpdateTime: "2024-07-12T03:51:24Z"
+      message: 'installing: waiting for deployment elasticsearch-operator to become
+        ready: deployment "elasticsearch-operator" not available: Deployment does
+        not have minimum availability.'
+      phase: Pending
+      reason: NeedsReinstall
+    - lastTransitionTime: "2024-07-12T03:51:24Z"
+      lastUpdateTime: "2024-07-12T03:51:24Z"
+      message: all requirements found, attempting install
+      phase: InstallReady
+      reason: AllRequirementsMet
+    - lastTransitionTime: "2024-07-12T03:51:24Z"
+      lastUpdateTime: "2024-07-12T03:51:24Z"
+      message: waiting for install components to report healthy
+      phase: Installing
+      reason: InstallSucceeded
+    - lastTransitionTime: "2024-07-12T03:51:24Z"
+      lastUpdateTime: "2024-07-12T03:51:24Z"
+      message: 'installing: waiting for deployment elasticsearch-operator to become
+        ready: waiting for spec update of deployment "elasticsearch-operator" to be
+        observed...'
+      phase: Installing
+      reason: InstallWaiting
+    - lastTransitionTime: "2024-07-12T03:52:34Z"
+      lastUpdateTime: "2024-07-12T03:52:34Z"
+      message: install strategy completed with no errors
+      phase: Succeeded
+      reason: InstallSucceeded
+    - lastTransitionTime: "2024-07-24T20:17:53Z"
+      lastUpdateTime: "2024-07-24T20:17:53Z"
+      message: 'installing: waiting for deployment elasticsearch-operator to become
+        ready: deployment "elasticsearch-operator" not available: Deployment does
+        not have minimum availability.'
+      phase: Failed
+      reason: ComponentUnhealthy
+    - lastTransitionTime: "2024-07-24T20:17:53Z"
+      lastUpdateTime: "2024-07-24T20:17:53Z"
+      message: 'installing: waiting for deployment elasticsearch-operator to become
+        ready: deployment "elasticsearch-operator" not available: Deployment does
+        not have minimum availability.'
+      phase: Pending
+      reason: NeedsReinstall
+    - lastTransitionTime: "2024-07-24T20:17:53Z"
+      lastUpdateTime: "2024-07-24T20:17:53Z"
+      message: all requirements found, attempting install
+      phase: InstallReady
+      reason: AllRequirementsMet
+    - lastTransitionTime: "2024-07-24T20:17:53Z"
+      lastUpdateTime: "2024-07-24T20:17:53Z"
+      message: waiting for install components to report healthy
+      phase: Installing
+      reason: InstallSucceeded
+    - lastTransitionTime: "2024-07-24T20:17:53Z"
+      lastUpdateTime: "2024-07-24T20:17:54Z"
+      message: 'installing: waiting for deployment elasticsearch-operator to become
+        ready: deployment "elasticsearch-operator" not available: Deployment does
+        not have minimum availability.'
+      phase: Installing
+      reason: InstallWaiting
+    - lastTransitionTime: "2024-07-24T20:17:57Z"
+      lastUpdateTime: "2024-07-24T20:17:57Z"
+      message: install strategy completed with no errors
+      phase: Succeeded
+      reason: InstallSucceeded
+    lastTransitionTime: "2024-07-24T20:17:57Z"
+    lastUpdateTime: "2024-07-24T20:17:57Z"
+    message: The operator is running in openshift-operators-redhat but is managing
+      this namespace
+    phase: Succeeded
+    reason: Copied
+    requirementStatus:
+    - group: operators.coreos.com
+      kind: ClusterServiceVersion
+      message: CSV minKubeVersion (1.18.3) less than server version (v1.23.12+8a6bfe4)
+      name: elasticsearch-operator.v5.6.5
+      status: Present
+      version: v1alpha1
+    - group: apiextensions.k8s.io
+      kind: CustomResourceDefinition
+      message: CRD is present and Established condition is true
+      name: elasticsearches.logging.openshift.io
+      status: Present
+      uuid: 8d005414-b651-4818-9c50-e6a4a8b4f555
+      version: v1
+    - group: apiextensions.k8s.io
+      kind: CustomResourceDefinition
+      message: CRD is present and Established condition is true
+      name: kibanas.logging.openshift.io
+      status: Present
+      uuid: d4ce7005-cbaa-48d8-b763-1b82559755d7
+      version: v1
+    - dependents:
+      - group: rbac.authorization.k8s.io
+        kind: PolicyRule
+        message: cluster rule:{"verbs":["get"],"nonResourceURLs":["/metrics"]}
+        status: Satisfied
+        version: v1
+      - group: rbac.authorization.k8s.io
+        kind: PolicyRule
+        message: cluster rule:{"verbs":["*"],"apiGroups":["apps"],"resources":["daemonsets","deployments","replicasets","statefulsets"]}
+        status: Satisfied
+        version: v1
+      - group: rbac.authorization.k8s.io
+        kind: PolicyRule
+        message: cluster rule:{"verbs":["update"],"apiGroups":["apps"],"resources":["deployments/finalizers"],"resourceNames":["elasticsearch-operator"]}
+        status: Satisfied
+        version: v1
+      - group: rbac.authorization.k8s.io
+        kind: PolicyRule
+        message: cluster rule:{"verbs":["create"],"apiGroups":["authentication.k8s.io"],"resources":["subjectaccessreviews","tokenreviews"]}
+        status: Satisfied
+        version: v1
+      - group: rbac.authorization.k8s.io
+        kind: PolicyRule
+        message: cluster rule:{"verbs":["create"],"apiGroups":["authorization.k8s.io"],"resources":["subjectaccessreviews"]}
+        status: Satisfied
+        version: v1
+      - group: rbac.authorization.k8s.io
+        kind: PolicyRule
+        message: cluster rule:{"verbs":["*"],"apiGroups":["batch"],"resources":["cronjobs"]}
+        status: Satisfied
+        version: v1
+      - group: rbac.authorization.k8s.io
+        kind: PolicyRule
+        message: cluster rule:{"verbs":["get","list","watch"],"apiGroups":["config.openshift.io"],"resources":["oauths","proxies"]}
+        status: Satisfied
+        version: v1
+      - group: rbac.authorization.k8s.io
+        kind: PolicyRule
+        message: cluster rule:{"verbs":["create","delete","get","update"],"apiGroups":["console.openshift.io"],"resources":["consoleexternalloglinks","consolelinks"]}
+        status: Satisfied
+        version: v1
+      - group: rbac.authorization.k8s.io
+        kind: PolicyRule
+        message: cluster rule:{"verbs":["create","get","update"],"apiGroups":["coordination.k8s.io"],"resources":["leases"]}
+        status: Satisfied
+        version: v1
+      - group: rbac.authorization.k8s.io
+        kind: PolicyRule
+        message: cluster rule:{"verbs":["*"],"apiGroups":[""],"resources":["configmaps","endpoints","events","persistentvolumeclaims","pods","pods/exec","secrets","serviceaccounts","services","services/finalizers"]}
+        status: Satisfied
+        version: v1
+      - group: rbac.authorization.k8s.io
+        kind: PolicyRule
+        message: cluster rule:{"verbs":["get","list","watch"],"apiGroups":["image.openshift.io"],"resources":["imagestreams"]}
+        status: Satisfied
+        version: v1
+      - group: rbac.authorization.k8s.io
+        kind: PolicyRule
+        message: cluster rule:{"verbs":["*"],"apiGroups":["logging.openshift.io"],"resources":["*"]}
+        status: Satisfied
+        version: v1
+      - group: rbac.authorization.k8s.io
+        kind: PolicyRule
+        message: cluster rule:{"verbs":["*"],"apiGroups":["monitoring.coreos.com"],"resources":["prometheusrules","servicemonitors"]}
+        status: Satisfied
+        version: v1
+      - group: rbac.authorization.k8s.io
+        kind: PolicyRule
+        message: cluster rule:{"verbs":["create","delete"],"apiGroups":["networking.k8s.io"],"resources":["networkpolicies"]}
+        status: Satisfied
+        version: v1
+      - group: rbac.authorization.k8s.io
+        kind: PolicyRule
+        message: cluster rule:{"verbs":["*"],"apiGroups":["oauth.openshift.io"],"resources":["oauthclients"]}
+        status: Satisfied
+        version: v1
+      - group: rbac.authorization.k8s.io
+        kind: PolicyRule
+        message: cluster rule:{"verbs":["*"],"apiGroups":["rbac.authorization.k8s.io"],"resources":["clusterrolebindings","clusterroles"]}
+        status: Satisfied
+        version: v1
+      - group: rbac.authorization.k8s.io
+        kind: PolicyRule
+        message: cluster rule:{"verbs":["*"],"apiGroups":["rbac.authorization.k8s.io"],"resources":["rolebindings","roles"]}
+        status: Satisfied
+        version: v1
+      - group: rbac.authorization.k8s.io
+        kind: PolicyRule
+        message: cluster rule:{"verbs":["*"],"apiGroups":["route.openshift.io"],"resources":["routes","routes/custom-host"]}
+        status: Satisfied
+        version: v1
+      - group: rbac.authorization.k8s.io
+        kind: PolicyRule
+        message: cluster rule:{"verbs":["create","get","list","update","watch"],"apiGroups":["security.openshift.io"],"resources":["securitycontextconstraints"]}
+        status: Satisfied
+        version: v1
+      group: ""
+      kind: ServiceAccount
+      message: ""
+      name: elasticsearch-operator
+      status: Present
+      version: v1
+- apiVersion: operators.coreos.com/v1alpha1
+  kind: ClusterServiceVersion
+  metadata:
+    annotations:
+      alm-examples: |-
+        [
+          {
+              "apiVersion": "migration.openshift.io/v1alpha1",
+              "kind": "MigrationController",
+              "metadata": {
+                "name": "migration-controller",
+                "namespace": "openshift-migration"
+              },
+              "spec": {
+                "azure_resource_group": "",
+                "cluster_name": "host",
+                "migration_velero": true,
+                "migration_controller": true,
+                "migration_ui": true,
+                "migration_log_reader": true,
+                "olm_managed": true,
+                "restic_timeout": "1h",
+                "mig_pv_limit": "100",
+                "mig_pod_limit": "100",
+                "mig_namespace_limit": "10"
+              }
+          },
+          {
+              "apiVersion": "migration.openshift.io/v1alpha1",
+              "kind": "DirectImageMigration",
+              "metadata": {
+                "name": "directimagemigration",
+                "namespace": "openshift-migration"
+              },
+              "spec": {}
+          },
+          {
+              "apiVersion": "migration.openshift.io/v1alpha1",
+              "kind": "DirectImageStreamMigration",
+              "metadata": {
+                "name": "directimagestreammigration",
+                "namespace": "openshift-migration"
+              },
+              "spec": {}
+          },
+          {
+              "apiVersion": "migration.openshift.io/v1alpha1",
+              "kind": "MigAnalytic",
+              "metadata": {
+                "name": "host",
+                "namespace": "openshift-migration"
+              },
+              "spec": {
+                "plan": {
+                  "name": "foo",
+                  "namespace": "openshift-migration"
+                },
+                "analyzeK8SResources": true,
+                "analyzeImageCount": true,
+                "analyzePVCapacity": true
+              }
+          },
+          {
+              "apiVersion": "migration.openshift.io/v1alpha1",
+              "kind": "MigCluster",
+              "metadata": {
+                "name": "host",
+                "namespace": "openshift-migration"
+              },
+              "spec": {}
+          },
+          {
+              "apiVersion": "migration.openshift.io/v1alpha1",
+              "kind": "DirectVolumeMigration",
+              "metadata": {
+                "name": "direct",
+                "namespace": "openshift-migration"
+              },
+              "spec": {}
+          },
+          {
+              "apiVersion": "migration.openshift.io/v1alpha1",
+                  "kind": "DirectVolumeMigrationProgress",
+                  "metadata": {
+                    "name": "direct-progress",
+                    "namespace": "openshift-migration"
+                  },
+                  "spec": {}
+          },
+          {
+              "apiVersion": "migration.openshift.io/v1alpha1",
+              "kind": "MigPlan",
+              "metadata": {
+                "name": "migplan",
+                "namespace": "openshift-migration"
+              },
+              "spec": {}
+          },
+          {
+              "apiVersion": "migration.openshift.io/v1alpha1",
+              "kind": "MigMigration",
+              "metadata": {
+                "name": "migmigration",
+                "namespace": "openshift-migration"
+              },
+              "spec": {}
+          },
+          {
+              "apiVersion": "migration.openshift.io/v1alpha1",
+              "kind": "MigStorage",
+              "metadata": {
+                "name": "migstorage",
+                "namespace": "openshift-migration"
+              },
+              "spec": {}
+          }
+        ]
+      capabilities: Seamless Upgrades
+      categories: OpenShift Optional, Modernization & Migration
+      certified: "false"
+      containerImage: registry.redhat.io/rhmtc/openshift-migration-rhel8-operator@sha256:8f1891677fbb290f130b906050bad0918353da85b5953bed593dc28038707807
+      createdAt: "2024-06-26T18:13:06Z"
+      description: Facilitates migration of container workloads from OpenShift 3.x
+        to OpenShift 4.x
+      features.operators.openshift.io/cnf: "false"
+      features.operators.openshift.io/cni: "false"
+      features.operators.openshift.io/csi: "false"
+      features.operators.openshift.io/disconnected: "true"
+      features.operators.openshift.io/fips-compliant: "false"
+      features.operators.openshift.io/proxy-aware: "false"
+      features.operators.openshift.io/tls-profiles: "false"
+      features.operators.openshift.io/token-auth-aws: "false"
+      features.operators.openshift.io/token-auth-azure: "false"
+      features.operators.openshift.io/token-auth-gcp: "false"
+      olm.operatorGroup: openshift-migration-z5b5h
+      olm.operatorNamespace: openshift-migration
+      olm.skipRange: '>=1.5.0 <1.7.16'
+      olm.targetNamespaces: openshift-migration
+      operatorframework.io/cluster-monitoring: "true"
+      operatorframework.io/properties: '{"properties":[{"type":"olm.gvk","value":{"group":"migration.openshift.io","kind":"MigrationController","version":"v1alpha1"}},{"type":"olm.gvk","value":{"group":"migration.openshift.io","kind":"MigPlan","version":"v1alpha1"}},{"type":"olm.gvk","value":{"group":"migration.openshift.io","kind":"MigStorage","version":"v1alpha1"}},{"type":"olm.gvk","value":{"group":"migration.openshift.io","kind":"DirectImageStreamMigration","version":"v1alpha1"}},{"type":"olm.gvk","value":{"group":"migration.openshift.io","kind":"MigCluster","version":"v1alpha1"}},{"type":"olm.gvk","value":{"group":"migration.openshift.io","kind":"MigHook","version":"v1alpha1"}},{"type":"olm.gvk","value":{"group":"migration.openshift.io","kind":"DirectVolumeMigration","version":"v1alpha1"}},{"type":"olm.package","value":{"packageName":"mtc-operator","version":"1.7.16"}},{"type":"olm.gvk","value":{"group":"migration.openshift.io","kind":"DirectVolumeMigrationProgress","version":"v1alpha1"}},{"type":"olm.gvk","value":{"group":"migration.openshift.io","kind":"MigAnalytic","version":"v1alpha1"}},{"type":"olm.gvk","value":{"group":"migration.openshift.io","kind":"MigMigration","version":"v1alpha1"}},{"type":"olm.gvk","value":{"group":"migration.openshift.io","kind":"DirectImageMigration","version":"v1alpha1"}},{"type":"olm.package.required","value":{"packageName":"redhat-oadp-operator","versionRange":"\u003e=1.0.14
+        \u003c1.1.0"}}]}'
+      operatorframework.io/suggested-namespace: openshift-migration
+      operators.openshift.io/infrastructure-features: '["Disconnected"]'
+      operators.openshift.io/must-gather-image: registry.redhat.io/rhmtc/openshift-migration-must-gather-rhel8@sha256:5fdab45b5ec09a8044f33d890c9e616154bf6b3844674b52f8548c4c95dffefd
+      operators.openshift.io/valid-subscription: '["OpenShift Container Platform",
+        "OpenShift Platform Plus"]'
+      repository: https://github.com/konveyor/mig-operator
+      support: Red Hat
+    creationTimestamp: "2024-07-11T17:31:42Z"
+    generation: 1
+    labels:
+      operators.coreos.com/mtc-operator.openshift-migration: ""
+    name: mtc-operator.v1.7.16
+    namespace: openshift-migration
+    resourceVersion: "476624619"
+    uid: 92379bf9-f5b5-4f6c-8e75-c1d41bd6f15e
+  spec:
+    apiservicedefinitions: {}
+    cleanup:
+      enabled: false
+    customresourcedefinitions:
+      owned:
+      - description: a request to migrate PVCs from a set of namespaces directly to
+          a target
+        displayName: DirectVolumeMigration
+        kind: DirectVolumeMigration
+        name: directvolumemigrations.migration.openshift.io
+        version: v1alpha1
+      - description: a request to migrate watch the progress of rsync pod migrating
+          a PVC to a target
+        displayName: DirectVolumeMigrationProgress
+        kind: DirectVolumeMigrationProgress
+        name: directvolumemigrationprogresses.migration.openshift.io
+        version: v1alpha1
+      - description: a request to migrate local images from a set of namespaces directly
+          to a target
+        displayName: DirectImageMigration
+        kind: DirectImageMigration
+        name: directimagemigrations.migration.openshift.io
+        version: v1alpha1
+      - description: a request to migrate local images from a single imagestream directly
+          to a target
+        displayName: DirectImageStreamMigration
+        kind: DirectImageStreamMigration
+        name: directimagestreammigrations.migration.openshift.io
+        version: v1alpha1
+      - description: A request to Analyze a MigPlan and its namespaces
+        displayName: MigAnalytic
+        kind: MigAnalytic
+        name: miganalytics.migration.openshift.io
+        version: v1alpha1
+      - description: A cluster defined for migration
+        displayName: MigCluster
+        kind: MigCluster
+        name: migclusters.migration.openshift.io
+        version: v1alpha1
+      - description: A migration process
+        displayName: MigMigration
+        kind: MigMigration
+        name: migmigrations.migration.openshift.io
+        version: v1alpha1
+      - description: A migration plan
+        displayName: MigPlan
+        kind: MigPlan
+        name: migplans.migration.openshift.io
+        version: v1alpha1
+      - description: A migration contoller deployment
+        displayName: MigrationController
+        kind: MigrationController
+        name: migrationcontrollers.migration.openshift.io
+        resources:
+        - kind: MigCluster
+          name: ""
+          version: migration.openshift.io/v1alpha1
+        - kind: Secret
+          name: ""
+          version: v1
+        - kind: Service
+          name: ""
+          version: v1
+        - kind: Deployment
+          name: ""
+          version: apps/v1
+        - kind: ConfigMap
+          name: ""
+          version: v1
+        - kind: OAuthClient
+          name: ""
+          version: oauth.openshift.io/v1
+        - kind: Route
+          name: ""
+          version: route.openshift.io/v1
+        - kind: Daemonset
+          name: ""
+          version: apps/v1
+        version: v1alpha1
+      - description: A migration hook
+        displayName: MigHook
+        kind: MigHook
+        name: mighooks.migration.openshift.io
+        version: v1alpha1
+      - description: A migration storage location
+        displayName: MigStorage
+        kind: MigStorage
+        name: migstorages.migration.openshift.io
+        version: v1alpha1
+    description: |-
+      The Migration Toolkit for Containers Operator enables installation of the application migration tool components.
+
+      After you have installed the Operator, you can install components by creating a MigrationController CR.
+
+      By default, the Operator installs the following components on an OpenShift Container Platform 4 target cluster:
+
+      * velero and restic, to back up data on the source cluster and restore it on the target cluster
+      * mig-controller, to coordinate the backup and restore processes
+      * mig-ui, the web console for managing migrations
+
+      If you experience any issues or have feature requests, please file an [issue](https://github.com/konveyor/mig-operator/issues)
+
+      For more information, see the [OpenShift Container Platform Migration Guide](https://docs.openshift.com/container-platform/latest/migration_toolkit_for_containers/about-mtc.html).
+    displayName: Migration Toolkit for Containers Operator
+    icon:
+    - base64data: PHN2ZyBpZD0iTGF5ZXJfMSIgZGF0YS1uYW1lPSJMYXllciAxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxOTIgMTQ1Ij48ZGVmcz48c3R5bGU+LmNscy0xe2ZpbGw6I2UwMDt9PC9zdHlsZT48L2RlZnM+PHRpdGxlPlJlZEhhdC1Mb2dvLUhhdC1Db2xvcjwvdGl0bGU+PHBhdGggZD0iTTE1Ny43Nyw2Mi42MWExNCwxNCwwLDAsMSwuMzEsMy40MmMwLDE0Ljg4LTE4LjEsMTcuNDYtMzAuNjEsMTcuNDZDNzguODMsODMuNDksNDIuNTMsNTMuMjYsNDIuNTMsNDRhNi40Myw2LjQzLDAsMCwxLC4yMi0xLjk0bC0zLjY2LDkuMDZhMTguNDUsMTguNDUsMCwwLDAtMS41MSw3LjMzYzAsMTguMTEsNDEsNDUuNDgsODcuNzQsNDUuNDgsMjAuNjksMCwzNi40My03Ljc2LDM2LjQzLTIxLjc3LDAtMS4wOCwwLTEuOTQtMS43My0xMC4xM1oiLz48cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0xMjcuNDcsODMuNDljMTIuNTEsMCwzMC42MS0yLjU4LDMwLjYxLTE3LjQ2YTE0LDE0LDAsMCwwLS4zMS0zLjQybC03LjQ1LTMyLjM2Yy0xLjcyLTcuMTItMy4yMy0xMC4zNS0xNS43My0xNi42QzEyNC44OSw4LjY5LDEwMy43Ni41LDk3LjUxLjUsOTEuNjkuNSw5MCw4LDgzLjA2LDhjLTYuNjgsMC0xMS42NC01LjYtMTcuODktNS42LTYsMC05LjkxLDQuMDktMTIuOTMsMTIuNSwwLDAtOC40MSwyMy43Mi05LjQ5LDI3LjE2QTYuNDMsNi40MywwLDAsMCw0Mi41Myw0NGMwLDkuMjIsMzYuMywzOS40NSw4NC45NCwzOS40NU0xNjAsNzIuMDdjMS43Myw4LjE5LDEuNzMsOS4wNSwxLjczLDEwLjEzLDAsMTQtMTUuNzQsMjEuNzctMzYuNDMsMjEuNzdDNzguNTQsMTA0LDM3LjU4LDc2LjYsMzcuNTgsNTguNDlhMTguNDUsMTguNDUsMCwwLDEsMS41MS03LjMzQzIyLjI3LDUyLC41LDU1LC41LDc0LjIyYzAsMzEuNDgsNzQuNTksNzAuMjgsMTMzLjY1LDcwLjI4LDQ1LjI4LDAsNTYuNy0yMC40OCw1Ni43LTM2LjY1LDAtMTIuNzItMTEtMjcuMTYtMzAuODMtMzUuNzgiLz48L3N2Zz4=
+      mediatype: image/svg+xml
+    install:
+      spec:
+        clusterPermissions:
+        - rules:
+          - apiGroups:
+            - oauth.openshift.io
+            resources:
+            - oauthclients
+            verbs:
+            - '*'
+          - apiGroups:
+            - ""
+            resources:
+            - namespaces
+            verbs:
+            - '*'
+          - apiGroups:
+            - config.openshift.io
+            resources:
+            - infrastructures
+            verbs:
+            - get
+          - apiGroups:
+            - security.openshift.io
+            resources:
+            - securitycontextconstraints
+            verbs:
+            - create
+            - list
+            - get
+            - watch
+            - edit
+            - patch
+            - delete
+          serviceAccountName: migration-operator
+        - rules:
+          - apiGroups:
+            - ""
+            resources:
+            - serviceaccounts
+            - configmaps
+            - events
+            verbs:
+            - get
+            - list
+            - watch
+            - create
+            - update
+            - patch
+            - delete
+          - apiGroups:
+            - apps
+            - batch
+            - extensions
+            resources:
+            - '*'
+            verbs:
+            - get
+            - list
+            - watch
+            - create
+            - update
+            - patch
+            - delete
+          - apiGroups:
+            - ""
+            resources:
+            - namespaces
+            verbs:
+            - get
+            - list
+            - watch
+            - create
+            - update
+            - patch
+            - delete
+          - apiGroups:
+            - ""
+            resources:
+            - namespaces/status
+            verbs:
+            - get
+            - update
+            - patch
+          - apiGroups:
+            - migration.openshift.io
+            - velero.io
+            resources:
+            - '*'
+            verbs:
+            - '*'
+          - apiGroups:
+            - ""
+            resources:
+            - pods
+            verbs:
+            - get
+            - list
+            - watch
+            - create
+            - update
+            - patch
+            - delete
+          - apiGroups:
+            - ""
+            resources:
+            - pods/status
+            verbs:
+            - get
+            - update
+            - patch
+          - apiGroups:
+            - ""
+            resources:
+            - pods/exec
+            verbs:
+            - create
+          - apiGroups:
+            - ""
+            resources:
+            - pods/log
+            verbs:
+            - '*'
+          - apiGroups:
+            - ""
+            resources:
+            - persistentvolumes
+            verbs:
+            - get
+            - list
+            - watch
+            - create
+            - update
+            - patch
+            - delete
+          - apiGroups:
+            - ""
+            resources:
+            - persistentvolumes/status
+            verbs:
+            - get
+            - update
+            - patch
+          - apiGroups:
+            - ""
+            resources:
+            - persistentvolumeclaims
+            verbs:
+            - get
+            - list
+            - watch
+            - create
+            - update
+            - patch
+            - delete
+          - apiGroups:
+            - ""
+            resources:
+            - persistentvolumeclaims/status
+            verbs:
+            - get
+            - update
+            - patch
+          - apiGroups:
+            - image.openshift.io
+            resources:
+            - '*'
+            verbs:
+            - get
+            - list
+            - watch
+            - create
+            - update
+            - patch
+            - delete
+          - apiGroups:
+            - security.openshift.io
+            resourceNames:
+            - privileged
+            - rsync-anyuid
+            resources:
+            - securitycontextconstraints
+            verbs:
+            - use
+          - apiGroups:
+            - config.openshift.io
+            resources:
+            - ingresses
+            verbs:
+            - get
+            - list
+            - watch
+          - apiGroups:
+            - apps.openshift.io
+            - route.openshift.io
+            resources:
+            - '*'
+            verbs:
+            - get
+            - list
+            - watch
+            - create
+            - update
+            - patch
+            - delete
+          - apiGroups:
+            - admissionregistration.k8s.io
+            resources:
+            - mutatingwebhookconfigurations
+            - validatingwebhookconfigurations
+            verbs:
+            - get
+            - list
+            - watch
+            - create
+            - update
+            - patch
+            - delete
+          - apiGroups:
+            - ""
+            resources:
+            - secrets
+            verbs:
+            - get
+            - list
+            - watch
+            - create
+            - update
+            - patch
+            - delete
+          - apiGroups:
+            - ""
+            resources:
+            - services
+            verbs:
+            - get
+            - list
+            - watch
+            - create
+            - update
+            - patch
+            - delete
+          - apiGroups:
+            - storage.k8s.io
+            resources:
+            - storageclasses
+            verbs:
+            - get
+            - list
+            - watch
+          - apiGroups:
+            - '*'
+            resources:
+            - '*'
+            verbs:
+            - list
+            - update
+            - watch
+            - delete
+            - deletecollection
+          - apiGroups:
+            - build.openshift.io
+            - rbac.authorization.k8s.io
+            resources:
+            - '*'
+            verbs:
+            - '*'
+          serviceAccountName: migration-controller
+        deployments:
+        - name: migration-operator
+          spec:
+            replicas: 1
+            selector:
+              matchLabels:
+                app: migration
+            strategy: {}
+            template:
+              metadata:
+                creationTimestamp: null
+                labels:
+                  app: migration
+              spec:
+                containers:
+                - env:
+                  - name: OPERATOR_NAME
+                    value: migration-operator
+                  - name: POD_NAME
+                    valueFrom:
+                      fieldRef:
+                        fieldPath: metadata.name
+                  - name: WATCH_NAMESPACE
+                    valueFrom:
+                      fieldRef:
+                        fieldPath: metadata.namespace
+                  - name: REGISTRY
+                    value: registry.redhat.io
+                  - name: PROJECT
+                    value: rhmtc
+                  - name: RSYNC_TRANSFER_REPO
+                    value: openshift-migration-rsync-transfer-rhel8@sha256
+                  - name: RSYNC_TRANSFER_TAG
+                    value: d1d65d090533509619a037318a4a56bf78e37571a4f836b89a83d2f449721983
+                  - name: HOOK_RUNNER_REPO
+                    value: openshift-migration-hook-runner-rhel8@sha256
+                  - name: HOOK_RUNNER_TAG
+                    value: 8d12970d0dd5379b55e25504efe65168535d58c2cafd5a14ec7a6cd2ecbc4973
+                  - name: MIG_CONTROLLER_REPO
+                    value: openshift-migration-controller-rhel8@sha256
+                  - name: MIG_CONTROLLER_TAG
+                    value: 2f14742d58bf09442510845664d7ea7175a7230f800e3cf0e77b4f1e4cb96e1c
+                  - name: MIG_UI_REPO
+                    value: openshift-migration-ui-rhel8@sha256
+                  - name: MIG_UI_TAG
+                    value: 90321b75d2de313fd2f4cb0303ece5b186448bedda864c0eaf932a22b1a9c5e2
+                  - name: MIG_LOG_READER_REPO
+                    value: openshift-migration-log-reader-rhel8@sha256
+                  - name: MIG_LOG_READER_TAG
+                    value: db002b2271ae87333f2d749433fa373c4455c820faf0ad4f4fcbd46d010fc1d9
+                  - name: MIGRATION_REGISTRY_REPO
+                    value: openshift-migration-registry-rhel8@sha256
+                  - name: MIGRATION_REGISTRY_TAG
+                    value: 03a267f927d08143b1b044bdc75618b60a3d011cac70164e0d201857cd39a5e2
+                  - name: VELERO_REPO
+                    value: openshift-migration-velero-rhel8@sha256
+                  - name: VELERO_TAG
+                    value: 4892f019cab3bbe9f14680a692cd94b0bbbf55571b8be3b16ab4aab8238b70f3
+                  - name: VELERO_PLUGIN_REPO
+                    value: openshift-velero-plugin-rhel8@sha256
+                  - name: VELERO_PLUGIN_TAG
+                    value: b55b9829db207cd26f542c2fd735fe910ac8b4e45212622e7170aa20d7a32758
+                  - name: VELERO_RESTIC_RESTORE_HELPER_REPO
+                    value: openshift-migration-velero-restic-restore-helper-rhel8@sha256
+                  - name: VELERO_RESTIC_RESTORE_HELPER_TAG
+                    value: 5bab782d274c5eed359f2cd89530349fb7402d273d12f971b56901b7afe962a9
+                  - name: VELERO_AWS_PLUGIN_REPO
+                    value: openshift-migration-velero-plugin-for-aws-rhel8@sha256
+                  - name: VELERO_AWS_PLUGIN_TAG
+                    value: fb397d4608359b246754c5b4bb382f2ecfc3125aac4ca6f5d8f8cb49fbc018a0
+                  - name: VELERO_GCP_PLUGIN_REPO
+                    value: openshift-migration-velero-plugin-for-gcp-rhel8@sha256
+                  - name: VELERO_GCP_PLUGIN_TAG
+                    value: 01b1c7d7cbcc7670008450ab8aa695ff7fd84aaca06c6a1362407c08e772a198
+                  - name: VELERO_AZURE_PLUGIN_REPO
+                    value: openshift-migration-velero-plugin-for-microsoft-azure-rhel8@sha256
+                  - name: VELERO_AZURE_PLUGIN_TAG
+                    value: c811c61e3d77a3e3c7d5b28619ce77eba64d93030b86ca3eea49562921f97f27
+                  image: registry.redhat.io/rhmtc/openshift-migration-rhel8-operator@sha256:8f1891677fbb290f130b906050bad0918353da85b5953bed593dc28038707807
+                  imagePullPolicy: Always
+                  name: operator
+                  resources: {}
+                  securityContext:
+                    allowPrivilegeEscalation: false
+                  volumeMounts:
+                  - mountPath: /tmp/ansible-operator/runner
+                    name: runner
+                securityContext:
+                  runAsNonRoot: true
+                serviceAccount: migration-operator
+                volumes:
+                - emptyDir: {}
+                  name: runner
+        permissions:
+        - rules:
+          - apiGroups:
+            - rbac.authorization.k8s.io
+            resources:
+            - roles
+            - rolebindings
+            verbs:
+            - list
+            - get
+            - create
+            - delete
+            - patch
+            - update
+            - watch
+          - apiGroups:
+            - oadp.openshift.io
+            resources:
+            - '*'
+            verbs:
+            - '*'
+          - apiGroups:
+            - apps
+            resources:
+            - daemonsets
+            - deployments
+            - replicasets
+            verbs:
+            - '*'
+          - apiGroups:
+            - monitoring.coreos.com
+            resources:
+            - servicemonitors
+            verbs:
+            - list
+            - get
+            - create
+            - delete
+            - update
+            - patch
+            - watch
+          - apiGroups:
+            - migration.openshift.io
+            resources:
+            - '*'
+            verbs:
+            - '*'
+          - apiGroups:
+            - route.openshift.io
+            resources:
+            - routes
+            verbs:
+            - '*'
+          - apiGroups:
+            - ""
+            resources:
+            - pods
+            - services
+            - endpoints
+            - persistentvolumeclaims
+            - events
+            - configmaps
+            - secrets
+            - serviceaccounts
+            verbs:
+            - '*'
+          serviceAccountName: migration-operator
+      strategy: deployment
+    installModes:
+    - supported: true
+      type: OwnNamespace
+    - supported: false
+      type: SingleNamespace
+    - supported: false
+      type: MultiNamespace
+    - supported: false
+      type: AllNamespaces
+    keywords:
+    - migration
+    - crane
+    - mtc
+    labels:
+      alm-owner-prometheus: mtc-operator
+      alm-status-descriptors: mtc-operator.v1.7.16
+    links:
+    - name: Migrations
+      url: https://github.com/konveyor/mig-controller
+    - name: Documentation
+      url: https://docs.openshift.com/container-platform/latest/migration_toolkit_for_containers/about-mtc.html
+    - name: Crane Operator
+      url: https://github.com/konveyor/mig-operator
+    maintainers:
+    - email: openshift-operators@redhat.com
+      name: Red Hat
+    maturity: alpha
+    provider:
+      name: Red Hat
+    relatedImages:
+    - image: registry.redhat.io/rhmtc/openshift-migration-controller-rhel8@sha256:2f14742d58bf09442510845664d7ea7175a7230f800e3cf0e77b4f1e4cb96e1c
+      name: controller
+    - image: registry.redhat.io/rhmtc/openshift-migration-ui-rhel8@sha256:90321b75d2de313fd2f4cb0303ece5b186448bedda864c0eaf932a22b1a9c5e2
+      name: ui
+    - image: registry.redhat.io/rhmtc/openshift-migration-velero-rhel8@sha256:4892f019cab3bbe9f14680a692cd94b0bbbf55571b8be3b16ab4aab8238b70f3
+      name: velero
+    - image: registry.redhat.io/rhmtc/openshift-migration-velero-restic-restore-helper-rhel8@sha256:5bab782d274c5eed359f2cd89530349fb7402d273d12f971b56901b7afe962a9
+      name: velero_restic_restore_helper
+    - image: registry.redhat.io/rhmtc/openshift-velero-plugin-rhel8@sha256:b55b9829db207cd26f542c2fd735fe910ac8b4e45212622e7170aa20d7a32758
+      name: migration_plugin
+    - image: registry.redhat.io/rhmtc/openshift-migration-velero-plugin-for-aws-rhel8@sha256:fb397d4608359b246754c5b4bb382f2ecfc3125aac4ca6f5d8f8cb49fbc018a0
+      name: aws_plugin
+    - image: registry.redhat.io/rhmtc/openshift-migration-velero-plugin-for-microsoft-azure-rhel8@sha256:c811c61e3d77a3e3c7d5b28619ce77eba64d93030b86ca3eea49562921f97f27
+      name: azure_plugin
+    - image: registry.redhat.io/rhmtc/openshift-migration-velero-plugin-for-gcp-rhel8@sha256:01b1c7d7cbcc7670008450ab8aa695ff7fd84aaca06c6a1362407c08e772a198
+      name: gcp_plugin
+    - image: registry.redhat.io/rhmtc/openshift-migration-registry-rhel8@sha256:03a267f927d08143b1b044bdc75618b60a3d011cac70164e0d201857cd39a5e2
+      name: registry
+    - image: registry.redhat.io/rhmtc/openshift-migration-hook-runner-rhel8@sha256:8d12970d0dd5379b55e25504efe65168535d58c2cafd5a14ec7a6cd2ecbc4973
+      name: hook_runner
+    - image: registry.redhat.io/rhmtc/openshift-migration-log-reader-rhel8@sha256:db002b2271ae87333f2d749433fa373c4455c820faf0ad4f4fcbd46d010fc1d9
+      name: mig_log_reader
+    - image: registry.redhat.io/rhmtc/openshift-migration-rsync-transfer-rhel8@sha256:d1d65d090533509619a037318a4a56bf78e37571a4f836b89a83d2f449721983
+      name: rsync_transfer
+    - image: registry.redhat.io/rhmtc/openshift-migration-must-gather-rhel8@sha256:5fdab45b5ec09a8044f33d890c9e616154bf6b3844674b52f8548c4c95dffefd
+      name: must_gather
+    replaces: mtc-operator.v1.7.15
+    selector:
+      matchLabels:
+        alm-owner-prometheus: mtc-operator
+    skips:
+    - mtc-operator.v1.7.15
+    - mtc-operator.v1.7.14
+    - mtc-operator.v1.7.13
+    - mtc-operator.v1.7.12
+    - mtc-operator.v1.7.11
+    - mtc-operator.v1.7.10
+    - mtc-operator.v1.7.9
+    - mtc-operator.v1.7.8
+    - mtc-operator.v1.7.7
+    - mtc-operator.v1.7.6
+    - mtc-operator.v1.7.5
+    - mtc-operator.v1.7.4
+    - mtc-operator.v1.7.3
+    - mtc-operator.v1.7.2
+    - mtc-operator.v1.7.1
+    - mtc-operator.v1.7.0
+    version: 1.7.16
+  status:
+    cleanup: {}
+    conditions:
+    - lastTransitionTime: "2024-07-11T17:31:43Z"
+      lastUpdateTime: "2024-07-11T17:31:43Z"
+      message: requirements not yet checked
+      phase: Pending
+      reason: RequirementsUnknown
+    - lastTransitionTime: "2024-07-11T17:31:43Z"
+      lastUpdateTime: "2024-07-11T17:31:43Z"
+      message: one or more requirements couldn't be found
+      phase: Pending
+      reason: RequirementsNotMet
+    - lastTransitionTime: "2024-07-11T17:31:48Z"
+      lastUpdateTime: "2024-07-11T17:31:48Z"
+      message: all requirements found, attempting install
+      phase: InstallReady
+      reason: AllRequirementsMet
+    - lastTransitionTime: "2024-07-11T17:31:49Z"
+      lastUpdateTime: "2024-07-11T17:31:49Z"
+      message: waiting for install components to report healthy
+      phase: Installing
+      reason: InstallSucceeded
+    - lastTransitionTime: "2024-07-11T17:31:49Z"
+      lastUpdateTime: "2024-07-11T17:31:50Z"
+      message: 'installing: waiting for deployment migration-operator to become ready:
+        deployment "migration-operator" waiting for 1 outdated replica(s) to be terminated'
+      phase: Installing
+      reason: InstallWaiting
+    - lastTransitionTime: "2024-07-11T17:32:29Z"
+      lastUpdateTime: "2024-07-11T17:32:29Z"
+      message: install strategy completed with no errors
+      phase: Succeeded
+      reason: InstallSucceeded
+    - lastTransitionTime: "2024-07-24T20:17:53Z"
+      lastUpdateTime: "2024-07-24T20:17:53Z"
+      message: 'installing: waiting for deployment migration-operator to become ready:
+        deployment "migration-operator" not available: Deployment does not have minimum
+        availability.'
+      phase: Failed
+      reason: ComponentUnhealthy
+    - lastTransitionTime: "2024-07-24T20:17:53Z"
+      lastUpdateTime: "2024-07-24T20:17:53Z"
+      message: 'installing: waiting for deployment migration-operator to become ready:
+        deployment "migration-operator" not available: Deployment does not have minimum
+        availability.'
+      phase: Pending
+      reason: NeedsReinstall
+    - lastTransitionTime: "2024-07-24T20:17:53Z"
+      lastUpdateTime: "2024-07-24T20:17:53Z"
+      message: all requirements found, attempting install
+      phase: InstallReady
+      reason: AllRequirementsMet
+    - lastTransitionTime: "2024-07-24T20:17:53Z"
+      lastUpdateTime: "2024-07-24T20:17:53Z"
+      message: waiting for install components to report healthy
+      phase: Installing
+      reason: InstallSucceeded
+    - lastTransitionTime: "2024-07-24T20:17:53Z"
+      lastUpdateTime: "2024-07-24T20:17:54Z"
+      message: 'installing: waiting for deployment migration-operator to become ready:
+        deployment "migration-operator" not available: Deployment does not have minimum
+        availability.'
+      phase: Installing
+      reason: InstallWaiting
+    - lastTransitionTime: "2024-07-24T20:17:57Z"
+      lastUpdateTime: "2024-07-24T20:17:57Z"
+      message: install strategy completed with no errors
+      phase: Succeeded
+      reason: InstallSucceeded
+    lastTransitionTime: "2024-07-24T20:17:57Z"
+    lastUpdateTime: "2024-07-24T20:17:57Z"
+    message: install strategy completed with no errors
+    phase: Succeeded
+    reason: InstallSucceeded
+    requirementStatus:
+    - group: apiextensions.k8s.io
+      kind: CustomResourceDefinition
+      message: CRD is present and Established condition is true
+      name: directimagemigrations.migration.openshift.io
+      status: Present
+      uuid: dac54282-6c9d-462f-8ba7-cacdd4127c3e
+      version: v1
+    - group: apiextensions.k8s.io
+      kind: CustomResourceDefinition
+      message: CRD is present and Established condition is true
+      name: directimagestreammigrations.migration.openshift.io
+      status: Present
+      uuid: e33c483d-c73d-4689-8b67-05fcb6ebf44a
+      version: v1
+    - group: apiextensions.k8s.io
+      kind: CustomResourceDefinition
+      message: CRD is present and Established condition is true
+      name: directvolumemigrationprogresses.migration.openshift.io
+      status: Present
+      uuid: 6d9b0899-3bec-422f-8425-b324ed3828df
+      version: v1
+    - group: apiextensions.k8s.io
+      kind: CustomResourceDefinition
+      message: CRD is present and Established condition is true
+      name: directvolumemigrations.migration.openshift.io
+      status: Present
+      uuid: 23cb529b-9b1f-491a-a258-fa1861154574
+      version: v1
+    - group: apiextensions.k8s.io
+      kind: CustomResourceDefinition
+      message: CRD is present and Established condition is true
+      name: miganalytics.migration.openshift.io
+      status: Present
+      uuid: e46d7008-0661-4e2e-8faa-30d5425ee073
+      version: v1
+    - group: apiextensions.k8s.io
+      kind: CustomResourceDefinition
+      message: CRD is present and Established condition is true
+      name: migclusters.migration.openshift.io
+      status: Present
+      uuid: b8aeabf8-9bd1-4e5c-8167-3b036480d089
+      version: v1
+    - group: apiextensions.k8s.io
+      kind: CustomResourceDefinition
+      message: CRD is present and Established condition is true
+      name: mighooks.migration.openshift.io
+      status: Present
+      uuid: 1778ec5f-f630-4af0-b22f-a01d6a3e493e
+      version: v1
+    - group: apiextensions.k8s.io
+      kind: CustomResourceDefinition
+      message: CRD is present and Established condition is true
+      name: migmigrations.migration.openshift.io
+      status: Present
+      uuid: 515c94bf-cbb2-430c-9c93-bf2a5c3593d5
+      version: v1
+    - group: apiextensions.k8s.io
+      kind: CustomResourceDefinition
+      message: CRD is present and Established condition is true
+      name: migplans.migration.openshift.io
+      status: Present
+      uuid: f28b3713-81d4-4e1e-a502-02a88743ac8a
+      version: v1
+    - group: apiextensions.k8s.io
+      kind: CustomResourceDefinition
+      message: CRD is present and Established condition is true
+      name: migrationcontrollers.migration.openshift.io
+      status: Present
+      uuid: fd84eefc-8339-4985-b2e3-7521f72765c9
+      version: v1
+    - group: apiextensions.k8s.io
+      kind: CustomResourceDefinition
+      message: CRD is present and Established condition is true
+      name: migstorages.migration.openshift.io
+      status: Present
+      uuid: fb4ead3e-3d65-4630-a2d6-6661e3658b07
+      version: v1
+    - dependents:
+      - group: rbac.authorization.k8s.io
+        kind: PolicyRule
+        message: namespaced rule:{"verbs":["list","get","create","delete","patch","update","watch"],"apiGroups":["rbac.authorization.k8s.io"],"resources":["roles","rolebindings"]}
+        status: Satisfied
+        version: v1
+      - group: rbac.authorization.k8s.io
+        kind: PolicyRule
+        message: namespaced rule:{"verbs":["*"],"apiGroups":["oadp.openshift.io"],"resources":["*"]}
+        status: Satisfied
+        version: v1
+      - group: rbac.authorization.k8s.io
+        kind: PolicyRule
+        message: namespaced rule:{"verbs":["*"],"apiGroups":["apps"],"resources":["daemonsets","deployments","replicasets"]}
+        status: Satisfied
+        version: v1
+      - group: rbac.authorization.k8s.io
+        kind: PolicyRule
+        message: namespaced rule:{"verbs":["list","get","create","delete","update","patch","watch"],"apiGroups":["monitoring.coreos.com"],"resources":["servicemonitors"]}
+        status: Satisfied
+        version: v1
+      - group: rbac.authorization.k8s.io
+        kind: PolicyRule
+        message: namespaced rule:{"verbs":["*"],"apiGroups":["migration.openshift.io"],"resources":["*"]}
+        status: Satisfied
+        version: v1
+      - group: rbac.authorization.k8s.io
+        kind: PolicyRule
+        message: namespaced rule:{"verbs":["*"],"apiGroups":["route.openshift.io"],"resources":["routes"]}
+        status: Satisfied
+        version: v1
+      - group: rbac.authorization.k8s.io
+        kind: PolicyRule
+        message: namespaced rule:{"verbs":["*"],"apiGroups":[""],"resources":["pods","services","endpoints","persistentvolumeclaims","events","configmaps","secrets","serviceaccounts"]}
+        status: Satisfied
+        version: v1
+      - group: rbac.authorization.k8s.io
+        kind: PolicyRule
+        message: cluster rule:{"verbs":["*"],"apiGroups":["oauth.openshift.io"],"resources":["oauthclients"]}
+        status: Satisfied
+        version: v1
+      - group: rbac.authorization.k8s.io
+        kind: PolicyRule
+        message: cluster rule:{"verbs":["*"],"apiGroups":[""],"resources":["namespaces"]}
+        status: Satisfied
+        version: v1
+      - group: rbac.authorization.k8s.io
+        kind: PolicyRule
+        message: cluster rule:{"verbs":["get"],"apiGroups":["config.openshift.io"],"resources":["infrastructures"]}
+        status: Satisfied
+        version: v1
+      - group: rbac.authorization.k8s.io
+        kind: PolicyRule
+        message: cluster rule:{"verbs":["create","list","get","watch","edit","patch","delete"],"apiGroups":["security.openshift.io"],"resources":["securitycontextconstraints"]}
+        status: Satisfied
+        version: v1
+      group: ""
+      kind: ServiceAccount
+      message: ""
+      name: migration-operator
+      status: Present
+      version: v1
+    - dependents:
+      - group: rbac.authorization.k8s.io
+        kind: PolicyRule
+        message: cluster rule:{"verbs":["get","list","watch","create","update","patch","delete"],"apiGroups":[""],"resources":["serviceaccounts","configmaps","events"]}
+        status: Satisfied
+        version: v1
+      - group: rbac.authorization.k8s.io
+        kind: PolicyRule
+        message: cluster rule:{"verbs":["get","list","watch","create","update","patch","delete"],"apiGroups":["apps","batch","extensions"],"resources":["*"]}
+        status: Satisfied
+        version: v1
+      - group: rbac.authorization.k8s.io
+        kind: PolicyRule
+        message: cluster rule:{"verbs":["get","list","watch","create","update","patch","delete"],"apiGroups":[""],"resources":["namespaces"]}
+        status: Satisfied
+        version: v1
+      - group: rbac.authorization.k8s.io
+        kind: PolicyRule
+        message: cluster rule:{"verbs":["get","update","patch"],"apiGroups":[""],"resources":["namespaces/status"]}
+        status: Satisfied
+        version: v1
+      - group: rbac.authorization.k8s.io
+        kind: PolicyRule
+        message: cluster rule:{"verbs":["*"],"apiGroups":["migration.openshift.io","velero.io"],"resources":["*"]}
+        status: Satisfied
+        version: v1
+      - group: rbac.authorization.k8s.io
+        kind: PolicyRule
+        message: cluster rule:{"verbs":["get","list","watch","create","update","patch","delete"],"apiGroups":[""],"resources":["pods"]}
+        status: Satisfied
+        version: v1
+      - group: rbac.authorization.k8s.io
+        kind: PolicyRule
+        message: cluster rule:{"verbs":["get","update","patch"],"apiGroups":[""],"resources":["pods/status"]}
+        status: Satisfied
+        version: v1
+      - group: rbac.authorization.k8s.io
+        kind: PolicyRule
+        message: cluster rule:{"verbs":["create"],"apiGroups":[""],"resources":["pods/exec"]}
+        status: Satisfied
+        version: v1
+      - group: rbac.authorization.k8s.io
+        kind: PolicyRule
+        message: cluster rule:{"verbs":["*"],"apiGroups":[""],"resources":["pods/log"]}
+        status: Satisfied
+        version: v1
+      - group: rbac.authorization.k8s.io
+        kind: PolicyRule
+        message: cluster rule:{"verbs":["get","list","watch","create","update","patch","delete"],"apiGroups":[""],"resources":["persistentvolumes"]}
+        status: Satisfied
+        version: v1
+      - group: rbac.authorization.k8s.io
+        kind: PolicyRule
+        message: cluster rule:{"verbs":["get","update","patch"],"apiGroups":[""],"resources":["persistentvolumes/status"]}
+        status: Satisfied
+        version: v1
+      - group: rbac.authorization.k8s.io
+        kind: PolicyRule
+        message: cluster rule:{"verbs":["get","list","watch","create","update","patch","delete"],"apiGroups":[""],"resources":["persistentvolumeclaims"]}
+        status: Satisfied
+        version: v1
+      - group: rbac.authorization.k8s.io
+        kind: PolicyRule
+        message: cluster rule:{"verbs":["get","update","patch"],"apiGroups":[""],"resources":["persistentvolumeclaims/status"]}
+        status: Satisfied
+        version: v1
+      - group: rbac.authorization.k8s.io
+        kind: PolicyRule
+        message: cluster rule:{"verbs":["get","list","watch","create","update","patch","delete"],"apiGroups":["image.openshift.io"],"resources":["*"]}
+        status: Satisfied
+        version: v1
+      - group: rbac.authorization.k8s.io
+        kind: PolicyRule
+        message: cluster rule:{"verbs":["use"],"apiGroups":["security.openshift.io"],"resources":["securitycontextconstraints"],"resourceNames":["privileged","rsync-anyuid"]}
+        status: Satisfied
+        version: v1
+      - group: rbac.authorization.k8s.io
+        kind: PolicyRule
+        message: cluster rule:{"verbs":["get","list","watch"],"apiGroups":["config.openshift.io"],"resources":["ingresses"]}
+        status: Satisfied
+        version: v1
+      - group: rbac.authorization.k8s.io
+        kind: PolicyRule
+        message: cluster rule:{"verbs":["get","list","watch","create","update","patch","delete"],"apiGroups":["apps.openshift.io","route.openshift.io"],"resources":["*"]}
+        status: Satisfied
+        version: v1
+      - group: rbac.authorization.k8s.io
+        kind: PolicyRule
+        message: cluster rule:{"verbs":["get","list","watch","create","update","patch","delete"],"apiGroups":["admissionregistration.k8s.io"],"resources":["mutatingwebhookconfigurations","validatingwebhookconfigurations"]}
+        status: Satisfied
+        version: v1
+      - group: rbac.authorization.k8s.io
+        kind: PolicyRule
+        message: cluster rule:{"verbs":["get","list","watch","create","update","patch","delete"],"apiGroups":[""],"resources":["secrets"]}
+        status: Satisfied
+        version: v1
+      - group: rbac.authorization.k8s.io
+        kind: PolicyRule
+        message: cluster rule:{"verbs":["get","list","watch","create","update","patch","delete"],"apiGroups":[""],"resources":["services"]}
+        status: Satisfied
+        version: v1
+      - group: rbac.authorization.k8s.io
+        kind: PolicyRule
+        message: cluster rule:{"verbs":["get","list","watch"],"apiGroups":["storage.k8s.io"],"resources":["storageclasses"]}
+        status: Satisfied
+        version: v1
+      - group: rbac.authorization.k8s.io
+        kind: PolicyRule
+        message: cluster rule:{"verbs":["list","update","watch","delete","deletecollection"],"apiGroups":["*"],"resources":["*"]}
+        status: Satisfied
+        version: v1
+      - group: rbac.authorization.k8s.io
+        kind: PolicyRule
+        message: cluster rule:{"verbs":["*"],"apiGroups":["build.openshift.io","rbac.authorization.k8s.io"],"resources":["*"]}
+        status: Satisfied
+        version: v1
+      group: ""
+      kind: ServiceAccount
+      message: ""
+      name: migration-controller
+      status: Present
+      version: v1
+- apiVersion: operators.coreos.com/v1alpha1
+  kind: ClusterServiceVersion
+  metadata:
+    annotations:
+      alm-examples: |-
+        [
+          {
+            "apiVersion": "oadp.openshift.io/v1alpha1",
+            "kind": "DataProtectionApplication",
+            "metadata": {
+              "name": "velero-sample"
+            },
+            "spec": {
+              "backupLocations": [
+                {
+                  "velero": {
+                    "config": {
+                      "profile": "default",
+                      "region": "us-east-1"
+                    },
+                    "credential": {
+                      "key": "cloud",
+                      "name": "cloud-credentials"
+                    },
+                    "default": true,
+                    "objectStorage": {
+                      "bucket": "my-bucket-name",
+                      "prefix": "velero"
+                    },
+                    "provider": "aws"
+                  }
+                }
+              ],
+              "configuration": {
+                "restic": {
+                  "enable": true
+                },
+                "velero": {
+                  "defaultPlugins": [
+                    "openshift",
+                    "aws",
+                    "kubevirt"
+                  ]
+                }
+              },
+              "snapshotLocations": [
+                {
+                  "velero": {
+                    "config": {
+                      "profile": "default",
+                      "region": "us-west-2"
+                    },
+                    "provider": "aws"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "apiVersion": "velero.io/v1",
+            "kind": "Backup",
+            "metadata": {
+              "name": "backup",
+              "namespace": "openshift-adp"
+            },
+            "spec": {}
+          },
+          {
+            "apiVersion": "velero.io/v1",
+            "kind": "BackupStorageLocation",
+            "metadata": {
+              "name": "backupstoragelocation",
+              "namespace": "openshift-adp"
+            },
+            "spec": {}
+          },
+          {
+            "apiVersion": "velero.io/v1",
+            "kind": "DeleteBackupRequest",
+            "metadata": {
+              "name": "deletebackuprequest",
+              "namespace": "openshift-adp"
+            },
+            "spec": {}
+          },
+          {
+            "apiVersion": "velero.io/v1",
+            "kind": "DownloadRequest",
+            "metadata": {
+              "name": "downloadrequest",
+              "namespace": "openshift-adp"
+            },
+            "spec": {}
+          },
+          {
+            "apiVersion": "velero.io/v1",
+            "kind": "PodVolumeBackup",
+            "metadata": {
+              "name": "podvolumebackup",
+              "namespace": "openshift-adp"
+            },
+            "spec": {}
+          },
+          {
+            "apiVersion": "velero.io/v1",
+            "kind": "PodVolumeRestore",
+            "metadata": {
+              "name": "podvolumerestore",
+              "namespace": "openshift-adp"
+            },
+            "spec": {}
+          },
+          {
+            "apiVersion": "velero.io/v1",
+            "kind": "ResticRepository",
+            "metadata": {
+              "name": "resticrepository",
+              "namespace": "openshift-adp"
+            },
+            "spec": {}
+          },
+          {
+            "apiVersion": "velero.io/v1",
+            "kind": "Restore",
+            "metadata": {
+              "name": "restore",
+              "namespace": "openshift-adp"
+            },
+            "spec": {}
+          },
+          {
+            "apiVersion": "velero.io/v1",
+            "kind": "Schedule",
+            "metadata": {
+              "name": "schedule",
+              "namespace": "openshift-adp"
+            },
+            "spec": {}
+          },
+          {
+            "apiVersion": "velero.io/v1",
+            "kind": "ServerStatusRequest",
+            "metadata": {
+              "name": "serverstatusrequest",
+              "namespace": "openshift-adp"
+            },
+            "spec": {}
+          },
+          {
+            "apiVersion": "velero.io/v1",
+            "kind": "VolumeSnapshotLocation",
+            "metadata": {
+              "name": "volumesnapshotlocation",
+              "namespace": "openshift-adp"
+            },
+            "spec": {}
+          }
+        ]
+      capabilities: Seamless Upgrades
+      categories: OpenShift Optional
+      certified: "false"
+      containerImage: registry.redhat.io/oadp/oadp-rhel8-operator@sha256:5ba8d9bca89945f05cc8f071e1a96bf62dcf21792ff2ca09033464dabd67e293
+      createdAt: "2024-06-26T17:04:33Z"
+      description: |-
+        OADP (OpenShift API for Data Protection) operator sets up and installs
+        Velero on the OpenShift platform.
+      features.operators.openshift.io/cnf: "false"
+      features.operators.openshift.io/cni: "false"
+      features.operators.openshift.io/csi: "false"
+      features.operators.openshift.io/disconnected: "true"
+      features.operators.openshift.io/fips-compliant: "false"
+      features.operators.openshift.io/proxy-aware: "false"
+      features.operators.openshift.io/tls-profiles: "false"
+      features.operators.openshift.io/token-auth-aws: "false"
+      features.operators.openshift.io/token-auth-azure: "false"
+      features.operators.openshift.io/token-auth-gcp: "false"
+      olm.operatorGroup: openshift-migration-z5b5h
+      olm.operatorNamespace: openshift-migration
+      olm.skipRange: '>=0.0.0 <1.0.16'
+      olm.targetNamespaces: openshift-migration
+      operatorframework.io/cluster-monitoring: "true"
+      operatorframework.io/properties: '{"properties":[{"type":"olm.gvk","value":{"group":"oadp.openshift.io","kind":"DataProtectionApplication","version":"v1alpha1"}},{"type":"olm.gvk","value":{"group":"velero.io","kind":"DownloadRequest","version":"v1"}},{"type":"olm.gvk","value":{"group":"velero.io","kind":"VolumeSnapshotLocation","version":"v1"}},{"type":"olm.gvk","value":{"group":"velero.io","kind":"Backup","version":"v1"}},{"type":"olm.package","value":{"packageName":"redhat-oadp-operator","version":"1.0.16"}},{"type":"olm.gvk","value":{"group":"velero.io","kind":"PodVolumeBackup","version":"v1"}},{"type":"olm.gvk","value":{"group":"velero.io","kind":"Restore","version":"v1"}},{"type":"olm.gvk","value":{"group":"velero.io","kind":"PodVolumeRestore","version":"v1"}},{"type":"olm.gvk","value":{"group":"velero.io","kind":"ResticRepository","version":"v1"}},{"type":"olm.gvk","value":{"group":"velero.io","kind":"BackupStorageLocation","version":"v1"}},{"type":"olm.gvk","value":{"group":"velero.io","kind":"ServerStatusRequest","version":"v1"}},{"type":"olm.gvk","value":{"group":"velero.io","kind":"Schedule","version":"v1"}},{"type":"olm.gvk","value":{"group":"oadp.openshift.io","kind":"CloudStorage","version":"v1alpha1"}},{"type":"olm.gvk","value":{"group":"velero.io","kind":"DeleteBackupRequest","version":"v1"}}]}'
+      operatorframework.io/suggested-namespace: openshift-adp
+      operators.openshift.io/infrastructure-features: '["Disconnected"]'
+      operators.openshift.io/must-gather-image: registry.redhat.io/oadp/oadp-mustgather-rhel8@sha256:35028c0615425ac1756a3e16de2b6f0559a8131b74d553c49751a6cf25d36832
+      operators.openshift.io/valid-subscription: '["OpenShift Container Platform",
+        "OpenShift Platform Plus"]'
+      operators.operatorframework.io/builder: operator-sdk-v1.21.0
+      operators.operatorframework.io/project_layout: go.kubebuilder.io/v3
+      repository: https://github.com/openshift/oadp-operator
+      support: Red Hat
+    creationTimestamp: "2024-07-11T14:22:50Z"
+    generation: 1
+    labels:
+      operatorframework.io/arch.amd64: supported
+      operators.coreos.com/redhat-oadp-operator.openshift-migration: ""
+    name: oadp-operator.v1.0.16
+    namespace: openshift-migration
+    resourceVersion: "476624683"
+    uid: 5f287fe9-f79a-466a-b87f-e751cf75fac3
+  spec:
+    apiservicedefinitions: {}
+    cleanup:
+      enabled: false
+    customresourcedefinitions:
+      owned:
+      - description: Backup is a Velero resource that represents the capture of Kubernetes
+          cluster state at a point in time (API objects and associated volume state).
+        displayName: Backup
+        kind: Backup
+        name: backups.velero.io
+        version: v1
+      - description: BackupStorageLocation represents an object storage location (Such
+          as Amazon S3 Bucket) where Velero stores backup objects.
+        displayName: BackupStorageLocation
+        kind: BackupStorageLocation
+        name: backupstoragelocations.velero.io
+        version: v1
+      - kind: CloudStorage
+        name: cloudstorages.oadp.openshift.io
+        version: v1alpha1
+      - description: DataProtectionApplication represents configuration to install
+          a data protection application to safely backup and restore, perform disaster
+          recovery and migrate Kubernetes cluster resources and persistent volumes.
+        displayName: DataProtectionApplication
+        kind: DataProtectionApplication
+        name: dataprotectionapplications.oadp.openshift.io
+        version: v1alpha1
+      - description: DeleteBackupRequest is a request to delete one or more backups.
+        displayName: DeleteBackupRequest
+        kind: DeleteBackupRequest
+        name: deletebackuprequests.velero.io
+        version: v1
+      - description: DownloadRequest is a request to download an artifact from object
+          storage such as a backup log file.
+        displayName: DownloadRequest
+        kind: DownloadRequest
+        name: downloadrequests.velero.io
+        version: v1
+      - description: A velero pod volume backup is a restic backup of persistent volumes
+          attached to a running pod.
+        displayName: PodVolumeBackup
+        kind: PodVolumeBackup
+        name: podvolumebackups.velero.io
+        version: v1
+      - description: A velero pod volume restore is a restic restore of persistent
+          volumes attached to a running pod.
+        displayName: PodVolumeRestore
+        kind: PodVolumeRestore
+        name: podvolumerestores.velero.io
+        version: v1
+      - description: A restic repository is an indicator of a connection from the
+          restic server to the backupstoragelocation.
+        displayName: ResticRepository
+        kind: ResticRepository
+        name: resticrepositories.velero.io
+        version: v1
+      - description: Restore is a Velero resource that represents the application
+          of resources from a Velero backup to a target Kubernetes cluster.
+        displayName: Restore
+        kind: Restore
+        name: restores.velero.io
+        version: v1
+      - description: Schedule is a Velero resource that represents a pre-scheduled
+          or periodic Backup that should be run.
+        displayName: Schedule
+        kind: Schedule
+        name: schedules.velero.io
+        version: v1
+      - description: ServerStatusRequest is a request to access current status information
+          about the Velero server.
+        displayName: ServerStatusRequest
+        kind: ServerStatusRequest
+        name: serverstatusrequests.velero.io
+        version: v1
+      - description: VolumeSnapshotLocation is a location where Velero stores volume
+          snapshots.
+        displayName: VolumeSnapshotLocation
+        kind: VolumeSnapshotLocation
+        name: volumesnapshotlocations.velero.io
+        version: v1
+    description: OADP (OpenShift API for Data Protection) operator sets up and installs
+      Data Protection Applications on the OpenShift platform.
+    displayName: OADP Operator
+    icon:
+    - base64data: PHN2ZyBpZD0iTGF5ZXJfMSIgZGF0YS1uYW1lPSJMYXllciAxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxOTIgMTQ1Ij48ZGVmcz48c3R5bGU+LmNscy0xe2ZpbGw6I2UwMDt9PC9zdHlsZT48L2RlZnM+PHRpdGxlPlJlZEhhdC1Mb2dvLUhhdC1Db2xvcjwvdGl0bGU+PHBhdGggZD0iTTE1Ny43Nyw2Mi42MWExNCwxNCwwLDAsMSwuMzEsMy40MmMwLDE0Ljg4LTE4LjEsMTcuNDYtMzAuNjEsMTcuNDZDNzguODMsODMuNDksNDIuNTMsNTMuMjYsNDIuNTMsNDRhNi40Myw2LjQzLDAsMCwxLC4yMi0xLjk0bC0zLjY2LDkuMDZhMTguNDUsMTguNDUsMCwwLDAtMS41MSw3LjMzYzAsMTguMTEsNDEsNDUuNDgsODcuNzQsNDUuNDgsMjAuNjksMCwzNi40My03Ljc2LDM2LjQzLTIxLjc3LDAtMS4wOCwwLTEuOTQtMS43My0xMC4xM1oiLz48cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0xMjcuNDcsODMuNDljMTIuNTEsMCwzMC42MS0yLjU4LDMwLjYxLTE3LjQ2YTE0LDE0LDAsMCwwLS4zMS0zLjQybC03LjQ1LTMyLjM2Yy0xLjcyLTcuMTItMy4yMy0xMC4zNS0xNS43My0xNi42QzEyNC44OSw4LjY5LDEwMy43Ni41LDk3LjUxLjUsOTEuNjkuNSw5MCw4LDgzLjA2LDhjLTYuNjgsMC0xMS42NC01LjYtMTcuODktNS42LTYsMC05LjkxLDQuMDktMTIuOTMsMTIuNSwwLDAtOC40MSwyMy43Mi05LjQ5LDI3LjE2QTYuNDMsNi40MywwLDAsMCw0Mi41Myw0NGMwLDkuMjIsMzYuMywzOS40NSw4NC45NCwzOS40NU0xNjAsNzIuMDdjMS43Myw4LjE5LDEuNzMsOS4wNSwxLjczLDEwLjEzLDAsMTQtMTUuNzQsMjEuNzctMzYuNDMsMjEuNzdDNzguNTQsMTA0LDM3LjU4LDc2LjYsMzcuNTgsNTguNDlhMTguNDUsMTguNDUsMCwwLDEsMS41MS03LjMzQzIyLjI3LDUyLC41LDU1LC41LDc0LjIyYzAsMzEuNDgsNzQuNTksNzAuMjgsMTMzLjY1LDcwLjI4LDQ1LjI4LDAsNTYuNy0yMC40OCw1Ni43LTM2LjY1LDAtMTIuNzItMTEtMjcuMTYtMzAuODMtMzUuNzgiLz48L3N2Zz4=
+      mediatype: image/svg+xml
+    install:
+      spec:
+        clusterPermissions:
+        - rules:
+          - apiGroups:
+            - oadp.openshift.io
+            resources:
+            - '*'
+            verbs:
+            - create
+            - delete
+            - get
+            - list
+            - patch
+            - update
+            - watch
+          - apiGroups:
+            - coordination.k8s.io
+            - corev1
+            resources:
+            - secrets
+            verbs:
+            - create
+            - delete
+            - get
+            - list
+            - patch
+            - update
+            - watch
+          - apiGroups:
+            - oadp.openshift.io
+            resources:
+            - buckets
+            verbs:
+            - create
+            - delete
+            - get
+            - list
+            - patch
+            - update
+            - watch
+          - apiGroups:
+            - oadp.openshift.io
+            resources:
+            - buckets/finalizers
+            verbs:
+            - update
+          - apiGroups:
+            - oadp.openshift.io
+            resources:
+            - buckets/status
+            verbs:
+            - get
+            - patch
+            - update
+          - apiGroups:
+            - oadp.openshift.io
+            resources:
+            - leases
+            verbs:
+            - create
+            - delete
+            - get
+            - list
+            - patch
+            - update
+            - watch
+          - apiGroups:
+            - velero.io
+            resources:
+            - '*'
+            verbs:
+            - create
+            - delete
+            - get
+            - list
+            - patch
+            - update
+            - watch
+          - apiGroups:
+            - security.openshift.io
+            resources:
+            - securitycontextconstraints
+            verbs:
+            - list
+            - get
+            - create
+            - delete
+            - patch
+            - update
+            - watch
+          - apiGroups:
+            - security.openshift.io
+            resourceNames:
+            - privileged
+            - velero-privileged
+            resources:
+            - securitycontextconstraints
+            verbs:
+            - use
+          - apiGroups:
+            - ""
+            resources:
+            - secrets
+            - configmaps
+            - pods
+            - services
+            - serviceaccounts
+            - endpoints
+            verbs:
+            - list
+            - get
+            - create
+            - delete
+            - patch
+            - update
+            - watch
+          - apiGroups:
+            - apps
+            resources:
+            - deployments
+            - daemonsets
+            verbs:
+            - create
+            - delete
+            - get
+            - list
+            - patch
+            - update
+            - watch
+          - apiGroups:
+            - route.openshift.io
+            resources:
+            - routes
+            verbs:
+            - create
+            - delete
+            - get
+            - list
+            - patch
+            - update
+            - watch
+          - apiGroups:
+            - monitoring.coreos.com
+            resources:
+            - servicemonitors
+            verbs:
+            - get
+            - create
+            - list
+            - delete
+            - update
+            - patch
+            - watch
+          - apiGroups:
+            - authentication.k8s.io
+            resources:
+            - tokenreviews
+            verbs:
+            - create
+          - apiGroups:
+            - authorization.k8s.io
+            resources:
+            - subjectaccessreviews
+            verbs:
+            - create
+          serviceAccountName: openshift-adp-controller-manager
+        - rules:
+          - apiGroups:
+            - build.openshift.io
+            - migration.openshift.io
+            - rbac.authorization.k8s.io
+            - velero.io
+            resources:
+            - '*'
+            verbs:
+            - '*'
+          - apiGroups:
+            - ""
+            resources:
+            - serviceaccounts
+            verbs:
+            - '*'
+          - apiGroups:
+            - packages.operators.coreos.com
+            resources:
+            - packagemanifests
+            verbs:
+            - '*'
+          - apiGroups:
+            - '*'
+            resources:
+            - '*'
+            verbs:
+            - get
+            - watch
+            - list
+            - update
+            - patch
+            - create
+            - delete
+            - assign
+            - deletecollection
+          - nonResourceURLs:
+            - '*'
+            verbs:
+            - '*'
+          - apiGroups:
+            - security.openshift.io
+            resourceNames:
+            - privileged
+            resources:
+            - securitycontextconstraints
+            verbs:
+            - use
+          serviceAccountName: velero
+        deployments:
+        - label:
+            control-plane: controller-manager
+          name: openshift-adp-controller-manager
+          spec:
+            replicas: 1
+            selector:
+              matchLabels:
+                control-plane: controller-manager
+            strategy: {}
+            template:
+              metadata:
+                creationTimestamp: null
+                labels:
+                  control-plane: controller-manager
+              spec:
+                containers:
+                - args:
+                  - --leader-elect
+                  command:
+                  - /manager
+                  env:
+                  - name: WATCH_NAMESPACE
+                    valueFrom:
+                      fieldRef:
+                        fieldPath: metadata.annotations['olm.targetNamespaces']
+                  - name: RELATED_IMAGE_VELERO
+                    value: registry.redhat.io/oadp/oadp-velero-rhel8@sha256:9b681de9e02cb402e24fa10dce66b36d02702b82ece9dff511bb6c7d1e6c9c31
+                  - name: RELATED_IMAGE_VELERO_RESTIC_RESTORE_HELPER
+                    value: registry.redhat.io/oadp/oadp-velero-restic-restore-helper-rhel8@sha256:602414650663295350974dea5e58658866927770d0bb10b2147749b5cdb78980
+                  - name: RELATED_IMAGE_OPENSHIFT_VELERO_PLUGIN
+                    value: registry.redhat.io/oadp/oadp-velero-plugin-rhel8@sha256:eac641a34d00fb5592e38d559b85cce99bbce436ae3ac2f3767d164d374a2278
+                  - name: RELATED_IMAGE_REGISTRY
+                    value: registry.redhat.io/oadp/oadp-registry-rhel8@sha256:c4b6cb088c96ec7aca6014e8d48f83fa4b2067edd507d1da73e48a969c7c9da9
+                  - name: RELATED_IMAGE_VELERO_PLUGIN_FOR_AWS
+                    value: registry.redhat.io/oadp/oadp-velero-plugin-for-aws-rhel8@sha256:a12100d0faf4dd4bdeb5212186d8a94c88a2b73d3632bdd4b6f504895fafb704
+                  - name: RELATED_IMAGE_VELERO_PLUGIN_FOR_MICROSOFT_AZURE
+                    value: registry.redhat.io/oadp/oadp-velero-plugin-for-microsoft-azure-rhel8@sha256:60b7d0f7ab58efcc1dc2ed13f3cb77b7396308a63580b3bf9235172b263a0ba2
+                  - name: RELATED_IMAGE_VELERO_PLUGIN_FOR_GCP
+                    value: registry.redhat.io/oadp/oadp-velero-plugin-for-gcp-rhel8@sha256:97e901972699a73e32e6ac456038179d6a614ea0fe29e052d0f872d66ac38365
+                  - name: RELATED_IMAGE_VELERO_PLUGIN_FOR_CSI
+                    value: registry.redhat.io/oadp/oadp-velero-plugin-for-csi-rhel8@sha256:db98264e722a3756ed923fff8f19b03dc6047105c372279c24fb707b3a0bd4aa
+                  - name: RELATED_IMAGE_KUBEVIRT_VELERO_PLUGIN
+                    value: registry.redhat.io/oadp/oadp-kubevirt-velero-plugin-rhel8@sha256:5c178c7d50f8a7ec9588648c7c978ae6707eaf26b851edef947b9d2d5635b3d4
+                  - name: RELATED_IMAGE_MUSTGATHER
+                    value: registry.redhat.io/oadp/oadp-mustgather-rhel8@sha256:35028c0615425ac1756a3e16de2b6f0559a8131b74d553c49751a6cf25d36832
+                  image: registry.redhat.io/oadp/oadp-rhel8-operator@sha256:5ba8d9bca89945f05cc8f071e1a96bf62dcf21792ff2ca09033464dabd67e293
+                  imagePullPolicy: Always
+                  livenessProbe:
+                    httpGet:
+                      path: /healthz
+                      port: 8081
+                    initialDelaySeconds: 15
+                    periodSeconds: 20
+                  name: manager
+                  readinessProbe:
+                    httpGet:
+                      path: /readyz
+                      port: 8081
+                    initialDelaySeconds: 5
+                    periodSeconds: 10
+                  resources:
+                    limits:
+                      cpu: "1"
+                      memory: 512Mi
+                    requests:
+                      cpu: 500m
+                      memory: 128Mi
+                  securityContext:
+                    allowPrivilegeEscalation: false
+                  startupProbe:
+                    failureThreshold: 12
+                    httpGet:
+                      path: /healthz
+                      port: 8081
+                    periodSeconds: 10
+                  volumeMounts:
+                  - mountPath: /var/run/secrets/openshift/serviceaccount
+                    name: bound-sa-token
+                    readOnly: true
+                securityContext:
+                  runAsNonRoot: true
+                serviceAccountName: openshift-adp-controller-manager
+                terminationGracePeriodSeconds: 10
+                volumes:
+                - name: bound-sa-token
+                  projected:
+                    sources:
+                    - serviceAccountToken:
+                        audience: openshift
+                        expirationSeconds: 3600
+                        path: token
+        permissions:
+        - rules:
+          - apiGroups:
+            - ""
+            resources:
+            - configmaps
+            verbs:
+            - get
+            - list
+            - watch
+            - create
+            - update
+            - patch
+            - delete
+          - apiGroups:
+            - coordination.k8s.io
+            resources:
+            - leases
+            verbs:
+            - get
+            - list
+            - watch
+            - create
+            - update
+            - patch
+            - delete
+          - apiGroups:
+            - ""
+            resources:
+            - events
+            verbs:
+            - create
+            - patch
+          serviceAccountName: openshift-adp-controller-manager
+      strategy: deployment
+    installModes:
+    - supported: true
+      type: OwnNamespace
+    - supported: false
+      type: SingleNamespace
+    - supported: false
+      type: MultiNamespace
+    - supported: false
+      type: AllNamespaces
+    keywords:
+    - velero
+    - openshift
+    - oadp
+    links:
+    - name: OADP Operator
+      url: https://github.com/openshift/oadp-operator
+    maintainers:
+    - email: dymurray@redhat.com
+      name: Dylan Murray
+    - email: spampatt@redhat.com
+      name: Shubham Dilip Pampattiwar
+    maturity: stable
+    provider:
+      name: Red Hat
+    relatedImages:
+    - image: registry.redhat.io/oadp/oadp-rhel8-operator@sha256:5ba8d9bca89945f05cc8f071e1a96bf62dcf21792ff2ca09033464dabd67e293
+      name: oadp-rhel8-operator-5ba8d9bca89945f05cc8f071e1a96bf62dcf21792ff2ca09033464dabd67e293-annotation
+    - image: registry.redhat.io/oadp/oadp-rhel8-operator@sha256:5ba8d9bca89945f05cc8f071e1a96bf62dcf21792ff2ca09033464dabd67e293
+      name: manager
+    - image: registry.redhat.io/oadp/oadp-velero-rhel8@sha256:9b681de9e02cb402e24fa10dce66b36d02702b82ece9dff511bb6c7d1e6c9c31
+      name: velero
+    - image: registry.redhat.io/oadp/oadp-velero-restic-restore-helper-rhel8@sha256:602414650663295350974dea5e58658866927770d0bb10b2147749b5cdb78980
+      name: velero_restic_restore_helper
+    - image: registry.redhat.io/oadp/oadp-velero-plugin-rhel8@sha256:eac641a34d00fb5592e38d559b85cce99bbce436ae3ac2f3767d164d374a2278
+      name: openshift_velero_plugin
+    - image: registry.redhat.io/oadp/oadp-registry-rhel8@sha256:c4b6cb088c96ec7aca6014e8d48f83fa4b2067edd507d1da73e48a969c7c9da9
+      name: registry
+    - image: registry.redhat.io/oadp/oadp-velero-plugin-for-aws-rhel8@sha256:a12100d0faf4dd4bdeb5212186d8a94c88a2b73d3632bdd4b6f504895fafb704
+      name: velero_plugin_for_aws
+    - image: registry.redhat.io/oadp/oadp-velero-plugin-for-microsoft-azure-rhel8@sha256:60b7d0f7ab58efcc1dc2ed13f3cb77b7396308a63580b3bf9235172b263a0ba2
+      name: velero_plugin_for_microsoft_azure
+    - image: registry.redhat.io/oadp/oadp-velero-plugin-for-gcp-rhel8@sha256:97e901972699a73e32e6ac456038179d6a614ea0fe29e052d0f872d66ac38365
+      name: velero_plugin_for_gcp
+    - image: registry.redhat.io/oadp/oadp-velero-plugin-for-csi-rhel8@sha256:db98264e722a3756ed923fff8f19b03dc6047105c372279c24fb707b3a0bd4aa
+      name: velero_plugin_for_csi
+    - image: registry.redhat.io/oadp/oadp-kubevirt-velero-plugin-rhel8@sha256:5c178c7d50f8a7ec9588648c7c978ae6707eaf26b851edef947b9d2d5635b3d4
+      name: kubevirt_velero_plugin
+    - image: registry.redhat.io/oadp/oadp-mustgather-rhel8@sha256:35028c0615425ac1756a3e16de2b6f0559a8131b74d553c49751a6cf25d36832
+      name: mustgather
+    - image: registry.redhat.io/oadp/oadp-mustgather-rhel8@sha256:35028c0615425ac1756a3e16de2b6f0559a8131b74d553c49751a6cf25d36832
+      name: oadp-mustgather-rhel8-35028c0615425ac1756a3e16de2b6f0559a8131b74d553c49751a6cf25d36832-annotation
+    replaces: oadp-operator.v1.0.15
+    skips:
+    - oadp-operator.v1.0.0
+    - oadp-operator.v1.0.1
+    - oadp-operator.v1.0.2
+    - oadp-operator.v1.0.3
+    - oadp-operator.v1.0.4
+    - oadp-operator.v1.0.5
+    - oadp-operator.v1.0.6
+    - oadp-operator.v1.0.7
+    - oadp-operator.v1.0.8
+    - oadp-operator.v1.0.9
+    - oadp-operator.v1.0.10
+    - oadp-operator.v1.0.11
+    - oadp-operator.v1.0.12
+    - oadp-operator.v1.0.13
+    - oadp-operator.v1.0.14
+    - oadp-operator.v1.0.15
+    version: 1.0.16
+  status:
+    cleanup: {}
+    conditions:
+    - lastTransitionTime: "2024-07-11T14:22:50Z"
+      lastUpdateTime: "2024-07-11T14:22:50Z"
+      message: requirements not yet checked
+      phase: Pending
+      reason: RequirementsUnknown
+    - lastTransitionTime: "2024-07-11T14:22:50Z"
+      lastUpdateTime: "2024-07-11T14:22:50Z"
+      message: one or more requirements couldn't be found
+      phase: Pending
+      reason: RequirementsNotMet
+    - lastTransitionTime: "2024-07-11T14:22:56Z"
+      lastUpdateTime: "2024-07-11T14:22:56Z"
+      message: all requirements found, attempting install
+      phase: InstallReady
+      reason: AllRequirementsMet
+    - lastTransitionTime: "2024-07-11T14:22:57Z"
+      lastUpdateTime: "2024-07-11T14:22:57Z"
+      message: waiting for install components to report healthy
+      phase: Installing
+      reason: InstallSucceeded
+    - lastTransitionTime: "2024-07-11T14:22:57Z"
+      lastUpdateTime: "2024-07-11T14:22:57Z"
+      message: 'installing: waiting for deployment openshift-adp-controller-manager
+        to become ready: deployment "openshift-adp-controller-manager" waiting for
+        1 outdated replica(s) to be terminated'
+      phase: Installing
+      reason: InstallWaiting
+    - lastTransitionTime: "2024-07-11T14:23:28Z"
+      lastUpdateTime: "2024-07-11T14:23:28Z"
+      message: install strategy completed with no errors
+      phase: Succeeded
+      reason: InstallSucceeded
+    - lastTransitionTime: "2024-07-24T20:17:53Z"
+      lastUpdateTime: "2024-07-24T20:17:53Z"
+      message: 'installing: waiting for deployment openshift-adp-controller-manager
+        to become ready: deployment "openshift-adp-controller-manager" not available:
+        Deployment does not have minimum availability.'
+      phase: Failed
+      reason: ComponentUnhealthy
+    - lastTransitionTime: "2024-07-24T20:17:53Z"
+      lastUpdateTime: "2024-07-24T20:17:53Z"
+      message: 'installing: waiting for deployment openshift-adp-controller-manager
+        to become ready: deployment "openshift-adp-controller-manager" not available:
+        Deployment does not have minimum availability.'
+      phase: Pending
+      reason: NeedsReinstall
+    - lastTransitionTime: "2024-07-24T20:17:53Z"
+      lastUpdateTime: "2024-07-24T20:17:53Z"
+      message: all requirements found, attempting install
+      phase: InstallReady
+      reason: AllRequirementsMet
+    - lastTransitionTime: "2024-07-24T20:17:54Z"
+      lastUpdateTime: "2024-07-24T20:17:54Z"
+      message: waiting for install components to report healthy
+      phase: Installing
+      reason: InstallSucceeded
+    - lastTransitionTime: "2024-07-24T20:17:54Z"
+      lastUpdateTime: "2024-07-24T20:17:55Z"
+      message: 'installing: waiting for deployment openshift-adp-controller-manager
+        to become ready: deployment "openshift-adp-controller-manager" not available:
+        Deployment does not have minimum availability.'
+      phase: Installing
+      reason: InstallWaiting
+    - lastTransitionTime: "2024-07-24T20:17:57Z"
+      lastUpdateTime: "2024-07-24T20:17:57Z"
+      message: install strategy completed with no errors
+      phase: Succeeded
+      reason: InstallSucceeded
+    lastTransitionTime: "2024-07-24T20:17:57Z"
+    lastUpdateTime: "2024-07-24T20:17:57Z"
+    message: install strategy completed with no errors
+    phase: Succeeded
+    reason: InstallSucceeded
+    requirementStatus:
+    - group: apiextensions.k8s.io
+      kind: CustomResourceDefinition
+      message: CRD is present and Established condition is true
+      name: backups.velero.io
+      status: Present
+      uuid: c316dc79-61ff-44e5-b543-0a567d314ff2
+      version: v1
+    - group: apiextensions.k8s.io
+      kind: CustomResourceDefinition
+      message: CRD is present and Established condition is true
+      name: backupstoragelocations.velero.io
+      status: Present
+      uuid: ccc9c77c-3a1c-471d-b266-d6db789a2914
+      version: v1
+    - group: apiextensions.k8s.io
+      kind: CustomResourceDefinition
+      message: CRD is present and Established condition is true
+      name: cloudstorages.oadp.openshift.io
+      status: Present
+      uuid: 316c614f-e9e2-4ef5-a1de-2fc08b88d12f
+      version: v1
+    - group: apiextensions.k8s.io
+      kind: CustomResourceDefinition
+      message: CRD is present and Established condition is true
+      name: dataprotectionapplications.oadp.openshift.io
+      status: Present
+      uuid: 729c62d8-33a3-41e0-985a-6daf297bf5cc
+      version: v1
+    - group: apiextensions.k8s.io
+      kind: CustomResourceDefinition
+      message: CRD is present and Established condition is true
+      name: deletebackuprequests.velero.io
+      status: Present
+      uuid: 24dc4fcf-1737-44d8-a1c4-2309b895b811
+      version: v1
+    - group: apiextensions.k8s.io
+      kind: CustomResourceDefinition
+      message: CRD is present and Established condition is true
+      name: downloadrequests.velero.io
+      status: Present
+      uuid: b555c9ad-6e61-41ed-b917-4e1d31b4efe8
+      version: v1
+    - group: apiextensions.k8s.io
+      kind: CustomResourceDefinition
+      message: CRD is present and Established condition is true
+      name: podvolumebackups.velero.io
+      status: Present
+      uuid: ab0c882d-9213-4adb-9869-d95c5f62bc51
+      version: v1
+    - group: apiextensions.k8s.io
+      kind: CustomResourceDefinition
+      message: CRD is present and Established condition is true
+      name: podvolumerestores.velero.io
+      status: Present
+      uuid: 1690d10f-0dc7-4846-bb15-9f5b449fee86
+      version: v1
+    - group: apiextensions.k8s.io
+      kind: CustomResourceDefinition
+      message: CRD is present and Established condition is true
+      name: resticrepositories.velero.io
+      status: Present
+      uuid: 7bd1b8f4-f416-485b-a870-7a389b4ac240
+      version: v1
+    - group: apiextensions.k8s.io
+      kind: CustomResourceDefinition
+      message: CRD is present and Established condition is true
+      name: restores.velero.io
+      status: Present
+      uuid: 9605307a-13d9-4b8b-bd37-9c5daa4059fd
+      version: v1
+    - group: apiextensions.k8s.io
+      kind: CustomResourceDefinition
+      message: CRD is present and Established condition is true
+      name: schedules.velero.io
+      status: Present
+      uuid: af80cdd2-1c60-4ae3-af9f-84150dc45d66
+      version: v1
+    - group: apiextensions.k8s.io
+      kind: CustomResourceDefinition
+      message: CRD is present and Established condition is true
+      name: serverstatusrequests.velero.io
+      status: Present
+      uuid: a2dd9a5f-5f6f-4ddb-9e45-8b71d0bb809c
+      version: v1
+    - group: apiextensions.k8s.io
+      kind: CustomResourceDefinition
+      message: CRD is present and Established condition is true
+      name: volumesnapshotlocations.velero.io
+      status: Present
+      uuid: 6be61b22-45e1-4408-b6f8-77096416c810
+      version: v1
+    - dependents:
+      - group: rbac.authorization.k8s.io
+        kind: PolicyRule
+        message: namespaced rule:{"verbs":["get","list","watch","create","update","patch","delete"],"apiGroups":[""],"resources":["configmaps"]}
+        status: Satisfied
+        version: v1
+      - group: rbac.authorization.k8s.io
+        kind: PolicyRule
+        message: namespaced rule:{"verbs":["get","list","watch","create","update","patch","delete"],"apiGroups":["coordination.k8s.io"],"resources":["leases"]}
+        status: Satisfied
+        version: v1
+      - group: rbac.authorization.k8s.io
+        kind: PolicyRule
+        message: namespaced rule:{"verbs":["create","patch"],"apiGroups":[""],"resources":["events"]}
+        status: Satisfied
+        version: v1
+      - group: rbac.authorization.k8s.io
+        kind: PolicyRule
+        message: cluster rule:{"verbs":["create","delete","get","list","patch","update","watch"],"apiGroups":["oadp.openshift.io"],"resources":["*"]}
+        status: Satisfied
+        version: v1
+      - group: rbac.authorization.k8s.io
+        kind: PolicyRule
+        message: cluster rule:{"verbs":["create","delete","get","list","patch","update","watch"],"apiGroups":["coordination.k8s.io","corev1"],"resources":["secrets"]}
+        status: Satisfied
+        version: v1
+      - group: rbac.authorization.k8s.io
+        kind: PolicyRule
+        message: cluster rule:{"verbs":["create","delete","get","list","patch","update","watch"],"apiGroups":["oadp.openshift.io"],"resources":["buckets"]}
+        status: Satisfied
+        version: v1
+      - group: rbac.authorization.k8s.io
+        kind: PolicyRule
+        message: cluster rule:{"verbs":["update"],"apiGroups":["oadp.openshift.io"],"resources":["buckets/finalizers"]}
+        status: Satisfied
+        version: v1
+      - group: rbac.authorization.k8s.io
+        kind: PolicyRule
+        message: cluster rule:{"verbs":["get","patch","update"],"apiGroups":["oadp.openshift.io"],"resources":["buckets/status"]}
+        status: Satisfied
+        version: v1
+      - group: rbac.authorization.k8s.io
+        kind: PolicyRule
+        message: cluster rule:{"verbs":["create","delete","get","list","patch","update","watch"],"apiGroups":["oadp.openshift.io"],"resources":["leases"]}
+        status: Satisfied
+        version: v1
+      - group: rbac.authorization.k8s.io
+        kind: PolicyRule
+        message: cluster rule:{"verbs":["create","delete","get","list","patch","update","watch"],"apiGroups":["velero.io"],"resources":["*"]}
+        status: Satisfied
+        version: v1
+      - group: rbac.authorization.k8s.io
+        kind: PolicyRule
+        message: cluster rule:{"verbs":["list","get","create","delete","patch","update","watch"],"apiGroups":["security.openshift.io"],"resources":["securitycontextconstraints"]}
+        status: Satisfied
+        version: v1
+      - group: rbac.authorization.k8s.io
+        kind: PolicyRule
+        message: cluster rule:{"verbs":["use"],"apiGroups":["security.openshift.io"],"resources":["securitycontextconstraints"],"resourceNames":["privileged","velero-privileged"]}
+        status: Satisfied
+        version: v1
+      - group: rbac.authorization.k8s.io
+        kind: PolicyRule
+        message: cluster rule:{"verbs":["list","get","create","delete","patch","update","watch"],"apiGroups":[""],"resources":["secrets","configmaps","pods","services","serviceaccounts","endpoints"]}
+        status: Satisfied
+        version: v1
+      - group: rbac.authorization.k8s.io
+        kind: PolicyRule
+        message: cluster rule:{"verbs":["create","delete","get","list","patch","update","watch"],"apiGroups":["apps"],"resources":["deployments","daemonsets"]}
+        status: Satisfied
+        version: v1
+      - group: rbac.authorization.k8s.io
+        kind: PolicyRule
+        message: cluster rule:{"verbs":["create","delete","get","list","patch","update","watch"],"apiGroups":["route.openshift.io"],"resources":["routes"]}
+        status: Satisfied
+        version: v1
+      - group: rbac.authorization.k8s.io
+        kind: PolicyRule
+        message: cluster rule:{"verbs":["get","create","list","delete","update","patch","watch"],"apiGroups":["monitoring.coreos.com"],"resources":["servicemonitors"]}
+        status: Satisfied
+        version: v1
+      - group: rbac.authorization.k8s.io
+        kind: PolicyRule
+        message: cluster rule:{"verbs":["create"],"apiGroups":["authentication.k8s.io"],"resources":["tokenreviews"]}
+        status: Satisfied
+        version: v1
+      - group: rbac.authorization.k8s.io
+        kind: PolicyRule
+        message: cluster rule:{"verbs":["create"],"apiGroups":["authorization.k8s.io"],"resources":["subjectaccessreviews"]}
+        status: Satisfied
+        version: v1
+      group: ""
+      kind: ServiceAccount
+      message: ""
+      name: openshift-adp-controller-manager
+      status: Present
+      version: v1
+    - dependents:
+      - group: rbac.authorization.k8s.io
+        kind: PolicyRule
+        message: cluster rule:{"verbs":["*"],"apiGroups":["build.openshift.io","migration.openshift.io","rbac.authorization.k8s.io","velero.io"],"resources":["*"]}
+        status: Satisfied
+        version: v1
+      - group: rbac.authorization.k8s.io
+        kind: PolicyRule
+        message: cluster rule:{"verbs":["*"],"apiGroups":[""],"resources":["serviceaccounts"]}
+        status: Satisfied
+        version: v1
+      - group: rbac.authorization.k8s.io
+        kind: PolicyRule
+        message: cluster rule:{"verbs":["*"],"apiGroups":["packages.operators.coreos.com"],"resources":["packagemanifests"]}
+        status: Satisfied
+        version: v1
+      - group: rbac.authorization.k8s.io
+        kind: PolicyRule
+        message: cluster rule:{"verbs":["get","watch","list","update","patch","create","delete","assign","deletecollection"],"apiGroups":["*"],"resources":["*"]}
+        status: Satisfied
+        version: v1
+      - group: rbac.authorization.k8s.io
+        kind: PolicyRule
+        message: cluster rule:{"verbs":["*"],"nonResourceURLs":["*"]}
+        status: Satisfied
+        version: v1
+      - group: rbac.authorization.k8s.io
+        kind: PolicyRule
+        message: cluster rule:{"verbs":["use"],"apiGroups":["security.openshift.io"],"resources":["securitycontextconstraints"],"resourceNames":["privileged"]}
+        status: Satisfied
+        version: v1
+      group: ""
+      kind: ServiceAccount
+      message: ""
+      name: velero
+      status: Present
+      version: v1
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

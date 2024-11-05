@@ -1,0 +1,302 @@
+apiVersion: v1
+items:
+- apiVersion: apps/v1
+  data:
+    spec:
+      template:
+        $patch: replace
+        metadata:
+          annotations:
+            scheduler.alpha.kubernetes.io/critical-pod: ""
+            target.workload.openshift.io/management: '{"effect": "PreferredDuringScheduling"}'
+          creationTimestamp: null
+          labels:
+            component: collector
+            logging-infra: collector
+            provider: openshift
+          name: collector
+        spec:
+          containers:
+          - env:
+            - name: COLLECTOR_CONF_HASH
+              value: cc1db9caa50541d986880967fd69683d
+            - name: TRUSTED_CA_HASH
+              value: 2ebb7ccd7aa7bead6579844ec442d938
+            - name: K8S_NODE_NAME
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: spec.nodeName
+            - name: NODE_IPV4
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: status.hostIP
+            - name: OPENSHIFT_CLUSTER_ID
+              value: 82cf3720-6faa-437c-a72c-5a2874e04b68
+            - name: POD_IP
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: status.podIP
+            - name: POD_IPS
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: status.podIPs
+            - name: NODE_NAME
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: spec.nodeName
+            - name: RUBY_GC_HEAP_OLDOBJECT_LIMIT_FACTOR
+              value: "0.9"
+            image: registry.redhat.io/openshift-logging/fluentd-rhel8@sha256:7d60ecaac129cb76277901ff87a6005bf07d160b0d2d73988894a5530bad2dfe
+            imagePullPolicy: IfNotPresent
+            name: collector
+            ports:
+            - containerPort: 24231
+              name: metrics
+              protocol: TCP
+            resources:
+              limits:
+                memory: 736Mi
+              requests:
+                cpu: 100m
+                memory: 736Mi
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                - CHOWN
+                - DAC_OVERRIDE
+                - FOWNER
+                - FSETID
+                - KILL
+                - NET_BIND_SERVICE
+                - SETGID
+                - SETPCAP
+                - SETUID
+              readOnlyRootFilesystem: true
+              seLinuxOptions:
+                type: spc_t
+              seccompProfile:
+                type: RuntimeDefault
+            terminationMessagePath: /dev/termination-log
+            terminationMessagePolicy: File
+            volumeMounts:
+            - mountPath: /var/log/containers
+              name: varlogcontainers
+              readOnly: true
+            - mountPath: /var/log/pods
+              name: varlogpods
+              readOnly: true
+            - mountPath: /var/log/journal
+              name: varlogjournal
+              readOnly: true
+            - mountPath: /var/log/audit
+              name: varlogaudit
+              readOnly: true
+            - mountPath: /var/log/ovn
+              name: varlogovn
+              readOnly: true
+            - mountPath: /var/log/oauth-apiserver
+              name: varlogoauthapiserver
+              readOnly: true
+            - mountPath: /var/log/oauth-server
+              name: varlogoauthserver
+              readOnly: true
+            - mountPath: /var/log/openshift-apiserver
+              name: varlogopenshiftapiserver
+              readOnly: true
+            - mountPath: /var/log/kube-apiserver
+              name: varlogkubeapiserver
+              readOnly: true
+            - mountPath: /etc/collector/metrics
+              name: collector-metrics
+              readOnly: true
+            - mountPath: /tmp
+              name: tmp
+            - mountPath: /var/run/ocp-collector/secrets/collector
+              name: collector
+              readOnly: true
+            - mountPath: /etc/pki/ca-trust/extracted/pem/
+              name: collector-trusted-ca-bundle
+              readOnly: true
+            - mountPath: /etc/fluent/keys
+              name: certs
+              readOnly: true
+            - mountPath: /etc/fluent/configs.d/user
+              name: config
+              readOnly: true
+            - mountPath: /var/lib/fluentd
+              name: datadir
+            - mountPath: /opt/app-root/src/run.sh
+              name: entrypoint
+              readOnly: true
+              subPath: run.sh
+          - args:
+            - -c
+            - /usr/local/bin/log-file-metric-exporter -verbosity=2 -dir=/var/log/pods
+              -http=:2112 -keyFile=/etc/collector/metrics/tls.key -crtFile=/etc/collector/metrics/tls.crt
+            command:
+            - /bin/bash
+            image: registry.redhat.io/openshift-logging/log-file-metric-exporter-rhel8@sha256:dff20ee41a3bd72d4f54f6058b4f9b101f80721d7fd27c9b40567a7a4eb67bc7
+            imagePullPolicy: IfNotPresent
+            name: logfilesmetricexporter
+            ports:
+            - containerPort: 2112
+              name: logfile-metrics
+              protocol: TCP
+            resources: {}
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                - CHOWN
+                - DAC_OVERRIDE
+                - FOWNER
+                - FSETID
+                - KILL
+                - NET_BIND_SERVICE
+                - SETGID
+                - SETPCAP
+                - SETUID
+              readOnlyRootFilesystem: true
+              seLinuxOptions:
+                type: spc_t
+              seccompProfile:
+                type: RuntimeDefault
+            terminationMessagePath: /dev/termination-log
+            terminationMessagePolicy: File
+            volumeMounts:
+            - mountPath: /var/log/containers
+              name: varlogcontainers
+              readOnly: true
+            - mountPath: /var/log/pods
+              name: varlogpods
+              readOnly: true
+            - mountPath: /etc/collector/metrics
+              name: collector-metrics
+              readOnly: true
+          dnsPolicy: ClusterFirst
+          nodeSelector:
+            kubernetes.io/os: linux
+          priorityClassName: system-node-critical
+          restartPolicy: Always
+          schedulerName: default-scheduler
+          securityContext: {}
+          serviceAccount: logcollector
+          serviceAccountName: logcollector
+          terminationGracePeriodSeconds: 10
+          tolerations:
+          - effect: NoSchedule
+            key: node-role.kubernetes.io/master
+            operator: Exists
+          - effect: NoSchedule
+            key: node.kubernetes.io/disk-pressure
+            operator: Exists
+          - effect: NoSchedule
+            key: node-role.kubernetes.io/infra
+            value: reserved
+          - effect: NoExecute
+            key: node-role.kubernetes.io/infra
+            value: reserved
+          volumes:
+          - hostPath:
+              path: /var/log/containers
+              type: ""
+            name: varlogcontainers
+          - hostPath:
+              path: /var/log/pods
+              type: ""
+            name: varlogpods
+          - hostPath:
+              path: /var/log/journal
+              type: ""
+            name: varlogjournal
+          - hostPath:
+              path: /var/log/audit
+              type: ""
+            name: varlogaudit
+          - hostPath:
+              path: /var/log/ovn
+              type: ""
+            name: varlogovn
+          - hostPath:
+              path: /var/log/oauth-apiserver
+              type: ""
+            name: varlogoauthapiserver
+          - hostPath:
+              path: /var/log/oauth-server
+              type: ""
+            name: varlogoauthserver
+          - hostPath:
+              path: /var/log/openshift-apiserver
+              type: ""
+            name: varlogopenshiftapiserver
+          - hostPath:
+              path: /var/log/kube-apiserver
+              type: ""
+            name: varlogkubeapiserver
+          - name: collector-metrics
+            secret:
+              defaultMode: 420
+              secretName: collector-metrics
+          - emptyDir:
+              medium: Memory
+            name: tmp
+          - name: collector
+            secret:
+              defaultMode: 420
+              secretName: collector
+          - configMap:
+              defaultMode: 420
+              items:
+              - key: ca-bundle.crt
+                path: tls-ca-bundle.pem
+              name: collector-trusted-ca-bundle
+            name: collector-trusted-ca-bundle
+          - name: certs
+            secret:
+              defaultMode: 420
+              optional: true
+              secretName: collector
+          - configMap:
+              defaultMode: 420
+              name: collector
+            name: config
+          - hostPath:
+              path: /var/lib/fluentd
+              type: ""
+            name: datadir
+          - configMap:
+              defaultMode: 420
+              name: collector
+            name: entrypoint
+  kind: ControllerRevision
+  metadata:
+    annotations:
+      deprecated.daemonset.template.generation: "1"
+    creationTimestamp: "2023-05-15T20:19:21Z"
+    labels:
+      component: collector
+      controller-revision-hash: 57dfcfc6b9
+      logging-infra: collector
+      provider: openshift
+    name: collector-57dfcfc6b9
+    namespace: openshift-logging
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DaemonSet
+      name: collector
+      uid: 8e5c45c5-3f7e-453d-a2c6-e3a650d75247
+    resourceVersion: "4184001"
+    uid: 80590e4c-8c3d-4645-b7c1-d37fdbc66d2e
+  revision: 1
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

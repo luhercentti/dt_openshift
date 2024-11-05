@@ -1,0 +1,478 @@
+apiVersion: v1
+items:
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "1"
+      include.release.openshift.io/self-managed-high-availability: "true"
+      include.release.openshift.io/single-node-developer: "true"
+    creationTimestamp: "2023-05-04T21:36:19Z"
+    generation: 1
+    labels:
+      name: cluster-storage-operator
+      pod-template-hash: 56ccb76bc4
+    name: cluster-storage-operator-56ccb76bc4
+    namespace: openshift-cluster-storage-operator
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: cluster-storage-operator
+      uid: 094fda16-6940-4b0f-8cc2-d1cad6154bca
+    resourceVersion: "369061744"
+    uid: f0a8994c-694d-411d-9098-09c011db4c5a
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        name: cluster-storage-operator
+        pod-template-hash: 56ccb76bc4
+    template:
+      metadata:
+        annotations:
+          target.workload.openshift.io/management: '{"effect": "PreferredDuringScheduling"}'
+        creationTimestamp: null
+        labels:
+          name: cluster-storage-operator
+          pod-template-hash: 56ccb76bc4
+      spec:
+        containers:
+        - command:
+          - cluster-storage-operator
+          - start
+          env:
+          - name: OPERATOR_IMAGE_VERSION
+            value: 4.10.53
+          - name: OPERAND_IMAGE_VERSION
+            value: 4.10.53
+          - name: AWS_EBS_DRIVER_OPERATOR_IMAGE
+            value: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:931ef5254ac6303c95e7db5f90a6470f957349e7ef95dd2a3184adc978ddcf76
+          - name: AWS_EBS_DRIVER_IMAGE
+            value: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:d41ebf1207af30b66b0aa370926a785082e87696a2f7711205b24d8f703febe2
+          - name: GCP_PD_DRIVER_OPERATOR_IMAGE
+            value: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:5b5e5aacdfe4663e69936041101e23435e6ac1f17f743cb8159e4f1923394593
+          - name: GCP_PD_DRIVER_IMAGE
+            value: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:563a2d276104295a7177554bb6eaa1140f9a9140ce81625efaae9090bfd4e054
+          - name: OPENSTACK_CINDER_DRIVER_OPERATOR_IMAGE
+            value: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:5485de24afe7a2efa4238994e63cd432fea494ba66f6de5f34bc20595c633ba8
+          - name: OPENSTACK_CINDER_DRIVER_IMAGE
+            value: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:ffbe48c22fbabbd931e19f69e15570f8c385f4bf4977e9b8a353e51e26ad9f17
+          - name: OVIRT_DRIVER_OPERATOR_IMAGE
+            value: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:f13cf6505b0b49e2090820c14aa46f2a331179c22feca9306fe02c95879b5dc9
+          - name: OVIRT_DRIVER_IMAGE
+            value: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:e07dc4685089b07477efedb56089f315c163e67e28490e1897456288dd6785e3
+          - name: MANILA_DRIVER_OPERATOR_IMAGE
+            value: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:37b77a815db9af37524eb81552ea3d967586309b747b1dd98d423cdf8a121bb4
+          - name: MANILA_DRIVER_IMAGE
+            value: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:69c96cebb34dacb5111cf609e6ffa204b624624044c6f10231063a6357c80f37
+          - name: MANILA_NFS_DRIVER_IMAGE
+            value: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:10463a57c9826d0ff866fc54ac3499f97dd86a6b59a55132f8003ad509a30f9b
+          - name: PROVISIONER_IMAGE
+            value: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:8b086f4e7d87d43eca79028879dce115f8a2fe13fb17eab37a8fb509bf2ccc52
+          - name: ATTACHER_IMAGE
+            value: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:29174679b0bbd6d7014d72aa723d10c96695ea52654bccf97516966dbd1fc2ac
+          - name: RESIZER_IMAGE
+            value: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:00b67980ea5c780118daf5d602324861eb9f0aa5fdf392e857ebf366a65f564d
+          - name: SNAPSHOTTER_IMAGE
+            value: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:63f9af8bb8e44752588dda8b5503bfa613efc9e6c1ad46b44c697229b95af71e
+          - name: NODE_DRIVER_REGISTRAR_IMAGE
+            value: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:1847d8560861bf7876e0758c9e542649d12f61f2e78d5f4d1aa76ed9a242198b
+          - name: LIVENESS_PROBE_IMAGE
+            value: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:2a51cb97a82a78758dc08ff4053add576906e56f21367a0662107a1076e3eaa4
+          - name: VSPHERE_PROBLEM_DETECTOR_OPERATOR_IMAGE
+            value: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:d8a86583e20a66f0a037744ab049dbebc6f8557e2db3abdbce017d6ebe7d24f3
+          - name: AZURE_DISK_DRIVER_OPERATOR_IMAGE
+            value: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:0bcd46fc1d1be46e17a28cddc8af2d6e00b24cac1e44619c5d4c53144bc403ef
+          - name: AZURE_DISK_DRIVER_IMAGE
+            value: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:d78f962ef12c22dfb1a6b2cc4da0d3d5a6ecabde1e30260e53323309076eff7c
+          - name: AZURE_FILE_DRIVER_OPERATOR_IMAGE
+            value: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:348374ae5040060ccf56321f58bf19e497e1cfd88e178ba1b1ac663840ee991a
+          - name: AZURE_FILE_DRIVER_IMAGE
+            value: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:9e265d4c26fa0df05078b38ede12385dd527750bf4f6e45602f4b5ae721fd07e
+          - name: KUBE_RBAC_PROXY_IMAGE
+            value: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:d253bc69fdc967c1fc1543b01deddacd4eefe816cc9ed4541ea3673e35321753
+          - name: VMWARE_VSPHERE_DRIVER_OPERATOR_IMAGE
+            value: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:544c5ce7f2c4d1aec5d1c0c5ff15a42bd49679b164be1157d3950dfb3b975d78
+          - name: VMWARE_VSPHERE_DRIVER_IMAGE
+            value: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:73449f60475b3b3e1a471be5b853df35d70642aeb2d950d63b5d3a953ac1e749
+          - name: VMWARE_VSPHERE_SYNCER_IMAGE
+            value: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:b002f89ce89efb36ccc9243d0c8fc3f9d7581f1aaaf275385b93b1023deb6e16
+          - name: CLUSTER_CLOUD_CONTROLLER_MANAGER_OPERATOR_IMAGE
+            value: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:be2ef4ed52fd39bafa210ed1409c102c5a1bf2c3e8f9529114929c6af16fb9c0
+          - name: SHARED_RESOURCE_DRIVER_OPERATOR_IMAGE
+            value: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:913a0d4b662a076437139551f75b3f52c9fc6ac9de69ea0233014cd3d07ef9bb
+          - name: SHARED_RESOURCE_DRIVER_IMAGE
+            value: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:461ec09a87defd4293fa102da3cb2803d4920340c379a2de9dce19b16dc299c2
+          - name: ALIBABA_DISK_DRIVER_OPERATOR_IMAGE
+            value: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:be4b581b72bc41d2d58d2c52c90af5ea707fb51553276e7ab49a3b2520e9ed09
+          - name: ALIBABA_CLOUD_DRIVER_IMAGE
+            value: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:f8e6ea70126ea5a84e31bb3bc94eee28e63a2861981b3d7ee7570f6c847033dd
+          - name: IBM_VPC_BLOCK_DRIVER_OPERATOR_IMAGE
+            value: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:358090699e6c3e697bb34e7aa30fb1c564f8618b29dc13f2f8b24e35b61b0c93
+          - name: IBM_VPC_BLOCK_DRIVER_IMAGE
+            value: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:c3546b9eec5d5530550e8efa363992a160d22007cf602017ecf71371b1bfc41a
+          - name: IBM_VPC_NODE_LABEL_UPDATER_IMAGE
+            value: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:2944e00d556c577cfb2035f3e1dd661616441c47ac2975249f6977492ae67ec2
+          image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:b1981037d218949d07bac6ce215f3e29632cf6385cdc4b5ca7d5d2252c594f1d
+          imagePullPolicy: IfNotPresent
+          name: cluster-storage-operator
+          ports:
+          - containerPort: 8443
+            name: metrics
+            protocol: TCP
+          resources:
+            requests:
+              cpu: 10m
+              memory: 20Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: FallbackToLogsOnError
+          volumeMounts:
+          - mountPath: /var/run/secrets/serving-cert
+            name: cluster-storage-operator-serving-cert
+        dnsPolicy: ClusterFirst
+        nodeSelector:
+          node-role.kubernetes.io/master: ""
+        priorityClassName: system-cluster-critical
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext:
+          fsGroup: 10400
+          runAsGroup: 10400
+          runAsUser: 10400
+        serviceAccount: cluster-storage-operator
+        serviceAccountName: cluster-storage-operator
+        terminationGracePeriodSeconds: 30
+        tolerations:
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/master
+          operator: Exists
+        - effect: NoExecute
+          key: node.kubernetes.io/unreachable
+          operator: Exists
+          tolerationSeconds: 120
+        - effect: NoExecute
+          key: node.kubernetes.io/not-ready
+          operator: Exists
+          tolerationSeconds: 120
+        volumes:
+        - name: cluster-storage-operator-serving-cert
+          secret:
+            defaultMode: 420
+            optional: true
+            secretName: cluster-storage-operator-serving-cert
+  status:
+    availableReplicas: 1
+    fullyLabeledReplicas: 1
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "2"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "1"
+      operator.openshift.io/spec-hash: ec7c2c48deb54e1a057a5ee4d37e7e08465a8978ee27c8d3cb6eaf3071b02ed1
+    creationTimestamp: "2023-05-04T21:40:31Z"
+    generation: 1
+    labels:
+      app: csi-snapshot-controller
+      pod-template-hash: 79df8647d7
+    name: csi-snapshot-controller-79df8647d7
+    namespace: openshift-cluster-storage-operator
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: csi-snapshot-controller
+      uid: 95442784-c758-4490-8d28-19f0d8bb72ef
+    resourceVersion: "425754469"
+    uid: c5407e6e-bee3-4335-a65c-e8c6c3f8ff9f
+  spec:
+    replicas: 2
+    selector:
+      matchLabels:
+        app: csi-snapshot-controller
+        pod-template-hash: 79df8647d7
+    template:
+      metadata:
+        annotations:
+          target.workload.openshift.io/management: '{"effect": "PreferredDuringScheduling"}'
+        creationTimestamp: null
+        labels:
+          app: csi-snapshot-controller
+          pod-template-hash: 79df8647d7
+      spec:
+        affinity:
+          podAntiAffinity:
+            preferredDuringSchedulingIgnoredDuringExecution:
+            - podAffinityTerm:
+                labelSelector:
+                  matchLabels:
+                    app: csi-snapshot-controller
+                topologyKey: kubernetes.io/hostname
+              weight: 100
+        containers:
+        - args:
+          - --v=2
+          - --leader-election=true
+          - --leader-election-lease-duration=137s
+          - --leader-election-renew-deadline=107s
+          - --leader-election-retry-period=26s
+          image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:21967243dfa80aa46d272f3d3dcc1ad64fe60b5c6b9602c50858ac3b71b334af
+          imagePullPolicy: IfNotPresent
+          name: snapshot-controller
+          resources:
+            requests:
+              cpu: 10m
+              memory: 50Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        nodeSelector:
+          node-role.kubernetes.io/master: ""
+        priorityClassName: system-cluster-critical
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: csi-snapshot-controller
+        serviceAccountName: csi-snapshot-controller
+        terminationGracePeriodSeconds: 30
+        tolerations:
+        - effect: NoExecute
+          key: node.kubernetes.io/unreachable
+          operator: Exists
+          tolerationSeconds: 120
+        - effect: NoExecute
+          key: node.kubernetes.io/not-ready
+          operator: Exists
+          tolerationSeconds: 120
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/master
+          operator: Exists
+  status:
+    availableReplicas: 2
+    fullyLabeledReplicas: 2
+    observedGeneration: 1
+    readyReplicas: 2
+    replicas: 2
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "1"
+      include.release.openshift.io/self-managed-high-availability: "true"
+      include.release.openshift.io/single-node-developer: "true"
+    creationTimestamp: "2023-05-04T21:36:07Z"
+    generation: 1
+    labels:
+      app: csi-snapshot-controller-operator
+      pod-template-hash: 85f94984d6
+    name: csi-snapshot-controller-operator-85f94984d6
+    namespace: openshift-cluster-storage-operator
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: csi-snapshot-controller-operator
+      uid: 5a9c322a-613c-4455-b423-9d011838f1a2
+    resourceVersion: "114617788"
+    uid: 1fe922f3-dbed-4ef6-8c85-94768b031ba9
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: csi-snapshot-controller-operator
+        pod-template-hash: 85f94984d6
+    template:
+      metadata:
+        annotations:
+          target.workload.openshift.io/management: '{"effect": "PreferredDuringScheduling"}'
+        creationTimestamp: null
+        labels:
+          app: csi-snapshot-controller-operator
+          pod-template-hash: 85f94984d6
+        name: csi-snapshot-controller-operator
+      spec:
+        containers:
+        - args:
+          - start
+          - -v
+          - "5"
+          - --config=/var/run/configmaps/config/operator-config.yaml
+          env:
+          - name: OPERAND_IMAGE
+            value: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:21967243dfa80aa46d272f3d3dcc1ad64fe60b5c6b9602c50858ac3b71b334af
+          - name: WEBHOOK_IMAGE
+            value: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:8f9d6ee075bfb8fbb8cb584c12bd4a6f35905ec53045ecdcec7c66f43cb4d5e0
+          - name: OPERATOR_IMAGE_VERSION
+            value: 4.10.53
+          - name: OPERAND_IMAGE_VERSION
+            value: 4.10.53
+          - name: POD_NAME
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.name
+          image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:e21d8b4e3590940322af48a6a72d2b8714d43d27999d2e835a03240f557bdb55
+          imagePullPolicy: IfNotPresent
+          name: csi-snapshot-controller-operator
+          resources:
+            requests:
+              cpu: 10m
+              memory: 65Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: FallbackToLogsOnError
+          volumeMounts:
+          - mountPath: /var/run/configmaps/config
+            name: config
+        dnsPolicy: ClusterFirst
+        nodeSelector:
+          node-role.kubernetes.io/master: ""
+        priorityClassName: system-cluster-critical
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext:
+          fsGroup: 10400
+          runAsGroup: 10400
+          runAsUser: 10400
+        serviceAccount: csi-snapshot-controller-operator
+        serviceAccountName: csi-snapshot-controller-operator
+        terminationGracePeriodSeconds: 30
+        tolerations:
+        - effect: NoExecute
+          key: node.kubernetes.io/unreachable
+          operator: Exists
+          tolerationSeconds: 120
+        - effect: NoExecute
+          key: node.kubernetes.io/not-ready
+          operator: Exists
+          tolerationSeconds: 120
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/master
+          operator: Exists
+        volumes:
+        - configMap:
+            defaultMode: 440
+            name: csi-snapshot-controller-operator-config
+          name: config
+  status:
+    availableReplicas: 1
+    fullyLabeledReplicas: 1
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "2"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "1"
+      operator.openshift.io/spec-hash: fb17c65904b0e2eeb17e598702c9ce820eea32749368371375396058b730fe50
+    creationTimestamp: "2023-05-04T21:40:27Z"
+    generation: 1
+    labels:
+      app: csi-snapshot-webhook
+      pod-template-hash: 5c6b7997db
+    name: csi-snapshot-webhook-5c6b7997db
+    namespace: openshift-cluster-storage-operator
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: csi-snapshot-webhook
+      uid: 6a15e0ac-0a0d-4e5d-8ebb-3eda11513200
+    resourceVersion: "425754465"
+    uid: 20ec9d1e-424c-466a-8d2d-b0f93d33a887
+  spec:
+    replicas: 2
+    selector:
+      matchLabels:
+        app: csi-snapshot-webhook
+        pod-template-hash: 5c6b7997db
+    template:
+      metadata:
+        annotations:
+          target.workload.openshift.io/management: '{"effect": "PreferredDuringScheduling"}'
+        creationTimestamp: null
+        labels:
+          app: csi-snapshot-webhook
+          pod-template-hash: 5c6b7997db
+      spec:
+        affinity:
+          podAntiAffinity:
+            preferredDuringSchedulingIgnoredDuringExecution:
+            - podAffinityTerm:
+                labelSelector:
+                  matchLabels:
+                    app: csi-snapshot-webhook
+                topologyKey: kubernetes.io/hostname
+              weight: 100
+        containers:
+        - args:
+          - --tls-cert-file=/etc/snapshot-validation-webhook/certs/tls.crt
+          - --tls-private-key-file=/etc/snapshot-validation-webhook/certs/tls.key
+          - --v=2
+          - --port=8443
+          image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:8f9d6ee075bfb8fbb8cb584c12bd4a6f35905ec53045ecdcec7c66f43cb4d5e0
+          imagePullPolicy: IfNotPresent
+          name: webhook
+          ports:
+          - containerPort: 8443
+            protocol: TCP
+          resources:
+            requests:
+              cpu: 10m
+              memory: 20Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /etc/snapshot-validation-webhook/certs
+            name: certs
+            readOnly: true
+        dnsPolicy: ClusterFirst
+        nodeSelector:
+          node-role.kubernetes.io/master: ""
+        priorityClassName: system-cluster-critical
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        tolerations:
+        - effect: NoExecute
+          key: node.kubernetes.io/unreachable
+          operator: Exists
+          tolerationSeconds: 120
+        - effect: NoExecute
+          key: node.kubernetes.io/not-ready
+          operator: Exists
+          tolerationSeconds: 120
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/master
+          operator: Exists
+        volumes:
+        - name: certs
+          secret:
+            defaultMode: 420
+            secretName: csi-snapshot-webhook-secret
+  status:
+    availableReplicas: 2
+    fullyLabeledReplicas: 2
+    observedGeneration: 1
+    readyReplicas: 2
+    replicas: 2
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

@@ -1,0 +1,337 @@
+apiVersion: v1
+items:
+- apiVersion: build.openshift.io/v1
+  kind: Build
+  metadata:
+    annotations:
+      openshift.io/build-config.name: trackdt
+      openshift.io/build.number: "1"
+      openshift.io/build.pod-name: trackdt-1-build
+    creationTimestamp: "2023-06-14T14:20:32Z"
+    generation: 2
+    labels:
+      app: trackdt
+      buildconfig: trackdt
+      openshift.io/build-config.name: trackdt
+      openshift.io/build.start-policy: Serial
+    name: trackdt-1
+    namespace: arquitectura-test
+    ownerReferences:
+    - apiVersion: build.openshift.io/v1
+      controller: true
+      kind: BuildConfig
+      name: trackdt
+      uid: 127d8cc0-e131-4991-9b47-3b49e52c50ea
+    resourceVersion: "28533822"
+    uid: 65ed5f1b-1cd6-422f-a266-68c59e2976be
+  spec:
+    nodeSelector: null
+    output:
+      pushSecret:
+        name: builder-dockercfg-j7hrl
+      to:
+        kind: ImageStreamTag
+        name: trackdt:latest
+    postCommit: {}
+    resources: {}
+    serviceAccount: builder
+    source:
+      git:
+        uri: https://dirtrab@dev.azure.com/dirtrab/OperacionUtilities/_git/TrackDTI-API
+      type: Git
+    strategy:
+      sourceStrategy:
+        from:
+          kind: DockerImage
+          name: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:4fe08ab3bd1f7cccfba21e509bc0751f1b68d4db8e8782b35610f33ca97f6d98
+        pullSecret:
+          name: builder-dockercfg-j7hrl
+      type: Source
+    triggeredBy:
+    - message: Build configuration change
+  status:
+    completionTimestamp: "2023-06-14T14:20:45Z"
+    conditions:
+    - lastTransitionTime: "2023-06-14T14:20:32Z"
+      lastUpdateTime: "2023-06-14T14:20:32Z"
+      status: "False"
+      type: New
+    - lastTransitionTime: "2023-06-14T14:20:45Z"
+      lastUpdateTime: "2023-06-14T14:20:45Z"
+      status: "False"
+      type: Pending
+    - lastTransitionTime: "2023-06-14T14:20:45Z"
+      lastUpdateTime: "2023-06-14T14:20:45Z"
+      status: "False"
+      type: Running
+    - lastTransitionTime: "2023-06-14T14:20:45Z"
+      lastUpdateTime: "2023-06-14T14:20:45Z"
+      message: Failed to fetch the input source.
+      reason: FetchSourceFailed
+      status: "True"
+      type: Failed
+    config:
+      kind: BuildConfig
+      name: trackdt
+      namespace: arquitectura-test
+    duration: 13000000000
+    logSnippet: |-
+      Cloning "https://dirtrab@dev.azure.com/dirtrab/OperacionUtilities/_git/TrackDTI-API" ...
+      error: failed to fetch requested repository "https://dirtr...acionUtilities/_git/TrackDTI-API" with provided credentials
+    message: Failed to fetch the input source.
+    output: {}
+    outputDockerImageReference: image-registry.openshift-image-registry.svc:5000/arquitectura-test/trackdt:latest
+    phase: Failed
+    reason: FetchSourceFailed
+    startTimestamp: "2023-06-14T14:20:32Z"
+- apiVersion: build.openshift.io/v1
+  kind: Build
+  metadata:
+    annotations:
+      openshift.io/build-config.name: trackdt
+      openshift.io/build.number: "2"
+      openshift.io/build.pod-name: trackdt-2-build
+    creationTimestamp: "2023-06-14T14:35:08Z"
+    generation: 2
+    labels:
+      app: trackdt
+      buildconfig: trackdt
+      openshift.io/build-config.name: trackdt
+      openshift.io/build.start-policy: Serial
+    name: trackdt-2
+    namespace: arquitectura-test
+    ownerReferences:
+    - apiVersion: build.openshift.io/v1
+      controller: true
+      kind: BuildConfig
+      name: trackdt
+      uid: 127d8cc0-e131-4991-9b47-3b49e52c50ea
+    resourceVersion: "28543441"
+    uid: e990ce50-aa02-4a05-a107-57916c2fa6b6
+  spec:
+    nodeSelector: null
+    output:
+      pushSecret:
+        name: builder-dockercfg-j7hrl
+      to:
+        kind: ImageStreamTag
+        name: trackdt:latest
+    postCommit: {}
+    resources: {}
+    revision:
+      git:
+        author:
+          email: a.sloncon@gmail.com
+          name: Andrea Silva
+        commit: 005c0625e68c71731c9a4a7c0c6d45b62ff1c071
+        committer:
+          email: a.sloncon@gmail.com
+          name: Andrea Silva
+        message: Merge branch 'main' of https://dev.azure.com/dirtrab/OperacionUtilities/_git/T..
+      type: Git
+    serviceAccount: builder
+    source:
+      contextDir: /
+      git:
+        uri: https://dirtrab@dev.azure.com/dirtrab/OperacionUtilities/_git/TrackDTI-API
+      sourceSecret:
+        name: azuredevops
+      type: Git
+    strategy:
+      sourceStrategy:
+        from:
+          kind: DockerImage
+          name: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:4fe08ab3bd1f7cccfba21e509bc0751f1b68d4db8e8782b35610f33ca97f6d98
+        pullSecret:
+          name: builder-dockercfg-j7hrl
+      type: Source
+    triggeredBy:
+    - message: Manually triggered
+  status:
+    completionTimestamp: "2023-06-14T14:36:49Z"
+    conditions:
+    - lastTransitionTime: "2023-06-14T14:35:08Z"
+      lastUpdateTime: "2023-06-14T14:35:08Z"
+      status: "False"
+      type: New
+    - lastTransitionTime: "2023-06-14T14:35:11Z"
+      lastUpdateTime: "2023-06-14T14:35:11Z"
+      status: "False"
+      type: Pending
+    - lastTransitionTime: "2023-06-14T14:36:49Z"
+      lastUpdateTime: "2023-06-14T14:36:49Z"
+      status: "False"
+      type: Running
+    - lastTransitionTime: "2023-06-14T14:36:49Z"
+      lastUpdateTime: "2023-06-14T14:36:49Z"
+      status: "True"
+      type: Complete
+    config:
+      kind: BuildConfig
+      name: trackdt
+      namespace: arquitectura-test
+    duration: 101000000000
+    output:
+      to:
+        imageDigest: sha256:4177de4f2c050e198b834abaf4a8988087878b6b049208a75b87aca11b56d34c
+    outputDockerImageReference: image-registry.openshift-image-registry.svc:5000/arquitectura-test/trackdt:latest
+    phase: Complete
+    stages:
+    - durationMilliseconds: 3508
+      name: FetchInputs
+      startTime: "2023-06-14T14:35:12Z"
+      steps:
+      - durationMilliseconds: 3508
+        name: FetchGitSource
+        startTime: "2023-06-14T14:35:12Z"
+    - durationMilliseconds: 55813
+      name: PullImages
+      startTime: "2023-06-14T14:35:17Z"
+      steps:
+      - durationMilliseconds: 55813
+        name: PullBaseImage
+        startTime: "2023-06-14T14:35:17Z"
+    - durationMilliseconds: 25423
+      name: Build
+      startTime: "2023-06-14T14:36:13Z"
+      steps:
+      - durationMilliseconds: 25423
+        name: DockerBuild
+        startTime: "2023-06-14T14:36:13Z"
+    - durationMilliseconds: 7110
+      name: PushImage
+      startTime: "2023-06-14T14:36:38Z"
+      steps:
+      - durationMilliseconds: 7110
+        name: PushImage
+        startTime: "2023-06-14T14:36:38Z"
+    startTimestamp: "2023-06-14T14:35:08Z"
+- apiVersion: build.openshift.io/v1
+  kind: Build
+  metadata:
+    annotations:
+      openshift.io/build-config.name: trackdt
+      openshift.io/build.number: "3"
+      openshift.io/build.pod-name: trackdt-3-build
+    creationTimestamp: "2023-06-14T14:47:26Z"
+    generation: 2
+    labels:
+      app: trackdt
+      buildconfig: trackdt
+      openshift.io/build-config.name: trackdt
+      openshift.io/build.start-policy: Serial
+    name: trackdt-3
+    namespace: arquitectura-test
+    ownerReferences:
+    - apiVersion: build.openshift.io/v1
+      controller: true
+      kind: BuildConfig
+      name: trackdt
+      uid: 127d8cc0-e131-4991-9b47-3b49e52c50ea
+    resourceVersion: "28550416"
+    uid: 57dfc511-f978-4a0a-9a6f-f5d7f4d63405
+  spec:
+    nodeSelector: null
+    output:
+      pushSecret:
+        name: builder-dockercfg-j7hrl
+      to:
+        kind: ImageStreamTag
+        name: trackdt:latest
+    postCommit: {}
+    resources: {}
+    revision:
+      git:
+        author:
+          email: a.sloncon@gmail.com
+          name: Andrea Silva
+        commit: 005c0625e68c71731c9a4a7c0c6d45b62ff1c071
+        committer:
+          email: a.sloncon@gmail.com
+          name: Andrea Silva
+        message: Merge branch 'main' of https://dev.azure.com/dirtrab/OperacionUtilities/_git/T..
+      type: Git
+    serviceAccount: builder
+    source:
+      contextDir: /
+      git:
+        uri: https://dirtrab@dev.azure.com/dirtrab/OperacionUtilities/_git/TrackDTI-API
+      sourceSecret:
+        name: azuredevops
+      type: Git
+    strategy:
+      sourceStrategy:
+        env:
+        - name: NODE_DEV
+          value: development
+        from:
+          kind: DockerImage
+          name: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:4fe08ab3bd1f7cccfba21e509bc0751f1b68d4db8e8782b35610f33ca97f6d98
+        pullSecret:
+          name: builder-dockercfg-j7hrl
+      type: Source
+    triggeredBy:
+    - message: Manually triggered
+  status:
+    completionTimestamp: "2023-06-14T14:48:16Z"
+    conditions:
+    - lastTransitionTime: "2023-06-14T14:47:26Z"
+      lastUpdateTime: "2023-06-14T14:47:26Z"
+      status: "False"
+      type: New
+    - lastTransitionTime: "2023-06-14T14:47:29Z"
+      lastUpdateTime: "2023-06-14T14:47:29Z"
+      status: "False"
+      type: Pending
+    - lastTransitionTime: "2023-06-14T14:48:16Z"
+      lastUpdateTime: "2023-06-14T14:48:16Z"
+      status: "False"
+      type: Running
+    - lastTransitionTime: "2023-06-14T14:48:16Z"
+      lastUpdateTime: "2023-06-14T14:48:16Z"
+      status: "True"
+      type: Complete
+    config:
+      kind: BuildConfig
+      name: trackdt
+      namespace: arquitectura-test
+    duration: 50000000000
+    output:
+      to:
+        imageDigest: sha256:ce8cb59d4c8ebf2a44ec66183f8f641b7f5bd0d3cd6d0d99a9f773c5a3574c9b
+    outputDockerImageReference: image-registry.openshift-image-registry.svc:5000/arquitectura-test/trackdt:latest
+    phase: Complete
+    stages:
+    - durationMilliseconds: 2550
+      name: FetchInputs
+      startTime: "2023-06-14T14:47:30Z"
+      steps:
+      - durationMilliseconds: 2550
+        name: FetchGitSource
+        startTime: "2023-06-14T14:47:30Z"
+    - durationMilliseconds: 10829
+      name: PullImages
+      startTime: "2023-06-14T14:47:34Z"
+      steps:
+      - durationMilliseconds: 10829
+        name: PullBaseImage
+        startTime: "2023-06-14T14:47:34Z"
+    - durationMilliseconds: 26020
+      name: Build
+      startTime: "2023-06-14T14:47:45Z"
+      steps:
+      - durationMilliseconds: 26020
+        name: DockerBuild
+        startTime: "2023-06-14T14:47:45Z"
+    - durationMilliseconds: 1685
+      name: PushImage
+      startTime: "2023-06-14T14:48:11Z"
+      steps:
+      - durationMilliseconds: 1685
+        name: PushImage
+        startTime: "2023-06-14T14:48:11Z"
+    startTimestamp: "2023-06-14T14:47:26Z"
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

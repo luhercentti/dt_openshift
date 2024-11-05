@@ -1,0 +1,47 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      service.alpha.openshift.io/serving-cert-signed-by: openshift-service-serving-signer@1683236429
+      service.beta.openshift.io/serving-cert-secret-name: elasticsearch-operator-metrics
+      service.beta.openshift.io/serving-cert-signed-by: openshift-service-serving-signer@1683236429
+    creationTimestamp: "2023-05-11T19:14:12Z"
+    labels:
+      name: elasticsearch-operator
+      operators.coreos.com/elasticsearch-operator.openshift-operators-redhat: ""
+    name: elasticsearch-operator-metrics
+    namespace: openshift-operators-redhat
+    ownerReferences:
+    - apiVersion: operators.coreos.com/v1alpha1
+      blockOwnerDeletion: false
+      controller: false
+      kind: ClusterServiceVersion
+      name: elasticsearch-operator.v5.6.5
+      uid: 132b7e4d-1c98-475c-8b48-ee146545811c
+    resourceVersion: "1630516"
+    uid: 38131af8-e109-4a79-83fe-ad6b915f0818
+  spec:
+    clusterIP: 172.30.162.183
+    clusterIPs:
+    - 172.30.162.183
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: https
+      port: 8443
+      protocol: TCP
+      targetPort: https
+    selector:
+      name: elasticsearch-operator
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

@@ -1,0 +1,84 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: "2023-05-23T15:42:58Z"
+    labels:
+      app: 3scale-gateway
+      migration.openshift.io/migrated-by-migmigration: d7f82f83-36b7-40cb-9be8-845686ebb478
+      migration.openshift.io/migrated-by-migplan: 1981d423-880a-454f-b775-1c317fd4855d
+      velero.io/backup-name: migration-685ab-initial-9hwzb
+      velero.io/restore-name: migration-685ab-final-dbsdc
+    name: apicast-live-prod
+    namespace: apicast-prod
+    resourceVersion: "9844493"
+    uid: 9b754307-1943-4659-b58b-57e7ed1a0b2d
+  spec:
+    clusterIP: 172.30.44.209
+    clusterIPs:
+    - 172.30.44.209
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: proxy
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    - name: management
+      port: 8090
+      protocol: TCP
+      targetPort: 8090
+    selector:
+      deploymentconfig: apicast-live-prod
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: "2023-05-23T15:42:58Z"
+    labels:
+      app: 3scale-gateway
+      migration.openshift.io/migrated-by-migmigration: d7f82f83-36b7-40cb-9be8-845686ebb478
+      migration.openshift.io/migrated-by-migplan: 1981d423-880a-454f-b775-1c317fd4855d
+      velero.io/backup-name: migration-685ab-initial-9hwzb
+      velero.io/restore-name: migration-685ab-final-dbsdc
+    name: apicast-staging-prod
+    namespace: apicast-prod
+    resourceVersion: "9844497"
+    uid: 6b5d5b9e-4875-404b-b949-9972863550b0
+  spec:
+    clusterIP: 172.30.133.48
+    clusterIPs:
+    - 172.30.133.48
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: proxy
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    - name: management
+      port: 8090
+      protocol: TCP
+      targetPort: 8090
+    selector:
+      deploymentconfig: apicast-staging-prod
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

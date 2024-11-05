@@ -1,0 +1,194 @@
+apiVersion: v1
+items:
+- apiVersion: build.openshift.io/v1
+  kind: Build
+  metadata:
+    annotations:
+      openshift.io/build-config.name: lre
+      openshift.io/build.number: "1"
+      openshift.io/build.pod-name: lre-1-build
+    creationTimestamp: "2023-09-01T01:10:32Z"
+    generation: 2
+    labels:
+      app: lre
+      buildconfig: lre
+      migration.openshift.io/migrated-by-migmigration: 0ccd2f67-7ac7-4be0-a33f-fe509b3b234f
+      migration.openshift.io/migrated-by-migplan: 650c7753-846f-4da6-a5a7-eff123c536a8
+      openshift.io/build-config.name: lre
+      openshift.io/build.start-policy: Serial
+      velero.io/backup-name: migration-e3183-initial-mpd46
+      velero.io/restore-name: migration-e3183-final-ltssc
+    name: lre-1
+    namespace: lre-prod
+    ownerReferences:
+    - apiVersion: build.openshift.io/v1
+      controller: true
+      kind: BuildConfig
+      name: lre
+      uid: a9448a0f-8cc4-40d3-ab9b-da751986ad2a
+    resourceVersion: "95923641"
+    uid: 54f0845c-72f0-4890-9a2a-aa991ec61a1c
+  spec:
+    nodeSelector: null
+    output:
+      pushSecret:
+        name: builder-dockercfg-rcgsd
+      to:
+        kind: ImageStreamTag
+        name: lre:latest
+    postCommit: {}
+    resources: {}
+    serviceAccount: builder
+    source:
+      git:
+        ref: develop
+        uri: https://dirtrab.visualstudio.com/Libro%20Remuneraciones%20Electronico/_git/product-lre
+      sourceSecret:
+        name: jorgarci
+      type: Git
+    strategy:
+      sourceStrategy:
+        from:
+          kind: DockerImage
+          name: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+        pullSecret:
+          name: builder-dockercfg-rcgsd
+      type: Source
+    triggeredBy:
+    - imageChangeBuild:
+        fromRef:
+          kind: ImageStreamTag
+          name: nodejs:10
+          namespace: openshift
+        imageID: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+      message: Image change
+  status:
+    completionTimestamp: "2023-09-01T01:10:36Z"
+    conditions:
+    - lastTransitionTime: "2023-09-01T01:10:32Z"
+      lastUpdateTime: "2023-09-01T01:10:32Z"
+      status: "False"
+      type: New
+    - lastTransitionTime: "2023-09-01T01:10:35Z"
+      lastUpdateTime: "2023-09-01T01:10:35Z"
+      status: "False"
+      type: Pending
+    - lastTransitionTime: "2023-09-01T01:10:36Z"
+      lastUpdateTime: "2023-09-01T01:10:36Z"
+      status: "False"
+      type: Running
+    - lastTransitionTime: "2023-09-01T01:10:36Z"
+      lastUpdateTime: "2023-09-01T01:10:36Z"
+      message: Failed to fetch the input source.
+      reason: FetchSourceFailed
+      status: "True"
+      type: Failed
+    config:
+      kind: BuildConfig
+      name: lre
+      namespace: lre-prod
+    duration: 4000000000
+    logSnippet: |-
+      Cloning "https://dirtrab.visualstudio.com/Libro%20Remuneraciones%20Electronico/_git/product-lre" ...
+      error: failed to fetch requested repository "https://dirtr...s%20Electronico/_git/product-lre" with provided credentials
+    message: Failed to fetch the input source.
+    output: {}
+    outputDockerImageReference: image-registry.openshift-image-registry.svc:5000/lre-prod/lre:latest
+    phase: Failed
+    reason: FetchSourceFailed
+    startTimestamp: "2023-09-01T01:10:32Z"
+- apiVersion: build.openshift.io/v1
+  kind: Build
+  metadata:
+    annotations:
+      openshift.io/build-config.name: lre
+      openshift.io/build.number: "2"
+      openshift.io/build.pod-name: lre-2-build
+    creationTimestamp: "2023-09-01T01:13:08Z"
+    generation: 2
+    labels:
+      app: lre
+      buildconfig: lre
+      migration.openshift.io/migrated-by-migmigration: 0ccd2f67-7ac7-4be0-a33f-fe509b3b234f
+      migration.openshift.io/migrated-by-migplan: 650c7753-846f-4da6-a5a7-eff123c536a8
+      openshift.io/build-config.name: lre
+      openshift.io/build.start-policy: Serial
+      velero.io/backup-name: migration-e3183-initial-mpd46
+      velero.io/restore-name: migration-e3183-final-ltssc
+    name: lre-2
+    namespace: lre-prod
+    ownerReferences:
+    - apiVersion: build.openshift.io/v1
+      controller: true
+      kind: BuildConfig
+      name: lre
+      uid: a9448a0f-8cc4-40d3-ab9b-da751986ad2a
+    resourceVersion: "95925740"
+    uid: 3c442f7f-dcaf-4aae-a290-5503011f8881
+  spec:
+    nodeSelector: null
+    output:
+      pushSecret:
+        name: builder-dockercfg-rcgsd
+      to:
+        kind: ImageStreamTag
+        name: lre:latest
+    postCommit: {}
+    resources: {}
+    serviceAccount: builder
+    source:
+      git:
+        ref: develop
+        uri: https://dirtrab.visualstudio.com/Libro%20Remuneraciones%20Electronico/_git/product-lre
+      sourceSecret:
+        name: jorgarci
+      type: Git
+    strategy:
+      sourceStrategy:
+        from:
+          kind: DockerImage
+          name: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+        pullSecret:
+          name: builder-dockercfg-rcgsd
+      type: Source
+    triggeredBy:
+    - message: Manually triggered
+  status:
+    completionTimestamp: "2023-09-01T01:13:24Z"
+    conditions:
+    - lastTransitionTime: "2023-09-01T01:13:08Z"
+      lastUpdateTime: "2023-09-01T01:13:08Z"
+      status: "False"
+      type: New
+    - lastTransitionTime: "2023-09-01T01:13:21Z"
+      lastUpdateTime: "2023-09-01T01:13:21Z"
+      status: "False"
+      type: Pending
+    - lastTransitionTime: "2023-09-01T01:13:24Z"
+      lastUpdateTime: "2023-09-01T01:13:24Z"
+      status: "False"
+      type: Running
+    - lastTransitionTime: "2023-09-01T01:13:24Z"
+      lastUpdateTime: "2023-09-01T01:13:24Z"
+      message: Failed to fetch the input source.
+      reason: FetchSourceFailed
+      status: "True"
+      type: Failed
+    config:
+      kind: BuildConfig
+      name: lre
+      namespace: lre-prod
+    duration: 16000000000
+    logSnippet: |-
+      Cloning "https://dirtrab.visualstudio.com/Libro%20Remuneraciones%20Electronico/_git/product-lre" ...
+      error: failed to fetch requested repository "https://dirtr...s%20Electronico/_git/product-lre" with provided credentials
+    message: Failed to fetch the input source.
+    output: {}
+    outputDockerImageReference: image-registry.openshift-image-registry.svc:5000/lre-prod/lre:latest
+    phase: Failed
+    reason: FetchSourceFailed
+    startTimestamp: "2023-09-01T01:13:08Z"
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

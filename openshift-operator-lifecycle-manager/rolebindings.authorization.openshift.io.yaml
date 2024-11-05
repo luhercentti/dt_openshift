@@ -1,0 +1,167 @@
+apiVersion: v1
+items:
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    annotations:
+      include.release.openshift.io/ibm-cloud-managed: "true"
+      include.release.openshift.io/self-managed-high-availability: "true"
+    creationTimestamp: "2023-05-04T21:36:03Z"
+    name: collect-profiles
+    namespace: openshift-operator-lifecycle-manager
+    ownerReferences:
+    - apiVersion: config.openshift.io/v1
+      kind: ClusterVersion
+      name: version
+      uid: 5d92b52f-9fff-4a6e-b815-398b934115ad
+    resourceVersion: "1805"
+    uid: 4e77477e-a478-41bf-8ddb-f54e1148a181
+  roleRef:
+    name: collect-profiles
+    namespace: openshift-operator-lifecycle-manager
+  subjects:
+  - kind: ServiceAccount
+    name: collect-profiles
+    namespace: openshift-operator-lifecycle-manager
+  userNames:
+  - system:serviceaccount:openshift-operator-lifecycle-manager:collect-profiles
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    annotations:
+      include.release.openshift.io/ibm-cloud-managed: "true"
+      include.release.openshift.io/self-managed-high-availability: "true"
+    creationTimestamp: "2023-05-04T21:35:46Z"
+    name: operator-lifecycle-manager-metrics
+    namespace: openshift-operator-lifecycle-manager
+    ownerReferences:
+    - apiVersion: config.openshift.io/v1
+      kind: ClusterVersion
+      name: version
+      uid: 5d92b52f-9fff-4a6e-b815-398b934115ad
+    resourceVersion: "1361"
+    uid: 8bd05f84-be59-4fc7-9cb6-cbce37c1b95b
+  roleRef:
+    name: operator-lifecycle-manager-metrics
+    namespace: openshift-operator-lifecycle-manager
+  subjects:
+  - kind: ServiceAccount
+    name: prometheus-k8s
+    namespace: openshift-monitoring
+  userNames:
+  - system:serviceaccount:openshift-monitoring:prometheus-k8s
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    creationTimestamp: "2023-05-04T21:41:13Z"
+    name: packageserver
+    namespace: openshift-operator-lifecycle-manager
+    ownerReferences:
+    - apiVersion: operators.coreos.com/v2
+      blockOwnerDeletion: false
+      controller: true
+      kind: OperatorCondition
+      name: packageserver
+      uid: 8052c9f8-98f0-4dfa-8850-82201352fd22
+    resourceVersion: "7227"
+    uid: b48be70a-98be-4178-a6e2-facfe1d471bd
+  roleRef:
+    name: packageserver
+    namespace: openshift-operator-lifecycle-manager
+  subjects:
+  - kind: ServiceAccount
+    name: olm-operator-serviceaccount
+  userNames:
+  - system:serviceaccount:openshift-operator-lifecycle-manager:olm-operator-serviceaccount
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    creationTimestamp: "2023-05-04T21:41:14Z"
+    name: packageserver-service-cert
+    namespace: openshift-operator-lifecycle-manager
+    ownerReferences:
+    - apiVersion: operators.coreos.com/v1alpha1
+      blockOwnerDeletion: false
+      controller: false
+      kind: ClusterServiceVersion
+      name: packageserver
+      uid: eefb24cd-0237-4dfe-82d0-bc3090d4cbcc
+    resourceVersion: "7261"
+    uid: 4814df16-481a-4f08-a025-6e21789b9671
+  roleRef:
+    name: packageserver-service-cert
+    namespace: openshift-operator-lifecycle-manager
+  subjects:
+  - kind: ServiceAccount
+    name: olm-operator-serviceaccount
+    namespace: openshift-operator-lifecycle-manager
+  userNames:
+  - system:serviceaccount:openshift-operator-lifecycle-manager:olm-operator-serviceaccount
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/description: Allows deploymentconfigs in this namespace to rollout
+        pods in this namespace.  It is auto-managed by a controller; remove subjects
+        to disable.
+    creationTimestamp: "2023-05-04T21:45:23Z"
+    name: system:deployers
+    namespace: openshift-operator-lifecycle-manager
+    resourceVersion: "14805"
+    uid: 5b4dcc6a-1930-4558-9066-464aad6c7f8c
+  roleRef:
+    name: system:deployer
+  subjects:
+  - kind: ServiceAccount
+    name: deployer
+    namespace: openshift-operator-lifecycle-manager
+  userNames:
+  - system:serviceaccount:openshift-operator-lifecycle-manager:deployer
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/description: Allows builds in this namespace to push images to
+        this namespace.  It is auto-managed by a controller; remove subjects to disable.
+    creationTimestamp: "2023-05-04T21:45:23Z"
+    name: system:image-builders
+    namespace: openshift-operator-lifecycle-manager
+    resourceVersion: "14741"
+    uid: b6a006d3-7c98-47fa-bf0f-b163aa3a6452
+  roleRef:
+    name: system:image-builder
+  subjects:
+  - kind: ServiceAccount
+    name: builder
+    namespace: openshift-operator-lifecycle-manager
+  userNames:
+  - system:serviceaccount:openshift-operator-lifecycle-manager:builder
+- apiVersion: authorization.openshift.io/v1
+  groupNames:
+  - system:serviceaccounts:openshift-operator-lifecycle-manager
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/description: Allows all pods in this namespace to pull images from
+        this namespace.  It is auto-managed by a controller; remove subjects to disable.
+    creationTimestamp: "2023-05-04T21:45:22Z"
+    name: system:image-pullers
+    namespace: openshift-operator-lifecycle-manager
+    resourceVersion: "14660"
+    uid: b2010f31-5c77-4cf0-95fa-63f2b7619dae
+  roleRef:
+    name: system:image-puller
+  subjects:
+  - kind: SystemGroup
+    name: system:serviceaccounts:openshift-operator-lifecycle-manager
+  userNames: null
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

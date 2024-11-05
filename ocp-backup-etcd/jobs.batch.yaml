@@ -1,0 +1,414 @@
+apiVersion: v1
+items:
+- apiVersion: batch/v1
+  kind: Job
+  metadata:
+    creationTimestamp: "2024-07-28T23:56:00Z"
+    generation: 1
+    labels:
+      app: openshift-backup
+    name: openshift-backup-28703516
+    namespace: ocp-backup-etcd
+    ownerReferences:
+    - apiVersion: batch/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: CronJob
+      name: openshift-backup
+      uid: 0f47eb70-12ea-4660-be9f-1be0258500a8
+    resourceVersion: "485304160"
+    uid: 17042a8c-0c49-47ef-95e4-a2e7decf7313
+  spec:
+    backoffLimit: 0
+    completionMode: NonIndexed
+    completions: 1
+    parallelism: 1
+    selector:
+      matchLabels:
+        controller-uid: 17042a8c-0c49-47ef-95e4-a2e7decf7313
+    suspend: false
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: openshift-backup
+          controller-uid: 17042a8c-0c49-47ef-95e4-a2e7decf7313
+          job-name: openshift-backup-28703516
+      spec:
+        activeDeadlineSeconds: 600
+        containers:
+        - command:
+          - /bin/bash
+          - -c
+          - oc get no -l node-role.kubernetes.io/master --no-headers -o name | xargs
+            -I {} --  oc debug {} -- bash -c 'chroot /host sudo -E /usr/local/bin/cluster-backup.sh
+            /home/core/backup/ && chroot /host sudo -E find /home/core/backup/ -type
+            f -ctime +"2" -delete'
+          image: registry.redhat.io/openshift4/ose-cli:v4.10
+          imagePullPolicy: IfNotPresent
+          name: backup
+          resources: {}
+          securityContext:
+            privileged: true
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Never
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: openshift-backup
+        serviceAccountName: openshift-backup
+        terminationGracePeriodSeconds: 30
+  status:
+    completionTime: "2024-07-28T23:56:25Z"
+    conditions:
+    - lastProbeTime: "2024-07-28T23:56:25Z"
+      lastTransitionTime: "2024-07-28T23:56:25Z"
+      status: "True"
+      type: Complete
+    startTime: "2024-07-28T23:56:00Z"
+    succeeded: 1
+- apiVersion: batch/v1
+  kind: Job
+  metadata:
+    creationTimestamp: "2024-07-29T23:56:00Z"
+    generation: 1
+    labels:
+      app: openshift-backup
+    name: openshift-backup-28704956
+    namespace: ocp-backup-etcd
+    ownerReferences:
+    - apiVersion: batch/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: CronJob
+      name: openshift-backup
+      uid: 0f47eb70-12ea-4660-be9f-1be0258500a8
+    resourceVersion: "487403336"
+    uid: f05524b1-990b-4181-87de-ba2d3d3b5c96
+  spec:
+    backoffLimit: 0
+    completionMode: NonIndexed
+    completions: 1
+    parallelism: 1
+    selector:
+      matchLabels:
+        controller-uid: f05524b1-990b-4181-87de-ba2d3d3b5c96
+    suspend: false
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: openshift-backup
+          controller-uid: f05524b1-990b-4181-87de-ba2d3d3b5c96
+          job-name: openshift-backup-28704956
+      spec:
+        activeDeadlineSeconds: 600
+        containers:
+        - command:
+          - /bin/bash
+          - -c
+          - oc get no -l node-role.kubernetes.io/master --no-headers -o name | xargs
+            -I {} --  oc debug {} -- bash -c 'chroot /host sudo -E /usr/local/bin/cluster-backup.sh
+            /home/core/backup/ && chroot /host sudo -E find /home/core/backup/ -type
+            f -ctime +"2" -delete'
+          image: registry.redhat.io/openshift4/ose-cli:v4.10
+          imagePullPolicy: IfNotPresent
+          name: backup
+          resources: {}
+          securityContext:
+            privileged: true
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Never
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: openshift-backup
+        serviceAccountName: openshift-backup
+        terminationGracePeriodSeconds: 30
+  status:
+    completionTime: "2024-07-29T23:56:26Z"
+    conditions:
+    - lastProbeTime: "2024-07-29T23:56:26Z"
+      lastTransitionTime: "2024-07-29T23:56:26Z"
+      status: "True"
+      type: Complete
+    startTime: "2024-07-29T23:56:00Z"
+    succeeded: 1
+- apiVersion: batch/v1
+  kind: Job
+  metadata:
+    creationTimestamp: "2024-07-30T23:56:00Z"
+    generation: 1
+    labels:
+      app: openshift-backup
+    name: openshift-backup-28706396
+    namespace: ocp-backup-etcd
+    ownerReferences:
+    - apiVersion: batch/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: CronJob
+      name: openshift-backup
+      uid: 0f47eb70-12ea-4660-be9f-1be0258500a8
+    resourceVersion: "489499251"
+    uid: 36ef3145-76f4-433d-a519-8c32295a66cc
+  spec:
+    backoffLimit: 0
+    completionMode: NonIndexed
+    completions: 1
+    parallelism: 1
+    selector:
+      matchLabels:
+        controller-uid: 36ef3145-76f4-433d-a519-8c32295a66cc
+    suspend: false
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: openshift-backup
+          controller-uid: 36ef3145-76f4-433d-a519-8c32295a66cc
+          job-name: openshift-backup-28706396
+      spec:
+        activeDeadlineSeconds: 600
+        containers:
+        - command:
+          - /bin/bash
+          - -c
+          - oc get no -l node-role.kubernetes.io/master --no-headers -o name | xargs
+            -I {} --  oc debug {} -- bash -c 'chroot /host sudo -E /usr/local/bin/cluster-backup.sh
+            /home/core/backup/ && chroot /host sudo -E find /home/core/backup/ -type
+            f -ctime +"2" -delete'
+          image: registry.redhat.io/openshift4/ose-cli:v4.10
+          imagePullPolicy: IfNotPresent
+          name: backup
+          resources: {}
+          securityContext:
+            privileged: true
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Never
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: openshift-backup
+        serviceAccountName: openshift-backup
+        terminationGracePeriodSeconds: 30
+  status:
+    completionTime: "2024-07-30T23:56:23Z"
+    conditions:
+    - lastProbeTime: "2024-07-30T23:56:23Z"
+      lastTransitionTime: "2024-07-30T23:56:23Z"
+      status: "True"
+      type: Complete
+    startTime: "2024-07-30T23:56:00Z"
+    succeeded: 1
+- apiVersion: batch/v1
+  kind: Job
+  metadata:
+    creationTimestamp: "2024-07-31T23:56:00Z"
+    generation: 1
+    labels:
+      app: openshift-backup
+    name: openshift-backup-28707836
+    namespace: ocp-backup-etcd
+    ownerReferences:
+    - apiVersion: batch/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: CronJob
+      name: openshift-backup
+      uid: 0f47eb70-12ea-4660-be9f-1be0258500a8
+    resourceVersion: "491586244"
+    uid: 14c87b21-d8f6-4731-819a-603174a7d047
+  spec:
+    backoffLimit: 0
+    completionMode: NonIndexed
+    completions: 1
+    parallelism: 1
+    selector:
+      matchLabels:
+        controller-uid: 14c87b21-d8f6-4731-819a-603174a7d047
+    suspend: false
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: openshift-backup
+          controller-uid: 14c87b21-d8f6-4731-819a-603174a7d047
+          job-name: openshift-backup-28707836
+      spec:
+        activeDeadlineSeconds: 600
+        containers:
+        - command:
+          - /bin/bash
+          - -c
+          - oc get no -l node-role.kubernetes.io/master --no-headers -o name | xargs
+            -I {} --  oc debug {} -- bash -c 'chroot /host sudo -E /usr/local/bin/cluster-backup.sh
+            /home/core/backup/ && chroot /host sudo -E find /home/core/backup/ -type
+            f -ctime +"2" -delete'
+          image: registry.redhat.io/openshift4/ose-cli:v4.10
+          imagePullPolicy: IfNotPresent
+          name: backup
+          resources: {}
+          securityContext:
+            privileged: true
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Never
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: openshift-backup
+        serviceAccountName: openshift-backup
+        terminationGracePeriodSeconds: 30
+  status:
+    completionTime: "2024-07-31T23:56:25Z"
+    conditions:
+    - lastProbeTime: "2024-07-31T23:56:25Z"
+      lastTransitionTime: "2024-07-31T23:56:25Z"
+      status: "True"
+      type: Complete
+    startTime: "2024-07-31T23:56:00Z"
+    succeeded: 1
+- apiVersion: batch/v1
+  kind: Job
+  metadata:
+    creationTimestamp: "2024-08-01T23:56:00Z"
+    generation: 1
+    labels:
+      app: openshift-backup
+    name: openshift-backup-28709276
+    namespace: ocp-backup-etcd
+    ownerReferences:
+    - apiVersion: batch/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: CronJob
+      name: openshift-backup
+      uid: 0f47eb70-12ea-4660-be9f-1be0258500a8
+    resourceVersion: "493671290"
+    uid: 45cca05e-6d16-4403-b6c6-eab6839a24c7
+  spec:
+    backoffLimit: 0
+    completionMode: NonIndexed
+    completions: 1
+    parallelism: 1
+    selector:
+      matchLabels:
+        controller-uid: 45cca05e-6d16-4403-b6c6-eab6839a24c7
+    suspend: false
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: openshift-backup
+          controller-uid: 45cca05e-6d16-4403-b6c6-eab6839a24c7
+          job-name: openshift-backup-28709276
+      spec:
+        activeDeadlineSeconds: 600
+        containers:
+        - command:
+          - /bin/bash
+          - -c
+          - oc get no -l node-role.kubernetes.io/master --no-headers -o name | xargs
+            -I {} --  oc debug {} -- bash -c 'chroot /host sudo -E /usr/local/bin/cluster-backup.sh
+            /home/core/backup/ && chroot /host sudo -E find /home/core/backup/ -type
+            f -ctime +"2" -delete'
+          image: registry.redhat.io/openshift4/ose-cli:v4.10
+          imagePullPolicy: IfNotPresent
+          name: backup
+          resources: {}
+          securityContext:
+            privileged: true
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Never
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: openshift-backup
+        serviceAccountName: openshift-backup
+        terminationGracePeriodSeconds: 30
+  status:
+    completionTime: "2024-08-01T23:56:23Z"
+    conditions:
+    - lastProbeTime: "2024-08-01T23:56:23Z"
+      lastTransitionTime: "2024-08-01T23:56:23Z"
+      status: "True"
+      type: Complete
+    startTime: "2024-08-01T23:56:00Z"
+    succeeded: 1
+- apiVersion: batch/v1
+  kind: Job
+  metadata:
+    annotations:
+      cronjob.kubernetes.io/instantiate: manual
+    creationTimestamp: "2023-11-22T22:34:45Z"
+    generation: 1
+    labels:
+      app: openshift-backup
+    name: prueba1
+    namespace: ocp-backup-etcd
+    ownerReferences:
+    - apiVersion: batch/v1
+      kind: CronJob
+      name: openshift-backup
+      uid: 0f47eb70-12ea-4660-be9f-1be0258500a8
+    resourceVersion: "167726753"
+    uid: c2bb34dc-6519-4e0a-bbc6-d1e869acda6c
+  spec:
+    backoffLimit: 0
+    completionMode: NonIndexed
+    completions: 1
+    parallelism: 1
+    selector:
+      matchLabels:
+        controller-uid: c2bb34dc-6519-4e0a-bbc6-d1e869acda6c
+    suspend: false
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: openshift-backup
+          controller-uid: c2bb34dc-6519-4e0a-bbc6-d1e869acda6c
+          job-name: prueba1
+      spec:
+        activeDeadlineSeconds: 600
+        containers:
+        - command:
+          - /bin/bash
+          - -c
+          - oc get no -l node-role.kubernetes.io/master --no-headers -o name | xargs
+            -I {} --  oc debug {} -- bash -c 'chroot /host sudo -E /usr/local/bin/cluster-backup.sh
+            /home/core/backup/ && chroot /host sudo -E find /home/core/backup/ -type
+            f -ctime +"2" -delete'
+          image: registry.redhat.io/openshift4/ose-cli:v4.10
+          imagePullPolicy: IfNotPresent
+          name: backup
+          resources: {}
+          securityContext:
+            privileged: true
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Never
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: openshift-backup
+        serviceAccountName: openshift-backup
+        terminationGracePeriodSeconds: 30
+  status:
+    completionTime: "2023-11-22T22:35:57Z"
+    conditions:
+    - lastProbeTime: "2023-11-22T22:35:57Z"
+      lastTransitionTime: "2023-11-22T22:35:57Z"
+      status: "True"
+      type: Complete
+    startTime: "2023-11-22T22:34:45Z"
+    succeeded: 1
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

@@ -1,0 +1,336 @@
+apiVersion: v1
+items:
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: RoleBinding
+  metadata:
+    annotations:
+      include.release.openshift.io/ibm-cloud-managed: "true"
+      include.release.openshift.io/self-managed-high-availability: "true"
+      include.release.openshift.io/single-node-developer: "true"
+    creationTimestamp: "2023-05-04T21:53:21Z"
+    name: console-user-settings-admin
+    namespace: openshift-console-user-settings
+    ownerReferences:
+    - apiVersion: config.openshift.io/v1
+      kind: ClusterVersion
+      name: version
+      uid: 5d92b52f-9fff-4a6e-b815-398b934115ad
+    resourceVersion: "25716"
+    uid: c2b6d46d-bb16-403a-bd64-1bc7955f064c
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: Role
+    name: console-user-settings-admin
+  subjects:
+  - kind: ServiceAccount
+    name: console
+    namespace: openshift-console
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/description: Allows deploymentconfigs in this namespace to rollout
+        pods in this namespace.  It is auto-managed by a controller; remove subjects
+        to disable.
+    creationTimestamp: "2023-05-04T21:53:15Z"
+    name: system:deployers
+    namespace: openshift-console-user-settings
+    resourceVersion: "25632"
+    uid: afe8b9bb-ee56-4a63-9c2b-26f08e21d248
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: ClusterRole
+    name: system:deployer
+  subjects:
+  - kind: ServiceAccount
+    name: deployer
+    namespace: openshift-console-user-settings
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/description: Allows builds in this namespace to push images to
+        this namespace.  It is auto-managed by a controller; remove subjects to disable.
+    creationTimestamp: "2023-05-04T21:53:15Z"
+    name: system:image-builders
+    namespace: openshift-console-user-settings
+    resourceVersion: "25630"
+    uid: 78804d7e-9a62-43ef-b63a-518d03553d73
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: ClusterRole
+    name: system:image-builder
+  subjects:
+  - kind: ServiceAccount
+    name: builder
+    namespace: openshift-console-user-settings
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/description: Allows all pods in this namespace to pull images from
+        this namespace.  It is auto-managed by a controller; remove subjects to disable.
+    creationTimestamp: "2023-05-04T21:53:15Z"
+    name: system:image-pullers
+    namespace: openshift-console-user-settings
+    resourceVersion: "25629"
+    uid: 077325fb-0cfd-4ebc-a55d-eec1ced0937f
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: ClusterRole
+    name: system:image-puller
+  subjects:
+  - apiGroup: rbac.authorization.k8s.io
+    kind: Group
+    name: system:serviceaccounts:openshift-console-user-settings
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: RoleBinding
+  metadata:
+    creationTimestamp: "2024-01-30T14:05:57Z"
+    name: user-settings-0178f513-d75d-42e3-abc8-e4b37c3b85af-rolebinding
+    namespace: openshift-console-user-settings
+    ownerReferences:
+    - apiVersion: user.openshift.io/v1
+      kind: User
+      name: Fernando Antonio Fernandez Alvarez
+      uid: 0178f513-d75d-42e3-abc8-e4b37c3b85af
+    resourceVersion: "226989425"
+    uid: 6b463879-5c76-4dc0-8257-c9584dc50fe9
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: Role
+    name: user-settings-0178f513-d75d-42e3-abc8-e4b37c3b85af-role
+  subjects:
+  - apiGroup: rbac.authorization.k8s.io
+    kind: User
+    name: Fernando Antonio Fernandez Alvarez
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: RoleBinding
+  metadata:
+    creationTimestamp: "2023-06-07T15:11:30Z"
+    name: user-settings-100510c3-7db9-4829-b87c-f84612b0f316-rolebinding
+    namespace: openshift-console-user-settings
+    ownerReferences:
+    - apiVersion: user.openshift.io/v1
+      kind: User
+      name: jalvarez@dt.gob.cl
+      uid: 100510c3-7db9-4829-b87c-f84612b0f316
+    resourceVersion: "22561594"
+    uid: addc9e82-f56a-4cc8-bfd6-7329f2a1d7f5
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: Role
+    name: user-settings-100510c3-7db9-4829-b87c-f84612b0f316-role
+  subjects:
+  - apiGroup: rbac.authorization.k8s.io
+    kind: User
+    name: jalvarez@dt.gob.cl
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: RoleBinding
+  metadata:
+    creationTimestamp: "2024-07-11T14:22:33Z"
+    name: user-settings-142d1d00-d726-4309-bf68-f79064ceea33-rolebinding
+    namespace: openshift-console-user-settings
+    ownerReferences:
+    - apiVersion: user.openshift.io/v1
+      kind: User
+      name: Jose Alvarez
+      uid: 142d1d00-d726-4309-bf68-f79064ceea33
+    resourceVersion: "449089053"
+    uid: 9b9cccca-8dd6-48b3-a23a-64afe12dfa43
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: Role
+    name: user-settings-142d1d00-d726-4309-bf68-f79064ceea33-role
+  subjects:
+  - apiGroup: rbac.authorization.k8s.io
+    kind: User
+    name: Jose Alvarez
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: RoleBinding
+  metadata:
+    creationTimestamp: "2023-06-05T19:24:47Z"
+    name: user-settings-3be10b88-24a9-4308-9b83-d8a55f463455-rolebinding
+    namespace: openshift-console-user-settings
+    ownerReferences:
+    - apiVersion: user.openshift.io/v1
+      kind: User
+      name: pmedinac
+      uid: 3be10b88-24a9-4308-9b83-d8a55f463455
+    resourceVersion: "20988449"
+    uid: 110da1bd-b92a-4ec9-9179-bae29b1aa51a
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: Role
+    name: user-settings-3be10b88-24a9-4308-9b83-d8a55f463455-role
+  subjects:
+  - apiGroup: rbac.authorization.k8s.io
+    kind: User
+    name: pmedinac
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: RoleBinding
+  metadata:
+    creationTimestamp: "2023-08-30T13:50:38Z"
+    name: user-settings-7a16ad7f-3de5-49c4-b709-7b6e855d2df6-rolebinding
+    namespace: openshift-console-user-settings
+    ownerReferences:
+    - apiVersion: user.openshift.io/v1
+      kind: User
+      name: araiman@dt.gob.cl
+      uid: 7a16ad7f-3de5-49c4-b709-7b6e855d2df6
+    resourceVersion: "94667961"
+    uid: 01edd5ed-a886-4aa5-bd8f-88379deac0b6
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: Role
+    name: user-settings-7a16ad7f-3de5-49c4-b709-7b6e855d2df6-role
+  subjects:
+  - apiGroup: rbac.authorization.k8s.io
+    kind: User
+    name: araiman@dt.gob.cl
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: RoleBinding
+  metadata:
+    creationTimestamp: "2023-06-07T15:13:01Z"
+    name: user-settings-9d28c3f1-8a05-49a5-9f3e-95827058beb7-rolebinding
+    namespace: openshift-console-user-settings
+    ownerReferences:
+    - apiVersion: user.openshift.io/v1
+      kind: User
+      name: admin
+      uid: 9d28c3f1-8a05-49a5-9f3e-95827058beb7
+    resourceVersion: "22562491"
+    uid: fba81e99-72e7-46df-b0a3-9439f57fc21b
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: Role
+    name: user-settings-9d28c3f1-8a05-49a5-9f3e-95827058beb7-role
+  subjects:
+  - apiGroup: rbac.authorization.k8s.io
+    kind: User
+    name: admin
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: RoleBinding
+  metadata:
+    creationTimestamp: "2023-10-18T15:23:26Z"
+    name: user-settings-a47dfff1-70be-4036-b1be-1c54acdd4e69-rolebinding
+    namespace: openshift-console-user-settings
+    ownerReferences:
+    - apiVersion: user.openshift.io/v1
+      kind: User
+      name: ffernandeza@dt.gob.cl
+      uid: a47dfff1-70be-4036-b1be-1c54acdd4e69
+    resourceVersion: "138069181"
+    uid: 0e7da3af-debd-4327-b3e7-571d4eb358c9
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: Role
+    name: user-settings-a47dfff1-70be-4036-b1be-1c54acdd4e69-role
+  subjects:
+  - apiGroup: rbac.authorization.k8s.io
+    kind: User
+    name: ffernandeza@dt.gob.cl
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: RoleBinding
+  metadata:
+    creationTimestamp: "2024-07-30T16:26:28Z"
+    name: user-settings-b136ffdb-8aeb-4aa3-96ab-c41f99699f02-rolebinding
+    namespace: openshift-console-user-settings
+    ownerReferences:
+    - apiVersion: user.openshift.io/v1
+      kind: User
+      name: malcoceraTivit
+      uid: b136ffdb-8aeb-4aa3-96ab-c41f99699f02
+    resourceVersion: "488846139"
+    uid: 5a84047d-1da2-4ca8-9178-bb15b533d7dc
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: Role
+    name: user-settings-b136ffdb-8aeb-4aa3-96ab-c41f99699f02-role
+  subjects:
+  - apiGroup: rbac.authorization.k8s.io
+    kind: User
+    name: malcoceraTivit
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: RoleBinding
+  metadata:
+    creationTimestamp: "2023-07-17T15:53:13Z"
+    name: user-settings-b3a848be-d697-4e6b-940c-362db7c89dee-rolebinding
+    namespace: openshift-console-user-settings
+    ownerReferences:
+    - apiVersion: user.openshift.io/v1
+      kind: User
+      name: ealmuna@dt.gob.cl
+      uid: b3a848be-d697-4e6b-940c-362db7c89dee
+    resourceVersion: "56881421"
+    uid: 671de159-5330-434a-b6d7-0bd3d871e356
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: Role
+    name: user-settings-b3a848be-d697-4e6b-940c-362db7c89dee-role
+  subjects:
+  - apiGroup: rbac.authorization.k8s.io
+    kind: User
+    name: ealmuna@dt.gob.cl
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: RoleBinding
+  metadata:
+    creationTimestamp: "2024-07-30T16:27:26Z"
+    name: user-settings-c7082c44-3c84-415a-8ab0-3c2f43700f77-rolebinding
+    namespace: openshift-console-user-settings
+    ownerReferences:
+    - apiVersion: user.openshift.io/v1
+      kind: User
+      name: jalvaradoTivit
+      uid: c7082c44-3c84-415a-8ab0-3c2f43700f77
+    resourceVersion: "488847574"
+    uid: 959a91c3-c60e-44f6-a36e-b9a826017f02
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: Role
+    name: user-settings-c7082c44-3c84-415a-8ab0-3c2f43700f77-role
+  subjects:
+  - apiGroup: rbac.authorization.k8s.io
+    kind: User
+    name: jalvaradoTivit
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: RoleBinding
+  metadata:
+    creationTimestamp: "2023-11-11T15:42:31Z"
+    name: user-settings-d54ef80a-efcb-4a24-b3c1-6af8c624b2bf-rolebinding
+    namespace: openshift-console-user-settings
+    ownerReferences:
+    - apiVersion: user.openshift.io/v1
+      kind: User
+      name: cbarriga
+      uid: d54ef80a-efcb-4a24-b3c1-6af8c624b2bf
+    resourceVersion: "158274353"
+    uid: 87d74c99-379d-4fcd-9848-a3cb95152056
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: Role
+    name: user-settings-d54ef80a-efcb-4a24-b3c1-6af8c624b2bf-role
+  subjects:
+  - apiGroup: rbac.authorization.k8s.io
+    kind: User
+    name: cbarriga
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: RoleBinding
+  metadata:
+    creationTimestamp: "2023-05-11T18:51:51Z"
+    name: user-settings-kubeadmin-rolebinding
+    namespace: openshift-console-user-settings
+    resourceVersion: "1619700"
+    uid: 4e735d71-839c-4d8c-bf98-de84fe385686
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: Role
+    name: user-settings-kubeadmin-role
+  subjects:
+  - apiGroup: rbac.authorization.k8s.io
+    kind: User
+    name: kube:admin
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

@@ -1,0 +1,1239 @@
+apiVersion: v1
+items:
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftWebConsole
+      openshift.io/migration-registry: 172.30.136.230:5000
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-18T20:33:48Z"
+    generation: 1
+    labels:
+      app: api-integracion
+      migration.openshift.io/migrated-by-migmigration: 6ff14eb9-893c-41c2-b14c-e7a903b73093
+      migration.openshift.io/migrated-by-migplan: 00366fb0-8e8e-4301-948a-980b177c294d
+      velero.io/backup-name: migration-6bbf3-initial-4mzmx
+      velero.io/restore-name: migration-6bbf3-final-zvlf7
+    name: api-integracion
+    namespace: denuncias-dev
+    resourceVersion: "6254098"
+    uid: bdecc31d-9dc4-4789-9667-81f9b7035c67
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: api-integracion:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      git:
+        ref: develop
+        uri: https://dirtrab.visualstudio.com/Denuncia%20Posterior%20Termino%20Contrato/_git/api-integracion-denuncias
+      sourceSecret:
+        name: vsts
+      type: Git
+    strategy:
+      sourceStrategy:
+        env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: Development
+        - name: DOTNET_STARTUP_PROJECT
+          value: Dt.DenunciaTerminoContrato.ApiDeIntegracion/Dt.DenunciaTerminoContrato.ApiDeIntegracion.csproj
+        from:
+          kind: ImageStreamTag
+          name: dotnet:2.1
+          namespace: openshift
+      type: Source
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - generic:
+        secret: 0b058284cbf67ca2
+      type: Generic
+    - github:
+        secret: c79237abc3326d69
+      type: GitHub
+    - imageChange:
+        lastTriggeredImageID: docker-registry.default.svc:5000/openshift/dotnet@sha256:c3aa4f3fa47b8f172a311aeebce45a091f6689dbf5aebf7e4c7ffa1c5c418a81
+      type: ImageChange
+    - type: ConfigChange
+  status:
+    lastVersion: 0
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftWebConsole
+      openshift.io/migration-registry: 172.30.136.230:5000
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-18T20:33:48Z"
+    generation: 1
+    labels:
+      app: api-integracion-prod
+      migration.openshift.io/migrated-by-migmigration: 6ff14eb9-893c-41c2-b14c-e7a903b73093
+      migration.openshift.io/migrated-by-migplan: 00366fb0-8e8e-4301-948a-980b177c294d
+      velero.io/backup-name: migration-6bbf3-initial-4mzmx
+      velero.io/restore-name: migration-6bbf3-final-zvlf7
+    name: api-integracion-prod
+    namespace: denuncias-dev
+    resourceVersion: "6254090"
+    uid: 60583107-21a8-43e0-902e-dc984ecd6b66
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: api-integracion-prod:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      git:
+        ref: master
+        uri: https://dirtrab.visualstudio.com/Denuncia%20Posterior%20Termino%20Contrato/_git/api-integracion-denuncias
+      sourceSecret:
+        name: vsts
+      type: Git
+    strategy:
+      sourceStrategy:
+        env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: Production
+        - name: DOTNET_STARTUP_PROJECT
+          value: Dt.DenunciaTerminoContrato.ApiDeIntegracion/Dt.DenunciaTerminoContrato.ApiDeIntegracion.csproj
+        from:
+          kind: ImageStreamTag
+          name: dotnet:2.1
+          namespace: openshift
+      type: Source
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - generic:
+        secret: b5042107aedb2655
+      type: Generic
+    - github:
+        secret: f0d6d4533c5653b7
+      type: GitHub
+    - imageChange:
+        lastTriggeredImageID: docker-registry.default.svc:5000/openshift/dotnet@sha256:c3aa4f3fa47b8f172a311aeebce45a091f6689dbf5aebf7e4c7ffa1c5c418a81
+      type: ImageChange
+    - type: ConfigChange
+  status:
+    lastVersion: 0
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftWebConsole
+      openshift.io/migration-registry: 172.30.136.230:5000
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-18T20:33:48Z"
+    generation: 1
+    labels:
+      app: api-integracion-qa
+      migration.openshift.io/migrated-by-migmigration: 6ff14eb9-893c-41c2-b14c-e7a903b73093
+      migration.openshift.io/migrated-by-migplan: 00366fb0-8e8e-4301-948a-980b177c294d
+      velero.io/backup-name: migration-6bbf3-initial-4mzmx
+      velero.io/restore-name: migration-6bbf3-final-zvlf7
+    name: api-integracion-qa
+    namespace: denuncias-dev
+    resourceVersion: "6254092"
+    uid: 77c7ccd5-1ba1-41af-a554-31cb94e1aed8
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: api-integracion-qa:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      git:
+        ref: develop
+        uri: https://dirtrab.visualstudio.com/Denuncia%20Posterior%20Termino%20Contrato/_git/api-integracion-denuncias
+      sourceSecret:
+        name: vsts
+      type: Git
+    strategy:
+      sourceStrategy:
+        env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: Qa
+        - name: DOTNET_STARTUP_PROJECT
+          value: Dt.DenunciaTerminoContrato.ApiDeIntegracion/Dt.DenunciaTerminoContrato.ApiDeIntegracion.csproj
+        from:
+          kind: ImageStreamTag
+          name: dotnet:2.1
+          namespace: openshift
+      type: Source
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - generic:
+        secret: c7372044ab6f9859
+      type: Generic
+    - github:
+        secret: 6c4b1fdff42ee017
+      type: GitHub
+    - imageChange:
+        lastTriggeredImageID: docker-registry.default.svc:5000/openshift/dotnet@sha256:c3aa4f3fa47b8f172a311aeebce45a091f6689dbf5aebf7e4c7ffa1c5c418a81
+      type: ImageChange
+    - type: ConfigChange
+  status:
+    lastVersion: 0
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftWebConsole
+      openshift.io/migration-registry: 172.30.136.230:5000
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-18T20:33:48Z"
+    generation: 2
+    labels:
+      app: dptc-cron001-report-prod
+      migration.openshift.io/migrated-by-migmigration: 6ff14eb9-893c-41c2-b14c-e7a903b73093
+      migration.openshift.io/migrated-by-migplan: 00366fb0-8e8e-4301-948a-980b177c294d
+      velero.io/backup-name: migration-6bbf3-initial-4mzmx
+      velero.io/restore-name: migration-6bbf3-final-zvlf7
+    name: dptc-cron001-report-prod
+    namespace: denuncias-dev
+    resourceVersion: "95923079"
+    uid: 2424fcd4-5973-467f-8ee2-014ff7f5b7fb
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: dptc-cron001-report-prod:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      git:
+        ref: master
+        uri: https://dirtrab.visualstudio.com/Denuncia%20Posterior%20Termino%20Contrato/_git/dptc-cron001-reportes
+      sourceSecret:
+        name: vsts
+      type: Git
+    strategy:
+      sourceStrategy:
+        from:
+          kind: ImageStreamTag
+          name: nodejs:10
+          namespace: openshift
+      type: Source
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - generic:
+        secret: 5b523f375600a1a0
+      type: Generic
+    - github:
+        secret: 6b6386fddc1aa2ea
+      type: GitHub
+    - imageChange:
+        lastTriggeredImageID: docker-registry.default.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+      type: ImageChange
+    - type: ConfigChange
+  status:
+    imageChangeTriggers:
+    - from:
+        name: nodejs:10
+        namespace: openshift
+      lastTriggerTime: "2023-09-01T01:10:32Z"
+      lastTriggeredImageID: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+    lastVersion: 1
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftWebConsole
+      openshift.io/migration-registry: 172.30.136.230:5000
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-18T20:33:48Z"
+    generation: 2
+    labels:
+      app: dptc-cron001-reportes
+      migration.openshift.io/migrated-by-migmigration: 6ff14eb9-893c-41c2-b14c-e7a903b73093
+      migration.openshift.io/migrated-by-migplan: 00366fb0-8e8e-4301-948a-980b177c294d
+      velero.io/backup-name: migration-6bbf3-initial-4mzmx
+      velero.io/restore-name: migration-6bbf3-final-zvlf7
+    name: dptc-cron001-reportes
+    namespace: denuncias-dev
+    resourceVersion: "95923027"
+    uid: 78206f43-bc59-4027-979b-0fa2342c6840
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: dptc-cron001-reportes:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      git:
+        ref: develop
+        uri: https://dirtrab.visualstudio.com/Denuncia%20Posterior%20Termino%20Contrato/_git/dptc-cron001-reportes
+      sourceSecret:
+        name: vsts
+      type: Git
+    strategy:
+      sourceStrategy:
+        from:
+          kind: ImageStreamTag
+          name: nodejs:10
+          namespace: openshift
+      type: Source
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - generic:
+        secret: 3b8b3fc193a0b3bc
+      type: Generic
+    - github:
+        secret: b71af7029860c229
+      type: GitHub
+    - imageChange:
+        lastTriggeredImageID: docker-registry.default.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+      type: ImageChange
+    - type: ConfigChange
+  status:
+    imageChangeTriggers:
+    - from:
+        name: nodejs:10
+        namespace: openshift
+      lastTriggerTime: "2023-09-01T01:10:32Z"
+      lastTriggeredImageID: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+    lastVersion: 1
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftWebConsole
+      openshift.io/migration-registry: 172.30.136.230:5000
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-18T20:33:48Z"
+    generation: 2
+    labels:
+      app: dptc-cron001-reportes-qa
+      migration.openshift.io/migrated-by-migmigration: 6ff14eb9-893c-41c2-b14c-e7a903b73093
+      migration.openshift.io/migrated-by-migplan: 00366fb0-8e8e-4301-948a-980b177c294d
+      velero.io/backup-name: migration-6bbf3-initial-4mzmx
+      velero.io/restore-name: migration-6bbf3-final-zvlf7
+    name: dptc-cron001-reportes-qa
+    namespace: denuncias-dev
+    resourceVersion: "95923134"
+    uid: 476f9fe8-af78-4b1c-8e3f-a6308ef5f3f0
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: dptc-cron001-reportes-qa:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      git:
+        ref: develop
+        uri: https://dirtrab.visualstudio.com/Denuncia%20Posterior%20Termino%20Contrato/_git/dptc-cron001-reportes
+      sourceSecret:
+        name: vsts
+      type: Git
+    strategy:
+      sourceStrategy:
+        from:
+          kind: ImageStreamTag
+          name: nodejs:10
+          namespace: openshift
+      type: Source
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - generic:
+        secret: 462af8d1e09f9db2
+      type: Generic
+    - github:
+        secret: 3a3390460a765a2a
+      type: GitHub
+    - imageChange:
+        lastTriggeredImageID: docker-registry.default.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+      type: ImageChange
+    - type: ConfigChange
+  status:
+    imageChangeTriggers:
+    - from:
+        name: nodejs:10
+        namespace: openshift
+      lastTriggerTime: "2023-09-01T01:10:32Z"
+      lastTriggeredImageID: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+    lastVersion: 1
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftWebConsole
+      openshift.io/migration-registry: 172.30.136.230:5000
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-18T20:33:48Z"
+    generation: 2
+    labels:
+      app: dptc-serv001-den-prod
+      migration.openshift.io/migrated-by-migmigration: 6ff14eb9-893c-41c2-b14c-e7a903b73093
+      migration.openshift.io/migrated-by-migplan: 00366fb0-8e8e-4301-948a-980b177c294d
+      velero.io/backup-name: migration-6bbf3-initial-4mzmx
+      velero.io/restore-name: migration-6bbf3-final-zvlf7
+    name: dptc-serv001-den-prod
+    namespace: denuncias-dev
+    resourceVersion: "95923160"
+    uid: 09f9a2a5-2a78-45ae-8f52-4b7f1c23297c
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: dptc-serv001-den-prod:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      git:
+        ref: master
+        uri: https://dirtrab.visualstudio.com/Denuncia%20Posterior%20Termino%20Contrato/_git/dptc-serv001-denuncia
+      sourceSecret:
+        name: vsts
+      type: Git
+    strategy:
+      sourceStrategy:
+        from:
+          kind: ImageStreamTag
+          name: nodejs:10
+          namespace: openshift
+      type: Source
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - generic:
+        secret: c67986165ee23c83
+      type: Generic
+    - github:
+        secret: ba6f4ed585ea5f77
+      type: GitHub
+    - imageChange:
+        lastTriggeredImageID: docker-registry.default.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+      type: ImageChange
+    - type: ConfigChange
+  status:
+    imageChangeTriggers:
+    - from:
+        name: nodejs:10
+        namespace: openshift
+      lastTriggerTime: "2023-09-01T01:10:33Z"
+      lastTriggeredImageID: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+    lastVersion: 1
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftWebConsole
+      openshift.io/migration-registry: 172.30.136.230:5000
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-18T20:33:48Z"
+    generation: 2
+    labels:
+      app: dptc-serv001-denuncia
+      migration.openshift.io/migrated-by-migmigration: 6ff14eb9-893c-41c2-b14c-e7a903b73093
+      migration.openshift.io/migrated-by-migplan: 00366fb0-8e8e-4301-948a-980b177c294d
+      velero.io/backup-name: migration-6bbf3-initial-4mzmx
+      velero.io/restore-name: migration-6bbf3-final-zvlf7
+    name: dptc-serv001-denuncia
+    namespace: denuncias-dev
+    resourceVersion: "95923198"
+    uid: 1e4c9008-cd3f-4948-80bd-6302bdf2b3df
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: dptc-serv001-denuncia:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      git:
+        ref: develop
+        uri: https://dirtrab.visualstudio.com/Denuncia%20Posterior%20Termino%20Contrato/_git/dptc-serv001-denuncia
+      sourceSecret:
+        name: vsts
+      type: Git
+    strategy:
+      sourceStrategy:
+        from:
+          kind: ImageStreamTag
+          name: nodejs:10
+          namespace: openshift
+      type: Source
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - imageChange:
+        lastTriggeredImageID: docker-registry.default.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+      type: ImageChange
+    - type: ConfigChange
+    - generic:
+        secret: 91c3223d8fc11fc3
+      type: Generic
+    - github:
+        secret: 0a99b3f5e2d910cb
+      type: GitHub
+  status:
+    imageChangeTriggers:
+    - from:
+        name: nodejs:10
+        namespace: openshift
+      lastTriggerTime: "2023-09-01T01:10:33Z"
+      lastTriggeredImageID: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+    lastVersion: 1
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftWebConsole
+      openshift.io/migration-registry: 172.30.136.230:5000
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-18T20:33:48Z"
+    generation: 2
+    labels:
+      app: dptc-serv001-denuncia-qa
+      migration.openshift.io/migrated-by-migmigration: 6ff14eb9-893c-41c2-b14c-e7a903b73093
+      migration.openshift.io/migrated-by-migplan: 00366fb0-8e8e-4301-948a-980b177c294d
+      velero.io/backup-name: migration-6bbf3-initial-4mzmx
+      velero.io/restore-name: migration-6bbf3-final-zvlf7
+    name: dptc-serv001-denuncia-qa
+    namespace: denuncias-dev
+    resourceVersion: "95922944"
+    uid: 514acd07-0460-4f36-853a-bc737d1a564f
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: dptc-serv001-denuncia-qa:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      git:
+        ref: develop
+        uri: https://dirtrab.visualstudio.com/Denuncia%20Posterior%20Termino%20Contrato/_git/dptc-serv001-denuncia
+      sourceSecret:
+        name: vsts
+      type: Git
+    strategy:
+      sourceStrategy:
+        from:
+          kind: ImageStreamTag
+          name: nodejs:10
+          namespace: openshift
+      type: Source
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - generic:
+        secret: a93af32670ee2940
+      type: Generic
+    - github:
+        secret: 57f7a7acf73616aa
+      type: GitHub
+    - imageChange:
+        lastTriggeredImageID: docker-registry.default.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+      type: ImageChange
+    - type: ConfigChange
+  status:
+    imageChangeTriggers:
+    - from:
+        name: nodejs:10
+        namespace: openshift
+      lastTriggerTime: "2023-09-01T01:10:32Z"
+      lastTriggeredImageID: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+    lastVersion: 1
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftWebConsole
+      openshift.io/migration-registry: 172.30.136.230:5000
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-18T20:33:48Z"
+    generation: 2
+    labels:
+      app: dptc-serv002-bff
+      migration.openshift.io/migrated-by-migmigration: 6ff14eb9-893c-41c2-b14c-e7a903b73093
+      migration.openshift.io/migrated-by-migplan: 00366fb0-8e8e-4301-948a-980b177c294d
+      velero.io/backup-name: migration-6bbf3-initial-4mzmx
+      velero.io/restore-name: migration-6bbf3-final-zvlf7
+    name: dptc-serv002-bff
+    namespace: denuncias-dev
+    resourceVersion: "95923145"
+    uid: 52de0c78-3be4-4823-8e99-9c6bab77e1ca
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: dptc-serv002-bff:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      git:
+        ref: develop
+        uri: https://dirtrab.visualstudio.com/Denuncia%20Posterior%20Termino%20Contrato/_git/dptc-serv002-bff
+      sourceSecret:
+        name: vsts
+      type: Git
+    strategy:
+      sourceStrategy:
+        from:
+          kind: ImageStreamTag
+          name: nodejs:10
+          namespace: openshift
+      type: Source
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - imageChange:
+        lastTriggeredImageID: docker-registry.default.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+      type: ImageChange
+    - type: ConfigChange
+    - generic:
+        secret: 2aceafec86fe198e
+      type: Generic
+    - github:
+        secret: dae38f73ae672930
+      type: GitHub
+  status:
+    imageChangeTriggers:
+    - from:
+        name: nodejs:10
+        namespace: openshift
+      lastTriggerTime: "2023-09-01T01:10:32Z"
+      lastTriggeredImageID: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+    lastVersion: 1
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftWebConsole
+      openshift.io/migration-registry: 172.30.136.230:5000
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-18T20:33:48Z"
+    generation: 2
+    labels:
+      app: dptc-serv002-bff-prod
+      migration.openshift.io/migrated-by-migmigration: 6ff14eb9-893c-41c2-b14c-e7a903b73093
+      migration.openshift.io/migrated-by-migplan: 00366fb0-8e8e-4301-948a-980b177c294d
+      velero.io/backup-name: migration-6bbf3-initial-4mzmx
+      velero.io/restore-name: migration-6bbf3-final-zvlf7
+    name: dptc-serv002-bff-prod
+    namespace: denuncias-dev
+    resourceVersion: "95923105"
+    uid: 7ace358e-0052-4d7b-9e10-32e9dbfbf811
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: dptc-serv002-bff-prod:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      git:
+        ref: master
+        uri: https://dirtrab.visualstudio.com/Denuncia%20Posterior%20Termino%20Contrato/_git/dptc-serv002-bff
+      sourceSecret:
+        name: vsts
+      type: Git
+    strategy:
+      sourceStrategy:
+        from:
+          kind: ImageStreamTag
+          name: nodejs:10
+          namespace: openshift
+      type: Source
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - generic:
+        secret: d4eeec8dbd166ef0
+      type: Generic
+    - github:
+        secret: 666f709476efa2d5
+      type: GitHub
+    - imageChange:
+        lastTriggeredImageID: docker-registry.default.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+      type: ImageChange
+    - type: ConfigChange
+  status:
+    imageChangeTriggers:
+    - from:
+        name: nodejs:10
+        namespace: openshift
+      lastTriggerTime: "2023-09-01T01:10:32Z"
+      lastTriggeredImageID: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+    lastVersion: 1
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftWebConsole
+      openshift.io/migration-registry: 172.30.136.230:5000
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-18T20:33:48Z"
+    generation: 2
+    labels:
+      app: dptc-serv002-bff-qa
+      migration.openshift.io/migrated-by-migmigration: 6ff14eb9-893c-41c2-b14c-e7a903b73093
+      migration.openshift.io/migrated-by-migplan: 00366fb0-8e8e-4301-948a-980b177c294d
+      velero.io/backup-name: migration-6bbf3-initial-4mzmx
+      velero.io/restore-name: migration-6bbf3-final-zvlf7
+    name: dptc-serv002-bff-qa
+    namespace: denuncias-dev
+    resourceVersion: "95923074"
+    uid: 1924bdbf-ca2f-4510-860d-ff9cbbe269de
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: dptc-serv002-bff-qa:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      git:
+        ref: develop
+        uri: https://dirtrab.visualstudio.com/Denuncia%20Posterior%20Termino%20Contrato/_git/dptc-serv002-bff
+      sourceSecret:
+        name: vsts
+      type: Git
+    strategy:
+      sourceStrategy:
+        from:
+          kind: ImageStreamTag
+          name: nodejs:10
+          namespace: openshift
+      type: Source
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - generic:
+        secret: e03d3d7547edeaf8
+      type: Generic
+    - github:
+        secret: 466710f895f9785b
+      type: GitHub
+    - imageChange:
+        lastTriggeredImageID: docker-registry.default.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+      type: ImageChange
+    - type: ConfigChange
+  status:
+    imageChangeTriggers:
+    - from:
+        name: nodejs:10
+        namespace: openshift
+      lastTriggerTime: "2023-09-01T01:10:32Z"
+      lastTriggeredImageID: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+    lastVersion: 1
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftWebConsole
+      openshift.io/migration-registry: 172.30.136.230:5000
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-18T20:33:49Z"
+    generation: 2
+    labels:
+      app: front001-denuncias
+      migration.openshift.io/migrated-by-migmigration: 6ff14eb9-893c-41c2-b14c-e7a903b73093
+      migration.openshift.io/migrated-by-migplan: 00366fb0-8e8e-4301-948a-980b177c294d
+      velero.io/backup-name: migration-6bbf3-initial-4mzmx
+      velero.io/restore-name: migration-6bbf3-final-zvlf7
+    name: front001-denuncias
+    namespace: denuncias-dev
+    resourceVersion: "95923180"
+    uid: 8704d00d-6f9f-41c0-b60a-dc75aab84973
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: front001-denuncias:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      git:
+        ref: develop
+        uri: https://dirtrab.visualstudio.com/Denuncia%20Posterior%20Termino%20Contrato/_git/front001-denuncias
+      sourceSecret:
+        name: vsts
+      type: Git
+    strategy:
+      sourceStrategy:
+        env:
+        - name: GENERATE_SOURCEMAP
+          value: "false"
+        - name: REACT_APP_DPTC_URL_METADATA
+          value: http://api-integracion-denuncias-dev.api-cloud.dirtrab.cl/api/metadata/formulario/full
+        - name: REACT_APP_DPTC_URL_TRABAJADOR
+          value: http://api-integracion-denuncias-dev.api-cloud.dirtrab.cl/api/metadata/personas/
+        - name: REACT_APP_DPTC_URL_EMPLEADOR
+          value: http://api-integracion-denuncias-dev.api-cloud.dirtrab.cl/api/metadata/empleadores
+        - name: REACT_APP_DPTC_URL_FORMULARIO
+          value: http://api-integracion-denuncias-dev.api-cloud.dirtrab.cl/api/form/denuncias/terminoContrato/personas/
+        - name: REACT_APP_VALIDA_TOKEN
+          value: http://proxy-portalinstitucional-dev.api.dirtrab.cl/api/Autenticacion/token/validar
+        - name: REACT_APP_REDIRECT
+          value: https://midt.dirtrab.cl/
+        - name: REACT_APP_VOLVER_REDIRECT
+          value: /trabajador/home
+        from:
+          kind: ImageStreamTag
+          name: nodejs:10
+          namespace: openshift
+      type: Source
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - generic:
+        secret: 09883f9c45e41494
+      type: Generic
+    - github:
+        secret: 4953dc0c82c37d5e
+      type: GitHub
+    - imageChange:
+        lastTriggeredImageID: docker-registry.default.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+      type: ImageChange
+    - type: ConfigChange
+  status:
+    imageChangeTriggers:
+    - from:
+        name: nodejs:10
+        namespace: openshift
+      lastTriggerTime: "2023-09-01T01:10:33Z"
+      lastTriggeredImageID: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+    lastVersion: 1
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftWebConsole
+      openshift.io/migration-registry: 172.30.136.230:5000
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-18T20:33:49Z"
+    generation: 2
+    labels:
+      app: front001-denuncias-prod
+      migration.openshift.io/migrated-by-migmigration: 6ff14eb9-893c-41c2-b14c-e7a903b73093
+      migration.openshift.io/migrated-by-migplan: 00366fb0-8e8e-4301-948a-980b177c294d
+      velero.io/backup-name: migration-6bbf3-initial-4mzmx
+      velero.io/restore-name: migration-6bbf3-final-zvlf7
+    name: front001-denuncias-prod
+    namespace: denuncias-dev
+    resourceVersion: "95923165"
+    uid: aa8bcf5f-2381-4d97-bbf1-e33fa5e9a156
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: front001-denuncias-prod:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      git:
+        ref: master
+        uri: https://dirtrab.visualstudio.com/Denuncia%20Posterior%20Termino%20Contrato/_git/front001-denuncias
+      sourceSecret:
+        name: vsts
+      type: Git
+    strategy:
+      sourceStrategy:
+        env:
+        - name: GENERATE_SOURCEMAP
+          value: "false"
+        - name: REACT_APP_DPTC_URL_METADATA
+          value: https://api-integracion-denuncias.api-cloud.dirtrab.cl/api/metadata/formulario/full
+        - name: REACT_APP_DPTC_URL_TRABAJADOR
+          value: https://api-integracion-denuncias.api-cloud.dirtrab.cl/api/metadata/personas/
+        - name: REACT_APP_DPTC_URL_EMPLEADOR
+          value: https://api-integracion-denuncias.api-cloud.dirtrab.cl/api/metadata/empleadores
+        - name: REACT_APP_DPTC_URL_FORMULARIO
+          value: https://api-integracion-denuncias.api-cloud.dirtrab.cl/api/form/denuncias/terminoContrato/personas/
+        - name: REACT_APP_VALIDA_TOKEN
+          value: https://proxy-portalinstitucional.api.dirtrab.cl/api/Autenticacion/token/validar
+        - name: REACT_APP_REDIRECT
+          value: https://midt.dirtrab.cl/
+        - name: REACT_APP_VOLVER_REDIRECT
+          value: /trabajador/home
+        from:
+          kind: ImageStreamTag
+          name: nodejs:10
+          namespace: openshift
+      type: Source
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - generic:
+        secret: 8739363b59a01deb
+      type: Generic
+    - github:
+        secret: 2dc9f5bd5234f9e6
+      type: GitHub
+    - imageChange:
+        lastTriggeredImageID: docker-registry.default.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+      type: ImageChange
+    - type: ConfigChange
+  status:
+    imageChangeTriggers:
+    - from:
+        name: nodejs:10
+        namespace: openshift
+      lastTriggerTime: "2023-09-01T01:10:33Z"
+      lastTriggeredImageID: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+    lastVersion: 1
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftWebConsole
+      openshift.io/migration-registry: 172.30.136.230:5000
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-18T20:33:49Z"
+    generation: 2
+    labels:
+      app: front001-denuncias-qa
+      migration.openshift.io/migrated-by-migmigration: 6ff14eb9-893c-41c2-b14c-e7a903b73093
+      migration.openshift.io/migrated-by-migplan: 00366fb0-8e8e-4301-948a-980b177c294d
+      velero.io/backup-name: migration-6bbf3-initial-4mzmx
+      velero.io/restore-name: migration-6bbf3-final-zvlf7
+    name: front001-denuncias-qa
+    namespace: denuncias-dev
+    resourceVersion: "95923121"
+    uid: 904bb5d6-2454-4f8b-96aa-a4ae7ff44d54
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: front001-denuncias-qa:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      git:
+        ref: develop
+        uri: https://dirtrab.visualstudio.com/Denuncia%20Posterior%20Termino%20Contrato/_git/front001-denuncias
+      sourceSecret:
+        name: vsts
+      type: Git
+    strategy:
+      sourceStrategy:
+        env:
+        - name: GENERATE_SOURCEMAP
+          value: "false"
+        - name: REACT_APP_DPTC_URL_METADATA
+          value: http://api-integracion-denuncias-qa.api-cloud.dirtrab.cl/api/metadata/formulario/full
+        - name: REACT_APP_DPTC_URL_TRABAJADOR
+          value: http://api-integracion-denuncias-qa.api-cloud.dirtrab.cl/api/metadata/personas/
+        - name: REACT_APP_DPTC_URL_EMPLEADOR
+          value: http://api-integracion-denuncias-qa.api-cloud.dirtrab.cl/api/metadata/empleadores
+        - name: REACT_APP_DPTC_URL_FORMULARIO
+          value: http://api-integracion-denuncias-qa.api-cloud.dirtrab.cl/api/form/denuncias/terminoContrato/personas/
+        - name: REACT_APP_VALIDA_TOKEN
+          value: http://proxy-portalinstitucional-dev.api.dirtrab.cl/api/Autenticacion/token/validar
+        - name: REACT_APP_REDIRECT
+          value: https://midt.dirtrab.cl/
+        - name: REACT_APP_VOLVER_REDIRECT
+          value: /trabajador/home
+        from:
+          kind: ImageStreamTag
+          name: nodejs:10
+          namespace: openshift
+      type: Source
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - generic:
+        secret: 39368f90b38481db
+      type: Generic
+    - github:
+        secret: 767c264aa3067e0a
+      type: GitHub
+    - imageChange:
+        lastTriggeredImageID: docker-registry.default.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+      type: ImageChange
+    - type: ConfigChange
+  status:
+    imageChangeTriggers:
+    - from:
+        name: nodejs:10
+        namespace: openshift
+      lastTriggerTime: "2023-09-01T01:10:32Z"
+      lastTriggeredImageID: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+    lastVersion: 1
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftWebConsole
+      openshift.io/migration-registry: 172.30.136.230:5000
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-18T20:33:49Z"
+    generation: 1
+    labels:
+      app: proxy001-serv-ext-prod
+      migration.openshift.io/migrated-by-migmigration: 6ff14eb9-893c-41c2-b14c-e7a903b73093
+      migration.openshift.io/migrated-by-migplan: 00366fb0-8e8e-4301-948a-980b177c294d
+      velero.io/backup-name: migration-6bbf3-initial-4mzmx
+      velero.io/restore-name: migration-6bbf3-final-zvlf7
+    name: proxy001-serv-ext-prod
+    namespace: denuncias-dev
+    resourceVersion: "6254170"
+    uid: 453fed69-0677-491e-b6a0-6aec3bbe6286
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: proxy001-serv-ext-prod:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      git:
+        ref: master
+        uri: https://dirtrab.visualstudio.com/Denuncia%20Posterior%20Termino%20Contrato/_git/prox001-servicios-externos
+      sourceSecret:
+        name: vsts
+      type: Git
+    strategy:
+      sourceStrategy:
+        env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: Production
+        - name: DOTNET_STARTUP_PROJECT
+          value: Dt.DenunciaTerminoContrato.Proxy001/Dt.DenunciaTerminoContrato.Proxy001.csproj
+        from:
+          kind: ImageStreamTag
+          name: dotnet:2.1
+          namespace: openshift
+      type: Source
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - generic:
+        secret: b122c9cccf9acd72
+      type: Generic
+    - github:
+        secret: 912be45ffc18bde2
+      type: GitHub
+    - imageChange:
+        lastTriggeredImageID: docker-registry.default.svc:5000/openshift/dotnet@sha256:c3aa4f3fa47b8f172a311aeebce45a091f6689dbf5aebf7e4c7ffa1c5c418a81
+      type: ImageChange
+    - type: ConfigChange
+  status:
+    lastVersion: 0
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftWebConsole
+      openshift.io/migration-registry: 172.30.136.230:5000
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-18T20:33:49Z"
+    generation: 1
+    labels:
+      app: proxy001-serv-ext-qa
+      migration.openshift.io/migrated-by-migmigration: 6ff14eb9-893c-41c2-b14c-e7a903b73093
+      migration.openshift.io/migrated-by-migplan: 00366fb0-8e8e-4301-948a-980b177c294d
+      velero.io/backup-name: migration-6bbf3-initial-4mzmx
+      velero.io/restore-name: migration-6bbf3-final-zvlf7
+    name: proxy001-serv-ext-qa
+    namespace: denuncias-dev
+    resourceVersion: "6254177"
+    uid: 599c248b-e73e-4c25-976f-177dddf3139d
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: proxy001-serv-ext-qa:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      git:
+        ref: develop
+        uri: https://dirtrab.visualstudio.com/Denuncia%20Posterior%20Termino%20Contrato/_git/prox001-servicios-externos
+      sourceSecret:
+        name: vsts
+      type: Git
+    strategy:
+      sourceStrategy:
+        env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: Qa
+        - name: DOTNET_STARTUP_PROJECT
+          value: Dt.DenunciaTerminoContrato.Proxy001/Dt.DenunciaTerminoContrato.Proxy001.csproj
+        from:
+          kind: ImageStreamTag
+          name: dotnet:2.1
+          namespace: openshift
+      type: Source
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - generic:
+        secret: 268bc1435e2fd028
+      type: Generic
+    - github:
+        secret: 34ddef5eda1b3d5d
+      type: GitHub
+    - imageChange:
+        lastTriggeredImageID: docker-registry.default.svc:5000/openshift/dotnet@sha256:c3aa4f3fa47b8f172a311aeebce45a091f6689dbf5aebf7e4c7ffa1c5c418a81
+      type: ImageChange
+    - type: ConfigChange
+  status:
+    lastVersion: 0
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftWebConsole
+      openshift.io/migration-registry: 172.30.136.230:5000
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-18T20:33:49Z"
+    generation: 1
+    labels:
+      app: proxy001-serv-externos
+      migration.openshift.io/migrated-by-migmigration: 6ff14eb9-893c-41c2-b14c-e7a903b73093
+      migration.openshift.io/migrated-by-migplan: 00366fb0-8e8e-4301-948a-980b177c294d
+      velero.io/backup-name: migration-6bbf3-initial-4mzmx
+      velero.io/restore-name: migration-6bbf3-final-zvlf7
+    name: proxy001-serv-externos
+    namespace: denuncias-dev
+    resourceVersion: "6254188"
+    uid: 0941973e-272e-4cb0-ac31-896de067b917
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: proxy001-serv-externos:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      git:
+        ref: develop
+        uri: https://dirtrab.visualstudio.com/Denuncia%20Posterior%20Termino%20Contrato/_git/prox001-servicios-externos
+      sourceSecret:
+        name: vsts
+      type: Git
+    strategy:
+      sourceStrategy:
+        env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: Development
+        - name: DOTNET_STARTUP_PROJECT
+          value: Dt.DenunciaTerminoContrato.Proxy001/Dt.DenunciaTerminoContrato.Proxy001.csproj
+        from:
+          kind: ImageStreamTag
+          name: dotnet:2.1
+          namespace: openshift
+      type: Source
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - generic:
+        secret: 271a9fb088740bc5
+      type: Generic
+    - github:
+        secret: 97ea3288740cb291
+      type: GitHub
+    - imageChange:
+        lastTriggeredImageID: docker-registry.default.svc:5000/openshift/dotnet@sha256:c3aa4f3fa47b8f172a311aeebce45a091f6689dbf5aebf7e4c7ffa1c5c418a81
+      type: ImageChange
+    - type: ConfigChange
+  status:
+    lastVersion: 0
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

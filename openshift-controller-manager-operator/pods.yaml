@@ -1,0 +1,215 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.130.0.10"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.130.0.10"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/scc: anyuid
+    creationTimestamp: "2023-05-04T21:35:53Z"
+    generateName: openshift-controller-manager-operator-cf7df976c-
+    labels:
+      app: openshift-controller-manager-operator
+      pod-template-hash: cf7df976c
+    name: openshift-controller-manager-operator-cf7df976c-56rms
+    namespace: openshift-controller-manager-operator
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: openshift-controller-manager-operator-cf7df976c
+      uid: b640dc54-5550-47f7-a381-da1d718fcdd1
+    resourceVersion: "369060402"
+    uid: eac6036a-6d4e-45cb-b317-7c77f91c7b44
+  spec:
+    containers:
+    - args:
+      - --config=/var/run/configmaps/config/config.yaml
+      - -v=4
+      command:
+      - cluster-openshift-controller-manager-operator
+      - operator
+      env:
+      - name: RELEASE_VERSION
+        value: 4.10.53
+      - name: IMAGE
+        value: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:91a53833b4bd4cbad006cd0b249dc31784d00d342a209b192c63e08f86b99630
+      - name: POD_NAME
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: metadata.name
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:a48a14532349e47faa378faf565004dade3c6d4cc5544c09ffafaa0db5d159b2
+      imagePullPolicy: IfNotPresent
+      name: openshift-controller-manager-operator
+      ports:
+      - containerPort: 8443
+        name: metrics
+        protocol: TCP
+      resources:
+        requests:
+          cpu: 10m
+          memory: 50Mi
+      securityContext:
+        capabilities:
+          drop:
+          - MKNOD
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: FallbackToLogsOnError
+      volumeMounts:
+      - mountPath: /var/run/configmaps/config
+        name: config
+      - mountPath: /var/run/secrets/serving-cert
+        name: serving-cert
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-2vp4j
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    nodeName: ocp4azu-sj2sl-master-1
+    nodeSelector:
+      node-role.kubernetes.io/master: ""
+    preemptionPolicy: PreemptLowerPriority
+    priority: 2000000000
+    priorityClassName: system-cluster-critical
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      seLinuxOptions:
+        level: s0:c14,c9
+    serviceAccount: openshift-controller-manager-operator
+    serviceAccountName: openshift-controller-manager-operator
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/master
+      operator: Exists
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 120
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 120
+    - effect: NoSchedule
+      key: node.kubernetes.io/memory-pressure
+      operator: Exists
+    volumes:
+    - name: serving-cert
+      secret:
+        defaultMode: 400
+        optional: true
+        secretName: openshift-controller-manager-operator-serving-cert
+    - configMap:
+        defaultMode: 440
+        name: openshift-controller-manager-operator-config
+      name: config
+    - name: kube-api-access-2vp4j
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-04T21:40:05Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2024-06-02T21:41:44Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2024-06-02T21:41:44Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-04T21:40:05Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://39524cd9172241defd96920632bc8f39de56081298729499e589eab94a5d31ea
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:a48a14532349e47faa378faf565004dade3c6d4cc5544c09ffafaa0db5d159b2
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:a48a14532349e47faa378faf565004dade3c6d4cc5544c09ffafaa0db5d159b2
+      lastState:
+        terminated:
+          containerID: cri-o://cc8506a9bd77f1a570ad876f80692e4969cdb52010fa838959ccbfc6f0f1ea24
+          exitCode: 1
+          finishedAt: "2024-06-02T21:41:43Z"
+          message: |
+            ector.go:167
+            I0602 21:41:43.029262       1 reflector.go:225] Stopping reflector *v1.ConfigMap (10m0s) from k8s.io/client-go@v0.23.0/tools/cache/reflector.go:167
+            I0602 21:41:43.028949       1 genericapiserver.go:460] "[graceful-termination] shutdown event" name="InFlightRequestsDrained"
+            I0602 21:41:43.028970       1 object_count_tracker.go:84] "StorageObjectCountTracker pruner is exiting"
+            I0602 21:41:43.028969       1 reflector.go:225] Stopping reflector *v1.ServiceAccount (10m0s) from k8s.io/client-go@v0.23.0/tools/cache/reflector.go:167
+            I0602 21:41:43.028971       1 base_controller.go:167] Shutting down ConfigObserver ...
+            I0602 21:41:43.028826       1 reflector.go:225] Stopping reflector *v1.ConfigMap (10m0s) from k8s.io/client-go@v0.23.0/tools/cache/reflector.go:167
+            I0602 21:41:43.029333       1 reflector.go:225] Stopping reflector *v1.ClusterOperator (10m0s) from k8s.io/client-go@v0.23.0/tools/cache/reflector.go:167
+            I0602 21:41:43.029374       1 reflector.go:225] Stopping reflector *v1.Service (10m0s) from k8s.io/client-go@v0.23.0/tools/cache/reflector.go:167
+            I0602 21:41:43.029424       1 reflector.go:225] Stopping reflector *v1.Image (10m0s) from k8s.io/client-go@v0.23.0/tools/cache/reflector.go:167
+            I0602 21:41:43.028981       1 base_controller.go:167] Shutting down UserCAObservationController ...
+            I0602 21:41:43.028989       1 operator.go:115] Shutting down OpenShiftControllerManagerOperator
+            I0602 21:41:43.029003       1 base_controller.go:114] Shutting down worker of ConfigObserver controller ...
+            I0602 21:41:43.029491       1 base_controller.go:104] All ConfigObserver workers have been terminated
+            I0602 21:41:43.029503       1 reflector.go:225] Stopping reflector *v1.ClusterRoleBinding (10m0s) from k8s.io/client-go@v0.23.0/tools/cache/reflector.go:167
+            I0602 21:41:43.029525       1 reflector.go:225] Stopping reflector *v1.ConfigMap (10m0s) from k8s.io/client-go@v0.23.0/tools/cache/reflector.go:167
+            W0602 21:41:43.029007       1 builder.go:106] graceful termination failed, controllers failed with error: stopped
+          reason: Error
+          startedAt: "2023-05-11T18:26:27Z"
+      name: openshift-controller-manager-operator
+      ready: true
+      restartCount: 5
+      started: true
+      state:
+        running:
+          startedAt: "2024-06-02T21:41:43Z"
+    hostIP: 10.80.80.8
+    phase: Running
+    podIP: 10.130.0.10
+    podIPs:
+    - ip: 10.130.0.10
+    qosClass: Burstable
+    startTime: "2023-05-04T21:40:05Z"
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

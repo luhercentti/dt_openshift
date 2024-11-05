@@ -1,0 +1,253 @@
+apiVersion: v1
+items:
+- apiVersion: authorization.openshift.io/v1
+  kind: Role
+  metadata:
+    annotations:
+      include.release.openshift.io/self-managed-high-availability: "true"
+      include.release.openshift.io/single-node-developer: "true"
+    creationTimestamp: "2023-05-04T21:36:07Z"
+    name: cluster-cloud-controller-manager
+    namespace: openshift-config-managed
+    ownerReferences:
+    - apiVersion: config.openshift.io/v1
+      kind: ClusterVersion
+      name: version
+      uid: 5d92b52f-9fff-4a6e-b815-398b934115ad
+    resourceVersion: "1878"
+    uid: 3ad93b07-35f9-4d6e-8b25-1a8aaa60ab86
+  rules:
+  - apiGroups:
+    - ""
+    attributeRestrictions: null
+    resources:
+    - configmaps
+    verbs:
+    - get
+    - list
+    - watch
+- apiVersion: authorization.openshift.io/v1
+  kind: Role
+  metadata:
+    annotations:
+      include.release.openshift.io/ibm-cloud-managed: "true"
+      include.release.openshift.io/self-managed-high-availability: "true"
+      include.release.openshift.io/single-node-developer: "true"
+    creationTimestamp: "2023-05-04T21:53:20Z"
+    name: console-configmap-reader
+    namespace: openshift-config-managed
+    ownerReferences:
+    - apiVersion: config.openshift.io/v1
+      kind: ClusterVersion
+      name: version
+      uid: 5d92b52f-9fff-4a6e-b815-398b934115ad
+    resourceVersion: "25698"
+    uid: 1b78b143-48e9-40ea-b3ac-987fff888ff6
+  rules:
+  - apiGroups:
+    - ""
+    attributeRestrictions: null
+    resources:
+    - configmaps
+    verbs:
+    - get
+    - list
+    - watch
+- apiVersion: authorization.openshift.io/v1
+  kind: Role
+  metadata:
+    annotations:
+      include.release.openshift.io/ibm-cloud-managed: "true"
+      include.release.openshift.io/self-managed-high-availability: "true"
+      include.release.openshift.io/single-node-developer: "true"
+    creationTimestamp: "2023-05-04T21:53:20Z"
+    name: console-operator
+    namespace: openshift-config-managed
+    ownerReferences:
+    - apiVersion: config.openshift.io/v1
+      kind: ClusterVersion
+      name: version
+      uid: 5d92b52f-9fff-4a6e-b815-398b934115ad
+    resourceVersion: "25674"
+    uid: 2e101d22-e033-43f2-9692-b08aaf2c29b1
+  rules:
+  - apiGroups:
+    - ""
+    attributeRestrictions: null
+    resources:
+    - configmaps
+    verbs:
+    - create
+    - get
+    - list
+    - watch
+  - apiGroups:
+    - ""
+    attributeRestrictions: null
+    resourceNames:
+    - console-public
+    resources:
+    - configmaps
+    verbs:
+    - update
+- apiVersion: authorization.openshift.io/v1
+  kind: Role
+  metadata:
+    annotations:
+      include.release.openshift.io/ibm-cloud-managed: "true"
+      include.release.openshift.io/self-managed-high-availability: "true"
+      include.release.openshift.io/single-node-developer: "true"
+    creationTimestamp: "2023-05-04T21:53:20Z"
+    name: console-public
+    namespace: openshift-config-managed
+    ownerReferences:
+    - apiVersion: config.openshift.io/v1
+      kind: ClusterVersion
+      name: version
+      uid: 5d92b52f-9fff-4a6e-b815-398b934115ad
+    resourceVersion: "25687"
+    uid: fe02870e-0012-41d2-8cf0-389ba2b5fc02
+  rules:
+  - apiGroups:
+    - ""
+    attributeRestrictions: null
+    resourceNames:
+    - console-public
+    resources:
+    - configmaps
+    verbs:
+    - get
+- apiVersion: authorization.openshift.io/v1
+  kind: Role
+  metadata:
+    annotations:
+      include.release.openshift.io/ibm-cloud-managed: "true"
+      include.release.openshift.io/self-managed-high-availability: "true"
+      include.release.openshift.io/single-node-developer: "true"
+    creationTimestamp: "2023-05-04T21:36:13Z"
+    name: insights-operator-etc-pki-entitlement
+    namespace: openshift-config-managed
+    ownerReferences:
+    - apiVersion: config.openshift.io/v1
+      kind: ClusterVersion
+      name: version
+      uid: 5d92b52f-9fff-4a6e-b815-398b934115ad
+    resourceVersion: "2084"
+    uid: 12d44225-5219-46e0-bd8f-154b78f56d46
+  rules:
+  - apiGroups:
+    - ""
+    attributeRestrictions: null
+    resources:
+    - secrets
+    verbs:
+    - create
+    - delete
+    - get
+    - list
+    - update
+    - watch
+- apiVersion: authorization.openshift.io/v1
+  kind: Role
+  metadata:
+    annotations:
+      include.release.openshift.io/self-managed-high-availability: "true"
+    creationTimestamp: "2023-05-04T21:36:19Z"
+    name: machine-api-controllers
+    namespace: openshift-config-managed
+    ownerReferences:
+    - apiVersion: config.openshift.io/v1
+      kind: ClusterVersion
+      name: version
+      uid: 5d92b52f-9fff-4a6e-b815-398b934115ad
+    resourceVersion: "2270"
+    uid: 9b9f391e-749d-4036-8542-a566067549d6
+  rules:
+  - apiGroups:
+    - ""
+    attributeRestrictions: null
+    resources:
+    - configmaps
+    verbs:
+    - get
+    - list
+    - watch
+- apiVersion: authorization.openshift.io/v1
+  kind: Role
+  metadata:
+    annotations:
+      include.release.openshift.io/ibm-cloud-managed: "true"
+      include.release.openshift.io/self-managed-high-availability: "true"
+      include.release.openshift.io/single-node-developer: "true"
+    creationTimestamp: "2023-05-04T21:36:01Z"
+    name: machine-approver
+    namespace: openshift-config-managed
+    ownerReferences:
+    - apiVersion: config.openshift.io/v1
+      kind: ClusterVersion
+      name: version
+      uid: 5d92b52f-9fff-4a6e-b815-398b934115ad
+    resourceVersion: "1752"
+    uid: 56eb16e2-f0b6-47b5-9346-3703d564ed0f
+  rules:
+  - apiGroups:
+    - ""
+    attributeRestrictions: null
+    resourceNames:
+    - csr-controller-ca
+    resources:
+    - configmaps
+    verbs:
+    - get
+- apiVersion: authorization.openshift.io/v1
+  kind: Role
+  metadata:
+    annotations:
+      openshift.io/description: Can read the openshift-network-features ConfigMap
+        values
+    creationTimestamp: "2023-05-04T21:39:44Z"
+    name: openshift-network-public-role
+    namespace: openshift-config-managed
+    ownerReferences:
+    - apiVersion: operator.openshift.io/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Network
+      name: cluster
+      uid: 5513ebe5-e5fd-4f40-8857-5fcd3d31efca
+    resourceVersion: "3355"
+    uid: d508b8da-752b-4f71-bf6a-bc383aef4a64
+  rules:
+  - apiGroups:
+    - ""
+    attributeRestrictions: null
+    resourceNames:
+    - openshift-network-features
+    resources:
+    - configmaps
+    verbs:
+    - get
+- apiVersion: authorization.openshift.io/v1
+  kind: Role
+  metadata:
+    creationTimestamp: "2023-05-04T21:40:36Z"
+    name: system:openshift:oauth-servercert-trust
+    namespace: openshift-config-managed
+    resourceVersion: "5515"
+    uid: b2bb32e3-5247-42ef-86c3-5d6bff305f73
+  rules:
+  - apiGroups:
+    - ""
+    attributeRestrictions: null
+    resourceNames:
+    - oauth-serving-cert
+    resources:
+    - configmaps
+    verbs:
+    - get
+    - list
+    - watch
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

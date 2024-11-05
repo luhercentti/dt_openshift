@@ -1,0 +1,215 @@
+apiVersion: v1
+items:
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    creationTimestamp: "2023-06-04T23:50:44Z"
+    labels:
+      migration.openshift.io/migrated-by-migmigration: d260e821-c8d9-409f-9013-a81dd35264d4
+      migration.openshift.io/migrated-by-migplan: 49357516-407e-4d22-8a38-498daa6ef155
+      velero.io/backup-name: migration-05da4-initial-s7jkt
+      velero.io/restore-name: migration-05da4-final-h89cb
+    name: admin
+    namespace: 3scale
+    resourceVersion: "20279547"
+    uid: 33149a44-306a-4ce9-93e1-a1799340d808
+  roleRef:
+    name: admin
+  subjects:
+  - kind: User
+    name: admin
+  - kind: User
+    name: jalvarez@dt.gob.cl
+  - kind: User
+    name: pmedinac
+  - kind: User
+    name: lolivero@redhat.com
+  - kind: User
+    name: cquezada@redhat.com
+  - kind: User
+    name: mcaballol@redhat.com
+  - kind: User
+    name: npatinom@redhat.com
+  userNames:
+  - admin
+  - jalvarez@dt.gob.cl
+  - pmedinac
+  - lolivero@redhat.com
+  - cquezada@redhat.com
+  - mcaballol@redhat.com
+  - npatinom@redhat.com
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    creationTimestamp: "2023-06-04T23:50:44Z"
+    labels:
+      migration.openshift.io/migrated-by-migmigration: d260e821-c8d9-409f-9013-a81dd35264d4
+      migration.openshift.io/migrated-by-migplan: 49357516-407e-4d22-8a38-498daa6ef155
+      velero.io/backup-name: migration-05da4-initial-s7jkt
+      velero.io/restore-name: migration-05da4-final-h89cb
+    name: admin-0
+    namespace: 3scale
+    resourceVersion: "20279546"
+    uid: 7a28a71a-68c3-4c42-ae8d-995f6cb75d15
+  roleRef:
+    name: admin
+  subjects:
+  - kind: ServiceAccount
+    name: persistent-volume-binder
+    namespace: kube-system
+  userNames:
+  - system:serviceaccount:kube-system:persistent-volume-binder
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    creationTimestamp: "2023-06-05T20:09:26Z"
+    name: admin-1
+    namespace: 3scale
+    resourceVersion: "21015525"
+    uid: 291e7f91-c36f-4032-ae32-9d1084efff1f
+  roleRef:
+    name: admin
+  subjects:
+  - kind: User
+    name: ipenaloza@dt.gob.cl
+  userNames:
+  - ipenaloza@dt.gob.cl
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    creationTimestamp: "2023-06-05T20:09:26Z"
+    name: admin-2
+    namespace: 3scale
+    resourceVersion: "21015532"
+    uid: 2f953970-dbf7-40a3-bb58-9fb3639bdc0f
+  roleRef:
+    name: admin
+  subjects:
+  - kind: User
+    name: araiman@dt.gob.cl
+  userNames:
+  - araiman@dt.gob.cl
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    creationTimestamp: "2023-06-05T20:09:26Z"
+    name: admin-3
+    namespace: 3scale
+    resourceVersion: "21015534"
+    uid: ee978bac-9a72-4a99-ad3f-59f18c03f995
+  roleRef:
+    name: admin
+  subjects:
+  - kind: User
+    name: ealmuna@dt.gob.cl
+  userNames:
+  - ealmuna@dt.gob.cl
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    creationTimestamp: "2023-06-05T20:09:27Z"
+    name: admin-4
+    namespace: 3scale
+    resourceVersion: "21015536"
+    uid: 8e404594-1a86-46a6-9792-563a70b4fbbc
+  roleRef:
+    name: admin
+  subjects:
+  - kind: User
+    name: cacevedoq@dt.gob.cl
+  userNames:
+  - cacevedoq@dt.gob.cl
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/description: Allows deploymentconfigs in this namespace to rollout
+        pods in this namespace.  It is auto-managed by a controller; remove subjects
+        to disable.
+    creationTimestamp: "2023-06-04T07:41:28Z"
+    name: system:deployers
+    namespace: 3scale
+    resourceVersion: "19642444"
+    uid: 63d08f56-a52b-4701-8666-eec17a44581d
+  roleRef:
+    name: system:deployer
+  subjects:
+  - kind: ServiceAccount
+    name: deployer
+    namespace: 3scale
+  userNames:
+  - system:serviceaccount:3scale:deployer
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/description: Allows builds in this namespace to push images to
+        this namespace.  It is auto-managed by a controller; remove subjects to disable.
+    creationTimestamp: "2023-06-04T07:41:28Z"
+    name: system:image-builders
+    namespace: 3scale
+    resourceVersion: "19642441"
+    uid: 7d3a35e4-cd78-42c3-b275-7783a39cd0c1
+  roleRef:
+    name: system:image-builder
+  subjects:
+  - kind: ServiceAccount
+    name: builder
+    namespace: 3scale
+  userNames:
+  - system:serviceaccount:3scale:builder
+- apiVersion: authorization.openshift.io/v1
+  groupNames:
+  - system:serviceaccounts:3scale
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/description: Allows all pods in this namespace to pull images from
+        this namespace.  It is auto-managed by a controller; remove subjects to disable.
+    creationTimestamp: "2023-06-04T07:41:28Z"
+    name: system:image-pullers
+    namespace: 3scale
+    resourceVersion: "19642426"
+    uid: 8fb9c720-b0ef-4521-94a8-5ddc16cfc663
+  roleRef:
+    name: system:image-puller
+  subjects:
+  - kind: SystemGroup
+    name: system:serviceaccounts:3scale
+  userNames: null
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: "2023-06-04T23:50:44Z"
+    labels:
+      migration.openshift.io/migrated-by-migmigration: d260e821-c8d9-409f-9013-a81dd35264d4
+      migration.openshift.io/migrated-by-migplan: 49357516-407e-4d22-8a38-498daa6ef155
+      velero.io/backup-name: migration-05da4-initial-s7jkt
+      velero.io/restore-name: migration-05da4-final-h89cb
+    name: zync-que-rolebinding
+    namespace: 3scale
+    resourceVersion: "20279558"
+    uid: d5a62261-c392-41a0-9e24-18da2df184c8
+  roleRef:
+    name: zync-que-role
+    namespace: 3scale
+  subjects:
+  - kind: ServiceAccount
+    name: zync-que-sa
+  userNames:
+  - system:serviceaccount:3scale:zync-que-sa
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

@@ -1,0 +1,49 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Service
+  metadata:
+    creationTimestamp: "2023-05-04T21:34:54Z"
+    labels:
+      component: apiserver
+      provider: kubernetes
+    name: kubernetes
+    namespace: default
+    resourceVersion: "258"
+    uid: f0a3518a-199a-4287-9ce7-6b7301550c56
+  spec:
+    clusterIP: 172.30.0.1
+    clusterIPs:
+    - 172.30.0.1
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: https
+      port: 443
+      protocol: TCP
+      targetPort: 6443
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    creationTimestamp: "2023-05-04T21:41:31Z"
+    name: openshift
+    namespace: default
+    resourceVersion: "8137"
+    uid: b0759481-77df-487c-a96f-3dfd4bf361ad
+  spec:
+    externalName: kubernetes.default.svc.cluster.local
+    internalTrafficPolicy: Cluster
+    sessionAffinity: None
+    type: ExternalName
+  status:
+    loadBalancer: {}
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

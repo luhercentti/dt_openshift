@@ -1,0 +1,5345 @@
+apiVersion: v1
+items:
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: MigAnalytic
+  metadata:
+    annotations:
+      migplan: 3scale
+    creationTimestamp: "2023-05-23T15:38:03Z"
+    generation: 4
+    labels:
+      migplan: 3scale
+    name: 3scale
+    namespace: openshift-migration
+    resourceVersion: "9841732"
+    uid: 7a9b92c9-ec40-4818-a365-936d39b59834
+  spec:
+    analyzeImageCount: true
+    analyzeK8SResources: true
+    analyzePVCapacity: true
+    migPlanRef:
+      name: 3scale
+      namespace: openshift-migration
+  status:
+    analytics:
+      excludedk8sResourceTotal: 0
+      imageCount: 0
+      imageSizeTotal: "0"
+      incompatiblek8sResourceTotal: 0
+      k8sResourceTotal: 220
+      namespaces:
+      - excludedK8SResourceTotal: 0
+        imageCount: 0
+        imageSizeTotal: "0"
+        incompatibleK8SResourceTotal: 0
+        k8sResourceTotal: 220
+        k8sResources:
+        - count: 8
+          group: ""
+          kind: configmaps
+          version: v1
+        - count: 13
+          group: ""
+          kind: endpoints
+          version: v1
+        - count: 5
+          group: ""
+          kind: persistentvolumeclaims
+          version: v1
+        - count: 15
+          group: ""
+          kind: pods
+          version: v1
+        - count: 26
+          group: ""
+          kind: replicationcontrollers
+          version: v1
+        - count: 30
+          group: ""
+          kind: secrets
+          version: v1
+        - count: 5
+          group: ""
+          kind: serviceaccounts
+          version: v1
+        - count: 13
+          group: ""
+          kind: services
+          version: v1
+        - count: 1
+          group: autoscaling
+          kind: horizontalpodautoscalers
+          version: v1
+        - count: 1
+          group: autoscaling
+          kind: horizontalpodautoscalers
+          version: v2beta1
+        - count: 6
+          group: authorization.openshift.io
+          kind: rolebindings
+          version: v1
+        - count: 2
+          group: authorization.openshift.io
+          kind: roles
+          version: v1
+        - count: 6
+          group: rbac.authorization.k8s.io
+          kind: rolebindings
+          version: v1
+        - count: 2
+          group: rbac.authorization.k8s.io
+          kind: roles
+          version: v1
+        - count: 6
+          group: rbac.authorization.k8s.io
+          kind: rolebindings
+          version: v1beta1
+        - count: 2
+          group: rbac.authorization.k8s.io
+          kind: roles
+          version: v1beta1
+        - count: 15
+          group: apps.openshift.io
+          kind: deploymentconfigs
+          version: v1
+        - count: 9
+          group: image.openshift.io
+          kind: imagestreams
+          version: v1
+        - count: 18
+          group: image.openshift.io
+          kind: imagestreamtags
+          version: v1
+        - count: 22
+          group: route.openshift.io
+          kind: routes
+          version: v1
+        - count: 15
+          group: metrics.k8s.io
+          kind: pods
+          version: v1beta1
+        namespace: 3scale
+        pvCapacity: 60Gi
+        pvCount: 5
+      percentComplete: 100
+      plan: 3scale
+      pvCapacity: 60Gi
+      pvCount: 5
+    conditions:
+    - category: Required
+      lastTransitionTime: "2023-05-23T15:38:25Z"
+      message: The analytic is ready.
+      status: "True"
+      type: Ready
+    observedGeneration: 4
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: MigAnalytic
+  metadata:
+    annotations:
+      migplan: 3scale
+    creationTimestamp: "2023-05-23T15:38:03Z"
+    generateName: 3scale-
+    generation: 12
+    labels:
+      migplan: 3scale
+    name: 3scale-54v66
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: migration.openshift.io/v1alpha1
+      kind: MigPlan
+      name: 3scale
+      uid: 49357516-407e-4d22-8a38-498daa6ef155
+    resourceVersion: "19641484"
+    uid: 233e81c3-d4d5-4d99-a3d6-606e222cd898
+  spec:
+    analyzeExtendedPVCapacity: true
+    analyzeImageCount: false
+    analyzeK8SResources: false
+    analyzePVCapacity: false
+    migPlanRef:
+      name: 3scale
+      namespace: openshift-migration
+  status:
+    analytics:
+      excludedk8sResourceTotal: 0
+      imageCount: 0
+      imageSizeTotal: "0"
+      incompatiblek8sResourceTotal: 0
+      k8sResourceTotal: 0
+      namespaces:
+      - excludedK8SResourceTotal: 0
+        imageCount: 0
+        imageSizeTotal: "0"
+        incompatibleK8SResourceTotal: 0
+        k8sResourceTotal: 0
+        namespace: 3scale
+        persistentVolumes:
+        - actualCapacity: 5369M
+          comment: Requested capacity of PV is not equal to its actual provisioned
+            capacity.  Maximum of both values will be used to avoid disk capacity
+            issue in the target cluster.
+          name: system-storage
+          proposedCapacity: 5369M
+          requestedCapacity: 5Gi
+        - actualCapacity: 5369M
+          comment: Requested capacity of PV is not equal to its actual provisioned
+            capacity.  Maximum of both values will be used to avoid disk capacity
+            issue in the target cluster.
+          name: system-storage
+          proposedCapacity: 5369M
+          requestedCapacity: 5Gi
+        - actualCapacity: 10435M
+          comment: No change in PV capacity is needed.
+          name: backend-redis-storage
+          proposedCapacity: 10Gi
+          requestedCapacity: 10Gi
+        - actualCapacity: 31573M
+          comment: No change in PV capacity is needed.
+          name: mysql-storage
+          proposedCapacity: 30Gi
+          requestedCapacity: 30Gi
+        - actualCapacity: 10435M
+          comment: No change in PV capacity is needed.
+          name: system-redis-storage
+          proposedCapacity: 10Gi
+          requestedCapacity: 10Gi
+        pvCapacity: "0"
+        pvCount: 0
+      percentComplete: 100
+      plan: 3scale
+      pvCapacity: "0"
+      pvCount: 0
+    conditions:
+    - category: Required
+      lastTransitionTime: "2023-05-23T15:38:05Z"
+      message: The analytic is ready.
+      status: "True"
+      type: Ready
+    observedGeneration: 12
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: MigAnalytic
+  metadata:
+    annotations:
+      migplan: api-fiscalizacion-prod
+    creationTimestamp: "2023-05-23T15:19:59Z"
+    generation: 5
+    labels:
+      migplan: api-fiscalizacion-prod
+    name: api-fiscalizacion-prod
+    namespace: openshift-migration
+    resourceVersion: "9831689"
+    uid: 10cc1a4b-2829-468a-8122-d325048bfe54
+  spec:
+    analyzeImageCount: true
+    analyzeK8SResources: true
+    analyzePVCapacity: true
+    migPlanRef:
+      name: api-fiscalizacion-prod
+      namespace: openshift-migration
+  status:
+    analytics:
+      excludedk8sResourceTotal: 53
+      imageCount: 111
+      imageSizeTotal: 24664Mi
+      incompatiblek8sResourceTotal: 0
+      k8sResourceTotal: 733
+      namespaces:
+      - excludedK8SResourceTotal: 53
+        excludedK8SResources:
+        - count: 53
+          group: ""
+          kind: events
+          version: v1
+        imageCount: 111
+        imageSizeTotal: 24664Mi
+        incompatibleK8SResourceTotal: 0
+        k8sResourceTotal: 733
+        k8sResources:
+        - count: 43
+          group: ""
+          kind: endpoints
+          version: v1
+        - count: 2
+          group: ""
+          kind: persistentvolumeclaims
+          version: v1
+        - count: 66
+          group: ""
+          kind: pods
+          version: v1
+        - count: 150
+          group: ""
+          kind: replicationcontrollers
+          version: v1
+        - count: 19
+          group: ""
+          kind: secrets
+          version: v1
+        - count: 3
+          group: ""
+          kind: serviceaccounts
+          version: v1
+        - count: 43
+          group: ""
+          kind: services
+          version: v1
+        - count: 5
+          group: apps
+          kind: controllerrevisions
+          version: v1
+        - count: 1
+          group: apps
+          kind: statefulsets
+          version: v1
+        - count: 5
+          group: apps
+          kind: controllerrevisions
+          version: v1beta2
+        - count: 1
+          group: apps
+          kind: statefulsets
+          version: v1beta2
+        - count: 5
+          group: apps
+          kind: controllerrevisions
+          version: v1beta1
+        - count: 1
+          group: apps
+          kind: statefulsets
+          version: v1beta1
+        - count: 8
+          group: authorization.openshift.io
+          kind: rolebindings
+          version: v1
+        - count: 8
+          group: rbac.authorization.k8s.io
+          kind: rolebindings
+          version: v1
+        - count: 8
+          group: rbac.authorization.k8s.io
+          kind: rolebindings
+          version: v1beta1
+        - count: 39
+          group: apps.openshift.io
+          kind: deploymentconfigs
+          version: v1
+        - count: 41
+          group: build.openshift.io
+          kind: buildconfigs
+          version: v1
+        - count: 110
+          group: build.openshift.io
+          kind: builds
+          version: v1
+        - count: 41
+          group: image.openshift.io
+          kind: imagestreams
+          version: v1
+        - count: 41
+          group: image.openshift.io
+          kind: imagestreamtags
+          version: v1
+        - count: 32
+          group: route.openshift.io
+          kind: routes
+          version: v1
+        - count: 61
+          group: metrics.k8s.io
+          kind: pods
+          version: v1beta1
+        namespace: api-fiscalizacion-prod
+        pvCapacity: 2Gi
+        pvCount: 2
+      percentComplete: 100
+      plan: api-fiscalizacion-prod
+      pvCapacity: 2Gi
+      pvCount: 2
+    conditions:
+    - category: Required
+      lastTransitionTime: "2023-05-23T15:20:22Z"
+      message: The analytic is ready.
+      status: "True"
+      type: Ready
+    observedGeneration: 5
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: MigAnalytic
+  metadata:
+    annotations:
+      migplan: api-fiscalizacion-prod
+    creationTimestamp: "2023-05-23T15:19:59Z"
+    generateName: api-fiscalizacion-prod-
+    generation: 12
+    labels:
+      migplan: api-fiscalizacion-prod
+    name: api-fiscalizacion-prod-bbcdv
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: migration.openshift.io/v1alpha1
+      kind: MigPlan
+      name: api-fiscalizacion-prod
+      uid: 939c18ea-060c-41cf-8cf0-870f4b31a246
+    resourceVersion: "10720700"
+    uid: efcc95ee-b6ed-4880-9177-3ffb1a8bbdd4
+  spec:
+    analyzeExtendedPVCapacity: true
+    analyzeImageCount: false
+    analyzeK8SResources: false
+    analyzePVCapacity: false
+    migPlanRef:
+      name: api-fiscalizacion-prod
+      namespace: openshift-migration
+  status:
+    analytics:
+      excludedk8sResourceTotal: 0
+      imageCount: 0
+      imageSizeTotal: "0"
+      incompatiblek8sResourceTotal: 0
+      k8sResourceTotal: 0
+      namespaces:
+      - excludedK8SResourceTotal: 0
+        imageCount: 0
+        imageSizeTotal: "0"
+        incompatibleK8SResourceTotal: 0
+        k8sResourceTotal: 0
+        namespace: api-fiscalizacion-prod
+        persistentVolumes:
+        - actualCapacity: 1024M
+          comment: No change in PV capacity is needed.
+          name: srv-data-cache-service-0
+          proposedCapacity: 1Gi
+          requestedCapacity: 1Gi
+        pvCapacity: "0"
+        pvCount: 0
+      percentComplete: 100
+      plan: api-fiscalizacion-prod
+      pvCapacity: "0"
+      pvCount: 0
+    conditions:
+    - category: Required
+      lastTransitionTime: "2023-05-23T15:20:04Z"
+      message: The analytic is ready.
+      status: "True"
+      type: Ready
+    observedGeneration: 12
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: MigAnalytic
+  metadata:
+    annotations:
+      migplan: api-fiscalizacion-qa
+    creationTimestamp: "2023-05-23T21:08:38Z"
+    generation: 4
+    labels:
+      migplan: api-fiscalizacion-qa
+    name: api-fiscalizacion-qa
+    namespace: openshift-migration
+    resourceVersion: "10023705"
+    uid: 31dd8328-13f4-4c56-b988-0868f7ebdb04
+  spec:
+    analyzeImageCount: true
+    analyzeK8SResources: true
+    analyzePVCapacity: true
+    migPlanRef:
+      name: api-fiscalizacion-qa
+      namespace: openshift-migration
+  status:
+    analytics:
+      excludedk8sResourceTotal: 0
+      imageCount: 128
+      imageSizeTotal: 28532Mi
+      incompatiblek8sResourceTotal: 0
+      k8sResourceTotal: 683
+      namespaces:
+      - excludedK8SResourceTotal: 0
+        imageCount: 128
+        imageSizeTotal: 28532Mi
+        incompatibleK8SResourceTotal: 0
+        k8sResourceTotal: 683
+        k8sResources:
+        - count: 1
+          group: ""
+          kind: configmaps
+          version: v1
+        - count: 42
+          group: ""
+          kind: endpoints
+          version: v1
+        - count: 2
+          group: ""
+          kind: persistentvolumeclaims
+          version: v1
+        - count: 48
+          group: ""
+          kind: pods
+          version: v1
+        - count: 152
+          group: ""
+          kind: replicationcontrollers
+          version: v1
+        - count: 21
+          group: ""
+          kind: secrets
+          version: v1
+        - count: 3
+          group: ""
+          kind: serviceaccounts
+          version: v1
+        - count: 42
+          group: ""
+          kind: services
+          version: v1
+        - count: 6
+          group: apps
+          kind: controllerrevisions
+          version: v1
+        - count: 1
+          group: apps
+          kind: statefulsets
+          version: v1
+        - count: 6
+          group: apps
+          kind: controllerrevisions
+          version: v1beta2
+        - count: 1
+          group: apps
+          kind: statefulsets
+          version: v1beta2
+        - count: 6
+          group: apps
+          kind: controllerrevisions
+          version: v1beta1
+        - count: 1
+          group: apps
+          kind: statefulsets
+          version: v1beta1
+        - count: 5
+          group: authorization.openshift.io
+          kind: rolebindings
+          version: v1
+        - count: 5
+          group: rbac.authorization.k8s.io
+          kind: rolebindings
+          version: v1
+        - count: 5
+          group: rbac.authorization.k8s.io
+          kind: rolebindings
+          version: v1beta1
+        - count: 39
+          group: apps.openshift.io
+          kind: deploymentconfigs
+          version: v1
+        - count: 39
+          group: build.openshift.io
+          kind: buildconfigs
+          version: v1
+        - count: 115
+          group: build.openshift.io
+          kind: builds
+          version: v1
+        - count: 39
+          group: image.openshift.io
+          kind: imagestreams
+          version: v1
+        - count: 39
+          group: image.openshift.io
+          kind: imagestreamtags
+          version: v1
+        - count: 34
+          group: route.openshift.io
+          kind: routes
+          version: v1
+        - count: 31
+          group: metrics.k8s.io
+          kind: pods
+          version: v1beta1
+        namespace: api-fiscalizacion-qa
+        pvCapacity: 2Gi
+        pvCount: 2
+      percentComplete: 100
+      plan: api-fiscalizacion-qa
+      pvCapacity: 2Gi
+      pvCount: 2
+    conditions:
+    - category: Required
+      lastTransitionTime: "2023-05-23T21:09:01Z"
+      message: The analytic is ready.
+      status: "True"
+      type: Ready
+    observedGeneration: 4
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: MigAnalytic
+  metadata:
+    annotations:
+      migplan: api-fiscalizacion-qa
+    creationTimestamp: "2023-05-23T21:08:38Z"
+    generateName: api-fiscalizacion-qa-
+    generation: 36
+    labels:
+      migplan: api-fiscalizacion-qa
+    name: api-fiscalizacion-qa-96kqx
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: migration.openshift.io/v1alpha1
+      kind: MigPlan
+      name: api-fiscalizacion-qa
+      uid: 2a8299ac-1423-4ceb-93a5-de572a0f44a9
+    resourceVersion: "11445535"
+    uid: 63b29282-e71a-4f03-9606-39c0b9c16c7f
+  spec:
+    analyzeExtendedPVCapacity: true
+    analyzeImageCount: false
+    analyzeK8SResources: false
+    analyzePVCapacity: false
+    migPlanRef:
+      name: api-fiscalizacion-qa
+      namespace: openshift-migration
+  status:
+    analytics:
+      excludedk8sResourceTotal: 0
+      imageCount: 0
+      imageSizeTotal: "0"
+      incompatiblek8sResourceTotal: 0
+      k8sResourceTotal: 0
+      namespaces:
+      - excludedK8SResourceTotal: 0
+        imageCount: 0
+        imageSizeTotal: "0"
+        incompatibleK8SResourceTotal: 0
+        k8sResourceTotal: 0
+        namespace: api-fiscalizacion-qa
+        persistentVolumes:
+        - actualCapacity: 1024M
+          comment: No change in PV capacity is needed.
+          name: srv-data-cache-service-0
+          proposedCapacity: 1Gi
+          requestedCapacity: 1Gi
+        pvCapacity: "0"
+        pvCount: 0
+      percentComplete: 100
+      plan: api-fiscalizacion-qa
+      pvCapacity: "0"
+      pvCount: 0
+    conditions:
+    - category: Required
+      lastTransitionTime: "2023-05-23T21:08:43Z"
+      message: The analytic is ready.
+      status: "True"
+      type: Ready
+    observedGeneration: 36
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: MigAnalytic
+  metadata:
+    annotations:
+      migplan: apicast-dev
+    creationTimestamp: "2023-05-25T14:44:22Z"
+    generation: 4
+    labels:
+      migplan: apicast-dev
+    name: apicast-dev
+    namespace: openshift-migration
+    resourceVersion: "11464339"
+    uid: aca34a01-7bde-4f00-a974-4dc61e64c7b9
+  spec:
+    analyzeImageCount: true
+    analyzeK8SResources: true
+    analyzePVCapacity: true
+    migPlanRef:
+      name: apicast-dev
+      namespace: openshift-migration
+  status:
+    analytics:
+      excludedk8sResourceTotal: 0
+      imageCount: 0
+      imageSizeTotal: "0"
+      incompatiblek8sResourceTotal: 0
+      k8sResourceTotal: 46
+      namespaces:
+      - excludedK8SResourceTotal: 0
+        imageCount: 0
+        imageSizeTotal: "0"
+        incompatibleK8SResourceTotal: 0
+        k8sResourceTotal: 46
+        k8sResources:
+        - count: 2
+          group: ""
+          kind: endpoints
+          version: v1
+        - count: 2
+          group: ""
+          kind: pods
+          version: v1
+        - count: 5
+          group: ""
+          kind: replicationcontrollers
+          version: v1
+        - count: 10
+          group: ""
+          kind: secrets
+          version: v1
+        - count: 3
+          group: ""
+          kind: serviceaccounts
+          version: v1
+        - count: 2
+          group: ""
+          kind: services
+          version: v1
+        - count: 4
+          group: authorization.openshift.io
+          kind: rolebindings
+          version: v1
+        - count: 4
+          group: rbac.authorization.k8s.io
+          kind: rolebindings
+          version: v1
+        - count: 4
+          group: rbac.authorization.k8s.io
+          kind: rolebindings
+          version: v1beta1
+        - count: 2
+          group: apps.openshift.io
+          kind: deploymentconfigs
+          version: v1
+        - count: 6
+          group: route.openshift.io
+          kind: routes
+          version: v1
+        - count: 2
+          group: metrics.k8s.io
+          kind: pods
+          version: v1beta1
+        namespace: apicast-dev
+        pvCapacity: "0"
+        pvCount: 0
+      percentComplete: 100
+      plan: apicast-dev
+      pvCapacity: "0"
+      pvCount: 0
+    conditions:
+    - category: Required
+      lastTransitionTime: "2023-05-25T14:44:43Z"
+      message: The analytic is ready.
+      status: "True"
+      type: Ready
+    observedGeneration: 4
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: MigAnalytic
+  metadata:
+    annotations:
+      migplan: apicast-dev
+    creationTimestamp: "2023-05-25T14:44:22Z"
+    generateName: apicast-dev-
+    generation: 6
+    labels:
+      migplan: apicast-dev
+    name: apicast-dev-6plx4
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: migration.openshift.io/v1alpha1
+      kind: MigPlan
+      name: apicast-dev
+      uid: f921392c-1b4c-4dd1-9fd7-bfec352bc628
+    resourceVersion: "11464295"
+    uid: 55d42169-43b8-48f6-9f65-cfa540db0a01
+  spec:
+    analyzeExtendedPVCapacity: true
+    analyzeImageCount: false
+    analyzeK8SResources: false
+    analyzePVCapacity: false
+    migPlanRef:
+      name: apicast-dev
+      namespace: openshift-migration
+  status:
+    analytics:
+      excludedk8sResourceTotal: 0
+      imageCount: 0
+      imageSizeTotal: "0"
+      incompatiblek8sResourceTotal: 0
+      k8sResourceTotal: 0
+      namespaces:
+      - excludedK8SResourceTotal: 0
+        imageCount: 0
+        imageSizeTotal: "0"
+        incompatibleK8SResourceTotal: 0
+        k8sResourceTotal: 0
+        namespace: apicast-dev
+        pvCapacity: "0"
+        pvCount: 0
+      percentComplete: 100
+      plan: apicast-dev
+      pvCapacity: "0"
+      pvCount: 0
+    conditions:
+    - category: Required
+      lastTransitionTime: "2023-05-25T14:44:22Z"
+      message: The analytic is ready.
+      status: "True"
+      type: Ready
+    observedGeneration: 6
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: MigAnalytic
+  metadata:
+    annotations:
+      migplan: apicast-prod
+    creationTimestamp: "2023-05-23T15:23:32Z"
+    generation: 5
+    labels:
+      migplan: apicast-prod
+    name: apicast-prod
+    namespace: openshift-migration
+    resourceVersion: "9833478"
+    uid: e44fbcde-ed12-4a06-a9fe-c95b2f23ed18
+  spec:
+    analyzeImageCount: true
+    analyzeK8SResources: true
+    analyzePVCapacity: true
+    migPlanRef:
+      name: apicast-prod
+      namespace: openshift-migration
+  status:
+    analytics:
+      excludedk8sResourceTotal: 0
+      imageCount: 0
+      imageSizeTotal: "0"
+      incompatiblek8sResourceTotal: 0
+      k8sResourceTotal: 46
+      namespaces:
+      - excludedK8SResourceTotal: 0
+        imageCount: 0
+        imageSizeTotal: "0"
+        incompatibleK8SResourceTotal: 0
+        k8sResourceTotal: 46
+        k8sResources:
+        - count: 2
+          group: ""
+          kind: endpoints
+          version: v1
+        - count: 2
+          group: ""
+          kind: pods
+          version: v1
+        - count: 5
+          group: ""
+          kind: replicationcontrollers
+          version: v1
+        - count: 10
+          group: ""
+          kind: secrets
+          version: v1
+        - count: 3
+          group: ""
+          kind: serviceaccounts
+          version: v1
+        - count: 2
+          group: ""
+          kind: services
+          version: v1
+        - count: 4
+          group: authorization.openshift.io
+          kind: rolebindings
+          version: v1
+        - count: 4
+          group: rbac.authorization.k8s.io
+          kind: rolebindings
+          version: v1
+        - count: 4
+          group: rbac.authorization.k8s.io
+          kind: rolebindings
+          version: v1beta1
+        - count: 2
+          group: apps.openshift.io
+          kind: deploymentconfigs
+          version: v1
+        - count: 6
+          group: route.openshift.io
+          kind: routes
+          version: v1
+        - count: 2
+          group: metrics.k8s.io
+          kind: pods
+          version: v1beta1
+        namespace: apicast-prod
+        pvCapacity: "0"
+        pvCount: 0
+      percentComplete: 100
+      plan: apicast-prod
+      pvCapacity: "0"
+      pvCount: 0
+    conditions:
+    - category: Required
+      lastTransitionTime: "2023-05-23T15:23:53Z"
+      message: The analytic is ready.
+      status: "True"
+      type: Ready
+    observedGeneration: 5
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: MigAnalytic
+  metadata:
+    annotations:
+      migplan: apicast-prod
+    creationTimestamp: "2023-05-23T15:23:32Z"
+    generateName: apicast-prod-
+    generation: 9
+    labels:
+      migplan: apicast-prod
+    name: apicast-prod-jk6xt
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: migration.openshift.io/v1alpha1
+      kind: MigPlan
+      name: apicast-prod
+      uid: 1981d423-880a-454f-b775-1c317fd4855d
+    resourceVersion: "9843952"
+    uid: 48e35ffa-b5cb-4d4a-b0dd-ca6c249e8bb9
+  spec:
+    analyzeExtendedPVCapacity: true
+    analyzeImageCount: false
+    analyzeK8SResources: false
+    analyzePVCapacity: false
+    migPlanRef:
+      name: apicast-prod
+      namespace: openshift-migration
+  status:
+    analytics:
+      excludedk8sResourceTotal: 0
+      imageCount: 0
+      imageSizeTotal: "0"
+      incompatiblek8sResourceTotal: 0
+      k8sResourceTotal: 0
+      namespaces:
+      - excludedK8SResourceTotal: 0
+        imageCount: 0
+        imageSizeTotal: "0"
+        incompatibleK8SResourceTotal: 0
+        k8sResourceTotal: 0
+        namespace: apicast-prod
+        pvCapacity: "0"
+        pvCount: 0
+      percentComplete: 100
+      plan: apicast-prod
+      pvCapacity: "0"
+      pvCount: 0
+    conditions:
+    - category: Required
+      lastTransitionTime: "2023-05-23T15:23:32Z"
+      message: The analytic is ready.
+      status: "True"
+      type: Ready
+    observedGeneration: 9
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: MigAnalytic
+  metadata:
+    annotations:
+      migplan: apicast-qa
+    creationTimestamp: "2023-05-18T17:01:00Z"
+    generation: 4
+    labels:
+      migplan: apicast-qa
+    name: apicast-qa
+    namespace: openshift-migration
+    resourceVersion: "6133213"
+    uid: 830543ea-e5c9-4e39-9f6b-706da07ff874
+  spec:
+    analyzeImageCount: true
+    analyzeK8SResources: true
+    analyzePVCapacity: true
+    migPlanRef:
+      name: apicast-qa
+      namespace: openshift-migration
+  status:
+    analytics:
+      excludedk8sResourceTotal: 0
+      imageCount: 0
+      imageSizeTotal: "0"
+      incompatiblek8sResourceTotal: 0
+      k8sResourceTotal: 48
+      namespaces:
+      - excludedK8SResourceTotal: 0
+        imageCount: 0
+        imageSizeTotal: "0"
+        incompatibleK8SResourceTotal: 0
+        k8sResourceTotal: 48
+        k8sResources:
+        - count: 2
+          group: ""
+          kind: endpoints
+          version: v1
+        - count: 2
+          group: ""
+          kind: pods
+          version: v1
+        - count: 7
+          group: ""
+          kind: replicationcontrollers
+          version: v1
+        - count: 10
+          group: ""
+          kind: secrets
+          version: v1
+        - count: 3
+          group: ""
+          kind: serviceaccounts
+          version: v1
+        - count: 2
+          group: ""
+          kind: services
+          version: v1
+        - count: 4
+          group: authorization.openshift.io
+          kind: rolebindings
+          version: v1
+        - count: 4
+          group: rbac.authorization.k8s.io
+          kind: rolebindings
+          version: v1
+        - count: 4
+          group: rbac.authorization.k8s.io
+          kind: rolebindings
+          version: v1beta1
+        - count: 2
+          group: apps.openshift.io
+          kind: deploymentconfigs
+          version: v1
+        - count: 6
+          group: route.openshift.io
+          kind: routes
+          version: v1
+        - count: 2
+          group: metrics.k8s.io
+          kind: pods
+          version: v1beta1
+        namespace: apicast-qa
+        pvCapacity: "0"
+        pvCount: 0
+      percentComplete: 100
+      plan: apicast-qa
+      pvCapacity: "0"
+      pvCount: 0
+    conditions:
+    - category: Required
+      lastTransitionTime: "2023-05-18T17:01:21Z"
+      message: The analytic is ready.
+      status: "True"
+      type: Ready
+    observedGeneration: 4
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: MigAnalytic
+  metadata:
+    annotations:
+      migplan: apicast-qa
+    creationTimestamp: "2023-05-18T17:01:00Z"
+    generateName: apicast-qa-
+    generation: 9
+    labels:
+      migplan: apicast-qa
+    name: apicast-qa-dmlwl
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: migration.openshift.io/v1alpha1
+      kind: MigPlan
+      name: apicast-qa
+      uid: 49805066-245d-4e4f-b6c5-23226a4d9ae4
+    resourceVersion: "9197118"
+    uid: 236bf43d-9dcb-489d-b136-2488e899f92e
+  spec:
+    analyzeExtendedPVCapacity: true
+    analyzeImageCount: false
+    analyzeK8SResources: false
+    analyzePVCapacity: false
+    migPlanRef:
+      name: apicast-qa
+      namespace: openshift-migration
+  status:
+    analytics:
+      excludedk8sResourceTotal: 0
+      imageCount: 0
+      imageSizeTotal: "0"
+      incompatiblek8sResourceTotal: 0
+      k8sResourceTotal: 0
+      namespaces:
+      - excludedK8SResourceTotal: 0
+        imageCount: 0
+        imageSizeTotal: "0"
+        incompatibleK8SResourceTotal: 0
+        k8sResourceTotal: 0
+        namespace: apicast-qa
+        pvCapacity: "0"
+        pvCount: 0
+      percentComplete: 100
+      plan: apicast-qa
+      pvCapacity: "0"
+      pvCount: 0
+    conditions:
+    - category: Required
+      lastTransitionTime: "2023-05-18T17:01:00Z"
+      message: The analytic is ready.
+      status: "True"
+      type: Ready
+    observedGeneration: 9
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: MigAnalytic
+  metadata:
+    annotations:
+      migplan: certificados-dev
+    creationTimestamp: "2023-05-18T16:15:22Z"
+    generation: 4
+    labels:
+      migplan: certificados-dev
+    name: certificados-dev
+    namespace: openshift-migration
+    resourceVersion: "6107811"
+    uid: 1a199996-9168-4b92-ba53-edaee36fc7ca
+  spec:
+    analyzeImageCount: true
+    analyzeK8SResources: true
+    analyzePVCapacity: true
+    migPlanRef:
+      name: certificados-dev
+      namespace: openshift-migration
+  status:
+    analytics:
+      excludedk8sResourceTotal: 0
+      imageCount: 0
+      imageSizeTotal: "0"
+      incompatiblek8sResourceTotal: 0
+      k8sResourceTotal: 24
+      namespaces:
+      - excludedK8SResourceTotal: 0
+        imageCount: 0
+        imageSizeTotal: "0"
+        incompatibleK8SResourceTotal: 0
+        k8sResourceTotal: 24
+        k8sResources:
+        - count: 9
+          group: ""
+          kind: secrets
+          version: v1
+        - count: 3
+          group: ""
+          kind: serviceaccounts
+          version: v1
+        - count: 4
+          group: authorization.openshift.io
+          kind: rolebindings
+          version: v1
+        - count: 4
+          group: rbac.authorization.k8s.io
+          kind: rolebindings
+          version: v1
+        - count: 4
+          group: rbac.authorization.k8s.io
+          kind: rolebindings
+          version: v1beta1
+        namespace: certificados-dev
+        pvCapacity: "0"
+        pvCount: 0
+      percentComplete: 100
+      plan: certificados-dev
+      pvCapacity: "0"
+      pvCount: 0
+    conditions:
+    - category: Required
+      lastTransitionTime: "2023-05-18T16:15:43Z"
+      message: The analytic is ready.
+      status: "True"
+      type: Ready
+    observedGeneration: 4
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: MigAnalytic
+  metadata:
+    annotations:
+      migplan: certificados-dev
+    creationTimestamp: "2023-05-18T16:15:22Z"
+    generateName: certificados-dev-
+    generation: 9
+    labels:
+      migplan: certificados-dev
+    name: certificados-dev-j8bd7
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: migration.openshift.io/v1alpha1
+      kind: MigPlan
+      name: certificados-dev
+      uid: 58fc7209-f833-4046-ab0e-edad201bf2f4
+    resourceVersion: "6214135"
+    uid: 9f794605-568b-4356-91fe-0663a068dae3
+  spec:
+    analyzeExtendedPVCapacity: true
+    analyzeImageCount: false
+    analyzeK8SResources: false
+    analyzePVCapacity: false
+    migPlanRef:
+      name: certificados-dev
+      namespace: openshift-migration
+  status:
+    analytics:
+      excludedk8sResourceTotal: 0
+      imageCount: 0
+      imageSizeTotal: "0"
+      incompatiblek8sResourceTotal: 0
+      k8sResourceTotal: 0
+      namespaces:
+      - excludedK8SResourceTotal: 0
+        imageCount: 0
+        imageSizeTotal: "0"
+        incompatibleK8SResourceTotal: 0
+        k8sResourceTotal: 0
+        namespace: certificados-dev
+        pvCapacity: "0"
+        pvCount: 0
+      percentComplete: 100
+      plan: certificados-dev
+      pvCapacity: "0"
+      pvCount: 0
+    conditions:
+    - category: Required
+      lastTransitionTime: "2023-05-18T16:15:22Z"
+      message: The analytic is ready.
+      status: "True"
+      type: Ready
+    observedGeneration: 9
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: MigAnalytic
+  metadata:
+    annotations:
+      migplan: certificados-prod
+    creationTimestamp: "2023-05-23T15:24:38Z"
+    generation: 4
+    labels:
+      migplan: certificados-prod
+    name: certificados-prod
+    namespace: openshift-migration
+    resourceVersion: "9834061"
+    uid: 0d00d7b3-463b-4d43-aec1-91c9f8bd450e
+  spec:
+    analyzeImageCount: true
+    analyzeK8SResources: true
+    analyzePVCapacity: true
+    migPlanRef:
+      name: certificados-prod
+      namespace: openshift-migration
+  status:
+    analytics:
+      excludedk8sResourceTotal: 0
+      imageCount: 0
+      imageSizeTotal: "0"
+      incompatiblek8sResourceTotal: 0
+      k8sResourceTotal: 33
+      namespaces:
+      - excludedK8SResourceTotal: 0
+        imageCount: 0
+        imageSizeTotal: "0"
+        incompatibleK8SResourceTotal: 0
+        k8sResourceTotal: 33
+        k8sResources:
+        - count: 9
+          group: ""
+          kind: secrets
+          version: v1
+        - count: 3
+          group: ""
+          kind: serviceaccounts
+          version: v1
+        - count: 7
+          group: authorization.openshift.io
+          kind: rolebindings
+          version: v1
+        - count: 7
+          group: rbac.authorization.k8s.io
+          kind: rolebindings
+          version: v1
+        - count: 7
+          group: rbac.authorization.k8s.io
+          kind: rolebindings
+          version: v1beta1
+        namespace: certificados-prod
+        pvCapacity: "0"
+        pvCount: 0
+      percentComplete: 100
+      plan: certificados-prod
+      pvCapacity: "0"
+      pvCount: 0
+    conditions:
+    - category: Required
+      lastTransitionTime: "2023-05-23T15:24:58Z"
+      message: The analytic is ready.
+      status: "True"
+      type: Ready
+    observedGeneration: 4
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: MigAnalytic
+  metadata:
+    annotations:
+      migplan: certificados-prod
+    creationTimestamp: "2023-05-23T15:24:38Z"
+    generateName: certificados-prod-
+    generation: 9
+    labels:
+      migplan: certificados-prod
+    name: certificados-prod-ppnrr
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: migration.openshift.io/v1alpha1
+      kind: MigPlan
+      name: certificados-prod
+      uid: 0b551d56-62e0-48ce-b8cd-dd5044d46944
+    resourceVersion: "9844149"
+    uid: a428a3c5-bdea-42e2-af32-9dd41b39194a
+  spec:
+    analyzeExtendedPVCapacity: true
+    analyzeImageCount: false
+    analyzeK8SResources: false
+    analyzePVCapacity: false
+    migPlanRef:
+      name: certificados-prod
+      namespace: openshift-migration
+  status:
+    analytics:
+      excludedk8sResourceTotal: 0
+      imageCount: 0
+      imageSizeTotal: "0"
+      incompatiblek8sResourceTotal: 0
+      k8sResourceTotal: 0
+      namespaces:
+      - excludedK8SResourceTotal: 0
+        imageCount: 0
+        imageSizeTotal: "0"
+        incompatibleK8SResourceTotal: 0
+        k8sResourceTotal: 0
+        namespace: certificados-prod
+        pvCapacity: "0"
+        pvCount: 0
+      percentComplete: 100
+      plan: certificados-prod
+      pvCapacity: "0"
+      pvCount: 0
+    conditions:
+    - category: Required
+      lastTransitionTime: "2023-05-23T15:24:38Z"
+      message: The analytic is ready.
+      status: "True"
+      type: Ready
+    observedGeneration: 9
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: MigAnalytic
+  metadata:
+    annotations:
+      migplan: certificados-qa
+    creationTimestamp: "2023-05-18T17:01:58Z"
+    generation: 4
+    labels:
+      migplan: certificados-qa
+    name: certificados-qa
+    namespace: openshift-migration
+    resourceVersion: "6133857"
+    uid: 825c562e-cd14-4167-9983-6f7e0fe322b1
+  spec:
+    analyzeImageCount: true
+    analyzeK8SResources: true
+    analyzePVCapacity: true
+    migPlanRef:
+      name: certificados-qa
+      namespace: openshift-migration
+  status:
+    analytics:
+      excludedk8sResourceTotal: 0
+      imageCount: 0
+      imageSizeTotal: "0"
+      incompatiblek8sResourceTotal: 0
+      k8sResourceTotal: 33
+      namespaces:
+      - excludedK8SResourceTotal: 0
+        imageCount: 0
+        imageSizeTotal: "0"
+        incompatibleK8SResourceTotal: 0
+        k8sResourceTotal: 33
+        k8sResources:
+        - count: 9
+          group: ""
+          kind: secrets
+          version: v1
+        - count: 3
+          group: ""
+          kind: serviceaccounts
+          version: v1
+        - count: 7
+          group: authorization.openshift.io
+          kind: rolebindings
+          version: v1
+        - count: 7
+          group: rbac.authorization.k8s.io
+          kind: rolebindings
+          version: v1
+        - count: 7
+          group: rbac.authorization.k8s.io
+          kind: rolebindings
+          version: v1beta1
+        namespace: certificados-qa
+        pvCapacity: "0"
+        pvCount: 0
+      percentComplete: 100
+      plan: certificados-qa
+      pvCapacity: "0"
+      pvCount: 0
+    conditions:
+    - category: Required
+      lastTransitionTime: "2023-05-18T17:02:19Z"
+      message: The analytic is ready.
+      status: "True"
+      type: Ready
+    observedGeneration: 4
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: MigAnalytic
+  metadata:
+    annotations:
+      migplan: certificados-qa
+    creationTimestamp: "2023-05-18T17:01:58Z"
+    generateName: certificados-qa-
+    generation: 9
+    labels:
+      migplan: certificados-qa
+    name: certificados-qa-cxqg5
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: migration.openshift.io/v1alpha1
+      kind: MigPlan
+      name: certificados-qa
+      uid: 881339f9-aa14-468d-b0e2-14a90cead01a
+    resourceVersion: "9207431"
+    uid: 00d64c5e-751d-42a2-bb04-e1d59331a544
+  spec:
+    analyzeExtendedPVCapacity: true
+    analyzeImageCount: false
+    analyzeK8SResources: false
+    analyzePVCapacity: false
+    migPlanRef:
+      name: certificados-qa
+      namespace: openshift-migration
+  status:
+    analytics:
+      excludedk8sResourceTotal: 0
+      imageCount: 0
+      imageSizeTotal: "0"
+      incompatiblek8sResourceTotal: 0
+      k8sResourceTotal: 0
+      namespaces:
+      - excludedK8SResourceTotal: 0
+        imageCount: 0
+        imageSizeTotal: "0"
+        incompatibleK8SResourceTotal: 0
+        k8sResourceTotal: 0
+        namespace: certificados-qa
+        pvCapacity: "0"
+        pvCount: 0
+      percentComplete: 100
+      plan: certificados-qa
+      pvCapacity: "0"
+      pvCount: 0
+    conditions:
+    - category: Required
+      lastTransitionTime: "2023-05-18T17:01:58Z"
+      message: The analytic is ready.
+      status: "True"
+      type: Ready
+    observedGeneration: 9
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: MigAnalytic
+  metadata:
+    annotations:
+      migplan: cicd
+    creationTimestamp: "2023-05-23T15:40:04Z"
+    generation: 5
+    labels:
+      migplan: cicd
+    name: cicd
+    namespace: openshift-migration
+    resourceVersion: "9843073"
+    uid: c824e962-8acb-4473-b4ac-9a8b5b3a94bc
+  spec:
+    analyzeImageCount: true
+    analyzeK8SResources: true
+    analyzePVCapacity: true
+    migPlanRef:
+      name: cicd
+      namespace: openshift-migration
+  status:
+    analytics:
+      excludedk8sResourceTotal: 23
+      imageCount: 14
+      imageSizeTotal: 3067Mi
+      incompatiblek8sResourceTotal: 0
+      k8sResourceTotal: 258
+      namespaces:
+      - excludedK8SResourceTotal: 23
+        excludedK8SResources:
+        - count: 20
+          group: ""
+          kind: events
+          version: v1
+        - count: 1
+          group: template.openshift.io
+          kind: templateinstances
+          version: v1
+        - count: 1
+          group: servicecatalog.k8s.io
+          kind: servicebindings
+          version: v1beta1
+        - count: 1
+          group: servicecatalog.k8s.io
+          kind: serviceinstances
+          version: v1beta1
+        imageCount: 14
+        imageSizeTotal: 3067Mi
+        incompatibleK8SResourceTotal: 0
+        k8sResourceTotal: 258
+        k8sResources:
+        - count: 5
+          group: ""
+          kind: configmaps
+          version: v1
+        - count: 21
+          group: ""
+          kind: endpoints
+          version: v1
+        - count: 4
+          group: ""
+          kind: persistentvolumeclaims
+          version: v1
+        - count: 8
+          group: ""
+          kind: pods
+          version: v1
+        - count: 36
+          group: ""
+          kind: replicationcontrollers
+          version: v1
+        - count: 23
+          group: ""
+          kind: secrets
+          version: v1
+        - count: 6
+          group: ""
+          kind: serviceaccounts
+          version: v1
+        - count: 21
+          group: ""
+          kind: services
+          version: v1
+        - count: 2
+          group: apps
+          kind: controllerrevisions
+          version: v1
+        - count: 1
+          group: apps
+          kind: deployments
+          version: v1
+        - count: 2
+          group: apps
+          kind: replicasets
+          version: v1
+        - count: 1
+          group: apps
+          kind: statefulsets
+          version: v1
+        - count: 2
+          group: apps
+          kind: controllerrevisions
+          version: v1beta2
+        - count: 1
+          group: apps
+          kind: statefulsets
+          version: v1beta2
+        - count: 2
+          group: apps
+          kind: controllerrevisions
+          version: v1beta1
+        - count: 1
+          group: apps
+          kind: statefulsets
+          version: v1beta1
+        - count: 7
+          group: authorization.openshift.io
+          kind: rolebindings
+          version: v1
+        - count: 7
+          group: rbac.authorization.k8s.io
+          kind: rolebindings
+          version: v1
+        - count: 7
+          group: rbac.authorization.k8s.io
+          kind: rolebindings
+          version: v1beta1
+        - count: 17
+          group: apps.openshift.io
+          kind: deploymentconfigs
+          version: v1
+        - count: 13
+          group: build.openshift.io
+          kind: buildconfigs
+          version: v1
+        - count: 14
+          group: build.openshift.io
+          kind: builds
+          version: v1
+        - count: 15
+          group: image.openshift.io
+          kind: imagestreams
+          version: v1
+        - count: 15
+          group: image.openshift.io
+          kind: imagestreamtags
+          version: v1
+        - count: 17
+          group: route.openshift.io
+          kind: routes
+          version: v1
+        - count: 2
+          group: template.openshift.io
+          kind: templates
+          version: v1
+        - count: 8
+          group: metrics.k8s.io
+          kind: pods
+          version: v1beta1
+        namespace: cicd
+        pvCapacity: 33Gi
+        pvCount: 4
+      percentComplete: 100
+      plan: cicd
+      pvCapacity: 33Gi
+      pvCount: 4
+    conditions:
+    - category: Required
+      lastTransitionTime: "2023-05-23T15:40:46Z"
+      message: The analytic is ready.
+      status: "True"
+      type: Ready
+    observedGeneration: 5
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: MigAnalytic
+  metadata:
+    annotations:
+      migplan: cicd
+    creationTimestamp: "2023-05-23T15:40:04Z"
+    generateName: cicd-
+    generation: 37
+    labels:
+      migplan: cicd
+    name: cicd-s6s8m
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: migration.openshift.io/v1alpha1
+      kind: MigPlan
+      name: cicd
+      uid: adcc6565-a1ee-4eee-a8d6-19a7e8841033
+    resourceVersion: "19216753"
+    uid: 85dc6e25-3e73-4fff-8796-053cf93f5d92
+  spec:
+    analyzeExtendedPVCapacity: true
+    analyzeImageCount: false
+    analyzeK8SResources: false
+    analyzePVCapacity: false
+    migPlanRef:
+      name: cicd
+      namespace: openshift-migration
+  status:
+    analytics:
+      excludedk8sResourceTotal: 0
+      imageCount: 0
+      imageSizeTotal: "0"
+      incompatiblek8sResourceTotal: 0
+      k8sResourceTotal: 0
+      namespaces:
+      - excludedK8SResourceTotal: 0
+        imageCount: 0
+        imageSizeTotal: "0"
+        incompatibleK8SResourceTotal: 0
+        k8sResourceTotal: 0
+        namespace: cicd
+        persistentVolumes:
+        - actualCapacity: 8321M
+          comment: No change in PV capacity is needed.
+          name: data-sonarqube-postgresql-0
+          proposedCapacity: 8Gi
+          requestedCapacity: 8Gi
+        - actualCapacity: 5151M
+          comment: No change in PV capacity is needed.
+          name: jenkins
+          proposedCapacity: 5Gi
+          requestedCapacity: 5Gi
+        - actualCapacity: 10435M
+          comment: No change in PV capacity is needed.
+          name: sonarqube-sonarqube
+          proposedCapacity: 10Gi
+          requestedCapacity: 10Gi
+        pvCapacity: "0"
+        pvCount: 0
+      percentComplete: 100
+      plan: cicd
+      pvCapacity: "0"
+      pvCount: 0
+    conditions:
+    - category: Required
+      lastTransitionTime: "2023-05-23T15:40:29Z"
+      message: The analytic is ready.
+      status: "True"
+      type: Ready
+    observedGeneration: 37
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: MigAnalytic
+  metadata:
+    annotations:
+      migplan: denuncias-dev
+    creationTimestamp: "2023-05-18T16:49:33Z"
+    generation: 4
+    labels:
+      migplan: denuncias-dev
+    name: denuncias-dev
+    namespace: openshift-migration
+    resourceVersion: "6126506"
+    uid: 30a2cd7c-8af5-4f8b-992a-40feb64b0bbb
+  spec:
+    analyzeImageCount: true
+    analyzeK8SResources: true
+    analyzePVCapacity: true
+    migPlanRef:
+      name: denuncias-dev
+      namespace: openshift-migration
+  status:
+    analytics:
+      excludedk8sResourceTotal: 0
+      imageCount: 31
+      imageSizeTotal: 6636Mi
+      incompatiblek8sResourceTotal: 0
+      k8sResourceTotal: 179
+      namespaces:
+      - excludedK8SResourceTotal: 0
+        imageCount: 31
+        imageSizeTotal: 6636Mi
+        incompatibleK8SResourceTotal: 0
+        k8sResourceTotal: 179
+        k8sResources:
+        - count: 6
+          group: ""
+          kind: endpoints
+          version: v1
+        - count: 5
+          group: ""
+          kind: pods
+          version: v1
+        - count: 17
+          group: ""
+          kind: replicationcontrollers
+          version: v1
+        - count: 11
+          group: ""
+          kind: secrets
+          version: v1
+        - count: 3
+          group: ""
+          kind: serviceaccounts
+          version: v1
+        - count: 6
+          group: ""
+          kind: services
+          version: v1
+        - count: 10
+          group: authorization.openshift.io
+          kind: rolebindings
+          version: v1
+        - count: 10
+          group: rbac.authorization.k8s.io
+          kind: rolebindings
+          version: v1
+        - count: 10
+          group: rbac.authorization.k8s.io
+          kind: rolebindings
+          version: v1beta1
+        - count: 6
+          group: apps.openshift.io
+          kind: deploymentconfigs
+          version: v1
+        - count: 18
+          group: build.openshift.io
+          kind: buildconfigs
+          version: v1
+        - count: 31
+          group: build.openshift.io
+          kind: builds
+          version: v1
+        - count: 18
+          group: image.openshift.io
+          kind: imagestreams
+          version: v1
+        - count: 18
+          group: image.openshift.io
+          kind: imagestreamtags
+          version: v1
+        - count: 5
+          group: route.openshift.io
+          kind: routes
+          version: v1
+        - count: 5
+          group: metrics.k8s.io
+          kind: pods
+          version: v1beta1
+        namespace: denuncias-dev
+        pvCapacity: "0"
+        pvCount: 0
+      percentComplete: 100
+      plan: denuncias-dev
+      pvCapacity: "0"
+      pvCount: 0
+    conditions:
+    - category: Required
+      lastTransitionTime: "2023-05-18T16:49:54Z"
+      message: The analytic is ready.
+      status: "True"
+      type: Ready
+    observedGeneration: 4
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: MigAnalytic
+  metadata:
+    annotations:
+      migplan: denuncias-dev
+    creationTimestamp: "2023-05-18T16:49:33Z"
+    generateName: denuncias-dev-
+    generation: 9
+    labels:
+      migplan: denuncias-dev
+    name: denuncias-dev-fnbxw
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: migration.openshift.io/v1alpha1
+      kind: MigPlan
+      name: denuncias-dev
+      uid: 00366fb0-8e8e-4301-948a-980b177c294d
+    resourceVersion: "6250416"
+    uid: 154d5dab-1432-4bdc-93b2-47b61a80bfe4
+  spec:
+    analyzeExtendedPVCapacity: true
+    analyzeImageCount: false
+    analyzeK8SResources: false
+    analyzePVCapacity: false
+    migPlanRef:
+      name: denuncias-dev
+      namespace: openshift-migration
+  status:
+    analytics:
+      excludedk8sResourceTotal: 0
+      imageCount: 0
+      imageSizeTotal: "0"
+      incompatiblek8sResourceTotal: 0
+      k8sResourceTotal: 0
+      namespaces:
+      - excludedK8SResourceTotal: 0
+        imageCount: 0
+        imageSizeTotal: "0"
+        incompatibleK8SResourceTotal: 0
+        k8sResourceTotal: 0
+        namespace: denuncias-dev
+        pvCapacity: "0"
+        pvCount: 0
+      percentComplete: 100
+      plan: denuncias-dev
+      pvCapacity: "0"
+      pvCount: 0
+    conditions:
+    - category: Required
+      lastTransitionTime: "2023-05-18T16:49:33Z"
+      message: The analytic is ready.
+      status: "True"
+      type: Ready
+    observedGeneration: 9
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: MigAnalytic
+  metadata:
+    annotations:
+      migplan: denuncias-prod
+    creationTimestamp: "2023-05-23T15:26:02Z"
+    generation: 4
+    labels:
+      migplan: denuncias-prod
+    name: denuncias-prod
+    namespace: openshift-migration
+    resourceVersion: "9834873"
+    uid: 91b59b3e-62d8-49ec-9bd1-63209dba01fe
+  spec:
+    analyzeImageCount: true
+    analyzeK8SResources: true
+    analyzePVCapacity: true
+    migPlanRef:
+      name: denuncias-prod
+      namespace: openshift-migration
+  status:
+    analytics:
+      excludedk8sResourceTotal: 0
+      imageCount: 0
+      imageSizeTotal: "0"
+      incompatiblek8sResourceTotal: 0
+      k8sResourceTotal: 71
+      namespaces:
+      - excludedK8SResourceTotal: 0
+        imageCount: 0
+        imageSizeTotal: "0"
+        incompatibleK8SResourceTotal: 0
+        k8sResourceTotal: 71
+        k8sResources:
+        - count: 5
+          group: ""
+          kind: endpoints
+          version: v1
+        - count: 15
+          group: ""
+          kind: replicationcontrollers
+          version: v1
+        - count: 10
+          group: ""
+          kind: secrets
+          version: v1
+        - count: 3
+          group: ""
+          kind: serviceaccounts
+          version: v1
+        - count: 5
+          group: ""
+          kind: services
+          version: v1
+        - count: 7
+          group: authorization.openshift.io
+          kind: rolebindings
+          version: v1
+        - count: 7
+          group: rbac.authorization.k8s.io
+          kind: rolebindings
+          version: v1
+        - count: 7
+          group: rbac.authorization.k8s.io
+          kind: rolebindings
+          version: v1beta1
+        - count: 5
+          group: apps.openshift.io
+          kind: deploymentconfigs
+          version: v1
+        - count: 7
+          group: route.openshift.io
+          kind: routes
+          version: v1
+        namespace: denuncias-prod
+        pvCapacity: "0"
+        pvCount: 0
+      percentComplete: 100
+      plan: denuncias-prod
+      pvCapacity: "0"
+      pvCount: 0
+    conditions:
+    - category: Required
+      lastTransitionTime: "2023-05-23T15:26:22Z"
+      message: The analytic is ready.
+      status: "True"
+      type: Ready
+    observedGeneration: 4
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: MigAnalytic
+  metadata:
+    annotations:
+      migplan: denuncias-prod
+    creationTimestamp: "2023-05-23T15:26:02Z"
+    generateName: denuncias-prod-
+    generation: 9
+    labels:
+      migplan: denuncias-prod
+    name: denuncias-prod-58gv2
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: migration.openshift.io/v1alpha1
+      kind: MigPlan
+      name: denuncias-prod
+      uid: 19adcece-7178-4e54-99cc-22dd4003dc83
+    resourceVersion: "9845131"
+    uid: e3feb78d-0b2a-4b92-9bca-184007ba92c5
+  spec:
+    analyzeExtendedPVCapacity: true
+    analyzeImageCount: false
+    analyzeK8SResources: false
+    analyzePVCapacity: false
+    migPlanRef:
+      name: denuncias-prod
+      namespace: openshift-migration
+  status:
+    analytics:
+      excludedk8sResourceTotal: 0
+      imageCount: 0
+      imageSizeTotal: "0"
+      incompatiblek8sResourceTotal: 0
+      k8sResourceTotal: 0
+      namespaces:
+      - excludedK8SResourceTotal: 0
+        imageCount: 0
+        imageSizeTotal: "0"
+        incompatibleK8SResourceTotal: 0
+        k8sResourceTotal: 0
+        namespace: denuncias-prod
+        pvCapacity: "0"
+        pvCount: 0
+      percentComplete: 100
+      plan: denuncias-prod
+      pvCapacity: "0"
+      pvCount: 0
+    conditions:
+    - category: Required
+      lastTransitionTime: "2023-05-23T15:26:02Z"
+      message: The analytic is ready.
+      status: "True"
+      type: Ready
+    observedGeneration: 9
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: MigAnalytic
+  metadata:
+    annotations:
+      migplan: denuncias-qa
+    creationTimestamp: "2023-05-18T17:03:17Z"
+    generation: 5
+    labels:
+      migplan: denuncias-qa
+    name: denuncias-qa
+    namespace: openshift-migration
+    resourceVersion: "6134710"
+    uid: 4646ef48-d606-4362-a409-b063257d9f48
+  spec:
+    analyzeImageCount: true
+    analyzeK8SResources: true
+    analyzePVCapacity: true
+    migPlanRef:
+      name: denuncias-qa
+      namespace: openshift-migration
+  status:
+    analytics:
+      excludedk8sResourceTotal: 0
+      imageCount: 0
+      imageSizeTotal: "0"
+      incompatiblek8sResourceTotal: 0
+      k8sResourceTotal: 75
+      namespaces:
+      - excludedK8SResourceTotal: 0
+        imageCount: 0
+        imageSizeTotal: "0"
+        incompatibleK8SResourceTotal: 0
+        k8sResourceTotal: 75
+        k8sResources:
+        - count: 6
+          group: ""
+          kind: endpoints
+          version: v1
+        - count: 15
+          group: ""
+          kind: replicationcontrollers
+          version: v1
+        - count: 10
+          group: ""
+          kind: secrets
+          version: v1
+        - count: 3
+          group: ""
+          kind: serviceaccounts
+          version: v1
+        - count: 6
+          group: ""
+          kind: services
+          version: v1
+        - count: 8
+          group: authorization.openshift.io
+          kind: rolebindings
+          version: v1
+        - count: 8
+          group: rbac.authorization.k8s.io
+          kind: rolebindings
+          version: v1
+        - count: 8
+          group: rbac.authorization.k8s.io
+          kind: rolebindings
+          version: v1beta1
+        - count: 6
+          group: apps.openshift.io
+          kind: deploymentconfigs
+          version: v1
+        - count: 5
+          group: route.openshift.io
+          kind: routes
+          version: v1
+        namespace: denuncias-qa
+        pvCapacity: "0"
+        pvCount: 0
+      percentComplete: 100
+      plan: denuncias-qa
+      pvCapacity: "0"
+      pvCount: 0
+    conditions:
+    - category: Required
+      lastTransitionTime: "2023-05-18T17:03:38Z"
+      message: The analytic is ready.
+      status: "True"
+      type: Ready
+    observedGeneration: 5
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: MigAnalytic
+  metadata:
+    annotations:
+      migplan: denuncias-qa
+    creationTimestamp: "2023-05-18T17:03:17Z"
+    generateName: denuncias-qa-
+    generation: 9
+    labels:
+      migplan: denuncias-qa
+    name: denuncias-qa-vfh9g
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: migration.openshift.io/v1alpha1
+      kind: MigPlan
+      name: denuncias-qa
+      uid: 4744b907-f899-4d99-9c40-21dc5fe59e15
+    resourceVersion: "9198436"
+    uid: 03708e84-da38-48d6-9316-6491a17e3c74
+  spec:
+    analyzeExtendedPVCapacity: true
+    analyzeImageCount: false
+    analyzeK8SResources: false
+    analyzePVCapacity: false
+    migPlanRef:
+      name: denuncias-qa
+      namespace: openshift-migration
+  status:
+    analytics:
+      excludedk8sResourceTotal: 0
+      imageCount: 0
+      imageSizeTotal: "0"
+      incompatiblek8sResourceTotal: 0
+      k8sResourceTotal: 0
+      namespaces:
+      - excludedK8SResourceTotal: 0
+        imageCount: 0
+        imageSizeTotal: "0"
+        incompatibleK8SResourceTotal: 0
+        k8sResourceTotal: 0
+        namespace: denuncias-qa
+        pvCapacity: "0"
+        pvCount: 0
+      percentComplete: 100
+      plan: denuncias-qa
+      pvCapacity: "0"
+      pvCount: 0
+    conditions:
+    - category: Required
+      lastTransitionTime: "2023-05-18T17:03:17Z"
+      message: The analytic is ready.
+      status: "True"
+      type: Ready
+    observedGeneration: 9
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: MigAnalytic
+  metadata:
+    annotations:
+      migplan: dev
+    creationTimestamp: "2023-05-18T16:50:54Z"
+    generation: 4
+    labels:
+      migplan: dev
+    name: dev
+    namespace: openshift-migration
+    resourceVersion: "6127259"
+    uid: e99204e7-d24f-473a-bf3e-667e750ec5db
+  spec:
+    analyzeImageCount: true
+    analyzeK8SResources: true
+    analyzePVCapacity: true
+    migPlanRef:
+      name: dev
+      namespace: openshift-migration
+  status:
+    analytics:
+      excludedk8sResourceTotal: 0
+      imageCount: 0
+      imageSizeTotal: "0"
+      incompatiblek8sResourceTotal: 0
+      k8sResourceTotal: 27
+      namespaces:
+      - excludedK8SResourceTotal: 0
+        imageCount: 0
+        imageSizeTotal: "0"
+        incompatibleK8SResourceTotal: 0
+        k8sResourceTotal: 27
+        k8sResources:
+        - count: 9
+          group: ""
+          kind: secrets
+          version: v1
+        - count: 3
+          group: ""
+          kind: serviceaccounts
+          version: v1
+        - count: 5
+          group: authorization.openshift.io
+          kind: rolebindings
+          version: v1
+        - count: 5
+          group: rbac.authorization.k8s.io
+          kind: rolebindings
+          version: v1
+        - count: 5
+          group: rbac.authorization.k8s.io
+          kind: rolebindings
+          version: v1beta1
+        namespace: dev
+        pvCapacity: "0"
+        pvCount: 0
+      percentComplete: 100
+      plan: dev
+      pvCapacity: "0"
+      pvCount: 0
+    conditions:
+    - category: Required
+      lastTransitionTime: "2023-05-18T16:51:15Z"
+      message: The analytic is ready.
+      status: "True"
+      type: Ready
+    observedGeneration: 4
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: MigAnalytic
+  metadata:
+    annotations:
+      migplan: dev
+    creationTimestamp: "2023-05-18T16:50:54Z"
+    generateName: dev-
+    generation: 9
+    labels:
+      migplan: dev
+    name: dev-mr5ql
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: migration.openshift.io/v1alpha1
+      kind: MigPlan
+      name: dev
+      uid: 9af31f99-5a88-4bb6-b11a-4d02605932d6
+    resourceVersion: "6259768"
+    uid: f6853676-e657-486b-b9ea-eb41568f938d
+  spec:
+    analyzeExtendedPVCapacity: true
+    analyzeImageCount: false
+    analyzeK8SResources: false
+    analyzePVCapacity: false
+    migPlanRef:
+      name: dev
+      namespace: openshift-migration
+  status:
+    analytics:
+      excludedk8sResourceTotal: 0
+      imageCount: 0
+      imageSizeTotal: "0"
+      incompatiblek8sResourceTotal: 0
+      k8sResourceTotal: 0
+      namespaces:
+      - excludedK8SResourceTotal: 0
+        imageCount: 0
+        imageSizeTotal: "0"
+        incompatibleK8SResourceTotal: 0
+        k8sResourceTotal: 0
+        namespace: dev
+        pvCapacity: "0"
+        pvCount: 0
+      percentComplete: 100
+      plan: dev
+      pvCapacity: "0"
+      pvCount: 0
+    conditions:
+    - category: Required
+      lastTransitionTime: "2023-05-18T16:50:54Z"
+      message: The analytic is ready.
+      status: "True"
+      type: Ready
+    observedGeneration: 9
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: MigAnalytic
+  metadata:
+    annotations:
+      migplan: hangfire-dev
+    creationTimestamp: "2023-05-18T16:52:17Z"
+    generation: 4
+    labels:
+      migplan: hangfire-dev
+    name: hangfire-dev
+    namespace: openshift-migration
+    resourceVersion: "6128077"
+    uid: 686298ad-5b12-4f79-96d1-b8a9cb781728
+  spec:
+    analyzeImageCount: true
+    analyzeK8SResources: true
+    analyzePVCapacity: true
+    migPlanRef:
+      name: hangfire-dev
+      namespace: openshift-migration
+  status:
+    analytics:
+      excludedk8sResourceTotal: 0
+      imageCount: 0
+      imageSizeTotal: "0"
+      incompatiblek8sResourceTotal: 0
+      k8sResourceTotal: 33
+      namespaces:
+      - excludedK8SResourceTotal: 0
+        imageCount: 0
+        imageSizeTotal: "0"
+        incompatibleK8SResourceTotal: 0
+        k8sResourceTotal: 33
+        k8sResources:
+        - count: 9
+          group: ""
+          kind: secrets
+          version: v1
+        - count: 3
+          group: ""
+          kind: serviceaccounts
+          version: v1
+        - count: 7
+          group: authorization.openshift.io
+          kind: rolebindings
+          version: v1
+        - count: 7
+          group: rbac.authorization.k8s.io
+          kind: rolebindings
+          version: v1
+        - count: 7
+          group: rbac.authorization.k8s.io
+          kind: rolebindings
+          version: v1beta1
+        namespace: hangfire-dev
+        pvCapacity: "0"
+        pvCount: 0
+      percentComplete: 100
+      plan: hangfire-dev
+      pvCapacity: "0"
+      pvCount: 0
+    conditions:
+    - category: Required
+      lastTransitionTime: "2023-05-18T16:52:38Z"
+      message: The analytic is ready.
+      status: "True"
+      type: Ready
+    observedGeneration: 4
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: MigAnalytic
+  metadata:
+    annotations:
+      migplan: hangfire-dev
+    creationTimestamp: "2023-05-18T16:52:17Z"
+    generateName: hangfire-dev-
+    generation: 9
+    labels:
+      migplan: hangfire-dev
+    name: hangfire-dev-r9h74
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: migration.openshift.io/v1alpha1
+      kind: MigPlan
+      name: hangfire-dev
+      uid: f79bedcd-e55e-4136-becf-d2363cdcf3d2
+    resourceVersion: "6260569"
+    uid: fa4607e4-e73b-49aa-a0c7-19802c4fbbc4
+  spec:
+    analyzeExtendedPVCapacity: true
+    analyzeImageCount: false
+    analyzeK8SResources: false
+    analyzePVCapacity: false
+    migPlanRef:
+      name: hangfire-dev
+      namespace: openshift-migration
+  status:
+    analytics:
+      excludedk8sResourceTotal: 0
+      imageCount: 0
+      imageSizeTotal: "0"
+      incompatiblek8sResourceTotal: 0
+      k8sResourceTotal: 0
+      namespaces:
+      - excludedK8SResourceTotal: 0
+        imageCount: 0
+        imageSizeTotal: "0"
+        incompatibleK8SResourceTotal: 0
+        k8sResourceTotal: 0
+        namespace: hangfire-dev
+        pvCapacity: "0"
+        pvCount: 0
+      percentComplete: 100
+      plan: hangfire-dev
+      pvCapacity: "0"
+      pvCount: 0
+    conditions:
+    - category: Required
+      lastTransitionTime: "2023-05-18T16:52:17Z"
+      message: The analytic is ready.
+      status: "True"
+      type: Ready
+    observedGeneration: 9
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: MigAnalytic
+  metadata:
+    annotations:
+      migplan: hangfire-prod
+    creationTimestamp: "2023-05-23T15:27:13Z"
+    generation: 4
+    labels:
+      migplan: hangfire-prod
+    name: hangfire-prod
+    namespace: openshift-migration
+    resourceVersion: "9835508"
+    uid: 9c252c72-afa8-4442-baf8-58c81282ae88
+  spec:
+    analyzeImageCount: true
+    analyzeK8SResources: true
+    analyzePVCapacity: true
+    migPlanRef:
+      name: hangfire-prod
+      namespace: openshift-migration
+  status:
+    analytics:
+      excludedk8sResourceTotal: 0
+      imageCount: 0
+      imageSizeTotal: "0"
+      incompatiblek8sResourceTotal: 0
+      k8sResourceTotal: 33
+      namespaces:
+      - excludedK8SResourceTotal: 0
+        imageCount: 0
+        imageSizeTotal: "0"
+        incompatibleK8SResourceTotal: 0
+        k8sResourceTotal: 33
+        k8sResources:
+        - count: 9
+          group: ""
+          kind: secrets
+          version: v1
+        - count: 3
+          group: ""
+          kind: serviceaccounts
+          version: v1
+        - count: 7
+          group: authorization.openshift.io
+          kind: rolebindings
+          version: v1
+        - count: 7
+          group: rbac.authorization.k8s.io
+          kind: rolebindings
+          version: v1
+        - count: 7
+          group: rbac.authorization.k8s.io
+          kind: rolebindings
+          version: v1beta1
+        namespace: hangfire-prod
+        pvCapacity: "0"
+        pvCount: 0
+      percentComplete: 100
+      plan: hangfire-prod
+      pvCapacity: "0"
+      pvCount: 0
+    conditions:
+    - category: Required
+      lastTransitionTime: "2023-05-23T15:27:33Z"
+      message: The analytic is ready.
+      status: "True"
+      type: Ready
+    observedGeneration: 4
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: MigAnalytic
+  metadata:
+    annotations:
+      migplan: hangfire-prod
+    creationTimestamp: "2023-05-23T15:27:13Z"
+    generateName: hangfire-prod-
+    generation: 9
+    labels:
+      migplan: hangfire-prod
+    name: hangfire-prod-gjbjd
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: migration.openshift.io/v1alpha1
+      kind: MigPlan
+      name: hangfire-prod
+      uid: b85a3f5d-045f-4a08-bdc7-fc7b6e2f678a
+    resourceVersion: "9845261"
+    uid: a1a6949a-db33-4347-b0dc-d7e6c523ce93
+  spec:
+    analyzeExtendedPVCapacity: true
+    analyzeImageCount: false
+    analyzeK8SResources: false
+    analyzePVCapacity: false
+    migPlanRef:
+      name: hangfire-prod
+      namespace: openshift-migration
+  status:
+    analytics:
+      excludedk8sResourceTotal: 0
+      imageCount: 0
+      imageSizeTotal: "0"
+      incompatiblek8sResourceTotal: 0
+      k8sResourceTotal: 0
+      namespaces:
+      - excludedK8SResourceTotal: 0
+        imageCount: 0
+        imageSizeTotal: "0"
+        incompatibleK8SResourceTotal: 0
+        k8sResourceTotal: 0
+        namespace: hangfire-prod
+        pvCapacity: "0"
+        pvCount: 0
+      percentComplete: 100
+      plan: hangfire-prod
+      pvCapacity: "0"
+      pvCount: 0
+    conditions:
+    - category: Required
+      lastTransitionTime: "2023-05-23T15:27:13Z"
+      message: The analytic is ready.
+      status: "True"
+      type: Ready
+    observedGeneration: 9
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: MigAnalytic
+  metadata:
+    annotations:
+      migplan: hangfire-qa
+    creationTimestamp: "2023-05-18T17:04:00Z"
+    generation: 4
+    labels:
+      migplan: hangfire-qa
+    name: hangfire-qa
+    namespace: openshift-migration
+    resourceVersion: "6135206"
+    uid: 422d8653-029f-4f72-97c0-2c24a43c4265
+  spec:
+    analyzeImageCount: true
+    analyzeK8SResources: true
+    analyzePVCapacity: true
+    migPlanRef:
+      name: hangfire-qa
+      namespace: openshift-migration
+  status:
+    analytics:
+      excludedk8sResourceTotal: 0
+      imageCount: 0
+      imageSizeTotal: "0"
+      incompatiblek8sResourceTotal: 0
+      k8sResourceTotal: 33
+      namespaces:
+      - excludedK8SResourceTotal: 0
+        imageCount: 0
+        imageSizeTotal: "0"
+        incompatibleK8SResourceTotal: 0
+        k8sResourceTotal: 33
+        k8sResources:
+        - count: 9
+          group: ""
+          kind: secrets
+          version: v1
+        - count: 3
+          group: ""
+          kind: serviceaccounts
+          version: v1
+        - count: 7
+          group: authorization.openshift.io
+          kind: rolebindings
+          version: v1
+        - count: 7
+          group: rbac.authorization.k8s.io
+          kind: rolebindings
+          version: v1
+        - count: 7
+          group: rbac.authorization.k8s.io
+          kind: rolebindings
+          version: v1beta1
+        namespace: hangfire-qa
+        pvCapacity: "0"
+        pvCount: 0
+      percentComplete: 100
+      plan: hangfire-qa
+      pvCapacity: "0"
+      pvCount: 0
+    conditions:
+    - category: Required
+      lastTransitionTime: "2023-05-18T17:04:21Z"
+      message: The analytic is ready.
+      status: "True"
+      type: Ready
+    observedGeneration: 4
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: MigAnalytic
+  metadata:
+    annotations:
+      migplan: hangfire-qa
+    creationTimestamp: "2023-05-18T17:04:00Z"
+    generateName: hangfire-qa-
+    generation: 9
+    labels:
+      migplan: hangfire-qa
+    name: hangfire-qa-mb464
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: migration.openshift.io/v1alpha1
+      kind: MigPlan
+      name: hangfire-qa
+      uid: 2c784d31-0365-438b-9399-3a4442eff086
+    resourceVersion: "9207787"
+    uid: 964730d5-4d76-440e-a3e1-99bff410d311
+  spec:
+    analyzeExtendedPVCapacity: true
+    analyzeImageCount: false
+    analyzeK8SResources: false
+    analyzePVCapacity: false
+    migPlanRef:
+      name: hangfire-qa
+      namespace: openshift-migration
+  status:
+    analytics:
+      excludedk8sResourceTotal: 0
+      imageCount: 0
+      imageSizeTotal: "0"
+      incompatiblek8sResourceTotal: 0
+      k8sResourceTotal: 0
+      namespaces:
+      - excludedK8SResourceTotal: 0
+        imageCount: 0
+        imageSizeTotal: "0"
+        incompatibleK8SResourceTotal: 0
+        k8sResourceTotal: 0
+        namespace: hangfire-qa
+        pvCapacity: "0"
+        pvCount: 0
+      percentComplete: 100
+      plan: hangfire-qa
+      pvCapacity: "0"
+      pvCount: 0
+    conditions:
+    - category: Required
+      lastTransitionTime: "2023-05-18T17:04:00Z"
+      message: The analytic is ready.
+      status: "True"
+      type: Ready
+    observedGeneration: 9
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: MigAnalytic
+  metadata:
+    annotations:
+      migplan: lre-dev
+    creationTimestamp: "2023-05-18T16:53:12Z"
+    generation: 4
+    labels:
+      migplan: lre-dev
+    name: lre-dev
+    namespace: openshift-migration
+    resourceVersion: "6128663"
+    uid: a9e253ba-116b-4018-bdf0-61b4f1d6def9
+  spec:
+    analyzeImageCount: true
+    analyzeK8SResources: true
+    analyzePVCapacity: true
+    migPlanRef:
+      name: lre-dev
+      namespace: openshift-migration
+  status:
+    analytics:
+      excludedk8sResourceTotal: 0
+      imageCount: 24
+      imageSizeTotal: 7782Mi
+      incompatiblek8sResourceTotal: 2
+      k8sResourceTotal: 167
+      namespaces:
+      - excludedK8SResourceTotal: 0
+        imageCount: 24
+        imageSizeTotal: 7782Mi
+        incompatibleK8SResourceTotal: 2
+        incompatibleK8SResources:
+        - count: 1
+          group: broker.amq.io
+          kind: activemqartemises
+          version: v2alpha4
+        - count: 1
+          group: broker.amq.io
+          kind: activemqartemisscaledowns
+          version: v2alpha1
+        k8sResourceTotal: 167
+        k8sResources:
+        - count: 1
+          group: ""
+          kind: configmaps
+          version: v1
+        - count: 13
+          group: ""
+          kind: endpoints
+          version: v1
+        - count: 1
+          group: ""
+          kind: limitranges
+          version: v1
+        - count: 2
+          group: ""
+          kind: persistentvolumeclaims
+          version: v1
+        - count: 4
+          group: ""
+          kind: pods
+          version: v1
+        - count: 12
+          group: ""
+          kind: replicationcontrollers
+          version: v1
+        - count: 20
+          group: ""
+          kind: secrets
+          version: v1
+        - count: 4
+          group: ""
+          kind: serviceaccounts
+          version: v1
+        - count: 13
+          group: ""
+          kind: services
+          version: v1
+        - count: 1
+          group: apps
+          kind: deployments
+          version: v1
+        - count: 1
+          group: apps
+          kind: replicasets
+          version: v1
+        - count: 2
+          group: autoscaling
+          kind: horizontalpodautoscalers
+          version: v1
+        - count: 2
+          group: autoscaling
+          kind: horizontalpodautoscalers
+          version: v2beta1
+        - count: 11
+          group: authorization.openshift.io
+          kind: rolebindings
+          version: v1
+        - count: 1
+          group: authorization.openshift.io
+          kind: roles
+          version: v1
+        - count: 11
+          group: rbac.authorization.k8s.io
+          kind: rolebindings
+          version: v1
+        - count: 1
+          group: rbac.authorization.k8s.io
+          kind: roles
+          version: v1
+        - count: 11
+          group: rbac.authorization.k8s.io
+          kind: rolebindings
+          version: v1beta1
+        - count: 1
+          group: rbac.authorization.k8s.io
+          kind: roles
+          version: v1beta1
+        - count: 3
+          group: apps.openshift.io
+          kind: deploymentconfigs
+          version: v1
+        - count: 8
+          group: build.openshift.io
+          kind: buildconfigs
+          version: v1
+        - count: 14
+          group: build.openshift.io
+          kind: builds
+          version: v1
+        - count: 6
+          group: image.openshift.io
+          kind: imagestreams
+          version: v1
+        - count: 9
+          group: image.openshift.io
+          kind: imagestreamtags
+          version: v1
+        - count: 8
+          group: route.openshift.io
+          kind: routes
+          version: v1
+        - count: 1
+          group: broker.amq.io
+          kind: activemqartemises
+          version: v2alpha3
+        - count: 1
+          group: broker.amq.io
+          kind: activemqartemises
+          version: v2alpha2
+        - count: 1
+          group: broker.amq.io
+          kind: activemqartemises
+          version: v2alpha1
+        - count: 4
+          group: metrics.k8s.io
+          kind: pods
+          version: v1beta1
+        namespace: lre-dev
+        pvCapacity: 10Gi
+        pvCount: 2
+      percentComplete: 100
+      plan: lre-dev
+      pvCapacity: 10Gi
+      pvCount: 2
+    conditions:
+    - category: Required
+      lastTransitionTime: "2023-05-18T16:53:33Z"
+      message: The analytic is ready.
+      status: "True"
+      type: Ready
+    observedGeneration: 4
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: MigAnalytic
+  metadata:
+    annotations:
+      migplan: lre-dev
+    creationTimestamp: "2023-05-18T16:53:11Z"
+    generateName: lre-dev-
+    generation: 15
+    labels:
+      migplan: lre-dev
+    name: lre-dev-rvkbp
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: migration.openshift.io/v1alpha1
+      kind: MigPlan
+      name: lre-dev
+      uid: 09dc99a3-20c0-4d89-88a2-c81cce3ef81b
+    resourceVersion: "19643299"
+    uid: c31f44ac-cf28-4327-b7d7-4cda45a9365b
+  spec:
+    analyzeExtendedPVCapacity: true
+    analyzeImageCount: false
+    analyzeK8SResources: false
+    analyzePVCapacity: false
+    migPlanRef:
+      name: lre-dev
+      namespace: openshift-migration
+  status:
+    analytics:
+      excludedk8sResourceTotal: 0
+      imageCount: 0
+      imageSizeTotal: "0"
+      incompatiblek8sResourceTotal: 0
+      k8sResourceTotal: 0
+      namespaces:
+      - excludedK8SResourceTotal: 0
+        imageCount: 0
+        imageSizeTotal: "0"
+        incompatibleK8SResourceTotal: 0
+        k8sResourceTotal: 0
+        namespace: lre-dev
+        pvCapacity: "0"
+        pvCount: 0
+      percentComplete: 100
+      plan: lre-dev
+      pvCapacity: "0"
+      pvCount: 0
+    conditions:
+    - category: Required
+      lastTransitionTime: "2023-05-18T16:53:12Z"
+      message: The analytic is ready.
+      status: "True"
+      type: Ready
+    observedGeneration: 15
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: MigAnalytic
+  metadata:
+    annotations:
+      migplan: lre-prod
+    creationTimestamp: "2023-05-23T15:29:26Z"
+    generation: 4
+    labels:
+      migplan: lre-prod
+    name: lre-prod
+    namespace: openshift-migration
+    resourceVersion: "9836805"
+    uid: de284b46-9a97-48d1-bc3f-a1fc5fe51c78
+  spec:
+    analyzeImageCount: true
+    analyzeK8SResources: true
+    analyzePVCapacity: true
+    migPlanRef:
+      name: lre-prod
+      namespace: openshift-migration
+  status:
+    analytics:
+      excludedk8sResourceTotal: 0
+      imageCount: 9
+      imageSizeTotal: 2470Mi
+      incompatiblek8sResourceTotal: 2
+      k8sResourceTotal: 165
+      namespaces:
+      - excludedK8SResourceTotal: 0
+        imageCount: 9
+        imageSizeTotal: 2470Mi
+        incompatibleK8SResourceTotal: 2
+        incompatibleK8SResources:
+        - count: 1
+          group: broker.amq.io
+          kind: activemqartemises
+          version: v2alpha4
+        - count: 1
+          group: broker.amq.io
+          kind: activemqartemisscaledowns
+          version: v2alpha1
+        k8sResourceTotal: 165
+        k8sResources:
+        - count: 1
+          group: ""
+          kind: configmaps
+          version: v1
+        - count: 12
+          group: ""
+          kind: endpoints
+          version: v1
+        - count: 2
+          group: ""
+          kind: persistentvolumeclaims
+          version: v1
+        - count: 9
+          group: ""
+          kind: pods
+          version: v1
+        - count: 17
+          group: ""
+          kind: replicationcontrollers
+          version: v1
+        - count: 19
+          group: ""
+          kind: secrets
+          version: v1
+        - count: 4
+          group: ""
+          kind: serviceaccounts
+          version: v1
+        - count: 12
+          group: ""
+          kind: services
+          version: v1
+        - count: 1
+          group: apps
+          kind: controllerrevisions
+          version: v1
+        - count: 1
+          group: apps
+          kind: deployments
+          version: v1
+        - count: 1
+          group: apps
+          kind: replicasets
+          version: v1
+        - count: 1
+          group: apps
+          kind: statefulsets
+          version: v1
+        - count: 1
+          group: apps
+          kind: controllerrevisions
+          version: v1beta2
+        - count: 1
+          group: apps
+          kind: statefulsets
+          version: v1beta2
+        - count: 1
+          group: apps
+          kind: controllerrevisions
+          version: v1beta1
+        - count: 1
+          group: apps
+          kind: statefulsets
+          version: v1beta1
+        - count: 2
+          group: autoscaling
+          kind: horizontalpodautoscalers
+          version: v1
+        - count: 2
+          group: autoscaling
+          kind: horizontalpodautoscalers
+          version: v2beta1
+        - count: 10
+          group: authorization.openshift.io
+          kind: rolebindings
+          version: v1
+        - count: 1
+          group: authorization.openshift.io
+          kind: roles
+          version: v1
+        - count: 10
+          group: rbac.authorization.k8s.io
+          kind: rolebindings
+          version: v1
+        - count: 1
+          group: rbac.authorization.k8s.io
+          kind: roles
+          version: v1
+        - count: 10
+          group: rbac.authorization.k8s.io
+          kind: rolebindings
+          version: v1beta1
+        - count: 1
+          group: rbac.authorization.k8s.io
+          kind: roles
+          version: v1beta1
+        - count: 5
+          group: apps.openshift.io
+          kind: deploymentconfigs
+          version: v1
+        - count: 3
+          group: build.openshift.io
+          kind: buildconfigs
+          version: v1
+        - count: 7
+          group: build.openshift.io
+          kind: builds
+          version: v1
+        - count: 4
+          group: image.openshift.io
+          kind: imagestreams
+          version: v1
+        - count: 4
+          group: image.openshift.io
+          kind: imagestreamtags
+          version: v1
+        - count: 9
+          group: route.openshift.io
+          kind: routes
+          version: v1
+        - count: 1
+          group: broker.amq.io
+          kind: activemqartemises
+          version: v2alpha3
+        - count: 1
+          group: broker.amq.io
+          kind: activemqartemises
+          version: v2alpha2
+        - count: 1
+          group: broker.amq.io
+          kind: activemqartemises
+          version: v2alpha1
+        - count: 9
+          group: metrics.k8s.io
+          kind: pods
+          version: v1beta1
+        namespace: lre-prod
+        pvCapacity: 40Gi
+        pvCount: 2
+      percentComplete: 100
+      plan: lre-prod
+      pvCapacity: 40Gi
+      pvCount: 2
+    conditions:
+    - category: Required
+      lastTransitionTime: "2023-05-23T15:29:47Z"
+      message: The analytic is ready.
+      status: "True"
+      type: Ready
+    observedGeneration: 4
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: MigAnalytic
+  metadata:
+    annotations:
+      migplan: lre-prod
+    creationTimestamp: "2023-05-23T15:29:26Z"
+    generateName: lre-prod-
+    generation: 12
+    labels:
+      migplan: lre-prod
+    name: lre-prod-4zqfx
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: migration.openshift.io/v1alpha1
+      kind: MigPlan
+      name: lre-prod
+      uid: 650c7753-846f-4da6-a5a7-eff123c536a8
+    resourceVersion: "20837970"
+    uid: bc10fdef-754f-45e9-977d-65352958521d
+  spec:
+    analyzeExtendedPVCapacity: true
+    analyzeImageCount: false
+    analyzeK8SResources: false
+    analyzePVCapacity: false
+    migPlanRef:
+      name: lre-prod
+      namespace: openshift-migration
+  status:
+    analytics:
+      excludedk8sResourceTotal: 0
+      imageCount: 0
+      imageSizeTotal: "0"
+      incompatiblek8sResourceTotal: 0
+      k8sResourceTotal: 0
+      namespaces:
+      - excludedK8SResourceTotal: 0
+        imageCount: 0
+        imageSizeTotal: "0"
+        incompatibleK8SResourceTotal: 0
+        k8sResourceTotal: 0
+        namespace: lre-prod
+        persistentVolumes:
+        - actualCapacity: 21004M
+          comment: No change in PV capacity is needed.
+          name: lre-broker-lre-broker-ss-1
+          proposedCapacity: 20Gi
+          requestedCapacity: 20Gi
+        - actualCapacity: 21004M
+          comment: No change in PV capacity is needed.
+          name: lre-broker-lre-broker-ss-0
+          proposedCapacity: 20Gi
+          requestedCapacity: 20Gi
+        pvCapacity: "0"
+        pvCount: 0
+      percentComplete: 100
+      plan: lre-prod
+      pvCapacity: "0"
+      pvCount: 0
+    conditions:
+    - category: Required
+      lastTransitionTime: "2023-05-23T15:29:29Z"
+      message: The analytic is ready.
+      status: "True"
+      type: Ready
+    observedGeneration: 12
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: MigAnalytic
+  metadata:
+    annotations:
+      migplan: lre-qa
+    creationTimestamp: "2023-05-18T17:04:45Z"
+    generation: 5
+    labels:
+      migplan: lre-qa
+    name: lre-qa
+    namespace: openshift-migration
+    resourceVersion: "6135726"
+    uid: 71f5d6a7-8c90-4d52-82a2-91463802a558
+  spec:
+    analyzeImageCount: true
+    analyzeK8SResources: true
+    analyzePVCapacity: true
+    migPlanRef:
+      name: lre-qa
+      namespace: openshift-migration
+  status:
+    analytics:
+      excludedk8sResourceTotal: 23
+      imageCount: 30
+      imageSizeTotal: 10642Mi
+      incompatiblek8sResourceTotal: 2
+      k8sResourceTotal: 143
+      namespaces:
+      - excludedK8SResourceTotal: 23
+        excludedK8SResources:
+        - count: 23
+          group: ""
+          kind: events
+          version: v1
+        imageCount: 30
+        imageSizeTotal: 10642Mi
+        incompatibleK8SResourceTotal: 2
+        incompatibleK8SResources:
+        - count: 1
+          group: broker.amq.io
+          kind: activemqartemises
+          version: v2alpha4
+        - count: 1
+          group: broker.amq.io
+          kind: activemqartemisscaledowns
+          version: v2alpha1
+        k8sResourceTotal: 143
+        k8sResources:
+        - count: 1
+          group: ""
+          kind: configmaps
+          version: v1
+        - count: 9
+          group: ""
+          kind: endpoints
+          version: v1
+        - count: 2
+          group: ""
+          kind: persistentvolumeclaims
+          version: v1
+        - count: 10
+          group: ""
+          kind: pods
+          version: v1
+        - count: 8
+          group: ""
+          kind: replicationcontrollers
+          version: v1
+        - count: 20
+          group: ""
+          kind: secrets
+          version: v1
+        - count: 4
+          group: ""
+          kind: serviceaccounts
+          version: v1
+        - count: 9
+          group: ""
+          kind: services
+          version: v1
+        - count: 1
+          group: apps
+          kind: controllerrevisions
+          version: v1
+        - count: 1
+          group: apps
+          kind: deployments
+          version: v1
+        - count: 1
+          group: apps
+          kind: replicasets
+          version: v1
+        - count: 1
+          group: apps
+          kind: statefulsets
+          version: v1
+        - count: 1
+          group: apps
+          kind: controllerrevisions
+          version: v1beta2
+        - count: 1
+          group: apps
+          kind: statefulsets
+          version: v1beta2
+        - count: 1
+          group: apps
+          kind: controllerrevisions
+          version: v1beta1
+        - count: 1
+          group: apps
+          kind: statefulsets
+          version: v1beta1
+        - count: 8
+          group: authorization.openshift.io
+          kind: rolebindings
+          version: v1
+        - count: 1
+          group: authorization.openshift.io
+          kind: roles
+          version: v1
+        - count: 8
+          group: rbac.authorization.k8s.io
+          kind: rolebindings
+          version: v1
+        - count: 1
+          group: rbac.authorization.k8s.io
+          kind: roles
+          version: v1
+        - count: 8
+          group: rbac.authorization.k8s.io
+          kind: rolebindings
+          version: v1beta1
+        - count: 1
+          group: rbac.authorization.k8s.io
+          kind: roles
+          version: v1beta1
+        - count: 2
+          group: apps.openshift.io
+          kind: deploymentconfigs
+          version: v1
+        - count: 2
+          group: build.openshift.io
+          kind: buildconfigs
+          version: v1
+        - count: 8
+          group: build.openshift.io
+          kind: builds
+          version: v1
+        - count: 3
+          group: image.openshift.io
+          kind: imagestreams
+          version: v1
+        - count: 15
+          group: image.openshift.io
+          kind: imagestreamtags
+          version: v1
+        - count: 6
+          group: route.openshift.io
+          kind: routes
+          version: v1
+        - count: 1
+          group: broker.amq.io
+          kind: activemqartemises
+          version: v2alpha3
+        - count: 1
+          group: broker.amq.io
+          kind: activemqartemises
+          version: v2alpha2
+        - count: 1
+          group: broker.amq.io
+          kind: activemqartemises
+          version: v2alpha1
+        - count: 6
+          group: metrics.k8s.io
+          kind: pods
+          version: v1beta1
+        namespace: lre-qa
+        pvCapacity: 10Gi
+        pvCount: 2
+      percentComplete: 100
+      plan: lre-qa
+      pvCapacity: 10Gi
+      pvCount: 2
+    conditions:
+    - category: Required
+      lastTransitionTime: "2023-05-18T17:05:17Z"
+      message: The analytic is ready.
+      status: "True"
+      type: Ready
+    observedGeneration: 5
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: MigAnalytic
+  metadata:
+    annotations:
+      migplan: lre-qa
+    creationTimestamp: "2023-05-18T17:04:45Z"
+    generateName: lre-qa-
+    generation: 13
+    labels:
+      migplan: lre-qa
+    name: lre-qa-vf5vx
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: migration.openshift.io/v1alpha1
+      kind: MigPlan
+      name: lre-qa
+      uid: ec0923fa-4d06-4a8b-a67a-a32b23d75ede
+    resourceVersion: "11891210"
+    uid: a3a35673-b6c0-4e1c-a2a4-b646ae8349c5
+  spec:
+    analyzeExtendedPVCapacity: true
+    analyzeImageCount: false
+    analyzeK8SResources: false
+    analyzePVCapacity: false
+    migPlanRef:
+      name: lre-qa
+      namespace: openshift-migration
+  status:
+    analytics:
+      excludedk8sResourceTotal: 0
+      imageCount: 0
+      imageSizeTotal: "0"
+      incompatiblek8sResourceTotal: 0
+      k8sResourceTotal: 0
+      namespaces:
+      - excludedK8SResourceTotal: 0
+        imageCount: 0
+        imageSizeTotal: "0"
+        incompatibleK8SResourceTotal: 0
+        k8sResourceTotal: 0
+        namespace: lre-qa
+        persistentVolumes:
+        - actualCapacity: 5151M
+          comment: No change in PV capacity is needed.
+          name: lre-broker-lre-broker-ss-1
+          proposedCapacity: 5Gi
+          requestedCapacity: 5Gi
+        - actualCapacity: 5151M
+          comment: No change in PV capacity is needed.
+          name: lre-broker-lre-broker-ss-0
+          proposedCapacity: 5Gi
+          requestedCapacity: 5Gi
+        pvCapacity: "0"
+        pvCount: 0
+      percentComplete: 100
+      plan: lre-qa
+      pvCapacity: "0"
+      pvCount: 0
+    conditions:
+    - category: Required
+      lastTransitionTime: "2023-05-18T17:05:10Z"
+      message: The analytic is ready.
+      status: "True"
+      type: Ready
+    observedGeneration: 13
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: MigAnalytic
+  metadata:
+    annotations:
+      migplan: mensajeria-dev
+    creationTimestamp: "2023-05-18T16:54:47Z"
+    generation: 4
+    labels:
+      migplan: mensajeria-dev
+    name: mensajeria-dev
+    namespace: openshift-migration
+    resourceVersion: "6129513"
+    uid: 7355872d-b3f5-460a-abcb-da804a85e578
+  spec:
+    analyzeImageCount: true
+    analyzeK8SResources: true
+    analyzePVCapacity: true
+    migPlanRef:
+      name: mensajeria-dev
+      namespace: openshift-migration
+  status:
+    analytics:
+      excludedk8sResourceTotal: 0
+      imageCount: 21
+      imageSizeTotal: 4511Mi
+      incompatiblek8sResourceTotal: 0
+      k8sResourceTotal: 98
+      namespaces:
+      - excludedK8SResourceTotal: 0
+        imageCount: 21
+        imageSizeTotal: 4511Mi
+        incompatibleK8SResourceTotal: 0
+        k8sResourceTotal: 98
+        k8sResources:
+        - count: 3
+          group: ""
+          kind: endpoints
+          version: v1
+        - count: 9
+          group: ""
+          kind: replicationcontrollers
+          version: v1
+        - count: 11
+          group: ""
+          kind: secrets
+          version: v1
+        - count: 3
+          group: ""
+          kind: serviceaccounts
+          version: v1
+        - count: 3
+          group: ""
+          kind: services
+          version: v1
+        - count: 7
+          group: authorization.openshift.io
+          kind: rolebindings
+          version: v1
+        - count: 7
+          group: rbac.authorization.k8s.io
+          kind: rolebindings
+          version: v1
+        - count: 7
+          group: rbac.authorization.k8s.io
+          kind: rolebindings
+          version: v1beta1
+        - count: 3
+          group: apps.openshift.io
+          kind: deploymentconfigs
+          version: v1
+        - count: 6
+          group: build.openshift.io
+          kind: buildconfigs
+          version: v1
+        - count: 18
+          group: build.openshift.io
+          kind: builds
+          version: v1
+        - count: 9
+          group: image.openshift.io
+          kind: imagestreams
+          version: v1
+        - count: 9
+          group: image.openshift.io
+          kind: imagestreamtags
+          version: v1
+        - count: 3
+          group: route.openshift.io
+          kind: routes
+          version: v1
+        namespace: mensajeria-dev
+        pvCapacity: "0"
+        pvCount: 0
+      percentComplete: 100
+      plan: mensajeria-dev
+      pvCapacity: "0"
+      pvCount: 0
+    conditions:
+    - category: Required
+      lastTransitionTime: "2023-05-18T16:55:08Z"
+      message: The analytic is ready.
+      status: "True"
+      type: Ready
+    observedGeneration: 4
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: MigAnalytic
+  metadata:
+    annotations:
+      migplan: mensajeria-dev
+    creationTimestamp: "2023-05-18T16:54:47Z"
+    generateName: mensajeria-dev-
+    generation: 9
+    labels:
+      migplan: mensajeria-dev
+    name: mensajeria-dev-ncd66
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: migration.openshift.io/v1alpha1
+      kind: MigPlan
+      name: mensajeria-dev
+      uid: 14f4ea15-0112-44f6-b444-b2d822f4eda7
+    resourceVersion: "6262044"
+    uid: 6517febf-41e7-40f8-8d81-85c632726ab7
+  spec:
+    analyzeExtendedPVCapacity: true
+    analyzeImageCount: false
+    analyzeK8SResources: false
+    analyzePVCapacity: false
+    migPlanRef:
+      name: mensajeria-dev
+      namespace: openshift-migration
+  status:
+    analytics:
+      excludedk8sResourceTotal: 0
+      imageCount: 0
+      imageSizeTotal: "0"
+      incompatiblek8sResourceTotal: 0
+      k8sResourceTotal: 0
+      namespaces:
+      - excludedK8SResourceTotal: 0
+        imageCount: 0
+        imageSizeTotal: "0"
+        incompatibleK8SResourceTotal: 0
+        k8sResourceTotal: 0
+        namespace: mensajeria-dev
+        pvCapacity: "0"
+        pvCount: 0
+      percentComplete: 100
+      plan: mensajeria-dev
+      pvCapacity: "0"
+      pvCount: 0
+    conditions:
+    - category: Required
+      lastTransitionTime: "2023-05-18T16:54:47Z"
+      message: The analytic is ready.
+      status: "True"
+      type: Ready
+    observedGeneration: 9
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: MigAnalytic
+  metadata:
+    annotations:
+      migplan: mensajeria-prod
+    creationTimestamp: "2023-05-23T15:33:23Z"
+    generation: 5
+    labels:
+      migplan: mensajeria-prod
+    name: mensajeria-prod
+    namespace: openshift-migration
+    resourceVersion: "9839033"
+    uid: 07523ecd-a45e-4c4c-b32e-4bd5b3e26038
+  spec:
+    analyzeImageCount: true
+    analyzeK8SResources: true
+    analyzePVCapacity: true
+    migPlanRef:
+      name: mensajeria-prod
+      namespace: openshift-migration
+  status:
+    analytics:
+      excludedk8sResourceTotal: 0
+      imageCount: 0
+      imageSizeTotal: "0"
+      incompatiblek8sResourceTotal: 0
+      k8sResourceTotal: 33
+      namespaces:
+      - excludedK8SResourceTotal: 0
+        imageCount: 0
+        imageSizeTotal: "0"
+        incompatibleK8SResourceTotal: 0
+        k8sResourceTotal: 33
+        k8sResources:
+        - count: 9
+          group: ""
+          kind: secrets
+          version: v1
+        - count: 3
+          group: ""
+          kind: serviceaccounts
+          version: v1
+        - count: 7
+          group: authorization.openshift.io
+          kind: rolebindings
+          version: v1
+        - count: 7
+          group: rbac.authorization.k8s.io
+          kind: rolebindings
+          version: v1
+        - count: 7
+          group: rbac.authorization.k8s.io
+          kind: rolebindings
+          version: v1beta1
+        namespace: mensajeria-prod
+        pvCapacity: "0"
+        pvCount: 0
+      percentComplete: 100
+      plan: mensajeria-prod
+      pvCapacity: "0"
+      pvCount: 0
+    conditions:
+    - category: Required
+      lastTransitionTime: "2023-05-23T15:33:43Z"
+      message: The analytic is ready.
+      status: "True"
+      type: Ready
+    observedGeneration: 5
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: MigAnalytic
+  metadata:
+    annotations:
+      migplan: mensajeria-prod
+    creationTimestamp: "2023-05-23T15:33:23Z"
+    generateName: mensajeria-prod-
+    generation: 9
+    labels:
+      migplan: mensajeria-prod
+    name: mensajeria-prod-txbls
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: migration.openshift.io/v1alpha1
+      kind: MigPlan
+      name: mensajeria-prod
+      uid: d9c8016c-9c78-481c-be0f-fceb5e1fcf62
+    resourceVersion: "9846168"
+    uid: d6d734a7-0438-45e7-8c9c-7d29969536fc
+  spec:
+    analyzeExtendedPVCapacity: true
+    analyzeImageCount: false
+    analyzeK8SResources: false
+    analyzePVCapacity: false
+    migPlanRef:
+      name: mensajeria-prod
+      namespace: openshift-migration
+  status:
+    analytics:
+      excludedk8sResourceTotal: 0
+      imageCount: 0
+      imageSizeTotal: "0"
+      incompatiblek8sResourceTotal: 0
+      k8sResourceTotal: 0
+      namespaces:
+      - excludedK8SResourceTotal: 0
+        imageCount: 0
+        imageSizeTotal: "0"
+        incompatibleK8SResourceTotal: 0
+        k8sResourceTotal: 0
+        namespace: mensajeria-prod
+        pvCapacity: "0"
+        pvCount: 0
+      percentComplete: 100
+      plan: mensajeria-prod
+      pvCapacity: "0"
+      pvCount: 0
+    conditions:
+    - category: Required
+      lastTransitionTime: "2023-05-23T15:33:23Z"
+      message: The analytic is ready.
+      status: "True"
+      type: Ready
+    observedGeneration: 9
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: MigAnalytic
+  metadata:
+    annotations:
+      migplan: mensajeria-qa
+    creationTimestamp: "2023-05-18T17:06:25Z"
+    generation: 4
+    labels:
+      migplan: mensajeria-qa
+    name: mensajeria-qa
+    namespace: openshift-migration
+    resourceVersion: "6136587"
+    uid: bf9b8318-6685-48ef-a074-b6d85dd59613
+  spec:
+    analyzeImageCount: true
+    analyzeK8SResources: true
+    analyzePVCapacity: true
+    migPlanRef:
+      name: mensajeria-qa
+      namespace: openshift-migration
+  status:
+    analytics:
+      excludedk8sResourceTotal: 0
+      imageCount: 0
+      imageSizeTotal: "0"
+      incompatiblek8sResourceTotal: 0
+      k8sResourceTotal: 56
+      namespaces:
+      - excludedK8SResourceTotal: 0
+        imageCount: 0
+        imageSizeTotal: "0"
+        incompatibleK8SResourceTotal: 0
+        k8sResourceTotal: 56
+        k8sResources:
+        - count: 4
+          group: ""
+          kind: endpoints
+          version: v1
+        - count: 9
+          group: ""
+          kind: replicationcontrollers
+          version: v1
+        - count: 9
+          group: ""
+          kind: secrets
+          version: v1
+        - count: 3
+          group: ""
+          kind: serviceaccounts
+          version: v1
+        - count: 4
+          group: ""
+          kind: services
+          version: v1
+        - count: 7
+          group: authorization.openshift.io
+          kind: rolebindings
+          version: v1
+        - count: 7
+          group: rbac.authorization.k8s.io
+          kind: rolebindings
+          version: v1
+        - count: 7
+          group: rbac.authorization.k8s.io
+          kind: rolebindings
+          version: v1beta1
+        - count: 3
+          group: apps.openshift.io
+          kind: deploymentconfigs
+          version: v1
+        - count: 3
+          group: route.openshift.io
+          kind: routes
+          version: v1
+        namespace: mensajeria-qa
+        pvCapacity: "0"
+        pvCount: 0
+      percentComplete: 100
+      plan: mensajeria-qa
+      pvCapacity: "0"
+      pvCount: 0
+    conditions:
+    - category: Required
+      lastTransitionTime: "2023-05-18T17:06:46Z"
+      message: The analytic is ready.
+      status: "True"
+      type: Ready
+    observedGeneration: 4
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: MigAnalytic
+  metadata:
+    annotations:
+      migplan: mensajeria-qa
+    creationTimestamp: "2023-05-18T17:06:25Z"
+    generateName: mensajeria-qa-
+    generation: 9
+    labels:
+      migplan: mensajeria-qa
+    name: mensajeria-qa-lvfdg
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: migration.openshift.io/v1alpha1
+      kind: MigPlan
+      name: mensajeria-qa
+      uid: 1ab7d19c-1b63-4fd8-8e50-983c4958473a
+    resourceVersion: "9200274"
+    uid: 8ac62d15-ef35-479b-be7e-63f97ac90cb2
+  spec:
+    analyzeExtendedPVCapacity: true
+    analyzeImageCount: false
+    analyzeK8SResources: false
+    analyzePVCapacity: false
+    migPlanRef:
+      name: mensajeria-qa
+      namespace: openshift-migration
+  status:
+    analytics:
+      excludedk8sResourceTotal: 0
+      imageCount: 0
+      imageSizeTotal: "0"
+      incompatiblek8sResourceTotal: 0
+      k8sResourceTotal: 0
+      namespaces:
+      - excludedK8SResourceTotal: 0
+        imageCount: 0
+        imageSizeTotal: "0"
+        incompatibleK8SResourceTotal: 0
+        k8sResourceTotal: 0
+        namespace: mensajeria-qa
+        pvCapacity: "0"
+        pvCount: 0
+      percentComplete: 100
+      plan: mensajeria-qa
+      pvCapacity: "0"
+      pvCount: 0
+    conditions:
+    - category: Required
+      lastTransitionTime: "2023-05-18T17:06:25Z"
+      message: The analytic is ready.
+      status: "True"
+      type: Ready
+    observedGeneration: 9
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: MigAnalytic
+  metadata:
+    annotations:
+      migplan: ministrosdefe-dev
+    creationTimestamp: "2023-05-18T16:55:45Z"
+    generation: 4
+    labels:
+      migplan: ministrosdefe-dev
+    name: ministrosdefe-dev
+    namespace: openshift-migration
+    resourceVersion: "6130048"
+    uid: 9931be48-49df-4892-9852-00ebae546501
+  spec:
+    analyzeImageCount: true
+    analyzeK8SResources: true
+    analyzePVCapacity: true
+    migPlanRef:
+      name: ministrosdefe-dev
+      namespace: openshift-migration
+  status:
+    analytics:
+      excludedk8sResourceTotal: 0
+      imageCount: 25
+      imageSizeTotal: 5757Mi
+      incompatiblek8sResourceTotal: 0
+      k8sResourceTotal: 130
+      namespaces:
+      - excludedK8SResourceTotal: 0
+        imageCount: 25
+        imageSizeTotal: 5757Mi
+        incompatibleK8SResourceTotal: 0
+        k8sResourceTotal: 130
+        k8sResources:
+        - count: 5
+          group: ""
+          kind: endpoints
+          version: v1
+        - count: 14
+          group: ""
+          kind: replicationcontrollers
+          version: v1
+        - count: 11
+          group: ""
+          kind: secrets
+          version: v1
+        - count: 3
+          group: ""
+          kind: serviceaccounts
+          version: v1
+        - count: 5
+          group: ""
+          kind: services
+          version: v1
+        - count: 9
+          group: authorization.openshift.io
+          kind: rolebindings
+          version: v1
+        - count: 9
+          group: rbac.authorization.k8s.io
+          kind: rolebindings
+          version: v1
+        - count: 9
+          group: rbac.authorization.k8s.io
+          kind: rolebindings
+          version: v1beta1
+        - count: 5
+          group: apps.openshift.io
+          kind: deploymentconfigs
+          version: v1
+        - count: 10
+          group: build.openshift.io
+          kind: buildconfigs
+          version: v1
+        - count: 25
+          group: build.openshift.io
+          kind: builds
+          version: v1
+        - count: 10
+          group: image.openshift.io
+          kind: imagestreams
+          version: v1
+        - count: 10
+          group: image.openshift.io
+          kind: imagestreamtags
+          version: v1
+        - count: 5
+          group: route.openshift.io
+          kind: routes
+          version: v1
+        namespace: ministrosdefe-dev
+        pvCapacity: "0"
+        pvCount: 0
+      percentComplete: 100
+      plan: ministrosdefe-dev
+      pvCapacity: "0"
+      pvCount: 0
+    conditions:
+    - category: Required
+      lastTransitionTime: "2023-05-18T16:56:06Z"
+      message: The analytic is ready.
+      status: "True"
+      type: Ready
+    observedGeneration: 4
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: MigAnalytic
+  metadata:
+    annotations:
+      migplan: ministrosdefe-dev
+    creationTimestamp: "2023-05-18T16:55:44Z"
+    generateName: ministrosdefe-dev-
+    generation: 9
+    labels:
+      migplan: ministrosdefe-dev
+    name: ministrosdefe-dev-dnfcn
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: migration.openshift.io/v1alpha1
+      kind: MigPlan
+      name: ministrosdefe-dev
+      uid: f912fe17-8056-491d-8703-6b82312d78ec
+    resourceVersion: "6265210"
+    uid: fabbd7f1-390d-4179-b91f-cad547a9bb52
+  spec:
+    analyzeExtendedPVCapacity: true
+    analyzeImageCount: false
+    analyzeK8SResources: false
+    analyzePVCapacity: false
+    migPlanRef:
+      name: ministrosdefe-dev
+      namespace: openshift-migration
+  status:
+    analytics:
+      excludedk8sResourceTotal: 0
+      imageCount: 0
+      imageSizeTotal: "0"
+      incompatiblek8sResourceTotal: 0
+      k8sResourceTotal: 0
+      namespaces:
+      - excludedK8SResourceTotal: 0
+        imageCount: 0
+        imageSizeTotal: "0"
+        incompatibleK8SResourceTotal: 0
+        k8sResourceTotal: 0
+        namespace: ministrosdefe-dev
+        pvCapacity: "0"
+        pvCount: 0
+      percentComplete: 100
+      plan: ministrosdefe-dev
+      pvCapacity: "0"
+      pvCount: 0
+    conditions:
+    - category: Required
+      lastTransitionTime: "2023-05-18T16:55:45Z"
+      message: The analytic is ready.
+      status: "True"
+      type: Ready
+    observedGeneration: 9
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: MigAnalytic
+  metadata:
+    annotations:
+      migplan: ministrosdefe-prod
+    creationTimestamp: "2023-05-23T15:34:18Z"
+    generation: 4
+    labels:
+      migplan: ministrosdefe-prod
+    name: ministrosdefe-prod
+    namespace: openshift-migration
+    resourceVersion: "9839556"
+    uid: 1b170bbc-ed9a-4374-a09f-aff8b9101bcc
+  spec:
+    analyzeImageCount: true
+    analyzeK8SResources: true
+    analyzePVCapacity: true
+    migPlanRef:
+      name: ministrosdefe-prod
+      namespace: openshift-migration
+  status:
+    analytics:
+      excludedk8sResourceTotal: 0
+      imageCount: 0
+      imageSizeTotal: "0"
+      incompatiblek8sResourceTotal: 0
+      k8sResourceTotal: 33
+      namespaces:
+      - excludedK8SResourceTotal: 0
+        imageCount: 0
+        imageSizeTotal: "0"
+        incompatibleK8SResourceTotal: 0
+        k8sResourceTotal: 33
+        k8sResources:
+        - count: 9
+          group: ""
+          kind: secrets
+          version: v1
+        - count: 3
+          group: ""
+          kind: serviceaccounts
+          version: v1
+        - count: 7
+          group: authorization.openshift.io
+          kind: rolebindings
+          version: v1
+        - count: 7
+          group: rbac.authorization.k8s.io
+          kind: rolebindings
+          version: v1
+        - count: 7
+          group: rbac.authorization.k8s.io
+          kind: rolebindings
+          version: v1beta1
+        namespace: ministrosdefe-prod
+        pvCapacity: "0"
+        pvCount: 0
+      percentComplete: 100
+      plan: ministrosdefe-prod
+      pvCapacity: "0"
+      pvCount: 0
+    conditions:
+    - category: Required
+      lastTransitionTime: "2023-05-23T15:34:39Z"
+      message: The analytic is ready.
+      status: "True"
+      type: Ready
+    observedGeneration: 4
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: MigAnalytic
+  metadata:
+    annotations:
+      migplan: ministrosdefe-prod
+    creationTimestamp: "2023-05-23T15:34:18Z"
+    generateName: ministrosdefe-prod-
+    generation: 9
+    labels:
+      migplan: ministrosdefe-prod
+    name: ministrosdefe-prod-z8wvd
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: migration.openshift.io/v1alpha1
+      kind: MigPlan
+      name: ministrosdefe-prod
+      uid: c120e743-badd-47d6-8ed5-7968caba84f0
+    resourceVersion: "9846369"
+    uid: c686928b-ebfe-47d9-b2c3-fd6fe47648f6
+  spec:
+    analyzeExtendedPVCapacity: true
+    analyzeImageCount: false
+    analyzeK8SResources: false
+    analyzePVCapacity: false
+    migPlanRef:
+      name: ministrosdefe-prod
+      namespace: openshift-migration
+  status:
+    analytics:
+      excludedk8sResourceTotal: 0
+      imageCount: 0
+      imageSizeTotal: "0"
+      incompatiblek8sResourceTotal: 0
+      k8sResourceTotal: 0
+      namespaces:
+      - excludedK8SResourceTotal: 0
+        imageCount: 0
+        imageSizeTotal: "0"
+        incompatibleK8SResourceTotal: 0
+        k8sResourceTotal: 0
+        namespace: ministrosdefe-prod
+        pvCapacity: "0"
+        pvCount: 0
+      percentComplete: 100
+      plan: ministrosdefe-prod
+      pvCapacity: "0"
+      pvCount: 0
+    conditions:
+    - category: Required
+      lastTransitionTime: "2023-05-23T15:34:18Z"
+      message: The analytic is ready.
+      status: "True"
+      type: Ready
+    observedGeneration: 9
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: MigAnalytic
+  metadata:
+    annotations:
+      migplan: ministrosdefe-qa
+    creationTimestamp: "2023-05-18T17:08:37Z"
+    generation: 5
+    labels:
+      migplan: ministrosdefe-qa
+    name: ministrosdefe-qa
+    namespace: openshift-migration
+    resourceVersion: "6137930"
+    uid: 24f44d84-5f25-4a95-b778-668000d3e913
+  spec:
+    analyzeImageCount: true
+    analyzeK8SResources: true
+    analyzePVCapacity: true
+    migPlanRef:
+      name: ministrosdefe-qa
+      namespace: openshift-migration
+  status:
+    analytics:
+      excludedk8sResourceTotal: 0
+      imageCount: 0
+      imageSizeTotal: "0"
+      incompatiblek8sResourceTotal: 0
+      k8sResourceTotal: 69
+      namespaces:
+      - excludedK8SResourceTotal: 0
+        imageCount: 0
+        imageSizeTotal: "0"
+        incompatibleK8SResourceTotal: 0
+        k8sResourceTotal: 69
+        k8sResources:
+        - count: 5
+          group: ""
+          kind: endpoints
+          version: v1
+        - count: 12
+          group: ""
+          kind: replicationcontrollers
+          version: v1
+        - count: 10
+          group: ""
+          kind: secrets
+          version: v1
+        - count: 3
+          group: ""
+          kind: serviceaccounts
+          version: v1
+        - count: 5
+          group: ""
+          kind: services
+          version: v1
+        - count: 8
+          group: authorization.openshift.io
+          kind: rolebindings
+          version: v1
+        - count: 8
+          group: rbac.authorization.k8s.io
+          kind: rolebindings
+          version: v1
+        - count: 8
+          group: rbac.authorization.k8s.io
+          kind: rolebindings
+          version: v1beta1
+        - count: 5
+          group: apps.openshift.io
+          kind: deploymentconfigs
+          version: v1
+        - count: 5
+          group: route.openshift.io
+          kind: routes
+          version: v1
+        namespace: ministrosdefe-qa
+        pvCapacity: "0"
+        pvCount: 0
+      percentComplete: 100
+      plan: ministrosdefe-qa
+      pvCapacity: "0"
+      pvCount: 0
+    conditions:
+    - category: Required
+      lastTransitionTime: "2023-05-18T17:08:58Z"
+      message: The analytic is ready.
+      status: "True"
+      type: Ready
+    observedGeneration: 5
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: MigAnalytic
+  metadata:
+    annotations:
+      migplan: ministrosdefe-qa
+    creationTimestamp: "2023-05-18T17:08:37Z"
+    generateName: ministrosdefe-qa-
+    generation: 9
+    labels:
+      migplan: ministrosdefe-qa
+    name: ministrosdefe-qa-t62hw
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: migration.openshift.io/v1alpha1
+      kind: MigPlan
+      name: ministrosdefe-qa
+      uid: 5ae88ccd-2300-4fae-80eb-6d8c6ca3cb33
+    resourceVersion: "9201158"
+    uid: 0e5ec11a-4afe-43d5-886c-50974c54f5d7
+  spec:
+    analyzeExtendedPVCapacity: true
+    analyzeImageCount: false
+    analyzeK8SResources: false
+    analyzePVCapacity: false
+    migPlanRef:
+      name: ministrosdefe-qa
+      namespace: openshift-migration
+  status:
+    analytics:
+      excludedk8sResourceTotal: 0
+      imageCount: 0
+      imageSizeTotal: "0"
+      incompatiblek8sResourceTotal: 0
+      k8sResourceTotal: 0
+      namespaces:
+      - excludedK8SResourceTotal: 0
+        imageCount: 0
+        imageSizeTotal: "0"
+        incompatibleK8SResourceTotal: 0
+        k8sResourceTotal: 0
+        namespace: ministrosdefe-qa
+        pvCapacity: "0"
+        pvCount: 0
+      percentComplete: 100
+      plan: ministrosdefe-qa
+      pvCapacity: "0"
+      pvCount: 0
+    conditions:
+    - category: Required
+      lastTransitionTime: "2023-05-18T17:08:37Z"
+      message: The analytic is ready.
+      status: "True"
+      type: Ready
+    observedGeneration: 9
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: MigAnalytic
+  metadata:
+    annotations:
+      migplan: pipelines-dev
+    creationTimestamp: "2023-05-23T15:13:07Z"
+    generation: 5
+    labels:
+      migplan: pipelines-dev
+    name: pipelines-dev
+    namespace: openshift-migration
+    resourceVersion: "9827736"
+    uid: 5500f3c5-d653-4420-af33-833b50b7d90a
+  spec:
+    analyzeImageCount: true
+    analyzeK8SResources: true
+    analyzePVCapacity: true
+    migPlanRef:
+      name: pipelines-dev
+      namespace: openshift-migration
+  status:
+    analytics:
+      excludedk8sResourceTotal: 0
+      imageCount: 0
+      imageSizeTotal: "0"
+      incompatiblek8sResourceTotal: 0
+      k8sResourceTotal: 97
+      namespaces:
+      - excludedK8SResourceTotal: 0
+        imageCount: 0
+        imageSizeTotal: "0"
+        incompatibleK8SResourceTotal: 0
+        k8sResourceTotal: 97
+        k8sResources:
+        - count: 9
+          group: ""
+          kind: secrets
+          version: v1
+        - count: 3
+          group: ""
+          kind: serviceaccounts
+          version: v1
+        - count: 2
+          group: ""
+          kind: services
+          version: v1
+        - count: 6
+          group: authorization.openshift.io
+          kind: rolebindings
+          version: v1
+        - count: 6
+          group: rbac.authorization.k8s.io
+          kind: rolebindings
+          version: v1
+        - count: 6
+          group: rbac.authorization.k8s.io
+          kind: rolebindings
+          version: v1beta1
+        - count: 30
+          group: build.openshift.io
+          kind: buildconfigs
+          version: v1
+        - count: 35
+          group: build.openshift.io
+          kind: builds
+          version: v1
+        namespace: pipelines-dev
+        pvCapacity: "0"
+        pvCount: 0
+      percentComplete: 100
+      plan: pipelines-dev
+      pvCapacity: "0"
+      pvCount: 0
+    conditions:
+    - category: Required
+      lastTransitionTime: "2023-05-23T15:13:29Z"
+      message: The analytic is ready.
+      status: "True"
+      type: Ready
+    observedGeneration: 5
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: MigAnalytic
+  metadata:
+    annotations:
+      migplan: pipelines-dev
+    creationTimestamp: "2023-05-23T15:13:07Z"
+    generateName: pipelines-dev-
+    generation: 6
+    labels:
+      migplan: pipelines-dev
+    name: pipelines-dev-hq8db
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: migration.openshift.io/v1alpha1
+      kind: MigPlan
+      name: pipelines-dev
+      uid: a3ccd4bb-657f-47a9-a0e5-d29a23a06ca1
+    resourceVersion: "9828426"
+    uid: 757730cc-057e-49cc-b981-45cce044c4cd
+  spec:
+    analyzeExtendedPVCapacity: true
+    analyzeImageCount: false
+    analyzeK8SResources: false
+    analyzePVCapacity: false
+    migPlanRef:
+      name: pipelines-dev
+      namespace: openshift-migration
+  status:
+    analytics:
+      excludedk8sResourceTotal: 0
+      imageCount: 0
+      imageSizeTotal: "0"
+      incompatiblek8sResourceTotal: 0
+      k8sResourceTotal: 0
+      namespaces:
+      - excludedK8SResourceTotal: 0
+        imageCount: 0
+        imageSizeTotal: "0"
+        incompatibleK8SResourceTotal: 0
+        k8sResourceTotal: 0
+        namespace: pipelines-dev
+        pvCapacity: "0"
+        pvCount: 0
+      percentComplete: 100
+      plan: pipelines-dev
+      pvCapacity: "0"
+      pvCount: 0
+    conditions:
+    - category: Required
+      lastTransitionTime: "2023-05-23T15:13:07Z"
+      message: The analytic is ready.
+      status: "True"
+      type: Ready
+    observedGeneration: 6
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: MigAnalytic
+  metadata:
+    annotations:
+      migplan: pipelines-prod
+    creationTimestamp: "2023-05-23T15:35:08Z"
+    generation: 5
+    labels:
+      migplan: pipelines-prod
+    name: pipelines-prod
+    namespace: openshift-migration
+    resourceVersion: "9840015"
+    uid: aedd7d62-3de5-497d-b6cb-f894c7e0ac7a
+  spec:
+    analyzeImageCount: true
+    analyzeK8SResources: true
+    analyzePVCapacity: true
+    migPlanRef:
+      name: pipelines-prod
+      namespace: openshift-migration
+  status:
+    analytics:
+      excludedk8sResourceTotal: 0
+      imageCount: 0
+      imageSizeTotal: "0"
+      incompatiblek8sResourceTotal: 0
+      k8sResourceTotal: 162
+      namespaces:
+      - excludedK8SResourceTotal: 0
+        imageCount: 0
+        imageSizeTotal: "0"
+        incompatibleK8SResourceTotal: 0
+        k8sResourceTotal: 162
+        k8sResources:
+        - count: 9
+          group: ""
+          kind: secrets
+          version: v1
+        - count: 3
+          group: ""
+          kind: serviceaccounts
+          version: v1
+        - count: 2
+          group: ""
+          kind: services
+          version: v1
+        - count: 6
+          group: authorization.openshift.io
+          kind: rolebindings
+          version: v1
+        - count: 6
+          group: rbac.authorization.k8s.io
+          kind: rolebindings
+          version: v1
+        - count: 6
+          group: rbac.authorization.k8s.io
+          kind: rolebindings
+          version: v1beta1
+        - count: 35
+          group: build.openshift.io
+          kind: buildconfigs
+          version: v1
+        - count: 95
+          group: build.openshift.io
+          kind: builds
+          version: v1
+        namespace: pipelines-prod
+        pvCapacity: "0"
+        pvCount: 0
+      percentComplete: 100
+      plan: pipelines-prod
+      pvCapacity: "0"
+      pvCount: 0
+    conditions:
+    - category: Required
+      lastTransitionTime: "2023-05-23T15:35:29Z"
+      message: The analytic is ready.
+      status: "True"
+      type: Ready
+    observedGeneration: 5
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: MigAnalytic
+  metadata:
+    annotations:
+      migplan: pipelines-prod
+    creationTimestamp: "2023-05-23T15:35:08Z"
+    generateName: pipelines-prod-
+    generation: 9
+    labels:
+      migplan: pipelines-prod
+    name: pipelines-prod-4thln
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: migration.openshift.io/v1alpha1
+      kind: MigPlan
+      name: pipelines-prod
+      uid: cc640fb7-e663-45df-b691-0008663d0ae9
+    resourceVersion: "9847640"
+    uid: d77366bc-ab8f-4fc6-bc5c-3963f02f81b6
+  spec:
+    analyzeExtendedPVCapacity: true
+    analyzeImageCount: false
+    analyzeK8SResources: false
+    analyzePVCapacity: false
+    migPlanRef:
+      name: pipelines-prod
+      namespace: openshift-migration
+  status:
+    analytics:
+      excludedk8sResourceTotal: 0
+      imageCount: 0
+      imageSizeTotal: "0"
+      incompatiblek8sResourceTotal: 0
+      k8sResourceTotal: 0
+      namespaces:
+      - excludedK8SResourceTotal: 0
+        imageCount: 0
+        imageSizeTotal: "0"
+        incompatibleK8SResourceTotal: 0
+        k8sResourceTotal: 0
+        namespace: pipelines-prod
+        pvCapacity: "0"
+        pvCount: 0
+      percentComplete: 100
+      plan: pipelines-prod
+      pvCapacity: "0"
+      pvCount: 0
+    conditions:
+    - category: Required
+      lastTransitionTime: "2023-05-23T15:35:08Z"
+      message: The analytic is ready.
+      status: "True"
+      type: Ready
+    observedGeneration: 9
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: MigAnalytic
+  metadata:
+    annotations:
+      migplan: pipelines-qa
+    creationTimestamp: "2023-05-18T17:11:12Z"
+    generation: 4
+    labels:
+      migplan: pipelines-qa
+    name: pipelines-qa
+    namespace: openshift-migration
+    resourceVersion: "6139315"
+    uid: 177acc29-bf25-453a-85e6-1dd44e1839d7
+  spec:
+    analyzeImageCount: true
+    analyzeK8SResources: true
+    analyzePVCapacity: true
+    migPlanRef:
+      name: pipelines-qa
+      namespace: openshift-migration
+  status:
+    analytics:
+      excludedk8sResourceTotal: 0
+      imageCount: 0
+      imageSizeTotal: "0"
+      incompatiblek8sResourceTotal: 0
+      k8sResourceTotal: 158
+      namespaces:
+      - excludedK8SResourceTotal: 0
+        imageCount: 0
+        imageSizeTotal: "0"
+        incompatibleK8SResourceTotal: 0
+        k8sResourceTotal: 158
+        k8sResources:
+        - count: 9
+          group: ""
+          kind: secrets
+          version: v1
+        - count: 3
+          group: ""
+          kind: serviceaccounts
+          version: v1
+        - count: 2
+          group: ""
+          kind: services
+          version: v1
+        - count: 6
+          group: authorization.openshift.io
+          kind: rolebindings
+          version: v1
+        - count: 6
+          group: rbac.authorization.k8s.io
+          kind: rolebindings
+          version: v1
+        - count: 6
+          group: rbac.authorization.k8s.io
+          kind: rolebindings
+          version: v1beta1
+        - count: 32
+          group: build.openshift.io
+          kind: buildconfigs
+          version: v1
+        - count: 94
+          group: build.openshift.io
+          kind: builds
+          version: v1
+        namespace: pipelines-qa
+        pvCapacity: "0"
+        pvCount: 0
+      percentComplete: 100
+      plan: pipelines-qa
+      pvCapacity: "0"
+      pvCount: 0
+    conditions:
+    - category: Required
+      lastTransitionTime: "2023-05-18T17:11:33Z"
+      message: The analytic is ready.
+      status: "True"
+      type: Ready
+    observedGeneration: 4
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: MigAnalytic
+  metadata:
+    annotations:
+      migplan: pipelines-qa
+    creationTimestamp: "2023-05-18T17:11:12Z"
+    generateName: pipelines-qa-
+    generation: 9
+    labels:
+      migplan: pipelines-qa
+    name: pipelines-qa-x5j2m
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: migration.openshift.io/v1alpha1
+      kind: MigPlan
+      name: pipelines-qa
+      uid: 6b6402c2-9258-443b-83f4-8bb51f1d90f8
+    resourceVersion: "9214029"
+    uid: 35679266-352f-4a3a-876b-95ba0a728887
+  spec:
+    analyzeExtendedPVCapacity: true
+    analyzeImageCount: false
+    analyzeK8SResources: false
+    analyzePVCapacity: false
+    migPlanRef:
+      name: pipelines-qa
+      namespace: openshift-migration
+  status:
+    analytics:
+      excludedk8sResourceTotal: 0
+      imageCount: 0
+      imageSizeTotal: "0"
+      incompatiblek8sResourceTotal: 0
+      k8sResourceTotal: 0
+      namespaces:
+      - excludedK8SResourceTotal: 0
+        imageCount: 0
+        imageSizeTotal: "0"
+        incompatibleK8SResourceTotal: 0
+        k8sResourceTotal: 0
+        namespace: pipelines-qa
+        pvCapacity: "0"
+        pvCount: 0
+      percentComplete: 100
+      plan: pipelines-qa
+      pvCapacity: "0"
+      pvCount: 0
+    conditions:
+    - category: Required
+      lastTransitionTime: "2023-05-18T17:11:12Z"
+      message: The analytic is ready.
+      status: "True"
+      type: Ready
+    observedGeneration: 9
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: MigAnalytic
+  metadata:
+    annotations:
+      migplan: portalinstitucional-dev-cloud
+    creationTimestamp: "2023-05-18T16:56:59Z"
+    generation: 4
+    labels:
+      migplan: portalinstitucional-dev-cloud
+    name: portalinstitucional-dev-cloud
+    namespace: openshift-migration
+    resourceVersion: "6130775"
+    uid: c80f9161-9589-450d-831b-017efc609f89
+  spec:
+    analyzeImageCount: true
+    analyzeK8SResources: true
+    analyzePVCapacity: true
+    migPlanRef:
+      name: portalinstitucional-dev-cloud
+      namespace: openshift-migration
+  status:
+    analytics:
+      excludedk8sResourceTotal: 0
+      imageCount: 1
+      imageSizeTotal: 190Mi
+      incompatiblek8sResourceTotal: 0
+      k8sResourceTotal: 34
+      namespaces:
+      - excludedK8SResourceTotal: 0
+        imageCount: 1
+        imageSizeTotal: 190Mi
+        incompatibleK8SResourceTotal: 0
+        k8sResourceTotal: 34
+        k8sResources:
+        - count: 1
+          group: ""
+          kind: endpoints
+          version: v1
+        - count: 1
+          group: ""
+          kind: replicationcontrollers
+          version: v1
+        - count: 10
+          group: ""
+          kind: secrets
+          version: v1
+        - count: 3
+          group: ""
+          kind: serviceaccounts
+          version: v1
+        - count: 1
+          group: ""
+          kind: services
+          version: v1
+        - count: 4
+          group: authorization.openshift.io
+          kind: rolebindings
+          version: v1
+        - count: 4
+          group: rbac.authorization.k8s.io
+          kind: rolebindings
+          version: v1
+        - count: 4
+          group: rbac.authorization.k8s.io
+          kind: rolebindings
+          version: v1beta1
+        - count: 1
+          group: apps.openshift.io
+          kind: deploymentconfigs
+          version: v1
+        - count: 1
+          group: build.openshift.io
+          kind: buildconfigs
+          version: v1
+        - count: 1
+          group: build.openshift.io
+          kind: builds
+          version: v1
+        - count: 1
+          group: image.openshift.io
+          kind: imagestreams
+          version: v1
+        - count: 1
+          group: image.openshift.io
+          kind: imagestreamtags
+          version: v1
+        - count: 1
+          group: route.openshift.io
+          kind: routes
+          version: v1
+        namespace: portalinstitucional-dev-cloud
+        pvCapacity: "0"
+        pvCount: 0
+      percentComplete: 100
+      plan: portalinstitucional-dev-cloud
+      pvCapacity: "0"
+      pvCount: 0
+    conditions:
+    - category: Required
+      lastTransitionTime: "2023-05-18T16:57:20Z"
+      message: The analytic is ready.
+      status: "True"
+      type: Ready
+    observedGeneration: 4
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: MigAnalytic
+  metadata:
+    annotations:
+      migplan: portalinstitucional-dev-cloud
+    creationTimestamp: "2023-05-18T16:56:59Z"
+    generateName: portalinstitucional-dev-cloud-
+    generation: 9
+    labels:
+      migplan: portalinstitucional-dev-cloud
+    name: portalinstitucional-dev-cloud-55pjj
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: migration.openshift.io/v1alpha1
+      kind: MigPlan
+      name: portalinstitucional-dev-cloud
+      uid: 115bf39f-32dd-46ac-8d1e-ac95f44b53ed
+    resourceVersion: "6308554"
+    uid: 8e3915e5-2565-4e07-9bad-01088c30b838
+  spec:
+    analyzeExtendedPVCapacity: true
+    analyzeImageCount: false
+    analyzeK8SResources: false
+    analyzePVCapacity: false
+    migPlanRef:
+      name: portalinstitucional-dev-cloud
+      namespace: openshift-migration
+  status:
+    analytics:
+      excludedk8sResourceTotal: 0
+      imageCount: 0
+      imageSizeTotal: "0"
+      incompatiblek8sResourceTotal: 0
+      k8sResourceTotal: 0
+      namespaces:
+      - excludedK8SResourceTotal: 0
+        imageCount: 0
+        imageSizeTotal: "0"
+        incompatibleK8SResourceTotal: 0
+        k8sResourceTotal: 0
+        namespace: portalinstitucional-dev-cloud
+        pvCapacity: "0"
+        pvCount: 0
+      percentComplete: 100
+      plan: portalinstitucional-dev-cloud
+      pvCapacity: "0"
+      pvCount: 0
+    conditions:
+    - category: Required
+      lastTransitionTime: "2023-05-18T16:56:59Z"
+      message: The analytic is ready.
+      status: "True"
+      type: Ready
+    observedGeneration: 9
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: MigAnalytic
+  metadata:
+    annotations:
+      migplan: prueba
+    creationTimestamp: "2023-07-14T19:39:43Z"
+    generation: 19
+    labels:
+      migplan: prueba
+    name: prueba
+    namespace: openshift-migration
+    resourceVersion: "163921185"
+    uid: d7c1af91-a2eb-41f0-94b1-4d36b4780ee2
+  spec:
+    analyzeImageCount: true
+    analyzeK8SResources: true
+    analyzePVCapacity: true
+    migPlanRef:
+      name: prueba
+      namespace: openshift-migration
+  status:
+    analytics:
+      excludedk8sResourceTotal: 0
+      imageCount: 0
+      imageSizeTotal: "0"
+      incompatiblek8sResourceTotal: 0
+      k8sResourceTotal: 0
+      percentComplete: 0
+      plan: ""
+      pvCapacity: "0"
+      pvCount: 0
+    conditions:
+    - category: Critical
+      lastTransitionTime: "2023-07-14T19:39:53Z"
+      message: Waiting 10 seconds for referenced MigPlan to become ready.
+      reason: TestFailed
+      status: "True"
+      type: Postponed
+    - category: Critical
+      lastTransitionTime: "2023-11-18T09:10:19Z"
+      message: 'Reconcile failed: []. See controller logs for details.'
+      status: "True"
+      type: ReconcileFailed
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: MigAnalytic
+  metadata:
+    annotations:
+      migplan: prueba
+    creationTimestamp: "2023-07-14T19:39:43Z"
+    generateName: prueba-
+    generation: 5
+    labels:
+      migplan: prueba
+    name: prueba-tpmzz
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: migration.openshift.io/v1alpha1
+      kind: MigPlan
+      name: prueba
+      uid: 1f11fcad-f6c9-4447-a7c0-65843ee8a6da
+    resourceVersion: "54388535"
+    uid: 47d08a36-31cf-4881-8873-6ca6415c06f6
+  spec:
+    analyzeExtendedPVCapacity: true
+    analyzeImageCount: false
+    analyzeK8SResources: false
+    analyzePVCapacity: false
+    migPlanRef:
+      name: prueba
+      namespace: openshift-migration
+  status:
+    analytics:
+      excludedk8sResourceTotal: 0
+      imageCount: 0
+      imageSizeTotal: "0"
+      incompatiblek8sResourceTotal: 0
+      k8sResourceTotal: 0
+      namespaces:
+      - excludedK8SResourceTotal: 0
+        imageCount: 0
+        imageSizeTotal: "0"
+        incompatibleK8SResourceTotal: 0
+        k8sResourceTotal: 0
+        namespace: 3scale
+        persistentVolumes:
+        - actualCapacity: 5369M
+          comment: Requested capacity of PV is not equal to its actual provisioned
+            capacity.  Maximum of both values will be used to avoid disk capacity
+            issue in the target cluster.
+          name: system-storage
+          proposedCapacity: 5369M
+          requestedCapacity: 5Gi
+        - actualCapacity: 5369M
+          comment: Requested capacity of PV is not equal to its actual provisioned
+            capacity.  Maximum of both values will be used to avoid disk capacity
+            issue in the target cluster.
+          name: system-storage
+          proposedCapacity: 5369M
+          requestedCapacity: 5Gi
+        - actualCapacity: 10435M
+          comment: No change in PV capacity is needed.
+          name: backend-redis-storage
+          proposedCapacity: 10Gi
+          requestedCapacity: 10Gi
+        - actualCapacity: 31573M
+          comment: No change in PV capacity is needed.
+          name: mysql-storage
+          proposedCapacity: 30Gi
+          requestedCapacity: 30Gi
+        - actualCapacity: 10435M
+          comment: No change in PV capacity is needed.
+          name: system-redis-storage
+          proposedCapacity: 10Gi
+          requestedCapacity: 10Gi
+        pvCapacity: "0"
+        pvCount: 0
+      percentComplete: 100
+      plan: prueba
+      pvCapacity: "0"
+      pvCount: 0
+    conditions:
+    - category: Required
+      lastTransitionTime: "2023-07-14T19:41:36Z"
+      message: The analytic is ready.
+      status: "True"
+      type: Ready
+    observedGeneration: 5
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: MigAnalytic
+  metadata:
+    annotations:
+      migplan: utilities-dev
+    creationTimestamp: "2023-05-18T18:44:48Z"
+    generation: 5
+    labels:
+      migplan: utilities-dev
+    name: utilities-dev
+    namespace: openshift-migration
+    resourceVersion: "6193027"
+    uid: 4025783d-32da-4756-821f-1f71fcd65203
+  spec:
+    analyzeImageCount: true
+    analyzeK8SResources: true
+    analyzePVCapacity: true
+    migPlanRef:
+      name: utilities-dev
+      namespace: openshift-migration
+  status:
+    analytics:
+      excludedk8sResourceTotal: 0
+      imageCount: 23
+      imageSizeTotal: 5029Mi
+      incompatiblek8sResourceTotal: 0
+      k8sResourceTotal: 143
+      namespaces:
+      - excludedK8SResourceTotal: 0
+        imageCount: 23
+        imageSizeTotal: 5029Mi
+        incompatibleK8SResourceTotal: 0
+        k8sResourceTotal: 143
+        k8sResources:
+        - count: 8
+          group: ""
+          kind: endpoints
+          version: v1
+        - count: 5
+          group: ""
+          kind: pods
+          version: v1
+        - count: 14
+          group: ""
+          kind: replicationcontrollers
+          version: v1
+        - count: 12
+          group: ""
+          kind: secrets
+          version: v1
+        - count: 3
+          group: ""
+          kind: serviceaccounts
+          version: v1
+        - count: 8
+          group: ""
+          kind: services
+          version: v1
+        - count: 11
+          group: authorization.openshift.io
+          kind: rolebindings
+          version: v1
+        - count: 11
+          group: rbac.authorization.k8s.io
+          kind: rolebindings
+          version: v1
+        - count: 11
+          group: rbac.authorization.k8s.io
+          kind: rolebindings
+          version: v1beta1
+        - count: 7
+          group: apps.openshift.io
+          kind: deploymentconfigs
+          version: v1
+        - count: 4
+          group: build.openshift.io
+          kind: buildconfigs
+          version: v1
+        - count: 8
+          group: build.openshift.io
+          kind: builds
+          version: v1
+        - count: 16
+          group: image.openshift.io
+          kind: imagestreams
+          version: v1
+        - count: 15
+          group: image.openshift.io
+          kind: imagestreamtags
+          version: v1
+        - count: 5
+          group: route.openshift.io
+          kind: routes
+          version: v1
+        - count: 5
+          group: metrics.k8s.io
+          kind: pods
+          version: v1beta1
+        namespace: utilities-dev
+        pvCapacity: "0"
+        pvCount: 0
+      percentComplete: 100
+      plan: utilities-dev
+      pvCapacity: "0"
+      pvCount: 0
+    conditions:
+    - category: Required
+      lastTransitionTime: "2023-05-18T18:45:09Z"
+      message: The analytic is ready.
+      status: "True"
+      type: Ready
+    observedGeneration: 5
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: MigAnalytic
+  metadata:
+    annotations:
+      migplan: utilities-dev
+    creationTimestamp: "2023-05-18T18:44:48Z"
+    generateName: utilities-dev-
+    generation: 9
+    labels:
+      migplan: utilities-dev
+    name: utilities-dev-ww4rh
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: migration.openshift.io/v1alpha1
+      kind: MigPlan
+      name: utilities-dev
+      uid: fc39346c-f9d4-4b3a-8404-0437309f995a
+    resourceVersion: "6310424"
+    uid: ac7bda7b-808b-4200-91ef-91475a85e519
+  spec:
+    analyzeExtendedPVCapacity: true
+    analyzeImageCount: false
+    analyzeK8SResources: false
+    analyzePVCapacity: false
+    migPlanRef:
+      name: utilities-dev
+      namespace: openshift-migration
+  status:
+    analytics:
+      excludedk8sResourceTotal: 0
+      imageCount: 0
+      imageSizeTotal: "0"
+      incompatiblek8sResourceTotal: 0
+      k8sResourceTotal: 0
+      namespaces:
+      - excludedK8SResourceTotal: 0
+        imageCount: 0
+        imageSizeTotal: "0"
+        incompatibleK8SResourceTotal: 0
+        k8sResourceTotal: 0
+        namespace: utilities-dev
+        pvCapacity: "0"
+        pvCount: 0
+      percentComplete: 100
+      plan: utilities-dev
+      pvCapacity: "0"
+      pvCount: 0
+    conditions:
+    - category: Required
+      lastTransitionTime: "2023-05-18T18:44:48Z"
+      message: The analytic is ready.
+      status: "True"
+      type: Ready
+    observedGeneration: 9
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: MigAnalytic
+  metadata:
+    annotations:
+      migplan: utilities-prod
+    creationTimestamp: "2023-05-23T15:36:27Z"
+    generation: 4
+    labels:
+      migplan: utilities-prod
+    name: utilities-prod
+    namespace: openshift-migration
+    resourceVersion: "9840774"
+    uid: c3cf4ead-ed00-45ce-a991-3e6efedb461e
+  spec:
+    analyzeImageCount: true
+    analyzeK8SResources: true
+    analyzePVCapacity: true
+    migPlanRef:
+      name: utilities-prod
+      namespace: openshift-migration
+  status:
+    analytics:
+      excludedk8sResourceTotal: 0
+      imageCount: 0
+      imageSizeTotal: "0"
+      incompatiblek8sResourceTotal: 0
+      k8sResourceTotal: 41
+      namespaces:
+      - excludedK8SResourceTotal: 0
+        imageCount: 0
+        imageSizeTotal: "0"
+        incompatibleK8SResourceTotal: 0
+        k8sResourceTotal: 41
+        k8sResources:
+        - count: 1
+          group: ""
+          kind: endpoints
+          version: v1
+        - count: 2
+          group: ""
+          kind: replicationcontrollers
+          version: v1
+        - count: 9
+          group: ""
+          kind: secrets
+          version: v1
+        - count: 3
+          group: ""
+          kind: serviceaccounts
+          version: v1
+        - count: 1
+          group: ""
+          kind: services
+          version: v1
+        - count: 8
+          group: authorization.openshift.io
+          kind: rolebindings
+          version: v1
+        - count: 8
+          group: rbac.authorization.k8s.io
+          kind: rolebindings
+          version: v1
+        - count: 8
+          group: rbac.authorization.k8s.io
+          kind: rolebindings
+          version: v1beta1
+        - count: 1
+          group: apps.openshift.io
+          kind: deploymentconfigs
+          version: v1
+        namespace: utilities-prod
+        pvCapacity: "0"
+        pvCount: 0
+      percentComplete: 100
+      plan: utilities-prod
+      pvCapacity: "0"
+      pvCount: 0
+    conditions:
+    - category: Required
+      lastTransitionTime: "2023-05-23T15:36:48Z"
+      message: The analytic is ready.
+      status: "True"
+      type: Ready
+    observedGeneration: 4
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: MigAnalytic
+  metadata:
+    annotations:
+      migplan: utilities-prod
+    creationTimestamp: "2023-05-23T15:36:27Z"
+    generateName: utilities-prod-
+    generation: 9
+    labels:
+      migplan: utilities-prod
+    name: utilities-prod-s6s5b
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: migration.openshift.io/v1alpha1
+      kind: MigPlan
+      name: utilities-prod
+      uid: fb88196e-a0b1-4afb-9b57-e6c52fa304de
+    resourceVersion: "9847794"
+    uid: 32172901-ad18-40df-a585-c291576e51b2
+  spec:
+    analyzeExtendedPVCapacity: true
+    analyzeImageCount: false
+    analyzeK8SResources: false
+    analyzePVCapacity: false
+    migPlanRef:
+      name: utilities-prod
+      namespace: openshift-migration
+  status:
+    analytics:
+      excludedk8sResourceTotal: 0
+      imageCount: 0
+      imageSizeTotal: "0"
+      incompatiblek8sResourceTotal: 0
+      k8sResourceTotal: 0
+      namespaces:
+      - excludedK8SResourceTotal: 0
+        imageCount: 0
+        imageSizeTotal: "0"
+        incompatibleK8SResourceTotal: 0
+        k8sResourceTotal: 0
+        namespace: utilities-prod
+        pvCapacity: "0"
+        pvCount: 0
+      percentComplete: 100
+      plan: utilities-prod
+      pvCapacity: "0"
+      pvCount: 0
+    conditions:
+    - category: Required
+      lastTransitionTime: "2023-05-23T15:36:27Z"
+      message: The analytic is ready.
+      status: "True"
+      type: Ready
+    observedGeneration: 9
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: MigAnalytic
+  metadata:
+    annotations:
+      migplan: utilities-qa
+    creationTimestamp: "2023-05-18T17:16:15Z"
+    generation: 4
+    labels:
+      migplan: utilities-qa
+    name: utilities-qa
+    namespace: openshift-migration
+    resourceVersion: "6142300"
+    uid: e955b857-7439-4b8c-8d40-4431d0470539
+  spec:
+    analyzeImageCount: true
+    analyzeK8SResources: true
+    analyzePVCapacity: true
+    migPlanRef:
+      name: utilities-qa
+      namespace: openshift-migration
+  status:
+    analytics:
+      excludedk8sResourceTotal: 0
+      imageCount: 0
+      imageSizeTotal: "0"
+      incompatiblek8sResourceTotal: 0
+      k8sResourceTotal: 39
+      namespaces:
+      - excludedK8SResourceTotal: 0
+        imageCount: 0
+        imageSizeTotal: "0"
+        incompatibleK8SResourceTotal: 0
+        k8sResourceTotal: 39
+        k8sResources:
+        - count: 1
+          group: ""
+          kind: endpoints
+          version: v1
+        - count: 2
+          group: ""
+          kind: replicationcontrollers
+          version: v1
+        - count: 9
+          group: ""
+          kind: secrets
+          version: v1
+        - count: 3
+          group: ""
+          kind: serviceaccounts
+          version: v1
+        - count: 1
+          group: ""
+          kind: services
+          version: v1
+        - count: 7
+          group: authorization.openshift.io
+          kind: rolebindings
+          version: v1
+        - count: 7
+          group: rbac.authorization.k8s.io
+          kind: rolebindings
+          version: v1
+        - count: 7
+          group: rbac.authorization.k8s.io
+          kind: rolebindings
+          version: v1beta1
+        - count: 1
+          group: apps.openshift.io
+          kind: deploymentconfigs
+          version: v1
+        - count: 1
+          group: route.openshift.io
+          kind: routes
+          version: v1
+        namespace: utilities-qa
+        pvCapacity: "0"
+        pvCount: 0
+      percentComplete: 100
+      plan: utilities-qa
+      pvCapacity: "0"
+      pvCount: 0
+    conditions:
+    - category: Required
+      lastTransitionTime: "2023-05-18T17:16:36Z"
+      message: The analytic is ready.
+      status: "True"
+      type: Ready
+    observedGeneration: 4
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: MigAnalytic
+  metadata:
+    annotations:
+      migplan: utilities-qa
+    creationTimestamp: "2023-05-18T17:16:15Z"
+    generateName: utilities-qa-
+    generation: 9
+    labels:
+      migplan: utilities-qa
+    name: utilities-qa-nw4dw
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: migration.openshift.io/v1alpha1
+      kind: MigPlan
+      name: utilities-qa
+      uid: 914f1c50-0174-49a2-ad41-7bd559223270
+    resourceVersion: "9206567"
+    uid: 97668676-e13a-4fd3-a823-45a217f4b2cd
+  spec:
+    analyzeExtendedPVCapacity: true
+    analyzeImageCount: false
+    analyzeK8SResources: false
+    analyzePVCapacity: false
+    migPlanRef:
+      name: utilities-qa
+      namespace: openshift-migration
+  status:
+    analytics:
+      excludedk8sResourceTotal: 0
+      imageCount: 0
+      imageSizeTotal: "0"
+      incompatiblek8sResourceTotal: 0
+      k8sResourceTotal: 0
+      namespaces:
+      - excludedK8SResourceTotal: 0
+        imageCount: 0
+        imageSizeTotal: "0"
+        incompatibleK8SResourceTotal: 0
+        k8sResourceTotal: 0
+        namespace: utilities-qa
+        pvCapacity: "0"
+        pvCount: 0
+      percentComplete: 100
+      plan: utilities-qa
+      pvCapacity: "0"
+      pvCount: 0
+    conditions:
+    - category: Required
+      lastTransitionTime: "2023-05-18T17:16:16Z"
+      message: The analytic is ready.
+      status: "True"
+      type: Ready
+    observedGeneration: 9
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

@@ -1,0 +1,396 @@
+apiVersion: v1
+items:
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftWebConsole
+      openshift.io/migration-registry: 172.30.79.107:5000
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-18T20:50:36Z"
+    generation: 1
+    labels:
+      app: laboralprevisional
+      migration.openshift.io/migrated-by-migmigration: 686e45c7-2384-4caa-8724-f04595ea56af
+      migration.openshift.io/migrated-by-migplan: 14f4ea15-0112-44f6-b444-b2d822f4eda7
+      velero.io/backup-name: migration-2013d-initial-qtt4p
+      velero.io/restore-name: migration-2013d-final-7v8hk
+    name: laboralprevisional
+    namespace: mensajeria-dev
+    resourceVersion: "6264148"
+    uid: 90adf891-a353-4989-8aff-5ab00f565df6
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: laboralprevisional:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      git:
+        ref: develop
+        uri: https://dirtrab.visualstudio.com/Certificados%20Laborales%20y%20Previsionales/_git/CertificadosLaboralesPrevisionales
+      sourceSecret:
+        name: vsts
+      type: Git
+    strategy:
+      sourceStrategy:
+        env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: Development
+        - name: DOTNET_STARTUP_PROJECT
+          value: F30.API/F30.API.csproj
+        from:
+          kind: ImageStreamTag
+          name: dotnet:2.2
+          namespace: openshift
+      type: Source
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - imageChange:
+        lastTriggeredImageID: docker-registry.default.svc:5000/openshift/dotnet@sha256:0478054f9e1aa4ca8b119093612bb9c101a513fec1012bb379a5aeb6216d0d1d
+      type: ImageChange
+    - type: ConfigChange
+    - generic:
+        secret: dea0c39e772ffd1e
+      type: Generic
+    - github:
+        secret: 152fc8e7c218e352
+      type: GitHub
+  status:
+    lastVersion: 0
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftWebConsole
+      openshift.io/migration-registry: 172.30.79.107:5000
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-18T20:50:36Z"
+    generation: 1
+    labels:
+      app: laboralprevisional-qa
+      migration.openshift.io/migrated-by-migmigration: 686e45c7-2384-4caa-8724-f04595ea56af
+      migration.openshift.io/migrated-by-migplan: 14f4ea15-0112-44f6-b444-b2d822f4eda7
+      velero.io/backup-name: migration-2013d-initial-qtt4p
+      velero.io/restore-name: migration-2013d-final-7v8hk
+    name: laboralprevisional-qa
+    namespace: mensajeria-dev
+    resourceVersion: "6264145"
+    uid: db1d40ba-ffbe-48b2-8aa1-6aef634c3048
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: laboralprevisional-qa:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      git:
+        ref: stage
+        uri: https://dirtrab.visualstudio.com/Certificados%20Laborales%20y%20Previsionales/_git/CertificadosLaboralesPrevisionales
+      sourceSecret:
+        name: vsts
+      type: Git
+    strategy:
+      sourceStrategy:
+        env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: QA
+        - name: DOTNET_STARTUP_PROJECT
+          value: F30.API/F30.API.csproj
+        from:
+          kind: ImageStreamTag
+          name: dotnet:2.2
+          namespace: openshift
+      type: Source
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - imageChange:
+        lastTriggeredImageID: docker-registry.default.svc:5000/openshift/dotnet@sha256:0478054f9e1aa4ca8b119093612bb9c101a513fec1012bb379a5aeb6216d0d1d
+      type: ImageChange
+    - type: ConfigChange
+    - generic:
+        secret: 5efd69e454257cfe
+      type: Generic
+    - github:
+        secret: 5d3ec70536fcc804
+      type: GitHub
+  status:
+    lastVersion: 0
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftWebConsole
+      openshift.io/migration-registry: 172.30.79.107:5000
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-18T20:50:36Z"
+    generation: 1
+    labels:
+      app: laboralprevisionalbck-qa
+      migration.openshift.io/migrated-by-migmigration: 686e45c7-2384-4caa-8724-f04595ea56af
+      migration.openshift.io/migrated-by-migplan: 14f4ea15-0112-44f6-b444-b2d822f4eda7
+      velero.io/backup-name: migration-2013d-initial-qtt4p
+      velero.io/restore-name: migration-2013d-final-7v8hk
+    name: laboralprevisionalbck-qa
+    namespace: mensajeria-dev
+    resourceVersion: "6264151"
+    uid: 774d8464-9f7e-4479-b426-e424f1814763
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: laboralprevisionalbck-qa:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      git:
+        ref: stage
+        uri: https://dirtrab.visualstudio.com/Certificados%20Laborales%20y%20Previsionales/_git/CertificadosLaboralesPrevisionales
+      sourceSecret:
+        name: vsts
+      type: Git
+    strategy:
+      sourceStrategy:
+        env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: QA
+        - name: DOTNET_STARTUP_PROJECT
+          value: F30.BackgroundTasks/F30.BackgroundTasks.csproj
+        from:
+          kind: ImageStreamTag
+          name: dotnet:2.2
+          namespace: openshift
+      type: Source
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - imageChange:
+        lastTriggeredImageID: docker-registry.default.svc:5000/openshift/dotnet@sha256:0478054f9e1aa4ca8b119093612bb9c101a513fec1012bb379a5aeb6216d0d1d
+      type: ImageChange
+    - type: ConfigChange
+    - generic:
+        secret: 96704396da8b0cfd
+      type: Generic
+    - github:
+        secret: b902447f0f497eff
+      type: GitHub
+  status:
+    lastVersion: 0
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftWebConsole
+      openshift.io/migration-registry: 172.30.79.107:5000
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-18T20:50:37Z"
+    generation: 1
+    labels:
+      app: laboralprevisionalbckgrd
+      migration.openshift.io/migrated-by-migmigration: 686e45c7-2384-4caa-8724-f04595ea56af
+      migration.openshift.io/migrated-by-migplan: 14f4ea15-0112-44f6-b444-b2d822f4eda7
+      velero.io/backup-name: migration-2013d-initial-qtt4p
+      velero.io/restore-name: migration-2013d-final-7v8hk
+    name: laboralprevisionalbckgrd
+    namespace: mensajeria-dev
+    resourceVersion: "6264157"
+    uid: da394992-6fc7-438b-8d84-eca05a13af4d
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: laboralprevisionalbckgrd:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      git:
+        ref: develop
+        uri: https://dirtrab.visualstudio.com/Certificados%20Laborales%20y%20Previsionales/_git/CertificadosLaboralesPrevisionales
+      sourceSecret:
+        name: vsts
+      type: Git
+    strategy:
+      sourceStrategy:
+        env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: Development
+        - name: DOTNET_STARTUP_PROJECT
+          value: F30.BackgroundTasks/F30.BackgroundTasks.csproj
+        from:
+          kind: ImageStreamTag
+          name: dotnet:2.2
+          namespace: openshift
+      type: Source
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - imageChange:
+        lastTriggeredImageID: docker-registry.default.svc:5000/openshift/dotnet@sha256:0478054f9e1aa4ca8b119093612bb9c101a513fec1012bb379a5aeb6216d0d1d
+      type: ImageChange
+    - type: ConfigChange
+    - generic:
+        secret: 2b848313d84f0ba5
+      type: Generic
+    - github:
+        secret: d8fd56121aa45bc8
+      type: GitHub
+  status:
+    lastVersion: 0
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftWebConsole
+      openshift.io/migration-registry: 172.30.79.107:5000
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-18T20:50:37Z"
+    generation: 1
+    labels:
+      app: labprev-cumplimiento
+      migration.openshift.io/migrated-by-migmigration: 686e45c7-2384-4caa-8724-f04595ea56af
+      migration.openshift.io/migrated-by-migplan: 14f4ea15-0112-44f6-b444-b2d822f4eda7
+      velero.io/backup-name: migration-2013d-initial-qtt4p
+      velero.io/restore-name: migration-2013d-final-7v8hk
+    name: labprev-cumplimiento
+    namespace: mensajeria-dev
+    resourceVersion: "6264168"
+    uid: ef36365b-d89a-4412-a37a-4ac9948e6f7d
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: labprev-cumplimiento:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      git:
+        ref: develop
+        uri: https://dirtrab.visualstudio.com/Certificados%20Laborales%20y%20Previsionales/_git/CertificadosDeCumplimiento
+      sourceSecret:
+        name: vsts
+      type: Git
+    strategy:
+      sourceStrategy:
+        env:
+        - name: DOTNET_STARTUP_PROJECT
+          value: Dt.F301.Backend/Dt.F301.Backend.WebAPI/Dt.F301.Backend.WebAPI.csproj
+        - name: ASPNETCORE_ENVIRONMENT
+          value: Development
+        from:
+          kind: ImageStreamTag
+          name: dotnet:2.2
+          namespace: openshift
+      type: Source
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - imageChange:
+        lastTriggeredImageID: docker-registry.default.svc:5000/openshift/dotnet@sha256:0478054f9e1aa4ca8b119093612bb9c101a513fec1012bb379a5aeb6216d0d1d
+      type: ImageChange
+    - type: ConfigChange
+    - generic:
+        secret: bdf100e1cb3c4680
+      type: Generic
+    - github:
+        secret: f2d742ed91e8692c
+      type: GitHub
+  status:
+    lastVersion: 0
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftWebConsole
+      openshift.io/migration-registry: 172.30.79.107:5000
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-18T20:50:37Z"
+    generation: 1
+    labels:
+      app: labprev-cumplimiento-qa
+      migration.openshift.io/migrated-by-migmigration: 686e45c7-2384-4caa-8724-f04595ea56af
+      migration.openshift.io/migrated-by-migplan: 14f4ea15-0112-44f6-b444-b2d822f4eda7
+      velero.io/backup-name: migration-2013d-initial-qtt4p
+      velero.io/restore-name: migration-2013d-final-7v8hk
+    name: labprev-cumplimiento-qa
+    namespace: mensajeria-dev
+    resourceVersion: "6264163"
+    uid: 288b36e3-8e7f-47e0-9978-a7eeda0529e7
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: labprev-cumplimiento-qa:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      git:
+        ref: stage
+        uri: https://dirtrab.visualstudio.com/Certificados%20Laborales%20y%20Previsionales/_git/CertificadosDeCumplimiento
+      sourceSecret:
+        name: vsts
+      type: Git
+    strategy:
+      sourceStrategy:
+        env:
+        - name: DOTNET_STARTUP_PROJECT
+          value: Dt.F301.Backend/Dt.F301.Backend.WebAPI/Dt.F301.Backend.WebAPI.csproj
+        - name: ASPNETCORE_ENVIRONMENT
+          value: Qa
+        from:
+          kind: ImageStreamTag
+          name: dotnet:2.2
+          namespace: openshift
+      type: Source
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - imageChange:
+        lastTriggeredImageID: docker-registry.default.svc:5000/openshift/dotnet@sha256:0478054f9e1aa4ca8b119093612bb9c101a513fec1012bb379a5aeb6216d0d1d
+      type: ImageChange
+    - type: ConfigChange
+    - generic:
+        secret: 2aefde6dd759a58b
+      type: Generic
+    - github:
+        secret: b47ccec45644776b
+      type: GitHub
+  status:
+    lastVersion: 0
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

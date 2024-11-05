@@ -1,0 +1,113 @@
+apiVersion: v1
+items:
+- apiVersion: apps/v1
+  kind: DaemonSet
+  metadata:
+    annotations:
+      deprecated.daemonset.template.generation: "202"
+      operator.openshift.io/force: 96b73cac-db73-4699-af9c-0a2c5ef4b264
+      operator.openshift.io/pull-spec: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:91a53833b4bd4cbad006cd0b249dc31784d00d342a209b192c63e08f86b99630
+      release.openshift.io/version: 4.10.53
+    creationTimestamp: "2023-05-04T21:40:29Z"
+    generation: 202
+    labels:
+      app: openshift-controller-manager
+      controller-manager: "true"
+    name: controller-manager
+    namespace: openshift-controller-manager
+    resourceVersion: "487812177"
+    uid: 3b2a5a15-ac02-42f0-9fc7-a2c80477f398
+  spec:
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: openshift-controller-manager
+        controller-manager: "true"
+    template:
+      metadata:
+        annotations:
+          operator.openshift.io/force: 96b73cac-db73-4699-af9c-0a2c5ef4b264
+          target.workload.openshift.io/management: '{"effect": "PreferredDuringScheduling"}'
+        creationTimestamp: null
+        labels:
+          app: openshift-controller-manager
+          controller-manager: "true"
+        name: openshift-controller-manager
+      spec:
+        containers:
+        - args:
+          - --config=/var/run/configmaps/config/config.yaml
+          - -v=2
+          command:
+          - openshift-controller-manager
+          - start
+          image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:91a53833b4bd4cbad006cd0b249dc31784d00d342a209b192c63e08f86b99630
+          imagePullPolicy: IfNotPresent
+          name: controller-manager
+          ports:
+          - containerPort: 8443
+            protocol: TCP
+          resources:
+            requests:
+              cpu: 100m
+              memory: 100Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: FallbackToLogsOnError
+          volumeMounts:
+          - mountPath: /var/run/configmaps/config
+            name: config
+          - mountPath: /var/run/configmaps/client-ca
+            name: client-ca
+          - mountPath: /var/run/secrets/serving-cert
+            name: serving-cert
+          - mountPath: /etc/pki/ca-trust/extracted/pem
+            name: proxy-ca-bundles
+        dnsPolicy: ClusterFirst
+        nodeSelector:
+          node-role.kubernetes.io/master: ""
+        priorityClassName: system-node-critical
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: openshift-controller-manager-sa
+        serviceAccountName: openshift-controller-manager-sa
+        terminationGracePeriodSeconds: 30
+        tolerations:
+        - operator: Exists
+        volumes:
+        - configMap:
+            defaultMode: 420
+            name: config
+          name: config
+        - configMap:
+            defaultMode: 420
+            name: client-ca
+          name: client-ca
+        - name: serving-cert
+          secret:
+            defaultMode: 420
+            secretName: serving-cert
+        - configMap:
+            defaultMode: 420
+            items:
+            - key: ca-bundle.crt
+              path: tls-ca-bundle.pem
+            name: openshift-global-ca
+          name: proxy-ca-bundles
+    updateStrategy:
+      rollingUpdate:
+        maxSurge: 0
+        maxUnavailable: 3
+      type: RollingUpdate
+  status:
+    currentNumberScheduled: 3
+    desiredNumberScheduled: 3
+    numberAvailable: 3
+    numberMisscheduled: 0
+    numberReady: 3
+    observedGeneration: 202
+    updatedNumberScheduled: 3
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

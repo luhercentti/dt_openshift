@@ -1,0 +1,80 @@
+apiVersion: v1
+items:
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/description: Allows deploymentconfigs in this namespace to rollout
+        pods in this namespace.  It is auto-managed by a controller; remove subjects
+        to disable.
+    creationTimestamp: "2023-05-04T21:45:25Z"
+    name: system:deployers
+    namespace: openshift-service-ca
+    resourceVersion: "15169"
+    uid: 187777d4-6f9a-4f4f-8a08-c673c3050b69
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: ClusterRole
+    name: system:deployer
+  subjects:
+  - kind: ServiceAccount
+    name: deployer
+    namespace: openshift-service-ca
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/description: Allows builds in this namespace to push images to
+        this namespace.  It is auto-managed by a controller; remove subjects to disable.
+    creationTimestamp: "2023-05-04T21:45:24Z"
+    name: system:image-builders
+    namespace: openshift-service-ca
+    resourceVersion: "15090"
+    uid: 9d39855a-92e9-469c-ab06-416452a4d3ce
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: ClusterRole
+    name: system:image-builder
+  subjects:
+  - kind: ServiceAccount
+    name: builder
+    namespace: openshift-service-ca
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/description: Allows all pods in this namespace to pull images from
+        this namespace.  It is auto-managed by a controller; remove subjects to disable.
+    creationTimestamp: "2023-05-04T21:45:24Z"
+    name: system:image-pullers
+    namespace: openshift-service-ca
+    resourceVersion: "15033"
+    uid: 2f95eef6-00b3-4d2d-a854-65b18c59b123
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: ClusterRole
+    name: system:image-puller
+  subjects:
+  - apiGroup: rbac.authorization.k8s.io
+    kind: Group
+    name: system:serviceaccounts:openshift-service-ca
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: RoleBinding
+  metadata:
+    creationTimestamp: "2023-05-04T21:40:28Z"
+    name: system:openshift:controller:service-ca
+    namespace: openshift-service-ca
+    resourceVersion: "4548"
+    uid: d2579c84-abe7-4e8a-9e09-6a4a2eba550b
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: Role
+    name: system:openshift:controller:service-ca
+  subjects:
+  - kind: ServiceAccount
+    name: service-ca
+    namespace: openshift-service-ca
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

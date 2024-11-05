@@ -1,0 +1,514 @@
+apiVersion: v1
+items:
+- apiVersion: authorization.openshift.io/v1
+  groupNames:
+  - system:authenticated
+  kind: RoleBinding
+  metadata:
+    creationTimestamp: "2023-05-04T21:40:43Z"
+    name: authentication-reader-for-authenticated-users
+    namespace: kube-system
+    resourceVersion: "6094"
+    uid: bb4f051c-6ac6-41a5-8d09-480ad936456b
+  roleRef:
+    name: extension-apiserver-authentication-reader
+    namespace: kube-system
+  subjects:
+  - kind: SystemGroup
+    name: system:authenticated
+  userNames: null
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    annotations:
+      include.release.openshift.io/self-managed-high-availability: "true"
+      include.release.openshift.io/single-node-developer: "true"
+    creationTimestamp: "2023-05-04T21:36:18Z"
+    name: cloud-controller-manager:apiserver-authentication-reader
+    namespace: kube-system
+    ownerReferences:
+    - apiVersion: config.openshift.io/v1
+      kind: ClusterVersion
+      name: version
+      uid: 5d92b52f-9fff-4a6e-b815-398b934115ad
+    resourceVersion: "2199"
+    uid: 1cbf225e-3b21-48cd-a2c6-338e5d7d9b9d
+  roleRef:
+    name: extension-apiserver-authentication-reader
+    namespace: kube-system
+  subjects:
+  - kind: ServiceAccount
+    name: cloud-controller-manager
+    namespace: openshift-cloud-controller-manager
+  userNames:
+  - system:serviceaccount:openshift-cloud-controller-manager:cloud-controller-manager
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    annotations:
+      include.release.openshift.io/ibm-cloud-managed: "true"
+      include.release.openshift.io/self-managed-high-availability: "true"
+      include.release.openshift.io/single-node-developer: "true"
+    creationTimestamp: "2023-05-04T21:53:22Z"
+    name: console
+    namespace: kube-system
+    ownerReferences:
+    - apiVersion: config.openshift.io/v1
+      kind: ClusterVersion
+      name: version
+      uid: 5d92b52f-9fff-4a6e-b815-398b934115ad
+    resourceVersion: "25752"
+    uid: 6503cc6a-3240-4858-9db0-d4c35bdda706
+  roleRef:
+    name: extension-apiserver-authentication-reader
+    namespace: kube-system
+  subjects:
+  - kind: ServiceAccount
+    name: console
+    namespace: openshift-console
+  userNames:
+  - system:serviceaccount:openshift-console:console
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    annotations:
+      include.release.openshift.io/ibm-cloud-managed: "true"
+      include.release.openshift.io/self-managed-high-availability: "true"
+      include.release.openshift.io/single-node-developer: "true"
+    creationTimestamp: "2023-05-04T21:53:22Z"
+    name: console-operator
+    namespace: kube-system
+    ownerReferences:
+    - apiVersion: config.openshift.io/v1
+      kind: ClusterVersion
+      name: version
+      uid: 5d92b52f-9fff-4a6e-b815-398b934115ad
+    resourceVersion: "25749"
+    uid: bd7a0b7a-f6ed-4a4f-95a7-19655de4c0d5
+  roleRef:
+    name: extension-apiserver-authentication-reader
+    namespace: kube-system
+  subjects:
+  - kind: ServiceAccount
+    name: console-operator
+    namespace: openshift-console-operator
+  userNames:
+  - system:serviceaccount:openshift-console-operator:console-operator
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    annotations:
+      include.release.openshift.io/ibm-cloud-managed: "true"
+      include.release.openshift.io/self-managed-high-availability: "true"
+      include.release.openshift.io/single-node-developer: "true"
+    creationTimestamp: "2023-05-04T21:35:36Z"
+    name: insights-operator-auth
+    namespace: kube-system
+    ownerReferences:
+    - apiVersion: config.openshift.io/v1
+      kind: ClusterVersion
+      name: version
+      uid: 5d92b52f-9fff-4a6e-b815-398b934115ad
+    resourceVersion: "1126"
+    uid: 823e9068-f895-462b-b29f-0f34d3fde3ef
+  roleRef:
+    name: extension-apiserver-authentication-reader
+    namespace: kube-system
+  subjects:
+  - kind: ServiceAccount
+    name: operator
+    namespace: openshift-insights
+  userNames:
+  - system:serviceaccount:openshift-insights:operator
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    creationTimestamp: "2023-05-04T21:39:44Z"
+    name: network-diagnostics
+    namespace: kube-system
+    ownerReferences:
+    - apiVersion: operator.openshift.io/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Network
+      name: cluster
+      uid: 5513ebe5-e5fd-4f40-8857-5fcd3d31efca
+    resourceVersion: "3326"
+    uid: 9aa7325f-b84a-442c-b6dd-c152e52181a3
+  roleRef:
+    name: extension-apiserver-authentication-reader
+    namespace: kube-system
+  subjects:
+  - kind: ServiceAccount
+    name: network-diagnostics
+    namespace: openshift-network-diagnostics
+  userNames:
+  - system:serviceaccount:openshift-network-diagnostics:network-diagnostics
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    creationTimestamp: "2023-05-04T21:41:14Z"
+    labels:
+      olm.owner: packageserver
+      olm.owner.kind: ClusterServiceVersion
+      olm.owner.namespace: openshift-operator-lifecycle-manager
+    name: packageserver-service-auth-reader
+    namespace: kube-system
+    resourceVersion: "7265"
+    uid: a3fb86c0-03ef-4276-b529-6697cae4c28a
+  roleRef:
+    name: extension-apiserver-authentication-reader
+    namespace: kube-system
+  subjects:
+  - kind: ServiceAccount
+    name: olm-operator-serviceaccount
+    namespace: openshift-operator-lifecycle-manager
+  userNames:
+  - system:serviceaccount:openshift-operator-lifecycle-manager:olm-operator-serviceaccount
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    creationTimestamp: "2023-05-04T21:49:26Z"
+    labels:
+      app.kubernetes.io/component: prometheus
+      app.kubernetes.io/instance: k8s
+      app.kubernetes.io/name: prometheus
+      app.kubernetes.io/part-of: openshift-monitoring
+      app.kubernetes.io/version: 2.32.1
+    name: prometheus-k8s
+    namespace: kube-system
+    resourceVersion: "21593"
+    uid: 19d76928-0ae0-4104-8167-1e40d6c70a08
+  roleRef:
+    name: prometheus-k8s
+    namespace: kube-system
+  subjects:
+  - kind: ServiceAccount
+    name: prometheus-k8s
+    namespace: openshift-monitoring
+  userNames:
+  - system:serviceaccount:openshift-monitoring:prometheus-k8s
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    creationTimestamp: "2023-05-04T21:41:44Z"
+    labels:
+      app.kubernetes.io/component: metrics-adapter
+      app.kubernetes.io/name: prometheus-adapter
+      app.kubernetes.io/part-of: openshift-monitoring
+      app.kubernetes.io/version: 0.9.1
+    name: resource-metrics-auth-reader
+    namespace: kube-system
+    resourceVersion: "8848"
+    uid: 2b2a2862-30e2-4cf0-9141-8d187eb31bcc
+  roleRef:
+    name: extension-apiserver-authentication-reader
+    namespace: kube-system
+  subjects:
+  - kind: ServiceAccount
+    name: prometheus-adapter
+    namespace: openshift-monitoring
+  userNames:
+  - system:serviceaccount:openshift-monitoring:prometheus-adapter
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/reconcile-protect: "false"
+    creationTimestamp: "2023-05-04T21:34:54Z"
+    labels:
+      kubernetes.io/bootstrapping: rbac-defaults
+    name: system::extension-apiserver-authentication-reader
+    namespace: kube-system
+    resourceVersion: "245"
+    uid: 7dcfb6cd-112b-49f3-9f00-878cf136a565
+  roleRef:
+    name: extension-apiserver-authentication-reader
+    namespace: kube-system
+  subjects:
+  - kind: SystemUser
+    name: system:kube-controller-manager
+  - kind: SystemUser
+    name: system:kube-scheduler
+  userNames:
+  - system:kube-controller-manager
+  - system:kube-scheduler
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/reconcile-protect: "false"
+    creationTimestamp: "2023-05-04T21:34:54Z"
+    labels:
+      kubernetes.io/bootstrapping: rbac-defaults
+    name: system::leader-locking-kube-controller-manager
+    namespace: kube-system
+    resourceVersion: "246"
+    uid: 2d5973fc-123a-48b6-863c-8122b7fe3b6c
+  roleRef:
+    name: system::leader-locking-kube-controller-manager
+    namespace: kube-system
+  subjects:
+  - kind: SystemUser
+    name: system:kube-controller-manager
+  - kind: ServiceAccount
+    name: kube-controller-manager
+    namespace: kube-system
+  userNames:
+  - system:kube-controller-manager
+  - system:serviceaccount:kube-system:kube-controller-manager
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/reconcile-protect: "false"
+    creationTimestamp: "2023-05-04T21:34:54Z"
+    labels:
+      kubernetes.io/bootstrapping: rbac-defaults
+    name: system::leader-locking-kube-scheduler
+    namespace: kube-system
+    resourceVersion: "247"
+    uid: afe2f74b-b03e-415a-8a3d-6b5ff50578fb
+  roleRef:
+    name: system::leader-locking-kube-scheduler
+    namespace: kube-system
+  subjects:
+  - kind: SystemUser
+    name: system:kube-scheduler
+  - kind: ServiceAccount
+    name: kube-scheduler
+    namespace: kube-system
+  userNames:
+  - system:kube-scheduler
+  - system:serviceaccount:kube-system:kube-scheduler
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/reconcile-protect: "false"
+    creationTimestamp: "2023-05-04T21:34:54Z"
+    labels:
+      kubernetes.io/bootstrapping: rbac-defaults
+    name: system:controller:bootstrap-signer
+    namespace: kube-system
+    resourceVersion: "248"
+    uid: 99cfbb11-962a-4bb7-b675-426ffaf48c5b
+  roleRef:
+    name: system:controller:bootstrap-signer
+    namespace: kube-system
+  subjects:
+  - kind: ServiceAccount
+    name: bootstrap-signer
+    namespace: kube-system
+  userNames:
+  - system:serviceaccount:kube-system:bootstrap-signer
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/reconcile-protect: "false"
+    creationTimestamp: "2023-05-04T21:34:54Z"
+    labels:
+      kubernetes.io/bootstrapping: rbac-defaults
+    name: system:controller:cloud-provider
+    namespace: kube-system
+    resourceVersion: "250"
+    uid: 2377b61d-9ea3-4828-8bcc-e1b9abb18b8e
+  roleRef:
+    name: system:controller:cloud-provider
+    namespace: kube-system
+  subjects:
+  - kind: ServiceAccount
+    name: cloud-provider
+    namespace: kube-system
+  userNames:
+  - system:serviceaccount:kube-system:cloud-provider
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/reconcile-protect: "false"
+    creationTimestamp: "2023-05-04T21:34:54Z"
+    labels:
+      kubernetes.io/bootstrapping: rbac-defaults
+    name: system:controller:token-cleaner
+    namespace: kube-system
+    resourceVersion: "252"
+    uid: 5ea87b5a-763a-4e34-ac57-fd5ddec478b8
+  roleRef:
+    name: system:controller:token-cleaner
+    namespace: kube-system
+  subjects:
+  - kind: ServiceAccount
+    name: token-cleaner
+    namespace: kube-system
+  userNames:
+  - system:serviceaccount:kube-system:token-cleaner
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/description: Allows deploymentconfigs in this namespace to rollout
+        pods in this namespace.  It is auto-managed by a controller; remove subjects
+        to disable.
+    creationTimestamp: "2023-05-04T21:45:19Z"
+    name: system:deployers
+    namespace: kube-system
+    resourceVersion: "13824"
+    uid: 13d8fd3e-d7c8-4d82-b743-6b94757507da
+  roleRef:
+    name: system:deployer
+  subjects:
+  - kind: ServiceAccount
+    name: deployer
+    namespace: kube-system
+  userNames:
+  - system:serviceaccount:kube-system:deployer
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/description: Allows builds in this namespace to push images to
+        this namespace.  It is auto-managed by a controller; remove subjects to disable.
+    creationTimestamp: "2023-05-04T21:45:18Z"
+    name: system:image-builders
+    namespace: kube-system
+    resourceVersion: "13660"
+    uid: 71335e2a-0eee-46c6-a8bc-c0cab3d14743
+  roleRef:
+    name: system:image-builder
+  subjects:
+  - kind: ServiceAccount
+    name: builder
+    namespace: kube-system
+  userNames:
+  - system:serviceaccount:kube-system:builder
+- apiVersion: authorization.openshift.io/v1
+  groupNames:
+  - system:serviceaccounts:kube-system
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/description: Allows all pods in this namespace to pull images from
+        this namespace.  It is auto-managed by a controller; remove subjects to disable.
+    creationTimestamp: "2023-05-04T21:45:18Z"
+    name: system:image-pullers
+    namespace: kube-system
+    resourceVersion: "13494"
+    uid: 88010da1-1a23-451b-b3fd-7ec235738173
+  roleRef:
+    name: system:image-puller
+  subjects:
+  - kind: SystemGroup
+    name: system:serviceaccounts:kube-system
+  userNames: null
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    creationTimestamp: "2023-05-04T21:40:42Z"
+    name: system:openshift:controller:kube-apiserver-check-endpoints
+    namespace: kube-system
+    resourceVersion: "6049"
+    uid: 45f2a438-b33a-43e8-ad91-ae95aebd2003
+  roleRef:
+    name: extension-apiserver-authentication-reader
+    namespace: kube-system
+  subjects:
+  - kind: SystemUser
+    name: system:serviceaccount:openshift-kube-apiserver:check-endpoints
+  userNames:
+  - system:serviceaccount:openshift-kube-apiserver:check-endpoints
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    creationTimestamp: "2023-05-04T21:40:31Z"
+    name: system:openshift:leader-election-lock-kube-controller-manager
+    namespace: kube-system
+    resourceVersion: "4959"
+    uid: d89576da-3270-4f0f-b044-47e3ba255484
+  roleRef:
+    name: system:openshift:leader-election-lock-kube-controller-manager
+    namespace: kube-system
+  subjects:
+  - kind: SystemUser
+    name: system:kube-controller-manager
+  - kind: ServiceAccount
+    name: namespace-security-allocation-controller
+    namespace: openshift-infra
+  userNames:
+  - system:kube-controller-manager
+  - system:serviceaccount:openshift-infra:namespace-security-allocation-controller
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    creationTimestamp: "2023-05-04T21:40:31Z"
+    name: system:openshift:leader-locking-kube-controller-manager
+    namespace: kube-system
+    resourceVersion: "4940"
+    uid: 4f8afb42-a47b-4365-a098-3bc7b23a54a9
+  roleRef:
+    name: system::leader-locking-kube-controller-manager
+    namespace: kube-system
+  subjects:
+  - kind: SystemUser
+    name: system:kube-controller-manager
+  userNames:
+  - system:kube-controller-manager
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    creationTimestamp: "2023-05-04T21:40:30Z"
+    name: system:openshift:leader-locking-kube-scheduler
+    namespace: kube-system
+    resourceVersion: "4779"
+    uid: 7d5277ef-a8e3-4404-b4e5-07295c3716ee
+  roleRef:
+    name: system::leader-locking-kube-scheduler
+    namespace: kube-system
+  subjects:
+  - kind: SystemUser
+    name: system:kube-scheduler
+  userNames:
+  - system:kube-scheduler
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    creationTimestamp: "2023-05-04T21:40:29Z"
+    name: system:openshift:leader-locking-openshift-controller-manager
+    namespace: kube-system
+    resourceVersion: "4696"
+    uid: 09e8d226-803b-4269-8c4f-cccc10465b06
+  roleRef:
+    name: system:openshift:leader-locking-openshift-controller-manager
+    namespace: kube-system
+  subjects:
+  - kind: ServiceAccount
+    name: openshift-controller-manager-sa
+    namespace: openshift-controller-manager
+  userNames:
+  - system:serviceaccount:openshift-controller-manager:openshift-controller-manager-sa
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

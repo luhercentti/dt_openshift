@@ -1,0 +1,185 @@
+apiVersion: v1
+items:
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftWebConsole
+      openshift.io/migration-registry: 172.30.232.232:5000
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-26T02:42:52Z"
+    generation: 2
+    labels:
+      app: front-lre
+      migration.openshift.io/migrated-by-migmigration: e38d34ca-b64b-4f51-8661-6ba7d05484a6
+      migration.openshift.io/migrated-by-migplan: ec0923fa-4d06-4a8b-a67a-a32b23d75ede
+      velero.io/backup-name: migration-fc7c1-initial-wskdq
+      velero.io/restore-name: migration-fc7c1-final-6g8n2
+    name: front-lre
+    namespace: lre-qa
+    resourceVersion: "95922951"
+    uid: f1a7539f-2ea9-47a5-970a-9214af20aba3
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: front-lre:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      git:
+        ref: develop
+        uri: https://dirtrab.visualstudio.com/Libro%20Remuneraciones%20Electronico/_git/product-lre
+      sourceSecret:
+        name: azure2
+      type: Git
+    strategy:
+      sourceStrategy:
+        from:
+          kind: ImageStreamTag
+          name: nodejs:10
+          namespace: openshift
+      type: Source
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - imageChange:
+        lastTriggeredImageID: docker-registry.default.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+      type: ImageChange
+    - type: ConfigChange
+    - generic:
+        secret: 8cb99e4509792a10
+      type: Generic
+    - github:
+        secret: b6bd6d3e2d0ff95f
+      type: GitHub
+  status:
+    imageChangeTriggers:
+    - from:
+        name: nodejs:10
+        namespace: openshift
+      lastTriggerTime: "2023-09-01T01:10:32Z"
+      lastTriggeredImageID: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+    lastVersion: 1
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftNewBuild
+      openshift.io/migration-registry: 172.30.232.232:5000
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-26T02:42:52Z"
+    generation: 2
+    labels:
+      build: product-lre
+      migration.openshift.io/migrated-by-migmigration: e38d34ca-b64b-4f51-8661-6ba7d05484a6
+      migration.openshift.io/migrated-by-migplan: ec0923fa-4d06-4a8b-a67a-a32b23d75ede
+      velero.io/backup-name: migration-fc7c1-initial-wskdq
+      velero.io/restore-name: migration-fc7c1-final-6g8n2
+    name: product-lre
+    namespace: lre-qa
+    resourceVersion: "137154809"
+    uid: 2de353a1-e78d-467c-a856-6577be34343a
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: product-lre:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      binary: {}
+      type: Binary
+    strategy:
+      sourceStrategy:
+        env:
+        - name: REACT_APP_VOLVER_REDIRECT_EMPLEADOR
+          value: /empleador/home
+        - name: REACT_APP_PARENT_DOMAIN
+          value: '*'
+        - name: REACT_APP_LRE_OBTENER_DECLARACIONES
+          value: https://lre-services-live-qa.api.dirtrab.cl/fiscalizacion/remuneracion/declaracion/datosDeclaraciones/empleador
+        - name: REACT_APP_LRE_OBTENER_OBSERVACIONES
+          value: https://lre-services-live-qa.api.dirtrab.cl/fiscalizacion/remuneracion/declaracion/datosDeclaraciones/observaciones/
+        - name: REACT_APP_LRE_CARGAR_DECLARACION
+          value: https://lre-services-live-qa.api.dirtrab.cl/fiscalizacion/remuneracion/declaracion/cargaDeclaracion
+        - name: REACT_APP_LRE_OBTENER_CSV_DECLARACION
+          value: https://lre-services-live-qa.api.dirtrab.cl/fiscalizacion/remuneracion/declaracion/descargaDeclaracion/
+        - name: REACT_APP_LRE_OBTENER_PLANTILLA_EJEMPLO
+          value: https://lre-services-live-qa.api.dirtrab.cl/fiscalizacion/remuneracion/declaracion/descargaDeclaracion/plantilla
+        - name: REACT_APP_LRE_EMPLEADOR
+          value: https://lre-services-live-qa.api.dirtrab.cl/fiscalizacion/remuneracion/validaEmpleador/empleador/
+        - name: REACT_APP_LRE_URL_METADATA
+          value: https://lre-services-live-qa.api.dirtrab.cl/fiscalizacion/remuneracion/bff/metadata/empleador
+        - name: REACT_APP_LRE_URL_GUARDAR_TERMINO_CONDICIONES
+          value: https://lre-services-live-qa.api.dirtrab.cl/fiscalizacion/remuneracion/terminoCondiciones/empleador
+        - name: REACT_APP_PDF_INSTRUCCIONES
+          value: https://static-content.api.dirtrab.cl/dt-docs/lre/lre_instrucciones_de_carga.pdf
+        - name: REACT_APP_PDF_POLITICAS_PRIVACIDAD
+          value: https://static-content.api.dirtrab.cl/dt-docs/lre/lre_politicas_proteccion_datos_personales.pdf
+        - name: REACT_APP_PDF_SUPLEMENTO_LRE
+          value: https://static-content.api.dirtrab.cl/dt-docs/lre/lre_suplemento.pdf
+        - name: REACT_APP_DESCARGAR_CSV
+          value: https://lre-services-live-qa.api.dirtrab.cl/fiscalizacion/remuneracion/declaracion/descargaDeclaracion/
+        - name: REACT_APP_OBTENER_OBSERVACIONES
+          value: https://lre-services-live-qa.api.dirtrab.cl/fiscalizacion/remuneracion/declaracion/datosDeclaraciones/observaciones/
+        - name: REACT_APP_OBTENER_DECLARACIONES
+          value: https://lre-services-live-qa.api.dirtrab.cl/fiscalizacion/remuneracion/declaracion/datosDeclaraciones/empleador
+        - name: REACT_APP_DESCARGAR_DECLARACIONES
+          value: https://lre-services-live-qa.api.dirtrab.cl/fiscalizacion/remuneracion/declaracion/descargaDeclaracion/plantilla
+        - name: REACT_APP_CARGAR_DECLARACIONES_TEST
+          value: https://lre-services-live-qa.api.dirtrab.cl/fiscalizacion/remuneracion/declaracion/cargaDeclaracion/cargaDeclaracion
+        - name: REACT_APP_VALIDAR_EMPLEADOR
+          value: https://lre-services-live-qa.api.dirtrab.cl/fiscalizacion/remuneracion/empleador/validaEmpleador
+        - name: REACT_APP_SEGUNDOS_DE_RECARGA
+          value: "20"
+        - name: REACT_APP_DEFAULT_TIPO_PERFIL
+          value: "3"
+        - name: REACT_APP_METADATA
+          value: https://lre-services-live-qa.api.dirtrab.cl/fiscalizacion/remuneracion/bff/metadata/formulario/estructura/full
+        - name: REACT_APP_METADATA_OPCIONES_FORMULARIO
+          value: https://lre-services-live-qa.api.dirtrab.cl/fiscalizacion/remuneracion/bff/metadata/formulario/full
+        - name: REACT_APP_METADATA_PERSONA
+          value: https://lre-services-live-qa.api.dirtrab.cl/fiscalizacion/remuneracion/bff/metadata/persona
+        - name: REACT_APP_TRABAJADORES
+          value: https://lre-services-live-qa.api.dirtrab.cl/fiscalizacion/remuneracion/adminNominaTrabajadores/nominaTrabajadores
+        - name: REACT_APP_DECLARACIONES_JSON
+          value: https://lre-services-live-qa.api.dirtrab.cl/declaraciones/declaracionesJSON
+        - name: REACT_APP_LRE_ENVIRONMENT
+          value: qa
+        - name: REACT_APP_CERTIFICADO_INCORPORACION
+          value: https://lre-services-live-qa.api.dirtrab.cl/api/certificados/comprobantes/incorporacion/
+        - name: REACT_APP_COMPROBANTE_DECLARACION
+          value: https://lre-services-live-qa.api.dirtrab.cl/api/certificados/comprobantes/comprobante-declaracion/
+        - name: REACT_APP_CARGAR_SIN_MOVIMIENTO
+          value: https://lre-services-live-qa.api.dirtrab.cl/fiscalizacion/remuneracion/declaracion/cargaDeclaracion/cargarDeclaracionSinMovimiento
+        from:
+          kind: ImageStreamTag
+          name: nodejs:10
+          namespace: openshift
+      type: Source
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - github:
+        secret: EuoUCPc8IO8i3MzjNxHi
+      type: GitHub
+    - generic:
+        secret: QnRZ4fABWrvf6O1CNcaz
+      type: Generic
+  status:
+    lastVersion: 1
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

@@ -1,0 +1,147 @@
+apiVersion: v1
+items:
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    annotations:
+      include.release.openshift.io/ibm-cloud-managed: "true"
+      include.release.openshift.io/self-managed-high-availability: "true"
+      include.release.openshift.io/single-node-developer: "true"
+    creationTimestamp: "2023-05-04T21:36:10Z"
+    name: insights-operator
+    namespace: openshift-insights
+    ownerReferences:
+    - apiVersion: config.openshift.io/v1
+      kind: ClusterVersion
+      name: version
+      uid: 5d92b52f-9fff-4a6e-b815-398b934115ad
+    resourceVersion: "1991"
+    uid: 5599a3f0-11be-4ffc-8bfa-39dfb66c5c3a
+  roleRef:
+    name: insights-operator
+    namespace: openshift-insights
+  subjects:
+  - kind: ServiceAccount
+    name: operator
+    namespace: openshift-insights
+  userNames:
+  - system:serviceaccount:openshift-insights:operator
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    annotations:
+      include.release.openshift.io/ibm-cloud-managed: "true"
+      include.release.openshift.io/self-managed-high-availability: "true"
+      include.release.openshift.io/single-node-developer: "true"
+    creationTimestamp: "2023-05-04T21:36:12Z"
+    name: insights-operator-obfuscation-secret
+    namespace: openshift-insights
+    ownerReferences:
+    - apiVersion: config.openshift.io/v1
+      kind: ClusterVersion
+      name: version
+      uid: 5d92b52f-9fff-4a6e-b815-398b934115ad
+    resourceVersion: "2053"
+    uid: c56e5f56-43be-400e-8523-a5975274eb3b
+  roleRef:
+    name: insights-operator-obfuscation-secret
+    namespace: openshift-insights
+  subjects:
+  - kind: ServiceAccount
+    name: operator
+    namespace: openshift-insights
+  userNames:
+  - system:serviceaccount:openshift-insights:operator
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    annotations:
+      include.release.openshift.io/ibm-cloud-managed: "true"
+      include.release.openshift.io/self-managed-high-availability: "true"
+      include.release.openshift.io/single-node-developer: "true"
+    creationTimestamp: "2023-05-04T21:36:17Z"
+    name: prometheus-k8s
+    namespace: openshift-insights
+    ownerReferences:
+    - apiVersion: config.openshift.io/v1
+      kind: ClusterVersion
+      name: version
+      uid: 5d92b52f-9fff-4a6e-b815-398b934115ad
+    resourceVersion: "2176"
+    uid: 2ec011e0-b884-466c-a21b-58101babdc7d
+  roleRef:
+    name: prometheus-k8s
+    namespace: openshift-insights
+  subjects:
+  - kind: ServiceAccount
+    name: prometheus-k8s
+    namespace: openshift-monitoring
+  userNames:
+  - system:serviceaccount:openshift-monitoring:prometheus-k8s
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/description: Allows deploymentconfigs in this namespace to rollout
+        pods in this namespace.  It is auto-managed by a controller; remove subjects
+        to disable.
+    creationTimestamp: "2023-05-04T21:45:27Z"
+    name: system:deployers
+    namespace: openshift-insights
+    resourceVersion: "15609"
+    uid: 2491bce7-b67f-4794-b68e-1bcbdaac17da
+  roleRef:
+    name: system:deployer
+  subjects:
+  - kind: ServiceAccount
+    name: deployer
+    namespace: openshift-insights
+  userNames:
+  - system:serviceaccount:openshift-insights:deployer
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/description: Allows builds in this namespace to push images to
+        this namespace.  It is auto-managed by a controller; remove subjects to disable.
+    creationTimestamp: "2023-05-04T21:45:27Z"
+    name: system:image-builders
+    namespace: openshift-insights
+    resourceVersion: "15574"
+    uid: 83e8874f-2e30-4c55-8ff4-cedbc1e3a6c6
+  roleRef:
+    name: system:image-builder
+  subjects:
+  - kind: ServiceAccount
+    name: builder
+    namespace: openshift-insights
+  userNames:
+  - system:serviceaccount:openshift-insights:builder
+- apiVersion: authorization.openshift.io/v1
+  groupNames:
+  - system:serviceaccounts:openshift-insights
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/description: Allows all pods in this namespace to pull images from
+        this namespace.  It is auto-managed by a controller; remove subjects to disable.
+    creationTimestamp: "2023-05-04T21:45:27Z"
+    name: system:image-pullers
+    namespace: openshift-insights
+    resourceVersion: "15495"
+    uid: fc876e2b-e797-488d-831a-37628d57cb1d
+  roleRef:
+    name: system:image-puller
+  subjects:
+  - kind: SystemGroup
+    name: system:serviceaccounts:openshift-insights
+  userNames: null
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

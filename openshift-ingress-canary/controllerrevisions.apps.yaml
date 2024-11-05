@@ -1,0 +1,68 @@
+apiVersion: v1
+items:
+- apiVersion: apps/v1
+  data:
+    spec:
+      template:
+        $patch: replace
+        metadata:
+          annotations:
+            target.workload.openshift.io/management: '{"effect": "PreferredDuringScheduling"}'
+          creationTimestamp: null
+          labels:
+            ingresscanary.operator.openshift.io/daemonset-ingresscanary: canary_controller
+        spec:
+          containers:
+          - command:
+            - ingress-operator
+            - serve-healthcheck
+            image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:cfcf29bb0e60e5ead9cf1ff5c307bdd12e3a05dce63ad92ade1b7bded6351162
+            imagePullPolicy: IfNotPresent
+            name: serve-healthcheck-canary
+            ports:
+            - containerPort: 8080
+              protocol: TCP
+            - containerPort: 8888
+              protocol: TCP
+            resources:
+              requests:
+                cpu: 10m
+                memory: 20Mi
+            terminationMessagePath: /dev/termination-log
+            terminationMessagePolicy: FallbackToLogsOnError
+          dnsPolicy: ClusterFirst
+          nodeSelector:
+            kubernetes.io/os: linux
+          priorityClassName: system-cluster-critical
+          restartPolicy: Always
+          schedulerName: default-scheduler
+          securityContext: {}
+          terminationGracePeriodSeconds: 30
+          tolerations:
+          - effect: NoSchedule
+            key: node-role.kubernetes.io/infra
+            operator: Exists
+  kind: ControllerRevision
+  metadata:
+    annotations:
+      deprecated.daemonset.template.generation: "1"
+    creationTimestamp: "2023-05-04T21:47:09Z"
+    labels:
+      controller-revision-hash: 986659d4d
+      ingresscanary.operator.openshift.io/daemonset-ingresscanary: canary_controller
+    name: ingress-canary-986659d4d
+    namespace: openshift-ingress-canary
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DaemonSet
+      name: ingress-canary
+      uid: abe802b6-57ae-4a31-8d3f-142349d19ede
+    resourceVersion: "16860"
+    uid: 89f1840d-17e6-4e50-984f-a8a9b5605f8b
+  revision: 1
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

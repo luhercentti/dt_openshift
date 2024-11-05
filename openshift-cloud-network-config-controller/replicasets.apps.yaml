@@ -1,0 +1,148 @@
+apiVersion: v1
+items:
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "1"
+      deployment.kubernetes.io/revision: "1"
+      kubernetes.io/description: |
+        This deployment launches the cloud network config controller which manages cloud-level network configurations
+      networkoperator.openshift.io/non-critical: ""
+      release.openshift.io/version: 4.10.53
+    creationTimestamp: "2023-05-04T21:39:32Z"
+    generation: 1
+    labels:
+      app: cloud-network-config-controller
+      component: network
+      openshift.io/component: network
+      pod-template-hash: 57bd646dc5
+      type: infra
+    name: cloud-network-config-controller-57bd646dc5
+    namespace: openshift-cloud-network-config-controller
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: cloud-network-config-controller
+      uid: ea5bc787-a487-4928-958a-7219c9f18c21
+    resourceVersion: "114617527"
+    uid: 0db4953d-34f3-44de-a353-066ba83f6bd5
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: cloud-network-config-controller
+        pod-template-hash: 57bd646dc5
+    template:
+      metadata:
+        annotations:
+          target.workload.openshift.io/management: '{"effect": "PreferredDuringScheduling"}'
+        creationTimestamp: null
+        labels:
+          app: cloud-network-config-controller
+          component: network
+          openshift.io/component: network
+          pod-template-hash: 57bd646dc5
+          type: infra
+        name: cloud-network-config-controller
+      spec:
+        containers:
+        - args:
+          - -platform-type
+          - Azure
+          - -platform-region=
+          - -platform-api-url=
+          - -platform-aws-ca-override=
+          - -platform-azure-environment=AzurePublicCloud
+          - -secret-name
+          - cloud-credentials
+          command:
+          - /usr/bin/cloud-network-config-controller
+          env:
+          - name: CONTROLLER_NAMESPACE
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+          - name: CONTROLLER_NAME
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.name
+          - name: KUBERNETES_SERVICE_PORT
+            value: "6443"
+          - name: KUBERNETES_SERVICE_HOST
+            value: api-int.ocp4azu.dirtrab.cl
+          image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:46e583311428f2b503d6d68feb7dfe3bcf3e534cfde109ba15e3ed79cb049b71
+          imagePullPolicy: IfNotPresent
+          name: controller
+          resources:
+            requests:
+              cpu: 10m
+              memory: 50Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: FallbackToLogsOnError
+          volumeMounts:
+          - mountPath: /etc/secret/cloudprovider
+            name: cloud-provider-secret
+            readOnly: true
+          - mountPath: /kube-cloud-config
+            name: kube-cloud-config
+            readOnly: true
+          - mountPath: /etc/pki/ca-trust/extracted/pem
+            name: trusted-ca
+            readOnly: true
+          - mountPath: /var/run/secrets/openshift/serviceaccount
+            name: bound-sa-token
+            readOnly: true
+        dnsPolicy: ClusterFirst
+        nodeSelector:
+          node-role.kubernetes.io/master: ""
+        priorityClassName: system-cluster-critical
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: cloud-network-config-controller
+        serviceAccountName: cloud-network-config-controller
+        terminationGracePeriodSeconds: 30
+        tolerations:
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/master
+          operator: Exists
+        volumes:
+        - name: cloud-provider-secret
+          secret:
+            defaultMode: 420
+            secretName: cloud-credentials
+        - configMap:
+            defaultMode: 420
+            name: kube-cloud-config
+          name: kube-cloud-config
+        - configMap:
+            defaultMode: 420
+            items:
+            - key: ca-bundle.crt
+              path: tls-ca-bundle.pem
+            name: trusted-ca
+          name: trusted-ca
+        - name: bound-sa-token
+          projected:
+            defaultMode: 420
+            sources:
+            - serviceAccountToken:
+                audience: openshift
+                expirationSeconds: 3600
+                path: token
+  status:
+    availableReplicas: 1
+    fullyLabeledReplicas: 1
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

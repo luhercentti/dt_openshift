@@ -1,0 +1,1058 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.130.20.252"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.130.20.252"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/deployment-config.name: apicast-live-prod
+      openshift.io/deployment.name: apicast-live-prod-4
+      openshift.io/scc: restricted
+    creationTimestamp: "2024-04-09T17:36:25Z"
+    labels:
+      openshift.io/deployer-pod-for.name: apicast-live-prod-4
+    name: apicast-live-prod-4-deploy
+    namespace: apicast-prod
+    ownerReferences:
+    - apiVersion: v1
+      kind: ReplicationController
+      name: apicast-live-prod-4
+      uid: 6748135e-ef3d-49b6-bce5-76ec6df669d3
+    resourceVersion: "286981941"
+    uid: 099570d0-12fc-4799-8aa6-8ebeebc938e1
+  spec:
+    activeDeadlineSeconds: 21600
+    containers:
+    - env:
+      - name: OPENSHIFT_DEPLOYMENT_NAME
+        value: apicast-live-prod-4
+      - name: OPENSHIFT_DEPLOYMENT_NAMESPACE
+        value: apicast-prod
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:6e42aa37bf05a8d5c1409a4ec39632234e783e6c92abe659f5e611860f073039
+      imagePullPolicy: IfNotPresent
+      name: deployment
+      resources: {}
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000820000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-5wjsm
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: deployer-dockercfg-25vz5
+    nodeName: ocp4azu-sj2sl-worker-noprod-dev-brazilsouth1-vlxcp
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Never
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000820000
+      seLinuxOptions:
+        level: s0:c29,c4
+    serviceAccount: deployer
+    serviceAccountName: deployer
+    shareProcessNamespace: false
+    terminationGracePeriodSeconds: 10
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - name: kube-api-access-5wjsm
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2024-04-09T17:36:25Z"
+      reason: PodCompleted
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2024-04-09T17:36:35Z"
+      reason: PodCompleted
+      status: "False"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2024-04-09T17:36:35Z"
+      reason: PodCompleted
+      status: "False"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2024-04-09T17:36:25Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://c2e9f73e39f7655578a664d5d8ffce5115cf3a06d185248ae70ea4ec4a9f6d48
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:6e42aa37bf05a8d5c1409a4ec39632234e783e6c92abe659f5e611860f073039
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:6e42aa37bf05a8d5c1409a4ec39632234e783e6c92abe659f5e611860f073039
+      lastState: {}
+      name: deployment
+      ready: false
+      restartCount: 0
+      started: false
+      state:
+        terminated:
+          containerID: cri-o://c2e9f73e39f7655578a664d5d8ffce5115cf3a06d185248ae70ea4ec4a9f6d48
+          exitCode: 0
+          finishedAt: "2024-04-09T17:36:35Z"
+          reason: Completed
+          startedAt: "2024-04-09T17:36:27Z"
+    hostIP: 10.80.80.5
+    phase: Succeeded
+    podIP: 10.130.20.252
+    podIPs:
+    - ip: 10.130.20.252
+    qosClass: BestEffort
+    startTime: "2024-04-09T17:36:25Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.130.20.253"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.130.20.253"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/deployment-config.latest-version: "4"
+      openshift.io/deployment-config.name: apicast-live-prod
+      openshift.io/deployment.name: apicast-live-prod-4
+      openshift.io/generated-by: OpenShiftNewApp
+      openshift.io/scc: restricted
+      prometheus.io/port: "9421"
+      prometheus.io/scrape: "true"
+    creationTimestamp: "2024-04-09T17:36:28Z"
+    generateName: apicast-live-prod-4-
+    labels:
+      app: 3scale-gateway
+      deployment: apicast-live-prod-4
+      deploymentconfig: apicast-live-prod
+    name: apicast-live-prod-4-r7vkf
+    namespace: apicast-prod
+    ownerReferences:
+    - apiVersion: v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicationController
+      name: apicast-live-prod-4
+      uid: 6748135e-ef3d-49b6-bce5-76ec6df669d3
+    resourceVersion: "476624880"
+    uid: 464790a4-dd65-4064-bdca-f593a909ff4f
+  spec:
+    containers:
+    - env:
+      - name: THREESCALE_PORTAL_ENDPOINT
+        valueFrom:
+          secretKeyRef:
+            key: password
+            name: apicast-configuration-url-secret
+      - name: THREESCALE_CONFIG_FILE
+      - name: THREESCALE_DEPLOYMENT_ENV
+        value: production
+      - name: RESOLVER
+      - name: APICAST_SERVICES_LIST
+      - name: APICAST_CONFIGURATION_LOADER
+        value: boot
+      - name: APICAST_LOG_LEVEL
+        value: debug
+      - name: APICAST_PATH_ROUTING
+        value: "false"
+      - name: APICAST_RESPONSE_CODES
+        value: "false"
+      - name: APICAST_CONFIGURATION_CACHE
+      - name: REDIS_URL
+      - name: APICAST_MANAGEMENT_API
+        value: status
+      - name: OPENSSL_VERIFY
+        value: "false"
+      - name: APICAST_OIDC_LOG_LEVEL
+        value: debug
+      image: registry.redhat.io/3scale-amp2/apicast-gateway-rhel7:3scale2.7
+      imagePullPolicy: IfNotPresent
+      name: apicast-live-prod
+      ports:
+      - containerPort: 8080
+        name: proxy
+        protocol: TCP
+      - containerPort: 8090
+        name: management
+        protocol: TCP
+      - containerPort: 9421
+        name: metrics
+        protocol: TCP
+      resources:
+        limits:
+          cpu: "1"
+          memory: 1Gi
+        requests:
+          cpu: 500m
+          memory: 200Mi
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000820000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-zdcj7
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: default-dockercfg-8gnm2
+    nodeName: ocp4azu-sj2sl-worker-noprod-dev-brazilsouth1-vlxcp
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000820000
+      seLinuxOptions:
+        level: s0:c29,c4
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoSchedule
+      key: node.kubernetes.io/memory-pressure
+      operator: Exists
+    volumes:
+    - name: kube-api-access-zdcj7
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2024-04-09T17:36:28Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2024-04-09T17:36:32Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2024-04-09T17:36:32Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2024-04-09T17:36:28Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://1ea920ef60c8faa2a134d935df05ce81007a1d1fa53675191e0f322c67fd7d9a
+      image: registry.redhat.io/3scale-amp2/apicast-gateway-rhel7:3scale2.7
+      imageID: registry.redhat.io/3scale-amp2/apicast-gateway-rhel7@sha256:26700c6cb5f43fa8061cee274caef5561646995a0e7d803273f394d9cdda1391
+      lastState: {}
+      name: apicast-live-prod
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2024-04-09T17:36:31Z"
+    hostIP: 10.80.80.5
+    phase: Running
+    podIP: 10.130.20.253
+    podIPs:
+    - ip: 10.130.20.253
+    qosClass: Burstable
+    startTime: "2024-04-09T17:36:28Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.131.18.154"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.131.18.154"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/deployment-config.name: apicast-staging-prod
+      openshift.io/deployment.name: apicast-staging-prod-3
+      openshift.io/scc: restricted
+    creationTimestamp: "2024-07-23T16:50:00Z"
+    labels:
+      openshift.io/deployer-pod-for.name: apicast-staging-prod-3
+    name: apicast-staging-prod-3-deploy
+    namespace: apicast-prod
+    ownerReferences:
+    - apiVersion: v1
+      kind: ReplicationController
+      name: apicast-staging-prod-3
+      uid: fd7c1cd3-47e0-4e1f-98d4-3b6acb63ee9c
+    resourceVersion: "474264919"
+    uid: 12612cbc-bf81-4628-bd09-36f44b0128d7
+  spec:
+    activeDeadlineSeconds: 21600
+    containers:
+    - env:
+      - name: OPENSHIFT_DEPLOYMENT_NAME
+        value: apicast-staging-prod-3
+      - name: OPENSHIFT_DEPLOYMENT_NAMESPACE
+        value: apicast-prod
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:6e42aa37bf05a8d5c1409a4ec39632234e783e6c92abe659f5e611860f073039
+      imagePullPolicy: IfNotPresent
+      name: deployment
+      resources: {}
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000820000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-6wlkq
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: deployer-dockercfg-25vz5
+    nodeName: ocp4azu-sj2sl-worker-prod-brazilsouth1-lks8v
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Never
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000820000
+      seLinuxOptions:
+        level: s0:c29,c4
+    serviceAccount: deployer
+    serviceAccountName: deployer
+    shareProcessNamespace: false
+    terminationGracePeriodSeconds: 10
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - name: kube-api-access-6wlkq
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-23T16:50:00Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-23T17:00:14Z"
+      reason: PodFailed
+      status: "False"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-23T17:00:14Z"
+      reason: PodFailed
+      status: "False"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-23T16:50:00Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://1d80860179589502257eb11948335c20d7367ab43b27e5b61c47ff17b9a2f584
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:6e42aa37bf05a8d5c1409a4ec39632234e783e6c92abe659f5e611860f073039
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:6e42aa37bf05a8d5c1409a4ec39632234e783e6c92abe659f5e611860f073039
+      lastState: {}
+      name: deployment
+      ready: false
+      restartCount: 0
+      started: false
+      state:
+        terminated:
+          containerID: cri-o://1d80860179589502257eb11948335c20d7367ab43b27e5b61c47ff17b9a2f584
+          exitCode: 1
+          finishedAt: "2024-07-23T17:00:14Z"
+          reason: Error
+          startedAt: "2024-07-23T16:50:09Z"
+    hostIP: 10.80.80.19
+    phase: Failed
+    podIP: 10.131.18.154
+    podIPs:
+    - ip: 10.131.18.154
+    qosClass: BestEffort
+    startTime: "2024-07-23T16:50:00Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.131.19.150"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.131.19.150"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/deployment-config.name: apicast-staging-prod
+      openshift.io/deployment.name: apicast-staging-prod-5
+      openshift.io/scc: restricted
+    creationTimestamp: "2024-07-26T21:57:32Z"
+    labels:
+      openshift.io/deployer-pod-for.name: apicast-staging-prod-5
+    name: apicast-staging-prod-5-deploy
+    namespace: apicast-prod
+    ownerReferences:
+    - apiVersion: v1
+      kind: ReplicationController
+      name: apicast-staging-prod-5
+      uid: e309dc62-3824-4296-8690-0d641da25d10
+    resourceVersion: "480957588"
+    uid: 74c96122-1412-44fd-9113-a5e9ea1a1322
+  spec:
+    activeDeadlineSeconds: 21600
+    containers:
+    - env:
+      - name: OPENSHIFT_DEPLOYMENT_NAME
+        value: apicast-staging-prod-5
+      - name: OPENSHIFT_DEPLOYMENT_NAMESPACE
+        value: apicast-prod
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:6e42aa37bf05a8d5c1409a4ec39632234e783e6c92abe659f5e611860f073039
+      imagePullPolicy: IfNotPresent
+      name: deployment
+      resources: {}
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000820000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-lck2t
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: deployer-dockercfg-25vz5
+    nodeName: ocp4azu-sj2sl-worker-prod-brazilsouth1-lks8v
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Never
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000820000
+      seLinuxOptions:
+        level: s0:c29,c4
+    serviceAccount: deployer
+    serviceAccountName: deployer
+    shareProcessNamespace: false
+    terminationGracePeriodSeconds: 10
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - name: kube-api-access-lck2t
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-26T21:57:32Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-26T22:07:41Z"
+      reason: PodFailed
+      status: "False"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-26T22:07:41Z"
+      reason: PodFailed
+      status: "False"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-26T21:57:32Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://af83383d575fa052321dd81488d326c8352eb8e699beecaeff85d3fd6966c3a3
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:6e42aa37bf05a8d5c1409a4ec39632234e783e6c92abe659f5e611860f073039
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:6e42aa37bf05a8d5c1409a4ec39632234e783e6c92abe659f5e611860f073039
+      lastState: {}
+      name: deployment
+      ready: false
+      restartCount: 0
+      started: false
+      state:
+        terminated:
+          containerID: cri-o://af83383d575fa052321dd81488d326c8352eb8e699beecaeff85d3fd6966c3a3
+          exitCode: 1
+          finishedAt: "2024-07-26T22:07:39Z"
+          reason: Error
+          startedAt: "2024-07-26T21:57:34Z"
+    hostIP: 10.80.80.19
+    phase: Failed
+    podIP: 10.131.19.150
+    podIPs:
+    - ip: 10.131.19.150
+    qosClass: BestEffort
+    startTime: "2024-07-26T21:57:32Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.131.19.163"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.131.19.163"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/deployment-config.name: apicast-staging-prod
+      openshift.io/deployment.name: apicast-staging-prod-6
+      openshift.io/scc: restricted
+    creationTimestamp: "2024-07-26T22:29:44Z"
+    labels:
+      openshift.io/deployer-pod-for.name: apicast-staging-prod-6
+    name: apicast-staging-prod-6-deploy
+    namespace: apicast-prod
+    ownerReferences:
+    - apiVersion: v1
+      kind: ReplicationController
+      name: apicast-staging-prod-6
+      uid: db0a70a5-1c35-40ec-b052-a73bcafc78c7
+    resourceVersion: "480990449"
+    uid: a66614a6-58b2-4278-9cbe-962c9d3c2f0e
+  spec:
+    activeDeadlineSeconds: 21600
+    containers:
+    - env:
+      - name: OPENSHIFT_DEPLOYMENT_NAME
+        value: apicast-staging-prod-6
+      - name: OPENSHIFT_DEPLOYMENT_NAMESPACE
+        value: apicast-prod
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:6e42aa37bf05a8d5c1409a4ec39632234e783e6c92abe659f5e611860f073039
+      imagePullPolicy: IfNotPresent
+      name: deployment
+      resources: {}
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000820000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-zcrld
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: deployer-dockercfg-25vz5
+    nodeName: ocp4azu-sj2sl-worker-prod-brazilsouth1-lks8v
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Never
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000820000
+      seLinuxOptions:
+        level: s0:c29,c4
+    serviceAccount: deployer
+    serviceAccountName: deployer
+    shareProcessNamespace: false
+    terminationGracePeriodSeconds: 10
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - name: kube-api-access-zcrld
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-26T22:29:44Z"
+      reason: PodCompleted
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-26T22:30:11Z"
+      reason: PodCompleted
+      status: "False"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-26T22:30:11Z"
+      reason: PodCompleted
+      status: "False"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-26T22:29:44Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://4b24d2ea95bb1232bab9cd114b1cdf50b726a8fcd305fe44be46783947e0f8a7
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:6e42aa37bf05a8d5c1409a4ec39632234e783e6c92abe659f5e611860f073039
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:6e42aa37bf05a8d5c1409a4ec39632234e783e6c92abe659f5e611860f073039
+      lastState: {}
+      name: deployment
+      ready: false
+      restartCount: 0
+      started: false
+      state:
+        terminated:
+          containerID: cri-o://4b24d2ea95bb1232bab9cd114b1cdf50b726a8fcd305fe44be46783947e0f8a7
+          exitCode: 0
+          finishedAt: "2024-07-26T22:30:10Z"
+          reason: Completed
+          startedAt: "2024-07-26T22:29:46Z"
+    hostIP: 10.80.80.19
+    phase: Succeeded
+    podIP: 10.131.19.163
+    podIPs:
+    - ip: 10.131.19.163
+    qosClass: BestEffort
+    startTime: "2024-07-26T22:29:44Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.131.19.164"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.131.19.164"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/deployment-config.latest-version: "6"
+      openshift.io/deployment-config.name: apicast-staging-prod
+      openshift.io/deployment.name: apicast-staging-prod-6
+      openshift.io/generated-by: OpenShiftNewApp
+      openshift.io/scc: restricted
+      prometheus.io/port: "9421"
+      prometheus.io/scrape: "true"
+    creationTimestamp: "2024-07-26T22:29:47Z"
+    generateName: apicast-staging-prod-6-
+    labels:
+      app: 3scale-gateway
+      deployment: apicast-staging-prod-6
+      deploymentconfig: apicast-staging-prod
+    name: apicast-staging-prod-6-vk79k
+    namespace: apicast-prod
+    ownerReferences:
+    - apiVersion: v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicationController
+      name: apicast-staging-prod-6
+      uid: db0a70a5-1c35-40ec-b052-a73bcafc78c7
+    resourceVersion: "491646489"
+    uid: b90a64aa-622b-490e-8891-b297f7ffdc5b
+  spec:
+    containers:
+    - env:
+      - name: THREESCALE_PORTAL_ENDPOINT
+        valueFrom:
+          secretKeyRef:
+            key: password
+            name: apicast-configuration-url-secret
+      - name: THREESCALE_CONFIG_FILE
+      - name: THREESCALE_DEPLOYMENT_ENV
+        value: sandbox
+      - name: RESOLVER
+      - name: APICAST_SERVICES_LIST
+      - name: APICAST_CONFIGURATION_LOADER
+        value: lazy
+      - name: APICAST_LOG_LEVEL
+        value: debug
+      - name: APICAST_PATH_ROUTING
+        value: "false"
+      - name: APICAST_RESPONSE_CODES
+        value: "false"
+      - name: APICAST_CONFIGURATION_CACHE
+      - name: REDIS_URL
+      - name: APICAST_MANAGEMENT_API
+        value: status
+      - name: OPENSSL_VERIFY
+        value: "false"
+      image: registry.redhat.io/3scale-amp2/apicast-gateway-rhel7:3scale2.7
+      imagePullPolicy: IfNotPresent
+      livenessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /status/live
+          port: management
+          scheme: HTTP
+        initialDelaySeconds: 10
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 5
+      name: apicast-staging-prod
+      ports:
+      - containerPort: 8080
+        name: proxy
+        protocol: TCP
+      - containerPort: 8090
+        name: management
+        protocol: TCP
+      - containerPort: 9421
+        name: metrics
+        protocol: TCP
+      readinessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /status/ready
+          port: management
+          scheme: HTTP
+        initialDelaySeconds: 15
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 5
+      resources:
+        limits:
+          cpu: "1"
+          memory: 128Mi
+        requests:
+          cpu: 500m
+          memory: 64Mi
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000820000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-5lmbh
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: default-dockercfg-8gnm2
+    nodeName: ocp4azu-sj2sl-worker-prod-brazilsouth1-lks8v
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000820000
+      seLinuxOptions:
+        level: s0:c29,c4
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoSchedule
+      key: node.kubernetes.io/memory-pressure
+      operator: Exists
+    volumes:
+    - name: kube-api-access-5lmbh
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-26T22:29:47Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-26T22:30:07Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-26T22:30:07Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-26T22:29:47Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://73d751700b82b78428ed7233c5fe1da303fe1a30d8f778e69124a15e36d59bef
+      image: registry.redhat.io/3scale-amp2/apicast-gateway-rhel7:3scale2.7
+      imageID: registry.redhat.io/3scale-amp2/apicast-gateway-rhel7@sha256:26700c6cb5f43fa8061cee274caef5561646995a0e7d803273f394d9cdda1391
+      lastState: {}
+      name: apicast-staging-prod
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2024-07-26T22:29:49Z"
+    hostIP: 10.80.80.19
+    phase: Running
+    podIP: 10.131.19.164
+    podIPs:
+    - ip: 10.131.19.164
+    qosClass: Burstable
+    startTime: "2024-07-26T22:29:47Z"
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

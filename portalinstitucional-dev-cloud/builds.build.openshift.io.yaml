@@ -1,0 +1,114 @@
+apiVersion: v1
+items:
+- apiVersion: build.openshift.io/v1
+  kind: Build
+  metadata:
+    annotations:
+      openshift.io/build-config.name: mi-escritorio-ux-v4
+      openshift.io/build.number: "1"
+      openshift.io/build.pod-name: mi-escritorio-ux-v4-1-build
+    creationTimestamp: "2023-09-01T01:10:32Z"
+    generation: 2
+    labels:
+      app: mi-escritorio-ux-v4
+      buildconfig: mi-escritorio-ux-v4
+      migration.openshift.io/migrated-by-migmigration: fec3ec19-481f-46b7-9ae7-bff48fdea7a1
+      migration.openshift.io/migrated-by-migplan: 115bf39f-32dd-46ac-8d1e-ac95f44b53ed
+      openshift.io/build-config.name: mi-escritorio-ux-v4
+      openshift.io/build.start-policy: Serial
+      velero.io/backup-name: migration-17781-initial-hpqdg
+      velero.io/restore-name: migration-17781-final-nbzfx
+    name: mi-escritorio-ux-v4-1
+    namespace: portalinstitucional-dev-cloud
+    ownerReferences:
+    - apiVersion: build.openshift.io/v1
+      controller: true
+      kind: BuildConfig
+      name: mi-escritorio-ux-v4
+      uid: 1797ced7-9fe8-432b-9004-b99cc0a6c87e
+    resourceVersion: "95923630"
+    uid: f361076c-e651-498c-b409-44a334d247b6
+  spec:
+    nodeSelector: null
+    output:
+      pushSecret:
+        name: builder-dockercfg-zrtdw
+      to:
+        kind: ImageStreamTag
+        name: mi-escritorio-ux-v4:latest
+    postCommit: {}
+    resources: {}
+    serviceAccount: builder
+    source:
+      git:
+        ref: moveapps/midt-v4-test
+        uri: https://dirtrab.visualstudio.com/Portal%20Institucional/_git/EscritorioFrontend
+      sourceSecret:
+        name: vsts
+      type: Git
+    strategy:
+      sourceStrategy:
+        env:
+        - name: NODE_ENV
+          value: development
+        - name: NPM_RUN
+          value: start
+        - name: REACT_APP_DT_API_JORNADA_EXCEPCIONAL
+          value: http://jornada-ex-dev.api.dirtrab.cl/api
+        - name: REACT_APP_DT_API_SIMULADOR_FINIQUITO
+          value: http://simulador-finiquito-dev.api.dirtrab.cl/api
+        - name: REACT_APP_DT_API_URL
+          value: http://proxy-portalinstitucional-dev.api.dirtrab.cl/api
+        from:
+          kind: DockerImage
+          name: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+        pullSecret:
+          name: builder-dockercfg-zrtdw
+      type: Source
+    triggeredBy:
+    - imageChangeBuild:
+        fromRef:
+          kind: ImageStreamTag
+          name: nodejs:10
+          namespace: openshift
+        imageID: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+      message: Image change
+  status:
+    completionTimestamp: "2023-09-01T01:10:35Z"
+    conditions:
+    - lastTransitionTime: "2023-09-01T01:10:32Z"
+      lastUpdateTime: "2023-09-01T01:10:32Z"
+      status: "False"
+      type: New
+    - lastTransitionTime: "2023-09-01T01:10:35Z"
+      lastUpdateTime: "2023-09-01T01:10:35Z"
+      status: "False"
+      type: Pending
+    - lastTransitionTime: "2023-09-01T01:10:35Z"
+      lastUpdateTime: "2023-09-01T01:10:35Z"
+      status: "False"
+      type: Running
+    - lastTransitionTime: "2023-09-01T01:10:35Z"
+      lastUpdateTime: "2023-09-01T01:10:35Z"
+      message: Failed to fetch the input source.
+      reason: FetchSourceFailed
+      status: "True"
+      type: Failed
+    config:
+      kind: BuildConfig
+      name: mi-escritorio-ux-v4
+      namespace: portalinstitucional-dev-cloud
+    duration: 3000000000
+    logSnippet: |-
+      Cloning "https://dirtrab.visualstudio.com/Portal%20Institucional/_git/EscritorioFrontend" ...
+      error: failed to fetch requested repository "https://dirtr...tucional/_git/EscritorioFrontend" with provided credentials
+    message: Failed to fetch the input source.
+    output: {}
+    outputDockerImageReference: image-registry.openshift-image-registry.svc:5000/portalinstitucional-dev-cloud/mi-escritorio-ux-v4:latest
+    phase: Failed
+    reason: FetchSourceFailed
+    startTimestamp: "2023-09-01T01:10:32Z"
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

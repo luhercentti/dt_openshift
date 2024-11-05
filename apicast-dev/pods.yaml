@@ -1,0 +1,466 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.131.22.108"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.131.22.108"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/deployment-config.latest-version: "1"
+      openshift.io/deployment-config.name: apicast-live-dev
+      openshift.io/deployment.name: apicast-live-dev-1
+      openshift.io/generated-by: OpenShiftNewApp
+      openshift.io/scc: restricted
+      prometheus.io/port: "9421"
+      prometheus.io/scrape: "true"
+    creationTimestamp: "2024-03-28T19:22:55Z"
+    generateName: apicast-live-dev-1-
+    labels:
+      app: 3scale-gateway
+      deployment: apicast-live-dev-1
+      deploymentconfig: apicast-live-dev
+    name: apicast-live-dev-1-gn2xb
+    namespace: apicast-dev
+    ownerReferences:
+    - apiVersion: v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicationController
+      name: apicast-live-dev-1
+      uid: 4d569081-30d9-44e8-9346-b0e35d02ea65
+    resourceVersion: "494722517"
+    uid: 0cea1a6d-5991-4724-91ea-3dbc9cda3ee6
+  spec:
+    containers:
+    - env:
+      - name: THREESCALE_PORTAL_ENDPOINT
+        valueFrom:
+          secretKeyRef:
+            key: password
+            name: apicast-configuration-url-secret
+      - name: THREESCALE_CONFIG_FILE
+      - name: THREESCALE_DEPLOYMENT_ENV
+        value: production
+      - name: RESOLVER
+      - name: APICAST_SERVICES_LIST
+      - name: APICAST_CONFIGURATION_LOADER
+        value: boot
+      - name: APICAST_LOG_LEVEL
+        value: debug
+      - name: APICAST_PATH_ROUTING
+        value: "false"
+      - name: APICAST_RESPONSE_CODES
+        value: "false"
+      - name: APICAST_CONFIGURATION_CACHE
+      - name: REDIS_URL
+      - name: APICAST_MANAGEMENT_API
+        value: status
+      - name: OPENSSL_VERIFY
+        value: "false"
+      - name: TZ
+        value: America/Santiago
+      - name: APICAST_OIDC_LOG_LEVEL
+        value: debug
+      image: registry.redhat.io/3scale-amp2/apicast-gateway-rhel7:3scale2.7
+      imagePullPolicy: IfNotPresent
+      livenessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /status/live
+          port: management
+          scheme: HTTP
+        initialDelaySeconds: 10
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 1
+      name: apicast-live-dev
+      ports:
+      - containerPort: 8080
+        name: proxy
+        protocol: TCP
+      - containerPort: 8090
+        name: management
+        protocol: TCP
+      - containerPort: 9421
+        name: metrics
+        protocol: TCP
+      readinessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /status/ready
+          port: management
+          scheme: HTTP
+        initialDelaySeconds: 15
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 1
+      resources:
+        limits:
+          cpu: "1"
+          memory: 128Mi
+        requests:
+          cpu: 500m
+          memory: 64Mi
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000770000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-nr69k
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: default-dockercfg-z9jwr
+    nodeName: ocp4azu-sj2sl-worker-prod-brazilsouth3-vmmxw
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000770000
+      seLinuxOptions:
+        level: s0:c28,c7
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoSchedule
+      key: node.kubernetes.io/memory-pressure
+      operator: Exists
+    volumes:
+    - name: kube-api-access-nr69k
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2024-03-28T19:22:55Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2024-03-28T19:22:55Z"
+      message: 'containers with unready status: [apicast-live-dev]'
+      reason: ContainersNotReady
+      status: "False"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2024-03-28T19:22:55Z"
+      message: 'containers with unready status: [apicast-live-dev]'
+      reason: ContainersNotReady
+      status: "False"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2024-03-28T19:22:55Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://ec18042c01b0500183649e0ed32d29deb72dd5f5f6bcda18dced63c812264cd5
+      image: registry.redhat.io/3scale-amp2/apicast-gateway-rhel7:3scale2.7
+      imageID: registry.redhat.io/3scale-amp2/apicast-gateway-rhel7@sha256:26700c6cb5f43fa8061cee274caef5561646995a0e7d803273f394d9cdda1391
+      lastState:
+        terminated:
+          containerID: cri-o://ec18042c01b0500183649e0ed32d29deb72dd5f5f6bcda18dced63c812264cd5
+          exitCode: 137
+          finishedAt: "2024-06-01T20:06:17Z"
+          reason: Error
+          startedAt: "1754-08-30T22:43:41Z"
+      name: apicast-live-dev
+      ready: false
+      restartCount: 28179
+      started: false
+      state:
+        waiting:
+          message: |
+            container create failed: time="2024-08-02T11:59:32Z" level=warning msg="unable to get oom kill count" error="open /sys/fs/cgroup/memory/kubepods.slice/kubepods-burstable.slice/kubepods-burstable-pod0cea1a6d_5991_4724_91ea_3dbc9cda3ee6.slice/crio-8f3b6887ee897961c91dcf07a2889102112b3e87046a417faec3e4bd11ce7ca2.scope/memory.oom_control: no such file or directory"
+            time="2024-08-02T11:59:32Z" level=error msg="runc create failed: unable to start container process: unable to apply cgroup configuration: mkdir /sys/fs/cgroup/memory/kubepods.slice/kubepods-burstable.slice/kubepods-burstable-pod0cea1a6d_5991_4724_91ea_3dbc9cda3ee6.slice/crio-8f3b6887ee897961c91dcf07a2889102112b3e87046a417faec3e4bd11ce7ca2.scope: cannot allocate memory"
+          reason: CreateContainerError
+    hostIP: 10.80.80.18
+    phase: Running
+    podIP: 10.131.22.108
+    podIPs:
+    - ip: 10.131.22.108
+    qosClass: Burstable
+    startTime: "2024-03-28T19:22:55Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.131.22.109"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.131.22.109"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/deployment-config.latest-version: "1"
+      openshift.io/deployment-config.name: apicast-staging-dev
+      openshift.io/deployment.name: apicast-staging-dev-1
+      openshift.io/generated-by: OpenShiftNewApp
+      openshift.io/scc: restricted
+      prometheus.io/port: "9421"
+      prometheus.io/scrape: "true"
+    creationTimestamp: "2024-03-28T19:22:55Z"
+    generateName: apicast-staging-dev-1-
+    labels:
+      app: 3scale-gateway
+      deployment: apicast-staging-dev-1
+      deploymentconfig: apicast-staging-dev
+    name: apicast-staging-dev-1-m7nk6
+    namespace: apicast-dev
+    ownerReferences:
+    - apiVersion: v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicationController
+      name: apicast-staging-dev-1
+      uid: 2e0ef5f3-5601-4efc-85f5-f2167f3b19e7
+    resourceVersion: "466147357"
+    uid: 21a105ab-1819-498f-bb02-a7d629d1e5fb
+  spec:
+    containers:
+    - env:
+      - name: THREESCALE_PORTAL_ENDPOINT
+        valueFrom:
+          secretKeyRef:
+            key: password
+            name: apicast-configuration-url-secret
+      - name: THREESCALE_CONFIG_FILE
+      - name: THREESCALE_DEPLOYMENT_ENV
+        value: sandbox
+      - name: RESOLVER
+      - name: APICAST_SERVICES_LIST
+      - name: APICAST_CONFIGURATION_LOADER
+        value: boot
+      - name: APICAST_LOG_LEVEL
+      - name: APICAST_PATH_ROUTING
+        value: "false"
+      - name: APICAST_RESPONSE_CODES
+        value: "false"
+      - name: APICAST_CONFIGURATION_CACHE
+      - name: REDIS_URL
+      - name: APICAST_MANAGEMENT_API
+        value: status
+      - name: OPENSSL_VERIFY
+        value: "false"
+      - name: TZ
+        value: America/Santiago
+      image: registry.redhat.io/3scale-amp2/apicast-gateway-rhel7:3scale2.7
+      imagePullPolicy: IfNotPresent
+      livenessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /status/live
+          port: management
+          scheme: HTTP
+        initialDelaySeconds: 10
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 1
+      name: apicast-staging-dev
+      ports:
+      - containerPort: 8080
+        name: proxy
+        protocol: TCP
+      - containerPort: 8090
+        name: management
+        protocol: TCP
+      - containerPort: 9421
+        name: metrics
+        protocol: TCP
+      readinessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /status/ready
+          port: management
+          scheme: HTTP
+        initialDelaySeconds: 15
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 1
+      resources:
+        limits:
+          cpu: "1"
+          memory: 128Mi
+        requests:
+          cpu: 500m
+          memory: 64Mi
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000770000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-zmzv7
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: default-dockercfg-z9jwr
+    nodeName: ocp4azu-sj2sl-worker-prod-brazilsouth3-vmmxw
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000770000
+      seLinuxOptions:
+        level: s0:c28,c7
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoSchedule
+      key: node.kubernetes.io/memory-pressure
+      operator: Exists
+    volumes:
+    - name: kube-api-access-zmzv7
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2024-03-28T19:22:55Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2024-05-05T02:05:07Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2024-05-05T02:05:07Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2024-03-28T19:22:55Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://6737960d4d0507d9e452bf1858509b747405217e79fad3ec68bc943bc96f0426
+      image: registry.redhat.io/3scale-amp2/apicast-gateway-rhel7:3scale2.7
+      imageID: registry.redhat.io/3scale-amp2/apicast-gateway-rhel7@sha256:26700c6cb5f43fa8061cee274caef5561646995a0e7d803273f394d9cdda1391
+      lastState:
+        terminated:
+          containerID: cri-o://6d895ca9b7474bde6e63951e7946970dbc553424d97b90dcb11d3e59fb0135c6
+          exitCode: 15
+          finishedAt: "2024-05-05T01:59:37Z"
+          reason: Error
+          startedAt: "2024-05-05T01:59:07Z"
+      name: apicast-staging-dev
+      ready: true
+      restartCount: 17030
+      started: true
+      state:
+        running:
+          startedAt: "2024-05-05T02:04:50Z"
+    hostIP: 10.80.80.18
+    phase: Running
+    podIP: 10.131.22.109
+    podIPs:
+    - ip: 10.131.22.109
+    qosClass: Burstable
+    startTime: "2024-03-28T19:22:55Z"
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

@@ -1,0 +1,66 @@
+apiVersion: v1
+items:
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/description: Allows deploymentconfigs in this namespace to rollout
+        pods in this namespace.  It is auto-managed by a controller; remove subjects
+        to disable.
+    creationTimestamp: "2023-05-04T21:45:19Z"
+    name: system:deployers
+    namespace: openshift-ovirt-infra
+    resourceVersion: "13831"
+    uid: a675e46a-5edc-47be-b8c7-debe27a6791b
+  roleRef:
+    name: system:deployer
+  subjects:
+  - kind: ServiceAccount
+    name: deployer
+    namespace: openshift-ovirt-infra
+  userNames:
+  - system:serviceaccount:openshift-ovirt-infra:deployer
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/description: Allows builds in this namespace to push images to
+        this namespace.  It is auto-managed by a controller; remove subjects to disable.
+    creationTimestamp: "2023-05-04T21:45:18Z"
+    name: system:image-builders
+    namespace: openshift-ovirt-infra
+    resourceVersion: "13668"
+    uid: 95b942c9-0d22-4f60-9a3f-b7c357d22d78
+  roleRef:
+    name: system:image-builder
+  subjects:
+  - kind: ServiceAccount
+    name: builder
+    namespace: openshift-ovirt-infra
+  userNames:
+  - system:serviceaccount:openshift-ovirt-infra:builder
+- apiVersion: authorization.openshift.io/v1
+  groupNames:
+  - system:serviceaccounts:openshift-ovirt-infra
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/description: Allows all pods in this namespace to pull images from
+        this namespace.  It is auto-managed by a controller; remove subjects to disable.
+    creationTimestamp: "2023-05-04T21:45:18Z"
+    name: system:image-pullers
+    namespace: openshift-ovirt-infra
+    resourceVersion: "13502"
+    uid: c824aa75-e945-4157-8a08-bd33c70beb3f
+  roleRef:
+    name: system:image-puller
+  subjects:
+  - kind: SystemGroup
+    name: system:serviceaccounts:openshift-ovirt-infra
+  userNames: null
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

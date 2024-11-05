@@ -1,0 +1,42 @@
+apiVersion: v1
+items:
+- apiVersion: authorization.openshift.io/v1
+  kind: Role
+  metadata:
+    annotations:
+      include.release.openshift.io/self-managed-high-availability: "true"
+      include.release.openshift.io/single-node-developer: "true"
+    creationTimestamp: "2023-05-04T21:36:15Z"
+    name: cloud-controller-manager
+    namespace: openshift-cloud-controller-manager
+    ownerReferences:
+    - apiVersion: config.openshift.io/v1
+      kind: ClusterVersion
+      name: version
+      uid: 5d92b52f-9fff-4a6e-b815-398b934115ad
+    resourceVersion: "2120"
+    uid: b1c636f4-f932-434e-b084-7947ef193d3f
+  rules:
+  - apiGroups:
+    - coordination.k8s.io
+    attributeRestrictions: null
+    resourceNames:
+    - cloud-controller-manager
+    resources:
+    - leases
+    verbs:
+    - create
+    - get
+    - list
+    - update
+  - apiGroups:
+    - ""
+    attributeRestrictions: null
+    resources:
+    - events
+    verbs:
+    - create
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

@@ -1,0 +1,120 @@
+apiVersion: v1
+items:
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    annotations:
+      include.release.openshift.io/ibm-cloud-managed: "true"
+      include.release.openshift.io/self-managed-high-availability: "true"
+      include.release.openshift.io/single-node-developer: "true"
+    creationTimestamp: "2023-05-04T21:35:55Z"
+    name: csi-snapshot-controller-leaderelection
+    namespace: openshift-cluster-storage-operator
+    ownerReferences:
+    - apiVersion: config.openshift.io/v1
+      kind: ClusterVersion
+      name: version
+      uid: 5d92b52f-9fff-4a6e-b815-398b934115ad
+    resourceVersion: "1627"
+    uid: 9c502f6f-d7c6-4c1a-a0cb-20fe8df67ef9
+  roleRef:
+    name: csi-snapshot-controller-leaderelection
+    namespace: openshift-cluster-storage-operator
+  subjects:
+  - kind: ServiceAccount
+    name: csi-snapshot-controller
+    namespace: openshift-cluster-storage-operator
+  userNames:
+  - system:serviceaccount:openshift-cluster-storage-operator:csi-snapshot-controller
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    annotations:
+      include.release.openshift.io/ibm-cloud-managed: "true"
+      include.release.openshift.io/self-managed-high-availability: "true"
+      include.release.openshift.io/single-node-developer: "true"
+    creationTimestamp: "2023-05-04T21:35:31Z"
+    name: prometheus
+    namespace: openshift-cluster-storage-operator
+    ownerReferences:
+    - apiVersion: config.openshift.io/v1
+      kind: ClusterVersion
+      name: version
+      uid: 5d92b52f-9fff-4a6e-b815-398b934115ad
+    resourceVersion: "806"
+    uid: 824aaf9c-4f8e-43b9-88e7-f9049764bdca
+  roleRef:
+    name: prometheus
+    namespace: openshift-cluster-storage-operator
+  subjects:
+  - kind: ServiceAccount
+    name: prometheus-k8s
+    namespace: openshift-monitoring
+  userNames:
+  - system:serviceaccount:openshift-monitoring:prometheus-k8s
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/description: Allows deploymentconfigs in this namespace to rollout
+        pods in this namespace.  It is auto-managed by a controller; remove subjects
+        to disable.
+    creationTimestamp: "2023-05-04T21:45:22Z"
+    name: system:deployers
+    namespace: openshift-cluster-storage-operator
+    resourceVersion: "14599"
+    uid: b254d1b5-2772-41ad-a77f-8ec787efc32a
+  roleRef:
+    name: system:deployer
+  subjects:
+  - kind: ServiceAccount
+    name: deployer
+    namespace: openshift-cluster-storage-operator
+  userNames:
+  - system:serviceaccount:openshift-cluster-storage-operator:deployer
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/description: Allows builds in this namespace to push images to
+        this namespace.  It is auto-managed by a controller; remove subjects to disable.
+    creationTimestamp: "2023-05-04T21:45:22Z"
+    name: system:image-builders
+    namespace: openshift-cluster-storage-operator
+    resourceVersion: "14518"
+    uid: 70852f4b-8091-472b-a546-0c8e614bc79d
+  roleRef:
+    name: system:image-builder
+  subjects:
+  - kind: ServiceAccount
+    name: builder
+    namespace: openshift-cluster-storage-operator
+  userNames:
+  - system:serviceaccount:openshift-cluster-storage-operator:builder
+- apiVersion: authorization.openshift.io/v1
+  groupNames:
+  - system:serviceaccounts:openshift-cluster-storage-operator
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/description: Allows all pods in this namespace to pull images from
+        this namespace.  It is auto-managed by a controller; remove subjects to disable.
+    creationTimestamp: "2023-05-04T21:45:21Z"
+    name: system:image-pullers
+    namespace: openshift-cluster-storage-operator
+    resourceVersion: "14396"
+    uid: 36dd4a0a-49d4-4483-8b44-f783238e636f
+  roleRef:
+    name: system:image-puller
+  subjects:
+  - kind: SystemGroup
+    name: system:serviceaccounts:openshift-cluster-storage-operator
+  userNames: null
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

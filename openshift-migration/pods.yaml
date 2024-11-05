@@ -1,0 +1,3769 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.128.22.214"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.128.22.214"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/scc: restricted
+    creationTimestamp: "2024-07-11T17:33:05Z"
+    generateName: migration-controller-9688b78dc-
+    labels:
+      app: migration
+      app.kubernetes.io/part-of: openshift-migration
+      cluster_config_name: migration-cluster-config-d85hf4294b
+      control-plane: controller-manager
+      controller-tools.k8s.io: "1.0"
+      controller_config_name: migration-controller-kf64f8d8b4
+      pod-template-hash: 9688b78dc
+      webhook_secret_name: webhook-server-secret-hbm87h96gd
+    name: migration-controller-9688b78dc-9ff5n
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: migration-controller-9688b78dc
+      uid: 81e6044a-bb2e-4e2a-9357-42181f556f15
+    resourceVersion: "476624636"
+    uid: 7154de43-10a2-46fc-a46b-5793e0e6eb99
+  spec:
+    containers:
+    - command:
+      - /manager
+      env:
+      - name: EXCLUDED_RESOURCES
+        value: imagetags,templateinstances,clusterserviceversions,packagemanifests,subscriptions,servicebrokers,servicebindings,serviceclasses,serviceinstances,serviceplans,operatorgroups,events,events.events.k8s.io,rolebindings.authorization.openshift.io
+      - name: POD_NAMESPACE
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: metadata.namespace
+      - name: ROLE
+        value: mtc
+      - name: SECRET_NAME
+        value: webhook-server-secret
+      - name: MIGRATION_REGISTRY_IMAGE
+        value: registry.redhat.io/rhmtc/openshift-migration-registry-rhel8@sha256:03a267f927d08143b1b044bdc75618b60a3d011cac70164e0d201857cd39a5e2
+      envFrom:
+      - configMapRef:
+          name: migration-controller
+      image: registry.redhat.io/rhmtc/openshift-migration-controller-rhel8@sha256:2f14742d58bf09442510845664d7ea7175a7230f800e3cf0e77b4f1e4cb96e1c
+      imagePullPolicy: Always
+      name: mtc
+      ports:
+      - containerPort: 9876
+        name: webhook-server
+        protocol: TCP
+      resources:
+        limits:
+          cpu: "1"
+          memory: 10Gi
+        requests:
+          cpu: 100m
+          memory: 350Mi
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000650000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /tmp/cert
+        name: cert
+        readOnly: true
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-kpfng
+        readOnly: true
+    - command:
+      - /manager
+      env:
+      - name: POD_NAMESPACE
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: metadata.namespace
+      - name: ROLE
+        value: discovery
+      - name: SECRET_NAME
+        value: webhook-server-secret
+      envFrom:
+      - configMapRef:
+          name: migration-controller
+      image: registry.redhat.io/rhmtc/openshift-migration-controller-rhel8@sha256:2f14742d58bf09442510845664d7ea7175a7230f800e3cf0e77b4f1e4cb96e1c
+      imagePullPolicy: Always
+      name: discovery
+      ports:
+      - containerPort: 8080
+        name: webhook-server
+        protocol: TCP
+      resources:
+        limits:
+          cpu: "1"
+          memory: 10Gi
+        requests:
+          cpu: 100m
+          memory: 350Mi
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000650000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/cache/discovery
+        name: discovery
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-kpfng
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: migration-controller-dockercfg-n6hxm
+    nodeName: ocp4azu-sj2sl-worker-noprod-dev-brazilsouth2-4dm6s
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000650000
+      seLinuxOptions:
+        level: s0:c26,c0
+    serviceAccount: migration-controller
+    serviceAccountName: migration-controller
+    terminationGracePeriodSeconds: 10
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoSchedule
+      key: node.kubernetes.io/memory-pressure
+      operator: Exists
+    volumes:
+    - name: cert
+      secret:
+        defaultMode: 420
+        secretName: webhook-server-secret
+    - emptyDir: {}
+      name: discovery
+    - name: kube-api-access-kpfng
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-11T17:33:06Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-11T17:33:21Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-11T17:33:21Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-11T17:33:06Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://0a2882ff1529e2f13776dfdf35e355ce55a29a2165d9972a4b98763a2f29132b
+      image: registry.redhat.io/rhmtc/openshift-migration-controller-rhel8@sha256:2f14742d58bf09442510845664d7ea7175a7230f800e3cf0e77b4f1e4cb96e1c
+      imageID: registry.redhat.io/rhmtc/openshift-migration-controller-rhel8@sha256:2f14742d58bf09442510845664d7ea7175a7230f800e3cf0e77b4f1e4cb96e1c
+      lastState: {}
+      name: discovery
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2024-07-11T17:33:20Z"
+    - containerID: cri-o://b9d8d4ec617a1fa6b6b61ba2dec51eb1549c0ec5d33789f8ff91cd40c9ea087c
+      image: registry.redhat.io/rhmtc/openshift-migration-controller-rhel8@sha256:2f14742d58bf09442510845664d7ea7175a7230f800e3cf0e77b4f1e4cb96e1c
+      imageID: registry.redhat.io/rhmtc/openshift-migration-controller-rhel8@sha256:2f14742d58bf09442510845664d7ea7175a7230f800e3cf0e77b4f1e4cb96e1c
+      lastState: {}
+      name: mtc
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2024-07-11T17:33:19Z"
+    hostIP: 10.80.80.9
+    phase: Running
+    podIP: 10.128.22.214
+    podIPs:
+    - ip: 10.128.22.214
+    qosClass: Burstable
+    startTime: "2024-07-11T17:33:06Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.128.22.215"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.128.22.215"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/scc: restricted
+    creationTimestamp: "2024-07-11T17:33:06Z"
+    generateName: migration-log-reader-6577995b5b-
+    labels:
+      app: migration
+      logreader: mig
+      pod-template-hash: 6577995b5b
+    name: migration-log-reader-6577995b5b-jwfp9
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: migration-log-reader-6577995b5b
+      uid: 22f8febb-a1e8-4d0a-96f3-3ed5048cdeb4
+    resourceVersion: "476624529"
+    uid: 40e79243-9a02-4732-ab43-d2f7c77ac82e
+  spec:
+    containers:
+    - env:
+      - name: STERN_COLOR
+        value: always
+      - name: KSUFFIX
+        value: color
+      image: registry.redhat.io/rhmtc/openshift-migration-log-reader-rhel8@sha256:db002b2271ae87333f2d749433fa373c4455c820faf0ad4f4fcbd46d010fc1d9
+      imagePullPolicy: Always
+      name: color
+      resources: {}
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000650000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/cache/sa2kubeconfig
+        name: kubeconfig
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-dzpqr
+        readOnly: true
+    - env:
+      - name: STERN_COLOR
+        value: never
+      - name: KSUFFIX
+        value: plain
+      image: registry.redhat.io/rhmtc/openshift-migration-log-reader-rhel8@sha256:db002b2271ae87333f2d749433fa373c4455c820faf0ad4f4fcbd46d010fc1d9
+      imagePullPolicy: Always
+      name: plain
+      resources: {}
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000650000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/cache/sa2kubeconfig
+        name: kubeconfig
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-dzpqr
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: migration-controller-dockercfg-n6hxm
+    nodeName: ocp4azu-sj2sl-worker-noprod-dev-brazilsouth2-4dm6s
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000650000
+      seLinuxOptions:
+        level: s0:c26,c0
+    serviceAccount: migration-controller
+    serviceAccountName: migration-controller
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - emptyDir: {}
+      name: kubeconfig
+    - name: kube-api-access-dzpqr
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-11T17:33:06Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-11T17:33:21Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-11T17:33:21Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-11T17:33:06Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://10ba6a8dfd3e84843ae193ac85a4c06261d4f5efc72071deae5702ae67f56132
+      image: registry.redhat.io/rhmtc/openshift-migration-log-reader-rhel8@sha256:db002b2271ae87333f2d749433fa373c4455c820faf0ad4f4fcbd46d010fc1d9
+      imageID: registry.redhat.io/rhmtc/openshift-migration-log-reader-rhel8@sha256:97399e762ce9744f026eb2cf6366b5f286e4a92b32db30b79787901eb580fbf4
+      lastState: {}
+      name: color
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2024-07-11T17:33:19Z"
+    - containerID: cri-o://966fbf08fe36b55cb262b253e18af2f4b8bbafb847329aee7fdc31db083fe82e
+      image: registry.redhat.io/rhmtc/openshift-migration-log-reader-rhel8@sha256:db002b2271ae87333f2d749433fa373c4455c820faf0ad4f4fcbd46d010fc1d9
+      imageID: registry.redhat.io/rhmtc/openshift-migration-log-reader-rhel8@sha256:97399e762ce9744f026eb2cf6366b5f286e4a92b32db30b79787901eb580fbf4
+      lastState: {}
+      name: plain
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2024-07-11T17:33:20Z"
+    hostIP: 10.80.80.9
+    phase: Running
+    podIP: 10.128.22.215
+    podIPs:
+    - ip: 10.128.22.215
+    qosClass: BestEffort
+    startTime: "2024-07-11T17:33:06Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      alm-examples: |-
+        [
+          {
+              "apiVersion": "migration.openshift.io/v1alpha1",
+              "kind": "MigrationController",
+              "metadata": {
+                "name": "migration-controller",
+                "namespace": "openshift-migration"
+              },
+              "spec": {
+                "azure_resource_group": "",
+                "cluster_name": "host",
+                "migration_velero": true,
+                "migration_controller": true,
+                "migration_ui": true,
+                "migration_log_reader": true,
+                "olm_managed": true,
+                "restic_timeout": "1h",
+                "mig_pv_limit": "100",
+                "mig_pod_limit": "100",
+                "mig_namespace_limit": "10"
+              }
+          },
+          {
+              "apiVersion": "migration.openshift.io/v1alpha1",
+              "kind": "DirectImageMigration",
+              "metadata": {
+                "name": "directimagemigration",
+                "namespace": "openshift-migration"
+              },
+              "spec": {}
+          },
+          {
+              "apiVersion": "migration.openshift.io/v1alpha1",
+              "kind": "DirectImageStreamMigration",
+              "metadata": {
+                "name": "directimagestreammigration",
+                "namespace": "openshift-migration"
+              },
+              "spec": {}
+          },
+          {
+              "apiVersion": "migration.openshift.io/v1alpha1",
+              "kind": "MigAnalytic",
+              "metadata": {
+                "name": "host",
+                "namespace": "openshift-migration"
+              },
+              "spec": {
+                "plan": {
+                  "name": "foo",
+                  "namespace": "openshift-migration"
+                },
+                "analyzeK8SResources": true,
+                "analyzeImageCount": true,
+                "analyzePVCapacity": true
+              }
+          },
+          {
+              "apiVersion": "migration.openshift.io/v1alpha1",
+              "kind": "MigCluster",
+              "metadata": {
+                "name": "host",
+                "namespace": "openshift-migration"
+              },
+              "spec": {}
+          },
+          {
+              "apiVersion": "migration.openshift.io/v1alpha1",
+              "kind": "DirectVolumeMigration",
+              "metadata": {
+                "name": "direct",
+                "namespace": "openshift-migration"
+              },
+              "spec": {}
+          },
+          {
+              "apiVersion": "migration.openshift.io/v1alpha1",
+                  "kind": "DirectVolumeMigrationProgress",
+                  "metadata": {
+                    "name": "direct-progress",
+                    "namespace": "openshift-migration"
+                  },
+                  "spec": {}
+          },
+          {
+              "apiVersion": "migration.openshift.io/v1alpha1",
+              "kind": "MigPlan",
+              "metadata": {
+                "name": "migplan",
+                "namespace": "openshift-migration"
+              },
+              "spec": {}
+          },
+          {
+              "apiVersion": "migration.openshift.io/v1alpha1",
+              "kind": "MigMigration",
+              "metadata": {
+                "name": "migmigration",
+                "namespace": "openshift-migration"
+              },
+              "spec": {}
+          },
+          {
+              "apiVersion": "migration.openshift.io/v1alpha1",
+              "kind": "MigStorage",
+              "metadata": {
+                "name": "migstorage",
+                "namespace": "openshift-migration"
+              },
+              "spec": {}
+          }
+        ]
+      capabilities: Seamless Upgrades
+      categories: OpenShift Optional, Modernization & Migration
+      certified: "false"
+      containerImage: registry.redhat.io/rhmtc/openshift-migration-rhel8-operator@sha256:8f1891677fbb290f130b906050bad0918353da85b5953bed593dc28038707807
+      createdAt: "2024-06-26T18:13:06Z"
+      description: Facilitates migration of container workloads from OpenShift 3.x
+        to OpenShift 4.x
+      features.operators.openshift.io/cnf: "false"
+      features.operators.openshift.io/cni: "false"
+      features.operators.openshift.io/csi: "false"
+      features.operators.openshift.io/disconnected: "true"
+      features.operators.openshift.io/fips-compliant: "false"
+      features.operators.openshift.io/proxy-aware: "false"
+      features.operators.openshift.io/tls-profiles: "false"
+      features.operators.openshift.io/token-auth-aws: "false"
+      features.operators.openshift.io/token-auth-azure: "false"
+      features.operators.openshift.io/token-auth-gcp: "false"
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.128.22.213"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.128.22.213"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      olm.operatorGroup: openshift-migration-z5b5h
+      olm.operatorNamespace: openshift-migration
+      olm.skipRange: '>=1.5.0 <1.7.16'
+      olm.targetNamespaces: openshift-migration
+      openshift.io/scc: restricted
+      operatorframework.io/cluster-monitoring: "true"
+      operatorframework.io/properties: '{"properties":[{"type":"olm.gvk","value":{"group":"migration.openshift.io","kind":"MigrationController","version":"v1alpha1"}},{"type":"olm.gvk","value":{"group":"migration.openshift.io","kind":"MigPlan","version":"v1alpha1"}},{"type":"olm.gvk","value":{"group":"migration.openshift.io","kind":"MigStorage","version":"v1alpha1"}},{"type":"olm.gvk","value":{"group":"migration.openshift.io","kind":"DirectImageStreamMigration","version":"v1alpha1"}},{"type":"olm.gvk","value":{"group":"migration.openshift.io","kind":"MigCluster","version":"v1alpha1"}},{"type":"olm.gvk","value":{"group":"migration.openshift.io","kind":"MigHook","version":"v1alpha1"}},{"type":"olm.gvk","value":{"group":"migration.openshift.io","kind":"DirectVolumeMigration","version":"v1alpha1"}},{"type":"olm.package","value":{"packageName":"mtc-operator","version":"1.7.16"}},{"type":"olm.gvk","value":{"group":"migration.openshift.io","kind":"DirectVolumeMigrationProgress","version":"v1alpha1"}},{"type":"olm.gvk","value":{"group":"migration.openshift.io","kind":"MigAnalytic","version":"v1alpha1"}},{"type":"olm.gvk","value":{"group":"migration.openshift.io","kind":"MigMigration","version":"v1alpha1"}},{"type":"olm.gvk","value":{"group":"migration.openshift.io","kind":"DirectImageMigration","version":"v1alpha1"}},{"type":"olm.package.required","value":{"packageName":"redhat-oadp-operator","versionRange":"\u003e=1.0.14
+        \u003c1.1.0"}}]}'
+      operatorframework.io/suggested-namespace: openshift-migration
+      operators.openshift.io/infrastructure-features: '["Disconnected"]'
+      operators.openshift.io/must-gather-image: registry.redhat.io/rhmtc/openshift-migration-must-gather-rhel8@sha256:5fdab45b5ec09a8044f33d890c9e616154bf6b3844674b52f8548c4c95dffefd
+      operators.openshift.io/valid-subscription: '["OpenShift Container Platform",
+        "OpenShift Platform Plus"]'
+      repository: https://github.com/konveyor/mig-operator
+      support: Red Hat
+    creationTimestamp: "2024-07-11T17:31:49Z"
+    generateName: migration-operator-864956fc8d-
+    labels:
+      app: migration
+      pod-template-hash: 864956fc8d
+    name: migration-operator-864956fc8d-8tbwj
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: migration-operator-864956fc8d
+      uid: 3da1ae1d-009e-4937-bc08-601712e32b93
+    resourceVersion: "476624551"
+    uid: 91b57c38-2622-45be-898a-f94866913796
+  spec:
+    containers:
+    - env:
+      - name: OPERATOR_NAME
+        value: migration-operator
+      - name: POD_NAME
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: metadata.name
+      - name: WATCH_NAMESPACE
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: metadata.namespace
+      - name: REGISTRY
+        value: registry.redhat.io
+      - name: PROJECT
+        value: rhmtc
+      - name: RSYNC_TRANSFER_REPO
+        value: openshift-migration-rsync-transfer-rhel8@sha256
+      - name: RSYNC_TRANSFER_TAG
+        value: d1d65d090533509619a037318a4a56bf78e37571a4f836b89a83d2f449721983
+      - name: HOOK_RUNNER_REPO
+        value: openshift-migration-hook-runner-rhel8@sha256
+      - name: HOOK_RUNNER_TAG
+        value: 8d12970d0dd5379b55e25504efe65168535d58c2cafd5a14ec7a6cd2ecbc4973
+      - name: MIG_CONTROLLER_REPO
+        value: openshift-migration-controller-rhel8@sha256
+      - name: MIG_CONTROLLER_TAG
+        value: 2f14742d58bf09442510845664d7ea7175a7230f800e3cf0e77b4f1e4cb96e1c
+      - name: MIG_UI_REPO
+        value: openshift-migration-ui-rhel8@sha256
+      - name: MIG_UI_TAG
+        value: 90321b75d2de313fd2f4cb0303ece5b186448bedda864c0eaf932a22b1a9c5e2
+      - name: MIG_LOG_READER_REPO
+        value: openshift-migration-log-reader-rhel8@sha256
+      - name: MIG_LOG_READER_TAG
+        value: db002b2271ae87333f2d749433fa373c4455c820faf0ad4f4fcbd46d010fc1d9
+      - name: MIGRATION_REGISTRY_REPO
+        value: openshift-migration-registry-rhel8@sha256
+      - name: MIGRATION_REGISTRY_TAG
+        value: 03a267f927d08143b1b044bdc75618b60a3d011cac70164e0d201857cd39a5e2
+      - name: VELERO_REPO
+        value: openshift-migration-velero-rhel8@sha256
+      - name: VELERO_TAG
+        value: 4892f019cab3bbe9f14680a692cd94b0bbbf55571b8be3b16ab4aab8238b70f3
+      - name: VELERO_PLUGIN_REPO
+        value: openshift-velero-plugin-rhel8@sha256
+      - name: VELERO_PLUGIN_TAG
+        value: b55b9829db207cd26f542c2fd735fe910ac8b4e45212622e7170aa20d7a32758
+      - name: VELERO_RESTIC_RESTORE_HELPER_REPO
+        value: openshift-migration-velero-restic-restore-helper-rhel8@sha256
+      - name: VELERO_RESTIC_RESTORE_HELPER_TAG
+        value: 5bab782d274c5eed359f2cd89530349fb7402d273d12f971b56901b7afe962a9
+      - name: VELERO_AWS_PLUGIN_REPO
+        value: openshift-migration-velero-plugin-for-aws-rhel8@sha256
+      - name: VELERO_AWS_PLUGIN_TAG
+        value: fb397d4608359b246754c5b4bb382f2ecfc3125aac4ca6f5d8f8cb49fbc018a0
+      - name: VELERO_GCP_PLUGIN_REPO
+        value: openshift-migration-velero-plugin-for-gcp-rhel8@sha256
+      - name: VELERO_GCP_PLUGIN_TAG
+        value: 01b1c7d7cbcc7670008450ab8aa695ff7fd84aaca06c6a1362407c08e772a198
+      - name: VELERO_AZURE_PLUGIN_REPO
+        value: openshift-migration-velero-plugin-for-microsoft-azure-rhel8@sha256
+      - name: VELERO_AZURE_PLUGIN_TAG
+        value: c811c61e3d77a3e3c7d5b28619ce77eba64d93030b86ca3eea49562921f97f27
+      - name: OPERATOR_CONDITION_NAME
+        value: mtc-operator.v1.7.16
+      image: registry.redhat.io/rhmtc/openshift-migration-rhel8-operator@sha256:8f1891677fbb290f130b906050bad0918353da85b5953bed593dc28038707807
+      imagePullPolicy: Always
+      name: operator
+      resources: {}
+      securityContext:
+        allowPrivilegeEscalation: false
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000650000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /tmp/ansible-operator/runner
+        name: runner
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-6d7q8
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: migration-operator-dockercfg-vs4zc
+    nodeName: ocp4azu-sj2sl-worker-noprod-dev-brazilsouth2-4dm6s
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000650000
+      runAsNonRoot: true
+      seLinuxOptions:
+        level: s0:c26,c0
+    serviceAccount: migration-operator
+    serviceAccountName: migration-operator
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - emptyDir: {}
+      name: runner
+    - name: kube-api-access-6d7q8
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-11T17:31:49Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-11T17:32:28Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-11T17:32:28Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-11T17:31:49Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://0eaa9d649ccc0a9684b7ac13c0eb7467193f765e9963738492cbe220684e2249
+      image: registry.redhat.io/rhmtc/openshift-migration-rhel8-operator@sha256:8f1891677fbb290f130b906050bad0918353da85b5953bed593dc28038707807
+      imageID: registry.redhat.io/rhmtc/openshift-migration-rhel8-operator@sha256:8f1891677fbb290f130b906050bad0918353da85b5953bed593dc28038707807
+      lastState: {}
+      name: operator
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2024-07-11T17:32:28Z"
+    hostIP: 10.80.80.9
+    phase: Running
+    podIP: 10.128.22.213
+    podIPs:
+    - ip: 10.128.22.213
+    qosClass: BestEffort
+    startTime: "2024-07-11T17:31:49Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.128.22.216"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.128.22.216"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/scc: restricted
+    creationTimestamp: "2024-07-11T17:33:12Z"
+    generateName: migration-ui-86f78879f7-
+    labels:
+      app: migration
+      app.kubernetes.io/part-of: openshift-migration
+      pod-template-hash: 86f78879f7
+      service: migration-ui
+      ui-config-name: mig-ui-config-5gm5c57bc8
+    name: migration-ui-86f78879f7-z4qpm
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: migration-ui-86f78879f7
+      uid: 6365927f-9c86-41a3-b233-ebd0e5b2536e
+    resourceVersion: "476624613"
+    uid: d1ba4712-338e-4217-895d-b389dc85d994
+  spec:
+    containers:
+    - env:
+      - name: CLUSTER_API_URL
+        value: https://kubernetes.default.svc.cluster.local
+      - name: DISCOVERY_SVC_URL
+        value: http://discovery.openshift-migration.svc.cluster.local
+      image: registry.redhat.io/rhmtc/openshift-migration-ui-rhel8@sha256:90321b75d2de313fd2f4cb0303ece5b186448bedda864c0eaf932a22b1a9c5e2
+      imagePullPolicy: Always
+      name: mig-ui
+      ports:
+      - containerPort: 9000
+        protocol: TCP
+      resources: {}
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000650000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /etc/mig-ui
+        name: mig-ui-config
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-g2ncz
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: default-dockercfg-48npj
+    nodeName: ocp4azu-sj2sl-worker-noprod-dev-brazilsouth2-4dm6s
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000650000
+      seLinuxOptions:
+        level: s0:c26,c0
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - configMap:
+        defaultMode: 420
+        name: mig-ui-config
+      name: mig-ui-config
+    - name: kube-api-access-g2ncz
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-11T17:33:12Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-11T17:33:35Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-11T17:33:35Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-11T17:33:12Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://7385c588c2e5889bb2daaa679caea93b20856aaef28b930952f734945af58401
+      image: registry.redhat.io/rhmtc/openshift-migration-ui-rhel8@sha256:90321b75d2de313fd2f4cb0303ece5b186448bedda864c0eaf932a22b1a9c5e2
+      imageID: registry.redhat.io/rhmtc/openshift-migration-ui-rhel8@sha256:90321b75d2de313fd2f4cb0303ece5b186448bedda864c0eaf932a22b1a9c5e2
+      lastState: {}
+      name: mig-ui
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2024-07-11T17:33:34Z"
+    hostIP: 10.80.80.9
+    phase: Running
+    podIP: 10.128.22.216
+    podIPs:
+    - ip: 10.128.22.216
+    qosClass: BestEffort
+    startTime: "2024-07-11T17:33:12Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      alm-examples: |-
+        [
+          {
+            "apiVersion": "oadp.openshift.io/v1alpha1",
+            "kind": "DataProtectionApplication",
+            "metadata": {
+              "name": "velero-sample"
+            },
+            "spec": {
+              "backupLocations": [
+                {
+                  "velero": {
+                    "config": {
+                      "profile": "default",
+                      "region": "us-east-1"
+                    },
+                    "credential": {
+                      "key": "cloud",
+                      "name": "cloud-credentials"
+                    },
+                    "default": true,
+                    "objectStorage": {
+                      "bucket": "my-bucket-name",
+                      "prefix": "velero"
+                    },
+                    "provider": "aws"
+                  }
+                }
+              ],
+              "configuration": {
+                "restic": {
+                  "enable": true
+                },
+                "velero": {
+                  "defaultPlugins": [
+                    "openshift",
+                    "aws",
+                    "kubevirt"
+                  ]
+                }
+              },
+              "snapshotLocations": [
+                {
+                  "velero": {
+                    "config": {
+                      "profile": "default",
+                      "region": "us-west-2"
+                    },
+                    "provider": "aws"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "apiVersion": "velero.io/v1",
+            "kind": "Backup",
+            "metadata": {
+              "name": "backup",
+              "namespace": "openshift-adp"
+            },
+            "spec": {}
+          },
+          {
+            "apiVersion": "velero.io/v1",
+            "kind": "BackupStorageLocation",
+            "metadata": {
+              "name": "backupstoragelocation",
+              "namespace": "openshift-adp"
+            },
+            "spec": {}
+          },
+          {
+            "apiVersion": "velero.io/v1",
+            "kind": "DeleteBackupRequest",
+            "metadata": {
+              "name": "deletebackuprequest",
+              "namespace": "openshift-adp"
+            },
+            "spec": {}
+          },
+          {
+            "apiVersion": "velero.io/v1",
+            "kind": "DownloadRequest",
+            "metadata": {
+              "name": "downloadrequest",
+              "namespace": "openshift-adp"
+            },
+            "spec": {}
+          },
+          {
+            "apiVersion": "velero.io/v1",
+            "kind": "PodVolumeBackup",
+            "metadata": {
+              "name": "podvolumebackup",
+              "namespace": "openshift-adp"
+            },
+            "spec": {}
+          },
+          {
+            "apiVersion": "velero.io/v1",
+            "kind": "PodVolumeRestore",
+            "metadata": {
+              "name": "podvolumerestore",
+              "namespace": "openshift-adp"
+            },
+            "spec": {}
+          },
+          {
+            "apiVersion": "velero.io/v1",
+            "kind": "ResticRepository",
+            "metadata": {
+              "name": "resticrepository",
+              "namespace": "openshift-adp"
+            },
+            "spec": {}
+          },
+          {
+            "apiVersion": "velero.io/v1",
+            "kind": "Restore",
+            "metadata": {
+              "name": "restore",
+              "namespace": "openshift-adp"
+            },
+            "spec": {}
+          },
+          {
+            "apiVersion": "velero.io/v1",
+            "kind": "Schedule",
+            "metadata": {
+              "name": "schedule",
+              "namespace": "openshift-adp"
+            },
+            "spec": {}
+          },
+          {
+            "apiVersion": "velero.io/v1",
+            "kind": "ServerStatusRequest",
+            "metadata": {
+              "name": "serverstatusrequest",
+              "namespace": "openshift-adp"
+            },
+            "spec": {}
+          },
+          {
+            "apiVersion": "velero.io/v1",
+            "kind": "VolumeSnapshotLocation",
+            "metadata": {
+              "name": "volumesnapshotlocation",
+              "namespace": "openshift-adp"
+            },
+            "spec": {}
+          }
+        ]
+      capabilities: Seamless Upgrades
+      categories: OpenShift Optional
+      certified: "false"
+      containerImage: registry.redhat.io/oadp/oadp-rhel8-operator@sha256:5ba8d9bca89945f05cc8f071e1a96bf62dcf21792ff2ca09033464dabd67e293
+      createdAt: "2024-06-26T17:04:33Z"
+      description: |-
+        OADP (OpenShift API for Data Protection) operator sets up and installs
+        Velero on the OpenShift platform.
+      features.operators.openshift.io/cnf: "false"
+      features.operators.openshift.io/cni: "false"
+      features.operators.openshift.io/csi: "false"
+      features.operators.openshift.io/disconnected: "true"
+      features.operators.openshift.io/fips-compliant: "false"
+      features.operators.openshift.io/proxy-aware: "false"
+      features.operators.openshift.io/tls-profiles: "false"
+      features.operators.openshift.io/token-auth-aws: "false"
+      features.operators.openshift.io/token-auth-azure: "false"
+      features.operators.openshift.io/token-auth-gcp: "false"
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.128.22.158"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.128.22.158"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      olm.operatorGroup: openshift-migration-z5b5h
+      olm.operatorNamespace: openshift-migration
+      olm.skipRange: '>=0.0.0 <1.0.16'
+      olm.targetNamespaces: openshift-migration
+      openshift.io/scc: restricted
+      operatorframework.io/cluster-monitoring: "true"
+      operatorframework.io/properties: '{"properties":[{"type":"olm.gvk","value":{"group":"oadp.openshift.io","kind":"DataProtectionApplication","version":"v1alpha1"}},{"type":"olm.gvk","value":{"group":"velero.io","kind":"DownloadRequest","version":"v1"}},{"type":"olm.gvk","value":{"group":"velero.io","kind":"VolumeSnapshotLocation","version":"v1"}},{"type":"olm.gvk","value":{"group":"velero.io","kind":"Backup","version":"v1"}},{"type":"olm.package","value":{"packageName":"redhat-oadp-operator","version":"1.0.16"}},{"type":"olm.gvk","value":{"group":"velero.io","kind":"PodVolumeBackup","version":"v1"}},{"type":"olm.gvk","value":{"group":"velero.io","kind":"Restore","version":"v1"}},{"type":"olm.gvk","value":{"group":"velero.io","kind":"PodVolumeRestore","version":"v1"}},{"type":"olm.gvk","value":{"group":"velero.io","kind":"ResticRepository","version":"v1"}},{"type":"olm.gvk","value":{"group":"velero.io","kind":"BackupStorageLocation","version":"v1"}},{"type":"olm.gvk","value":{"group":"velero.io","kind":"ServerStatusRequest","version":"v1"}},{"type":"olm.gvk","value":{"group":"velero.io","kind":"Schedule","version":"v1"}},{"type":"olm.gvk","value":{"group":"oadp.openshift.io","kind":"CloudStorage","version":"v1alpha1"}},{"type":"olm.gvk","value":{"group":"velero.io","kind":"DeleteBackupRequest","version":"v1"}}]}'
+      operatorframework.io/suggested-namespace: openshift-adp
+      operators.openshift.io/infrastructure-features: '["Disconnected"]'
+      operators.openshift.io/must-gather-image: registry.redhat.io/oadp/oadp-mustgather-rhel8@sha256:35028c0615425ac1756a3e16de2b6f0559a8131b74d553c49751a6cf25d36832
+      operators.openshift.io/valid-subscription: '["OpenShift Container Platform",
+        "OpenShift Platform Plus"]'
+      operators.operatorframework.io/builder: operator-sdk-v1.21.0
+      operators.operatorframework.io/project_layout: go.kubebuilder.io/v3
+      repository: https://github.com/openshift/oadp-operator
+      support: Red Hat
+    creationTimestamp: "2024-07-11T14:22:57Z"
+    generateName: openshift-adp-controller-manager-5f7bb58f7-
+    labels:
+      control-plane: controller-manager
+      pod-template-hash: 5f7bb58f7
+    name: openshift-adp-controller-manager-5f7bb58f7-68dnw
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: openshift-adp-controller-manager-5f7bb58f7
+      uid: 32abe60b-39b7-4f70-885b-6f119dfeea8c
+    resourceVersion: "476624595"
+    uid: 2f6ed74f-272e-40b1-9f78-70e86c052863
+  spec:
+    containers:
+    - args:
+      - --leader-elect
+      command:
+      - /manager
+      env:
+      - name: WATCH_NAMESPACE
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: metadata.annotations['olm.targetNamespaces']
+      - name: RELATED_IMAGE_VELERO
+        value: registry.redhat.io/oadp/oadp-velero-rhel8@sha256:9b681de9e02cb402e24fa10dce66b36d02702b82ece9dff511bb6c7d1e6c9c31
+      - name: RELATED_IMAGE_VELERO_RESTIC_RESTORE_HELPER
+        value: registry.redhat.io/oadp/oadp-velero-restic-restore-helper-rhel8@sha256:602414650663295350974dea5e58658866927770d0bb10b2147749b5cdb78980
+      - name: RELATED_IMAGE_OPENSHIFT_VELERO_PLUGIN
+        value: registry.redhat.io/oadp/oadp-velero-plugin-rhel8@sha256:eac641a34d00fb5592e38d559b85cce99bbce436ae3ac2f3767d164d374a2278
+      - name: RELATED_IMAGE_REGISTRY
+        value: registry.redhat.io/oadp/oadp-registry-rhel8@sha256:c4b6cb088c96ec7aca6014e8d48f83fa4b2067edd507d1da73e48a969c7c9da9
+      - name: RELATED_IMAGE_VELERO_PLUGIN_FOR_AWS
+        value: registry.redhat.io/oadp/oadp-velero-plugin-for-aws-rhel8@sha256:a12100d0faf4dd4bdeb5212186d8a94c88a2b73d3632bdd4b6f504895fafb704
+      - name: RELATED_IMAGE_VELERO_PLUGIN_FOR_MICROSOFT_AZURE
+        value: registry.redhat.io/oadp/oadp-velero-plugin-for-microsoft-azure-rhel8@sha256:60b7d0f7ab58efcc1dc2ed13f3cb77b7396308a63580b3bf9235172b263a0ba2
+      - name: RELATED_IMAGE_VELERO_PLUGIN_FOR_GCP
+        value: registry.redhat.io/oadp/oadp-velero-plugin-for-gcp-rhel8@sha256:97e901972699a73e32e6ac456038179d6a614ea0fe29e052d0f872d66ac38365
+      - name: RELATED_IMAGE_VELERO_PLUGIN_FOR_CSI
+        value: registry.redhat.io/oadp/oadp-velero-plugin-for-csi-rhel8@sha256:db98264e722a3756ed923fff8f19b03dc6047105c372279c24fb707b3a0bd4aa
+      - name: RELATED_IMAGE_KUBEVIRT_VELERO_PLUGIN
+        value: registry.redhat.io/oadp/oadp-kubevirt-velero-plugin-rhel8@sha256:5c178c7d50f8a7ec9588648c7c978ae6707eaf26b851edef947b9d2d5635b3d4
+      - name: RELATED_IMAGE_MUSTGATHER
+        value: registry.redhat.io/oadp/oadp-mustgather-rhel8@sha256:35028c0615425ac1756a3e16de2b6f0559a8131b74d553c49751a6cf25d36832
+      - name: OPERATOR_CONDITION_NAME
+        value: oadp-operator.v1.0.16
+      image: registry.redhat.io/oadp/oadp-rhel8-operator@sha256:5ba8d9bca89945f05cc8f071e1a96bf62dcf21792ff2ca09033464dabd67e293
+      imagePullPolicy: Always
+      livenessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /healthz
+          port: 8081
+          scheme: HTTP
+        initialDelaySeconds: 15
+        periodSeconds: 20
+        successThreshold: 1
+        timeoutSeconds: 1
+      name: manager
+      readinessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /readyz
+          port: 8081
+          scheme: HTTP
+        initialDelaySeconds: 5
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 1
+      resources:
+        limits:
+          cpu: "1"
+          memory: 512Mi
+        requests:
+          cpu: 500m
+          memory: 128Mi
+      securityContext:
+        allowPrivilegeEscalation: false
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000650000
+      startupProbe:
+        failureThreshold: 12
+        httpGet:
+          path: /healthz
+          port: 8081
+          scheme: HTTP
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 1
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/openshift/serviceaccount
+        name: bound-sa-token
+        readOnly: true
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-q4lk8
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: openshift-adp-controller-manager-dockercfg-cwhjl
+    nodeName: ocp4azu-sj2sl-worker-noprod-dev-brazilsouth2-4dm6s
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000650000
+      runAsNonRoot: true
+      seLinuxOptions:
+        level: s0:c26,c0
+    serviceAccount: openshift-adp-controller-manager
+    serviceAccountName: openshift-adp-controller-manager
+    terminationGracePeriodSeconds: 10
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoSchedule
+      key: node.kubernetes.io/memory-pressure
+      operator: Exists
+    volumes:
+    - name: bound-sa-token
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            audience: openshift
+            expirationSeconds: 3600
+            path: token
+    - name: kube-api-access-q4lk8
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-11T14:22:57Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-11T14:23:27Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-11T14:23:27Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-11T14:22:57Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://7bbc95dda0f48f71afcea2694ac97ebba7bb7a68d43e1aa73a911cdfe74594fd
+      image: registry.redhat.io/oadp/oadp-rhel8-operator@sha256:5ba8d9bca89945f05cc8f071e1a96bf62dcf21792ff2ca09033464dabd67e293
+      imageID: registry.redhat.io/oadp/oadp-rhel8-operator@sha256:04201940e2ab0ff399a68ebb39d9ffac7a07b623915ba33a75b92f87493ec1d3
+      lastState: {}
+      name: manager
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2024-07-11T14:23:16Z"
+    hostIP: 10.80.80.9
+    phase: Running
+    podIP: 10.128.22.158
+    podIPs:
+    - ip: 10.128.22.158
+    qosClass: Burstable
+    startTime: "2024-07-11T14:22:57Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.129.16.158"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.129.16.158"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/scc: privileged
+    creationTimestamp: "2024-07-11T14:26:50Z"
+    generateName: restic-
+    labels:
+      app.kubernetes.io/part-of: openshift-migration
+      component: velero
+      controller-revision-hash: 6fd769bf58
+      name: restic
+      pod-template-generation: "8"
+    name: restic-94s7d
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DaemonSet
+      name: restic
+      uid: 3738eeca-16de-493c-af80-524c883dbee8
+    resourceVersion: "472917890"
+    uid: 78b7fbbd-3348-4744-9e06-b0e0d9f09fde
+  spec:
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchFields:
+            - key: metadata.name
+              operator: In
+              values:
+              - ocp4azu-sj2sl-worker-noprod-qa-brazilsouth1-2s77x
+    containers:
+    - args:
+      - restic
+      - server
+      command:
+      - /velero
+      env:
+      - name: NODE_NAME
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: spec.nodeName
+      - name: VELERO_NAMESPACE
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: metadata.namespace
+      - name: VELERO_SCRATCH_DIR
+        value: /scratch
+      - name: AWS_SHARED_CREDENTIALS_FILE
+        value: /credentials/cloud
+      - name: GOOGLE_APPLICATION_CREDENTIALS
+        value: /credentials-gcp/cloud
+      - name: AZURE_CREDENTIALS_FILE
+        value: /credentials-azure/cloud
+      image: registry.redhat.io/oadp/oadp-velero-rhel8@sha256:9b681de9e02cb402e24fa10dce66b36d02702b82ece9dff511bb6c7d1e6c9c31
+      imagePullPolicy: Always
+      name: restic
+      resources:
+        limits:
+          cpu: "1"
+          memory: 512Mi
+        requests:
+          cpu: 100m
+          memory: 128Mi
+      securityContext:
+        privileged: true
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /host_pods
+        mountPropagation: HostToContainer
+        name: host-pods
+      - mountPath: /scratch
+        name: scratch
+      - mountPath: /etc/ssl/certs
+        name: certs
+      - mountPath: /credentials
+        name: cloud-credentials
+      - mountPath: /credentials-gcp
+        name: cloud-credentials-gcp
+      - mountPath: /credentials-azure
+        name: cloud-credentials-azure
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-q5hmm
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: velero-dockercfg-757mh
+    nodeName: ocp4azu-sj2sl-worker-noprod-qa-brazilsouth1-2s77x
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      runAsUser: 0
+    serviceAccount: velero
+    serviceAccountName: velero
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/disk-pressure
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/memory-pressure
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/pid-pressure
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/unschedulable
+      operator: Exists
+    volumes:
+    - hostPath:
+        path: /var/lib/kubelet/pods
+        type: ""
+      name: host-pods
+    - emptyDir: {}
+      name: scratch
+    - emptyDir: {}
+      name: certs
+    - name: cloud-credentials
+      secret:
+        defaultMode: 420
+        secretName: cloud-credentials
+    - name: cloud-credentials-gcp
+      secret:
+        defaultMode: 420
+        secretName: cloud-credentials-gcp
+    - name: cloud-credentials-azure
+      secret:
+        defaultMode: 420
+        secretName: cloud-credentials-azure
+    - name: kube-api-access-q5hmm
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-11T14:26:50Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-11T14:26:59Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-11T14:26:59Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-11T14:26:50Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://ba97372702fb4aecd54206cb33eb81c7890c1364023e54d8681869bef7a1b102
+      image: registry.redhat.io/oadp/oadp-velero-rhel8@sha256:9b681de9e02cb402e24fa10dce66b36d02702b82ece9dff511bb6c7d1e6c9c31
+      imageID: registry.redhat.io/oadp/oadp-velero-rhel8@sha256:9b681de9e02cb402e24fa10dce66b36d02702b82ece9dff511bb6c7d1e6c9c31
+      lastState: {}
+      name: restic
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2024-07-11T14:26:59Z"
+    hostIP: 10.80.80.28
+    phase: Running
+    podIP: 10.129.16.158
+    podIPs:
+    - ip: 10.129.16.158
+    qosClass: Burstable
+    startTime: "2024-07-11T14:26:50Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.128.20.79"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.128.20.79"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/scc: privileged
+    creationTimestamp: "2024-07-11T14:25:36Z"
+    generateName: restic-
+    labels:
+      app.kubernetes.io/part-of: openshift-migration
+      component: velero
+      controller-revision-hash: 6fd769bf58
+      name: restic
+      pod-template-generation: "8"
+    name: restic-9c7kr
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DaemonSet
+      name: restic
+      uid: 3738eeca-16de-493c-af80-524c883dbee8
+    resourceVersion: "472847120"
+    uid: dd8c47c6-b254-45fe-9104-615525593b8d
+  spec:
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchFields:
+            - key: metadata.name
+              operator: In
+              values:
+              - ocp4azu-sj2sl-worker-prod-brazilsouth2-xbz5z
+    containers:
+    - args:
+      - restic
+      - server
+      command:
+      - /velero
+      env:
+      - name: NODE_NAME
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: spec.nodeName
+      - name: VELERO_NAMESPACE
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: metadata.namespace
+      - name: VELERO_SCRATCH_DIR
+        value: /scratch
+      - name: AWS_SHARED_CREDENTIALS_FILE
+        value: /credentials/cloud
+      - name: GOOGLE_APPLICATION_CREDENTIALS
+        value: /credentials-gcp/cloud
+      - name: AZURE_CREDENTIALS_FILE
+        value: /credentials-azure/cloud
+      image: registry.redhat.io/oadp/oadp-velero-rhel8@sha256:9b681de9e02cb402e24fa10dce66b36d02702b82ece9dff511bb6c7d1e6c9c31
+      imagePullPolicy: Always
+      name: restic
+      resources:
+        limits:
+          cpu: "1"
+          memory: 512Mi
+        requests:
+          cpu: 100m
+          memory: 128Mi
+      securityContext:
+        privileged: true
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /host_pods
+        mountPropagation: HostToContainer
+        name: host-pods
+      - mountPath: /scratch
+        name: scratch
+      - mountPath: /etc/ssl/certs
+        name: certs
+      - mountPath: /credentials
+        name: cloud-credentials
+      - mountPath: /credentials-gcp
+        name: cloud-credentials-gcp
+      - mountPath: /credentials-azure
+        name: cloud-credentials-azure
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-kl2vt
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: velero-dockercfg-757mh
+    nodeName: ocp4azu-sj2sl-worker-prod-brazilsouth2-xbz5z
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      runAsUser: 0
+    serviceAccount: velero
+    serviceAccountName: velero
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/disk-pressure
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/memory-pressure
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/pid-pressure
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/unschedulable
+      operator: Exists
+    volumes:
+    - hostPath:
+        path: /var/lib/kubelet/pods
+        type: ""
+      name: host-pods
+    - emptyDir: {}
+      name: scratch
+    - emptyDir: {}
+      name: certs
+    - name: cloud-credentials
+      secret:
+        defaultMode: 420
+        secretName: cloud-credentials
+    - name: cloud-credentials-gcp
+      secret:
+        defaultMode: 420
+        secretName: cloud-credentials-gcp
+    - name: cloud-credentials-azure
+      secret:
+        defaultMode: 420
+        secretName: cloud-credentials-azure
+    - name: kube-api-access-kl2vt
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-11T14:25:37Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-11T14:25:48Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-11T14:25:48Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-11T14:25:37Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://fc2c5886adf6f68069ca4537ef72a3c469c3eb02ba3b5122c0eacd5318bd3c6b
+      image: registry.redhat.io/oadp/oadp-velero-rhel8@sha256:9b681de9e02cb402e24fa10dce66b36d02702b82ece9dff511bb6c7d1e6c9c31
+      imageID: registry.redhat.io/oadp/oadp-velero-rhel8@sha256:9b681de9e02cb402e24fa10dce66b36d02702b82ece9dff511bb6c7d1e6c9c31
+      lastState: {}
+      name: restic
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2024-07-11T14:25:48Z"
+    hostIP: 10.80.80.23
+    phase: Running
+    podIP: 10.128.20.79
+    podIPs:
+    - ip: 10.128.20.79
+    qosClass: Burstable
+    startTime: "2024-07-11T14:25:37Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.131.18.101"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.131.18.101"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/scc: privileged
+    creationTimestamp: "2024-07-11T14:24:42Z"
+    generateName: restic-
+    labels:
+      app.kubernetes.io/part-of: openshift-migration
+      component: velero
+      controller-revision-hash: 6fd769bf58
+      name: restic
+      pod-template-generation: "8"
+    name: restic-bhx8c
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DaemonSet
+      name: restic
+      uid: 3738eeca-16de-493c-af80-524c883dbee8
+    resourceVersion: "491646530"
+    uid: e2f92173-e912-406b-b215-bea04c3ece55
+  spec:
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchFields:
+            - key: metadata.name
+              operator: In
+              values:
+              - ocp4azu-sj2sl-worker-prod-brazilsouth1-lks8v
+    containers:
+    - args:
+      - restic
+      - server
+      command:
+      - /velero
+      env:
+      - name: NODE_NAME
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: spec.nodeName
+      - name: VELERO_NAMESPACE
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: metadata.namespace
+      - name: VELERO_SCRATCH_DIR
+        value: /scratch
+      - name: AWS_SHARED_CREDENTIALS_FILE
+        value: /credentials/cloud
+      - name: GOOGLE_APPLICATION_CREDENTIALS
+        value: /credentials-gcp/cloud
+      - name: AZURE_CREDENTIALS_FILE
+        value: /credentials-azure/cloud
+      image: registry.redhat.io/oadp/oadp-velero-rhel8@sha256:9b681de9e02cb402e24fa10dce66b36d02702b82ece9dff511bb6c7d1e6c9c31
+      imagePullPolicy: Always
+      name: restic
+      resources:
+        limits:
+          cpu: "1"
+          memory: 512Mi
+        requests:
+          cpu: 100m
+          memory: 128Mi
+      securityContext:
+        privileged: true
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /host_pods
+        mountPropagation: HostToContainer
+        name: host-pods
+      - mountPath: /scratch
+        name: scratch
+      - mountPath: /etc/ssl/certs
+        name: certs
+      - mountPath: /credentials
+        name: cloud-credentials
+      - mountPath: /credentials-gcp
+        name: cloud-credentials-gcp
+      - mountPath: /credentials-azure
+        name: cloud-credentials-azure
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-7q8kp
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: velero-dockercfg-757mh
+    nodeName: ocp4azu-sj2sl-worker-prod-brazilsouth1-lks8v
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      runAsUser: 0
+    serviceAccount: velero
+    serviceAccountName: velero
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/disk-pressure
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/memory-pressure
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/pid-pressure
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/unschedulable
+      operator: Exists
+    volumes:
+    - hostPath:
+        path: /var/lib/kubelet/pods
+        type: ""
+      name: host-pods
+    - emptyDir: {}
+      name: scratch
+    - emptyDir: {}
+      name: certs
+    - name: cloud-credentials
+      secret:
+        defaultMode: 420
+        secretName: cloud-credentials
+    - name: cloud-credentials-gcp
+      secret:
+        defaultMode: 420
+        secretName: cloud-credentials-gcp
+    - name: cloud-credentials-azure
+      secret:
+        defaultMode: 420
+        secretName: cloud-credentials-azure
+    - name: kube-api-access-7q8kp
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-11T14:24:42Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-11T14:25:23Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-11T14:25:23Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-11T14:24:42Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://ce1a0a8f617863f0d9f1a63c9f1bc1e8eea5cc1110bdc9482888638a35333283
+      image: registry.redhat.io/oadp/oadp-velero-rhel8@sha256:9b681de9e02cb402e24fa10dce66b36d02702b82ece9dff511bb6c7d1e6c9c31
+      imageID: registry.redhat.io/oadp/oadp-velero-rhel8@sha256:9b681de9e02cb402e24fa10dce66b36d02702b82ece9dff511bb6c7d1e6c9c31
+      lastState: {}
+      name: restic
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2024-07-11T14:25:23Z"
+    hostIP: 10.80.80.19
+    phase: Running
+    podIP: 10.131.18.101
+    podIPs:
+    - ip: 10.131.18.101
+    qosClass: Burstable
+    startTime: "2024-07-11T14:24:42Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.128.22.161"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.128.22.161"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/scc: privileged
+    creationTimestamp: "2024-07-11T14:26:30Z"
+    generateName: restic-
+    labels:
+      app.kubernetes.io/part-of: openshift-migration
+      component: velero
+      controller-revision-hash: 6fd769bf58
+      name: restic
+      pod-template-generation: "8"
+    name: restic-jfk2k
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DaemonSet
+      name: restic
+      uid: 3738eeca-16de-493c-af80-524c883dbee8
+    resourceVersion: "476624611"
+    uid: d9586cdb-d88a-47a8-b95b-38e2428999de
+  spec:
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchFields:
+            - key: metadata.name
+              operator: In
+              values:
+              - ocp4azu-sj2sl-worker-noprod-dev-brazilsouth2-4dm6s
+    containers:
+    - args:
+      - restic
+      - server
+      command:
+      - /velero
+      env:
+      - name: NODE_NAME
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: spec.nodeName
+      - name: VELERO_NAMESPACE
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: metadata.namespace
+      - name: VELERO_SCRATCH_DIR
+        value: /scratch
+      - name: AWS_SHARED_CREDENTIALS_FILE
+        value: /credentials/cloud
+      - name: GOOGLE_APPLICATION_CREDENTIALS
+        value: /credentials-gcp/cloud
+      - name: AZURE_CREDENTIALS_FILE
+        value: /credentials-azure/cloud
+      image: registry.redhat.io/oadp/oadp-velero-rhel8@sha256:9b681de9e02cb402e24fa10dce66b36d02702b82ece9dff511bb6c7d1e6c9c31
+      imagePullPolicy: Always
+      name: restic
+      resources:
+        limits:
+          cpu: "1"
+          memory: 512Mi
+        requests:
+          cpu: 100m
+          memory: 128Mi
+      securityContext:
+        privileged: true
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /host_pods
+        mountPropagation: HostToContainer
+        name: host-pods
+      - mountPath: /scratch
+        name: scratch
+      - mountPath: /etc/ssl/certs
+        name: certs
+      - mountPath: /credentials
+        name: cloud-credentials
+      - mountPath: /credentials-gcp
+        name: cloud-credentials-gcp
+      - mountPath: /credentials-azure
+        name: cloud-credentials-azure
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-jss96
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: velero-dockercfg-757mh
+    nodeName: ocp4azu-sj2sl-worker-noprod-dev-brazilsouth2-4dm6s
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      runAsUser: 0
+    serviceAccount: velero
+    serviceAccountName: velero
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/disk-pressure
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/memory-pressure
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/pid-pressure
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/unschedulable
+      operator: Exists
+    volumes:
+    - hostPath:
+        path: /var/lib/kubelet/pods
+        type: ""
+      name: host-pods
+    - emptyDir: {}
+      name: scratch
+    - emptyDir: {}
+      name: certs
+    - name: cloud-credentials
+      secret:
+        defaultMode: 420
+        secretName: cloud-credentials
+    - name: cloud-credentials-gcp
+      secret:
+        defaultMode: 420
+        secretName: cloud-credentials-gcp
+    - name: cloud-credentials-azure
+      secret:
+        defaultMode: 420
+        secretName: cloud-credentials-azure
+    - name: kube-api-access-jss96
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-11T14:26:30Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-11T14:26:35Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-11T14:26:35Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-11T14:26:30Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://c0a5c56d7f7c6f1343d6ec752dd1d8a1e6d7969dfbccfe67b65749613817ee6c
+      image: registry.redhat.io/oadp/oadp-velero-rhel8@sha256:9b681de9e02cb402e24fa10dce66b36d02702b82ece9dff511bb6c7d1e6c9c31
+      imageID: registry.redhat.io/oadp/oadp-velero-rhel8@sha256:9b681de9e02cb402e24fa10dce66b36d02702b82ece9dff511bb6c7d1e6c9c31
+      lastState: {}
+      name: restic
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2024-07-11T14:26:34Z"
+    hostIP: 10.80.80.9
+    phase: Running
+    podIP: 10.128.22.161
+    podIPs:
+    - ip: 10.128.22.161
+    qosClass: Burstable
+    startTime: "2024-07-11T14:26:30Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.130.17.131"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.130.17.131"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/scc: privileged
+    creationTimestamp: "2024-07-11T14:25:24Z"
+    generateName: restic-
+    labels:
+      app.kubernetes.io/part-of: openshift-migration
+      component: velero
+      controller-revision-hash: 6fd769bf58
+      name: restic
+      pod-template-generation: "8"
+    name: restic-lgqhg
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DaemonSet
+      name: restic
+      uid: 3738eeca-16de-493c-af80-524c883dbee8
+    resourceVersion: "467404410"
+    uid: 9f389221-6077-4fc7-a8d5-47c39fb5eb9d
+  spec:
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchFields:
+            - key: metadata.name
+              operator: In
+              values:
+              - ocp4azu-sj2sl-worker-noprod-qa-brazilsouth2-rglbf
+    containers:
+    - args:
+      - restic
+      - server
+      command:
+      - /velero
+      env:
+      - name: NODE_NAME
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: spec.nodeName
+      - name: VELERO_NAMESPACE
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: metadata.namespace
+      - name: VELERO_SCRATCH_DIR
+        value: /scratch
+      - name: AWS_SHARED_CREDENTIALS_FILE
+        value: /credentials/cloud
+      - name: GOOGLE_APPLICATION_CREDENTIALS
+        value: /credentials-gcp/cloud
+      - name: AZURE_CREDENTIALS_FILE
+        value: /credentials-azure/cloud
+      image: registry.redhat.io/oadp/oadp-velero-rhel8@sha256:9b681de9e02cb402e24fa10dce66b36d02702b82ece9dff511bb6c7d1e6c9c31
+      imagePullPolicy: Always
+      name: restic
+      resources:
+        limits:
+          cpu: "1"
+          memory: 512Mi
+        requests:
+          cpu: 100m
+          memory: 128Mi
+      securityContext:
+        privileged: true
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /host_pods
+        mountPropagation: HostToContainer
+        name: host-pods
+      - mountPath: /scratch
+        name: scratch
+      - mountPath: /etc/ssl/certs
+        name: certs
+      - mountPath: /credentials
+        name: cloud-credentials
+      - mountPath: /credentials-gcp
+        name: cloud-credentials-gcp
+      - mountPath: /credentials-azure
+        name: cloud-credentials-azure
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-l6bk4
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: velero-dockercfg-757mh
+    nodeName: ocp4azu-sj2sl-worker-noprod-qa-brazilsouth2-rglbf
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      runAsUser: 0
+    serviceAccount: velero
+    serviceAccountName: velero
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/disk-pressure
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/memory-pressure
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/pid-pressure
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/unschedulable
+      operator: Exists
+    volumes:
+    - hostPath:
+        path: /var/lib/kubelet/pods
+        type: ""
+      name: host-pods
+    - emptyDir: {}
+      name: scratch
+    - emptyDir: {}
+      name: certs
+    - name: cloud-credentials
+      secret:
+        defaultMode: 420
+        secretName: cloud-credentials
+    - name: cloud-credentials-gcp
+      secret:
+        defaultMode: 420
+        secretName: cloud-credentials-gcp
+    - name: cloud-credentials-azure
+      secret:
+        defaultMode: 420
+        secretName: cloud-credentials-azure
+    - name: kube-api-access-l6bk4
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-11T14:25:24Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-11T14:25:34Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-11T14:25:34Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-11T14:25:24Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://0241f81586fbff9ed7fe2f2fa6cdb5f3c6f7ae946ee31a76e7f116a92acda84f
+      image: registry.redhat.io/oadp/oadp-velero-rhel8@sha256:9b681de9e02cb402e24fa10dce66b36d02702b82ece9dff511bb6c7d1e6c9c31
+      imageID: registry.redhat.io/oadp/oadp-velero-rhel8@sha256:9b681de9e02cb402e24fa10dce66b36d02702b82ece9dff511bb6c7d1e6c9c31
+      lastState: {}
+      name: restic
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2024-07-11T14:25:34Z"
+    hostIP: 10.80.80.22
+    phase: Running
+    podIP: 10.130.17.131
+    podIPs:
+    - ip: 10.130.17.131
+    qosClass: Burstable
+    startTime: "2024-07-11T14:25:24Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.129.23.3"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.129.23.3"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/scc: privileged
+    creationTimestamp: "2024-07-11T14:26:36Z"
+    generateName: restic-
+    labels:
+      app.kubernetes.io/part-of: openshift-migration
+      component: velero
+      controller-revision-hash: 6fd769bf58
+      name: restic
+      pod-template-generation: "8"
+    name: restic-n7nkb
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DaemonSet
+      name: restic
+      uid: 3738eeca-16de-493c-af80-524c883dbee8
+    resourceVersion: "449096092"
+    uid: c9a7da54-0dc8-40ec-9fd5-e489d385105b
+  spec:
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchFields:
+            - key: metadata.name
+              operator: In
+              values:
+              - ocp4azu-sj2sl-worker-prod-brazilsouth1-mjsb5
+    containers:
+    - args:
+      - restic
+      - server
+      command:
+      - /velero
+      env:
+      - name: NODE_NAME
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: spec.nodeName
+      - name: VELERO_NAMESPACE
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: metadata.namespace
+      - name: VELERO_SCRATCH_DIR
+        value: /scratch
+      - name: AWS_SHARED_CREDENTIALS_FILE
+        value: /credentials/cloud
+      - name: GOOGLE_APPLICATION_CREDENTIALS
+        value: /credentials-gcp/cloud
+      - name: AZURE_CREDENTIALS_FILE
+        value: /credentials-azure/cloud
+      image: registry.redhat.io/oadp/oadp-velero-rhel8@sha256:9b681de9e02cb402e24fa10dce66b36d02702b82ece9dff511bb6c7d1e6c9c31
+      imagePullPolicy: Always
+      name: restic
+      resources:
+        limits:
+          cpu: "1"
+          memory: 512Mi
+        requests:
+          cpu: 100m
+          memory: 128Mi
+      securityContext:
+        privileged: true
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /host_pods
+        mountPropagation: HostToContainer
+        name: host-pods
+      - mountPath: /scratch
+        name: scratch
+      - mountPath: /etc/ssl/certs
+        name: certs
+      - mountPath: /credentials
+        name: cloud-credentials
+      - mountPath: /credentials-gcp
+        name: cloud-credentials-gcp
+      - mountPath: /credentials-azure
+        name: cloud-credentials-azure
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-gcrq8
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: velero-dockercfg-757mh
+    nodeName: ocp4azu-sj2sl-worker-prod-brazilsouth1-mjsb5
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      runAsUser: 0
+    serviceAccount: velero
+    serviceAccountName: velero
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/disk-pressure
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/memory-pressure
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/pid-pressure
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/unschedulable
+      operator: Exists
+    volumes:
+    - hostPath:
+        path: /var/lib/kubelet/pods
+        type: ""
+      name: host-pods
+    - emptyDir: {}
+      name: scratch
+    - emptyDir: {}
+      name: certs
+    - name: cloud-credentials
+      secret:
+        defaultMode: 420
+        secretName: cloud-credentials
+    - name: cloud-credentials-gcp
+      secret:
+        defaultMode: 420
+        secretName: cloud-credentials-gcp
+    - name: cloud-credentials-azure
+      secret:
+        defaultMode: 420
+        secretName: cloud-credentials-azure
+    - name: kube-api-access-gcrq8
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-11T14:26:36Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-11T14:26:48Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-11T14:26:48Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-11T14:26:36Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://83263afb64a0dba95bade6682410bc81979c866074d2dca28bbfd6377991fd16
+      image: registry.redhat.io/oadp/oadp-velero-rhel8@sha256:9b681de9e02cb402e24fa10dce66b36d02702b82ece9dff511bb6c7d1e6c9c31
+      imageID: registry.redhat.io/oadp/oadp-velero-rhel8@sha256:9b681de9e02cb402e24fa10dce66b36d02702b82ece9dff511bb6c7d1e6c9c31
+      lastState: {}
+      name: restic
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2024-07-11T14:26:48Z"
+    hostIP: 10.80.80.13
+    phase: Running
+    podIP: 10.129.23.3
+    podIPs:
+    - ip: 10.129.23.3
+    qosClass: Burstable
+    startTime: "2024-07-11T14:26:36Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.130.20.110"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.130.20.110"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/scc: privileged
+    creationTimestamp: "2024-07-11T14:24:37Z"
+    generateName: restic-
+    labels:
+      app.kubernetes.io/part-of: openshift-migration
+      component: velero
+      controller-revision-hash: 6fd769bf58
+      name: restic
+      pod-template-generation: "8"
+    name: restic-p48sl
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DaemonSet
+      name: restic
+      uid: 3738eeca-16de-493c-af80-524c883dbee8
+    resourceVersion: "476624967"
+    uid: 4d2ecbe5-8d0e-46fb-8c3e-a7b7c07997bb
+  spec:
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchFields:
+            - key: metadata.name
+              operator: In
+              values:
+              - ocp4azu-sj2sl-worker-noprod-dev-brazilsouth1-vlxcp
+    containers:
+    - args:
+      - restic
+      - server
+      command:
+      - /velero
+      env:
+      - name: NODE_NAME
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: spec.nodeName
+      - name: VELERO_NAMESPACE
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: metadata.namespace
+      - name: VELERO_SCRATCH_DIR
+        value: /scratch
+      - name: AWS_SHARED_CREDENTIALS_FILE
+        value: /credentials/cloud
+      - name: GOOGLE_APPLICATION_CREDENTIALS
+        value: /credentials-gcp/cloud
+      - name: AZURE_CREDENTIALS_FILE
+        value: /credentials-azure/cloud
+      image: registry.redhat.io/oadp/oadp-velero-rhel8@sha256:9b681de9e02cb402e24fa10dce66b36d02702b82ece9dff511bb6c7d1e6c9c31
+      imagePullPolicy: Always
+      name: restic
+      resources:
+        limits:
+          cpu: "1"
+          memory: 512Mi
+        requests:
+          cpu: 100m
+          memory: 128Mi
+      securityContext:
+        privileged: true
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /host_pods
+        mountPropagation: HostToContainer
+        name: host-pods
+      - mountPath: /scratch
+        name: scratch
+      - mountPath: /etc/ssl/certs
+        name: certs
+      - mountPath: /credentials
+        name: cloud-credentials
+      - mountPath: /credentials-gcp
+        name: cloud-credentials-gcp
+      - mountPath: /credentials-azure
+        name: cloud-credentials-azure
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-lpc9n
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: velero-dockercfg-757mh
+    nodeName: ocp4azu-sj2sl-worker-noprod-dev-brazilsouth1-vlxcp
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      runAsUser: 0
+    serviceAccount: velero
+    serviceAccountName: velero
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/disk-pressure
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/memory-pressure
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/pid-pressure
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/unschedulable
+      operator: Exists
+    volumes:
+    - hostPath:
+        path: /var/lib/kubelet/pods
+        type: ""
+      name: host-pods
+    - emptyDir: {}
+      name: scratch
+    - emptyDir: {}
+      name: certs
+    - name: cloud-credentials
+      secret:
+        defaultMode: 420
+        secretName: cloud-credentials
+    - name: cloud-credentials-gcp
+      secret:
+        defaultMode: 420
+        secretName: cloud-credentials-gcp
+    - name: cloud-credentials-azure
+      secret:
+        defaultMode: 420
+        secretName: cloud-credentials-azure
+    - name: kube-api-access-lpc9n
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-11T14:24:37Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-11T14:24:54Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-11T14:24:54Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-11T14:24:37Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://deced4963c34bafe1062999cf1cd7eac6454582600676c9bcfaf30eb54c86bc7
+      image: registry.redhat.io/oadp/oadp-velero-rhel8@sha256:9b681de9e02cb402e24fa10dce66b36d02702b82ece9dff511bb6c7d1e6c9c31
+      imageID: registry.redhat.io/oadp/oadp-velero-rhel8@sha256:9b681de9e02cb402e24fa10dce66b36d02702b82ece9dff511bb6c7d1e6c9c31
+      lastState: {}
+      name: restic
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2024-07-11T14:24:53Z"
+    hostIP: 10.80.80.5
+    phase: Running
+    podIP: 10.130.20.110
+    podIPs:
+    - ip: 10.130.20.110
+    qosClass: Burstable
+    startTime: "2024-07-11T14:24:37Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.130.22.98"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.130.22.98"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/scc: privileged
+    creationTimestamp: "2024-07-11T14:26:19Z"
+    generateName: restic-
+    labels:
+      app.kubernetes.io/part-of: openshift-migration
+      component: velero
+      controller-revision-hash: 6fd769bf58
+      name: restic
+      pod-template-generation: "8"
+    name: restic-vcjws
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DaemonSet
+      name: restic
+      uid: 3738eeca-16de-493c-af80-524c883dbee8
+    resourceVersion: "449095616"
+    uid: a70aff9e-a8b7-4f14-8d38-032247ee1070
+  spec:
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchFields:
+            - key: metadata.name
+              operator: In
+              values:
+              - ocp4azu-sj2sl-worker-prod-brazilsouth2-gmw4z
+    containers:
+    - args:
+      - restic
+      - server
+      command:
+      - /velero
+      env:
+      - name: NODE_NAME
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: spec.nodeName
+      - name: VELERO_NAMESPACE
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: metadata.namespace
+      - name: VELERO_SCRATCH_DIR
+        value: /scratch
+      - name: AWS_SHARED_CREDENTIALS_FILE
+        value: /credentials/cloud
+      - name: GOOGLE_APPLICATION_CREDENTIALS
+        value: /credentials-gcp/cloud
+      - name: AZURE_CREDENTIALS_FILE
+        value: /credentials-azure/cloud
+      image: registry.redhat.io/oadp/oadp-velero-rhel8@sha256:9b681de9e02cb402e24fa10dce66b36d02702b82ece9dff511bb6c7d1e6c9c31
+      imagePullPolicy: Always
+      name: restic
+      resources:
+        limits:
+          cpu: "1"
+          memory: 512Mi
+        requests:
+          cpu: 100m
+          memory: 128Mi
+      securityContext:
+        privileged: true
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /host_pods
+        mountPropagation: HostToContainer
+        name: host-pods
+      - mountPath: /scratch
+        name: scratch
+      - mountPath: /etc/ssl/certs
+        name: certs
+      - mountPath: /credentials
+        name: cloud-credentials
+      - mountPath: /credentials-gcp
+        name: cloud-credentials-gcp
+      - mountPath: /credentials-azure
+        name: cloud-credentials-azure
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-9mxqz
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: velero-dockercfg-757mh
+    nodeName: ocp4azu-sj2sl-worker-prod-brazilsouth2-gmw4z
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      runAsUser: 0
+    serviceAccount: velero
+    serviceAccountName: velero
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/disk-pressure
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/memory-pressure
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/pid-pressure
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/unschedulable
+      operator: Exists
+    volumes:
+    - hostPath:
+        path: /var/lib/kubelet/pods
+        type: ""
+      name: host-pods
+    - emptyDir: {}
+      name: scratch
+    - emptyDir: {}
+      name: certs
+    - name: cloud-credentials
+      secret:
+        defaultMode: 420
+        secretName: cloud-credentials
+    - name: cloud-credentials-gcp
+      secret:
+        defaultMode: 420
+        secretName: cloud-credentials-gcp
+    - name: cloud-credentials-azure
+      secret:
+        defaultMode: 420
+        secretName: cloud-credentials-azure
+    - name: kube-api-access-9mxqz
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-11T14:26:19Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-11T14:26:29Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-11T14:26:29Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-11T14:26:19Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://724d6962ee3b8d423f676c34bdd7bdabf4586b9c8f955426c2f2cd5b883a900f
+      image: registry.redhat.io/oadp/oadp-velero-rhel8@sha256:9b681de9e02cb402e24fa10dce66b36d02702b82ece9dff511bb6c7d1e6c9c31
+      imageID: registry.redhat.io/oadp/oadp-velero-rhel8@sha256:9b681de9e02cb402e24fa10dce66b36d02702b82ece9dff511bb6c7d1e6c9c31
+      lastState: {}
+      name: restic
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2024-07-11T14:26:29Z"
+    hostIP: 10.80.80.17
+    phase: Running
+    podIP: 10.130.22.98
+    podIPs:
+    - ip: 10.130.22.98
+    qosClass: Burstable
+    startTime: "2024-07-11T14:26:19Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.131.22.240"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.131.22.240"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/scc: privileged
+    creationTimestamp: "2024-07-11T14:25:54Z"
+    generateName: restic-
+    labels:
+      app.kubernetes.io/part-of: openshift-migration
+      component: velero
+      controller-revision-hash: 6fd769bf58
+      name: restic
+      pod-template-generation: "8"
+    name: restic-w7h96
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DaemonSet
+      name: restic
+      uid: 3738eeca-16de-493c-af80-524c883dbee8
+    resourceVersion: "466147399"
+    uid: 0504a088-712c-492e-baa0-4de6826ba157
+  spec:
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchFields:
+            - key: metadata.name
+              operator: In
+              values:
+              - ocp4azu-sj2sl-worker-prod-brazilsouth3-vmmxw
+    containers:
+    - args:
+      - restic
+      - server
+      command:
+      - /velero
+      env:
+      - name: NODE_NAME
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: spec.nodeName
+      - name: VELERO_NAMESPACE
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: metadata.namespace
+      - name: VELERO_SCRATCH_DIR
+        value: /scratch
+      - name: AWS_SHARED_CREDENTIALS_FILE
+        value: /credentials/cloud
+      - name: GOOGLE_APPLICATION_CREDENTIALS
+        value: /credentials-gcp/cloud
+      - name: AZURE_CREDENTIALS_FILE
+        value: /credentials-azure/cloud
+      image: registry.redhat.io/oadp/oadp-velero-rhel8@sha256:9b681de9e02cb402e24fa10dce66b36d02702b82ece9dff511bb6c7d1e6c9c31
+      imagePullPolicy: Always
+      name: restic
+      resources:
+        limits:
+          cpu: "1"
+          memory: 512Mi
+        requests:
+          cpu: 100m
+          memory: 128Mi
+      securityContext:
+        privileged: true
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /host_pods
+        mountPropagation: HostToContainer
+        name: host-pods
+      - mountPath: /scratch
+        name: scratch
+      - mountPath: /etc/ssl/certs
+        name: certs
+      - mountPath: /credentials
+        name: cloud-credentials
+      - mountPath: /credentials-gcp
+        name: cloud-credentials-gcp
+      - mountPath: /credentials-azure
+        name: cloud-credentials-azure
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-6jpzm
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: velero-dockercfg-757mh
+    nodeName: ocp4azu-sj2sl-worker-prod-brazilsouth3-vmmxw
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      runAsUser: 0
+    serviceAccount: velero
+    serviceAccountName: velero
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/disk-pressure
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/memory-pressure
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/pid-pressure
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/unschedulable
+      operator: Exists
+    volumes:
+    - hostPath:
+        path: /var/lib/kubelet/pods
+        type: ""
+      name: host-pods
+    - emptyDir: {}
+      name: scratch
+    - emptyDir: {}
+      name: certs
+    - name: cloud-credentials
+      secret:
+        defaultMode: 420
+        secretName: cloud-credentials
+    - name: cloud-credentials-gcp
+      secret:
+        defaultMode: 420
+        secretName: cloud-credentials-gcp
+    - name: cloud-credentials-azure
+      secret:
+        defaultMode: 420
+        secretName: cloud-credentials-azure
+    - name: kube-api-access-6jpzm
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-11T14:25:54Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-11T14:26:18Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-11T14:26:18Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-11T14:25:54Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://eb85f926f486a5c0b44bf498cbe6255da9df951ec0f416c6e7e35c7e9bf31465
+      image: registry.redhat.io/oadp/oadp-velero-rhel8@sha256:9b681de9e02cb402e24fa10dce66b36d02702b82ece9dff511bb6c7d1e6c9c31
+      imageID: registry.redhat.io/oadp/oadp-velero-rhel8@sha256:9b681de9e02cb402e24fa10dce66b36d02702b82ece9dff511bb6c7d1e6c9c31
+      lastState: {}
+      name: restic
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2024-07-11T14:26:18Z"
+    hostIP: 10.80.80.18
+    phase: Running
+    podIP: 10.131.22.240
+    podIPs:
+    - ip: 10.131.22.240
+    qosClass: Burstable
+    startTime: "2024-07-11T14:25:54Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.128.22.159"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.128.22.159"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/scc: restricted
+      prometheus.io/path: /metrics
+      prometheus.io/port: "8085"
+      prometheus.io/scrape: "true"
+    creationTimestamp: "2024-07-11T14:23:44Z"
+    generateName: velero-5bcb94bb68-
+    labels:
+      app.kubernetes.io/component: server
+      app.kubernetes.io/instance: velero
+      app.kubernetes.io/managed-by: oadp-operator
+      app.kubernetes.io/name: velero
+      app.kubernetes.io/part-of: openshift-migration
+      component: velero
+      deploy: velero
+      openshift.io/oadp: "True"
+      pod-template-hash: 5bcb94bb68
+    name: velero-5bcb94bb68-lw7ld
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: velero-5bcb94bb68
+      uid: 7c3ac7bb-7d94-4210-b90c-0dc12f0aef01
+    resourceVersion: "476624569"
+    uid: 472ba212-e451-4bb6-b046-011424b648a7
+  spec:
+    containers:
+    - args:
+      - server
+      - --restic-timeout=1h
+      command:
+      - /velero
+      env:
+      - name: VELERO_SCRATCH_DIR
+        value: /scratch
+      - name: VELERO_NAMESPACE
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: metadata.namespace
+      - name: LD_LIBRARY_PATH
+        value: /plugins
+      - name: AWS_SHARED_CREDENTIALS_FILE
+        value: /credentials/cloud
+      - name: GOOGLE_APPLICATION_CREDENTIALS
+        value: /credentials-gcp/cloud
+      - name: AZURE_CREDENTIALS_FILE
+        value: /credentials-azure/cloud
+      image: registry.redhat.io/oadp/oadp-velero-rhel8@sha256:9b681de9e02cb402e24fa10dce66b36d02702b82ece9dff511bb6c7d1e6c9c31
+      imagePullPolicy: Always
+      name: velero
+      ports:
+      - containerPort: 8085
+        name: metrics
+        protocol: TCP
+      resources:
+        limits:
+          cpu: "1"
+          memory: 512Mi
+        requests:
+          cpu: 100m
+          memory: 128Mi
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000650000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /plugins
+        name: plugins
+      - mountPath: /scratch
+        name: scratch
+      - mountPath: /etc/ssl/certs
+        name: certs
+      - mountPath: /credentials
+        name: cloud-credentials
+      - mountPath: /credentials-gcp
+        name: cloud-credentials-gcp
+      - mountPath: /credentials-azure
+        name: cloud-credentials-azure
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-7zvh6
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: velero-dockercfg-757mh
+    initContainers:
+    - image: registry.redhat.io/oadp/oadp-velero-plugin-rhel8@sha256:eac641a34d00fb5592e38d559b85cce99bbce436ae3ac2f3767d164d374a2278
+      imagePullPolicy: Always
+      name: openshift-velero-plugin
+      resources: {}
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000650000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /target
+        name: plugins
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-7zvh6
+        readOnly: true
+    - image: registry.redhat.io/oadp/oadp-velero-plugin-for-aws-rhel8@sha256:a12100d0faf4dd4bdeb5212186d8a94c88a2b73d3632bdd4b6f504895fafb704
+      imagePullPolicy: Always
+      name: velero-plugin-for-aws
+      resources: {}
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000650000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /target
+        name: plugins
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-7zvh6
+        readOnly: true
+    - image: registry.redhat.io/oadp/oadp-velero-plugin-for-gcp-rhel8@sha256:97e901972699a73e32e6ac456038179d6a614ea0fe29e052d0f872d66ac38365
+      imagePullPolicy: Always
+      name: velero-plugin-for-gcp
+      resources: {}
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000650000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /target
+        name: plugins
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-7zvh6
+        readOnly: true
+    - image: registry.redhat.io/oadp/oadp-velero-plugin-for-microsoft-azure-rhel8@sha256:60b7d0f7ab58efcc1dc2ed13f3cb77b7396308a63580b3bf9235172b263a0ba2
+      imagePullPolicy: Always
+      name: velero-plugin-for-microsoft-azure
+      resources: {}
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000650000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /target
+        name: plugins
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-7zvh6
+        readOnly: true
+    nodeName: ocp4azu-sj2sl-worker-noprod-dev-brazilsouth2-4dm6s
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000650000
+      seLinuxOptions:
+        level: s0:c26,c0
+    serviceAccount: velero
+    serviceAccountName: velero
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoSchedule
+      key: node.kubernetes.io/memory-pressure
+      operator: Exists
+    volumes:
+    - emptyDir: {}
+      name: plugins
+    - emptyDir: {}
+      name: scratch
+    - emptyDir: {}
+      name: certs
+    - name: cloud-credentials
+      secret:
+        defaultMode: 420
+        secretName: cloud-credentials
+    - name: cloud-credentials-gcp
+      secret:
+        defaultMode: 420
+        secretName: cloud-credentials-gcp
+    - name: cloud-credentials-azure
+      secret:
+        defaultMode: 420
+        secretName: cloud-credentials-azure
+    - name: kube-api-access-7zvh6
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-11T14:24:52Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-11T14:24:59Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-11T14:24:59Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-11T14:23:44Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://2974dac480db344d7dd217c1a06818e31149aaff42f5248ad65473940d8b5e9b
+      image: registry.redhat.io/oadp/oadp-velero-rhel8@sha256:9b681de9e02cb402e24fa10dce66b36d02702b82ece9dff511bb6c7d1e6c9c31
+      imageID: registry.redhat.io/oadp/oadp-velero-rhel8@sha256:9b681de9e02cb402e24fa10dce66b36d02702b82ece9dff511bb6c7d1e6c9c31
+      lastState: {}
+      name: velero
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2024-07-11T14:24:58Z"
+    hostIP: 10.80.80.9
+    initContainerStatuses:
+    - containerID: cri-o://45467a820c1ae807e3c83a955255c4e6dea4d09baf4d35c432c71c825aab6495
+      image: registry.redhat.io/oadp/oadp-velero-plugin-rhel8@sha256:eac641a34d00fb5592e38d559b85cce99bbce436ae3ac2f3767d164d374a2278
+      imageID: registry.redhat.io/oadp/oadp-velero-plugin-rhel8@sha256:00662cd419457ade1f806056a7280a72699e567d7f9f529e683d403ac66411d2
+      lastState: {}
+      name: openshift-velero-plugin
+      ready: true
+      restartCount: 0
+      state:
+        terminated:
+          containerID: cri-o://45467a820c1ae807e3c83a955255c4e6dea4d09baf4d35c432c71c825aab6495
+          exitCode: 0
+          finishedAt: "2024-07-11T14:24:02Z"
+          reason: Completed
+          startedAt: "2024-07-11T14:24:01Z"
+    - containerID: cri-o://28803b871eaec6d4fc51e3a1cd8a7fcc5525a56f4e7e89919cdfb9d72a60bef8
+      image: registry.redhat.io/oadp/oadp-velero-plugin-for-aws-rhel8@sha256:a12100d0faf4dd4bdeb5212186d8a94c88a2b73d3632bdd4b6f504895fafb704
+      imageID: registry.redhat.io/oadp/oadp-velero-plugin-for-aws-rhel8@sha256:71d0165421ed07cd1277e071aa242afb5be0cb4c4c6413ec8fd5d4c623adfa5c
+      lastState: {}
+      name: velero-plugin-for-aws
+      ready: true
+      restartCount: 0
+      state:
+        terminated:
+          containerID: cri-o://28803b871eaec6d4fc51e3a1cd8a7fcc5525a56f4e7e89919cdfb9d72a60bef8
+          exitCode: 0
+          finishedAt: "2024-07-11T14:24:21Z"
+          reason: Completed
+          startedAt: "2024-07-11T14:24:21Z"
+    - containerID: cri-o://087d7a91804d5997f46d4c4efd5fb2b6693cfb8e6fefc7a8af89768a49161773
+      image: registry.redhat.io/oadp/oadp-velero-plugin-for-gcp-rhel8@sha256:97e901972699a73e32e6ac456038179d6a614ea0fe29e052d0f872d66ac38365
+      imageID: registry.redhat.io/oadp/oadp-velero-plugin-for-gcp-rhel8@sha256:5d179c750e0c6560b04d9b9ab335150a21689a840bbf7ee4c4364094814d7b1f
+      lastState: {}
+      name: velero-plugin-for-gcp
+      ready: true
+      restartCount: 0
+      state:
+        terminated:
+          containerID: cri-o://087d7a91804d5997f46d4c4efd5fb2b6693cfb8e6fefc7a8af89768a49161773
+          exitCode: 0
+          finishedAt: "2024-07-11T14:24:36Z"
+          reason: Completed
+          startedAt: "2024-07-11T14:24:36Z"
+    - containerID: cri-o://f693ae141aaddfeba1d74834ff551673733e8e7c5dda14a84d9947d67c404e1d
+      image: registry.redhat.io/oadp/oadp-velero-plugin-for-microsoft-azure-rhel8@sha256:60b7d0f7ab58efcc1dc2ed13f3cb77b7396308a63580b3bf9235172b263a0ba2
+      imageID: registry.redhat.io/oadp/oadp-velero-plugin-for-microsoft-azure-rhel8@sha256:60b7d0f7ab58efcc1dc2ed13f3cb77b7396308a63580b3bf9235172b263a0ba2
+      lastState: {}
+      name: velero-plugin-for-microsoft-azure
+      ready: true
+      restartCount: 0
+      state:
+        terminated:
+          containerID: cri-o://f693ae141aaddfeba1d74834ff551673733e8e7c5dda14a84d9947d67c404e1d
+          exitCode: 0
+          finishedAt: "2024-07-11T14:24:51Z"
+          reason: Completed
+          startedAt: "2024-07-11T14:24:51Z"
+    phase: Running
+    podIP: 10.128.22.159
+    podIPs:
+    - ip: 10.128.22.159
+    qosClass: Burstable
+    startTime: "2024-07-11T14:23:44Z"
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

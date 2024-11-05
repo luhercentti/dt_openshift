@@ -1,0 +1,84 @@
+apiVersion: v1
+items:
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/description: Allows deploymentconfigs in this namespace to rollout
+        pods in this namespace.  It is auto-managed by a controller; remove subjects
+        to disable.
+    creationTimestamp: "2023-05-04T21:45:28Z"
+    name: system:deployers
+    namespace: openshift-infra
+    resourceVersion: "15730"
+    uid: 43b1cb93-4e66-43c3-b0f0-8666cd84d915
+  roleRef:
+    name: system:deployer
+  subjects:
+  - kind: ServiceAccount
+    name: deployer
+    namespace: openshift-infra
+  userNames:
+  - system:serviceaccount:openshift-infra:deployer
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/description: Allows builds in this namespace to push images to
+        this namespace.  It is auto-managed by a controller; remove subjects to disable.
+    creationTimestamp: "2023-05-04T21:45:28Z"
+    name: system:image-builders
+    namespace: openshift-infra
+    resourceVersion: "15723"
+    uid: 7f4c0966-a744-4298-9880-1295870286e3
+  roleRef:
+    name: system:image-builder
+  subjects:
+  - kind: ServiceAccount
+    name: builder
+    namespace: openshift-infra
+  userNames:
+  - system:serviceaccount:openshift-infra:builder
+- apiVersion: authorization.openshift.io/v1
+  groupNames:
+  - system:serviceaccounts:openshift-infra
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/description: Allows all pods in this namespace to pull images from
+        this namespace.  It is auto-managed by a controller; remove subjects to disable.
+    creationTimestamp: "2023-05-04T21:45:28Z"
+    name: system:image-pullers
+    namespace: openshift-infra
+    resourceVersion: "15717"
+    uid: b2363c30-168e-4144-872c-57d7ccc9dfb4
+  roleRef:
+    name: system:image-puller
+  subjects:
+  - kind: SystemGroup
+    name: system:serviceaccounts:openshift-infra
+  userNames: null
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    creationTimestamp: "2023-05-04T21:40:29Z"
+    name: system:openshift:sa-creating-openshift-controller-manager
+    namespace: openshift-infra
+    resourceVersion: "4710"
+    uid: d6b9163b-9a89-4804-b265-99549ccace22
+  roleRef:
+    name: system:openshift:sa-creating-openshift-controller-manager
+    namespace: openshift-infra
+  subjects:
+  - kind: ServiceAccount
+    name: openshift-controller-manager-sa
+    namespace: openshift-controller-manager
+  userNames:
+  - system:serviceaccount:openshift-controller-manager:openshift-controller-manager-sa
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

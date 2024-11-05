@@ -1,0 +1,234 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Service
+  metadata:
+    creationTimestamp: "2023-05-15T18:37:50Z"
+    labels:
+      name: cluster-logging-operator
+      operators.coreos.com/cluster-logging.openshift-logging: ""
+    name: cluster-logging-operator-metrics
+    namespace: openshift-logging
+    ownerReferences:
+    - apiVersion: operators.coreos.com/v1alpha1
+      blockOwnerDeletion: false
+      controller: false
+      kind: ClusterServiceVersion
+      name: cluster-logging.v5.6.5
+      uid: 728f7a6d-ca6d-4102-9f2d-dc70c4a6883d
+    resourceVersion: "4139902"
+    uid: d25ff539-ef93-432e-8d11-7d99794801fa
+  spec:
+    clusterIP: 172.30.254.201
+    clusterIPs:
+    - 172.30.254.201
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: http-metrics
+      port: 8686
+      protocol: TCP
+      targetPort: 8686
+    selector:
+      name: cluster-logging-operator
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      service.alpha.openshift.io/serving-cert-secret-name: collector-metrics
+      service.alpha.openshift.io/serving-cert-signed-by: openshift-service-serving-signer@1683236429
+      service.beta.openshift.io/serving-cert-signed-by: openshift-service-serving-signer@1683236429
+    creationTimestamp: "2023-05-15T20:19:21Z"
+    labels:
+      logging-infra: support
+    name: collector
+    namespace: openshift-logging
+    ownerReferences:
+    - apiVersion: logging.openshift.io/v1
+      controller: true
+      kind: ClusterLogging
+      name: instance
+      uid: bb2ae1b1-01e5-4ac0-b0dd-cfd009c2ceac
+    resourceVersion: "4183981"
+    uid: da6e2424-512e-44cf-9b2e-96224614c4ad
+  spec:
+    clusterIP: 172.30.95.119
+    clusterIPs:
+    - 172.30.95.119
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: metrics
+      port: 24231
+      protocol: TCP
+      targetPort: metrics
+    - name: logfile-metrics
+      port: 2112
+      protocol: TCP
+      targetPort: logfile-metrics
+    selector:
+      component: collector
+      provider: openshift
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    creationTimestamp: "2023-05-15T20:18:53Z"
+    labels:
+      cluster-name: elasticsearch
+    name: elasticsearch
+    namespace: openshift-logging
+    ownerReferences:
+    - apiVersion: logging.openshift.io/v1
+      controller: true
+      kind: Elasticsearch
+      name: elasticsearch
+      uid: 2ae98126-4c52-4543-90f0-f736c6651f74
+    resourceVersion: "4183576"
+    uid: d3274766-3829-41d1-ac13-7fb804578c71
+  spec:
+    clusterIP: 172.30.47.59
+    clusterIPs:
+    - 172.30.47.59
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: elasticsearch
+      port: 9200
+      protocol: TCP
+      targetPort: restapi
+    selector:
+      cluster-name: elasticsearch
+      es-node-client: "true"
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    creationTimestamp: "2023-05-15T20:18:53Z"
+    labels:
+      cluster-name: elasticsearch
+    name: elasticsearch-cluster
+    namespace: openshift-logging
+    ownerReferences:
+    - apiVersion: logging.openshift.io/v1
+      controller: true
+      kind: Elasticsearch
+      name: elasticsearch
+      uid: 2ae98126-4c52-4543-90f0-f736c6651f74
+    resourceVersion: "4183573"
+    uid: e1ba1526-3ed1-4c0b-8940-a22ebc24ca68
+  spec:
+    clusterIP: 172.30.39.101
+    clusterIPs:
+    - 172.30.39.101
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: elasticsearch
+      port: 9300
+      protocol: TCP
+      targetPort: cluster
+    publishNotReadyAddresses: true
+    selector:
+      cluster-name: elasticsearch
+      es-node-master: "true"
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      service.beta.openshift.io/serving-cert-secret-name: elasticsearch-metrics
+    creationTimestamp: "2023-05-15T20:18:53Z"
+    labels:
+      cluster-name: elasticsearch
+      scrape-metrics: enabled
+    name: elasticsearch-metrics
+    namespace: openshift-logging
+    ownerReferences:
+    - apiVersion: logging.openshift.io/v1
+      controller: true
+      kind: Elasticsearch
+      name: elasticsearch
+      uid: 2ae98126-4c52-4543-90f0-f736c6651f74
+    resourceVersion: "369059884"
+    uid: 0a259b26-d4ec-4c24-9ec6-bc9887145d01
+  spec:
+    clusterIP: 172.30.251.117
+    clusterIPs:
+    - 172.30.251.117
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: elasticsearch
+      port: 60001
+      protocol: TCP
+      targetPort: metrics
+    selector:
+      cluster-name: elasticsearch
+      es-node-client: "true"
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    creationTimestamp: "2023-05-15T20:18:59Z"
+    labels:
+      logging-infra: support
+    name: kibana
+    namespace: openshift-logging
+    ownerReferences:
+    - apiVersion: logging.openshift.io/v1
+      controller: true
+      kind: Kibana
+      name: kibana
+      uid: 1833afe9-ac10-4bd4-aded-48bfc4297f24
+    resourceVersion: "4183714"
+    uid: 9fe6e8ae-e83e-4122-964d-f86c220fd72c
+  spec:
+    clusterIP: 172.30.29.154
+    clusterIPs:
+    - 172.30.29.154
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - port: 443
+      protocol: TCP
+      targetPort: oaproxy
+    selector:
+      component: kibana
+      provider: openshift
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

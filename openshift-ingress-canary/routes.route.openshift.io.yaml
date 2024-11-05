@@ -1,0 +1,47 @@
+apiVersion: v1
+items:
+- apiVersion: route.openshift.io/v1
+  kind: Route
+  metadata:
+    annotations:
+      haproxy.router.openshift.io/balance: roundrobin
+      openshift.io/host.generated: "true"
+    creationTimestamp: "2023-05-04T21:46:36Z"
+    labels:
+      ingress.openshift.io/canary: canary_controller
+    name: canary
+    namespace: openshift-ingress-canary
+    ownerReferences:
+    - apiVersion: apps/v1
+      controller: true
+      kind: daemonset
+      name: ingress-canary
+      uid: abe802b6-57ae-4a31-8d3f-142349d19ede
+    resourceVersion: "21394"
+    uid: 103f2126-19e9-44d6-8515-74f81e44a5ec
+  spec:
+    host: canary-openshift-ingress-canary.apps.ocp4azu.dirtrab.cl
+    port:
+      targetPort: 8080
+    tls:
+      insecureEdgeTerminationPolicy: Redirect
+      termination: edge
+    to:
+      kind: Service
+      name: ingress-canary
+      weight: 100
+    wildcardPolicy: None
+  status:
+    ingress:
+    - conditions:
+      - lastTransitionTime: "2023-05-04T21:49:23Z"
+        status: "True"
+        type: Admitted
+      host: canary-openshift-ingress-canary.apps.ocp4azu.dirtrab.cl
+      routerCanonicalHostname: router-default.apps.ocp4azu.dirtrab.cl
+      routerName: default
+      wildcardPolicy: None
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

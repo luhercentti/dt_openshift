@@ -1,0 +1,2849 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.129.16.148"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.129.16.148"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/scc: restricted
+    creationTimestamp: "2024-01-17T21:47:32Z"
+    generateName: network-check-source-7786b5887f-
+    labels:
+      app: network-check-source
+      kubernetes.io/os: linux
+      pod-template-hash: 7786b5887f
+    name: network-check-source-7786b5887f-jvsck
+    namespace: openshift-network-diagnostics
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: network-check-source-7786b5887f
+      uid: 5dd5b966-d4f5-444f-9deb-7fd446cf414a
+    resourceVersion: "472918061"
+    uid: 2e917084-fa19-4db2-9915-ea5b5fa9db3a
+  spec:
+    containers:
+    - args:
+      - --listen
+      - 0.0.0.0:17698
+      - --namespace
+      - $(POD_NAMESPACE)
+      command:
+      - cluster-network-check-endpoints
+      env:
+      - name: POD_NAME
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: metadata.name
+      - name: POD_NAMESPACE
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: metadata.namespace
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:8bc10069f7e6e0ae3fafbef1beba94516ed91a8692de6fee7f17379687adb5cb
+      imagePullPolicy: IfNotPresent
+      name: check-endpoints
+      ports:
+      - containerPort: 17698
+        name: check-endpoints
+        protocol: TCP
+      resources:
+        requests:
+          cpu: 10m
+          memory: 40Mi
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000500000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: FallbackToLogsOnError
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-vrff9
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: network-diagnostics-dockercfg-t5qld
+    nodeName: ocp4azu-sj2sl-worker-noprod-qa-brazilsouth1-2s77x
+    nodeSelector:
+      beta.kubernetes.io/os: linux
+    preemptionPolicy: PreemptLowerPriority
+    priority: 1000000000
+    priorityClassName: openshift-user-critical
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000500000
+      seLinuxOptions:
+        level: s0:c22,c19
+    serviceAccount: network-diagnostics
+    serviceAccountName: network-diagnostics
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoSchedule
+      key: node.kubernetes.io/memory-pressure
+      operator: Exists
+    volumes:
+    - name: kube-api-access-vrff9
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2024-01-17T21:47:33Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2024-01-17T21:47:35Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2024-01-17T21:47:35Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2024-01-17T21:47:32Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://116a198e7477c6f2f7c86d63541e990db99b1d1c21669097e36742e740134c08
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:8bc10069f7e6e0ae3fafbef1beba94516ed91a8692de6fee7f17379687adb5cb
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:8bc10069f7e6e0ae3fafbef1beba94516ed91a8692de6fee7f17379687adb5cb
+      lastState: {}
+      name: check-endpoints
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2024-01-17T21:47:35Z"
+    hostIP: 10.80.80.28
+    phase: Running
+    podIP: 10.129.16.148
+    podIPs:
+    - ip: 10.129.16.148
+    qosClass: Burstable
+    startTime: "2024-01-17T21:47:33Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.131.22.11"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.131.22.11"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/scc: restricted
+    creationTimestamp: "2023-06-05T02:11:56Z"
+    generateName: network-check-target-
+    labels:
+      app: network-check-target
+      controller-revision-hash: 6f76cbd87f
+      kubernetes.io/os: linux
+      pod-template-generation: "1"
+    name: network-check-target-4b9dq
+    namespace: openshift-network-diagnostics
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DaemonSet
+      name: network-check-target
+      uid: cc71422b-4b56-45e6-bdac-bb625d4b30d5
+    resourceVersion: "466147435"
+    uid: f3c96982-935e-4df7-9e0b-9987d1a5ae6c
+  spec:
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchFields:
+            - key: metadata.name
+              operator: In
+              values:
+              - ocp4azu-sj2sl-worker-prod-brazilsouth3-vmmxw
+    containers:
+    - command:
+      - cluster-network-check-target
+      env:
+      - name: K8S_NODE_NAME
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: spec.nodeName
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:8bc10069f7e6e0ae3fafbef1beba94516ed91a8692de6fee7f17379687adb5cb
+      imagePullPolicy: IfNotPresent
+      name: network-check-target-container
+      ports:
+      - containerPort: 8080
+        protocol: TCP
+      readinessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /
+          port: 8080
+          scheme: HTTP
+        initialDelaySeconds: 30
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 10
+      resources:
+        requests:
+          cpu: 10m
+          memory: 15Mi
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000500000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-tlwl6
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: default-dockercfg-swdh4
+    nodeName: ocp4azu-sj2sl-worker-prod-brazilsouth3-vmmxw
+    nodeSelector:
+      beta.kubernetes.io/os: linux
+    preemptionPolicy: PreemptLowerPriority
+    priority: 1000000000
+    priorityClassName: openshift-user-critical
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000500000
+      seLinuxOptions:
+        level: s0:c22,c19
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 10
+    tolerations:
+    - operator: Exists
+    volumes:
+    - name: kube-api-access-tlwl6
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-06-05T02:11:57Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2024-01-17T22:41:39Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2024-01-17T22:41:39Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-06-05T02:11:56Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://8579b5f2ed0b8aa9df25b2d2841f06dd217fc068826abe6d9a19f30761f186a9
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:8bc10069f7e6e0ae3fafbef1beba94516ed91a8692de6fee7f17379687adb5cb
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:8bc10069f7e6e0ae3fafbef1beba94516ed91a8692de6fee7f17379687adb5cb
+      lastState: {}
+      name: network-check-target-container
+      ready: true
+      restartCount: 1
+      started: true
+      state:
+        running:
+          startedAt: "2024-01-17T22:41:06Z"
+    hostIP: 10.80.80.18
+    phase: Running
+    podIP: 10.131.22.11
+    podIPs:
+    - ip: 10.131.22.11
+    qosClass: Burstable
+    startTime: "2023-06-05T02:11:57Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.129.16.16"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.129.16.16"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/scc: restricted
+    creationTimestamp: "2023-05-25T13:26:47Z"
+    generateName: network-check-target-
+    labels:
+      app: network-check-target
+      controller-revision-hash: 6f76cbd87f
+      kubernetes.io/os: linux
+      pod-template-generation: "1"
+    name: network-check-target-4jhzd
+    namespace: openshift-network-diagnostics
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DaemonSet
+      name: network-check-target
+      uid: cc71422b-4b56-45e6-bdac-bb625d4b30d5
+    resourceVersion: "472918021"
+    uid: 8b38bb8d-6fea-4ed0-b2b9-23cdab4fd903
+  spec:
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchFields:
+            - key: metadata.name
+              operator: In
+              values:
+              - ocp4azu-sj2sl-worker-noprod-qa-brazilsouth1-2s77x
+    containers:
+    - command:
+      - cluster-network-check-target
+      env:
+      - name: K8S_NODE_NAME
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: spec.nodeName
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:8bc10069f7e6e0ae3fafbef1beba94516ed91a8692de6fee7f17379687adb5cb
+      imagePullPolicy: IfNotPresent
+      name: network-check-target-container
+      ports:
+      - containerPort: 8080
+        protocol: TCP
+      readinessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /
+          port: 8080
+          scheme: HTTP
+        initialDelaySeconds: 30
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 10
+      resources:
+        requests:
+          cpu: 10m
+          memory: 15Mi
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000500000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-zj72k
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: default-dockercfg-swdh4
+    nodeName: ocp4azu-sj2sl-worker-noprod-qa-brazilsouth1-2s77x
+    nodeSelector:
+      beta.kubernetes.io/os: linux
+    preemptionPolicy: PreemptLowerPriority
+    priority: 1000000000
+    priorityClassName: openshift-user-critical
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000500000
+      seLinuxOptions:
+        level: s0:c22,c19
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 10
+    tolerations:
+    - operator: Exists
+    volumes:
+    - name: kube-api-access-zj72k
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-25T13:26:47Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-25T13:28:30Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-25T13:28:30Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-25T13:26:47Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://69406ed741384737ae31362229731d4d546a8ebe6697ec3f1f2187e730bb2e39
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:8bc10069f7e6e0ae3fafbef1beba94516ed91a8692de6fee7f17379687adb5cb
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:8bc10069f7e6e0ae3fafbef1beba94516ed91a8692de6fee7f17379687adb5cb
+      lastState: {}
+      name: network-check-target-container
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2023-05-25T13:28:00Z"
+    hostIP: 10.80.80.28
+    phase: Running
+    podIP: 10.129.16.16
+    podIPs:
+    - ip: 10.129.16.16
+    qosClass: Burstable
+    startTime: "2023-05-25T13:26:47Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.128.20.6"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.128.20.6"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/scc: restricted
+    creationTimestamp: "2023-05-25T13:39:12Z"
+    generateName: network-check-target-
+    labels:
+      app: network-check-target
+      controller-revision-hash: 6f76cbd87f
+      kubernetes.io/os: linux
+      pod-template-generation: "1"
+    name: network-check-target-5jbvn
+    namespace: openshift-network-diagnostics
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DaemonSet
+      name: network-check-target
+      uid: cc71422b-4b56-45e6-bdac-bb625d4b30d5
+    resourceVersion: "472847049"
+    uid: d75c5503-05e4-467d-bab0-ee9f1f168f2d
+  spec:
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchFields:
+            - key: metadata.name
+              operator: In
+              values:
+              - ocp4azu-sj2sl-worker-prod-brazilsouth2-xbz5z
+    containers:
+    - command:
+      - cluster-network-check-target
+      env:
+      - name: K8S_NODE_NAME
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: spec.nodeName
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:8bc10069f7e6e0ae3fafbef1beba94516ed91a8692de6fee7f17379687adb5cb
+      imagePullPolicy: IfNotPresent
+      name: network-check-target-container
+      ports:
+      - containerPort: 8080
+        protocol: TCP
+      readinessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /
+          port: 8080
+          scheme: HTTP
+        initialDelaySeconds: 30
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 10
+      resources:
+        requests:
+          cpu: 10m
+          memory: 15Mi
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000500000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-b8lpc
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: default-dockercfg-swdh4
+    nodeName: ocp4azu-sj2sl-worker-prod-brazilsouth2-xbz5z
+    nodeSelector:
+      beta.kubernetes.io/os: linux
+    preemptionPolicy: PreemptLowerPriority
+    priority: 1000000000
+    priorityClassName: openshift-user-critical
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000500000
+      seLinuxOptions:
+        level: s0:c22,c19
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 10
+    tolerations:
+    - operator: Exists
+    volumes:
+    - name: kube-api-access-b8lpc
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-25T13:39:12Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-25T13:40:45Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-25T13:40:45Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-25T13:39:12Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://fadb0b6ebdaaa6847661fae104a3322edabbc21af1e5ac64b30bd315d45d1829
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:8bc10069f7e6e0ae3fafbef1beba94516ed91a8692de6fee7f17379687adb5cb
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:8bc10069f7e6e0ae3fafbef1beba94516ed91a8692de6fee7f17379687adb5cb
+      lastState: {}
+      name: network-check-target-container
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2023-05-25T13:40:11Z"
+    hostIP: 10.80.80.23
+    phase: Running
+    podIP: 10.128.20.6
+    podIPs:
+    - ip: 10.128.20.6
+    qosClass: Burstable
+    startTime: "2023-05-25T13:39:12Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.129.8.4"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.129.8.4"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/scc: restricted
+    creationTimestamp: "2023-05-17T18:14:31Z"
+    generateName: network-check-target-
+    labels:
+      app: network-check-target
+      controller-revision-hash: 6f76cbd87f
+      kubernetes.io/os: linux
+      pod-template-generation: "1"
+    name: network-check-target-7n54j
+    namespace: openshift-network-diagnostics
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DaemonSet
+      name: network-check-target
+      uid: cc71422b-4b56-45e6-bdac-bb625d4b30d5
+    resourceVersion: "460420451"
+    uid: f8cb1430-146d-4bcd-bce5-1f46d41d8cd9
+  spec:
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchFields:
+            - key: metadata.name
+              operator: In
+              values:
+              - ocp4azu-sj2sl-infra-brazilsouth1-5zvnf
+    containers:
+    - command:
+      - cluster-network-check-target
+      env:
+      - name: K8S_NODE_NAME
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: spec.nodeName
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:8bc10069f7e6e0ae3fafbef1beba94516ed91a8692de6fee7f17379687adb5cb
+      imagePullPolicy: IfNotPresent
+      name: network-check-target-container
+      ports:
+      - containerPort: 8080
+        protocol: TCP
+      readinessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /
+          port: 8080
+          scheme: HTTP
+        initialDelaySeconds: 30
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 10
+      resources:
+        requests:
+          cpu: 10m
+          memory: 15Mi
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000500000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-bzvd8
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: default-dockercfg-swdh4
+    nodeName: ocp4azu-sj2sl-infra-brazilsouth1-5zvnf
+    nodeSelector:
+      beta.kubernetes.io/os: linux
+    preemptionPolicy: PreemptLowerPriority
+    priority: 1000000000
+    priorityClassName: openshift-user-critical
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000500000
+      seLinuxOptions:
+        level: s0:c22,c19
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 10
+    tolerations:
+    - operator: Exists
+    volumes:
+    - name: kube-api-access-bzvd8
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-17T18:14:31Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-17T18:16:03Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-17T18:16:03Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-17T18:14:31Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://765a8498c3739f58a3170d09cbac3c315328219b59e6a227019c58d0c0cbf55a
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:8bc10069f7e6e0ae3fafbef1beba94516ed91a8692de6fee7f17379687adb5cb
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:8bc10069f7e6e0ae3fafbef1beba94516ed91a8692de6fee7f17379687adb5cb
+      lastState: {}
+      name: network-check-target-container
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2023-05-17T18:15:25Z"
+    hostIP: 10.80.80.11
+    phase: Running
+    podIP: 10.129.8.4
+    podIPs:
+    - ip: 10.129.8.4
+    qosClass: Burstable
+    startTime: "2023-05-17T18:14:31Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.129.0.26"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.129.0.26"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/scc: restricted
+    creationTimestamp: "2023-05-04T21:39:44Z"
+    generateName: network-check-target-
+    labels:
+      app: network-check-target
+      controller-revision-hash: 6f76cbd87f
+      kubernetes.io/os: linux
+      pod-template-generation: "1"
+    name: network-check-target-9mmwz
+    namespace: openshift-network-diagnostics
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DaemonSet
+      name: network-check-target
+      uid: cc71422b-4b56-45e6-bdac-bb625d4b30d5
+    resourceVersion: "1608426"
+    uid: 24eef55e-8771-476f-8d30-34aa2018bbf3
+  spec:
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchFields:
+            - key: metadata.name
+              operator: In
+              values:
+              - ocp4azu-sj2sl-master-0
+    containers:
+    - command:
+      - cluster-network-check-target
+      env:
+      - name: K8S_NODE_NAME
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: spec.nodeName
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:8bc10069f7e6e0ae3fafbef1beba94516ed91a8692de6fee7f17379687adb5cb
+      imagePullPolicy: IfNotPresent
+      name: network-check-target-container
+      ports:
+      - containerPort: 8080
+        protocol: TCP
+      readinessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /
+          port: 8080
+          scheme: HTTP
+        initialDelaySeconds: 30
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 10
+      resources:
+        requests:
+          cpu: 10m
+          memory: 15Mi
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000500000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-sspfh
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    nodeName: ocp4azu-sj2sl-master-0
+    nodeSelector:
+      beta.kubernetes.io/os: linux
+    preemptionPolicy: PreemptLowerPriority
+    priority: 1000000000
+    priorityClassName: openshift-user-critical
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000500000
+      seLinuxOptions:
+        level: s0:c22,c19
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 10
+    tolerations:
+    - operator: Exists
+    volumes:
+    - name: kube-api-access-sspfh
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-04T21:39:44Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-11T18:26:52Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-11T18:26:52Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-04T21:39:44Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://ce2e7b319431413f089742efe7b55e6a172764be287d7c2a32d163d2334d292c
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:8bc10069f7e6e0ae3fafbef1beba94516ed91a8692de6fee7f17379687adb5cb
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:8bc10069f7e6e0ae3fafbef1beba94516ed91a8692de6fee7f17379687adb5cb
+      lastState: {}
+      name: network-check-target-container
+      ready: true
+      restartCount: 3
+      started: true
+      state:
+        running:
+          startedAt: "2023-05-11T18:26:21Z"
+    hostIP: 10.80.80.6
+    phase: Running
+    podIP: 10.129.0.26
+    podIPs:
+    - ip: 10.129.0.26
+    qosClass: Burstable
+    startTime: "2023-05-04T21:39:44Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.128.22.7"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.128.22.7"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/scc: restricted
+    creationTimestamp: "2023-05-25T14:41:57Z"
+    generateName: network-check-target-
+    labels:
+      app: network-check-target
+      controller-revision-hash: 6f76cbd87f
+      kubernetes.io/os: linux
+      pod-template-generation: "1"
+    name: network-check-target-bddqd
+    namespace: openshift-network-diagnostics
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DaemonSet
+      name: network-check-target
+      uid: cc71422b-4b56-45e6-bdac-bb625d4b30d5
+    resourceVersion: "476624660"
+    uid: e318af25-69f4-4aa7-8197-267c12c80265
+  spec:
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchFields:
+            - key: metadata.name
+              operator: In
+              values:
+              - ocp4azu-sj2sl-worker-noprod-dev-brazilsouth2-4dm6s
+    containers:
+    - command:
+      - cluster-network-check-target
+      env:
+      - name: K8S_NODE_NAME
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: spec.nodeName
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:8bc10069f7e6e0ae3fafbef1beba94516ed91a8692de6fee7f17379687adb5cb
+      imagePullPolicy: IfNotPresent
+      name: network-check-target-container
+      ports:
+      - containerPort: 8080
+        protocol: TCP
+      readinessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /
+          port: 8080
+          scheme: HTTP
+        initialDelaySeconds: 30
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 10
+      resources:
+        requests:
+          cpu: 10m
+          memory: 15Mi
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000500000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-8kxmc
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: default-dockercfg-swdh4
+    nodeName: ocp4azu-sj2sl-worker-noprod-dev-brazilsouth2-4dm6s
+    nodeSelector:
+      beta.kubernetes.io/os: linux
+    preemptionPolicy: PreemptLowerPriority
+    priority: 1000000000
+    priorityClassName: openshift-user-critical
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000500000
+      seLinuxOptions:
+        level: s0:c22,c19
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 10
+    tolerations:
+    - operator: Exists
+    volumes:
+    - name: kube-api-access-8kxmc
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-25T14:41:58Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2024-05-02T14:27:12Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2024-05-02T14:27:12Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-25T14:41:57Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://5d7e791e6e866190bcbcd594060dfcd8aea69e336ad15af9f7c000569790685c
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:8bc10069f7e6e0ae3fafbef1beba94516ed91a8692de6fee7f17379687adb5cb
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:8bc10069f7e6e0ae3fafbef1beba94516ed91a8692de6fee7f17379687adb5cb
+      lastState: {}
+      name: network-check-target-container
+      ready: true
+      restartCount: 1
+      started: true
+      state:
+        running:
+          startedAt: "2024-05-02T14:26:40Z"
+    hostIP: 10.80.80.9
+    phase: Running
+    podIP: 10.128.22.7
+    podIPs:
+    - ip: 10.128.22.7
+    qosClass: Burstable
+    startTime: "2023-05-25T14:41:58Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.129.4.7"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.129.4.7"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/scc: restricted
+    creationTimestamp: "2023-05-16T16:46:16Z"
+    generateName: network-check-target-
+    labels:
+      app: network-check-target
+      controller-revision-hash: 6f76cbd87f
+      kubernetes.io/os: linux
+      pod-template-generation: "1"
+    name: network-check-target-dmfs8
+    namespace: openshift-network-diagnostics
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DaemonSet
+      name: network-check-target
+      uid: cc71422b-4b56-45e6-bdac-bb625d4b30d5
+    resourceVersion: "467286860"
+    uid: df293334-b95e-4b78-8383-e7c24aba925c
+  spec:
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchFields:
+            - key: metadata.name
+              operator: In
+              values:
+              - ocp4azu-sj2sl-infra-brazilsouth3-pfrpx
+    containers:
+    - command:
+      - cluster-network-check-target
+      env:
+      - name: K8S_NODE_NAME
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: spec.nodeName
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:8bc10069f7e6e0ae3fafbef1beba94516ed91a8692de6fee7f17379687adb5cb
+      imagePullPolicy: IfNotPresent
+      name: network-check-target-container
+      ports:
+      - containerPort: 8080
+        protocol: TCP
+      readinessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /
+          port: 8080
+          scheme: HTTP
+        initialDelaySeconds: 30
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 10
+      resources:
+        requests:
+          cpu: 10m
+          memory: 15Mi
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000500000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-vzz4s
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: default-dockercfg-swdh4
+    nodeName: ocp4azu-sj2sl-infra-brazilsouth3-pfrpx
+    nodeSelector:
+      beta.kubernetes.io/os: linux
+    preemptionPolicy: PreemptLowerPriority
+    priority: 1000000000
+    priorityClassName: openshift-user-critical
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000500000
+      seLinuxOptions:
+        level: s0:c22,c19
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 10
+    tolerations:
+    - operator: Exists
+    volumes:
+    - name: kube-api-access-vzz4s
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-16T16:46:17Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-16T16:47:49Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-16T16:47:49Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-16T16:46:16Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://ab2fb44202b37e7b6a695082c15debf419421e97aaa97679f81e6ec2bc77c318
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:8bc10069f7e6e0ae3fafbef1beba94516ed91a8692de6fee7f17379687adb5cb
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:8bc10069f7e6e0ae3fafbef1beba94516ed91a8692de6fee7f17379687adb5cb
+      lastState: {}
+      name: network-check-target-container
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2023-05-16T16:47:19Z"
+    hostIP: 10.80.80.16
+    phase: Running
+    podIP: 10.129.4.7
+    podIPs:
+    - ip: 10.129.4.7
+    qosClass: Burstable
+    startTime: "2023-05-16T16:46:17Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.130.16.6"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.130.16.6"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/scc: restricted
+    creationTimestamp: "2023-05-25T13:31:43Z"
+    generateName: network-check-target-
+    labels:
+      app: network-check-target
+      controller-revision-hash: 6f76cbd87f
+      kubernetes.io/os: linux
+      pod-template-generation: "1"
+    name: network-check-target-fwh7t
+    namespace: openshift-network-diagnostics
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DaemonSet
+      name: network-check-target
+      uid: cc71422b-4b56-45e6-bdac-bb625d4b30d5
+    resourceVersion: "467404222"
+    uid: 1e5dcf2a-c49a-46db-9ba9-2c1a3bed7ee9
+  spec:
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchFields:
+            - key: metadata.name
+              operator: In
+              values:
+              - ocp4azu-sj2sl-worker-noprod-qa-brazilsouth2-rglbf
+    containers:
+    - command:
+      - cluster-network-check-target
+      env:
+      - name: K8S_NODE_NAME
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: spec.nodeName
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:8bc10069f7e6e0ae3fafbef1beba94516ed91a8692de6fee7f17379687adb5cb
+      imagePullPolicy: IfNotPresent
+      name: network-check-target-container
+      ports:
+      - containerPort: 8080
+        protocol: TCP
+      readinessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /
+          port: 8080
+          scheme: HTTP
+        initialDelaySeconds: 30
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 10
+      resources:
+        requests:
+          cpu: 10m
+          memory: 15Mi
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000500000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-zpqtm
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: default-dockercfg-swdh4
+    nodeName: ocp4azu-sj2sl-worker-noprod-qa-brazilsouth2-rglbf
+    nodeSelector:
+      beta.kubernetes.io/os: linux
+    preemptionPolicy: PreemptLowerPriority
+    priority: 1000000000
+    priorityClassName: openshift-user-critical
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000500000
+      seLinuxOptions:
+        level: s0:c22,c19
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 10
+    tolerations:
+    - operator: Exists
+    volumes:
+    - name: kube-api-access-zpqtm
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-25T13:31:44Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-25T13:33:16Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-25T13:33:16Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-25T13:31:43Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://81172d299e40cbf6a927a8515ba3de4ed98b88521723f8c1b6abe7f4fe0506a0
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:8bc10069f7e6e0ae3fafbef1beba94516ed91a8692de6fee7f17379687adb5cb
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:8bc10069f7e6e0ae3fafbef1beba94516ed91a8692de6fee7f17379687adb5cb
+      lastState: {}
+      name: network-check-target-container
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2023-05-25T13:32:46Z"
+    hostIP: 10.80.80.22
+    phase: Running
+    podIP: 10.130.16.6
+    podIPs:
+    - ip: 10.130.16.6
+    qosClass: Burstable
+    startTime: "2023-05-25T13:31:44Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.129.6.5"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.129.6.5"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/scc: restricted
+    creationTimestamp: "2023-05-16T17:01:44Z"
+    generateName: network-check-target-
+    labels:
+      app: network-check-target
+      controller-revision-hash: 6f76cbd87f
+      kubernetes.io/os: linux
+      pod-template-generation: "1"
+    name: network-check-target-jjn9t
+    namespace: openshift-network-diagnostics
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DaemonSet
+      name: network-check-target
+      uid: cc71422b-4b56-45e6-bdac-bb625d4b30d5
+    resourceVersion: "458211509"
+    uid: 16dc982b-fc4b-4df2-acc7-ca3214ecbe73
+  spec:
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchFields:
+            - key: metadata.name
+              operator: In
+              values:
+              - ocp4azu-sj2sl-infra-brazilsouth2-ptg7h
+    containers:
+    - command:
+      - cluster-network-check-target
+      env:
+      - name: K8S_NODE_NAME
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: spec.nodeName
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:8bc10069f7e6e0ae3fafbef1beba94516ed91a8692de6fee7f17379687adb5cb
+      imagePullPolicy: IfNotPresent
+      name: network-check-target-container
+      ports:
+      - containerPort: 8080
+        protocol: TCP
+      readinessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /
+          port: 8080
+          scheme: HTTP
+        initialDelaySeconds: 30
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 10
+      resources:
+        requests:
+          cpu: 10m
+          memory: 15Mi
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000500000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-dgxtr
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: default-dockercfg-swdh4
+    nodeName: ocp4azu-sj2sl-infra-brazilsouth2-ptg7h
+    nodeSelector:
+      beta.kubernetes.io/os: linux
+    preemptionPolicy: PreemptLowerPriority
+    priority: 1000000000
+    priorityClassName: openshift-user-critical
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000500000
+      seLinuxOptions:
+        level: s0:c22,c19
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 10
+    tolerations:
+    - operator: Exists
+    volumes:
+    - name: kube-api-access-dgxtr
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-16T17:01:44Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-16T17:03:16Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-16T17:03:16Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-16T17:01:44Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://1bb1c782ad81ff7b44864a951f42af175190b42c3834775847fac99a2e23ef7c
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:8bc10069f7e6e0ae3fafbef1beba94516ed91a8692de6fee7f17379687adb5cb
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:8bc10069f7e6e0ae3fafbef1beba94516ed91a8692de6fee7f17379687adb5cb
+      lastState: {}
+      name: network-check-target-container
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2023-05-16T17:02:43Z"
+    hostIP: 10.80.80.12
+    phase: Running
+    podIP: 10.129.6.5
+    podIPs:
+    - ip: 10.129.6.5
+    qosClass: Burstable
+    startTime: "2023-05-16T17:01:44Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.129.22.7"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.129.22.7"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/scc: restricted
+    creationTimestamp: "2023-05-25T19:26:47Z"
+    generateName: network-check-target-
+    labels:
+      app: network-check-target
+      controller-revision-hash: 6f76cbd87f
+      kubernetes.io/os: linux
+      pod-template-generation: "1"
+    name: network-check-target-l7wrv
+    namespace: openshift-network-diagnostics
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DaemonSet
+      name: network-check-target
+      uid: cc71422b-4b56-45e6-bdac-bb625d4b30d5
+    resourceVersion: "380476283"
+    uid: 2f324755-2320-4f6d-98e5-6885cba639d5
+  spec:
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchFields:
+            - key: metadata.name
+              operator: In
+              values:
+              - ocp4azu-sj2sl-worker-prod-brazilsouth1-mjsb5
+    containers:
+    - command:
+      - cluster-network-check-target
+      env:
+      - name: K8S_NODE_NAME
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: spec.nodeName
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:8bc10069f7e6e0ae3fafbef1beba94516ed91a8692de6fee7f17379687adb5cb
+      imagePullPolicy: IfNotPresent
+      name: network-check-target-container
+      ports:
+      - containerPort: 8080
+        protocol: TCP
+      readinessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /
+          port: 8080
+          scheme: HTTP
+        initialDelaySeconds: 30
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 10
+      resources:
+        requests:
+          cpu: 10m
+          memory: 15Mi
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000500000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-xp2z2
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: default-dockercfg-swdh4
+    nodeName: ocp4azu-sj2sl-worker-prod-brazilsouth1-mjsb5
+    nodeSelector:
+      beta.kubernetes.io/os: linux
+    preemptionPolicy: PreemptLowerPriority
+    priority: 1000000000
+    priorityClassName: openshift-user-critical
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000500000
+      seLinuxOptions:
+        level: s0:c22,c19
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 10
+    tolerations:
+    - operator: Exists
+    volumes:
+    - name: kube-api-access-xp2z2
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-25T19:26:48Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-25T19:28:30Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-25T19:28:30Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-25T19:26:47Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://11dc7496d2665d08ab80aa4fe1335a0ff8da5a2dfc819e0a2e706a48340216d7
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:8bc10069f7e6e0ae3fafbef1beba94516ed91a8692de6fee7f17379687adb5cb
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:8bc10069f7e6e0ae3fafbef1beba94516ed91a8692de6fee7f17379687adb5cb
+      lastState: {}
+      name: network-check-target-container
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2023-05-25T19:28:00Z"
+    hostIP: 10.80.80.13
+    phase: Running
+    podIP: 10.129.22.7
+    podIPs:
+    - ip: 10.129.22.7
+    qosClass: Burstable
+    startTime: "2023-05-25T19:26:48Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.128.0.11"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.128.0.11"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/scc: restricted
+    creationTimestamp: "2023-05-04T21:39:44Z"
+    generateName: network-check-target-
+    labels:
+      app: network-check-target
+      controller-revision-hash: 6f76cbd87f
+      kubernetes.io/os: linux
+      pod-template-generation: "1"
+    name: network-check-target-lmvnj
+    namespace: openshift-network-diagnostics
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DaemonSet
+      name: network-check-target
+      uid: cc71422b-4b56-45e6-bdac-bb625d4b30d5
+    resourceVersion: "465633664"
+    uid: 77313879-54e9-43ce-89c8-d604468824ce
+  spec:
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchFields:
+            - key: metadata.name
+              operator: In
+              values:
+              - ocp4azu-sj2sl-master-2
+    containers:
+    - command:
+      - cluster-network-check-target
+      env:
+      - name: K8S_NODE_NAME
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: spec.nodeName
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:8bc10069f7e6e0ae3fafbef1beba94516ed91a8692de6fee7f17379687adb5cb
+      imagePullPolicy: IfNotPresent
+      name: network-check-target-container
+      ports:
+      - containerPort: 8080
+        protocol: TCP
+      readinessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /
+          port: 8080
+          scheme: HTTP
+        initialDelaySeconds: 30
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 10
+      resources:
+        requests:
+          cpu: 10m
+          memory: 15Mi
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000500000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-xpc75
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    nodeName: ocp4azu-sj2sl-master-2
+    nodeSelector:
+      beta.kubernetes.io/os: linux
+    preemptionPolicy: PreemptLowerPriority
+    priority: 1000000000
+    priorityClassName: openshift-user-critical
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000500000
+      seLinuxOptions:
+        level: s0:c22,c19
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 10
+    tolerations:
+    - operator: Exists
+    volumes:
+    - name: kube-api-access-xpc75
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-04T21:39:45Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-11T18:26:52Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-11T18:26:52Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-04T21:39:45Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://58ca8de35e50eadb8ba5b71ea4686cf9e83fdc1ef2b9f46e06360b1af3a991e6
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:8bc10069f7e6e0ae3fafbef1beba94516ed91a8692de6fee7f17379687adb5cb
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:8bc10069f7e6e0ae3fafbef1beba94516ed91a8692de6fee7f17379687adb5cb
+      lastState: {}
+      name: network-check-target-container
+      ready: true
+      restartCount: 3
+      started: true
+      state:
+        running:
+          startedAt: "2023-05-11T18:26:19Z"
+    hostIP: 10.80.80.7
+    phase: Running
+    podIP: 10.128.0.11
+    podIPs:
+    - ip: 10.128.0.11
+    qosClass: Burstable
+    startTime: "2023-05-04T21:39:45Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.131.18.7"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.131.18.7"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/scc: restricted
+    creationTimestamp: "2023-05-25T13:39:03Z"
+    generateName: network-check-target-
+    labels:
+      app: network-check-target
+      controller-revision-hash: 6f76cbd87f
+      kubernetes.io/os: linux
+      pod-template-generation: "1"
+    name: network-check-target-njc9r
+    namespace: openshift-network-diagnostics
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DaemonSet
+      name: network-check-target
+      uid: cc71422b-4b56-45e6-bdac-bb625d4b30d5
+    resourceVersion: "491646534"
+    uid: 22a26f50-99db-4a36-9919-8eb3a4f1055e
+  spec:
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchFields:
+            - key: metadata.name
+              operator: In
+              values:
+              - ocp4azu-sj2sl-worker-prod-brazilsouth1-lks8v
+    containers:
+    - command:
+      - cluster-network-check-target
+      env:
+      - name: K8S_NODE_NAME
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: spec.nodeName
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:8bc10069f7e6e0ae3fafbef1beba94516ed91a8692de6fee7f17379687adb5cb
+      imagePullPolicy: IfNotPresent
+      name: network-check-target-container
+      ports:
+      - containerPort: 8080
+        protocol: TCP
+      readinessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /
+          port: 8080
+          scheme: HTTP
+        initialDelaySeconds: 30
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 10
+      resources:
+        requests:
+          cpu: 10m
+          memory: 15Mi
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000500000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-7wkfg
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: default-dockercfg-swdh4
+    nodeName: ocp4azu-sj2sl-worker-prod-brazilsouth1-lks8v
+    nodeSelector:
+      beta.kubernetes.io/os: linux
+    preemptionPolicy: PreemptLowerPriority
+    priority: 1000000000
+    priorityClassName: openshift-user-critical
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000500000
+      seLinuxOptions:
+        level: s0:c22,c19
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 10
+    tolerations:
+    - operator: Exists
+    volumes:
+    - name: kube-api-access-7wkfg
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-25T13:39:04Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-25T13:40:46Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-25T13:40:46Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-25T13:39:03Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://cb41e15a6c885cc37993969a4ac6c38f170e3e3036722247618b824101f923e0
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:8bc10069f7e6e0ae3fafbef1beba94516ed91a8692de6fee7f17379687adb5cb
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:8bc10069f7e6e0ae3fafbef1beba94516ed91a8692de6fee7f17379687adb5cb
+      lastState: {}
+      name: network-check-target-container
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2023-05-25T13:40:07Z"
+    hostIP: 10.80.80.19
+    phase: Running
+    podIP: 10.131.18.7
+    podIPs:
+    - ip: 10.131.18.7
+    qosClass: Burstable
+    startTime: "2023-05-25T13:39:04Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.130.20.8"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.130.20.8"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/scc: restricted
+    creationTimestamp: "2023-05-25T14:39:41Z"
+    generateName: network-check-target-
+    labels:
+      app: network-check-target
+      controller-revision-hash: 6f76cbd87f
+      kubernetes.io/os: linux
+      pod-template-generation: "1"
+    name: network-check-target-prltw
+    namespace: openshift-network-diagnostics
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DaemonSet
+      name: network-check-target
+      uid: cc71422b-4b56-45e6-bdac-bb625d4b30d5
+    resourceVersion: "476624861"
+    uid: b6e6d88c-86d3-4499-94e4-0f2ec3b95a71
+  spec:
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchFields:
+            - key: metadata.name
+              operator: In
+              values:
+              - ocp4azu-sj2sl-worker-noprod-dev-brazilsouth1-vlxcp
+    containers:
+    - command:
+      - cluster-network-check-target
+      env:
+      - name: K8S_NODE_NAME
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: spec.nodeName
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:8bc10069f7e6e0ae3fafbef1beba94516ed91a8692de6fee7f17379687adb5cb
+      imagePullPolicy: IfNotPresent
+      name: network-check-target-container
+      ports:
+      - containerPort: 8080
+        protocol: TCP
+      readinessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /
+          port: 8080
+          scheme: HTTP
+        initialDelaySeconds: 30
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 10
+      resources:
+        requests:
+          cpu: 10m
+          memory: 15Mi
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000500000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-4scrq
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: default-dockercfg-swdh4
+    nodeName: ocp4azu-sj2sl-worker-noprod-dev-brazilsouth1-vlxcp
+    nodeSelector:
+      beta.kubernetes.io/os: linux
+    preemptionPolicy: PreemptLowerPriority
+    priority: 1000000000
+    priorityClassName: openshift-user-critical
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000500000
+      seLinuxOptions:
+        level: s0:c22,c19
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 10
+    tolerations:
+    - operator: Exists
+    volumes:
+    - name: kube-api-access-4scrq
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-25T14:39:42Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-25T14:42:04Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-25T14:42:04Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-25T14:39:41Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://2515b5d59b78bd0476fad8bca6e0b931e5662cef60b01293cfac683d488e9d65
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:8bc10069f7e6e0ae3fafbef1beba94516ed91a8692de6fee7f17379687adb5cb
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:8bc10069f7e6e0ae3fafbef1beba94516ed91a8692de6fee7f17379687adb5cb
+      lastState: {}
+      name: network-check-target-container
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2023-05-25T14:41:27Z"
+    hostIP: 10.80.80.5
+    phase: Running
+    podIP: 10.130.20.8
+    podIPs:
+    - ip: 10.130.20.8
+    qosClass: Burstable
+    startTime: "2023-05-25T14:39:42Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.130.0.48"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.130.0.48"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/scc: restricted
+    creationTimestamp: "2023-05-04T21:39:44Z"
+    generateName: network-check-target-
+    labels:
+      app: network-check-target
+      controller-revision-hash: 6f76cbd87f
+      kubernetes.io/os: linux
+      pod-template-generation: "1"
+    name: network-check-target-s8h2m
+    namespace: openshift-network-diagnostics
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DaemonSet
+      name: network-check-target
+      uid: cc71422b-4b56-45e6-bdac-bb625d4b30d5
+    resourceVersion: "114617741"
+    uid: 182f7783-4fac-4b52-8d9b-8fca51f09e34
+  spec:
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchFields:
+            - key: metadata.name
+              operator: In
+              values:
+              - ocp4azu-sj2sl-master-1
+    containers:
+    - command:
+      - cluster-network-check-target
+      env:
+      - name: K8S_NODE_NAME
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: spec.nodeName
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:8bc10069f7e6e0ae3fafbef1beba94516ed91a8692de6fee7f17379687adb5cb
+      imagePullPolicy: IfNotPresent
+      name: network-check-target-container
+      ports:
+      - containerPort: 8080
+        protocol: TCP
+      readinessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /
+          port: 8080
+          scheme: HTTP
+        initialDelaySeconds: 30
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 10
+      resources:
+        requests:
+          cpu: 10m
+          memory: 15Mi
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000500000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-qhwrr
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    nodeName: ocp4azu-sj2sl-master-1
+    nodeSelector:
+      beta.kubernetes.io/os: linux
+    preemptionPolicy: PreemptLowerPriority
+    priority: 1000000000
+    priorityClassName: openshift-user-critical
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000500000
+      seLinuxOptions:
+        level: s0:c22,c19
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 10
+    tolerations:
+    - operator: Exists
+    volumes:
+    - name: kube-api-access-qhwrr
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-04T21:39:45Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-11T18:27:16Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-11T18:27:16Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-04T21:39:45Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://3b1c3ee7515537f15b90115f1a664c2551626608e2bacf3c97d14b9ccd3e23fc
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:8bc10069f7e6e0ae3fafbef1beba94516ed91a8692de6fee7f17379687adb5cb
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:8bc10069f7e6e0ae3fafbef1beba94516ed91a8692de6fee7f17379687adb5cb
+      lastState: {}
+      name: network-check-target-container
+      ready: true
+      restartCount: 3
+      started: true
+      state:
+        running:
+          startedAt: "2023-05-11T18:26:41Z"
+    hostIP: 10.80.80.8
+    phase: Running
+    podIP: 10.130.0.48
+    podIPs:
+    - ip: 10.130.0.48
+    qosClass: Burstable
+    startTime: "2023-05-04T21:39:45Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.130.22.7"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.130.22.7"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/scc: restricted
+    creationTimestamp: "2023-05-25T20:10:15Z"
+    generateName: network-check-target-
+    labels:
+      app: network-check-target
+      controller-revision-hash: 6f76cbd87f
+      kubernetes.io/os: linux
+      pod-template-generation: "1"
+    name: network-check-target-ttdbr
+    namespace: openshift-network-diagnostics
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DaemonSet
+      name: network-check-target
+      uid: cc71422b-4b56-45e6-bdac-bb625d4b30d5
+    resourceVersion: "428583495"
+    uid: 4a35f0b1-97e1-44a5-986b-58b15a7c766c
+  spec:
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchFields:
+            - key: metadata.name
+              operator: In
+              values:
+              - ocp4azu-sj2sl-worker-prod-brazilsouth2-gmw4z
+    containers:
+    - command:
+      - cluster-network-check-target
+      env:
+      - name: K8S_NODE_NAME
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: spec.nodeName
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:8bc10069f7e6e0ae3fafbef1beba94516ed91a8692de6fee7f17379687adb5cb
+      imagePullPolicy: IfNotPresent
+      name: network-check-target-container
+      ports:
+      - containerPort: 8080
+        protocol: TCP
+      readinessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /
+          port: 8080
+          scheme: HTTP
+        initialDelaySeconds: 30
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 10
+      resources:
+        requests:
+          cpu: 10m
+          memory: 15Mi
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000500000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-dmtqg
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: default-dockercfg-swdh4
+    nodeName: ocp4azu-sj2sl-worker-prod-brazilsouth2-gmw4z
+    nodeSelector:
+      beta.kubernetes.io/os: linux
+    preemptionPolicy: PreemptLowerPriority
+    priority: 1000000000
+    priorityClassName: openshift-user-critical
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000500000
+      seLinuxOptions:
+        level: s0:c22,c19
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 10
+    tolerations:
+    - operator: Exists
+    volumes:
+    - name: kube-api-access-dmtqg
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-25T20:10:16Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-25T20:11:58Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-25T20:11:58Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-25T20:10:15Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://e74a3769f3b5f6877285d6966bd0c99635edf99e8c61c34832fe35bbbe37d2c3
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:8bc10069f7e6e0ae3fafbef1beba94516ed91a8692de6fee7f17379687adb5cb
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:8bc10069f7e6e0ae3fafbef1beba94516ed91a8692de6fee7f17379687adb5cb
+      lastState: {}
+      name: network-check-target-container
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2023-05-25T20:11:20Z"
+    hostIP: 10.80.80.17
+    phase: Running
+    podIP: 10.130.22.7
+    podIPs:
+    - ip: 10.130.22.7
+    qosClass: Burstable
+    startTime: "2023-05-25T20:10:16Z"
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

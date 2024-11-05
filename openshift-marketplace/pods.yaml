@@ -1,0 +1,2330 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.128.22.212"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.128.22.212"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/scc: restricted
+    creationTimestamp: "2024-07-11T17:31:26Z"
+    generateName: 2b39fc370861585050d73d61774ab88ea4a9d11d4acab8a5c9c12ff6355f3e9-
+    labels:
+      controller-uid: af3bce10-6adf-4a38-96e2-bad1db752e31
+      job-name: 2b39fc370861585050d73d61774ab88ea4a9d11d4acab8a5c9c12ff6355f3e9
+    name: 2b39fc370861585050d73d61774ab88ea4a9d11d4acab8a5c9c12ff635c6j48
+    namespace: openshift-marketplace
+    ownerReferences:
+    - apiVersion: batch/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Job
+      name: 2b39fc370861585050d73d61774ab88ea4a9d11d4acab8a5c9c12ff6355f3e9
+      uid: af3bce10-6adf-4a38-96e2-bad1db752e31
+    resourceVersion: "449354664"
+    uid: b0c016d3-9508-40b6-ae9f-7e941837b181
+  spec:
+    containers:
+    - command:
+      - opm
+      - alpha
+      - bundle
+      - extract
+      - -m
+      - /bundle/
+      - -n
+      - openshift-marketplace
+      - -c
+      - 2b39fc370861585050d73d61774ab88ea4a9d11d4acab8a5c9c12ff6355f3e9
+      - -z
+      env:
+      - name: CONTAINER_IMAGE
+        value: registry.redhat.io/rhmtc/openshift-migration-operator-bundle@sha256:4de0188e7e57ab94a125c454e0be15ff701e7f5c52660c357386cc303feb70e8
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:a85fbe0aecf2203c347074c95cae8ef611897c5c614e2ea8ad3a612b32ab355b
+      imagePullPolicy: IfNotPresent
+      name: extract
+      resources:
+        requests:
+          cpu: 10m
+          memory: 50Mi
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000240000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /bundle
+        name: bundle
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-588xx
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: default-dockercfg-nx25s
+    initContainers:
+    - command:
+      - /bin/cp
+      - -Rv
+      - /bin/cpb
+      - /util/cpb
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:58d171c685b8bba98ed0a0497b23ddc9703fe975ce93e04182a283ac17f31410
+      imagePullPolicy: IfNotPresent
+      name: util
+      resources:
+        requests:
+          cpu: 10m
+          memory: 50Mi
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000240000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /util
+        name: util
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-588xx
+        readOnly: true
+    - command:
+      - /util/cpb
+      - /bundle
+      image: registry.redhat.io/rhmtc/openshift-migration-operator-bundle@sha256:4de0188e7e57ab94a125c454e0be15ff701e7f5c52660c357386cc303feb70e8
+      imagePullPolicy: Always
+      name: pull
+      resources:
+        requests:
+          cpu: 10m
+          memory: 50Mi
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000240000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /bundle
+        name: bundle
+      - mountPath: /util
+        name: util
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-588xx
+        readOnly: true
+    nodeName: ocp4azu-sj2sl-worker-noprod-dev-brazilsouth2-4dm6s
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Never
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000240000
+      seLinuxOptions:
+        level: s0:c16,c0
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoSchedule
+      key: node.kubernetes.io/memory-pressure
+      operator: Exists
+    volumes:
+    - emptyDir: {}
+      name: bundle
+    - emptyDir: {}
+      name: util
+    - name: kube-api-access-588xx
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-11T17:31:37Z"
+      reason: PodCompleted
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-11T17:31:26Z"
+      reason: PodCompleted
+      status: "False"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-11T17:31:26Z"
+      reason: PodCompleted
+      status: "False"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-11T17:31:26Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://b013a5a98f8b8f2b86e301fa2134e89167306146b23c07f9a4f00bfb43dab811
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:a85fbe0aecf2203c347074c95cae8ef611897c5c614e2ea8ad3a612b32ab355b
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:a85fbe0aecf2203c347074c95cae8ef611897c5c614e2ea8ad3a612b32ab355b
+      lastState: {}
+      name: extract
+      ready: false
+      restartCount: 0
+      started: false
+      state:
+        terminated:
+          containerID: cri-o://b013a5a98f8b8f2b86e301fa2134e89167306146b23c07f9a4f00bfb43dab811
+          exitCode: 0
+          finishedAt: "2024-07-11T17:31:37Z"
+          reason: Completed
+          startedAt: "2024-07-11T17:31:37Z"
+    hostIP: 10.80.80.9
+    initContainerStatuses:
+    - containerID: cri-o://3d3d3519f92f2a37e8398ed9284e5c92685d3e6fc643554b2950f3a44b4d2d26
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:58d171c685b8bba98ed0a0497b23ddc9703fe975ce93e04182a283ac17f31410
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:58d171c685b8bba98ed0a0497b23ddc9703fe975ce93e04182a283ac17f31410
+      lastState: {}
+      name: util
+      ready: true
+      restartCount: 0
+      state:
+        terminated:
+          containerID: cri-o://3d3d3519f92f2a37e8398ed9284e5c92685d3e6fc643554b2950f3a44b4d2d26
+          exitCode: 0
+          finishedAt: "2024-07-11T17:31:28Z"
+          reason: Completed
+          startedAt: "2024-07-11T17:31:28Z"
+    - containerID: cri-o://7d6a12e5e74beb892c7940df4891e9e5586b8ab78b71127c61f3f03aa99df627
+      image: registry.redhat.io/rhmtc/openshift-migration-operator-bundle@sha256:4de0188e7e57ab94a125c454e0be15ff701e7f5c52660c357386cc303feb70e8
+      imageID: registry.redhat.io/rhmtc/openshift-migration-operator-bundle@sha256:4de0188e7e57ab94a125c454e0be15ff701e7f5c52660c357386cc303feb70e8
+      lastState: {}
+      name: pull
+      ready: true
+      restartCount: 0
+      state:
+        terminated:
+          containerID: cri-o://7d6a12e5e74beb892c7940df4891e9e5586b8ab78b71127c61f3f03aa99df627
+          exitCode: 0
+          finishedAt: "2024-07-11T17:31:37Z"
+          reason: Completed
+          startedAt: "2024-07-11T17:31:37Z"
+    phase: Succeeded
+    podIP: 10.128.22.212
+    podIPs:
+    - ip: 10.128.22.212
+    qosClass: Burstable
+    startTime: "2024-07-11T17:31:26Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.130.20.11"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.130.20.11"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/scc: restricted
+    creationTimestamp: "2024-05-01T02:39:17Z"
+    generateName: 30f3542986bcef2d213894a88846e744d81fd6f388adef7c13eb6103c563005-
+    labels:
+      controller-uid: c7ada2bf-c0ee-4292-aa4b-c626f7bb5282
+      job-name: 30f3542986bcef2d213894a88846e744d81fd6f388adef7c13eb6103c563005
+    name: 30f3542986bcef2d213894a88846e744d81fd6f388adef7c13eb6103c5447c9
+    namespace: openshift-marketplace
+    ownerReferences:
+    - apiVersion: batch/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Job
+      name: 30f3542986bcef2d213894a88846e744d81fd6f388adef7c13eb6103c563005
+      uid: c7ada2bf-c0ee-4292-aa4b-c626f7bb5282
+    resourceVersion: "304850855"
+    uid: 3fc1aac4-6fae-4894-9ed0-a22a216216f9
+  spec:
+    containers:
+    - command:
+      - opm
+      - alpha
+      - bundle
+      - extract
+      - -m
+      - /bundle/
+      - -n
+      - openshift-marketplace
+      - -c
+      - 30f3542986bcef2d213894a88846e744d81fd6f388adef7c13eb6103c563005
+      - -z
+      env:
+      - name: CONTAINER_IMAGE
+        value: registry.redhat.io/rhmtc/openshift-migration-operator-bundle@sha256:1b1f273e6ed2300ca64962f18a0402bba8a60c0629bb94da6aa16b90986ee558
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:a85fbe0aecf2203c347074c95cae8ef611897c5c614e2ea8ad3a612b32ab355b
+      imagePullPolicy: IfNotPresent
+      name: extract
+      resources:
+        requests:
+          cpu: 10m
+          memory: 50Mi
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000240000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /bundle
+        name: bundle
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-p26q6
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: default-dockercfg-nx25s
+    initContainers:
+    - command:
+      - /bin/cp
+      - -Rv
+      - /bin/cpb
+      - /util/cpb
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:58d171c685b8bba98ed0a0497b23ddc9703fe975ce93e04182a283ac17f31410
+      imagePullPolicy: IfNotPresent
+      name: util
+      resources:
+        requests:
+          cpu: 10m
+          memory: 50Mi
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000240000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /util
+        name: util
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-p26q6
+        readOnly: true
+    - command:
+      - /util/cpb
+      - /bundle
+      image: registry.redhat.io/rhmtc/openshift-migration-operator-bundle@sha256:1b1f273e6ed2300ca64962f18a0402bba8a60c0629bb94da6aa16b90986ee558
+      imagePullPolicy: Always
+      name: pull
+      resources:
+        requests:
+          cpu: 10m
+          memory: 50Mi
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000240000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /bundle
+        name: bundle
+      - mountPath: /util
+        name: util
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-p26q6
+        readOnly: true
+    nodeName: ocp4azu-sj2sl-worker-noprod-dev-brazilsouth1-vlxcp
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Never
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000240000
+      seLinuxOptions:
+        level: s0:c16,c0
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoSchedule
+      key: node.kubernetes.io/memory-pressure
+      operator: Exists
+    volumes:
+    - emptyDir: {}
+      name: bundle
+    - emptyDir: {}
+      name: util
+    - name: kube-api-access-p26q6
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2024-05-01T02:39:29Z"
+      reason: PodCompleted
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2024-05-01T02:39:17Z"
+      reason: PodCompleted
+      status: "False"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2024-05-01T02:39:17Z"
+      reason: PodCompleted
+      status: "False"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2024-05-01T02:39:17Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://f35ef9da791497f2be7c5a426e36107f326d11b16e6cb2e0dc8668e76c437c37
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:a85fbe0aecf2203c347074c95cae8ef611897c5c614e2ea8ad3a612b32ab355b
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:a85fbe0aecf2203c347074c95cae8ef611897c5c614e2ea8ad3a612b32ab355b
+      lastState: {}
+      name: extract
+      ready: false
+      restartCount: 0
+      started: false
+      state:
+        terminated:
+          containerID: cri-o://f35ef9da791497f2be7c5a426e36107f326d11b16e6cb2e0dc8668e76c437c37
+          exitCode: 0
+          finishedAt: "2024-05-01T02:39:29Z"
+          reason: Completed
+          startedAt: "2024-05-01T02:39:29Z"
+    hostIP: 10.80.80.5
+    initContainerStatuses:
+    - containerID: cri-o://db1c5b148ec5ed57202009f8413210c002831596eebfb3a10619a5b933c13f7f
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:58d171c685b8bba98ed0a0497b23ddc9703fe975ce93e04182a283ac17f31410
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:58d171c685b8bba98ed0a0497b23ddc9703fe975ce93e04182a283ac17f31410
+      lastState: {}
+      name: util
+      ready: true
+      restartCount: 0
+      state:
+        terminated:
+          containerID: cri-o://db1c5b148ec5ed57202009f8413210c002831596eebfb3a10619a5b933c13f7f
+          exitCode: 0
+          finishedAt: "2024-05-01T02:39:20Z"
+          reason: Completed
+          startedAt: "2024-05-01T02:39:20Z"
+    - containerID: cri-o://48c2cc2d7865396acde7dbe05059ae838dc86df14e0bd96d43b1c31c2e052ddf
+      image: registry.redhat.io/rhmtc/openshift-migration-operator-bundle@sha256:1b1f273e6ed2300ca64962f18a0402bba8a60c0629bb94da6aa16b90986ee558
+      imageID: registry.redhat.io/rhmtc/openshift-migration-operator-bundle@sha256:1b1f273e6ed2300ca64962f18a0402bba8a60c0629bb94da6aa16b90986ee558
+      lastState: {}
+      name: pull
+      ready: true
+      restartCount: 0
+      state:
+        terminated:
+          containerID: cri-o://48c2cc2d7865396acde7dbe05059ae838dc86df14e0bd96d43b1c31c2e052ddf
+          exitCode: 0
+          finishedAt: "2024-05-01T02:39:28Z"
+          reason: Completed
+          startedAt: "2024-05-01T02:39:28Z"
+    phase: Succeeded
+    podIP: 10.130.20.11
+    podIPs:
+    - ip: 10.130.20.11
+    qosClass: Burstable
+    startTime: "2024-05-01T02:39:17Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.129.22.227"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.129.22.227"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/scc: restricted
+    creationTimestamp: "2023-10-19T03:17:54Z"
+    generateName: 66dd0711e40cd284eca6c75b5f6908a2ced91c63a89bfd42bc551e6ea56d80c-
+    labels:
+      controller-uid: c1e74f59-908a-495a-8a5d-4b7a6d5314a1
+      job-name: 66dd0711e40cd284eca6c75b5f6908a2ced91c63a89bfd42bc551e6ea56d80c
+    name: 66dd0711e40cd284eca6c75b5f6908a2ced91c63a89bfd42bc551e6ea5ppwx6
+    namespace: openshift-marketplace
+    ownerReferences:
+    - apiVersion: batch/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Job
+      name: 66dd0711e40cd284eca6c75b5f6908a2ced91c63a89bfd42bc551e6ea56d80c
+      uid: c1e74f59-908a-495a-8a5d-4b7a6d5314a1
+    resourceVersion: "138488337"
+    uid: e76cb991-64f8-4fe9-b6f4-1e66ba4e1535
+  spec:
+    containers:
+    - command:
+      - opm
+      - alpha
+      - bundle
+      - extract
+      - -m
+      - /bundle/
+      - -n
+      - openshift-marketplace
+      - -c
+      - 66dd0711e40cd284eca6c75b5f6908a2ced91c63a89bfd42bc551e6ea56d80c
+      - -z
+      env:
+      - name: CONTAINER_IMAGE
+        value: registry.redhat.io/oadp/oadp-operator-bundle@sha256:cb573ef4e70fcd9dc576bca70e915068dde49b896131c2f2446fea13d9b9dccd
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:a85fbe0aecf2203c347074c95cae8ef611897c5c614e2ea8ad3a612b32ab355b
+      imagePullPolicy: IfNotPresent
+      name: extract
+      resources:
+        requests:
+          cpu: 10m
+          memory: 50Mi
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000240000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /bundle
+        name: bundle
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-kwxdj
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: default-dockercfg-nx25s
+    initContainers:
+    - command:
+      - /bin/cp
+      - -Rv
+      - /bin/cpb
+      - /util/cpb
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:58d171c685b8bba98ed0a0497b23ddc9703fe975ce93e04182a283ac17f31410
+      imagePullPolicy: IfNotPresent
+      name: util
+      resources:
+        requests:
+          cpu: 10m
+          memory: 50Mi
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000240000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /util
+        name: util
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-kwxdj
+        readOnly: true
+    - command:
+      - /util/cpb
+      - /bundle
+      image: registry.redhat.io/oadp/oadp-operator-bundle@sha256:cb573ef4e70fcd9dc576bca70e915068dde49b896131c2f2446fea13d9b9dccd
+      imagePullPolicy: Always
+      name: pull
+      resources:
+        requests:
+          cpu: 10m
+          memory: 50Mi
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000240000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /bundle
+        name: bundle
+      - mountPath: /util
+        name: util
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-kwxdj
+        readOnly: true
+    nodeName: ocp4azu-sj2sl-worker-prod-brazilsouth1-mjsb5
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Never
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000240000
+      seLinuxOptions:
+        level: s0:c16,c0
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoSchedule
+      key: node.kubernetes.io/memory-pressure
+      operator: Exists
+    volumes:
+    - emptyDir: {}
+      name: bundle
+    - emptyDir: {}
+      name: util
+    - name: kube-api-access-kwxdj
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-10-19T03:18:02Z"
+      reason: PodCompleted
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2023-10-19T03:17:54Z"
+      reason: PodCompleted
+      status: "False"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2023-10-19T03:17:54Z"
+      reason: PodCompleted
+      status: "False"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-10-19T03:17:54Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://8247dc3eb8dfe2d7a9754408921ac740424ea123076ef4dceb305866a923e0ba
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:a85fbe0aecf2203c347074c95cae8ef611897c5c614e2ea8ad3a612b32ab355b
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:a85fbe0aecf2203c347074c95cae8ef611897c5c614e2ea8ad3a612b32ab355b
+      lastState: {}
+      name: extract
+      ready: false
+      restartCount: 0
+      started: false
+      state:
+        terminated:
+          containerID: cri-o://8247dc3eb8dfe2d7a9754408921ac740424ea123076ef4dceb305866a923e0ba
+          exitCode: 0
+          finishedAt: "2023-10-19T03:18:18Z"
+          reason: Completed
+          startedAt: "2023-10-19T03:18:18Z"
+    hostIP: 10.80.80.13
+    initContainerStatuses:
+    - containerID: cri-o://f3a35bc17c15fd48e1b37f8c37a956b80dae62b59f63f4afe3ddc82a88d9186b
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:58d171c685b8bba98ed0a0497b23ddc9703fe975ce93e04182a283ac17f31410
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:58d171c685b8bba98ed0a0497b23ddc9703fe975ce93e04182a283ac17f31410
+      lastState: {}
+      name: util
+      ready: true
+      restartCount: 0
+      state:
+        terminated:
+          containerID: cri-o://f3a35bc17c15fd48e1b37f8c37a956b80dae62b59f63f4afe3ddc82a88d9186b
+          exitCode: 0
+          finishedAt: "2023-10-19T03:17:57Z"
+          reason: Completed
+          startedAt: "2023-10-19T03:17:57Z"
+    - containerID: cri-o://fb0e4e03aa49f920c1820a1bbb86f0c72a208eaec26c865ecac15554324bb61e
+      image: registry.redhat.io/oadp/oadp-operator-bundle@sha256:cb573ef4e70fcd9dc576bca70e915068dde49b896131c2f2446fea13d9b9dccd
+      imageID: registry.redhat.io/oadp/oadp-operator-bundle@sha256:cb573ef4e70fcd9dc576bca70e915068dde49b896131c2f2446fea13d9b9dccd
+      lastState: {}
+      name: pull
+      ready: true
+      restartCount: 0
+      state:
+        terminated:
+          containerID: cri-o://fb0e4e03aa49f920c1820a1bbb86f0c72a208eaec26c865ecac15554324bb61e
+          exitCode: 0
+          finishedAt: "2023-10-19T03:18:01Z"
+          reason: Completed
+          startedAt: "2023-10-19T03:18:01Z"
+    phase: Succeeded
+    podIP: 10.129.22.227
+    podIPs:
+    - ip: 10.129.22.227
+    qosClass: Burstable
+    startTime: "2023-10-19T03:17:54Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.128.22.157"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.128.22.157"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/scc: restricted
+    creationTimestamp: "2024-07-11T14:22:03Z"
+    generateName: 8ac2ab6b90b5312037578eac70d43312d312058b9424b0d8ac8f3c0d6f600fa-
+    labels:
+      controller-uid: 3f52498b-8c5b-4445-ba70-14319ad96661
+      job-name: 8ac2ab6b90b5312037578eac70d43312d312058b9424b0d8ac8f3c0d6f600fa
+    name: 8ac2ab6b90b5312037578eac70d43312d312058b9424b0d8ac8f3c0d6fv2cx9
+    namespace: openshift-marketplace
+    ownerReferences:
+    - apiVersion: batch/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Job
+      name: 8ac2ab6b90b5312037578eac70d43312d312058b9424b0d8ac8f3c0d6f600fa
+      uid: 3f52498b-8c5b-4445-ba70-14319ad96661
+    resourceVersion: "449089335"
+    uid: e110bc17-375b-4c90-b620-87b685bfd518
+  spec:
+    containers:
+    - command:
+      - opm
+      - alpha
+      - bundle
+      - extract
+      - -m
+      - /bundle/
+      - -n
+      - openshift-marketplace
+      - -c
+      - 8ac2ab6b90b5312037578eac70d43312d312058b9424b0d8ac8f3c0d6f600fa
+      - -z
+      env:
+      - name: CONTAINER_IMAGE
+        value: registry.redhat.io/oadp/oadp-operator-bundle@sha256:670e0cc80b44d931389c1c9713bb990d9057a28c718bf784df0ee06a32206929
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:a85fbe0aecf2203c347074c95cae8ef611897c5c614e2ea8ad3a612b32ab355b
+      imagePullPolicy: IfNotPresent
+      name: extract
+      resources:
+        requests:
+          cpu: 10m
+          memory: 50Mi
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000240000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /bundle
+        name: bundle
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-xhsc5
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: default-dockercfg-nx25s
+    initContainers:
+    - command:
+      - /bin/cp
+      - -Rv
+      - /bin/cpb
+      - /util/cpb
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:58d171c685b8bba98ed0a0497b23ddc9703fe975ce93e04182a283ac17f31410
+      imagePullPolicy: IfNotPresent
+      name: util
+      resources:
+        requests:
+          cpu: 10m
+          memory: 50Mi
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000240000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /util
+        name: util
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-xhsc5
+        readOnly: true
+    - command:
+      - /util/cpb
+      - /bundle
+      image: registry.redhat.io/oadp/oadp-operator-bundle@sha256:670e0cc80b44d931389c1c9713bb990d9057a28c718bf784df0ee06a32206929
+      imagePullPolicy: Always
+      name: pull
+      resources:
+        requests:
+          cpu: 10m
+          memory: 50Mi
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000240000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /bundle
+        name: bundle
+      - mountPath: /util
+        name: util
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-xhsc5
+        readOnly: true
+    nodeName: ocp4azu-sj2sl-worker-noprod-dev-brazilsouth2-4dm6s
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Never
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000240000
+      seLinuxOptions:
+        level: s0:c16,c0
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoSchedule
+      key: node.kubernetes.io/memory-pressure
+      operator: Exists
+    volumes:
+    - emptyDir: {}
+      name: bundle
+    - emptyDir: {}
+      name: util
+    - name: kube-api-access-xhsc5
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-11T14:22:17Z"
+      reason: PodCompleted
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-11T14:22:41Z"
+      reason: PodCompleted
+      status: "False"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-11T14:22:41Z"
+      reason: PodCompleted
+      status: "False"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-11T14:22:03Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://9b1942c72e7cc240350568bf37f7073d6a0ca7445944c6692d80312b12f73779
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:a85fbe0aecf2203c347074c95cae8ef611897c5c614e2ea8ad3a612b32ab355b
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:a85fbe0aecf2203c347074c95cae8ef611897c5c614e2ea8ad3a612b32ab355b
+      lastState: {}
+      name: extract
+      ready: false
+      restartCount: 0
+      started: false
+      state:
+        terminated:
+          containerID: cri-o://9b1942c72e7cc240350568bf37f7073d6a0ca7445944c6692d80312b12f73779
+          exitCode: 0
+          finishedAt: "2024-07-11T14:22:40Z"
+          reason: Completed
+          startedAt: "2024-07-11T14:22:40Z"
+    hostIP: 10.80.80.9
+    initContainerStatuses:
+    - containerID: cri-o://608c77ec61894782630ed6ca9dc83205731c2709fb67fba2ef5c5b4b4313f51e
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:58d171c685b8bba98ed0a0497b23ddc9703fe975ce93e04182a283ac17f31410
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:58d171c685b8bba98ed0a0497b23ddc9703fe975ce93e04182a283ac17f31410
+      lastState: {}
+      name: util
+      ready: true
+      restartCount: 0
+      state:
+        terminated:
+          containerID: cri-o://608c77ec61894782630ed6ca9dc83205731c2709fb67fba2ef5c5b4b4313f51e
+          exitCode: 0
+          finishedAt: "2024-07-11T14:22:05Z"
+          reason: Completed
+          startedAt: "2024-07-11T14:22:05Z"
+    - containerID: cri-o://0069c9eac18812cc18ed6a693784ef1d4bd6091562add0b624b9cb8f008239be
+      image: registry.redhat.io/oadp/oadp-operator-bundle@sha256:670e0cc80b44d931389c1c9713bb990d9057a28c718bf784df0ee06a32206929
+      imageID: registry.redhat.io/oadp/oadp-operator-bundle@sha256:670e0cc80b44d931389c1c9713bb990d9057a28c718bf784df0ee06a32206929
+      lastState: {}
+      name: pull
+      ready: true
+      restartCount: 0
+      state:
+        terminated:
+          containerID: cri-o://0069c9eac18812cc18ed6a693784ef1d4bd6091562add0b624b9cb8f008239be
+          exitCode: 0
+          finishedAt: "2024-07-11T14:22:17Z"
+          reason: Completed
+          startedAt: "2024-07-11T14:22:16Z"
+    phase: Succeeded
+    podIP: 10.128.22.157
+    podIPs:
+    - ip: 10.128.22.157
+    qosClass: Burstable
+    startTime: "2024-07-11T14:22:03Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      cluster-autoscaler.kubernetes.io/safe-to-evict: "true"
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.129.0.155"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.129.0.155"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/scc: anyuid
+      operatorframework.io/managed-by: marketplace-operator
+    creationTimestamp: "2023-11-28T19:15:17Z"
+    generateName: certified-operators-
+    labels:
+      catalogsource.operators.coreos.com/update: ""
+      olm.catalogSource: certified-operators
+      olm.pod-spec-hash: 6cdb874f56
+    name: certified-operators-crgnv
+    namespace: openshift-marketplace
+    ownerReferences:
+    - apiVersion: operators.coreos.com/v1alpha1
+      blockOwnerDeletion: false
+      controller: false
+      kind: CatalogSource
+      name: certified-operators
+      uid: 14ab831a-f34b-4eae-950f-ccba5ec642ea
+    resourceVersion: "172666457"
+    uid: 8dd753fa-bbfd-46b5-9e68-2d9af1ebfd98
+  spec:
+    containers:
+    - image: registry.redhat.io/redhat/certified-operator-index:v4.10
+      imagePullPolicy: Always
+      livenessProbe:
+        exec:
+          command:
+          - grpc_health_probe
+          - -addr=:50051
+        failureThreshold: 3
+        initialDelaySeconds: 10
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 5
+      name: registry-server
+      ports:
+      - containerPort: 50051
+        name: grpc
+        protocol: TCP
+      readinessProbe:
+        exec:
+          command:
+          - grpc_health_probe
+          - -addr=:50051
+        failureThreshold: 3
+        initialDelaySeconds: 5
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 5
+      resources:
+        requests:
+          cpu: 10m
+          memory: 50Mi
+      securityContext:
+        capabilities:
+          drop:
+          - MKNOD
+        readOnlyRootFilesystem: false
+      startupProbe:
+        exec:
+          command:
+          - grpc_health_probe
+          - -addr=:50051
+        failureThreshold: 15
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 1
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: FallbackToLogsOnError
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-cxbk5
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: certified-operators-dockercfg-mdf5k
+    nodeName: ocp4azu-sj2sl-master-0
+    nodeSelector:
+      kubernetes.io/os: linux
+      node-role.kubernetes.io/master: ""
+    preemptionPolicy: PreemptLowerPriority
+    priority: 2000000000
+    priorityClassName: system-cluster-critical
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      seLinuxOptions:
+        level: s0:c16,c0
+    serviceAccount: certified-operators
+    serviceAccountName: certified-operators
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/master
+      operator: Exists
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 120
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 120
+    - effect: NoSchedule
+      key: node.kubernetes.io/memory-pressure
+      operator: Exists
+    volumes:
+    - name: kube-api-access-cxbk5
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-11-28T19:15:17Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2023-11-28T19:15:29Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2023-11-28T19:15:29Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-11-28T19:15:17Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://a79159ff3bc8206ab4b3af9a0a4fbd35b390e03941bcfc68b84c718ba04067f2
+      image: registry.redhat.io/redhat/certified-operator-index:v4.10
+      imageID: registry.redhat.io/redhat/certified-operator-index@sha256:3dce67415a332f6f8d23b7a8130123376ab852c40634e414969900f8aa419b99
+      lastState: {}
+      name: registry-server
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2023-11-28T19:15:24Z"
+    hostIP: 10.80.80.6
+    phase: Running
+    podIP: 10.129.0.155
+    podIPs:
+    - ip: 10.129.0.155
+    qosClass: Burstable
+    startTime: "2023-11-28T19:15:17Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      cluster-autoscaler.kubernetes.io/safe-to-evict: "true"
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.129.0.63"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.129.0.63"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/scc: anyuid
+      operatorframework.io/managed-by: marketplace-operator
+    creationTimestamp: "2023-12-06T05:14:17Z"
+    generateName: community-operators-
+    labels:
+      catalogsource.operators.coreos.com/update: ""
+      olm.catalogSource: community-operators
+      olm.pod-spec-hash: 656f95f5d4
+    name: community-operators-w6z6w
+    namespace: openshift-marketplace
+    ownerReferences:
+    - apiVersion: operators.coreos.com/v1alpha1
+      blockOwnerDeletion: false
+      controller: false
+      kind: CatalogSource
+      name: community-operators
+      uid: e71e9d76-ad65-4875-a648-02788f03ab63
+    resourceVersion: "179044351"
+    uid: f27d56df-1319-43b6-b24a-2fed1c66a805
+  spec:
+    containers:
+    - image: registry.redhat.io/redhat/community-operator-index:v4.10
+      imagePullPolicy: Always
+      livenessProbe:
+        exec:
+          command:
+          - grpc_health_probe
+          - -addr=:50051
+        failureThreshold: 3
+        initialDelaySeconds: 10
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 5
+      name: registry-server
+      ports:
+      - containerPort: 50051
+        name: grpc
+        protocol: TCP
+      readinessProbe:
+        exec:
+          command:
+          - grpc_health_probe
+          - -addr=:50051
+        failureThreshold: 3
+        initialDelaySeconds: 5
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 5
+      resources:
+        requests:
+          cpu: 10m
+          memory: 50Mi
+      securityContext:
+        capabilities:
+          drop:
+          - MKNOD
+        readOnlyRootFilesystem: false
+      startupProbe:
+        exec:
+          command:
+          - grpc_health_probe
+          - -addr=:50051
+        failureThreshold: 15
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 1
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: FallbackToLogsOnError
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-4qmmv
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: community-operators-dockercfg-68v9c
+    nodeName: ocp4azu-sj2sl-master-0
+    nodeSelector:
+      kubernetes.io/os: linux
+      node-role.kubernetes.io/master: ""
+    preemptionPolicy: PreemptLowerPriority
+    priority: 2000000000
+    priorityClassName: system-cluster-critical
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      seLinuxOptions:
+        level: s0:c16,c0
+    serviceAccount: community-operators
+    serviceAccountName: community-operators
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/master
+      operator: Exists
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 120
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 120
+    - effect: NoSchedule
+      key: node.kubernetes.io/memory-pressure
+      operator: Exists
+    volumes:
+    - name: kube-api-access-4qmmv
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-12-06T05:14:17Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2023-12-06T05:14:37Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2023-12-06T05:14:37Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-12-06T05:14:17Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://d1a8d337a47570435ed99129b73e76172d8c58142f70f8414a95dbf7cf86096f
+      image: registry.redhat.io/redhat/community-operator-index:v4.10
+      imageID: registry.redhat.io/redhat/community-operator-index@sha256:069b83da0c95f935f3f099532093547e410ee3b1ef7dafdab9579e28a2854bc1
+      lastState: {}
+      name: registry-server
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2023-12-06T05:14:26Z"
+    hostIP: 10.80.80.6
+    phase: Running
+    podIP: 10.129.0.63
+    podIPs:
+    - ip: 10.129.0.63
+    qosClass: Burstable
+    startTime: "2023-12-06T05:14:17Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.130.21.243"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.130.21.243"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/scc: restricted
+    creationTimestamp: "2024-05-01T01:51:16Z"
+    generateName: d46c1776bddb51cd596003f0c37ff88e60982ffb7593bd2c8690d42000e31f8-
+    labels:
+      controller-uid: f9cdb5a8-3edf-4460-b08a-849aab49b4b9
+      job-name: d46c1776bddb51cd596003f0c37ff88e60982ffb7593bd2c8690d42000e31f8
+    name: d46c1776bddb51cd596003f0c37ff88e60982ffb7593bd2c8690d420008ggrd
+    namespace: openshift-marketplace
+    ownerReferences:
+    - apiVersion: batch/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Job
+      name: d46c1776bddb51cd596003f0c37ff88e60982ffb7593bd2c8690d42000e31f8
+      uid: f9cdb5a8-3edf-4460-b08a-849aab49b4b9
+    resourceVersion: "304822431"
+    uid: 4a21b5fc-dfa0-46d9-8639-ae73ca848665
+  spec:
+    containers:
+    - command:
+      - opm
+      - alpha
+      - bundle
+      - extract
+      - -m
+      - /bundle/
+      - -n
+      - openshift-marketplace
+      - -c
+      - d46c1776bddb51cd596003f0c37ff88e60982ffb7593bd2c8690d42000e31f8
+      - -z
+      env:
+      - name: CONTAINER_IMAGE
+        value: registry.redhat.io/oadp/oadp-operator-bundle@sha256:8957af692f11ddef8486f9d3fa3c1edac3fcc918fcf7bbccaefef9f433132888
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:a85fbe0aecf2203c347074c95cae8ef611897c5c614e2ea8ad3a612b32ab355b
+      imagePullPolicy: IfNotPresent
+      name: extract
+      resources:
+        requests:
+          cpu: 10m
+          memory: 50Mi
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000240000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /bundle
+        name: bundle
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-2d7ss
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: default-dockercfg-nx25s
+    initContainers:
+    - command:
+      - /bin/cp
+      - -Rv
+      - /bin/cpb
+      - /util/cpb
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:58d171c685b8bba98ed0a0497b23ddc9703fe975ce93e04182a283ac17f31410
+      imagePullPolicy: IfNotPresent
+      name: util
+      resources:
+        requests:
+          cpu: 10m
+          memory: 50Mi
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000240000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /util
+        name: util
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-2d7ss
+        readOnly: true
+    - command:
+      - /util/cpb
+      - /bundle
+      image: registry.redhat.io/oadp/oadp-operator-bundle@sha256:8957af692f11ddef8486f9d3fa3c1edac3fcc918fcf7bbccaefef9f433132888
+      imagePullPolicy: Always
+      name: pull
+      resources:
+        requests:
+          cpu: 10m
+          memory: 50Mi
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000240000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /bundle
+        name: bundle
+      - mountPath: /util
+        name: util
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-2d7ss
+        readOnly: true
+    nodeName: ocp4azu-sj2sl-worker-noprod-dev-brazilsouth1-vlxcp
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Never
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000240000
+      seLinuxOptions:
+        level: s0:c16,c0
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoSchedule
+      key: node.kubernetes.io/memory-pressure
+      operator: Exists
+    volumes:
+    - emptyDir: {}
+      name: bundle
+    - emptyDir: {}
+      name: util
+    - name: kube-api-access-2d7ss
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2024-05-01T01:51:23Z"
+      reason: PodCompleted
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2024-05-01T01:51:17Z"
+      reason: PodCompleted
+      status: "False"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2024-05-01T01:51:17Z"
+      reason: PodCompleted
+      status: "False"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2024-05-01T01:51:17Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://f78c3133d5ca314fc1ee18014ed0790701d1b63a1dbf4463190b8dc42f29202e
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:a85fbe0aecf2203c347074c95cae8ef611897c5c614e2ea8ad3a612b32ab355b
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:a85fbe0aecf2203c347074c95cae8ef611897c5c614e2ea8ad3a612b32ab355b
+      lastState: {}
+      name: extract
+      ready: false
+      restartCount: 0
+      started: false
+      state:
+        terminated:
+          containerID: cri-o://f78c3133d5ca314fc1ee18014ed0790701d1b63a1dbf4463190b8dc42f29202e
+          exitCode: 0
+          finishedAt: "2024-05-01T01:51:41Z"
+          reason: Completed
+          startedAt: "2024-05-01T01:51:41Z"
+    hostIP: 10.80.80.5
+    initContainerStatuses:
+    - containerID: cri-o://6d401b23b13336f278402540d57a31d108b38e96b5de499666a4f685125c3b8e
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:58d171c685b8bba98ed0a0497b23ddc9703fe975ce93e04182a283ac17f31410
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:58d171c685b8bba98ed0a0497b23ddc9703fe975ce93e04182a283ac17f31410
+      lastState: {}
+      name: util
+      ready: true
+      restartCount: 0
+      state:
+        terminated:
+          containerID: cri-o://6d401b23b13336f278402540d57a31d108b38e96b5de499666a4f685125c3b8e
+          exitCode: 0
+          finishedAt: "2024-05-01T01:51:19Z"
+          reason: Completed
+          startedAt: "2024-05-01T01:51:19Z"
+    - containerID: cri-o://2cddf95295a19c45aceae8900ea6818728ea3a0c58260f8f438e5a417deec9c1
+      image: registry.redhat.io/oadp/oadp-operator-bundle@sha256:8957af692f11ddef8486f9d3fa3c1edac3fcc918fcf7bbccaefef9f433132888
+      imageID: registry.redhat.io/oadp/oadp-operator-bundle@sha256:8957af692f11ddef8486f9d3fa3c1edac3fcc918fcf7bbccaefef9f433132888
+      lastState: {}
+      name: pull
+      ready: true
+      restartCount: 0
+      state:
+        terminated:
+          containerID: cri-o://2cddf95295a19c45aceae8900ea6818728ea3a0c58260f8f438e5a417deec9c1
+          exitCode: 0
+          finishedAt: "2024-05-01T01:51:23Z"
+          reason: Completed
+          startedAt: "2024-05-01T01:51:22Z"
+    phase: Succeeded
+    podIP: 10.130.21.243
+    podIPs:
+    - ip: 10.130.21.243
+    qosClass: Burstable
+    startTime: "2024-05-01T01:51:17Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.130.0.43"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.130.0.43"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/scc: restricted
+    creationTimestamp: "2023-05-04T21:35:54Z"
+    generateName: marketplace-operator-55cf45dcc6-
+    labels:
+      name: marketplace-operator
+      pod-template-hash: 55cf45dcc6
+    name: marketplace-operator-55cf45dcc6-lknxd
+    namespace: openshift-marketplace
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: marketplace-operator-55cf45dcc6
+      uid: b9ae80b9-a45f-4257-965e-415a775bb67c
+    resourceVersion: "114617592"
+    uid: bd041fd9-35b8-48ae-ab93-1a2b484ab0d7
+  spec:
+    containers:
+    - args:
+      - -defaultsDir=/defaults
+      - -clusterOperatorName=marketplace
+      - -tls-cert
+      - /var/run/secrets/serving-cert/tls.crt
+      - -tls-key
+      - /var/run/secrets/serving-cert/tls.key
+      command:
+      - marketplace-operator
+      env:
+      - name: WATCH_NAMESPACE
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: metadata.namespace
+      - name: POD_NAME
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: metadata.name
+      - name: OPERATOR_NAME
+        value: marketplace-operator
+      - name: RELEASE_VERSION
+        value: 4.10.53
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:8478a14170786045bad82111b5761ec3f3a6e8457026e803793f3870e6d133d3
+      imagePullPolicy: IfNotPresent
+      livenessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /healthz
+          port: 8080
+          scheme: HTTP
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 1
+      name: marketplace-operator
+      ports:
+      - containerPort: 60000
+        name: metrics
+        protocol: TCP
+      - containerPort: 8080
+        name: healthz
+        protocol: TCP
+      readinessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /healthz
+          port: 8080
+          scheme: HTTP
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 1
+      resources:
+        requests:
+          cpu: 10m
+          memory: 50Mi
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000240000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /etc/pki/ca-trust/extracted/pem/
+        name: marketplace-trusted-ca
+      - mountPath: /var/run/secrets/serving-cert
+        name: marketplace-operator-metrics
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-rqsfx
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    nodeName: ocp4azu-sj2sl-master-1
+    nodeSelector:
+      node-role.kubernetes.io/master: ""
+    preemptionPolicy: PreemptLowerPriority
+    priority: 2000000000
+    priorityClassName: system-cluster-critical
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000240000
+      seLinuxOptions:
+        level: s0:c16,c0
+    serviceAccount: marketplace-operator
+    serviceAccountName: marketplace-operator
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/master
+      operator: Exists
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 120
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 120
+    - effect: NoSchedule
+      key: node.kubernetes.io/memory-pressure
+      operator: Exists
+    volumes:
+    - configMap:
+        defaultMode: 420
+        items:
+        - key: ca-bundle.crt
+          path: tls-ca-bundle.pem
+        name: marketplace-trusted-ca
+        optional: true
+      name: marketplace-trusted-ca
+    - name: marketplace-operator-metrics
+      secret:
+        defaultMode: 420
+        secretName: marketplace-operator-metrics
+    - name: kube-api-access-rqsfx
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-04T21:40:05Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-11T18:26:46Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-11T18:26:46Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-04T21:40:05Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://7ce979e4e5d4d3e841f68c755a10bc17cc46aac35f63662b5a492a80a05cbb86
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:8478a14170786045bad82111b5761ec3f3a6e8457026e803793f3870e6d133d3
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:8478a14170786045bad82111b5761ec3f3a6e8457026e803793f3870e6d133d3
+      lastState: {}
+      name: marketplace-operator
+      ready: true
+      restartCount: 4
+      started: true
+      state:
+        running:
+          startedAt: "2023-05-11T18:26:39Z"
+    hostIP: 10.80.80.8
+    phase: Running
+    podIP: 10.130.0.43
+    podIPs:
+    - ip: 10.130.0.43
+    qosClass: Burstable
+    startTime: "2023-05-04T21:40:05Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      cluster-autoscaler.kubernetes.io/safe-to-evict: "true"
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.129.0.40"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.129.0.40"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/scc: anyuid
+      operatorframework.io/managed-by: marketplace-operator
+    creationTimestamp: "2024-06-30T06:24:40Z"
+    generateName: redhat-marketplace-
+    labels:
+      olm.catalogSource: redhat-marketplace
+      olm.pod-spec-hash: 5f586bc987
+    name: redhat-marketplace-fw5t9
+    namespace: openshift-marketplace
+    ownerReferences:
+    - apiVersion: operators.coreos.com/v1alpha1
+      blockOwnerDeletion: false
+      controller: false
+      kind: CatalogSource
+      name: redhat-marketplace
+      uid: 71d912a3-f47e-42e4-bbcf-119447846ea6
+    resourceVersion: "425754609"
+    uid: 95933ee2-f03f-4db1-87cb-6ca672e15dc3
+  spec:
+    containers:
+    - image: registry.redhat.io/redhat/redhat-marketplace-index:v4.10
+      imagePullPolicy: Always
+      livenessProbe:
+        exec:
+          command:
+          - grpc_health_probe
+          - -addr=:50051
+        failureThreshold: 3
+        initialDelaySeconds: 10
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 5
+      name: registry-server
+      ports:
+      - containerPort: 50051
+        name: grpc
+        protocol: TCP
+      readinessProbe:
+        exec:
+          command:
+          - grpc_health_probe
+          - -addr=:50051
+        failureThreshold: 3
+        initialDelaySeconds: 5
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 5
+      resources:
+        requests:
+          cpu: 10m
+          memory: 50Mi
+      securityContext:
+        capabilities:
+          drop:
+          - MKNOD
+        readOnlyRootFilesystem: false
+      startupProbe:
+        exec:
+          command:
+          - grpc_health_probe
+          - -addr=:50051
+        failureThreshold: 15
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 1
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: FallbackToLogsOnError
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-r7js8
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: redhat-marketplace-dockercfg-rjd8g
+    nodeName: ocp4azu-sj2sl-master-0
+    nodeSelector:
+      kubernetes.io/os: linux
+      node-role.kubernetes.io/master: ""
+    preemptionPolicy: PreemptLowerPriority
+    priority: 2000000000
+    priorityClassName: system-cluster-critical
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      seLinuxOptions:
+        level: s0:c16,c0
+    serviceAccount: redhat-marketplace
+    serviceAccountName: redhat-marketplace
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/master
+      operator: Exists
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 120
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 120
+    - effect: NoSchedule
+      key: node.kubernetes.io/memory-pressure
+      operator: Exists
+    volumes:
+    - name: kube-api-access-r7js8
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2024-06-30T06:24:41Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2024-06-30T06:24:52Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2024-06-30T06:24:52Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2024-06-30T06:24:40Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://2df0ce7b63d60dc8e1a4552c9282bdb1acdfb549f2cc03dbbc2bb1b3f57a0f9c
+      image: registry.redhat.io/redhat/redhat-marketplace-index:v4.10
+      imageID: registry.redhat.io/redhat/redhat-marketplace-index@sha256:212d4ad631741f9be256c3a9130343c5aabc8585d08d41dc6b05b169a4470b3c
+      lastState: {}
+      name: registry-server
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2024-06-30T06:24:44Z"
+    hostIP: 10.80.80.6
+    phase: Running
+    podIP: 10.129.0.40
+    podIPs:
+    - ip: 10.129.0.40
+    qosClass: Burstable
+    startTime: "2024-06-30T06:24:41Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      cluster-autoscaler.kubernetes.io/safe-to-evict: "true"
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.128.0.215"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.128.0.215"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/scc: anyuid
+      operatorframework.io/managed-by: marketplace-operator
+    creationTimestamp: "2024-08-01T19:09:31Z"
+    generateName: redhat-operators-
+    labels:
+      catalogsource.operators.coreos.com/update: ""
+      olm.catalogSource: redhat-operators
+      olm.pod-spec-hash: 8974fff8d
+    name: redhat-operators-q497t
+    namespace: openshift-marketplace
+    ownerReferences:
+    - apiVersion: operators.coreos.com/v1alpha1
+      blockOwnerDeletion: false
+      controller: false
+      kind: CatalogSource
+      name: redhat-operators
+      uid: 22f75936-542c-492c-a037-eeba1a25d24b
+    resourceVersion: "493256751"
+    uid: a3746ada-0ee6-4d9c-b5e4-fed512aba916
+  spec:
+    containers:
+    - image: registry.redhat.io/redhat/redhat-operator-index:v4.10
+      imagePullPolicy: Always
+      livenessProbe:
+        exec:
+          command:
+          - grpc_health_probe
+          - -addr=:50051
+        failureThreshold: 3
+        initialDelaySeconds: 10
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 5
+      name: registry-server
+      ports:
+      - containerPort: 50051
+        name: grpc
+        protocol: TCP
+      readinessProbe:
+        exec:
+          command:
+          - grpc_health_probe
+          - -addr=:50051
+        failureThreshold: 3
+        initialDelaySeconds: 5
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 5
+      resources:
+        requests:
+          cpu: 10m
+          memory: 50Mi
+      securityContext:
+        capabilities:
+          drop:
+          - MKNOD
+        readOnlyRootFilesystem: false
+      startupProbe:
+        exec:
+          command:
+          - grpc_health_probe
+          - -addr=:50051
+        failureThreshold: 15
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 1
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: FallbackToLogsOnError
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-p4h2p
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: redhat-operators-dockercfg-dd5gt
+    nodeName: ocp4azu-sj2sl-master-2
+    nodeSelector:
+      kubernetes.io/os: linux
+      node-role.kubernetes.io/master: ""
+    preemptionPolicy: PreemptLowerPriority
+    priority: 2000000000
+    priorityClassName: system-cluster-critical
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      seLinuxOptions:
+        level: s0:c16,c0
+    serviceAccount: redhat-operators
+    serviceAccountName: redhat-operators
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/master
+      operator: Exists
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 120
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 120
+    - effect: NoSchedule
+      key: node.kubernetes.io/memory-pressure
+      operator: Exists
+    volumes:
+    - name: kube-api-access-p4h2p
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2024-08-01T19:09:31Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2024-08-01T19:09:52Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2024-08-01T19:09:52Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2024-08-01T19:09:31Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://14f57922d5dfe93b9ddbb2e0d2e6534dbf216692ca5e306f9775fcec92162ec2
+      image: registry.redhat.io/redhat/redhat-operator-index:v4.10
+      imageID: registry.redhat.io/redhat/redhat-operator-index@sha256:10c2c810bf5146432209afb9e7db0c140d59a3d9fc4489f6f9fd51ce96862d14
+      lastState: {}
+      name: registry-server
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2024-08-01T19:09:42Z"
+    hostIP: 10.80.80.7
+    phase: Running
+    podIP: 10.128.0.215
+    podIPs:
+    - ip: 10.128.0.215
+    qosClass: Burstable
+    startTime: "2024-08-01T19:09:31Z"
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

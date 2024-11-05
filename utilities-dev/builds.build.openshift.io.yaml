@@ -1,0 +1,103 @@
+apiVersion: v1
+items:
+- apiVersion: build.openshift.io/v1
+  kind: Build
+  metadata:
+    annotations:
+      openshift.io/build-config.name: s2i-nestjs
+      openshift.io/build.number: "1"
+      openshift.io/build.pod-name: s2i-nestjs-1-build
+    creationTimestamp: "2023-09-01T01:10:32Z"
+    generation: 2
+    labels:
+      app: s2i-nestjs
+      buildconfig: s2i-nestjs
+      migration.openshift.io/migrated-by-migmigration: 6d5b8e4e-6e6a-4858-a8cb-69094aa3de8a
+      migration.openshift.io/migrated-by-migplan: fc39346c-f9d4-4b3a-8404-0437309f995a
+      openshift.io/build-config.name: s2i-nestjs
+      openshift.io/build.start-policy: Serial
+      velero.io/backup-name: migration-7ff83-initial-fq7dv
+      velero.io/restore-name: migration-7ff83-final-jlm4p
+    name: s2i-nestjs-1
+    namespace: utilities-dev
+    ownerReferences:
+    - apiVersion: build.openshift.io/v1
+      controller: true
+      kind: BuildConfig
+      name: s2i-nestjs
+      uid: f380c98b-0172-4921-96dc-c620d57b4e2d
+    resourceVersion: "95923639"
+    uid: 8a9cd7e5-cd45-403d-bef6-07c82c238309
+  spec:
+    nodeSelector: null
+    output:
+      pushSecret:
+        name: builder-dockercfg-sx6s5
+      to:
+        kind: ImageStreamTag
+        name: s2i-nestjs:latest
+    postCommit: {}
+    resources: {}
+    serviceAccount: builder
+    source:
+      git:
+        ref: master
+        uri: https://dirtrab.visualstudio.com/Denuncia%20Posterior%20Termino%20Contrato/_git/serv001-denuncia
+      sourceSecret:
+        name: vsts
+      type: Git
+    strategy:
+      sourceStrategy:
+        from:
+          kind: DockerImage
+          name: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+        pullSecret:
+          name: builder-dockercfg-sx6s5
+      type: Source
+    triggeredBy:
+    - imageChangeBuild:
+        fromRef:
+          kind: ImageStreamTag
+          name: nodejs:10
+          namespace: openshift
+        imageID: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+      message: Image change
+  status:
+    completionTimestamp: "2023-09-01T01:10:35Z"
+    conditions:
+    - lastTransitionTime: "2023-09-01T01:10:32Z"
+      lastUpdateTime: "2023-09-01T01:10:32Z"
+      status: "False"
+      type: New
+    - lastTransitionTime: "2023-09-01T01:10:35Z"
+      lastUpdateTime: "2023-09-01T01:10:35Z"
+      status: "False"
+      type: Pending
+    - lastTransitionTime: "2023-09-01T01:10:35Z"
+      lastUpdateTime: "2023-09-01T01:10:35Z"
+      status: "False"
+      type: Running
+    - lastTransitionTime: "2023-09-01T01:10:35Z"
+      lastUpdateTime: "2023-09-01T01:10:35Z"
+      message: Failed to fetch the input source.
+      reason: FetchSourceFailed
+      status: "True"
+      type: Failed
+    config:
+      kind: BuildConfig
+      name: s2i-nestjs
+      namespace: utilities-dev
+    duration: 3000000000
+    logSnippet: |-
+      Cloning "https://dirtrab.visualstudio.com/Denuncia%20Posterior%20Termino%20Contrato/_git/serv001-denuncia" ...
+      error: failed to fetch requested repository "https://dirtr...20Contrato/_git/serv001-denuncia" with provided credentials
+    message: Failed to fetch the input source.
+    output: {}
+    outputDockerImageReference: image-registry.openshift-image-registry.svc:5000/utilities-dev/s2i-nestjs:latest
+    phase: Failed
+    reason: FetchSourceFailed
+    startTimestamp: "2023-09-01T01:10:32Z"
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

@@ -1,0 +1,632 @@
+apiVersion: v1
+items:
+- apiVersion: build.openshift.io/v1
+  kind: Build
+  metadata:
+    annotations:
+      openshift.io/build-config.name: djtrl-serv001-decl
+      openshift.io/build.number: "1"
+      openshift.io/build.pod-name: djtrl-serv001-decl-1-build
+    creationTimestamp: "2023-09-01T01:10:33Z"
+    generation: 2
+    labels:
+      app: djtrl-serv001-decl
+      buildconfig: djtrl-serv001-decl
+      migration.openshift.io/migrated-by-migmigration: bf3b53a0-3a30-4f32-905a-b3647ad7c520
+      migration.openshift.io/migrated-by-migplan: f912fe17-8056-491d-8703-6b82312d78ec
+      openshift.io/build-config.name: djtrl-serv001-decl
+      openshift.io/build.start-policy: Serial
+      velero.io/backup-name: migration-d9b4c-initial-qhlk8
+      velero.io/restore-name: migration-d9b4c-final-gc9lr
+    name: djtrl-serv001-decl-1
+    namespace: ministrosdefe-dev
+    ownerReferences:
+    - apiVersion: build.openshift.io/v1
+      controller: true
+      kind: BuildConfig
+      name: djtrl-serv001-decl
+      uid: 0cac8065-c72c-4ea1-9e5b-4348335dbbd1
+    resourceVersion: "95923884"
+    uid: 746c962b-f087-46ab-9b72-aade5ed715b9
+  spec:
+    nodeSelector: null
+    output:
+      pushSecret:
+        name: builder-dockercfg-dvgmg
+      to:
+        kind: ImageStreamTag
+        name: djtrl-serv001-decl:latest
+    postCommit: {}
+    resources: {}
+    serviceAccount: builder
+    source:
+      git:
+        ref: develop
+        uri: https://dirtrab.visualstudio.com/Ministros%20De%20Fe/_git/djtrl-serv001-declaracion
+      sourceSecret:
+        name: vsts
+      type: Git
+    strategy:
+      sourceStrategy:
+        from:
+          kind: DockerImage
+          name: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+        pullSecret:
+          name: builder-dockercfg-dvgmg
+      type: Source
+    triggeredBy:
+    - imageChangeBuild:
+        fromRef:
+          kind: ImageStreamTag
+          name: nodejs:10
+          namespace: openshift
+        imageID: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+      message: Image change
+  status:
+    completionTimestamp: "2023-09-01T01:10:38Z"
+    conditions:
+    - lastTransitionTime: "2023-09-01T01:10:34Z"
+      lastUpdateTime: "2023-09-01T01:10:34Z"
+      status: "False"
+      type: New
+    - lastTransitionTime: "2023-09-01T01:10:37Z"
+      lastUpdateTime: "2023-09-01T01:10:37Z"
+      status: "False"
+      type: Pending
+    - lastTransitionTime: "2023-09-01T01:10:38Z"
+      lastUpdateTime: "2023-09-01T01:10:38Z"
+      status: "False"
+      type: Running
+    - lastTransitionTime: "2023-09-01T01:10:38Z"
+      lastUpdateTime: "2023-09-01T01:10:38Z"
+      message: Failed to fetch the input source.
+      reason: FetchSourceFailed
+      status: "True"
+      type: Failed
+    config:
+      kind: BuildConfig
+      name: djtrl-serv001-decl
+      namespace: ministrosdefe-dev
+    duration: 5000000000
+    logSnippet: |-
+      Cloning "https://dirtrab.visualstudio.com/Ministros%20De%20Fe/_git/djtrl-serv001-declaracion" ...
+      error: failed to fetch requested repository "https://dirtr...e/_git/djtrl-serv001-declaracion" with provided credentials
+    message: Failed to fetch the input source.
+    output: {}
+    outputDockerImageReference: image-registry.openshift-image-registry.svc:5000/ministrosdefe-dev/djtrl-serv001-decl:latest
+    phase: Failed
+    reason: FetchSourceFailed
+    startTimestamp: "2023-09-01T01:10:33Z"
+- apiVersion: build.openshift.io/v1
+  kind: Build
+  metadata:
+    annotations:
+      openshift.io/build-config.name: djtrl-serv001-decl-qa
+      openshift.io/build.number: "1"
+      openshift.io/build.pod-name: djtrl-serv001-decl-qa-1-build
+    creationTimestamp: "2023-09-01T01:10:32Z"
+    generation: 2
+    labels:
+      app: djtrl-serv001-decl-qa
+      buildconfig: djtrl-serv001-decl-qa
+      migration.openshift.io/migrated-by-migmigration: bf3b53a0-3a30-4f32-905a-b3647ad7c520
+      migration.openshift.io/migrated-by-migplan: f912fe17-8056-491d-8703-6b82312d78ec
+      openshift.io/build-config.name: djtrl-serv001-decl-qa
+      openshift.io/build.start-policy: Serial
+      velero.io/backup-name: migration-d9b4c-initial-qhlk8
+      velero.io/restore-name: migration-d9b4c-final-gc9lr
+    name: djtrl-serv001-decl-qa-1
+    namespace: ministrosdefe-dev
+    ownerReferences:
+    - apiVersion: build.openshift.io/v1
+      controller: true
+      kind: BuildConfig
+      name: djtrl-serv001-decl-qa
+      uid: 3cfa969f-8455-4fde-ae1b-ede9cf69fa20
+    resourceVersion: "95923674"
+    uid: 17c2768e-6232-46e7-9954-2c5a8eb883ce
+  spec:
+    nodeSelector: null
+    output:
+      pushSecret:
+        name: builder-dockercfg-dvgmg
+      to:
+        kind: ImageStreamTag
+        name: djtrl-serv001-decl-qa:latest
+    postCommit: {}
+    resources: {}
+    serviceAccount: builder
+    source:
+      git:
+        ref: develop
+        uri: https://dirtrab.visualstudio.com/Ministros%20De%20Fe/_git/djtrl-serv001-declaracion
+      sourceSecret:
+        name: vsts
+      type: Git
+    strategy:
+      sourceStrategy:
+        from:
+          kind: DockerImage
+          name: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+        pullSecret:
+          name: builder-dockercfg-dvgmg
+      type: Source
+    triggeredBy:
+    - imageChangeBuild:
+        fromRef:
+          kind: ImageStreamTag
+          name: nodejs:10
+          namespace: openshift
+        imageID: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+      message: Image change
+  status:
+    completionTimestamp: "2023-09-01T01:10:36Z"
+    conditions:
+    - lastTransitionTime: "2023-09-01T01:10:32Z"
+      lastUpdateTime: "2023-09-01T01:10:32Z"
+      status: "False"
+      type: New
+    - lastTransitionTime: "2023-09-01T01:10:35Z"
+      lastUpdateTime: "2023-09-01T01:10:35Z"
+      status: "False"
+      type: Pending
+    - lastTransitionTime: "2023-09-01T01:10:36Z"
+      lastUpdateTime: "2023-09-01T01:10:36Z"
+      status: "False"
+      type: Running
+    - lastTransitionTime: "2023-09-01T01:10:36Z"
+      lastUpdateTime: "2023-09-01T01:10:36Z"
+      message: Failed to fetch the input source.
+      reason: FetchSourceFailed
+      status: "True"
+      type: Failed
+    config:
+      kind: BuildConfig
+      name: djtrl-serv001-decl-qa
+      namespace: ministrosdefe-dev
+    duration: 4000000000
+    logSnippet: |-
+      Cloning "https://dirtrab.visualstudio.com/Ministros%20De%20Fe/_git/djtrl-serv001-declaracion" ...
+      error: failed to fetch requested repository "https://dirtr...e/_git/djtrl-serv001-declaracion" with provided credentials
+    message: Failed to fetch the input source.
+    output: {}
+    outputDockerImageReference: image-registry.openshift-image-registry.svc:5000/ministrosdefe-dev/djtrl-serv001-decl-qa:latest
+    phase: Failed
+    reason: FetchSourceFailed
+    startTimestamp: "2023-09-01T01:10:32Z"
+- apiVersion: build.openshift.io/v1
+  kind: Build
+  metadata:
+    annotations:
+      openshift.io/build-config.name: djtrl-serv002-bff
+      openshift.io/build.number: "1"
+      openshift.io/build.pod-name: djtrl-serv002-bff-1-build
+    creationTimestamp: "2023-09-01T01:10:32Z"
+    generation: 2
+    labels:
+      app: djtrl-serv002-bff
+      buildconfig: djtrl-serv002-bff
+      migration.openshift.io/migrated-by-migmigration: bf3b53a0-3a30-4f32-905a-b3647ad7c520
+      migration.openshift.io/migrated-by-migplan: f912fe17-8056-491d-8703-6b82312d78ec
+      openshift.io/build-config.name: djtrl-serv002-bff
+      openshift.io/build.start-policy: Serial
+      velero.io/backup-name: migration-d9b4c-initial-qhlk8
+      velero.io/restore-name: migration-d9b4c-final-gc9lr
+    name: djtrl-serv002-bff-1
+    namespace: ministrosdefe-dev
+    ownerReferences:
+    - apiVersion: build.openshift.io/v1
+      controller: true
+      kind: BuildConfig
+      name: djtrl-serv002-bff
+      uid: ca170cf3-5ae6-40ef-87f8-8ac5b35fa8ca
+    resourceVersion: "95923628"
+    uid: 97bd477a-750b-48b9-87eb-f779709e90b8
+  spec:
+    nodeSelector: null
+    output:
+      pushSecret:
+        name: builder-dockercfg-dvgmg
+      to:
+        kind: ImageStreamTag
+        name: djtrl-serv002-bff:latest
+    postCommit: {}
+    resources: {}
+    serviceAccount: builder
+    source:
+      git:
+        ref: develop
+        uri: https://dirtrab.visualstudio.com/Ministros%20De%20Fe/_git/djtrl-serv002-bff
+      sourceSecret:
+        name: vsts
+      type: Git
+    strategy:
+      sourceStrategy:
+        from:
+          kind: DockerImage
+          name: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+        pullSecret:
+          name: builder-dockercfg-dvgmg
+      type: Source
+    triggeredBy:
+    - imageChangeBuild:
+        fromRef:
+          kind: ImageStreamTag
+          name: nodejs:10
+          namespace: openshift
+        imageID: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+      message: Image change
+  status:
+    completionTimestamp: "2023-09-01T01:10:36Z"
+    conditions:
+    - lastTransitionTime: "2023-09-01T01:10:32Z"
+      lastUpdateTime: "2023-09-01T01:10:32Z"
+      status: "False"
+      type: New
+    - lastTransitionTime: "2023-09-01T01:10:35Z"
+      lastUpdateTime: "2023-09-01T01:10:35Z"
+      status: "False"
+      type: Pending
+    - lastTransitionTime: "2023-09-01T01:10:36Z"
+      lastUpdateTime: "2023-09-01T01:10:36Z"
+      status: "False"
+      type: Running
+    - lastTransitionTime: "2023-09-01T01:10:36Z"
+      lastUpdateTime: "2023-09-01T01:10:36Z"
+      message: Failed to fetch the input source.
+      reason: FetchSourceFailed
+      status: "True"
+      type: Failed
+    config:
+      kind: BuildConfig
+      name: djtrl-serv002-bff
+      namespace: ministrosdefe-dev
+    duration: 4000000000
+    logSnippet: |-
+      Cloning "https://dirtrab.visualstudio.com/Ministros%20De%20Fe/_git/djtrl-serv002-bff" ...
+      error: failed to fetch requested repository "https://dirtr...20De%20Fe/_git/djtrl-serv002-bff" with provided credentials
+    message: Failed to fetch the input source.
+    output: {}
+    outputDockerImageReference: image-registry.openshift-image-registry.svc:5000/ministrosdefe-dev/djtrl-serv002-bff:latest
+    phase: Failed
+    reason: FetchSourceFailed
+    startTimestamp: "2023-09-01T01:10:32Z"
+- apiVersion: build.openshift.io/v1
+  kind: Build
+  metadata:
+    annotations:
+      openshift.io/build-config.name: djtrl-serv002-bff-qa
+      openshift.io/build.number: "1"
+      openshift.io/build.pod-name: djtrl-serv002-bff-qa-1-build
+    creationTimestamp: "2023-09-01T01:10:32Z"
+    generation: 2
+    labels:
+      app: djtrl-serv002-bff-qa
+      buildconfig: djtrl-serv002-bff-qa
+      migration.openshift.io/migrated-by-migmigration: bf3b53a0-3a30-4f32-905a-b3647ad7c520
+      migration.openshift.io/migrated-by-migplan: f912fe17-8056-491d-8703-6b82312d78ec
+      openshift.io/build-config.name: djtrl-serv002-bff-qa
+      openshift.io/build.start-policy: Serial
+      velero.io/backup-name: migration-d9b4c-initial-qhlk8
+      velero.io/restore-name: migration-d9b4c-final-gc9lr
+    name: djtrl-serv002-bff-qa-1
+    namespace: ministrosdefe-dev
+    ownerReferences:
+    - apiVersion: build.openshift.io/v1
+      controller: true
+      kind: BuildConfig
+      name: djtrl-serv002-bff-qa
+      uid: d892d5b6-7972-4184-9df8-2a0b86b2161d
+    resourceVersion: "95923690"
+    uid: 28e61354-c252-433b-9441-63a70d5e9a65
+  spec:
+    nodeSelector: null
+    output:
+      pushSecret:
+        name: builder-dockercfg-dvgmg
+      to:
+        kind: ImageStreamTag
+        name: djtrl-serv002-bff-qa:latest
+    postCommit: {}
+    resources: {}
+    serviceAccount: builder
+    source:
+      git:
+        ref: develop
+        uri: https://dirtrab.visualstudio.com/Ministros%20De%20Fe/_git/djtrl-serv002-bff
+      sourceSecret:
+        name: vsts
+      type: Git
+    strategy:
+      sourceStrategy:
+        from:
+          kind: DockerImage
+          name: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+        pullSecret:
+          name: builder-dockercfg-dvgmg
+      type: Source
+    triggeredBy:
+    - imageChangeBuild:
+        fromRef:
+          kind: ImageStreamTag
+          name: nodejs:10
+          namespace: openshift
+        imageID: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+      message: Image change
+  status:
+    completionTimestamp: "2023-09-01T01:10:36Z"
+    conditions:
+    - lastTransitionTime: "2023-09-01T01:10:32Z"
+      lastUpdateTime: "2023-09-01T01:10:32Z"
+      status: "False"
+      type: New
+    - lastTransitionTime: "2023-09-01T01:10:35Z"
+      lastUpdateTime: "2023-09-01T01:10:35Z"
+      status: "False"
+      type: Pending
+    - lastTransitionTime: "2023-09-01T01:10:35Z"
+      lastUpdateTime: "2023-09-01T01:10:35Z"
+      status: "False"
+      type: Running
+    - lastTransitionTime: "2023-09-01T01:10:35Z"
+      lastUpdateTime: "2023-09-01T01:10:35Z"
+      message: Failed to fetch the input source.
+      reason: FetchSourceFailed
+      status: "True"
+      type: Failed
+    config:
+      kind: BuildConfig
+      name: djtrl-serv002-bff-qa
+      namespace: ministrosdefe-dev
+    duration: 4000000000
+    logSnippet: |-
+      Cloning "https://dirtrab.visualstudio.com/Ministros%20De%20Fe/_git/djtrl-serv002-bff" ...
+      error: failed to fetch requested repository "https://dirtr...20De%20Fe/_git/djtrl-serv002-bff" with provided credentials
+    message: Failed to fetch the input source.
+    output: {}
+    outputDockerImageReference: image-registry.openshift-image-registry.svc:5000/ministrosdefe-dev/djtrl-serv002-bff-qa:latest
+    phase: Failed
+    reason: FetchSourceFailed
+    startTimestamp: "2023-09-01T01:10:32Z"
+- apiVersion: build.openshift.io/v1
+  kind: Build
+  metadata:
+    annotations:
+      openshift.io/build-config.name: front001-min-de-fe-qa
+      openshift.io/build.number: "1"
+      openshift.io/build.pod-name: front001-min-de-fe-qa-1-build
+    creationTimestamp: "2023-09-01T01:10:32Z"
+    generation: 2
+    labels:
+      app: front001-min-de-fe-qa
+      buildconfig: front001-min-de-fe-qa
+      migration.openshift.io/migrated-by-migmigration: bf3b53a0-3a30-4f32-905a-b3647ad7c520
+      migration.openshift.io/migrated-by-migplan: f912fe17-8056-491d-8703-6b82312d78ec
+      openshift.io/build-config.name: front001-min-de-fe-qa
+      openshift.io/build.start-policy: Serial
+      velero.io/backup-name: migration-d9b4c-initial-qhlk8
+      velero.io/restore-name: migration-d9b4c-final-gc9lr
+    name: front001-min-de-fe-qa-1
+    namespace: ministrosdefe-dev
+    ownerReferences:
+    - apiVersion: build.openshift.io/v1
+      controller: true
+      kind: BuildConfig
+      name: front001-min-de-fe-qa
+      uid: bfa270d0-da90-4627-9f34-1b82d3cbe6a2
+    resourceVersion: "95923806"
+    uid: 84719f21-7ea4-4706-a160-f8e671a24716
+  spec:
+    nodeSelector: null
+    output:
+      pushSecret:
+        name: builder-dockercfg-dvgmg
+      to:
+        kind: ImageStreamTag
+        name: front001-min-de-fe-qa:latest
+    postCommit: {}
+    resources: {}
+    serviceAccount: builder
+    source:
+      git:
+        ref: develop
+        uri: https://dirtrab.visualstudio.com/Ministros%20De%20Fe/_git/front001-ministros-de-fe
+      sourceSecret:
+        name: vsts
+      type: Git
+    strategy:
+      sourceStrategy:
+        env:
+        - name: GENERATE_SOURCEMAP
+          value: "false"
+        - name: REACT_APP_VALIDA_TOKEN
+          value: http://proxy-portalinstitucional-dev.api.dirtrab.cl/api/Autenticacion/token/validar
+        - name: REACT_APP_REDIRECT
+          value: https://midt.dirtrab.cl/
+        - name: REACT_APP_VOLVER_REDIRECT
+          value: /trabajador/home
+        - name: REACT_APP_METADATA_GRAPHQL
+          value: http://api-integracion-ministros-de-fe-qa.api-cloud.dirtrab.cl/api/metadata/graphql
+        - name: REACT_APP_DJTRL_URL_FORMULARIO
+          value: http://api-integracion-ministros-de-fe-qa.api-cloud.dirtrab.cl/api/form/declaracion/terminoRelacionLaboral/personas/
+        - name: REACT_APP_TEXTO_AYUDA_TRAMITE_DJTRL
+          value: En esta sección podrás realizar la Declaración Jurada de Termino
+            de Relación Laboral, para ser presentada en la AFC (Seguro de Cesantía)
+            o AFP (Indemnización de Trabajador/a de Casa Particular).
+        - name: REACT_APP_TEXTO_CAMBIO_DATOS_PERFIL
+          value: El comprobante del trámite será enviado a su correo. Si necesita
+            actualizar sus datos puede hacerlo en su perfil de MiDT
+        - name: REACT_APP_URL_PERFIL_MIDT
+          value: /actualizarPerfil
+        from:
+          kind: DockerImage
+          name: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+        pullSecret:
+          name: builder-dockercfg-dvgmg
+      type: Source
+    triggeredBy:
+    - imageChangeBuild:
+        fromRef:
+          kind: ImageStreamTag
+          name: nodejs:10
+          namespace: openshift
+        imageID: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+      message: Image change
+  status:
+    completionTimestamp: "2023-09-01T01:10:37Z"
+    conditions:
+    - lastTransitionTime: "2023-09-01T01:10:32Z"
+      lastUpdateTime: "2023-09-01T01:10:32Z"
+      status: "False"
+      type: New
+    - lastTransitionTime: "2023-09-01T01:10:36Z"
+      lastUpdateTime: "2023-09-01T01:10:36Z"
+      status: "False"
+      type: Pending
+    - lastTransitionTime: "2023-09-01T01:10:37Z"
+      lastUpdateTime: "2023-09-01T01:10:37Z"
+      status: "False"
+      type: Running
+    - lastTransitionTime: "2023-09-01T01:10:37Z"
+      lastUpdateTime: "2023-09-01T01:10:37Z"
+      message: Failed to fetch the input source.
+      reason: FetchSourceFailed
+      status: "True"
+      type: Failed
+    config:
+      kind: BuildConfig
+      name: front001-min-de-fe-qa
+      namespace: ministrosdefe-dev
+    duration: 5000000000
+    logSnippet: |-
+      Cloning "https://dirtrab.visualstudio.com/Ministros%20De%20Fe/_git/front001-ministros-de-fe" ...
+      error: failed to fetch requested repository "https://dirtr...Fe/_git/front001-ministros-de-fe" with provided credentials
+    message: Failed to fetch the input source.
+    output: {}
+    outputDockerImageReference: image-registry.openshift-image-registry.svc:5000/ministrosdefe-dev/front001-min-de-fe-qa:latest
+    phase: Failed
+    reason: FetchSourceFailed
+    startTimestamp: "2023-09-01T01:10:32Z"
+- apiVersion: build.openshift.io/v1
+  kind: Build
+  metadata:
+    annotations:
+      openshift.io/build-config.name: front001-ministros-de-fe
+      openshift.io/build.number: "1"
+      openshift.io/build.pod-name: front001-ministros-de-fe-1-build
+    creationTimestamp: "2023-09-01T01:10:32Z"
+    generation: 2
+    labels:
+      app: front001-ministros-de-fe
+      buildconfig: front001-ministros-de-fe
+      migration.openshift.io/migrated-by-migmigration: bf3b53a0-3a30-4f32-905a-b3647ad7c520
+      migration.openshift.io/migrated-by-migplan: f912fe17-8056-491d-8703-6b82312d78ec
+      openshift.io/build-config.name: front001-ministros-de-fe
+      openshift.io/build.start-policy: Serial
+      velero.io/backup-name: migration-d9b4c-initial-qhlk8
+      velero.io/restore-name: migration-d9b4c-final-gc9lr
+    name: front001-ministros-de-fe-1
+    namespace: ministrosdefe-dev
+    ownerReferences:
+    - apiVersion: build.openshift.io/v1
+      controller: true
+      kind: BuildConfig
+      name: front001-ministros-de-fe
+      uid: 8f355869-0511-4d0f-8946-f48de214c038
+    resourceVersion: "95923701"
+    uid: 125830d9-d4fa-471a-966f-a1095bf4d3be
+  spec:
+    nodeSelector: null
+    output:
+      pushSecret:
+        name: builder-dockercfg-dvgmg
+      to:
+        kind: ImageStreamTag
+        name: front001-ministros-de-fe:latest
+    postCommit: {}
+    resources: {}
+    serviceAccount: builder
+    source:
+      git:
+        ref: develop
+        uri: https://dirtrab.visualstudio.com/Ministros%20De%20Fe/_git/front001-ministros-de-fe
+      sourceSecret:
+        name: vsts
+      type: Git
+    strategy:
+      sourceStrategy:
+        env:
+        - name: GENERATE_SOURCEMAP
+          value: "false"
+        - name: REACT_APP_VALIDA_TOKEN
+          value: http://proxy-portalinstitucional-dev.api.dirtrab.cl/api/Autenticacion/token/validar
+        - name: REACT_APP_REDIRECT
+          value: https://midt.dirtrab.cl/
+        - name: REACT_APP_VOLVER_REDIRECT
+          value: /trabajador/home
+        - name: REACT_APP_METADATA_GRAPHQL
+          value: http://api-integracion-ministros-de-fe-dev.api-cloud.dirtrab.cl/api/metadata/graphql
+        - name: REACT_APP_DJTRL_URL_FORMULARIO
+          value: http://api-integracion-ministros-de-fe-dev.api-cloud.dirtrab.cl/api/form/declaracion/terminoRelacionLaboral/personas/
+        - name: REACT_APP_TEXTO_AYUDA_TRAMITE_DJTRL
+          value: En esta sección podrás realizar la Declaración Jurada de Termino
+            de Relación Laboral, para ser presentada en la AFC (Seguro de Cesantía)
+            o AFP (Indemnización de Trabajador/a de Casa Particular).
+        - name: REACT_APP_TEXTO_CAMBIO_DATOS_PERFIL
+          value: El comprobante del trámite será enviado a su correo. Si necesita
+            actualizar sus datos puede hacerlo en su perfil de MiDT
+        - name: REACT_APP_URL_PERFIL_MIDT
+          value: /actualizarPerfil
+        from:
+          kind: DockerImage
+          name: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+        pullSecret:
+          name: builder-dockercfg-dvgmg
+      type: Source
+    triggeredBy:
+    - imageChangeBuild:
+        fromRef:
+          kind: ImageStreamTag
+          name: nodejs:10
+          namespace: openshift
+        imageID: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+      message: Image change
+  status:
+    completionTimestamp: "2023-09-01T01:10:36Z"
+    conditions:
+    - lastTransitionTime: "2023-09-01T01:10:32Z"
+      lastUpdateTime: "2023-09-01T01:10:32Z"
+      status: "False"
+      type: New
+    - lastTransitionTime: "2023-09-01T01:10:35Z"
+      lastUpdateTime: "2023-09-01T01:10:35Z"
+      status: "False"
+      type: Pending
+    - lastTransitionTime: "2023-09-01T01:10:36Z"
+      lastUpdateTime: "2023-09-01T01:10:36Z"
+      status: "False"
+      type: Running
+    - lastTransitionTime: "2023-09-01T01:10:36Z"
+      lastUpdateTime: "2023-09-01T01:10:36Z"
+      message: Failed to fetch the input source.
+      reason: FetchSourceFailed
+      status: "True"
+      type: Failed
+    config:
+      kind: BuildConfig
+      name: front001-ministros-de-fe
+      namespace: ministrosdefe-dev
+    duration: 4000000000
+    logSnippet: |-
+      Cloning "https://dirtrab.visualstudio.com/Ministros%20De%20Fe/_git/front001-ministros-de-fe" ...
+      error: failed to fetch requested repository "https://dirtr...Fe/_git/front001-ministros-de-fe" with provided credentials
+    message: Failed to fetch the input source.
+    output: {}
+    outputDockerImageReference: image-registry.openshift-image-registry.svc:5000/ministrosdefe-dev/front001-ministros-de-fe:latest
+    phase: Failed
+    reason: FetchSourceFailed
+    startTimestamp: "2023-09-01T01:10:32Z"
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

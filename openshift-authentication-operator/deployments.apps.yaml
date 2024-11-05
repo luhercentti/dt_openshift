@@ -1,0 +1,168 @@
+apiVersion: v1
+items:
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      config.openshift.io/inject-proxy: authentication-operator
+      deployment.kubernetes.io/revision: "1"
+      exclude.release.openshift.io/internal-openshift-hosted: "true"
+      include.release.openshift.io/self-managed-high-availability: "true"
+      include.release.openshift.io/single-node-developer: "true"
+    creationTimestamp: "2023-05-04T21:35:56Z"
+    generation: 1
+    labels:
+      app: authentication-operator
+    name: authentication-operator
+    namespace: openshift-authentication-operator
+    ownerReferences:
+    - apiVersion: config.openshift.io/v1
+      kind: ClusterVersion
+      name: version
+      uid: 5d92b52f-9fff-4a6e-b815-398b934115ad
+    resourceVersion: "369062529"
+    uid: 37ed9307-4be5-4bd7-9f10-10d159dcac0e
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: authentication-operator
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        annotations:
+          target.workload.openshift.io/management: '{"effect": "PreferredDuringScheduling"}'
+        creationTimestamp: null
+        labels:
+          app: authentication-operator
+        name: authentication-operator
+      spec:
+        containers:
+        - args:
+          - |
+            if [ -s /var/run/configmaps/trusted-ca-bundle/ca-bundle.crt ]; then
+                echo "Copying system trust bundle"
+                cp -f /var/run/configmaps/trusted-ca-bundle/ca-bundle.crt /etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem
+            fi
+            exec authentication-operator operator --config=/var/run/configmaps/config/operator-config.yaml --v=2 --terminate-on-files=/var/run/configmaps/trusted-ca-bundle/ca-bundle.crt
+          command:
+          - /bin/bash
+          - -ec
+          env:
+          - name: IMAGE_OAUTH_SERVER
+            value: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:73db334e251ce085c1bdac76a793cf244d340ef6ba7058f7ca5ba77566c058df
+          - name: IMAGE_OAUTH_APISERVER
+            value: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:5fc285bde33eb354345dba8cd6c2df3f2385e41558540bb3ff6adddf0756285f
+          - name: OPERATOR_IMAGE_VERSION
+            value: 4.10.53
+          - name: OPERAND_OAUTH_SERVER_IMAGE_VERSION
+            value: 4.10.53_openshift
+          - name: POD_NAME
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.name
+          image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:9819ad87ae3ba62bcb66550c26ec1b3e100f41988724d4cde78e9c03cd2d9d93
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: healthz
+              port: 8443
+              scheme: HTTPS
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          name: authentication-operator
+          resources:
+            requests:
+              cpu: 20m
+              memory: 200Mi
+          securityContext:
+            readOnlyRootFilesystem: false
+            runAsUser: 0
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: FallbackToLogsOnError
+          volumeMounts:
+          - mountPath: /var/run/configmaps/config
+            name: config
+          - mountPath: /var/run/secrets/serving-cert
+            name: serving-cert
+          - mountPath: /var/run/configmaps/trusted-ca-bundle
+            name: trusted-ca-bundle
+            readOnly: true
+          - mountPath: /var/run/configmaps/service-ca-bundle
+            name: service-ca-bundle
+            readOnly: true
+        dnsPolicy: ClusterFirst
+        nodeSelector:
+          node-role.kubernetes.io/master: ""
+        priorityClassName: system-cluster-critical
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: authentication-operator
+        serviceAccountName: authentication-operator
+        terminationGracePeriodSeconds: 30
+        tolerations:
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/master
+          operator: Exists
+        - effect: NoExecute
+          key: node.kubernetes.io/unreachable
+          operator: Exists
+          tolerationSeconds: 120
+        - effect: NoExecute
+          key: node.kubernetes.io/not-ready
+          operator: Exists
+          tolerationSeconds: 120
+        volumes:
+        - configMap:
+            defaultMode: 440
+            name: authentication-operator-config
+          name: config
+        - configMap:
+            defaultMode: 420
+            name: trusted-ca-bundle
+            optional: true
+          name: trusted-ca-bundle
+        - name: serving-cert
+          secret:
+            defaultMode: 420
+            optional: true
+            secretName: serving-cert
+        - configMap:
+            defaultMode: 420
+            name: service-ca-bundle
+            optional: true
+          name: service-ca-bundle
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2023-05-04T21:35:56Z"
+      lastUpdateTime: "2023-05-04T21:40:25Z"
+      message: ReplicaSet "authentication-operator-658d5b5449" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: "2024-06-02T21:42:49Z"
+      lastUpdateTime: "2024-06-02T21:42:49Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

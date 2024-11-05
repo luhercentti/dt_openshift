@@ -1,0 +1,1773 @@
+apiVersion: v1
+items:
+- apiVersion: machine.openshift.io/v1beta1
+  kind: Machine
+  metadata:
+    annotations:
+      machine.openshift.io/instance-state: Running
+    creationTimestamp: "2023-05-17T18:11:22Z"
+    finalizers:
+    - machine.machine.openshift.io
+    generateName: ocp4azu-sj2sl-infra-brazilsouth1-
+    generation: 3
+    labels:
+      machine.openshift.io/cluster-api-cluster: ocp4azu-sj2sl
+      machine.openshift.io/cluster-api-machine-role: infra
+      machine.openshift.io/cluster-api-machine-type: infra
+      machine.openshift.io/cluster-api-machineset: ocp4azu-sj2sl-infra-brazilsouth1
+      machine.openshift.io/instance-type: Standard_D8s_v3
+      machine.openshift.io/region: brazilsouth
+      machine.openshift.io/zone: "1"
+    name: ocp4azu-sj2sl-infra-brazilsouth1-5zvnf
+    namespace: openshift-machine-api
+    ownerReferences:
+    - apiVersion: machine.openshift.io/v1beta1
+      blockOwnerDeletion: true
+      controller: true
+      kind: MachineSet
+      name: ocp4azu-sj2sl-infra-brazilsouth1
+      uid: d7b3f7cd-448f-4ade-855a-d58801999d95
+    resourceVersion: "494963895"
+    uid: f4d6be36-1191-40a3-823a-4ef535b903dd
+  spec:
+    lifecycleHooks: {}
+    metadata:
+      labels:
+        node-role.kubernetes.io/infra: ""
+    providerID: azure:///subscriptions/3f7ca611-455f-41ca-b1d3-7dc4384d323a/resourceGroups/ocp4azu-sj2sl-rg/providers/Microsoft.Compute/virtualMachines/ocp4azu-sj2sl-infra-brazilsouth1-5zvnf
+    providerSpec:
+      value:
+        apiVersion: machine.openshift.io/v1beta1
+        credentialsSecret:
+          name: azure-cloud-credentials
+          namespace: openshift-machine-api
+        image:
+          offer: ""
+          publisher: ""
+          resourceID: /resourceGroups/ocp4azu-sj2sl-rg/providers/Microsoft.Compute/images/ocp4azu-sj2sl
+          sku: ""
+          version: ""
+        kind: AzureMachineProviderSpec
+        location: brazilsouth
+        managedIdentity: ocp4azu-sj2sl-identity
+        metadata:
+          creationTimestamp: null
+          name: ocp4azu-sj2sl
+        networkResourceGroup: Networking
+        osDisk:
+          diskSettings: {}
+          diskSizeGB: 512
+          managedDisk:
+            storageAccountType: Premium_LRS
+          osType: Linux
+        publicIP: false
+        publicLoadBalancer: ocp4azu-sj2sl
+        resourceGroup: ocp4azu-sj2sl-rg
+        subnet: OCP4-Subnet
+        userDataSecret:
+          name: worker-user-data
+        vmSize: Standard_D8s_v3
+        vnet: DT-ocp4
+        zone: "1"
+    taints:
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/infra
+      value: reserved
+    - effect: NoExecute
+      key: node-role.kubernetes.io/infra
+      value: reserved
+  status:
+    addresses:
+    - address: ocp4azu-sj2sl-infra-brazilsouth1-5zvnf
+      type: Hostname
+    - address: ocp4azu-sj2sl-infra-brazilsouth1-5zvnf
+      type: InternalDNS
+    - address: ocp4azu-sj2sl-infra-brazilsouth1-5zvnf.4ucngfacb21uzd24fzjcjlmgmf.nx.internal.cloudapp.net
+      type: InternalDNS
+    - address: 10.80.80.11
+      type: InternalIP
+    conditions:
+    - lastTransitionTime: "2023-05-17T18:11:23Z"
+      status: "True"
+      type: Drainable
+    - lastTransitionTime: "2024-08-02T14:45:57Z"
+      message: 'Failed to check if machine exists: failed to get vm: azure.BearerAuthorizer#WithAuthorization:
+        Failed to refresh the Token for request to https://management.azure.com/subscriptions/3f7ca611-455f-41ca-b1d3-7dc4384d323a/resourceGroups/ocp4azu-sj2sl-rg/providers/Microsoft.Compute/virtualMachines/ocp4azu-sj2sl-infra-brazilsouth1-5zvnf?%24expand=instanceView&api-version=2021-03-01:
+        StatusCode=401 -- Original Error: adal: Refresh request failed. Status Code
+        = ''401''. Response body: {"error":"invalid_client","error_description":"AADSTS7000222:
+        The provided client secret keys for app ''8cd449af-d25a-41b6-ac02-fe0db91a528e''
+        are expired. Visit the Azure portal to create new keys for your app: https://aka.ms/NewClientSecret,
+        or consider using certificate credentials for added security: https://aka.ms/certCreds.
+        Trace ID: 88ca54c2-c474-4f09-b035-ad2e0e602500 Correlation ID: be775f0d-6db3-4d3e-9d80-c3d9e82f46f8
+        Timestamp: 2024-08-02 14:45:57Z","error_codes":[7000222],"timestamp":"2024-08-02
+        14:45:57Z","trace_id":"88ca54c2-c474-4f09-b035-ad2e0e602500","correlation_id":"be775f0d-6db3-4d3e-9d80-c3d9e82f46f8","error_uri":"https://login.microsoftonline.com/error?code=7000222"}
+        Endpoint https://login.microsoftonline.com/2d55c762-c477-4390-bb75-5adbde0a92fc/oauth2/token?api-version=1.0'
+      reason: ErrorCheckingProvider
+      status: Unknown
+      type: InstanceExists
+    - lastTransitionTime: "2023-05-17T18:11:23Z"
+      status: "True"
+      type: Terminable
+    lastUpdated: "2024-08-02T14:45:57Z"
+    nodeRef:
+      kind: Node
+      name: ocp4azu-sj2sl-infra-brazilsouth1-5zvnf
+      uid: f656ff55-3211-470e-aa71-fd11aa1caa8b
+    phase: Running
+    providerStatus:
+      conditions:
+      - lastProbeTime: "2023-05-17T18:11:35Z"
+        lastTransitionTime: "2023-05-17T18:11:35Z"
+        message: machine successfully created
+        reason: MachineCreationSucceeded
+        status: "True"
+        type: MachineCreated
+      metadata: {}
+      vmId: /subscriptions/3f7ca611-455f-41ca-b1d3-7dc4384d323a/resourceGroups/ocp4azu-sj2sl-rg/providers/Microsoft.Compute/virtualMachines/ocp4azu-sj2sl-infra-brazilsouth1-5zvnf
+      vmState: Running
+- apiVersion: machine.openshift.io/v1beta1
+  kind: Machine
+  metadata:
+    annotations:
+      machine.openshift.io/instance-state: Running
+    creationTimestamp: "2023-05-16T16:57:17Z"
+    finalizers:
+    - machine.machine.openshift.io
+    generateName: ocp4azu-sj2sl-infra-brazilsouth2-
+    generation: 3
+    labels:
+      machine.openshift.io/cluster-api-cluster: ocp4azu-sj2sl
+      machine.openshift.io/cluster-api-machine-role: infra
+      machine.openshift.io/cluster-api-machine-type: infra
+      machine.openshift.io/cluster-api-machineset: ocp4azu-sj2sl-infra-brazilsouth2
+      machine.openshift.io/instance-type: Standard_D8s_v3
+      machine.openshift.io/region: brazilsouth
+      machine.openshift.io/zone: "2"
+    name: ocp4azu-sj2sl-infra-brazilsouth2-ptg7h
+    namespace: openshift-machine-api
+    ownerReferences:
+    - apiVersion: machine.openshift.io/v1beta1
+      blockOwnerDeletion: true
+      controller: true
+      kind: MachineSet
+      name: ocp4azu-sj2sl-infra-brazilsouth2
+      uid: d6788735-b9ad-465b-9228-bb3f6105db0f
+    resourceVersion: "494963968"
+    uid: 398d5ea9-7da5-4afa-af31-72a435fd6e8a
+  spec:
+    lifecycleHooks: {}
+    metadata:
+      labels:
+        node-role.kubernetes.io/infra: ""
+    providerID: azure:///subscriptions/3f7ca611-455f-41ca-b1d3-7dc4384d323a/resourceGroups/ocp4azu-sj2sl-rg/providers/Microsoft.Compute/virtualMachines/ocp4azu-sj2sl-infra-brazilsouth2-ptg7h
+    providerSpec:
+      value:
+        apiVersion: machine.openshift.io/v1beta1
+        credentialsSecret:
+          name: azure-cloud-credentials
+          namespace: openshift-machine-api
+        image:
+          offer: ""
+          publisher: ""
+          resourceID: /resourceGroups/ocp4azu-sj2sl-rg/providers/Microsoft.Compute/images/ocp4azu-sj2sl
+          sku: ""
+          version: ""
+        kind: AzureMachineProviderSpec
+        location: brazilsouth
+        managedIdentity: ocp4azu-sj2sl-identity
+        metadata:
+          creationTimestamp: null
+          name: ocp4azu-sj2sl
+        networkResourceGroup: Networking
+        osDisk:
+          diskSettings: {}
+          diskSizeGB: 512
+          managedDisk:
+            storageAccountType: Premium_LRS
+          osType: Linux
+        publicIP: false
+        publicLoadBalancer: ocp4azu-sj2sl
+        resourceGroup: ocp4azu-sj2sl-rg
+        subnet: OCP4-Subnet
+        userDataSecret:
+          name: worker-user-data
+        vmSize: Standard_D8s_v3
+        vnet: DT-ocp4
+        zone: "2"
+    taints:
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/infra
+      value: reserved
+    - effect: NoExecute
+      key: node-role.kubernetes.io/infra
+      value: reserved
+  status:
+    addresses:
+    - address: ocp4azu-sj2sl-infra-brazilsouth2-ptg7h
+      type: Hostname
+    - address: ocp4azu-sj2sl-infra-brazilsouth2-ptg7h
+      type: InternalDNS
+    - address: ocp4azu-sj2sl-infra-brazilsouth2-ptg7h.4ucngfacb21uzd24fzjcjlmgmf.nx.internal.cloudapp.net
+      type: InternalDNS
+    - address: 10.80.80.12
+      type: InternalIP
+    conditions:
+    - lastTransitionTime: "2023-05-16T16:57:21Z"
+      status: "True"
+      type: Drainable
+    - lastTransitionTime: "2024-08-02T14:46:00Z"
+      message: 'Failed to check if machine exists: failed to get vm: azure.BearerAuthorizer#WithAuthorization:
+        Failed to refresh the Token for request to https://management.azure.com/subscriptions/3f7ca611-455f-41ca-b1d3-7dc4384d323a/resourceGroups/ocp4azu-sj2sl-rg/providers/Microsoft.Compute/virtualMachines/ocp4azu-sj2sl-infra-brazilsouth2-ptg7h?%24expand=instanceView&api-version=2021-03-01:
+        StatusCode=401 -- Original Error: adal: Refresh request failed. Status Code
+        = ''401''. Response body: {"error":"invalid_client","error_description":"AADSTS7000222:
+        The provided client secret keys for app ''8cd449af-d25a-41b6-ac02-fe0db91a528e''
+        are expired. Visit the Azure portal to create new keys for your app: https://aka.ms/NewClientSecret,
+        or consider using certificate credentials for added security: https://aka.ms/certCreds.
+        Trace ID: 97d12f2b-d08c-4798-ace2-c23baaea1c00 Correlation ID: e30cf397-da1c-43c1-82e4-819d9f426fed
+        Timestamp: 2024-08-02 14:46:00Z","error_codes":[7000222],"timestamp":"2024-08-02
+        14:46:00Z","trace_id":"97d12f2b-d08c-4798-ace2-c23baaea1c00","correlation_id":"e30cf397-da1c-43c1-82e4-819d9f426fed","error_uri":"https://login.microsoftonline.com/error?code=7000222"}
+        Endpoint https://login.microsoftonline.com/2d55c762-c477-4390-bb75-5adbde0a92fc/oauth2/token?api-version=1.0'
+      reason: ErrorCheckingProvider
+      status: Unknown
+      type: InstanceExists
+    - lastTransitionTime: "2023-05-16T16:57:21Z"
+      status: "True"
+      type: Terminable
+    lastUpdated: "2024-08-02T14:46:00Z"
+    nodeRef:
+      kind: Node
+      name: ocp4azu-sj2sl-infra-brazilsouth2-ptg7h
+      uid: 9d132bd4-2380-4491-8763-3d5c1f48b3ee
+    phase: Running
+    providerStatus:
+      conditions:
+      - lastProbeTime: "2023-05-16T16:57:34Z"
+        lastTransitionTime: "2023-05-16T16:57:31Z"
+        message: machine successfully created
+        reason: MachineCreationSucceeded
+        status: "True"
+        type: MachineCreated
+      metadata: {}
+      vmId: /subscriptions/3f7ca611-455f-41ca-b1d3-7dc4384d323a/resourceGroups/ocp4azu-sj2sl-rg/providers/Microsoft.Compute/virtualMachines/ocp4azu-sj2sl-infra-brazilsouth2-ptg7h
+      vmState: Running
+- apiVersion: machine.openshift.io/v1beta1
+  kind: Machine
+  metadata:
+    annotations:
+      machine.openshift.io/instance-state: Running
+    creationTimestamp: "2023-05-16T16:42:02Z"
+    finalizers:
+    - machine.machine.openshift.io
+    generateName: ocp4azu-sj2sl-infra-brazilsouth3-
+    generation: 3
+    labels:
+      machine.openshift.io/cluster-api-cluster: ocp4azu-sj2sl
+      machine.openshift.io/cluster-api-machine-role: infra
+      machine.openshift.io/cluster-api-machine-type: infra
+      machine.openshift.io/cluster-api-machineset: ocp4azu-sj2sl-infra-brazilsouth3
+      machine.openshift.io/instance-type: Standard_D8s_v3
+      machine.openshift.io/region: brazilsouth
+      machine.openshift.io/zone: "3"
+    name: ocp4azu-sj2sl-infra-brazilsouth3-pfrpx
+    namespace: openshift-machine-api
+    ownerReferences:
+    - apiVersion: machine.openshift.io/v1beta1
+      blockOwnerDeletion: true
+      controller: true
+      kind: MachineSet
+      name: ocp4azu-sj2sl-infra-brazilsouth3
+      uid: b2815bc9-d767-45e9-b833-669a7d8fd27a
+    resourceVersion: "494963965"
+    uid: 03b955c0-ab99-4fb2-a1d1-19cd19f25f60
+  spec:
+    lifecycleHooks: {}
+    metadata:
+      labels:
+        node-role.kubernetes.io/infra: ""
+    providerID: azure:///subscriptions/3f7ca611-455f-41ca-b1d3-7dc4384d323a/resourceGroups/ocp4azu-sj2sl-rg/providers/Microsoft.Compute/virtualMachines/ocp4azu-sj2sl-infra-brazilsouth3-pfrpx
+    providerSpec:
+      value:
+        apiVersion: machine.openshift.io/v1beta1
+        credentialsSecret:
+          name: azure-cloud-credentials
+          namespace: openshift-machine-api
+        image:
+          offer: ""
+          publisher: ""
+          resourceID: /resourceGroups/ocp4azu-sj2sl-rg/providers/Microsoft.Compute/images/ocp4azu-sj2sl
+          sku: ""
+          version: ""
+        kind: AzureMachineProviderSpec
+        location: brazilsouth
+        managedIdentity: ocp4azu-sj2sl-identity
+        metadata:
+          creationTimestamp: null
+          name: ocp4azu-sj2sl
+        networkResourceGroup: Networking
+        osDisk:
+          diskSettings: {}
+          diskSizeGB: 512
+          managedDisk:
+            storageAccountType: Premium_LRS
+          osType: Linux
+        publicIP: false
+        publicLoadBalancer: ocp4azu-sj2sl
+        resourceGroup: ocp4azu-sj2sl-rg
+        subnet: OCP4-Subnet
+        userDataSecret:
+          name: worker-user-data
+        vmSize: Standard_D8s_v3
+        vnet: DT-ocp4
+        zone: "3"
+    taints:
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/infra
+      value: reserved
+    - effect: NoExecute
+      key: node-role.kubernetes.io/infra
+      value: reserved
+  status:
+    addresses:
+    - address: ocp4azu-sj2sl-infra-brazilsouth3-pfrpx
+      type: Hostname
+    - address: ocp4azu-sj2sl-infra-brazilsouth3-pfrpx
+      type: InternalDNS
+    - address: ocp4azu-sj2sl-infra-brazilsouth3-pfrpx.4ucngfacb21uzd24fzjcjlmgmf.nx.internal.cloudapp.net
+      type: InternalDNS
+    - address: 10.80.80.16
+      type: InternalIP
+    conditions:
+    - lastTransitionTime: "2023-05-16T16:42:15Z"
+      status: "True"
+      type: Drainable
+    - lastTransitionTime: "2024-08-02T14:46:00Z"
+      message: 'Failed to check if machine exists: failed to get vm: azure.BearerAuthorizer#WithAuthorization:
+        Failed to refresh the Token for request to https://management.azure.com/subscriptions/3f7ca611-455f-41ca-b1d3-7dc4384d323a/resourceGroups/ocp4azu-sj2sl-rg/providers/Microsoft.Compute/virtualMachines/ocp4azu-sj2sl-infra-brazilsouth3-pfrpx?%24expand=instanceView&api-version=2021-03-01:
+        StatusCode=401 -- Original Error: adal: Refresh request failed. Status Code
+        = ''401''. Response body: {"error":"invalid_client","error_description":"AADSTS7000222:
+        The provided client secret keys for app ''8cd449af-d25a-41b6-ac02-fe0db91a528e''
+        are expired. Visit the Azure portal to create new keys for your app: https://aka.ms/NewClientSecret,
+        or consider using certificate credentials for added security: https://aka.ms/certCreds.
+        Trace ID: 60ae3e86-50e3-4323-b5ff-7fa652cc2d00 Correlation ID: 58b70a74-05d1-4903-aea2-324bc52dfb12
+        Timestamp: 2024-08-02 14:46:00Z","error_codes":[7000222],"timestamp":"2024-08-02
+        14:46:00Z","trace_id":"60ae3e86-50e3-4323-b5ff-7fa652cc2d00","correlation_id":"58b70a74-05d1-4903-aea2-324bc52dfb12","error_uri":"https://login.microsoftonline.com/error?code=7000222"}
+        Endpoint https://login.microsoftonline.com/2d55c762-c477-4390-bb75-5adbde0a92fc/oauth2/token?api-version=1.0'
+      reason: ErrorCheckingProvider
+      status: Unknown
+      type: InstanceExists
+    - lastTransitionTime: "2023-05-16T16:42:15Z"
+      status: "True"
+      type: Terminable
+    lastUpdated: "2024-08-02T14:46:00Z"
+    nodeRef:
+      kind: Node
+      name: ocp4azu-sj2sl-infra-brazilsouth3-pfrpx
+      uid: 517073de-e9e6-4eff-a6ba-ef1281e55776
+    phase: Running
+    providerStatus:
+      conditions:
+      - lastProbeTime: "2023-05-16T16:42:26Z"
+        lastTransitionTime: "2023-05-16T16:42:26Z"
+        message: machine successfully created
+        reason: MachineCreationSucceeded
+        status: "True"
+        type: MachineCreated
+      metadata: {}
+      vmId: /subscriptions/3f7ca611-455f-41ca-b1d3-7dc4384d323a/resourceGroups/ocp4azu-sj2sl-rg/providers/Microsoft.Compute/virtualMachines/ocp4azu-sj2sl-infra-brazilsouth3-pfrpx
+      vmState: Running
+- apiVersion: machine.openshift.io/v1beta1
+  kind: Machine
+  metadata:
+    annotations:
+      machine.openshift.io/instance-state: Running
+    creationTimestamp: "2023-05-04T21:36:14Z"
+    finalizers:
+    - machine.machine.openshift.io
+    generation: 2
+    labels:
+      machine.openshift.io/cluster-api-cluster: ocp4azu-sj2sl
+      machine.openshift.io/cluster-api-machine-role: master
+      machine.openshift.io/cluster-api-machine-type: master
+      machine.openshift.io/instance-type: Standard_D8s_v3
+      machine.openshift.io/region: brazilsouth
+      machine.openshift.io/zone: "1"
+    name: ocp4azu-sj2sl-master-0
+    namespace: openshift-machine-api
+    resourceVersion: "494963904"
+    uid: c331e001-cb7e-41b3-807f-16e3a355191d
+  spec:
+    lifecycleHooks: {}
+    metadata: {}
+    providerID: azure:///subscriptions/3f7ca611-455f-41ca-b1d3-7dc4384d323a/resourceGroups/ocp4azu-sj2sl-rg/providers/Microsoft.Compute/virtualMachines/ocp4azu-sj2sl-master-0
+    providerSpec:
+      value:
+        apiVersion: machine.openshift.io/v1beta1
+        credentialsSecret:
+          name: azure-cloud-credentials
+          namespace: openshift-machine-api
+        image:
+          offer: ""
+          publisher: ""
+          resourceID: /resourceGroups/ocp4azu-sj2sl-rg/providers/Microsoft.Compute/images/ocp4azu-sj2sl
+          sku: ""
+          version: ""
+        kind: AzureMachineProviderSpec
+        location: brazilsouth
+        managedIdentity: ocp4azu-sj2sl-identity
+        metadata:
+          creationTimestamp: null
+          name: ocp4azu-sj2sl
+        networkResourceGroup: Networking
+        osDisk:
+          diskSettings: {}
+          diskSizeGB: 1024
+          managedDisk:
+            storageAccountType: Premium_LRS
+          osType: Linux
+        publicIP: false
+        publicLoadBalancer: ocp4azu-sj2sl
+        resourceGroup: ocp4azu-sj2sl-rg
+        subnet: OCP4-Subnet
+        userDataSecret:
+          name: master-user-data
+        vmSize: Standard_D8s_v3
+        vnet: DT-ocp4
+        zone: "1"
+  status:
+    addresses:
+    - address: ocp4azu-sj2sl-master-0
+      type: Hostname
+    - address: ocp4azu-sj2sl-master-0
+      type: InternalDNS
+    - address: ocp4azu-sj2sl-master-0.4ucngfacb21uzd24fzjcjlmgmf.nx.internal.cloudapp.net
+      type: InternalDNS
+    - address: 10.80.80.6
+      type: InternalIP
+    conditions:
+    - lastTransitionTime: "2023-05-04T21:42:30Z"
+      status: "True"
+      type: Drainable
+    - lastTransitionTime: "2024-08-02T14:45:57Z"
+      message: 'Failed to check if machine exists: failed to get vm: azure.BearerAuthorizer#WithAuthorization:
+        Failed to refresh the Token for request to https://management.azure.com/subscriptions/3f7ca611-455f-41ca-b1d3-7dc4384d323a/resourceGroups/ocp4azu-sj2sl-rg/providers/Microsoft.Compute/virtualMachines/ocp4azu-sj2sl-master-0?%24expand=instanceView&api-version=2021-03-01:
+        StatusCode=401 -- Original Error: adal: Refresh request failed. Status Code
+        = ''401''. Response body: {"error":"invalid_client","error_description":"AADSTS7000222:
+        The provided client secret keys for app ''8cd449af-d25a-41b6-ac02-fe0db91a528e''
+        are expired. Visit the Azure portal to create new keys for your app: https://aka.ms/NewClientSecret,
+        or consider using certificate credentials for added security: https://aka.ms/certCreds.
+        Trace ID: 252043e2-e292-41b6-b54c-21f923b21800 Correlation ID: 74da451e-78fe-4e31-85c8-32e969cbf08d
+        Timestamp: 2024-08-02 14:45:57Z","error_codes":[7000222],"timestamp":"2024-08-02
+        14:45:57Z","trace_id":"252043e2-e292-41b6-b54c-21f923b21800","correlation_id":"74da451e-78fe-4e31-85c8-32e969cbf08d","error_uri":"https://login.microsoftonline.com/error?code=7000222"}
+        Endpoint https://login.microsoftonline.com/2d55c762-c477-4390-bb75-5adbde0a92fc/oauth2/token?api-version=1.0'
+      reason: ErrorCheckingProvider
+      status: Unknown
+      type: InstanceExists
+    - lastTransitionTime: "2023-05-04T21:42:30Z"
+      status: "True"
+      type: Terminable
+    lastUpdated: "2024-08-02T14:45:57Z"
+    nodeRef:
+      kind: Node
+      name: ocp4azu-sj2sl-master-0
+      uid: 0000f293-27ae-40f3-8b64-6fd866e5ec4b
+    phase: Running
+    providerStatus:
+      conditions:
+      - lastProbeTime: "2023-05-04T21:42:12Z"
+        lastTransitionTime: "2023-05-04T21:42:12Z"
+        message: machine successfully created
+        reason: MachineCreationSucceeded
+        status: "True"
+        type: MachineCreated
+      metadata: {}
+      vmId: /subscriptions/3f7ca611-455f-41ca-b1d3-7dc4384d323a/resourceGroups/ocp4azu-sj2sl-rg/providers/Microsoft.Compute/virtualMachines/ocp4azu-sj2sl-master-0
+      vmState: Running
+- apiVersion: machine.openshift.io/v1beta1
+  kind: Machine
+  metadata:
+    annotations:
+      machine.openshift.io/instance-state: Running
+    creationTimestamp: "2023-05-04T21:36:15Z"
+    finalizers:
+    - machine.machine.openshift.io
+    generation: 2
+    labels:
+      machine.openshift.io/cluster-api-cluster: ocp4azu-sj2sl
+      machine.openshift.io/cluster-api-machine-role: master
+      machine.openshift.io/cluster-api-machine-type: master
+      machine.openshift.io/instance-type: Standard_D8s_v3
+      machine.openshift.io/region: brazilsouth
+      machine.openshift.io/zone: "2"
+    name: ocp4azu-sj2sl-master-1
+    namespace: openshift-machine-api
+    resourceVersion: "494963927"
+    uid: 3abdfd3d-11d6-4e30-a4ce-338dabd0641e
+  spec:
+    lifecycleHooks: {}
+    metadata: {}
+    providerID: azure:///subscriptions/3f7ca611-455f-41ca-b1d3-7dc4384d323a/resourceGroups/ocp4azu-sj2sl-rg/providers/Microsoft.Compute/virtualMachines/ocp4azu-sj2sl-master-1
+    providerSpec:
+      value:
+        apiVersion: machine.openshift.io/v1beta1
+        credentialsSecret:
+          name: azure-cloud-credentials
+          namespace: openshift-machine-api
+        image:
+          offer: ""
+          publisher: ""
+          resourceID: /resourceGroups/ocp4azu-sj2sl-rg/providers/Microsoft.Compute/images/ocp4azu-sj2sl
+          sku: ""
+          version: ""
+        kind: AzureMachineProviderSpec
+        location: brazilsouth
+        managedIdentity: ocp4azu-sj2sl-identity
+        metadata:
+          creationTimestamp: null
+          name: ocp4azu-sj2sl
+        networkResourceGroup: Networking
+        osDisk:
+          diskSettings: {}
+          diskSizeGB: 1024
+          managedDisk:
+            storageAccountType: Premium_LRS
+          osType: Linux
+        publicIP: false
+        publicLoadBalancer: ocp4azu-sj2sl
+        resourceGroup: ocp4azu-sj2sl-rg
+        subnet: OCP4-Subnet
+        userDataSecret:
+          name: master-user-data
+        vmSize: Standard_D8s_v3
+        vnet: DT-ocp4
+        zone: "2"
+  status:
+    addresses:
+    - address: ocp4azu-sj2sl-master-1
+      type: Hostname
+    - address: ocp4azu-sj2sl-master-1
+      type: InternalDNS
+    - address: ocp4azu-sj2sl-master-1.4ucngfacb21uzd24fzjcjlmgmf.nx.internal.cloudapp.net
+      type: InternalDNS
+    - address: 10.80.80.8
+      type: InternalIP
+    conditions:
+    - lastTransitionTime: "2023-05-04T21:41:57Z"
+      status: "True"
+      type: Drainable
+    - lastTransitionTime: "2024-08-02T14:45:58Z"
+      message: 'Failed to check if machine exists: failed to get vm: azure.BearerAuthorizer#WithAuthorization:
+        Failed to refresh the Token for request to https://management.azure.com/subscriptions/3f7ca611-455f-41ca-b1d3-7dc4384d323a/resourceGroups/ocp4azu-sj2sl-rg/providers/Microsoft.Compute/virtualMachines/ocp4azu-sj2sl-master-1?%24expand=instanceView&api-version=2021-03-01:
+        StatusCode=401 -- Original Error: adal: Refresh request failed. Status Code
+        = ''401''. Response body: {"error":"invalid_client","error_description":"AADSTS7000222:
+        The provided client secret keys for app ''8cd449af-d25a-41b6-ac02-fe0db91a528e''
+        are expired. Visit the Azure portal to create new keys for your app: https://aka.ms/NewClientSecret,
+        or consider using certificate credentials for added security: https://aka.ms/certCreds.
+        Trace ID: 73da4c8c-b9e8-4355-9a28-fd8a23fa2100 Correlation ID: 00da3827-e1bf-48fa-afe7-19b5c7d7b4b8
+        Timestamp: 2024-08-02 14:45:58Z","error_codes":[7000222],"timestamp":"2024-08-02
+        14:45:58Z","trace_id":"73da4c8c-b9e8-4355-9a28-fd8a23fa2100","correlation_id":"00da3827-e1bf-48fa-afe7-19b5c7d7b4b8","error_uri":"https://login.microsoftonline.com/error?code=7000222"}
+        Endpoint https://login.microsoftonline.com/2d55c762-c477-4390-bb75-5adbde0a92fc/oauth2/token?api-version=1.0'
+      reason: ErrorCheckingProvider
+      status: Unknown
+      type: InstanceExists
+    - lastTransitionTime: "2023-05-04T21:41:57Z"
+      status: "True"
+      type: Terminable
+    lastUpdated: "2024-08-02T14:45:58Z"
+    nodeRef:
+      kind: Node
+      name: ocp4azu-sj2sl-master-1
+      uid: b31818a2-097b-45e8-93e7-f2d7744bdb3e
+    phase: Running
+    providerStatus:
+      conditions:
+      - lastProbeTime: "2023-05-04T21:42:32Z"
+        lastTransitionTime: "2023-05-04T21:42:32Z"
+        message: machine successfully created
+        reason: MachineCreationSucceeded
+        status: "True"
+        type: MachineCreated
+      metadata: {}
+      vmId: /subscriptions/3f7ca611-455f-41ca-b1d3-7dc4384d323a/resourceGroups/ocp4azu-sj2sl-rg/providers/Microsoft.Compute/virtualMachines/ocp4azu-sj2sl-master-1
+      vmState: Running
+- apiVersion: machine.openshift.io/v1beta1
+  kind: Machine
+  metadata:
+    annotations:
+      machine.openshift.io/instance-state: Running
+    creationTimestamp: "2023-05-04T21:36:15Z"
+    finalizers:
+    - machine.machine.openshift.io
+    generation: 2
+    labels:
+      machine.openshift.io/cluster-api-cluster: ocp4azu-sj2sl
+      machine.openshift.io/cluster-api-machine-role: master
+      machine.openshift.io/cluster-api-machine-type: master
+      machine.openshift.io/instance-type: Standard_D8s_v3
+      machine.openshift.io/region: brazilsouth
+      machine.openshift.io/zone: "3"
+    name: ocp4azu-sj2sl-master-2
+    namespace: openshift-machine-api
+    resourceVersion: "494963912"
+    uid: 11693158-551b-4a0b-85a9-b9c376d7577d
+  spec:
+    lifecycleHooks: {}
+    metadata: {}
+    providerID: azure:///subscriptions/3f7ca611-455f-41ca-b1d3-7dc4384d323a/resourceGroups/ocp4azu-sj2sl-rg/providers/Microsoft.Compute/virtualMachines/ocp4azu-sj2sl-master-2
+    providerSpec:
+      value:
+        apiVersion: machine.openshift.io/v1beta1
+        credentialsSecret:
+          name: azure-cloud-credentials
+          namespace: openshift-machine-api
+        image:
+          offer: ""
+          publisher: ""
+          resourceID: /resourceGroups/ocp4azu-sj2sl-rg/providers/Microsoft.Compute/images/ocp4azu-sj2sl
+          sku: ""
+          version: ""
+        kind: AzureMachineProviderSpec
+        location: brazilsouth
+        managedIdentity: ocp4azu-sj2sl-identity
+        metadata:
+          creationTimestamp: null
+          name: ocp4azu-sj2sl
+        networkResourceGroup: Networking
+        osDisk:
+          diskSettings: {}
+          diskSizeGB: 1024
+          managedDisk:
+            storageAccountType: Premium_LRS
+          osType: Linux
+        publicIP: false
+        publicLoadBalancer: ocp4azu-sj2sl
+        resourceGroup: ocp4azu-sj2sl-rg
+        subnet: OCP4-Subnet
+        userDataSecret:
+          name: master-user-data
+        vmSize: Standard_D8s_v3
+        vnet: DT-ocp4
+        zone: "3"
+  status:
+    addresses:
+    - address: ocp4azu-sj2sl-master-2
+      type: Hostname
+    - address: ocp4azu-sj2sl-master-2
+      type: InternalDNS
+    - address: ocp4azu-sj2sl-master-2.4ucngfacb21uzd24fzjcjlmgmf.nx.internal.cloudapp.net
+      type: InternalDNS
+    - address: 10.80.80.7
+      type: InternalIP
+    conditions:
+    - lastTransitionTime: "2023-05-04T21:42:08Z"
+      status: "True"
+      type: Drainable
+    - lastTransitionTime: "2024-08-02T14:45:58Z"
+      message: 'Failed to check if machine exists: failed to get vm: azure.BearerAuthorizer#WithAuthorization:
+        Failed to refresh the Token for request to https://management.azure.com/subscriptions/3f7ca611-455f-41ca-b1d3-7dc4384d323a/resourceGroups/ocp4azu-sj2sl-rg/providers/Microsoft.Compute/virtualMachines/ocp4azu-sj2sl-master-2?%24expand=instanceView&api-version=2021-03-01:
+        StatusCode=401 -- Original Error: adal: Refresh request failed. Status Code
+        = ''401''. Response body: {"error":"invalid_client","error_description":"AADSTS7000222:
+        The provided client secret keys for app ''8cd449af-d25a-41b6-ac02-fe0db91a528e''
+        are expired. Visit the Azure portal to create new keys for your app: https://aka.ms/NewClientSecret,
+        or consider using certificate credentials for added security: https://aka.ms/certCreds.
+        Trace ID: 73da4c8c-b9e8-4355-9a28-fd8ae9f92100 Correlation ID: c7cafdbc-4559-4fb3-8f0d-04001703a6bd
+        Timestamp: 2024-08-02 14:45:58Z","error_codes":[7000222],"timestamp":"2024-08-02
+        14:45:58Z","trace_id":"73da4c8c-b9e8-4355-9a28-fd8ae9f92100","correlation_id":"c7cafdbc-4559-4fb3-8f0d-04001703a6bd","error_uri":"https://login.microsoftonline.com/error?code=7000222"}
+        Endpoint https://login.microsoftonline.com/2d55c762-c477-4390-bb75-5adbde0a92fc/oauth2/token?api-version=1.0'
+      reason: ErrorCheckingProvider
+      status: Unknown
+      type: InstanceExists
+    - lastTransitionTime: "2023-05-04T21:42:08Z"
+      status: "True"
+      type: Terminable
+    lastUpdated: "2024-08-02T14:45:58Z"
+    nodeRef:
+      kind: Node
+      name: ocp4azu-sj2sl-master-2
+      uid: 70fcf7d1-ef27-4674-936c-0504a68de3e3
+    phase: Running
+    providerStatus:
+      conditions:
+      - lastProbeTime: "2023-05-04T21:42:44Z"
+        lastTransitionTime: "2023-05-04T21:42:44Z"
+        message: machine successfully created
+        reason: MachineCreationSucceeded
+        status: "True"
+        type: MachineCreated
+      metadata: {}
+      vmId: /subscriptions/3f7ca611-455f-41ca-b1d3-7dc4384d323a/resourceGroups/ocp4azu-sj2sl-rg/providers/Microsoft.Compute/virtualMachines/ocp4azu-sj2sl-master-2
+      vmState: Running
+- apiVersion: machine.openshift.io/v1beta1
+  kind: Machine
+  metadata:
+    annotations:
+      machine.openshift.io/instance-state: Running
+    creationTimestamp: "2023-05-25T14:36:34Z"
+    finalizers:
+    - machine.machine.openshift.io
+    generateName: ocp4azu-sj2sl-worker-noprod-dev-brazilsouth1-
+    generation: 3
+    labels:
+      machine.openshift.io/cluster-api-cluster: ocp4azu-sj2sl
+      machine.openshift.io/cluster-api-machine-role: worker
+      machine.openshift.io/cluster-api-machine-type: worker
+      machine.openshift.io/cluster-api-machineset: ocp4azu-sj2sl-worker-noprod-dev-brazilsouth1
+      machine.openshift.io/instance-type: Standard_D4s_v3
+      machine.openshift.io/region: brazilsouth
+      machine.openshift.io/zone: "1"
+    name: ocp4azu-sj2sl-worker-noprod-dev-brazilsouth1-vlxcp
+    namespace: openshift-machine-api
+    ownerReferences:
+    - apiVersion: machine.openshift.io/v1beta1
+      blockOwnerDeletion: true
+      controller: true
+      kind: MachineSet
+      name: ocp4azu-sj2sl-worker-noprod-dev-brazilsouth1
+      uid: 244c8bda-640c-479e-bff3-8b2eb6b29b5f
+    resourceVersion: "494963931"
+    uid: 5071c924-e9fe-4fe9-a9ec-898161437ad2
+  spec:
+    lifecycleHooks: {}
+    metadata:
+      labels:
+        ambientes.dt.cl/noprod: "true"
+        environment: development
+    providerID: azure:///subscriptions/3f7ca611-455f-41ca-b1d3-7dc4384d323a/resourceGroups/ocp4azu-sj2sl-rg/providers/Microsoft.Compute/virtualMachines/ocp4azu-sj2sl-worker-noprod-dev-brazilsouth1-vlxcp
+    providerSpec:
+      value:
+        apiVersion: machine.openshift.io/v1beta1
+        credentialsSecret:
+          name: azure-cloud-credentials
+          namespace: openshift-machine-api
+        image:
+          offer: ""
+          publisher: ""
+          resourceID: /resourceGroups/ocp4azu-sj2sl-rg/providers/Microsoft.Compute/images/ocp4azu-sj2sl
+          sku: ""
+          version: ""
+        kind: AzureMachineProviderSpec
+        location: brazilsouth
+        managedIdentity: ocp4azu-sj2sl-identity
+        metadata:
+          creationTimestamp: null
+          name: ocp4azu-sj2sl
+        networkResourceGroup: Networking
+        osDisk:
+          diskSettings: {}
+          diskSizeGB: 512
+          managedDisk:
+            storageAccountType: Premium_LRS
+          osType: Linux
+        publicIP: false
+        publicLoadBalancer: ocp4azu-sj2sl
+        resourceGroup: ocp4azu-sj2sl-rg
+        subnet: OCP4-Subnet
+        userDataSecret:
+          name: worker-user-data
+        vmSize: Standard_D4s_v3
+        vnet: DT-ocp4
+        zone: "1"
+  status:
+    addresses:
+    - address: ocp4azu-sj2sl-worker-noprod-dev-brazilsouth1-vlxcp
+      type: Hostname
+    - address: ocp4azu-sj2sl-worker-noprod-dev-brazilsouth1-vlxcp
+      type: InternalDNS
+    - address: ocp4azu-sj2sl-worker-noprod-dev-brazilsouth1-vlxcp.4ucngfacb21uzd24fzjcjlmgmf.nx.internal.cloudapp.net
+      type: InternalDNS
+    - address: 10.80.80.5
+      type: InternalIP
+    conditions:
+    - lastTransitionTime: "2023-05-25T14:36:36Z"
+      status: "True"
+      type: Drainable
+    - lastTransitionTime: "2024-08-02T14:45:59Z"
+      message: 'Failed to check if machine exists: failed to get vm: azure.BearerAuthorizer#WithAuthorization:
+        Failed to refresh the Token for request to https://management.azure.com/subscriptions/3f7ca611-455f-41ca-b1d3-7dc4384d323a/resourceGroups/ocp4azu-sj2sl-rg/providers/Microsoft.Compute/virtualMachines/ocp4azu-sj2sl-worker-noprod-dev-brazilsouth1-vlxcp?%24expand=instanceView&api-version=2021-03-01:
+        StatusCode=401 -- Original Error: adal: Refresh request failed. Status Code
+        = ''401''. Response body: {"error":"invalid_client","error_description":"AADSTS7000222:
+        The provided client secret keys for app ''8cd449af-d25a-41b6-ac02-fe0db91a528e''
+        are expired. Visit the Azure portal to create new keys for your app: https://aka.ms/NewClientSecret,
+        or consider using certificate credentials for added security: https://aka.ms/certCreds.
+        Trace ID: 06ab4a37-49f9-4909-a23f-56ad45132000 Correlation ID: ee16e49e-f307-4f25-944c-bf1090ec21e9
+        Timestamp: 2024-08-02 14:45:58Z","error_codes":[7000222],"timestamp":"2024-08-02
+        14:45:58Z","trace_id":"06ab4a37-49f9-4909-a23f-56ad45132000","correlation_id":"ee16e49e-f307-4f25-944c-bf1090ec21e9","error_uri":"https://login.microsoftonline.com/error?code=7000222"}
+        Endpoint https://login.microsoftonline.com/2d55c762-c477-4390-bb75-5adbde0a92fc/oauth2/token?api-version=1.0'
+      reason: ErrorCheckingProvider
+      status: Unknown
+      type: InstanceExists
+    - lastTransitionTime: "2023-05-25T14:36:36Z"
+      status: "True"
+      type: Terminable
+    lastUpdated: "2024-08-02T14:45:59Z"
+    nodeRef:
+      kind: Node
+      name: ocp4azu-sj2sl-worker-noprod-dev-brazilsouth1-vlxcp
+      uid: 335c32aa-6e38-41d8-a486-6207280eb504
+    phase: Running
+    providerStatus:
+      conditions:
+      - lastProbeTime: "2023-05-25T14:36:48Z"
+        lastTransitionTime: "2023-05-25T14:36:46Z"
+        message: machine successfully created
+        reason: MachineCreationSucceeded
+        status: "True"
+        type: MachineCreated
+      metadata: {}
+      vmId: /subscriptions/3f7ca611-455f-41ca-b1d3-7dc4384d323a/resourceGroups/ocp4azu-sj2sl-rg/providers/Microsoft.Compute/virtualMachines/ocp4azu-sj2sl-worker-noprod-dev-brazilsouth1-vlxcp
+      vmState: Running
+- apiVersion: machine.openshift.io/v1beta1
+  kind: Machine
+  metadata:
+    annotations:
+      machine.openshift.io/instance-state: Running
+    creationTimestamp: "2023-05-25T14:38:38Z"
+    finalizers:
+    - machine.machine.openshift.io
+    generateName: ocp4azu-sj2sl-worker-noprod-dev-brazilsouth2-
+    generation: 3
+    labels:
+      machine.openshift.io/cluster-api-cluster: ocp4azu-sj2sl
+      machine.openshift.io/cluster-api-machine-role: worker
+      machine.openshift.io/cluster-api-machine-type: worker
+      machine.openshift.io/cluster-api-machineset: ocp4azu-sj2sl-worker-noprod-dev-brazilsouth2
+      machine.openshift.io/instance-type: Standard_D4s_v3
+      machine.openshift.io/region: brazilsouth
+      machine.openshift.io/zone: "2"
+    name: ocp4azu-sj2sl-worker-noprod-dev-brazilsouth2-4dm6s
+    namespace: openshift-machine-api
+    ownerReferences:
+    - apiVersion: machine.openshift.io/v1beta1
+      blockOwnerDeletion: true
+      controller: true
+      kind: MachineSet
+      name: ocp4azu-sj2sl-worker-noprod-dev-brazilsouth2
+      uid: 97f524b3-c375-40b2-b3b9-83eb375ed951
+    resourceVersion: "494963937"
+    uid: e9011f58-7457-48e3-8488-541535a3e706
+  spec:
+    lifecycleHooks: {}
+    metadata:
+      labels:
+        ambientes.dt.cl/noprod: "true"
+        environment: development
+    providerID: azure:///subscriptions/3f7ca611-455f-41ca-b1d3-7dc4384d323a/resourceGroups/ocp4azu-sj2sl-rg/providers/Microsoft.Compute/virtualMachines/ocp4azu-sj2sl-worker-noprod-dev-brazilsouth2-4dm6s
+    providerSpec:
+      value:
+        apiVersion: machine.openshift.io/v1beta1
+        credentialsSecret:
+          name: azure-cloud-credentials
+          namespace: openshift-machine-api
+        image:
+          offer: ""
+          publisher: ""
+          resourceID: /resourceGroups/ocp4azu-sj2sl-rg/providers/Microsoft.Compute/images/ocp4azu-sj2sl
+          sku: ""
+          version: ""
+        kind: AzureMachineProviderSpec
+        location: brazilsouth
+        managedIdentity: ocp4azu-sj2sl-identity
+        metadata:
+          creationTimestamp: null
+          name: ocp4azu-sj2sl
+        networkResourceGroup: Networking
+        osDisk:
+          diskSettings: {}
+          diskSizeGB: 512
+          managedDisk:
+            storageAccountType: Premium_LRS
+          osType: Linux
+        publicIP: false
+        publicLoadBalancer: ocp4azu-sj2sl
+        resourceGroup: ocp4azu-sj2sl-rg
+        subnet: OCP4-Subnet
+        userDataSecret:
+          name: worker-user-data
+        vmSize: Standard_D4s_v3
+        vnet: DT-ocp4
+        zone: "2"
+  status:
+    addresses:
+    - address: ocp4azu-sj2sl-worker-noprod-dev-brazilsouth2-4dm6s
+      type: Hostname
+    - address: ocp4azu-sj2sl-worker-noprod-dev-brazilsouth2-4dm6s
+      type: InternalDNS
+    - address: ocp4azu-sj2sl-worker-noprod-dev-brazilsouth2-4dm6s.4ucngfacb21uzd24fzjcjlmgmf.nx.internal.cloudapp.net
+      type: InternalDNS
+    - address: 10.80.80.9
+      type: InternalIP
+    conditions:
+    - lastTransitionTime: "2023-05-25T14:38:41Z"
+      status: "True"
+      type: Drainable
+    - lastTransitionTime: "2024-08-02T14:45:59Z"
+      message: 'Failed to check if machine exists: failed to get vm: azure.BearerAuthorizer#WithAuthorization:
+        Failed to refresh the Token for request to https://management.azure.com/subscriptions/3f7ca611-455f-41ca-b1d3-7dc4384d323a/resourceGroups/ocp4azu-sj2sl-rg/providers/Microsoft.Compute/virtualMachines/ocp4azu-sj2sl-worker-noprod-dev-brazilsouth2-4dm6s?%24expand=instanceView&api-version=2021-03-01:
+        StatusCode=401 -- Original Error: adal: Refresh request failed. Status Code
+        = ''401''. Response body: {"error":"invalid_client","error_description":"AADSTS7000222:
+        The provided client secret keys for app ''8cd449af-d25a-41b6-ac02-fe0db91a528e''
+        are expired. Visit the Azure portal to create new keys for your app: https://aka.ms/NewClientSecret,
+        or consider using certificate credentials for added security: https://aka.ms/certCreds.
+        Trace ID: 6b1c37d6-b14b-4a96-b42d-b3ced8501e00 Correlation ID: 7b9c75ae-e4ab-4e5c-8018-d59693c13d51
+        Timestamp: 2024-08-02 14:45:59Z","error_codes":[7000222],"timestamp":"2024-08-02
+        14:45:59Z","trace_id":"6b1c37d6-b14b-4a96-b42d-b3ced8501e00","correlation_id":"7b9c75ae-e4ab-4e5c-8018-d59693c13d51","error_uri":"https://login.microsoftonline.com/error?code=7000222"}
+        Endpoint https://login.microsoftonline.com/2d55c762-c477-4390-bb75-5adbde0a92fc/oauth2/token?api-version=1.0'
+      reason: ErrorCheckingProvider
+      status: Unknown
+      type: InstanceExists
+    - lastTransitionTime: "2023-05-25T14:38:41Z"
+      status: "True"
+      type: Terminable
+    lastUpdated: "2024-08-02T14:45:59Z"
+    nodeRef:
+      kind: Node
+      name: ocp4azu-sj2sl-worker-noprod-dev-brazilsouth2-4dm6s
+      uid: 0f56d939-12d4-4f2b-98f7-295a1705a2a0
+    phase: Running
+    providerStatus:
+      conditions:
+      - lastProbeTime: "2023-05-25T14:39:05Z"
+        lastTransitionTime: "2023-05-25T14:38:53Z"
+        message: machine successfully created
+        reason: MachineCreationSucceeded
+        status: "True"
+        type: MachineCreated
+      metadata: {}
+      vmId: /subscriptions/3f7ca611-455f-41ca-b1d3-7dc4384d323a/resourceGroups/ocp4azu-sj2sl-rg/providers/Microsoft.Compute/virtualMachines/ocp4azu-sj2sl-worker-noprod-dev-brazilsouth2-4dm6s
+      vmState: Running
+- apiVersion: machine.openshift.io/v1beta1
+  kind: Machine
+  metadata:
+    annotations:
+      machine.openshift.io/instance-state: Running
+    creationTimestamp: "2023-05-25T13:23:40Z"
+    finalizers:
+    - machine.machine.openshift.io
+    generateName: ocp4azu-sj2sl-worker-noprod-qa-brazilsouth1-
+    generation: 3
+    labels:
+      machine.openshift.io/cluster-api-cluster: ocp4azu-sj2sl
+      machine.openshift.io/cluster-api-machine-role: worker
+      machine.openshift.io/cluster-api-machine-type: worker
+      machine.openshift.io/cluster-api-machineset: ocp4azu-sj2sl-worker-noprod-qa-brazilsouth1
+      machine.openshift.io/instance-type: Standard_D4s_v3
+      machine.openshift.io/region: brazilsouth
+      machine.openshift.io/zone: "1"
+    name: ocp4azu-sj2sl-worker-noprod-qa-brazilsouth1-2s77x
+    namespace: openshift-machine-api
+    ownerReferences:
+    - apiVersion: machine.openshift.io/v1beta1
+      blockOwnerDeletion: true
+      controller: true
+      kind: MachineSet
+      name: ocp4azu-sj2sl-worker-noprod-qa-brazilsouth1
+      uid: 91c13b48-a3f4-4d2e-9b4f-5dc94a767c90
+    resourceVersion: "494963944"
+    uid: 78f40b82-92ee-481a-8d14-97a01aad03b1
+  spec:
+    lifecycleHooks: {}
+    metadata:
+      labels:
+        ambientes.dt.cl/noprod: "true"
+        environment: qa
+    providerID: azure:///subscriptions/3f7ca611-455f-41ca-b1d3-7dc4384d323a/resourceGroups/ocp4azu-sj2sl-rg/providers/Microsoft.Compute/virtualMachines/ocp4azu-sj2sl-worker-noprod-qa-brazilsouth1-2s77x
+    providerSpec:
+      value:
+        apiVersion: machine.openshift.io/v1beta1
+        credentialsSecret:
+          name: azure-cloud-credentials
+          namespace: openshift-machine-api
+        image:
+          offer: ""
+          publisher: ""
+          resourceID: /resourceGroups/ocp4azu-sj2sl-rg/providers/Microsoft.Compute/images/ocp4azu-sj2sl
+          sku: ""
+          version: ""
+        kind: AzureMachineProviderSpec
+        location: brazilsouth
+        managedIdentity: ocp4azu-sj2sl-identity
+        metadata:
+          creationTimestamp: null
+          name: ocp4azu-sj2sl
+        networkResourceGroup: Networking
+        osDisk:
+          diskSettings: {}
+          diskSizeGB: 512
+          managedDisk:
+            storageAccountType: Premium_LRS
+          osType: Linux
+        publicIP: false
+        publicLoadBalancer: ocp4azu-sj2sl
+        resourceGroup: ocp4azu-sj2sl-rg
+        subnet: OCP4-Subnet
+        userDataSecret:
+          name: worker-user-data
+        vmSize: Standard_D4s_v3
+        vnet: DT-ocp4
+        zone: "1"
+  status:
+    addresses:
+    - address: ocp4azu-sj2sl-worker-noprod-qa-brazilsouth1-2s77x
+      type: Hostname
+    - address: ocp4azu-sj2sl-worker-noprod-qa-brazilsouth1-2s77x
+      type: InternalDNS
+    - address: ocp4azu-sj2sl-worker-noprod-qa-brazilsouth1-2s77x.4ucngfacb21uzd24fzjcjlmgmf.nx.internal.cloudapp.net
+      type: InternalDNS
+    - address: 10.80.80.28
+      type: InternalIP
+    conditions:
+    - lastTransitionTime: "2023-05-25T13:23:43Z"
+      status: "True"
+      type: Drainable
+    - lastTransitionTime: "2024-08-02T14:45:59Z"
+      message: 'Failed to check if machine exists: failed to get vm: azure.BearerAuthorizer#WithAuthorization:
+        Failed to refresh the Token for request to https://management.azure.com/subscriptions/3f7ca611-455f-41ca-b1d3-7dc4384d323a/resourceGroups/ocp4azu-sj2sl-rg/providers/Microsoft.Compute/virtualMachines/ocp4azu-sj2sl-worker-noprod-qa-brazilsouth1-2s77x?%24expand=instanceView&api-version=2021-03-01:
+        StatusCode=401 -- Original Error: adal: Refresh request failed. Status Code
+        = ''401''. Response body: {"error":"invalid_client","error_description":"AADSTS7000222:
+        The provided client secret keys for app ''8cd449af-d25a-41b6-ac02-fe0db91a528e''
+        are expired. Visit the Azure portal to create new keys for your app: https://aka.ms/NewClientSecret,
+        or consider using certificate credentials for added security: https://aka.ms/certCreds.
+        Trace ID: d78d671a-228a-4921-8679-999a753b2700 Correlation ID: 136a7fe6-1070-44cd-92b1-0ace486cfe4f
+        Timestamp: 2024-08-02 14:45:59Z","error_codes":[7000222],"timestamp":"2024-08-02
+        14:45:59Z","trace_id":"d78d671a-228a-4921-8679-999a753b2700","correlation_id":"136a7fe6-1070-44cd-92b1-0ace486cfe4f","error_uri":"https://login.microsoftonline.com/error?code=7000222"}
+        Endpoint https://login.microsoftonline.com/2d55c762-c477-4390-bb75-5adbde0a92fc/oauth2/token?api-version=1.0'
+      reason: ErrorCheckingProvider
+      status: Unknown
+      type: InstanceExists
+    - lastTransitionTime: "2023-05-25T13:23:43Z"
+      status: "True"
+      type: Terminable
+    lastUpdated: "2024-08-02T14:45:59Z"
+    nodeRef:
+      kind: Node
+      name: ocp4azu-sj2sl-worker-noprod-qa-brazilsouth1-2s77x
+      uid: 1ea1328f-35a8-4e29-a0b9-54b209680414
+    phase: Running
+    providerStatus:
+      conditions:
+      - lastProbeTime: "2023-05-25T13:23:55Z"
+        lastTransitionTime: "2023-05-25T13:23:53Z"
+        message: machine successfully created
+        reason: MachineCreationSucceeded
+        status: "True"
+        type: MachineCreated
+      metadata: {}
+      vmId: /subscriptions/3f7ca611-455f-41ca-b1d3-7dc4384d323a/resourceGroups/ocp4azu-sj2sl-rg/providers/Microsoft.Compute/virtualMachines/ocp4azu-sj2sl-worker-noprod-qa-brazilsouth1-2s77x
+      vmState: Running
+- apiVersion: machine.openshift.io/v1beta1
+  kind: Machine
+  metadata:
+    annotations:
+      machine.openshift.io/instance-state: Running
+    creationTimestamp: "2023-05-25T13:28:30Z"
+    finalizers:
+    - machine.machine.openshift.io
+    generateName: ocp4azu-sj2sl-worker-noprod-qa-brazilsouth2-
+    generation: 3
+    labels:
+      machine.openshift.io/cluster-api-cluster: ocp4azu-sj2sl
+      machine.openshift.io/cluster-api-machine-role: worker
+      machine.openshift.io/cluster-api-machine-type: worker
+      machine.openshift.io/cluster-api-machineset: ocp4azu-sj2sl-worker-noprod-qa-brazilsouth2
+      machine.openshift.io/instance-type: Standard_D4s_v3
+      machine.openshift.io/region: brazilsouth
+      machine.openshift.io/zone: "2"
+    name: ocp4azu-sj2sl-worker-noprod-qa-brazilsouth2-rglbf
+    namespace: openshift-machine-api
+    ownerReferences:
+    - apiVersion: machine.openshift.io/v1beta1
+      blockOwnerDeletion: true
+      controller: true
+      kind: MachineSet
+      name: ocp4azu-sj2sl-worker-noprod-qa-brazilsouth2
+      uid: 367a3fa9-29a3-45fc-9220-b7fbd2c4d3a3
+    resourceVersion: "494963958"
+    uid: 0c216aee-e11c-4374-bb48-9fb2b51ac4da
+  spec:
+    lifecycleHooks: {}
+    metadata:
+      labels:
+        ambientes.dt.cl/noprod: "true"
+        environment: qa
+    providerID: azure:///subscriptions/3f7ca611-455f-41ca-b1d3-7dc4384d323a/resourceGroups/ocp4azu-sj2sl-rg/providers/Microsoft.Compute/virtualMachines/ocp4azu-sj2sl-worker-noprod-qa-brazilsouth2-rglbf
+    providerSpec:
+      value:
+        apiVersion: machine.openshift.io/v1beta1
+        credentialsSecret:
+          name: azure-cloud-credentials
+          namespace: openshift-machine-api
+        image:
+          offer: ""
+          publisher: ""
+          resourceID: /resourceGroups/ocp4azu-sj2sl-rg/providers/Microsoft.Compute/images/ocp4azu-sj2sl
+          sku: ""
+          version: ""
+        kind: AzureMachineProviderSpec
+        location: brazilsouth
+        managedIdentity: ocp4azu-sj2sl-identity
+        metadata:
+          creationTimestamp: null
+          name: ocp4azu-sj2sl
+        networkResourceGroup: Networking
+        osDisk:
+          diskSettings: {}
+          diskSizeGB: 512
+          managedDisk:
+            storageAccountType: Premium_LRS
+          osType: Linux
+        publicIP: false
+        publicLoadBalancer: ocp4azu-sj2sl
+        resourceGroup: ocp4azu-sj2sl-rg
+        subnet: OCP4-Subnet
+        userDataSecret:
+          name: worker-user-data
+        vmSize: Standard_D4s_v3
+        vnet: DT-ocp4
+        zone: "2"
+  status:
+    addresses:
+    - address: ocp4azu-sj2sl-worker-noprod-qa-brazilsouth2-rglbf
+      type: Hostname
+    - address: ocp4azu-sj2sl-worker-noprod-qa-brazilsouth2-rglbf
+      type: InternalDNS
+    - address: ocp4azu-sj2sl-worker-noprod-qa-brazilsouth2-rglbf.4ucngfacb21uzd24fzjcjlmgmf.nx.internal.cloudapp.net
+      type: InternalDNS
+    - address: 10.80.80.22
+      type: InternalIP
+    conditions:
+    - lastTransitionTime: "2023-05-25T13:28:37Z"
+      status: "True"
+      type: Drainable
+    - lastTransitionTime: "2024-08-02T14:45:59Z"
+      message: 'Failed to check if machine exists: failed to get vm: azure.BearerAuthorizer#WithAuthorization:
+        Failed to refresh the Token for request to https://management.azure.com/subscriptions/3f7ca611-455f-41ca-b1d3-7dc4384d323a/resourceGroups/ocp4azu-sj2sl-rg/providers/Microsoft.Compute/virtualMachines/ocp4azu-sj2sl-worker-noprod-qa-brazilsouth2-rglbf?%24expand=instanceView&api-version=2021-03-01:
+        StatusCode=401 -- Original Error: adal: Refresh request failed. Status Code
+        = ''401''. Response body: {"error":"invalid_client","error_description":"AADSTS7000222:
+        The provided client secret keys for app ''8cd449af-d25a-41b6-ac02-fe0db91a528e''
+        are expired. Visit the Azure portal to create new keys for your app: https://aka.ms/NewClientSecret,
+        or consider using certificate credentials for added security: https://aka.ms/certCreds.
+        Trace ID: 60ae3e86-50e3-4323-b5ff-7fa648cc2d00 Correlation ID: 6a7e9b94-2671-445b-b8d7-772986bfd8c9
+        Timestamp: 2024-08-02 14:45:59Z","error_codes":[7000222],"timestamp":"2024-08-02
+        14:45:59Z","trace_id":"60ae3e86-50e3-4323-b5ff-7fa648cc2d00","correlation_id":"6a7e9b94-2671-445b-b8d7-772986bfd8c9","error_uri":"https://login.microsoftonline.com/error?code=7000222"}
+        Endpoint https://login.microsoftonline.com/2d55c762-c477-4390-bb75-5adbde0a92fc/oauth2/token?api-version=1.0'
+      reason: ErrorCheckingProvider
+      status: Unknown
+      type: InstanceExists
+    - lastTransitionTime: "2023-05-25T13:28:37Z"
+      status: "True"
+      type: Terminable
+    lastUpdated: "2024-08-02T14:45:59Z"
+    nodeRef:
+      kind: Node
+      name: ocp4azu-sj2sl-worker-noprod-qa-brazilsouth2-rglbf
+      uid: ad476d89-bf17-471f-802f-486e1dfe0406
+    phase: Running
+    providerStatus:
+      conditions:
+      - lastProbeTime: "2023-05-25T13:29:34Z"
+        lastTransitionTime: "2023-05-25T13:28:51Z"
+        message: machine successfully created
+        reason: MachineCreationSucceeded
+        status: "True"
+        type: MachineCreated
+      metadata: {}
+      vmId: /subscriptions/3f7ca611-455f-41ca-b1d3-7dc4384d323a/resourceGroups/ocp4azu-sj2sl-rg/providers/Microsoft.Compute/virtualMachines/ocp4azu-sj2sl-worker-noprod-qa-brazilsouth2-rglbf
+      vmState: Running
+- apiVersion: machine.openshift.io/v1beta1
+  kind: Machine
+  metadata:
+    annotations:
+      machine.openshift.io/instance-state: Running
+    creationTimestamp: "2023-05-25T13:35:50Z"
+    finalizers:
+    - machine.machine.openshift.io
+    generateName: ocp4azu-sj2sl-worker-prod-brazilsouth1-
+    generation: 3
+    labels:
+      machine.openshift.io/cluster-api-cluster: ocp4azu-sj2sl
+      machine.openshift.io/cluster-api-machine-role: worker
+      machine.openshift.io/cluster-api-machine-type: worker
+      machine.openshift.io/cluster-api-machineset: ocp4azu-sj2sl-worker-prod-brazilsouth1
+      machine.openshift.io/instance-type: Standard_D4s_v3
+      machine.openshift.io/region: brazilsouth
+      machine.openshift.io/zone: "1"
+    name: ocp4azu-sj2sl-worker-prod-brazilsouth1-lks8v
+    namespace: openshift-machine-api
+    ownerReferences:
+    - apiVersion: machine.openshift.io/v1beta1
+      blockOwnerDeletion: true
+      controller: true
+      kind: MachineSet
+      name: ocp4azu-sj2sl-worker-prod-brazilsouth1
+      uid: f5308086-d06c-4621-a7fe-73c4949847e1
+    resourceVersion: "494963917"
+    uid: e24bec43-fdc2-4505-91f7-f9e935f10b2e
+  spec:
+    lifecycleHooks: {}
+    metadata:
+      labels:
+        ambientes.dt.cl/prod: "true"
+        environment: prod
+    providerID: azure:///subscriptions/3f7ca611-455f-41ca-b1d3-7dc4384d323a/resourceGroups/ocp4azu-sj2sl-rg/providers/Microsoft.Compute/virtualMachines/ocp4azu-sj2sl-worker-prod-brazilsouth1-lks8v
+    providerSpec:
+      value:
+        apiVersion: machine.openshift.io/v1beta1
+        credentialsSecret:
+          name: azure-cloud-credentials
+          namespace: openshift-machine-api
+        image:
+          offer: ""
+          publisher: ""
+          resourceID: /resourceGroups/ocp4azu-sj2sl-rg/providers/Microsoft.Compute/images/ocp4azu-sj2sl
+          sku: ""
+          version: ""
+        kind: AzureMachineProviderSpec
+        location: brazilsouth
+        managedIdentity: ocp4azu-sj2sl-identity
+        metadata:
+          creationTimestamp: null
+          name: ocp4azu-sj2sl
+        networkResourceGroup: Networking
+        osDisk:
+          diskSettings: {}
+          diskSizeGB: 512
+          managedDisk:
+            storageAccountType: Premium_LRS
+          osType: Linux
+        publicIP: false
+        publicLoadBalancer: ocp4azu-sj2sl
+        resourceGroup: ocp4azu-sj2sl-rg
+        subnet: OCP4-Subnet
+        userDataSecret:
+          name: worker-user-data
+        vmSize: Standard_D4s_v3
+        vnet: DT-ocp4
+        zone: "1"
+  status:
+    addresses:
+    - address: ocp4azu-sj2sl-worker-prod-brazilsouth1-lks8v
+      type: Hostname
+    - address: ocp4azu-sj2sl-worker-prod-brazilsouth1-lks8v
+      type: InternalDNS
+    - address: ocp4azu-sj2sl-worker-prod-brazilsouth1-lks8v.4ucngfacb21uzd24fzjcjlmgmf.nx.internal.cloudapp.net
+      type: InternalDNS
+    - address: 10.80.80.19
+      type: InternalIP
+    conditions:
+    - lastTransitionTime: "2023-05-25T13:35:56Z"
+      status: "True"
+      type: Drainable
+    - lastTransitionTime: "2024-08-02T14:45:58Z"
+      message: 'Failed to check if machine exists: failed to get vm: azure.BearerAuthorizer#WithAuthorization:
+        Failed to refresh the Token for request to https://management.azure.com/subscriptions/3f7ca611-455f-41ca-b1d3-7dc4384d323a/resourceGroups/ocp4azu-sj2sl-rg/providers/Microsoft.Compute/virtualMachines/ocp4azu-sj2sl-worker-prod-brazilsouth1-lks8v?%24expand=instanceView&api-version=2021-03-01:
+        StatusCode=401 -- Original Error: adal: Refresh request failed. Status Code
+        = ''401''. Response body: {"error":"invalid_client","error_description":"AADSTS7000222:
+        The provided client secret keys for app ''8cd449af-d25a-41b6-ac02-fe0db91a528e''
+        are expired. Visit the Azure portal to create new keys for your app: https://aka.ms/NewClientSecret,
+        or consider using certificate credentials for added security: https://aka.ms/certCreds.
+        Trace ID: 97d12f2b-d08c-4798-ace2-c23b5bea1c00 Correlation ID: decb1b6c-a6ce-42e1-9d95-b335e34c5227
+        Timestamp: 2024-08-02 14:45:58Z","error_codes":[7000222],"timestamp":"2024-08-02
+        14:45:58Z","trace_id":"97d12f2b-d08c-4798-ace2-c23b5bea1c00","correlation_id":"decb1b6c-a6ce-42e1-9d95-b335e34c5227","error_uri":"https://login.microsoftonline.com/error?code=7000222"}
+        Endpoint https://login.microsoftonline.com/2d55c762-c477-4390-bb75-5adbde0a92fc/oauth2/token?api-version=1.0'
+      reason: ErrorCheckingProvider
+      status: Unknown
+      type: InstanceExists
+    - lastTransitionTime: "2023-05-25T13:35:56Z"
+      status: "True"
+      type: Terminable
+    lastUpdated: "2024-08-02T14:45:58Z"
+    nodeRef:
+      kind: Node
+      name: ocp4azu-sj2sl-worker-prod-brazilsouth1-lks8v
+      uid: ffa882ca-ea3c-4aab-b125-81bbbfc55275
+    phase: Running
+    providerStatus:
+      conditions:
+      - lastProbeTime: "2023-05-25T13:36:28Z"
+        lastTransitionTime: "2023-05-25T13:36:07Z"
+        message: machine successfully created
+        reason: MachineCreationSucceeded
+        status: "True"
+        type: MachineCreated
+      metadata: {}
+      vmId: /subscriptions/3f7ca611-455f-41ca-b1d3-7dc4384d323a/resourceGroups/ocp4azu-sj2sl-rg/providers/Microsoft.Compute/virtualMachines/ocp4azu-sj2sl-worker-prod-brazilsouth1-lks8v
+      vmState: Running
+- apiVersion: machine.openshift.io/v1beta1
+  kind: Machine
+  metadata:
+    annotations:
+      machine.openshift.io/instance-state: Running
+    creationTimestamp: "2023-05-25T19:23:23Z"
+    finalizers:
+    - machine.machine.openshift.io
+    generateName: ocp4azu-sj2sl-worker-prod-brazilsouth1-
+    generation: 3
+    labels:
+      machine.openshift.io/cluster-api-cluster: ocp4azu-sj2sl
+      machine.openshift.io/cluster-api-machine-role: worker
+      machine.openshift.io/cluster-api-machine-type: worker
+      machine.openshift.io/cluster-api-machineset: ocp4azu-sj2sl-worker-prod-brazilsouth1
+      machine.openshift.io/instance-type: Standard_D4s_v3
+      machine.openshift.io/region: brazilsouth
+      machine.openshift.io/zone: "1"
+    name: ocp4azu-sj2sl-worker-prod-brazilsouth1-mjsb5
+    namespace: openshift-machine-api
+    ownerReferences:
+    - apiVersion: machine.openshift.io/v1beta1
+      blockOwnerDeletion: true
+      controller: true
+      kind: MachineSet
+      name: ocp4azu-sj2sl-worker-prod-brazilsouth1
+      uid: f5308086-d06c-4621-a7fe-73c4949847e1
+    resourceVersion: "494963947"
+    uid: 606b25ad-f4d6-40a6-9de0-4e5e93da7972
+  spec:
+    lifecycleHooks: {}
+    metadata:
+      labels:
+        ambientes.dt.cl/prod: "true"
+        environment: prod
+    providerID: azure:///subscriptions/3f7ca611-455f-41ca-b1d3-7dc4384d323a/resourceGroups/ocp4azu-sj2sl-rg/providers/Microsoft.Compute/virtualMachines/ocp4azu-sj2sl-worker-prod-brazilsouth1-mjsb5
+    providerSpec:
+      value:
+        apiVersion: machine.openshift.io/v1beta1
+        credentialsSecret:
+          name: azure-cloud-credentials
+          namespace: openshift-machine-api
+        image:
+          offer: ""
+          publisher: ""
+          resourceID: /resourceGroups/ocp4azu-sj2sl-rg/providers/Microsoft.Compute/images/ocp4azu-sj2sl
+          sku: ""
+          version: ""
+        kind: AzureMachineProviderSpec
+        location: brazilsouth
+        managedIdentity: ocp4azu-sj2sl-identity
+        metadata:
+          creationTimestamp: null
+          name: ocp4azu-sj2sl
+        networkResourceGroup: Networking
+        osDisk:
+          diskSettings: {}
+          diskSizeGB: 512
+          managedDisk:
+            storageAccountType: Premium_LRS
+          osType: Linux
+        publicIP: false
+        publicLoadBalancer: ocp4azu-sj2sl
+        resourceGroup: ocp4azu-sj2sl-rg
+        subnet: OCP4-Subnet
+        userDataSecret:
+          name: worker-user-data
+        vmSize: Standard_D4s_v3
+        vnet: DT-ocp4
+        zone: "1"
+  status:
+    addresses:
+    - address: ocp4azu-sj2sl-worker-prod-brazilsouth1-mjsb5
+      type: Hostname
+    - address: ocp4azu-sj2sl-worker-prod-brazilsouth1-mjsb5
+      type: InternalDNS
+    - address: ocp4azu-sj2sl-worker-prod-brazilsouth1-mjsb5.4ucngfacb21uzd24fzjcjlmgmf.nx.internal.cloudapp.net
+      type: InternalDNS
+    - address: 10.80.80.13
+      type: InternalIP
+    conditions:
+    - lastTransitionTime: "2023-05-25T19:23:24Z"
+      status: "True"
+      type: Drainable
+    - lastTransitionTime: "2024-08-02T14:45:59Z"
+      message: 'Failed to check if machine exists: failed to get vm: azure.BearerAuthorizer#WithAuthorization:
+        Failed to refresh the Token for request to https://management.azure.com/subscriptions/3f7ca611-455f-41ca-b1d3-7dc4384d323a/resourceGroups/ocp4azu-sj2sl-rg/providers/Microsoft.Compute/virtualMachines/ocp4azu-sj2sl-worker-prod-brazilsouth1-mjsb5?%24expand=instanceView&api-version=2021-03-01:
+        StatusCode=401 -- Original Error: adal: Refresh request failed. Status Code
+        = ''401''. Response body: {"error":"invalid_client","error_description":"AADSTS7000222:
+        The provided client secret keys for app ''8cd449af-d25a-41b6-ac02-fe0db91a528e''
+        are expired. Visit the Azure portal to create new keys for your app: https://aka.ms/NewClientSecret,
+        or consider using certificate credentials for added security: https://aka.ms/certCreds.
+        Trace ID: 45d8985d-b11b-43d8-8415-4710d97d2a00 Correlation ID: 3e8d65bb-d6f8-4b1a-a1c1-6b8890cfdd11
+        Timestamp: 2024-08-02 14:45:59Z","error_codes":[7000222],"timestamp":"2024-08-02
+        14:45:59Z","trace_id":"45d8985d-b11b-43d8-8415-4710d97d2a00","correlation_id":"3e8d65bb-d6f8-4b1a-a1c1-6b8890cfdd11","error_uri":"https://login.microsoftonline.com/error?code=7000222"}
+        Endpoint https://login.microsoftonline.com/2d55c762-c477-4390-bb75-5adbde0a92fc/oauth2/token?api-version=1.0'
+      reason: ErrorCheckingProvider
+      status: Unknown
+      type: InstanceExists
+    - lastTransitionTime: "2023-05-25T19:23:24Z"
+      status: "True"
+      type: Terminable
+    lastUpdated: "2024-08-02T14:45:59Z"
+    nodeRef:
+      kind: Node
+      name: ocp4azu-sj2sl-worker-prod-brazilsouth1-mjsb5
+      uid: 010ca6b2-702e-4a10-bfd5-00cdf8a1bedb
+    phase: Running
+    providerStatus:
+      conditions:
+      - lastProbeTime: "2023-05-25T19:23:35Z"
+        lastTransitionTime: "2023-05-25T19:23:34Z"
+        message: machine successfully created
+        reason: MachineCreationSucceeded
+        status: "True"
+        type: MachineCreated
+      metadata: {}
+      vmId: /subscriptions/3f7ca611-455f-41ca-b1d3-7dc4384d323a/resourceGroups/ocp4azu-sj2sl-rg/providers/Microsoft.Compute/virtualMachines/ocp4azu-sj2sl-worker-prod-brazilsouth1-mjsb5
+      vmState: Running
+- apiVersion: machine.openshift.io/v1beta1
+  kind: Machine
+  metadata:
+    annotations:
+      machine.openshift.io/instance-state: Running
+    creationTimestamp: "2023-05-25T20:07:13Z"
+    finalizers:
+    - machine.machine.openshift.io
+    generateName: ocp4azu-sj2sl-worker-prod-brazilsouth2-
+    generation: 3
+    labels:
+      machine.openshift.io/cluster-api-cluster: ocp4azu-sj2sl
+      machine.openshift.io/cluster-api-machine-role: worker
+      machine.openshift.io/cluster-api-machine-type: worker
+      machine.openshift.io/cluster-api-machineset: ocp4azu-sj2sl-worker-prod-brazilsouth2
+      machine.openshift.io/instance-type: Standard_D4s_v3
+      machine.openshift.io/region: brazilsouth
+      machine.openshift.io/zone: "2"
+    name: ocp4azu-sj2sl-worker-prod-brazilsouth2-gmw4z
+    namespace: openshift-machine-api
+    ownerReferences:
+    - apiVersion: machine.openshift.io/v1beta1
+      blockOwnerDeletion: true
+      controller: true
+      kind: MachineSet
+      name: ocp4azu-sj2sl-worker-prod-brazilsouth2
+      uid: 53c39668-4cbc-438f-af28-c7f353138bcd
+    resourceVersion: "494963898"
+    uid: 645479d5-6718-48fa-9740-6c64b20340f6
+  spec:
+    lifecycleHooks: {}
+    metadata:
+      labels:
+        ambientes.dt.cl/prod: "true"
+        environment: prod
+    providerID: azure:///subscriptions/3f7ca611-455f-41ca-b1d3-7dc4384d323a/resourceGroups/ocp4azu-sj2sl-rg/providers/Microsoft.Compute/virtualMachines/ocp4azu-sj2sl-worker-prod-brazilsouth2-gmw4z
+    providerSpec:
+      value:
+        apiVersion: machine.openshift.io/v1beta1
+        credentialsSecret:
+          name: azure-cloud-credentials
+          namespace: openshift-machine-api
+        image:
+          offer: ""
+          publisher: ""
+          resourceID: /resourceGroups/ocp4azu-sj2sl-rg/providers/Microsoft.Compute/images/ocp4azu-sj2sl
+          sku: ""
+          version: ""
+        kind: AzureMachineProviderSpec
+        location: brazilsouth
+        managedIdentity: ocp4azu-sj2sl-identity
+        metadata:
+          creationTimestamp: null
+          name: ocp4azu-sj2sl
+        networkResourceGroup: Networking
+        osDisk:
+          diskSettings: {}
+          diskSizeGB: 512
+          managedDisk:
+            storageAccountType: Premium_LRS
+          osType: Linux
+        publicIP: false
+        publicLoadBalancer: ocp4azu-sj2sl
+        resourceGroup: ocp4azu-sj2sl-rg
+        subnet: OCP4-Subnet
+        userDataSecret:
+          name: worker-user-data
+        vmSize: Standard_D4s_v3
+        vnet: DT-ocp4
+        zone: "2"
+  status:
+    addresses:
+    - address: ocp4azu-sj2sl-worker-prod-brazilsouth2-gmw4z
+      type: Hostname
+    - address: ocp4azu-sj2sl-worker-prod-brazilsouth2-gmw4z
+      type: InternalDNS
+    - address: ocp4azu-sj2sl-worker-prod-brazilsouth2-gmw4z.4ucngfacb21uzd24fzjcjlmgmf.nx.internal.cloudapp.net
+      type: InternalDNS
+    - address: 10.80.80.17
+      type: InternalIP
+    conditions:
+    - lastTransitionTime: "2023-05-25T20:07:13Z"
+      status: "True"
+      type: Drainable
+    - lastTransitionTime: "2024-08-02T14:45:57Z"
+      message: 'Failed to check if machine exists: failed to get vm: azure.BearerAuthorizer#WithAuthorization:
+        Failed to refresh the Token for request to https://management.azure.com/subscriptions/3f7ca611-455f-41ca-b1d3-7dc4384d323a/resourceGroups/ocp4azu-sj2sl-rg/providers/Microsoft.Compute/virtualMachines/ocp4azu-sj2sl-worker-prod-brazilsouth2-gmw4z?%24expand=instanceView&api-version=2021-03-01:
+        StatusCode=401 -- Original Error: adal: Refresh request failed. Status Code
+        = ''401''. Response body: {"error":"invalid_client","error_description":"AADSTS7000222:
+        The provided client secret keys for app ''8cd449af-d25a-41b6-ac02-fe0db91a528e''
+        are expired. Visit the Azure portal to create new keys for your app: https://aka.ms/NewClientSecret,
+        or consider using certificate credentials for added security: https://aka.ms/certCreds.
+        Trace ID: 97d12f2b-d08c-4798-ace2-c23b3fea1c00 Correlation ID: b3751b28-137f-4188-bf8d-188c56136314
+        Timestamp: 2024-08-02 14:45:57Z","error_codes":[7000222],"timestamp":"2024-08-02
+        14:45:57Z","trace_id":"97d12f2b-d08c-4798-ace2-c23b3fea1c00","correlation_id":"b3751b28-137f-4188-bf8d-188c56136314","error_uri":"https://login.microsoftonline.com/error?code=7000222"}
+        Endpoint https://login.microsoftonline.com/2d55c762-c477-4390-bb75-5adbde0a92fc/oauth2/token?api-version=1.0'
+      reason: ErrorCheckingProvider
+      status: Unknown
+      type: InstanceExists
+    - lastTransitionTime: "2023-05-25T20:07:13Z"
+      status: "True"
+      type: Terminable
+    lastUpdated: "2024-08-02T14:45:57Z"
+    nodeRef:
+      kind: Node
+      name: ocp4azu-sj2sl-worker-prod-brazilsouth2-gmw4z
+      uid: 7a9e22c7-dc6d-4650-b811-e49d1bf30744
+    phase: Running
+    providerStatus:
+      conditions:
+      - lastProbeTime: "2023-05-25T20:07:24Z"
+        lastTransitionTime: "2023-05-25T20:07:24Z"
+        message: machine successfully created
+        reason: MachineCreationSucceeded
+        status: "True"
+        type: MachineCreated
+      metadata: {}
+      vmId: /subscriptions/3f7ca611-455f-41ca-b1d3-7dc4384d323a/resourceGroups/ocp4azu-sj2sl-rg/providers/Microsoft.Compute/virtualMachines/ocp4azu-sj2sl-worker-prod-brazilsouth2-gmw4z
+      vmState: Running
+- apiVersion: machine.openshift.io/v1beta1
+  kind: Machine
+  metadata:
+    annotations:
+      machine.openshift.io/instance-state: Running
+    creationTimestamp: "2023-05-25T13:35:50Z"
+    finalizers:
+    - machine.machine.openshift.io
+    generateName: ocp4azu-sj2sl-worker-prod-brazilsouth2-
+    generation: 3
+    labels:
+      machine.openshift.io/cluster-api-cluster: ocp4azu-sj2sl
+      machine.openshift.io/cluster-api-machine-role: worker
+      machine.openshift.io/cluster-api-machine-type: worker
+      machine.openshift.io/cluster-api-machineset: ocp4azu-sj2sl-worker-prod-brazilsouth2
+      machine.openshift.io/instance-type: Standard_D4s_v3
+      machine.openshift.io/region: brazilsouth
+      machine.openshift.io/zone: "2"
+    name: ocp4azu-sj2sl-worker-prod-brazilsouth2-xbz5z
+    namespace: openshift-machine-api
+    ownerReferences:
+    - apiVersion: machine.openshift.io/v1beta1
+      blockOwnerDeletion: true
+      controller: true
+      kind: MachineSet
+      name: ocp4azu-sj2sl-worker-prod-brazilsouth2
+      uid: 53c39668-4cbc-438f-af28-c7f353138bcd
+    resourceVersion: "494963921"
+    uid: b1dd84f0-1528-4817-bbf7-83e5d0f2bfb7
+  spec:
+    lifecycleHooks: {}
+    metadata:
+      labels:
+        ambientes.dt.cl/prod: "true"
+        environment: prod
+    providerID: azure:///subscriptions/3f7ca611-455f-41ca-b1d3-7dc4384d323a/resourceGroups/ocp4azu-sj2sl-rg/providers/Microsoft.Compute/virtualMachines/ocp4azu-sj2sl-worker-prod-brazilsouth2-xbz5z
+    providerSpec:
+      value:
+        apiVersion: machine.openshift.io/v1beta1
+        credentialsSecret:
+          name: azure-cloud-credentials
+          namespace: openshift-machine-api
+        image:
+          offer: ""
+          publisher: ""
+          resourceID: /resourceGroups/ocp4azu-sj2sl-rg/providers/Microsoft.Compute/images/ocp4azu-sj2sl
+          sku: ""
+          version: ""
+        kind: AzureMachineProviderSpec
+        location: brazilsouth
+        managedIdentity: ocp4azu-sj2sl-identity
+        metadata:
+          creationTimestamp: null
+          name: ocp4azu-sj2sl
+        networkResourceGroup: Networking
+        osDisk:
+          diskSettings: {}
+          diskSizeGB: 512
+          managedDisk:
+            storageAccountType: Premium_LRS
+          osType: Linux
+        publicIP: false
+        publicLoadBalancer: ocp4azu-sj2sl
+        resourceGroup: ocp4azu-sj2sl-rg
+        subnet: OCP4-Subnet
+        userDataSecret:
+          name: worker-user-data
+        vmSize: Standard_D4s_v3
+        vnet: DT-ocp4
+        zone: "2"
+  status:
+    addresses:
+    - address: ocp4azu-sj2sl-worker-prod-brazilsouth2-xbz5z
+      type: Hostname
+    - address: ocp4azu-sj2sl-worker-prod-brazilsouth2-xbz5z
+      type: InternalDNS
+    - address: ocp4azu-sj2sl-worker-prod-brazilsouth2-xbz5z.4ucngfacb21uzd24fzjcjlmgmf.nx.internal.cloudapp.net
+      type: InternalDNS
+    - address: 10.80.80.23
+      type: InternalIP
+    conditions:
+    - lastTransitionTime: "2023-05-25T13:35:56Z"
+      status: "True"
+      type: Drainable
+    - lastTransitionTime: "2024-08-02T14:45:58Z"
+      message: 'Failed to check if machine exists: failed to get vm: azure.BearerAuthorizer#WithAuthorization:
+        Failed to refresh the Token for request to https://management.azure.com/subscriptions/3f7ca611-455f-41ca-b1d3-7dc4384d323a/resourceGroups/ocp4azu-sj2sl-rg/providers/Microsoft.Compute/virtualMachines/ocp4azu-sj2sl-worker-prod-brazilsouth2-xbz5z?%24expand=instanceView&api-version=2021-03-01:
+        StatusCode=401 -- Original Error: adal: Refresh request failed. Status Code
+        = ''401''. Response body: {"error":"invalid_client","error_description":"AADSTS7000222:
+        The provided client secret keys for app ''8cd449af-d25a-41b6-ac02-fe0db91a528e''
+        are expired. Visit the Azure portal to create new keys for your app: https://aka.ms/NewClientSecret,
+        or consider using certificate credentials for added security: https://aka.ms/certCreds.
+        Trace ID: c890ac27-199a-4b3a-9612-4064eac31b00 Correlation ID: 9ca02850-48fa-4bdf-aabe-7ecac54da224
+        Timestamp: 2024-08-02 14:45:58Z","error_codes":[7000222],"timestamp":"2024-08-02
+        14:45:58Z","trace_id":"c890ac27-199a-4b3a-9612-4064eac31b00","correlation_id":"9ca02850-48fa-4bdf-aabe-7ecac54da224","error_uri":"https://login.microsoftonline.com/error?code=7000222"}
+        Endpoint https://login.microsoftonline.com/2d55c762-c477-4390-bb75-5adbde0a92fc/oauth2/token?api-version=1.0'
+      reason: ErrorCheckingProvider
+      status: Unknown
+      type: InstanceExists
+    - lastTransitionTime: "2023-05-25T13:35:56Z"
+      status: "True"
+      type: Terminable
+    lastUpdated: "2024-08-02T14:45:58Z"
+    nodeRef:
+      kind: Node
+      name: ocp4azu-sj2sl-worker-prod-brazilsouth2-xbz5z
+      uid: 99a76f9e-c390-4799-94bd-c7dc5dd7377e
+    phase: Running
+    providerStatus:
+      conditions:
+      - lastProbeTime: "2023-05-25T13:36:34Z"
+        lastTransitionTime: "2023-05-25T13:36:17Z"
+        message: machine successfully created
+        reason: MachineCreationSucceeded
+        status: "True"
+        type: MachineCreated
+      metadata: {}
+      vmId: /subscriptions/3f7ca611-455f-41ca-b1d3-7dc4384d323a/resourceGroups/ocp4azu-sj2sl-rg/providers/Microsoft.Compute/virtualMachines/ocp4azu-sj2sl-worker-prod-brazilsouth2-xbz5z
+      vmState: Running
+- apiVersion: machine.openshift.io/v1beta1
+  kind: Machine
+  metadata:
+    annotations:
+      machine.openshift.io/instance-state: Running
+    creationTimestamp: "2023-06-05T02:07:42Z"
+    finalizers:
+    - machine.machine.openshift.io
+    generateName: ocp4azu-sj2sl-worker-prod-brazilsouth3-
+    generation: 3
+    labels:
+      machine.openshift.io/cluster-api-cluster: ocp4azu-sj2sl
+      machine.openshift.io/cluster-api-machine-role: worker
+      machine.openshift.io/cluster-api-machine-type: worker
+      machine.openshift.io/cluster-api-machineset: ocp4azu-sj2sl-worker-prod-brazilsouth3
+      machine.openshift.io/instance-type: Standard_D8s_v3
+      machine.openshift.io/region: brazilsouth
+      machine.openshift.io/zone: "3"
+    name: ocp4azu-sj2sl-worker-prod-brazilsouth3-vmmxw
+    namespace: openshift-machine-api
+    ownerReferences:
+    - apiVersion: machine.openshift.io/v1beta1
+      blockOwnerDeletion: true
+      controller: true
+      kind: MachineSet
+      name: ocp4azu-sj2sl-worker-prod-brazilsouth3
+      uid: 9fc6238d-2795-4100-86ea-d38632a468cc
+    resourceVersion: "494963934"
+    uid: dbda3bf6-659d-4a28-a499-a3d726e1c14a
+  spec:
+    lifecycleHooks: {}
+    metadata:
+      labels:
+        ambientes.dt.cl/prod: "true"
+        environment: prod
+    providerID: azure:///subscriptions/3f7ca611-455f-41ca-b1d3-7dc4384d323a/resourceGroups/ocp4azu-sj2sl-rg/providers/Microsoft.Compute/virtualMachines/ocp4azu-sj2sl-worker-prod-brazilsouth3-vmmxw
+    providerSpec:
+      value:
+        apiVersion: machine.openshift.io/v1beta1
+        credentialsSecret:
+          name: azure-cloud-credentials
+          namespace: openshift-machine-api
+        image:
+          offer: ""
+          publisher: ""
+          resourceID: /resourceGroups/ocp4azu-sj2sl-rg/providers/Microsoft.Compute/images/ocp4azu-sj2sl
+          sku: ""
+          version: ""
+        kind: AzureMachineProviderSpec
+        location: brazilsouth
+        managedIdentity: ocp4azu-sj2sl-identity
+        metadata:
+          creationTimestamp: null
+          name: ocp4azu-sj2sl
+        networkResourceGroup: Networking
+        osDisk:
+          diskSettings: {}
+          diskSizeGB: 512
+          managedDisk:
+            storageAccountType: Premium_LRS
+          osType: Linux
+        publicIP: false
+        publicLoadBalancer: ocp4azu-sj2sl
+        resourceGroup: ocp4azu-sj2sl-rg
+        subnet: OCP4-Subnet
+        userDataSecret:
+          name: worker-user-data
+        vmSize: Standard_D8s_v3
+        vnet: DT-ocp4
+        zone: "3"
+  status:
+    addresses:
+    - address: ocp4azu-sj2sl-worker-prod-brazilsouth3-vmmxw
+      type: Hostname
+    - address: ocp4azu-sj2sl-worker-prod-brazilsouth3-vmmxw
+      type: InternalDNS
+    - address: ocp4azu-sj2sl-worker-prod-brazilsouth3-vmmxw.4ucngfacb21uzd24fzjcjlmgmf.nx.internal.cloudapp.net
+      type: InternalDNS
+    - address: 10.80.80.18
+      type: InternalIP
+    conditions:
+    - lastTransitionTime: "2023-06-05T02:07:42Z"
+      status: "True"
+      type: Drainable
+    - lastTransitionTime: "2024-08-02T14:45:59Z"
+      message: 'Failed to check if machine exists: failed to get vm: azure.BearerAuthorizer#WithAuthorization:
+        Failed to refresh the Token for request to https://management.azure.com/subscriptions/3f7ca611-455f-41ca-b1d3-7dc4384d323a/resourceGroups/ocp4azu-sj2sl-rg/providers/Microsoft.Compute/virtualMachines/ocp4azu-sj2sl-worker-prod-brazilsouth3-vmmxw?%24expand=instanceView&api-version=2021-03-01:
+        StatusCode=401 -- Original Error: adal: Refresh request failed. Status Code
+        = ''401''. Response body: {"error":"invalid_client","error_description":"AADSTS7000222:
+        The provided client secret keys for app ''8cd449af-d25a-41b6-ac02-fe0db91a528e''
+        are expired. Visit the Azure portal to create new keys for your app: https://aka.ms/NewClientSecret,
+        or consider using certificate credentials for added security: https://aka.ms/certCreds.
+        Trace ID: 33df14d6-b4ac-4c27-9555-b1ca74fa2000 Correlation ID: 16809418-7719-4378-97b6-6c4cab0fb1d2
+        Timestamp: 2024-08-02 14:45:59Z","error_codes":[7000222],"timestamp":"2024-08-02
+        14:45:59Z","trace_id":"33df14d6-b4ac-4c27-9555-b1ca74fa2000","correlation_id":"16809418-7719-4378-97b6-6c4cab0fb1d2","error_uri":"https://login.microsoftonline.com/error?code=7000222"}
+        Endpoint https://login.microsoftonline.com/2d55c762-c477-4390-bb75-5adbde0a92fc/oauth2/token?api-version=1.0'
+      reason: ErrorCheckingProvider
+      status: Unknown
+      type: InstanceExists
+    - lastTransitionTime: "2023-06-05T02:07:42Z"
+      status: "True"
+      type: Terminable
+    lastUpdated: "2024-08-02T14:45:59Z"
+    nodeRef:
+      kind: Node
+      name: ocp4azu-sj2sl-worker-prod-brazilsouth3-vmmxw
+      uid: c21551d7-453e-4abd-bb31-6efb9530ffda
+    phase: Running
+    providerStatus:
+      conditions:
+      - lastProbeTime: "2023-06-05T02:07:54Z"
+        lastTransitionTime: "2023-06-05T02:07:54Z"
+        message: machine successfully created
+        reason: MachineCreationSucceeded
+        status: "True"
+        type: MachineCreated
+      metadata: {}
+      vmId: /subscriptions/3f7ca611-455f-41ca-b1d3-7dc4384d323a/resourceGroups/ocp4azu-sj2sl-rg/providers/Microsoft.Compute/virtualMachines/ocp4azu-sj2sl-worker-prod-brazilsouth3-vmmxw
+      vmState: Running
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

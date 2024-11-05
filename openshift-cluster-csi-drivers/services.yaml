@@ -1,0 +1,55 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      service.alpha.openshift.io/serving-cert-signed-by: openshift-service-serving-signer@1683236429
+      service.beta.openshift.io/serving-cert-secret-name: azure-disk-csi-driver-controller-metrics-serving-cert
+      service.beta.openshift.io/serving-cert-signed-by: openshift-service-serving-signer@1683236429
+    creationTimestamp: "2023-05-04T21:40:40Z"
+    labels:
+      app: azure-disk-csi-driver-controller-metrics
+    name: azure-disk-csi-driver-controller-metrics
+    namespace: openshift-cluster-csi-drivers
+    resourceVersion: "6595"
+    uid: 9a856506-c612-43ab-86cb-b552606abcb2
+  spec:
+    clusterIP: 172.30.168.81
+    clusterIPs:
+    - 172.30.168.81
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: driver-m
+      port: 442
+      protocol: TCP
+      targetPort: driver-m
+    - name: provisioner-m
+      port: 443
+      protocol: TCP
+      targetPort: provisioner-m
+    - name: attacher-m
+      port: 444
+      protocol: TCP
+      targetPort: attacher-m
+    - name: resizer-m
+      port: 445
+      protocol: TCP
+      targetPort: resizer-m
+    - name: snapshotter-m
+      port: 446
+      protocol: TCP
+      targetPort: snapshotter-m
+    selector:
+      app: azure-disk-csi-driver-controller
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

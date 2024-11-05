@@ -1,0 +1,930 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.131.18.221"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.131.18.221"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/scc: privileged
+    creationTimestamp: "2024-07-28T23:56:00Z"
+    generateName: openshift-backup-28703516-
+    labels:
+      app: openshift-backup
+      controller-uid: 17042a8c-0c49-47ef-95e4-a2e7decf7313
+      job-name: openshift-backup-28703516
+    name: openshift-backup-28703516-9kr2d
+    namespace: ocp-backup-etcd
+    ownerReferences:
+    - apiVersion: batch/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Job
+      name: openshift-backup-28703516
+      uid: 17042a8c-0c49-47ef-95e4-a2e7decf7313
+    resourceVersion: "485304158"
+    uid: 8d645518-1063-4f63-9eb9-8f1e09093e0f
+  spec:
+    activeDeadlineSeconds: 600
+    containers:
+    - command:
+      - /bin/bash
+      - -c
+      - oc get no -l node-role.kubernetes.io/master --no-headers -o name | xargs -I
+        {} --  oc debug {} -- bash -c 'chroot /host sudo -E /usr/local/bin/cluster-backup.sh
+        /home/core/backup/ && chroot /host sudo -E find /home/core/backup/ -type f
+        -ctime +"2" -delete'
+      image: registry.redhat.io/openshift4/ose-cli:v4.10
+      imagePullPolicy: IfNotPresent
+      name: backup
+      resources: {}
+      securityContext:
+        privileged: true
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-c7p5d
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: openshift-backup-dockercfg-jwwvf
+    nodeName: ocp4azu-sj2sl-worker-prod-brazilsouth1-lks8v
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Never
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: openshift-backup
+    serviceAccountName: openshift-backup
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - name: kube-api-access-c7p5d
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-28T23:56:00Z"
+      reason: PodCompleted
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-28T23:56:23Z"
+      reason: PodCompleted
+      status: "False"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-28T23:56:23Z"
+      reason: PodCompleted
+      status: "False"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-28T23:56:00Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://5cd507edf711609f87978551fb492cbbb4e66c435e583d8caf6a4a8575bad734
+      image: registry.redhat.io/openshift4/ose-cli:v4.10
+      imageID: registry.redhat.io/openshift4/ose-cli@sha256:7804ea66ea8ca0f414148b8b3b52ae454800785e80a32bd8a5eb2db789014a00
+      lastState: {}
+      name: backup
+      ready: false
+      restartCount: 0
+      started: false
+      state:
+        terminated:
+          containerID: cri-o://5cd507edf711609f87978551fb492cbbb4e66c435e583d8caf6a4a8575bad734
+          exitCode: 0
+          finishedAt: "2024-07-28T23:56:23Z"
+          reason: Completed
+          startedAt: "2024-07-28T23:56:02Z"
+    hostIP: 10.80.80.19
+    phase: Succeeded
+    podIP: 10.131.18.221
+    podIPs:
+    - ip: 10.131.18.221
+    qosClass: BestEffort
+    startTime: "2024-07-28T23:56:00Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.131.18.106"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.131.18.106"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/scc: privileged
+    creationTimestamp: "2024-07-29T23:56:00Z"
+    generateName: openshift-backup-28704956-
+    labels:
+      app: openshift-backup
+      controller-uid: f05524b1-990b-4181-87de-ba2d3d3b5c96
+      job-name: openshift-backup-28704956
+    name: openshift-backup-28704956-pq855
+    namespace: ocp-backup-etcd
+    ownerReferences:
+    - apiVersion: batch/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Job
+      name: openshift-backup-28704956
+      uid: f05524b1-990b-4181-87de-ba2d3d3b5c96
+    resourceVersion: "487403334"
+    uid: 6d51dfe2-ddec-4a90-b157-7272043d3384
+  spec:
+    activeDeadlineSeconds: 600
+    containers:
+    - command:
+      - /bin/bash
+      - -c
+      - oc get no -l node-role.kubernetes.io/master --no-headers -o name | xargs -I
+        {} --  oc debug {} -- bash -c 'chroot /host sudo -E /usr/local/bin/cluster-backup.sh
+        /home/core/backup/ && chroot /host sudo -E find /home/core/backup/ -type f
+        -ctime +"2" -delete'
+      image: registry.redhat.io/openshift4/ose-cli:v4.10
+      imagePullPolicy: IfNotPresent
+      name: backup
+      resources: {}
+      securityContext:
+        privileged: true
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-tvpq8
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: openshift-backup-dockercfg-jwwvf
+    nodeName: ocp4azu-sj2sl-worker-prod-brazilsouth1-lks8v
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Never
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: openshift-backup
+    serviceAccountName: openshift-backup
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - name: kube-api-access-tvpq8
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-29T23:56:00Z"
+      reason: PodCompleted
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-29T23:56:24Z"
+      reason: PodCompleted
+      status: "False"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-29T23:56:24Z"
+      reason: PodCompleted
+      status: "False"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-29T23:56:00Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://f0752412a019bd973782df0181da69ac95d82ae472a9d29af3e0008447c7b6e2
+      image: registry.redhat.io/openshift4/ose-cli:v4.10
+      imageID: registry.redhat.io/openshift4/ose-cli@sha256:7804ea66ea8ca0f414148b8b3b52ae454800785e80a32bd8a5eb2db789014a00
+      lastState: {}
+      name: backup
+      ready: false
+      restartCount: 0
+      started: false
+      state:
+        terminated:
+          containerID: cri-o://f0752412a019bd973782df0181da69ac95d82ae472a9d29af3e0008447c7b6e2
+          exitCode: 0
+          finishedAt: "2024-07-29T23:56:23Z"
+          reason: Completed
+          startedAt: "2024-07-29T23:56:02Z"
+    hostIP: 10.80.80.19
+    phase: Succeeded
+    podIP: 10.131.18.106
+    podIPs:
+    - ip: 10.131.18.106
+    qosClass: BestEffort
+    startTime: "2024-07-29T23:56:00Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.131.19.242"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.131.19.242"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/scc: privileged
+    creationTimestamp: "2024-07-30T23:56:00Z"
+    generateName: openshift-backup-28706396-
+    labels:
+      app: openshift-backup
+      controller-uid: 36ef3145-76f4-433d-a519-8c32295a66cc
+      job-name: openshift-backup-28706396
+    name: openshift-backup-28706396-svn7g
+    namespace: ocp-backup-etcd
+    ownerReferences:
+    - apiVersion: batch/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Job
+      name: openshift-backup-28706396
+      uid: 36ef3145-76f4-433d-a519-8c32295a66cc
+    resourceVersion: "489499250"
+    uid: 8796e67c-79c9-4043-9d8f-b6d333eaee0d
+  spec:
+    activeDeadlineSeconds: 600
+    containers:
+    - command:
+      - /bin/bash
+      - -c
+      - oc get no -l node-role.kubernetes.io/master --no-headers -o name | xargs -I
+        {} --  oc debug {} -- bash -c 'chroot /host sudo -E /usr/local/bin/cluster-backup.sh
+        /home/core/backup/ && chroot /host sudo -E find /home/core/backup/ -type f
+        -ctime +"2" -delete'
+      image: registry.redhat.io/openshift4/ose-cli:v4.10
+      imagePullPolicy: IfNotPresent
+      name: backup
+      resources: {}
+      securityContext:
+        privileged: true
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-vst4j
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: openshift-backup-dockercfg-jwwvf
+    nodeName: ocp4azu-sj2sl-worker-prod-brazilsouth1-lks8v
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Never
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: openshift-backup
+    serviceAccountName: openshift-backup
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - name: kube-api-access-vst4j
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-30T23:56:00Z"
+      reason: PodCompleted
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-30T23:56:21Z"
+      reason: PodCompleted
+      status: "False"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-30T23:56:21Z"
+      reason: PodCompleted
+      status: "False"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-30T23:56:00Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://e7cc0b58b54416ed5d82b489cc435ddbea5455b681725e1157599602e22d776e
+      image: registry.redhat.io/openshift4/ose-cli:v4.10
+      imageID: registry.redhat.io/openshift4/ose-cli@sha256:7804ea66ea8ca0f414148b8b3b52ae454800785e80a32bd8a5eb2db789014a00
+      lastState: {}
+      name: backup
+      ready: false
+      restartCount: 0
+      started: false
+      state:
+        terminated:
+          containerID: cri-o://e7cc0b58b54416ed5d82b489cc435ddbea5455b681725e1157599602e22d776e
+          exitCode: 0
+          finishedAt: "2024-07-30T23:56:21Z"
+          reason: Completed
+          startedAt: "2024-07-30T23:56:02Z"
+    hostIP: 10.80.80.19
+    phase: Succeeded
+    podIP: 10.131.19.242
+    podIPs:
+    - ip: 10.131.19.242
+    qosClass: BestEffort
+    startTime: "2024-07-30T23:56:00Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.131.19.128"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.131.19.128"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/scc: privileged
+    creationTimestamp: "2024-07-31T23:56:00Z"
+    generateName: openshift-backup-28707836-
+    labels:
+      app: openshift-backup
+      controller-uid: 14c87b21-d8f6-4731-819a-603174a7d047
+      job-name: openshift-backup-28707836
+    name: openshift-backup-28707836-lrvz6
+    namespace: ocp-backup-etcd
+    ownerReferences:
+    - apiVersion: batch/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Job
+      name: openshift-backup-28707836
+      uid: 14c87b21-d8f6-4731-819a-603174a7d047
+    resourceVersion: "491586242"
+    uid: 8959868a-eea0-47d1-bb1b-202cab9196c9
+  spec:
+    activeDeadlineSeconds: 600
+    containers:
+    - command:
+      - /bin/bash
+      - -c
+      - oc get no -l node-role.kubernetes.io/master --no-headers -o name | xargs -I
+        {} --  oc debug {} -- bash -c 'chroot /host sudo -E /usr/local/bin/cluster-backup.sh
+        /home/core/backup/ && chroot /host sudo -E find /home/core/backup/ -type f
+        -ctime +"2" -delete'
+      image: registry.redhat.io/openshift4/ose-cli:v4.10
+      imagePullPolicy: IfNotPresent
+      name: backup
+      resources: {}
+      securityContext:
+        privileged: true
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-4rcls
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: openshift-backup-dockercfg-jwwvf
+    nodeName: ocp4azu-sj2sl-worker-prod-brazilsouth1-lks8v
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Never
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: openshift-backup
+    serviceAccountName: openshift-backup
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - name: kube-api-access-4rcls
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-31T23:56:00Z"
+      reason: PodCompleted
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-31T23:56:23Z"
+      reason: PodCompleted
+      status: "False"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-31T23:56:23Z"
+      reason: PodCompleted
+      status: "False"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-31T23:56:00Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://a7c5cd344f893c0706c8365341e5d7dbf253e0cc5d850eb80785fae769b92b4d
+      image: registry.redhat.io/openshift4/ose-cli:v4.10
+      imageID: registry.redhat.io/openshift4/ose-cli@sha256:7804ea66ea8ca0f414148b8b3b52ae454800785e80a32bd8a5eb2db789014a00
+      lastState: {}
+      name: backup
+      ready: false
+      restartCount: 0
+      started: false
+      state:
+        terminated:
+          containerID: cri-o://a7c5cd344f893c0706c8365341e5d7dbf253e0cc5d850eb80785fae769b92b4d
+          exitCode: 0
+          finishedAt: "2024-07-31T23:56:23Z"
+          reason: Completed
+          startedAt: "2024-07-31T23:56:02Z"
+    hostIP: 10.80.80.19
+    phase: Succeeded
+    podIP: 10.131.19.128
+    podIPs:
+    - ip: 10.131.19.128
+    qosClass: BestEffort
+    startTime: "2024-07-31T23:56:00Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.131.19.16"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.131.19.16"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/scc: privileged
+    creationTimestamp: "2024-08-01T23:56:00Z"
+    generateName: openshift-backup-28709276-
+    labels:
+      app: openshift-backup
+      controller-uid: 45cca05e-6d16-4403-b6c6-eab6839a24c7
+      job-name: openshift-backup-28709276
+    name: openshift-backup-28709276-qd27b
+    namespace: ocp-backup-etcd
+    ownerReferences:
+    - apiVersion: batch/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Job
+      name: openshift-backup-28709276
+      uid: 45cca05e-6d16-4403-b6c6-eab6839a24c7
+    resourceVersion: "493671288"
+    uid: ecaf75a6-f602-4ebb-85ed-981a90d8c25b
+  spec:
+    activeDeadlineSeconds: 600
+    containers:
+    - command:
+      - /bin/bash
+      - -c
+      - oc get no -l node-role.kubernetes.io/master --no-headers -o name | xargs -I
+        {} --  oc debug {} -- bash -c 'chroot /host sudo -E /usr/local/bin/cluster-backup.sh
+        /home/core/backup/ && chroot /host sudo -E find /home/core/backup/ -type f
+        -ctime +"2" -delete'
+      image: registry.redhat.io/openshift4/ose-cli:v4.10
+      imagePullPolicy: IfNotPresent
+      name: backup
+      resources: {}
+      securityContext:
+        privileged: true
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-rwbts
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: openshift-backup-dockercfg-jwwvf
+    nodeName: ocp4azu-sj2sl-worker-prod-brazilsouth1-lks8v
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Never
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: openshift-backup
+    serviceAccountName: openshift-backup
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - name: kube-api-access-rwbts
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2024-08-01T23:56:00Z"
+      reason: PodCompleted
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2024-08-01T23:56:21Z"
+      reason: PodCompleted
+      status: "False"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2024-08-01T23:56:21Z"
+      reason: PodCompleted
+      status: "False"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2024-08-01T23:56:00Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://9ffb6ed780b74aad2b9fe02728e1849c7ecb4fd828e4d3f290d6d88de8e3ea63
+      image: registry.redhat.io/openshift4/ose-cli:v4.10
+      imageID: registry.redhat.io/openshift4/ose-cli@sha256:7804ea66ea8ca0f414148b8b3b52ae454800785e80a32bd8a5eb2db789014a00
+      lastState: {}
+      name: backup
+      ready: false
+      restartCount: 0
+      started: false
+      state:
+        terminated:
+          containerID: cri-o://9ffb6ed780b74aad2b9fe02728e1849c7ecb4fd828e4d3f290d6d88de8e3ea63
+          exitCode: 0
+          finishedAt: "2024-08-01T23:56:21Z"
+          reason: Completed
+          startedAt: "2024-08-01T23:56:02Z"
+    hostIP: 10.80.80.19
+    phase: Succeeded
+    podIP: 10.131.19.16
+    podIPs:
+    - ip: 10.131.19.16
+    qosClass: BestEffort
+    startTime: "2024-08-01T23:56:00Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.129.22.96"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.129.22.96"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/scc: privileged
+    creationTimestamp: "2023-11-22T22:34:45Z"
+    generateName: prueba1-
+    labels:
+      app: openshift-backup
+      controller-uid: c2bb34dc-6519-4e0a-bbc6-d1e869acda6c
+      job-name: prueba1
+    name: prueba1-kcdmj
+    namespace: ocp-backup-etcd
+    ownerReferences:
+    - apiVersion: batch/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Job
+      name: prueba1
+      uid: c2bb34dc-6519-4e0a-bbc6-d1e869acda6c
+    resourceVersion: "167726751"
+    uid: da1b1b1b-13c8-4857-8bf7-8ba1f4c61254
+  spec:
+    activeDeadlineSeconds: 600
+    containers:
+    - command:
+      - /bin/bash
+      - -c
+      - oc get no -l node-role.kubernetes.io/master --no-headers -o name | xargs -I
+        {} --  oc debug {} -- bash -c 'chroot /host sudo -E /usr/local/bin/cluster-backup.sh
+        /home/core/backup/ && chroot /host sudo -E find /home/core/backup/ -type f
+        -ctime +"2" -delete'
+      image: registry.redhat.io/openshift4/ose-cli:v4.10
+      imagePullPolicy: IfNotPresent
+      name: backup
+      resources: {}
+      securityContext:
+        privileged: true
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-4qbjf
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: openshift-backup-dockercfg-jwwvf
+    nodeName: ocp4azu-sj2sl-worker-prod-brazilsouth1-mjsb5
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Never
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: openshift-backup
+    serviceAccountName: openshift-backup
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - name: kube-api-access-4qbjf
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-11-22T22:34:45Z"
+      reason: PodCompleted
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2023-11-22T22:35:55Z"
+      reason: PodCompleted
+      status: "False"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2023-11-22T22:35:55Z"
+      reason: PodCompleted
+      status: "False"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-11-22T22:34:45Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://030df4c93900316ac82e427bce8f4a956db600dcbf8742df4a363379913de9d9
+      image: registry.redhat.io/openshift4/ose-cli:v4.10
+      imageID: registry.redhat.io/openshift4/ose-cli@sha256:7804ea66ea8ca0f414148b8b3b52ae454800785e80a32bd8a5eb2db789014a00
+      lastState: {}
+      name: backup
+      ready: false
+      restartCount: 0
+      started: false
+      state:
+        terminated:
+          containerID: cri-o://030df4c93900316ac82e427bce8f4a956db600dcbf8742df4a363379913de9d9
+          exitCode: 0
+          finishedAt: "2023-11-22T22:35:55Z"
+          reason: Completed
+          startedAt: "2023-11-22T22:34:52Z"
+    hostIP: 10.80.80.13
+    phase: Succeeded
+    podIP: 10.129.22.96
+    podIPs:
+    - ip: 10.129.22.96
+    qosClass: BestEffort
+    startTime: "2023-11-22T22:34:45Z"
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

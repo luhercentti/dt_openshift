@@ -1,0 +1,564 @@
+apiVersion: v1
+items:
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftWebConsole
+      openshift.io/migration-registry: 172.30.164.193:5000
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-25T13:37:37Z"
+    generation: 1
+    labels:
+      app: api-integracion
+      migration.openshift.io/migrated-by-migmigration: c3ea9ecb-e90b-490b-b3d5-a4a3ca470138
+      migration.openshift.io/migrated-by-migplan: 09dc99a3-20c0-4d89-88a2-c81cce3ef81b
+      velero.io/backup-name: migration-f9156-initial-ff7x9
+      velero.io/restore-name: migration-f9156-final-jccsn
+    name: api-integracion
+    namespace: lre-dev
+    resourceVersion: "11409056"
+    uid: e28ace25-1868-45d6-a57b-d833f363115c
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: api-integracion:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      git:
+        ref: develop
+        uri: https://dirtrab.visualstudio.com/Libro%20Remuneraciones%20Electronico/_git/api-integracion-lre
+      sourceSecret:
+        name: vsts
+      type: Git
+    strategy:
+      sourceStrategy:
+        env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: Development
+        - name: DOTNET_STARTUP_PROJECT
+          value: api-integracion-lre/Dt.LibroRemuneraciones.ApiDeIntegracion/Dt.LibroRemuneraciones.ApiDeIntegracion.csproj
+        from:
+          kind: ImageStreamTag
+          name: dotnet:2.1
+          namespace: openshift
+      type: Source
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - imageChange:
+        lastTriggeredImageID: docker-registry.default.svc:5000/openshift/dotnet@sha256:c3aa4f3fa47b8f172a311aeebce45a091f6689dbf5aebf7e4c7ffa1c5c418a81
+      type: ImageChange
+    - type: ConfigChange
+    - generic:
+        secret: c242ef442815ee15
+      type: Generic
+    - github:
+        secret: ede2d78e4be25016
+      type: GitHub
+  status:
+    lastVersion: 0
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftWebConsole
+      openshift.io/migration-registry: 172.30.164.193:5000
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-25T13:37:37Z"
+    generation: 1
+    labels:
+      app: api-integracion-prod
+      migration.openshift.io/migrated-by-migmigration: c3ea9ecb-e90b-490b-b3d5-a4a3ca470138
+      migration.openshift.io/migrated-by-migplan: 09dc99a3-20c0-4d89-88a2-c81cce3ef81b
+      velero.io/backup-name: migration-f9156-initial-ff7x9
+      velero.io/restore-name: migration-f9156-final-jccsn
+    name: api-integracion-prod
+    namespace: lre-dev
+    resourceVersion: "11409054"
+    uid: 1f69fb9b-1a6e-471d-a421-a87ae038a0ef
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: api-integracion-prod:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      git:
+        ref: master
+        uri: https://dirtrab.visualstudio.com/Libro%20Remuneraciones%20Electronico/_git/api-integracion-lre
+      sourceSecret:
+        name: vsts
+      type: Git
+    strategy:
+      sourceStrategy:
+        env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: Production
+        - name: DOTNET_STARTUP_PROJECT
+          value: api-integracion-lre/Dt.LibroRemuneraciones.ApiDeIntegracion/Dt.LibroRemuneraciones.ApiDeIntegracion.csproj
+        from:
+          kind: ImageStreamTag
+          name: dotnet:2.1
+          namespace: openshift
+      type: Source
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - imageChange:
+        lastTriggeredImageID: docker-registry.default.svc:5000/openshift/dotnet@sha256:c3aa4f3fa47b8f172a311aeebce45a091f6689dbf5aebf7e4c7ffa1c5c418a81
+      type: ImageChange
+    - type: ConfigChange
+    - generic:
+        secret: 3dd0b95d77874241
+      type: Generic
+    - github:
+        secret: cb8fd38497fe4f0a
+      type: GitHub
+  status:
+    lastVersion: 0
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftWebConsole
+      openshift.io/migration-registry: 172.30.164.193:5000
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-25T13:37:37Z"
+    generation: 2
+    labels:
+      app: consumerampq
+      migration.openshift.io/migrated-by-migmigration: c3ea9ecb-e90b-490b-b3d5-a4a3ca470138
+      migration.openshift.io/migrated-by-migplan: 09dc99a3-20c0-4d89-88a2-c81cce3ef81b
+      velero.io/backup-name: migration-f9156-initial-ff7x9
+      velero.io/restore-name: migration-f9156-final-jccsn
+    name: consumerampq
+    namespace: lre-dev
+    resourceVersion: "11409067"
+    uid: cc31525f-2891-4c20-8349-c3e2c7fdd9a6
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: consumerampq:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      contextDir: /CONSUMER0001-ValidacionesFondoAMQP
+      git:
+        ref: feature/validacion-forma
+        uri: https://dirtrab.visualstudio.com/Libro%20Remuneraciones%20Electronico/_git/api-remuneraciones-declaracion
+      sourceSecret:
+        name: lolivero
+      type: Git
+    strategy:
+      sourceStrategy:
+        forcePull: true
+        from:
+          kind: ImageStreamTag
+          name: redhat-openjdk18-openshift:1.4
+          namespace: openshift
+      type: Source
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - imageChange:
+        lastTriggeredImageID: docker-registry.default.svc:5000/openshift/redhat-openjdk18-openshift@sha256:dc84fed0f6f40975a2277c126438c8aa15c70eeac75981dbaa4b6b853eff61a6
+      type: ImageChange
+    - type: ConfigChange
+    - generic:
+        secret: 9725c70b96034570
+      type: Generic
+    - github:
+        secret: 22333374b52fcb2e
+      type: GitHub
+  status:
+    imageChangeTriggers:
+    - from:
+        name: redhat-openjdk18-openshift:1.4
+        namespace: openshift
+      lastTriggerTime: null
+      lastTriggeredImageID: image-registry.openshift-image-registry.svc:5000/openshift/redhat-openjdk18-openshift@sha256:dc84fed0f6f40975a2277c126438c8aa15c70eeac75981dbaa4b6b853eff61a6
+    lastVersion: 1
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftWebConsole
+      openshift.io/migration-registry: 172.30.164.193:5000
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-25T13:37:37Z"
+    generation: 2
+    labels:
+      app: lre-front
+      migration.openshift.io/migrated-by-migmigration: c3ea9ecb-e90b-490b-b3d5-a4a3ca470138
+      migration.openshift.io/migrated-by-migplan: 09dc99a3-20c0-4d89-88a2-c81cce3ef81b
+      velero.io/backup-name: migration-f9156-initial-ff7x9
+      velero.io/restore-name: migration-f9156-final-jccsn
+    name: lre-front
+    namespace: lre-dev
+    resourceVersion: "95923197"
+    uid: f7ed2939-5b0d-45a0-a1bb-68c60afab044
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: lre-front:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      git:
+        ref: develop
+        uri: https://dirtrab.visualstudio.com/Libro%20Remuneraciones%20Electronico/_git/product-lre
+      sourceSecret:
+        name: product-lre
+      type: Git
+    strategy:
+      sourceStrategy:
+        from:
+          kind: ImageStreamTag
+          name: nodejs:10
+          namespace: openshift
+      type: Source
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - imageChange:
+        lastTriggeredImageID: docker-registry.default.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+      type: ImageChange
+    - type: ConfigChange
+    - generic:
+        secret: e515de4953d5caa5
+      type: Generic
+    - github:
+        secret: 7d28c95b215d9f02
+      type: GitHub
+  status:
+    imageChangeTriggers:
+    - from:
+        name: nodejs:10
+        namespace: openshift
+      lastTriggerTime: "2023-09-01T01:10:33Z"
+      lastTriggeredImageID: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+    lastVersion: 1
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftNewBuild
+      openshift.io/migration-registry: 172.30.164.193:5000
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-25T13:37:37Z"
+    generation: 1
+    labels:
+      build: myjavaapp
+      migration.openshift.io/migrated-by-migmigration: c3ea9ecb-e90b-490b-b3d5-a4a3ca470138
+      migration.openshift.io/migrated-by-migplan: 09dc99a3-20c0-4d89-88a2-c81cce3ef81b
+      velero.io/backup-name: migration-f9156-initial-ff7x9
+      velero.io/restore-name: migration-f9156-final-jccsn
+    name: myjavaapp
+    namespace: lre-dev
+    resourceVersion: "11409072"
+    uid: 8c373499-ebb8-4f3e-8ea0-a68ecda81cb0
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: myjavaapp:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      binary: {}
+      type: Binary
+    strategy:
+      sourceStrategy:
+        env:
+        - name: brokerurl
+          value: broker-poc-lre-amqp-0-svc:5672
+        from:
+          kind: ImageStreamTag
+          name: openjdk-11-rhel8:latest
+          namespace: openshift
+      type: Source
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - github:
+        secret: Thl5YK8Fs1EOgVeQ6wPz
+      type: GitHub
+    - generic:
+        secret: oj0C6v8uKhOPSHYbyjKG
+      type: Generic
+  status:
+    lastVersion: 0
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftWebConsole
+      openshift.io/migration-registry: 172.30.164.193:5000
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-25T13:37:37Z"
+    generation: 2
+    labels:
+      app: pocdatagrid
+      migration.openshift.io/migrated-by-migmigration: c3ea9ecb-e90b-490b-b3d5-a4a3ca470138
+      migration.openshift.io/migrated-by-migplan: 09dc99a3-20c0-4d89-88a2-c81cce3ef81b
+      velero.io/backup-name: migration-f9156-initial-ff7x9
+      velero.io/restore-name: migration-f9156-final-jccsn
+    name: pocdatagrid
+    namespace: lre-dev
+    resourceVersion: "11409091"
+    uid: df473da3-d880-4f5d-a23c-1ae3f9ce736b
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: pocdatagrid:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      contextDir: /pocdatagridupload
+      git:
+        ref: master
+        uri: https://dirtrab.visualstudio.com/Libro%20Remuneraciones%20Electronico/_git/lre-poc
+      sourceSecret:
+        name: lolivero
+      type: Git
+    strategy:
+      sourceStrategy:
+        from:
+          kind: ImageStreamTag
+          name: java:8
+          namespace: openshift
+      type: Source
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - imageChange:
+        lastTriggeredImageID: docker-registry.default.svc:5000/openshift/java@sha256:06bbbf9272d5c5161f444388593e9bd8db793d8a2d95a50b429b3c0301fafcdd
+      type: ImageChange
+    - type: ConfigChange
+    - generic:
+        secret: 8bdb073a4a8e673e
+      type: Generic
+    - github:
+        secret: 01d9069ea227043b
+      type: GitHub
+  status:
+    imageChangeTriggers:
+    - from:
+        name: java:8
+        namespace: openshift
+      lastTriggerTime: "2023-05-25T13:37:37Z"
+      lastTriggeredImageID: image-registry.openshift-image-registry.svc:5000/openshift/java@sha256:11ed9be8643f914f9740f782a2e6ed8055e2fd9f53eee3bb25a563e374be0054
+    lastVersion: 1
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftWebConsole
+      openshift.io/migration-registry: 172.30.164.193:5000
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-25T13:37:37Z"
+    generation: 2
+    labels:
+      app: pocdatagrird
+      migration.openshift.io/migrated-by-migmigration: c3ea9ecb-e90b-490b-b3d5-a4a3ca470138
+      migration.openshift.io/migrated-by-migplan: 09dc99a3-20c0-4d89-88a2-c81cce3ef81b
+      velero.io/backup-name: migration-f9156-initial-ff7x9
+      velero.io/restore-name: migration-f9156-final-jccsn
+    name: pocdatagrird
+    namespace: lre-dev
+    resourceVersion: "11409099"
+    uid: 97101b9e-4ee5-4760-bfcf-37fd7b9cd957
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: pocdatagrird:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      contextDir: undertow-servlet
+      git:
+        ref: master
+        uri: https://github.com/jboss-openshift/openshift-quickstarts
+      type: Git
+    strategy:
+      sourceStrategy:
+        from:
+          kind: ImageStreamTag
+          name: java:8
+          namespace: openshift
+      type: Source
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - generic:
+        secret: 4c5245bddb89f5c4
+      type: Generic
+    - github:
+        secret: 6893d7aa443c1241
+      type: GitHub
+    - imageChange:
+        lastTriggeredImageID: docker-registry.default.svc:5000/openshift/java@sha256:06bbbf9272d5c5161f444388593e9bd8db793d8a2d95a50b429b3c0301fafcdd
+      type: ImageChange
+    - type: ConfigChange
+  status:
+    imageChangeTriggers:
+    - from:
+        name: java:8
+        namespace: openshift
+      lastTriggerTime: "2023-05-25T13:37:37Z"
+      lastTriggeredImageID: image-registry.openshift-image-registry.svc:5000/openshift/java@sha256:11ed9be8643f914f9740f782a2e6ed8055e2fd9f53eee3bb25a563e374be0054
+    lastVersion: 1
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftNewBuild
+      openshift.io/migration-registry: 172.30.164.193:5000
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-25T13:37:37Z"
+    generation: 1
+    labels:
+      build: product-lre
+      migration.openshift.io/migrated-by-migmigration: c3ea9ecb-e90b-490b-b3d5-a4a3ca470138
+      migration.openshift.io/migrated-by-migplan: 09dc99a3-20c0-4d89-88a2-c81cce3ef81b
+      velero.io/backup-name: migration-f9156-initial-ff7x9
+      velero.io/restore-name: migration-f9156-final-jccsn
+    name: product-lre
+    namespace: lre-dev
+    resourceVersion: "11409098"
+    uid: d792d885-3867-4ba7-987a-0acece281e5c
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: product-lre:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      binary: {}
+      type: Binary
+    strategy:
+      sourceStrategy:
+        env:
+        - name: REACT_APP_VOLVER_REDIRECT_EMPLEADOR
+          value: /empleador/home
+        - name: REACT_APP_PARENT_DOMAIN
+          value: '*'
+        - name: REACT_APP_LRE_OBTENER_DECLARACIONES
+          value: https://lre-services-live-qa.api.dirtrab.cl/fiscalizacion/remuneracion/declaracion/datosDeclaraciones/empleador/
+        - name: REACT_APP_LRE_OBTENER_OBSERVACIONES
+          value: https://lre-services-live-qa.api.dirtrab.cl/fiscalizacion/remuneracion/declaracion/datosDeclaraciones/observaciones/
+        - name: REACT_APP_LRE_CARGAR_DECLARACION
+          value: https://lre-services-live-qa.api.dirtrab.cl/fiscalizacion/remuneracion/declaracion/cargaDeclaracion
+        - name: REACT_APP_LRE_OBTENER_CSV_DECLARACION
+          value: https://lre-services-live-qa.api.dirtrab.cl/fiscalizacion/remuneracion/declaracion/descargaDeclaracion/
+        - name: REACT_APP_LRE_OBTENER_PLANTILLA_EJEMPLO
+          value: https://lre-services-live-qa.api.dirtrab.cl/fiscalizacion/remuneracion/declaracion/descargaDeclaracion/plantilla
+        - name: REACT_APP_LRE_EMPLEADOR
+          value: https://lre-services-live-qa.api.dirtrab.cl/fiscalizacion/remuneracion/validaEmpleador/empleador/
+        - name: REACT_APP_LRE_URL_METADATA
+          value: https://lre-services-live-qa.api.dirtrab.cl/fiscalizacion/remuneracion/bff/metadata/empleador
+        - name: REACT_APP_LRE_URL_GUARDAR_TERMINO_CONDICIONES
+          value: https://lre-services-live-qa.api.dirtrab.cl/fiscalizacion/remuneracion/terminoCondiciones/empleador/
+        - name: REACT_APP_PDF_INSTRUCCIONES
+          value: https://static-content.api.dirtrab.cl/dt-docs/lre/lre_instrucciones_de_carga.pdf
+        - name: REACT_APP_PDF_POLITICAS_PRIVACIDAD
+          value: https://static-content.api.dirtrab.cl/dt-docs/lre/lre_politicas_proteccion_datos_personales.pdf
+        - name: REACT_APP_PDF_SUPLEMENTO_LRE
+          value: https://static-content.api.dirtrab.cl/dt-docs/lre/lre_suplemento.pdf
+        - name: REACT_APP_DESCARGAR_CSV
+          value: https://lre-services-live-qa.api.dirtrab.cl/fiscalizacion/remuneracion/declaracion/descargaDeclaracion/
+        - name: REACT_APP_OBTENER_OBSERVACIONES
+          value: https://lre-services-live-qa.api.dirtrab.cl/fiscalizacion/remuneracion/declaracion/datosDeclaraciones/observaciones/
+        - name: REACT_APP_OBTENER_DECLARACIONES
+          value: https://lre-services-live-qa.api.dirtrab.cl/fiscalizacion/remuneracion/declaracion/datosDeclaraciones/empleador
+        - name: REACT_APP_DESCARGAR_DECLARACIONES
+          value: https://lre-services-live-qa.api.dirtrab.cl/fiscalizacion/remuneracion/declaracion/descargaDeclaracion/plantilla
+        - name: REACT_APP_CARGAR_DECLARACIONES_TEST
+          value: https://lre-services-live-qa.api.dirtrab.cl/fiscalizacion/remuneracion/declaracion/cargaDeclaracion
+        - name: REACT_APP_VALIDAR_EMPLEADOR
+          value: https://lre-services-live-qa.api.dirtrab.cl/fiscalizacion/remuneracion/empleador/validaEmpleador
+        - name: REACT_APP_SEGUNDOS_DE_RECARGA
+          value: "20"
+        - name: REACT_APP_DEFAULT_TIPO_PERFIL
+          value: "3"
+        - name: REACT_APP_METADATA_PERSONA
+          value: https://lre-services-live-qa.api.dirtrab.cl/fiscalizacion/remuneracion/bff/metadata/persona
+        - name: REACT_APP_METADATA
+          value: https://lre-services-live-qa.api.dirtrab.cl/fiscalizacion/remuneracion/bff/metadata/formulario/estructura/full
+        - name: REACT_APP_METADATA_OPCIONES_FORMULARIO
+          value: https://lre-services-live-qa.api.dirtrab.cl/fiscalizacion/remuneracion/bff/metadata/formulario/full
+        - name: REACT_APP_TRABAJADORES
+          value: https://lre-services-live-qa.api.dirtrab.cl/fiscalizacion/remuneracion/adminNominaTrabajadores/nominaTrabajadores
+        - name: REACT_APP_DECLARACIONES_JSON
+          value: https://lre-services-live-qa.api.dirtrab.cl/declaraciones/declaracionesJSON
+        - name: REACT_APP_LRE_ENVIRONMENT
+          value: production
+        from:
+          kind: ImageStreamTag
+          name: nodejs:10
+          namespace: openshift
+      type: Source
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - github:
+        secret: miNNfgsoDF_EXx2L3MwB
+      type: GitHub
+    - generic:
+        secret: n8VStb5Ygjc_sVoMB6FJ
+      type: Generic
+  status:
+    lastVersion: 0
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

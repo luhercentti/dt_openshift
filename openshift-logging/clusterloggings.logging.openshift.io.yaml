@@ -1,0 +1,184 @@
+apiVersion: v1
+items:
+- apiVersion: logging.openshift.io/v1
+  kind: ClusterLogging
+  metadata:
+    creationTimestamp: "2023-05-15T20:18:27Z"
+    generation: 1
+    name: instance
+    namespace: openshift-logging
+    resourceVersion: "494941424"
+    uid: bb2ae1b1-01e5-4ac0-b0dd-cfd009c2ceac
+  spec:
+    collection:
+      logs:
+        fluentd:
+          tolerations:
+          - effect: NoSchedule
+            key: node-role.kubernetes.io/infra
+            value: reserved
+          - effect: NoExecute
+            key: node-role.kubernetes.io/infra
+            value: reserved
+        type: fluentd
+    curation:
+      curator:
+        nodeSelector:
+          node-role.kubernetes.io/infra: ""
+        schedule: 30 3 * * *
+        tolerations:
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/infra
+          value: reserved
+        - effect: NoExecute
+          key: node-role.kubernetes.io/infra
+          value: reserved
+      type: curator
+    logStore:
+      elasticsearch:
+        nodeCount: 3
+        nodeSelector:
+          node-role.kubernetes.io/infra: ""
+        proxy:
+          resources:
+            limits:
+              memory: 256Mi
+            requests:
+              memory: 256Mi
+        redundancyPolicy: SingleRedundancy
+        resources:
+          requests:
+            memory: 4Gi
+        storage:
+          size: 200G
+          storageClassName: managed-premium
+        tolerations:
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/infra
+          value: reserved
+        - effect: NoExecute
+          key: node-role.kubernetes.io/infra
+          value: reserved
+      retentionPolicy:
+        application:
+          maxAge: 1d
+        audit:
+          maxAge: 4d
+        infra:
+          maxAge: 4d
+      type: elasticsearch
+    managementState: Managed
+    visualization:
+      kibana:
+        nodeSelector:
+          node-role.kubernetes.io/infra: ""
+        replicas: 1
+        tolerations:
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/infra
+          value: reserved
+        - effect: NoExecute
+          key: node-role.kubernetes.io/infra
+          value: reserved
+      type: kibana
+  status:
+    collection:
+      logs:
+        fluentdStatus:
+          daemonSet: collector
+          nodes:
+            collector-7w6j9: ocp4azu-sj2sl-worker-prod-brazilsouth1-mjsb5
+            collector-8j4mf: ocp4azu-sj2sl-infra-brazilsouth1-5zvnf
+            collector-9bfnv: ocp4azu-sj2sl-master-0
+            collector-9zmfl: ocp4azu-sj2sl-master-1
+            collector-f7xrc: ocp4azu-sj2sl-worker-noprod-dev-brazilsouth2-4dm6s
+            collector-hjrtc: ocp4azu-sj2sl-worker-prod-brazilsouth2-xbz5z
+            collector-k5slf: ocp4azu-sj2sl-infra-brazilsouth2-ptg7h
+            collector-pr2zj: ocp4azu-sj2sl-worker-noprod-qa-brazilsouth1-2s77x
+            collector-pt7pq: ocp4azu-sj2sl-infra-brazilsouth3-pfrpx
+            collector-qh49v: ocp4azu-sj2sl-worker-prod-brazilsouth1-lks8v
+            collector-qtmbq: ocp4azu-sj2sl-master-2
+            collector-qxvnr: ocp4azu-sj2sl-worker-noprod-dev-brazilsouth1-vlxcp
+            collector-rpfb6: ocp4azu-sj2sl-worker-prod-brazilsouth2-gmw4z
+            collector-vhnvf: ocp4azu-sj2sl-worker-noprod-qa-brazilsouth2-rglbf
+            collector-wjpf6: ocp4azu-sj2sl-worker-prod-brazilsouth3-vmmxw
+          pods:
+            failed: []
+            notReady: []
+            ready:
+            - collector-7w6j9
+            - collector-8j4mf
+            - collector-9bfnv
+            - collector-9zmfl
+            - collector-f7xrc
+            - collector-hjrtc
+            - collector-k5slf
+            - collector-pr2zj
+            - collector-pt7pq
+            - collector-qh49v
+            - collector-qtmbq
+            - collector-qxvnr
+            - collector-rpfb6
+            - collector-vhnvf
+            - collector-wjpf6
+    conditions:
+    - lastTransitionTime: "2023-05-15T20:19:21Z"
+      status: "False"
+      type: CollectorDeadEnd
+    curation: {}
+    logStore:
+      elasticsearchStatus:
+      - cluster:
+          activePrimaryShards: 207
+          activeShards: 414
+          initializingShards: 0
+          numDataNodes: 3
+          numNodes: 3
+          pendingTasks: 0
+          relocatingShards: 0
+          status: green
+          unassignedShards: 0
+        clusterName: elasticsearch
+        nodeConditions:
+          elasticsearch-cdm-07rnwmwx-1: []
+          elasticsearch-cdm-07rnwmwx-2: []
+          elasticsearch-cdm-07rnwmwx-3: []
+        nodeCount: 3
+        pods:
+          client:
+            failed: []
+            notReady: []
+            ready:
+            - elasticsearch-cdm-07rnwmwx-1-76d4647dfc-9nl7c
+            - elasticsearch-cdm-07rnwmwx-2-6fbf7999d4-hs8pb
+            - elasticsearch-cdm-07rnwmwx-3-66994f5b9f-wcxsj
+          data:
+            failed: []
+            notReady: []
+            ready:
+            - elasticsearch-cdm-07rnwmwx-1-76d4647dfc-9nl7c
+            - elasticsearch-cdm-07rnwmwx-2-6fbf7999d4-hs8pb
+            - elasticsearch-cdm-07rnwmwx-3-66994f5b9f-wcxsj
+          master:
+            failed: []
+            notReady: []
+            ready:
+            - elasticsearch-cdm-07rnwmwx-1-76d4647dfc-9nl7c
+            - elasticsearch-cdm-07rnwmwx-2-6fbf7999d4-hs8pb
+            - elasticsearch-cdm-07rnwmwx-3-66994f5b9f-wcxsj
+        shardAllocationEnabled: all
+    visualization:
+      kibanaStatus:
+      - deployment: kibana
+        pods:
+          failed: []
+          notReady: []
+          ready:
+          - kibana-b6969687b-qbgrx
+        replicaSets:
+        - kibana-b6969687b
+        replicas: 1
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

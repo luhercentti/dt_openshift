@@ -1,0 +1,57 @@
+apiVersion: v1
+items:
+- apiVersion: oadp.openshift.io/v1alpha1
+  kind: DataProtectionApplication
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: '{"apiVersion":"oadp.openshift.io/v1alpha1","kind":"DataProtectionApplication","metadata":{"name":"velero","namespace":"openshift-migration"},"spec":{"backupImages":false,"configuration":{"restic":{"enable":true,"podConfig":{"labels":{"app.kubernetes.io/part-of":"openshift-migration"},"resourceAllocations":{"limits":null,"requests":{"cpu":"100m","memory":null}}},"supplementalGroups":[],"timeout":"1h"},"velero":{"defaultPlugins":["openshift","aws","gcp","azure"],"noDefaultBackupLocation":true,"podConfig":{"labels":{"app.kubernetes.io/part-of":"openshift-migration"},"resourceAllocations":{"limits":null,"requests":{"cpu":"100m","memory":null}}}}},"unsupportedOverrides":{"operator-type":"mtc"}}}'
+    creationTimestamp: "2023-05-12T20:25:40Z"
+    generation: 2
+    name: velero
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: migration.openshift.io/v1alpha1
+      kind: MigrationController
+      name: migration-controller
+      uid: 6c83ac9d-343f-4bbd-82b5-65232ad8f08e
+    resourceVersion: "2281595"
+    uid: 2243f0dc-d566-45ae-9332-0148894804c0
+  spec:
+    backupImages: false
+    configuration:
+      restic:
+        enable: true
+        podConfig:
+          labels:
+            app.kubernetes.io/part-of: openshift-migration
+          resourceAllocations:
+            requests:
+              cpu: 100m
+        supplementalGroups: []
+        timeout: 1h
+      velero:
+        defaultPlugins:
+        - openshift
+        - aws
+        - gcp
+        - azure
+        noDefaultBackupLocation: true
+        podConfig:
+          labels:
+            app.kubernetes.io/part-of: openshift-migration
+          resourceAllocations:
+            requests:
+              cpu: 100m
+    unsupportedOverrides:
+      operator-type: mtc
+  status:
+    conditions:
+    - lastTransitionTime: "2023-05-12T20:25:40Z"
+      message: Reconcile complete
+      reason: Complete
+      status: "True"
+      type: Reconciled
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

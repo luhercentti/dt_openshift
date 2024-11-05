@@ -1,0 +1,936 @@
+apiVersion: v1
+items:
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: DirectVolumeMigration
+  metadata:
+    creationTimestamp: "2023-06-04T07:41:27Z"
+    generateName: migration-05da4-
+    generation: 20331
+    labels:
+      app.kubernetes.io/part-of: openshift-migration
+      migmigration: d260e821-c8d9-409f-9013-a81dd35264d4
+      migration-direct-volume: d260e821-c8d9-409f-9013-a81dd35264d4
+    name: migration-05da4-m7nnr
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: migration.openshift.io/v1alpha1
+      controller: true
+      kind: MigMigration
+      name: migration-05da4
+      uid: d260e821-c8d9-409f-9013-a81dd35264d4
+    resourceVersion: "20279326"
+    uid: 6d50c73f-6428-40ef-8229-7ce6d6acbbe1
+  spec:
+    createDestinationNamespaces: true
+    destMigClusterRef:
+      name: host
+      namespace: openshift-migration
+    persistentVolumeClaims:
+    - name: system-storage
+      namespace: 3scale
+      targetAccessModes:
+      - ReadWriteMany
+      targetName: system-storage
+      targetNamespace: 3scale
+      targetStorageClass: managed-premium
+    - name: system-storage-workaround
+      namespace: 3scale
+      targetAccessModes:
+      - ReadWriteMany
+      targetName: system-storage-workaround
+      targetNamespace: 3scale
+      targetStorageClass: managed-premium
+    - name: backend-redis-storage
+      namespace: 3scale
+      targetAccessModes:
+      - ReadWriteOnce
+      targetName: backend-redis-storage
+      targetNamespace: 3scale
+      targetStorageClass: managed-premium
+    - name: mysql-storage
+      namespace: 3scale
+      targetAccessModes:
+      - ReadWriteOnce
+      targetName: mysql-storage
+      targetNamespace: 3scale
+      targetStorageClass: managed-premium
+    - name: system-redis-storage
+      namespace: 3scale
+      targetAccessModes:
+      - ReadWriteOnce
+      targetName: system-redis-storage
+      targetNamespace: 3scale
+      targetStorageClass: managed-premium
+    srcMigClusterRef:
+      name: ocp3cloud
+      namespace: openshift-migration
+  status:
+    conditions:
+    - category: Advisory
+      durable: true
+      lastTransitionTime: "2023-06-04T23:50:37Z"
+      message: The migration has succeeded
+      reason: Completed
+      status: "True"
+      type: Succeeded
+    itinerary: VolumeMigration
+    observedDigest: 1a47c5ad4e6c724e58060cc271855c1618b65bf5bd4bfa6d2cf5e17ca08dcc64
+    phase: Completed
+    phaseDescription: Complete
+    rsyncOperations:
+    - currentAttempt: 1
+      pvcReference:
+        name: system-storage
+        namespace: 3scale
+      succeeded: true
+    - currentAttempt: 1
+      pvcReference:
+        name: system-storage-workaround
+        namespace: 3scale
+      succeeded: true
+    - currentAttempt: 1
+      pvcReference:
+        name: backend-redis-storage
+        namespace: 3scale
+      succeeded: true
+    - currentAttempt: 1
+      pvcReference:
+        name: mysql-storage
+        namespace: 3scale
+      succeeded: true
+    - currentAttempt: 1
+      pvcReference:
+        name: system-redis-storage
+        namespace: 3scale
+      succeeded: true
+    startTimestamp: "2023-06-04T07:41:27Z"
+    successfulPods:
+    - lastObservedProgressPercent: 100%
+      name: rsync-q9cr5
+      namespace: 3scale
+      pvcRef:
+        name: system-storage
+        namespace: 3scale
+      totalElapsedTime: 10s
+    - lastObservedProgressPercent: 100%
+      lastObservedTransferRate: 6.19MB/s
+      name: rsync-sjj6x
+      namespace: 3scale
+      pvcRef:
+        name: system-storage-workaround
+        namespace: 3scale
+      totalElapsedTime: 7s
+    - lastObservedProgressPercent: 100%
+      name: rsync-pbzdm
+      namespace: 3scale
+      pvcRef:
+        name: backend-redis-storage
+        namespace: 3scale
+      totalElapsedTime: 5s
+    - lastObservedProgressPercent: 100%
+      name: rsync-bjfh9
+      namespace: 3scale
+      pvcRef:
+        name: mysql-storage
+        namespace: 3scale
+      totalElapsedTime: 16s
+    - lastObservedProgressPercent: 100%
+      name: rsync-xq2mc
+      namespace: 3scale
+      pvcRef:
+        name: system-redis-storage
+        namespace: 3scale
+      totalElapsedTime: 7s
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: DirectVolumeMigration
+  metadata:
+    creationTimestamp: "2023-05-24T18:05:00Z"
+    generateName: migration-2aa62-
+    generation: 1316
+    labels:
+      app.kubernetes.io/part-of: openshift-migration
+      migmigration: fb6d415b-403f-4870-9be1-ea5c70a277b4
+      migration-direct-volume: fb6d415b-403f-4870-9be1-ea5c70a277b4
+    name: migration-2aa62-jk5f8
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: migration.openshift.io/v1alpha1
+      controller: true
+      kind: MigMigration
+      name: migration-2aa62
+      uid: fb6d415b-403f-4870-9be1-ea5c70a277b4
+    resourceVersion: "10763286"
+    uid: 2abcc54f-54b4-4a86-965b-65f7ff158134
+  spec:
+    createDestinationNamespaces: true
+    destMigClusterRef:
+      name: host
+      namespace: openshift-migration
+    persistentVolumeClaims:
+    - name: srv-data-cache-service-1
+      namespace: api-fiscalizacion-prod
+      targetAccessModes:
+      - ReadWriteOnce
+      targetName: srv-data-cache-service-1
+      targetNamespace: api-fiscalizacion-prod
+      targetStorageClass: managed-premium
+    - name: srv-data-cache-service-0
+      namespace: api-fiscalizacion-prod
+      targetAccessModes:
+      - ReadWriteOnce
+      targetName: srv-data-cache-service-0
+      targetNamespace: api-fiscalizacion-prod
+      targetStorageClass: managed-premium
+    srcMigClusterRef:
+      name: ocp3cloud
+      namespace: openshift-migration
+  status:
+    conditions:
+    - category: Advisory
+      durable: true
+      lastTransitionTime: "2023-05-24T19:11:23Z"
+      message: The migration has succeeded
+      reason: Completed
+      status: "True"
+      type: Succeeded
+    itinerary: VolumeMigration
+    observedDigest: a1fda9f376427f37f5fcb7401c7191038c68c8d9ab7078e1659a3e005d9c89d5
+    phase: Completed
+    phaseDescription: Complete
+    rsyncOperations:
+    - currentAttempt: 1
+      pvcReference:
+        name: srv-data-cache-service-1
+        namespace: api-fiscalizacion-prod
+      succeeded: true
+    - currentAttempt: 1
+      pvcReference:
+        name: srv-data-cache-service-0
+        namespace: api-fiscalizacion-prod
+      succeeded: true
+    startTimestamp: "2023-05-24T18:05:00Z"
+    successfulPods:
+    - lastObservedProgressPercent: 100%
+      name: rsync-qlfj8
+      namespace: api-fiscalizacion-prod
+      pvcRef:
+        name: srv-data-cache-service-1
+        namespace: api-fiscalizacion-prod
+      totalElapsedTime: 12s
+    - lastObservedProgressPercent: 100%
+      name: rsync-fczn2
+      namespace: api-fiscalizacion-prod
+      pvcRef:
+        name: srv-data-cache-service-0
+        namespace: api-fiscalizacion-prod
+      totalElapsedTime: 4s
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: DirectVolumeMigration
+  metadata:
+    creationTimestamp: "2023-06-04T07:43:35Z"
+    generateName: migration-6375c-
+    generation: 32
+    labels:
+      app.kubernetes.io/part-of: openshift-migration
+      migmigration: d6e899c8-d37c-4eff-837f-3d84bd4b30d6
+      migration-direct-volume: d6e899c8-d37c-4eff-837f-3d84bd4b30d6
+    name: migration-6375c-7d7xv
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: migration.openshift.io/v1alpha1
+      controller: true
+      kind: MigMigration
+      name: migration-6375c
+      uid: d6e899c8-d37c-4eff-837f-3d84bd4b30d6
+    resourceVersion: "19645040"
+    uid: db839ca8-264e-41dc-9c54-b8e408df4a4c
+  spec:
+    createDestinationNamespaces: true
+    destMigClusterRef:
+      name: host
+      namespace: openshift-migration
+    persistentVolumeClaims:
+    - name: lre-broker-lre-broker-ss-0
+      namespace: lre-dev
+      targetAccessModes:
+      - ReadWriteOnce
+      targetName: lre-broker-lre-broker-ss-0
+      targetNamespace: lre-dev
+      targetStorageClass: managed-premium
+    - name: lre-broker-lre-broker-ss-1
+      namespace: lre-dev
+      targetAccessModes:
+      - ReadWriteOnce
+      targetName: lre-broker-lre-broker-ss-1
+      targetNamespace: lre-dev
+      targetStorageClass: managed-premium
+    srcMigClusterRef:
+      name: ocp3cloud
+      namespace: openshift-migration
+  status:
+    conditions:
+    - category: Advisory
+      durable: true
+      lastTransitionTime: "2023-06-04T07:44:48Z"
+      message: The migration has succeeded
+      reason: Completed
+      status: "True"
+      type: Succeeded
+    itinerary: VolumeMigration
+    observedDigest: 38428bf515be08c0e9c558d005dac5db106441c32da978d2654875000444e213
+    phase: Completed
+    phaseDescription: Complete
+    rsyncOperations:
+    - currentAttempt: 1
+      pvcReference:
+        name: lre-broker-lre-broker-ss-0
+        namespace: lre-dev
+      succeeded: true
+    - currentAttempt: 1
+      pvcReference:
+        name: lre-broker-lre-broker-ss-1
+        namespace: lre-dev
+      succeeded: true
+    startTimestamp: "2023-06-04T07:43:35Z"
+    successfulPods:
+    - lastObservedProgressPercent: 100%
+      name: rsync-fz8lp
+      namespace: lre-dev
+      pvcRef:
+        name: lre-broker-lre-broker-ss-0
+        namespace: lre-dev
+      totalElapsedTime: 2s
+    - lastObservedProgressPercent: 100%
+      name: rsync-pllcm
+      namespace: lre-dev
+      pvcRef:
+        name: lre-broker-lre-broker-ss-1
+        namespace: lre-dev
+      totalElapsedTime: 3s
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: DirectVolumeMigration
+  metadata:
+    creationTimestamp: "2023-06-03T19:49:25Z"
+    generateName: migration-85fa4-
+    generation: 76
+    labels:
+      app.kubernetes.io/part-of: openshift-migration
+      migmigration: 4066e18a-7c09-4930-a1fd-19e7058b887b
+      migration-direct-volume: 4066e18a-7c09-4930-a1fd-19e7058b887b
+    name: migration-85fa4-cxjm5
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: migration.openshift.io/v1alpha1
+      controller: true
+      kind: MigMigration
+      name: migration-85fa4
+      uid: 4066e18a-7c09-4930-a1fd-19e7058b887b
+    resourceVersion: "19220265"
+    uid: b7f60806-3353-4e6a-b845-ff1269b7617f
+  spec:
+    createDestinationNamespaces: true
+    destMigClusterRef:
+      name: host
+      namespace: openshift-migration
+    persistentVolumeClaims:
+    - name: nexus3-pv
+      namespace: cicd
+      targetAccessModes:
+      - ReadWriteOnce
+      targetName: nexus3-pv
+      targetNamespace: cicd
+      targetStorageClass: managed-premium
+    - name: sonarqube-sonarqube
+      namespace: cicd
+      targetAccessModes:
+      - ReadWriteOnce
+      targetName: sonarqube-sonarqube
+      targetNamespace: cicd
+      targetStorageClass: managed-premium
+    - name: data-sonarqube-postgresql-0
+      namespace: cicd
+      targetAccessModes:
+      - ReadWriteOnce
+      targetName: data-sonarqube-postgresql-0
+      targetNamespace: cicd
+      targetStorageClass: managed-premium
+    - name: jenkins
+      namespace: cicd
+      targetAccessModes:
+      - ReadWriteOnce
+      targetName: jenkins
+      targetNamespace: cicd
+      targetStorageClass: managed-premium
+    srcMigClusterRef:
+      name: ocp3cloud
+      namespace: openshift-migration
+  status:
+    conditions:
+    - category: Advisory
+      durable: true
+      lastTransitionTime: "2023-06-03T19:53:10Z"
+      message: The migration has succeeded
+      reason: Completed
+      status: "True"
+      type: Succeeded
+    itinerary: VolumeMigration
+    observedDigest: 05dd67a1b20e8b02b24854248d64240f4491154fffc675fbbfab644f7838a5fe
+    phase: Completed
+    phaseDescription: Complete
+    rsyncOperations:
+    - currentAttempt: 1
+      pvcReference:
+        name: nexus3-pv
+        namespace: cicd
+      succeeded: true
+    - currentAttempt: 1
+      pvcReference:
+        name: sonarqube-sonarqube
+        namespace: cicd
+      succeeded: true
+    - currentAttempt: 1
+      pvcReference:
+        name: data-sonarqube-postgresql-0
+        namespace: cicd
+      succeeded: true
+    - currentAttempt: 1
+      pvcReference:
+        name: jenkins
+        namespace: cicd
+      succeeded: true
+    startTimestamp: "2023-06-03T19:49:25Z"
+    successfulPods:
+    - lastObservedProgressPercent: 100%
+      lastObservedTransferRate: 7.63MB/s
+      name: rsync-bfxb7
+      namespace: cicd
+      pvcRef:
+        name: nexus3-pv
+        namespace: cicd
+      totalElapsedTime: 43s
+    - lastObservedProgressPercent: 100%
+      name: rsync-n86bw
+      namespace: cicd
+      pvcRef:
+        name: sonarqube-sonarqube
+        namespace: cicd
+      totalElapsedTime: 8s
+    - lastObservedProgressPercent: 100%
+      name: rsync-7mrrc
+      namespace: cicd
+      pvcRef:
+        name: data-sonarqube-postgresql-0
+        namespace: cicd
+      totalElapsedTime: 2s
+    - lastObservedProgressPercent: 100%
+      name: rsync-qbpcn
+      namespace: cicd
+      pvcRef:
+        name: jenkins
+        namespace: cicd
+      totalElapsedTime: 12s
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: DirectVolumeMigration
+  metadata:
+    creationTimestamp: "2023-05-25T13:56:15Z"
+    generateName: migration-86e34-
+    generation: 67
+    labels:
+      app.kubernetes.io/part-of: openshift-migration
+      migmigration: be4eaccf-3585-4f01-a07c-115ecb0f9e52
+      migration-direct-volume: be4eaccf-3585-4f01-a07c-115ecb0f9e52
+    name: migration-86e34-27krl
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: migration.openshift.io/v1alpha1
+      controller: true
+      kind: MigMigration
+      name: migration-86e34
+      uid: be4eaccf-3585-4f01-a07c-115ecb0f9e52
+    resourceVersion: "11431169"
+    uid: 454b45fc-6ab0-471f-9dcc-7fb2bb1d6e1b
+  spec:
+    createDestinationNamespaces: true
+    destMigClusterRef:
+      name: host
+      namespace: openshift-migration
+    persistentVolumeClaims:
+    - name: srv-data-cache-service-1
+      namespace: api-fiscalizacion-qa
+      targetAccessModes:
+      - ReadWriteOnce
+      targetName: srv-data-cache-service-1
+      targetNamespace: api-fiscalizacion-qa
+      targetStorageClass: managed-premium
+    - name: srv-data-cache-service-0
+      namespace: api-fiscalizacion-qa
+      targetAccessModes:
+      - ReadWriteOnce
+      targetName: srv-data-cache-service-0
+      targetNamespace: api-fiscalizacion-qa
+      targetStorageClass: managed-premium
+    srcMigClusterRef:
+      name: ocp3cloud
+      namespace: openshift-migration
+  status:
+    conditions:
+    - category: Advisory
+      durable: true
+      lastTransitionTime: "2023-05-25T14:01:24Z"
+      message: 'The migration has failed.  See: Errors.'
+      reason: RunRsyncOperations
+      status: "True"
+      type: Failed
+    failedPods:
+    - lastObservedProgressPercent: 0%
+      name: rsync-wvp65
+      namespace: api-fiscalizacion-qa
+      pvcRef:
+        name: srv-data-cache-service-0
+        namespace: api-fiscalizacion-qa
+      totalElapsedTime: 0s
+    itinerary: VolumeMigrationFailed
+    observedDigest: e1e34f11f52d4311926c2afd1b77b32dea89b1e1b78903719d81227247536432
+    phase: Completed
+    phaseDescription: Complete
+    rsyncOperations:
+    - currentAttempt: 1
+      pvcReference:
+        name: srv-data-cache-service-1
+        namespace: api-fiscalizacion-qa
+      succeeded: true
+    - currentAttempt: 20
+      failed: true
+      pvcReference:
+        name: srv-data-cache-service-0
+        namespace: api-fiscalizacion-qa
+    startTimestamp: "2023-05-25T13:56:16Z"
+    successfulPods:
+    - lastObservedProgressPercent: 100%
+      name: rsync-29bvs
+      namespace: api-fiscalizacion-qa
+      pvcRef:
+        name: srv-data-cache-service-1
+        namespace: api-fiscalizacion-qa
+      totalElapsedTime: 23s
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: DirectVolumeMigration
+  metadata:
+    creationTimestamp: "2023-05-25T14:24:29Z"
+    generateName: migration-89ce3-
+    generation: 50
+    labels:
+      app.kubernetes.io/part-of: openshift-migration
+      migmigration: ff2f5321-ca11-4c04-bd17-16088fb9b13a
+      migration-direct-volume: ff2f5321-ca11-4c04-bd17-16088fb9b13a
+    name: migration-89ce3-rtq4g
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: migration.openshift.io/v1alpha1
+      controller: true
+      kind: MigMigration
+      name: migration-89ce3
+      uid: ff2f5321-ca11-4c04-bd17-16088fb9b13a
+    resourceVersion: "11447688"
+    uid: f02c9856-e262-4146-90ca-ba56b949490f
+  spec:
+    createDestinationNamespaces: true
+    destMigClusterRef:
+      name: host
+      namespace: openshift-migration
+    persistentVolumeClaims:
+    - name: srv-data-cache-service-1
+      namespace: api-fiscalizacion-qa
+      targetAccessModes:
+      - ReadWriteOnce
+      targetName: srv-data-cache-service-1
+      targetNamespace: api-fiscalizacion-qa
+      targetStorageClass: managed-premium
+    - name: srv-data-cache-service-0
+      namespace: api-fiscalizacion-qa
+      targetAccessModes:
+      - ReadWriteOnce
+      targetName: srv-data-cache-service-0
+      targetNamespace: api-fiscalizacion-qa
+      targetStorageClass: managed-premium
+    srcMigClusterRef:
+      name: ocp3cloud
+      namespace: openshift-migration
+  status:
+    conditions:
+    - category: Advisory
+      durable: true
+      lastTransitionTime: "2023-05-25T14:25:41Z"
+      message: 'The migration has failed.  See: Errors.'
+      reason: RunRsyncOperations
+      status: "True"
+      type: Failed
+    failedPods:
+    - lastObservedProgressPercent: 0%
+      name: rsync-hd8vs
+      namespace: api-fiscalizacion-qa
+      pvcRef:
+        name: srv-data-cache-service-0
+        namespace: api-fiscalizacion-qa
+      totalElapsedTime: 0s
+    itinerary: VolumeMigrationFailed
+    observedDigest: e1e34f11f52d4311926c2afd1b77b32dea89b1e1b78903719d81227247536432
+    phase: Completed
+    phaseDescription: Complete
+    rsyncOperations:
+    - currentAttempt: 1
+      pvcReference:
+        name: srv-data-cache-service-1
+        namespace: api-fiscalizacion-qa
+      succeeded: true
+    - currentAttempt: 20
+      failed: true
+      pvcReference:
+        name: srv-data-cache-service-0
+        namespace: api-fiscalizacion-qa
+    startTimestamp: "2023-05-25T14:24:29Z"
+    successfulPods:
+    - lastObservedProgressPercent: 100%
+      name: rsync-2zgwk
+      namespace: api-fiscalizacion-qa
+      pvcRef:
+        name: srv-data-cache-service-1
+        namespace: api-fiscalizacion-qa
+      totalElapsedTime: 2s
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: DirectVolumeMigration
+  metadata:
+    creationTimestamp: "2023-05-24T16:50:12Z"
+    generateName: migration-a1d0e-
+    generation: 68
+    labels:
+      app.kubernetes.io/part-of: openshift-migration
+      migmigration: 699d0bcd-b652-4694-8061-a2f9a1459099
+      migration-direct-volume: 699d0bcd-b652-4694-8061-a2f9a1459099
+    name: migration-a1d0e-l97rg
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: migration.openshift.io/v1alpha1
+      controller: true
+      kind: MigMigration
+      name: migration-a1d0e
+      uid: 699d0bcd-b652-4694-8061-a2f9a1459099
+    resourceVersion: "10682113"
+    uid: 0f058818-2311-4dfa-ad4e-69e991ac5a3e
+  spec:
+    createDestinationNamespaces: true
+    destMigClusterRef:
+      name: host
+      namespace: openshift-migration
+    persistentVolumeClaims:
+    - name: srv-data-cache-service-1
+      namespace: api-fiscalizacion-qa
+      targetAccessModes:
+      - ReadWriteOnce
+      targetName: srv-data-cache-service-1
+      targetNamespace: api-fiscalizacion-qa
+      targetStorageClass: managed-premium
+    - name: srv-data-cache-service-0
+      namespace: api-fiscalizacion-qa
+      targetAccessModes:
+      - ReadWriteOnce
+      targetName: srv-data-cache-service-0
+      targetNamespace: api-fiscalizacion-qa
+      targetStorageClass: managed-premium
+    srcMigClusterRef:
+      name: ocp3cloud
+      namespace: openshift-migration
+  status:
+    conditions:
+    - category: Advisory
+      durable: true
+      lastTransitionTime: "2023-05-24T16:54:33Z"
+      message: 'The migration has failed.  See: Errors.'
+      reason: RunRsyncOperations
+      status: "True"
+      type: Failed
+    failedPods:
+    - lastObservedProgressPercent: 0%
+      name: rsync-gcdfq
+      namespace: api-fiscalizacion-qa
+      pvcRef:
+        name: srv-data-cache-service-0
+        namespace: api-fiscalizacion-qa
+      totalElapsedTime: 0s
+    itinerary: VolumeMigrationFailed
+    observedDigest: e1e34f11f52d4311926c2afd1b77b32dea89b1e1b78903719d81227247536432
+    phase: Completed
+    phaseDescription: Complete
+    rsyncOperations:
+    - currentAttempt: 1
+      pvcReference:
+        name: srv-data-cache-service-1
+        namespace: api-fiscalizacion-qa
+      succeeded: true
+    - currentAttempt: 20
+      failed: true
+      pvcReference:
+        name: srv-data-cache-service-0
+        namespace: api-fiscalizacion-qa
+    startTimestamp: "2023-05-24T16:50:12Z"
+    successfulPods:
+    - lastObservedProgressPercent: 100%
+      name: rsync-bndww
+      namespace: api-fiscalizacion-qa
+      pvcRef:
+        name: srv-data-cache-service-1
+        namespace: api-fiscalizacion-qa
+      totalElapsedTime: 18s
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: DirectVolumeMigration
+  metadata:
+    creationTimestamp: "2023-06-05T15:18:08Z"
+    generateName: migration-e3183-
+    generation: 177
+    labels:
+      app.kubernetes.io/part-of: openshift-migration
+      migmigration: 0ccd2f67-7ac7-4be0-a33f-fe509b3b234f
+      migration-direct-volume: 0ccd2f67-7ac7-4be0-a33f-fe509b3b234f
+    name: migration-e3183-xfcsg
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: migration.openshift.io/v1alpha1
+      controller: true
+      kind: MigMigration
+      name: migration-e3183
+      uid: 0ccd2f67-7ac7-4be0-a33f-fe509b3b234f
+    resourceVersion: "20851459"
+    uid: 0beceda0-e8da-4d8c-8de9-0480901ec953
+  spec:
+    createDestinationNamespaces: true
+    destMigClusterRef:
+      name: host
+      namespace: openshift-migration
+    persistentVolumeClaims:
+    - name: lre-broker-lre-broker-ss-1
+      namespace: lre-prod
+      targetAccessModes:
+      - ReadWriteOnce
+      targetName: lre-broker-lre-broker-ss-1
+      targetNamespace: lre-prod
+      targetStorageClass: managed-premium
+    - name: lre-broker-lre-broker-ss-0
+      namespace: lre-prod
+      targetAccessModes:
+      - ReadWriteOnce
+      targetName: lre-broker-lre-broker-ss-0
+      targetNamespace: lre-prod
+      targetStorageClass: managed-premium
+    srcMigClusterRef:
+      name: ocp3cloud
+      namespace: openshift-migration
+  status:
+    conditions:
+    - category: Advisory
+      durable: true
+      lastTransitionTime: "2023-06-05T15:37:50Z"
+      message: The migration has succeeded
+      reason: Completed
+      status: "True"
+      type: Succeeded
+    itinerary: VolumeMigration
+    observedDigest: 1d16f82921481f5be56dcfbba504c6a02c80156689ffd799144bd317fad4b3ef
+    phase: Completed
+    phaseDescription: Complete
+    rsyncOperations:
+    - currentAttempt: 1
+      pvcReference:
+        name: lre-broker-lre-broker-ss-1
+        namespace: lre-prod
+      succeeded: true
+    - currentAttempt: 1
+      pvcReference:
+        name: lre-broker-lre-broker-ss-0
+        namespace: lre-prod
+      succeeded: true
+    startTimestamp: "2023-06-05T15:18:08Z"
+    successfulPods:
+    - lastObservedProgressPercent: 100%
+      name: rsync-v4422
+      namespace: lre-prod
+      pvcRef:
+        name: lre-broker-lre-broker-ss-1
+        namespace: lre-prod
+      totalElapsedTime: 21s
+    - lastObservedProgressPercent: 100%
+      name: rsync-kt2sc
+      namespace: lre-prod
+      pvcRef:
+        name: lre-broker-lre-broker-ss-0
+        namespace: lre-prod
+      totalElapsedTime: 58s
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: DirectVolumeMigration
+  metadata:
+    creationTimestamp: "2023-05-25T13:00:24Z"
+    generateName: migration-f9156-
+    generation: 627
+    labels:
+      app.kubernetes.io/part-of: openshift-migration
+      migmigration: c3ea9ecb-e90b-490b-b3d5-a4a3ca470138
+      migration-direct-volume: c3ea9ecb-e90b-490b-b3d5-a4a3ca470138
+    name: migration-f9156-zzwwk
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: migration.openshift.io/v1alpha1
+      controller: true
+      kind: MigMigration
+      name: migration-f9156
+      uid: c3ea9ecb-e90b-490b-b3d5-a4a3ca470138
+    resourceVersion: "11408655"
+    uid: d99e6328-9515-4b89-9eb6-69d78aeeb1a4
+  spec:
+    createDestinationNamespaces: true
+    destMigClusterRef:
+      name: host
+      namespace: openshift-migration
+    persistentVolumeClaims:
+    - name: lre-broker-lre-broker-ss-0
+      namespace: lre-dev
+      targetAccessModes:
+      - ReadWriteOnce
+      targetName: lre-broker-lre-broker-ss-0
+      targetNamespace: lre-dev
+      targetStorageClass: managed-premium
+    - name: lre-broker-lre-broker-ss-1
+      namespace: lre-dev
+      targetAccessModes:
+      - ReadWriteOnce
+      targetName: lre-broker-lre-broker-ss-1
+      targetNamespace: lre-dev
+      targetStorageClass: managed-premium
+    srcMigClusterRef:
+      name: ocp3cloud
+      namespace: openshift-migration
+  status:
+    conditions:
+    - category: Advisory
+      durable: true
+      lastTransitionTime: "2023-05-25T13:37:18Z"
+      message: The migration has succeeded
+      reason: Completed
+      status: "True"
+      type: Succeeded
+    itinerary: VolumeMigration
+    observedDigest: 38428bf515be08c0e9c558d005dac5db106441c32da978d2654875000444e213
+    phase: Completed
+    phaseDescription: Complete
+    rsyncOperations:
+    - currentAttempt: 1
+      pvcReference:
+        name: lre-broker-lre-broker-ss-0
+        namespace: lre-dev
+      succeeded: true
+    - currentAttempt: 1
+      pvcReference:
+        name: lre-broker-lre-broker-ss-1
+        namespace: lre-dev
+      succeeded: true
+    startTimestamp: "2023-05-25T13:00:24Z"
+    successfulPods:
+    - lastObservedProgressPercent: 100%
+      name: rsync-k4ggn
+      namespace: lre-dev
+      pvcRef:
+        name: lre-broker-lre-broker-ss-0
+        namespace: lre-dev
+      totalElapsedTime: 20s
+    - lastObservedProgressPercent: 100%
+      name: rsync-ml7jq
+      namespace: lre-dev
+      pvcRef:
+        name: lre-broker-lre-broker-ss-1
+        namespace: lre-dev
+      totalElapsedTime: 22s
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: DirectVolumeMigration
+  metadata:
+    creationTimestamp: "2023-05-26T02:36:59Z"
+    generateName: migration-fc7c1-
+    generation: 57
+    labels:
+      app.kubernetes.io/part-of: openshift-migration
+      migmigration: e38d34ca-b64b-4f51-8661-6ba7d05484a6
+      migration-direct-volume: e38d34ca-b64b-4f51-8661-6ba7d05484a6
+    name: migration-fc7c1-jqwwv
+    namespace: openshift-migration
+    ownerReferences:
+    - apiVersion: migration.openshift.io/v1alpha1
+      controller: true
+      kind: MigMigration
+      name: migration-fc7c1
+      uid: e38d34ca-b64b-4f51-8661-6ba7d05484a6
+    resourceVersion: "11894391"
+    uid: e30b46a2-7d68-46a8-8cbe-5183436406ac
+  spec:
+    createDestinationNamespaces: true
+    destMigClusterRef:
+      name: host
+      namespace: openshift-migration
+    persistentVolumeClaims:
+    - name: lre-broker-lre-broker-ss-0
+      namespace: lre-qa
+      targetAccessModes:
+      - ReadWriteOnce
+      targetName: lre-broker-lre-broker-ss-0
+      targetNamespace: lre-qa
+      targetStorageClass: managed-premium
+    - name: lre-broker-lre-broker-ss-1
+      namespace: lre-qa
+      targetAccessModes:
+      - ReadWriteOnce
+      targetName: lre-broker-lre-broker-ss-1
+      targetNamespace: lre-qa
+      targetStorageClass: managed-premium
+    srcMigClusterRef:
+      name: ocp3cloud
+      namespace: openshift-migration
+  status:
+    conditions:
+    - category: Advisory
+      durable: true
+      lastTransitionTime: "2023-05-26T02:40:34Z"
+      message: The migration has succeeded
+      reason: Completed
+      status: "True"
+      type: Succeeded
+    itinerary: VolumeMigration
+    observedDigest: c128fb710f6213664478a6cdfe6f670d350cfa1d3f310f9f76223f0a607968ec
+    phase: Completed
+    phaseDescription: Complete
+    rsyncOperations:
+    - currentAttempt: 1
+      pvcReference:
+        name: lre-broker-lre-broker-ss-0
+        namespace: lre-qa
+      succeeded: true
+    - currentAttempt: 1
+      pvcReference:
+        name: lre-broker-lre-broker-ss-1
+        namespace: lre-qa
+      succeeded: true
+    startTimestamp: "2023-05-26T02:36:59Z"
+    successfulPods:
+    - lastObservedProgressPercent: 100%
+      name: rsync-7wswv
+      namespace: lre-qa
+      pvcRef:
+        name: lre-broker-lre-broker-ss-0
+        namespace: lre-qa
+      totalElapsedTime: 19s
+    - lastObservedProgressPercent: 100%
+      name: rsync-265bq
+      namespace: lre-qa
+      pvcRef:
+        name: lre-broker-lre-broker-ss-1
+        namespace: lre-qa
+      totalElapsedTime: 4s
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

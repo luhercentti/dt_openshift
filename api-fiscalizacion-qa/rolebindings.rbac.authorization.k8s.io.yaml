@@ -1,0 +1,168 @@
+apiVersion: v1
+items:
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: RoleBinding
+  metadata:
+    creationTimestamp: "2023-05-24T16:47:27Z"
+    labels:
+      migration.openshift.io/migrated-by-migmigration: 7403c997-3617-4c43-a005-e473ceb26445
+      migration.openshift.io/migrated-by-migplan: 2a8299ac-1423-4ceb-93a5-de572a0f44a9
+      velero.io/backup-name: migration-9db42-initial-5kc64
+      velero.io/restore-name: migration-9db42-final-cpc2b
+    name: admin
+    namespace: api-fiscalizacion-qa
+    resourceVersion: "10674690"
+    uid: 5c18e182-fff4-43ae-87c1-bd1bfdcfc3c6
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: ClusterRole
+    name: admin
+  subjects:
+  - apiGroup: rbac.authorization.k8s.io
+    kind: User
+    name: admin
+  - apiGroup: rbac.authorization.k8s.io
+    kind: User
+    name: jalvarez@dt.gob.cl
+  - apiGroup: rbac.authorization.k8s.io
+    kind: User
+    name: ditorres@dt.gob.cl
+  - apiGroup: rbac.authorization.k8s.io
+    kind: User
+    name: ealmuna@dt.gob.cl
+  - apiGroup: rbac.authorization.k8s.io
+    kind: User
+    name: araiman@dt.gob.cl
+  - apiGroup: rbac.authorization.k8s.io
+    kind: User
+    name: ffernandeza@dt.gob.cl
+  - apiGroup: rbac.authorization.k8s.io
+    kind: User
+    name: iosorio@redhat.com
+  - apiGroup: rbac.authorization.k8s.io
+    kind: User
+    name: lolivero@redhat.com
+  - apiGroup: rbac.authorization.k8s.io
+    kind: User
+    name: pmedinac
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: RoleBinding
+  metadata:
+    creationTimestamp: "2023-06-05T20:08:17Z"
+    name: admin-0
+    namespace: api-fiscalizacion-qa
+    resourceVersion: "21014866"
+    uid: ab29d72e-0f82-445b-9eb5-962d2d366ed6
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: ClusterRole
+    name: admin
+  subjects:
+  - apiGroup: rbac.authorization.k8s.io
+    kind: User
+    name: ipenaloza@dt.gob.cl
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: RoleBinding
+  metadata:
+    creationTimestamp: "2023-06-05T20:08:18Z"
+    name: admin-1
+    namespace: api-fiscalizacion-qa
+    resourceVersion: "21014869"
+    uid: 8d95c69f-7b28-44c4-8b83-b5c0fb642490
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: ClusterRole
+    name: admin
+  subjects:
+  - apiGroup: rbac.authorization.k8s.io
+    kind: User
+    name: cacevedoq@dt.gob.cl
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: RoleBinding
+  metadata:
+    creationTimestamp: "2023-05-24T16:47:27Z"
+    labels:
+      migration.openshift.io/migrated-by-migmigration: 7403c997-3617-4c43-a005-e473ceb26445
+      migration.openshift.io/migrated-by-migplan: 2a8299ac-1423-4ceb-93a5-de572a0f44a9
+      velero.io/backup-name: migration-9db42-initial-5kc64
+      velero.io/restore-name: migration-9db42-final-cpc2b
+    name: jenkins-cicd-edit
+    namespace: api-fiscalizacion-qa
+    resourceVersion: "10674693"
+    uid: 55e34681-0192-4080-8811-f327b643ca4c
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: ClusterRole
+    name: edit
+  subjects:
+  - kind: ServiceAccount
+    name: jenkins
+    namespace: cicd
+  - apiGroup: rbac.authorization.k8s.io
+    kind: User
+    name: gbriceno@dt.gob.cl
+  - apiGroup: rbac.authorization.k8s.io
+    kind: User
+    name: ffernandeza@dt.gob.cl
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/description: Allows deploymentconfigs in this namespace to rollout
+        pods in this namespace.  It is auto-managed by a controller; remove subjects
+        to disable.
+    creationTimestamp: "2023-05-24T15:21:20Z"
+    name: system:deployers
+    namespace: api-fiscalizacion-qa
+    resourceVersion: "10621712"
+    uid: 66d8ed88-3ce3-42d3-81a9-9fe1cce3e654
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: ClusterRole
+    name: system:deployer
+  subjects:
+  - kind: ServiceAccount
+    name: deployer
+    namespace: api-fiscalizacion-qa
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/description: Allows builds in this namespace to push images to
+        this namespace.  It is auto-managed by a controller; remove subjects to disable.
+    creationTimestamp: "2023-05-24T15:21:19Z"
+    name: system:image-builders
+    namespace: api-fiscalizacion-qa
+    resourceVersion: "10621703"
+    uid: d6cca3d7-7a6e-4e4d-bf26-c8981dde86d5
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: ClusterRole
+    name: system:image-builder
+  subjects:
+  - kind: ServiceAccount
+    name: builder
+    namespace: api-fiscalizacion-qa
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/description: Allows all pods in this namespace to pull images from
+        this namespace.  It is auto-managed by a controller; remove subjects to disable.
+    creationTimestamp: "2023-05-24T15:21:19Z"
+    name: system:image-pullers
+    namespace: api-fiscalizacion-qa
+    resourceVersion: "10621698"
+    uid: 483a5765-25ca-41fa-9a82-05dee93c9b49
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: ClusterRole
+    name: system:image-puller
+  subjects:
+  - apiGroup: rbac.authorization.k8s.io
+    kind: Group
+    name: system:serviceaccounts:api-fiscalizacion-qa
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

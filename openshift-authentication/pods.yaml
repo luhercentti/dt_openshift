@@ -1,0 +1,1807 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.131.19.227"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.131.19.227"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/scc: restricted
+    creationTimestamp: "2024-08-02T12:55:00Z"
+    generateName: ldap-group-syncer-28710055-
+    labels:
+      app: cronjob-ldap-group-sync
+      controller-uid: 3d718af0-c68a-4e7f-a969-174c9d9cbb12
+      job-name: ldap-group-syncer-28710055
+    name: ldap-group-syncer-28710055-2n5vj
+    namespace: openshift-authentication
+    ownerReferences:
+    - apiVersion: batch/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Job
+      name: ldap-group-syncer-28710055
+      uid: 3d718af0-c68a-4e7f-a969-174c9d9cbb12
+    resourceVersion: "494803195"
+    uid: 513c73d2-ac94-4084-ae1e-99ae86bcc055
+  spec:
+    activeDeadlineSeconds: 500
+    containers:
+    - command:
+      - /bin/bash
+      - -c
+      - oc adm groups sync --whitelist=/etc/whitelist/whitelist.txt --sync-config=/etc/config/ldap-group-sync.yaml
+        --confirm
+      image: registry.redhat.io/openshift4/ose-cli:v4.7
+      imagePullPolicy: IfNotPresent
+      name: ldap-group-sync
+      resources: {}
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000560000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /etc/config
+        name: ldap-sync-volume
+      - mountPath: /etc/whitelist
+        name: ldap-sync-volume-whitelist
+      - mountPath: /etc/secrets
+        name: ldap-bind-password
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-8d67c
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: ldap-group-syncer-dockercfg-sx4rt
+    nodeName: ocp4azu-sj2sl-worker-prod-brazilsouth1-lks8v
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Never
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000560000
+      seLinuxOptions:
+        level: s0:c24,c4
+    serviceAccount: ldap-group-syncer
+    serviceAccountName: ldap-group-syncer
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - configMap:
+        defaultMode: 420
+        name: ldap-group-syncer
+      name: ldap-sync-volume
+    - configMap:
+        defaultMode: 420
+        name: ldap-group-syncer-whitelist
+      name: ldap-sync-volume-whitelist
+    - name: ldap-bind-password
+      secret:
+        defaultMode: 420
+        secretName: v4-0-config-user-idp-1-bind-password
+    - name: kube-api-access-8d67c
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2024-08-02T12:55:00Z"
+      reason: PodCompleted
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2024-08-02T12:55:06Z"
+      reason: PodCompleted
+      status: "False"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2024-08-02T12:55:06Z"
+      reason: PodCompleted
+      status: "False"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2024-08-02T12:55:00Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://2447123084b44da319a388d42894bb3b6ebd6d585734eb09a0f8cbd0e82b873c
+      image: registry.redhat.io/openshift4/ose-cli:v4.7
+      imageID: registry.redhat.io/openshift4/ose-cli@sha256:1a8caae40be21f23ba3cb48b75809a73333907033a6041927aa568b5c9290f3c
+      lastState: {}
+      name: ldap-group-sync
+      ready: false
+      restartCount: 0
+      started: false
+      state:
+        terminated:
+          containerID: cri-o://2447123084b44da319a388d42894bb3b6ebd6d585734eb09a0f8cbd0e82b873c
+          exitCode: 0
+          finishedAt: "2024-08-02T12:55:06Z"
+          reason: Completed
+          startedAt: "2024-08-02T12:55:02Z"
+    hostIP: 10.80.80.19
+    phase: Succeeded
+    podIP: 10.131.19.227
+    podIPs:
+    - ip: 10.131.19.227
+    qosClass: BestEffort
+    startTime: "2024-08-02T12:55:00Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.131.19.229"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.131.19.229"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/scc: restricted
+    creationTimestamp: "2024-08-02T13:00:00Z"
+    generateName: ldap-group-syncer-28710060-
+    labels:
+      app: cronjob-ldap-group-sync
+      controller-uid: 3abdcfec-60a3-4876-ab3f-9f8d3af7220c
+      job-name: ldap-group-syncer-28710060
+    name: ldap-group-syncer-28710060-k88g8
+    namespace: openshift-authentication
+    ownerReferences:
+    - apiVersion: batch/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Job
+      name: ldap-group-syncer-28710060
+      uid: 3abdcfec-60a3-4876-ab3f-9f8d3af7220c
+    resourceVersion: "494810498"
+    uid: 6b4ecd0f-8177-4037-ad6d-c7cba8eff607
+  spec:
+    activeDeadlineSeconds: 500
+    containers:
+    - command:
+      - /bin/bash
+      - -c
+      - oc adm groups sync --whitelist=/etc/whitelist/whitelist.txt --sync-config=/etc/config/ldap-group-sync.yaml
+        --confirm
+      image: registry.redhat.io/openshift4/ose-cli:v4.7
+      imagePullPolicy: IfNotPresent
+      name: ldap-group-sync
+      resources: {}
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000560000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /etc/config
+        name: ldap-sync-volume
+      - mountPath: /etc/whitelist
+        name: ldap-sync-volume-whitelist
+      - mountPath: /etc/secrets
+        name: ldap-bind-password
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-n2vxf
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: ldap-group-syncer-dockercfg-sx4rt
+    nodeName: ocp4azu-sj2sl-worker-prod-brazilsouth1-lks8v
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Never
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000560000
+      seLinuxOptions:
+        level: s0:c24,c4
+    serviceAccount: ldap-group-syncer
+    serviceAccountName: ldap-group-syncer
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - configMap:
+        defaultMode: 420
+        name: ldap-group-syncer
+      name: ldap-sync-volume
+    - configMap:
+        defaultMode: 420
+        name: ldap-group-syncer-whitelist
+      name: ldap-sync-volume-whitelist
+    - name: ldap-bind-password
+      secret:
+        defaultMode: 420
+        secretName: v4-0-config-user-idp-1-bind-password
+    - name: kube-api-access-n2vxf
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2024-08-02T13:00:00Z"
+      reason: PodCompleted
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2024-08-02T13:00:07Z"
+      reason: PodCompleted
+      status: "False"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2024-08-02T13:00:07Z"
+      reason: PodCompleted
+      status: "False"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2024-08-02T13:00:00Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://c7a1f019b66b66e02fb8186f92acaea562100d5e94ac3f5b988e9450090b8ebb
+      image: registry.redhat.io/openshift4/ose-cli:v4.7
+      imageID: registry.redhat.io/openshift4/ose-cli@sha256:1a8caae40be21f23ba3cb48b75809a73333907033a6041927aa568b5c9290f3c
+      lastState: {}
+      name: ldap-group-sync
+      ready: false
+      restartCount: 0
+      started: false
+      state:
+        terminated:
+          containerID: cri-o://c7a1f019b66b66e02fb8186f92acaea562100d5e94ac3f5b988e9450090b8ebb
+          exitCode: 0
+          finishedAt: "2024-08-02T13:00:06Z"
+          reason: Completed
+          startedAt: "2024-08-02T13:00:03Z"
+    hostIP: 10.80.80.19
+    phase: Succeeded
+    podIP: 10.131.19.229
+    podIPs:
+    - ip: 10.131.19.229
+    qosClass: BestEffort
+    startTime: "2024-08-02T13:00:00Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.131.19.230"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.131.19.230"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/scc: restricted
+    creationTimestamp: "2024-08-02T13:05:00Z"
+    generateName: ldap-group-syncer-28710065-
+    labels:
+      app: cronjob-ldap-group-sync
+      controller-uid: 4efd61bf-21dc-4828-9e38-2e7e499f08d9
+      job-name: ldap-group-syncer-28710065
+    name: ldap-group-syncer-28710065-9fk2n
+    namespace: openshift-authentication
+    ownerReferences:
+    - apiVersion: batch/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Job
+      name: ldap-group-syncer-28710065
+      uid: 4efd61bf-21dc-4828-9e38-2e7e499f08d9
+    resourceVersion: "494817833"
+    uid: 0f25bfb2-aacd-4ee1-ab3e-d995cb8f4385
+  spec:
+    activeDeadlineSeconds: 500
+    containers:
+    - command:
+      - /bin/bash
+      - -c
+      - oc adm groups sync --whitelist=/etc/whitelist/whitelist.txt --sync-config=/etc/config/ldap-group-sync.yaml
+        --confirm
+      image: registry.redhat.io/openshift4/ose-cli:v4.7
+      imagePullPolicy: IfNotPresent
+      name: ldap-group-sync
+      resources: {}
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000560000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /etc/config
+        name: ldap-sync-volume
+      - mountPath: /etc/whitelist
+        name: ldap-sync-volume-whitelist
+      - mountPath: /etc/secrets
+        name: ldap-bind-password
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-rwxkx
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: ldap-group-syncer-dockercfg-sx4rt
+    nodeName: ocp4azu-sj2sl-worker-prod-brazilsouth1-lks8v
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Never
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000560000
+      seLinuxOptions:
+        level: s0:c24,c4
+    serviceAccount: ldap-group-syncer
+    serviceAccountName: ldap-group-syncer
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - configMap:
+        defaultMode: 420
+        name: ldap-group-syncer
+      name: ldap-sync-volume
+    - configMap:
+        defaultMode: 420
+        name: ldap-group-syncer-whitelist
+      name: ldap-sync-volume-whitelist
+    - name: ldap-bind-password
+      secret:
+        defaultMode: 420
+        secretName: v4-0-config-user-idp-1-bind-password
+    - name: kube-api-access-rwxkx
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2024-08-02T13:05:00Z"
+      reason: PodCompleted
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2024-08-02T13:05:06Z"
+      reason: PodCompleted
+      status: "False"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2024-08-02T13:05:06Z"
+      reason: PodCompleted
+      status: "False"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2024-08-02T13:05:00Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://5b9b22566d7a41e76a11da7334ea81dd37b89f3fab9b9b02333b1277b168a265
+      image: registry.redhat.io/openshift4/ose-cli:v4.7
+      imageID: registry.redhat.io/openshift4/ose-cli@sha256:1a8caae40be21f23ba3cb48b75809a73333907033a6041927aa568b5c9290f3c
+      lastState: {}
+      name: ldap-group-sync
+      ready: false
+      restartCount: 0
+      started: false
+      state:
+        terminated:
+          containerID: cri-o://5b9b22566d7a41e76a11da7334ea81dd37b89f3fab9b9b02333b1277b168a265
+          exitCode: 0
+          finishedAt: "2024-08-02T13:05:05Z"
+          reason: Completed
+          startedAt: "2024-08-02T13:05:01Z"
+    hostIP: 10.80.80.19
+    phase: Succeeded
+    podIP: 10.131.19.230
+    podIPs:
+    - ip: 10.131.19.230
+    qosClass: BestEffort
+    startTime: "2024-08-02T13:05:00Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.131.19.231"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.131.19.231"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/scc: restricted
+    creationTimestamp: "2024-08-02T13:10:00Z"
+    generateName: ldap-group-syncer-28710070-
+    labels:
+      app: cronjob-ldap-group-sync
+      controller-uid: 31bf3081-162a-48aa-8ab9-20478979d994
+      job-name: ldap-group-syncer-28710070
+    name: ldap-group-syncer-28710070-j4kwv
+    namespace: openshift-authentication
+    ownerReferences:
+    - apiVersion: batch/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Job
+      name: ldap-group-syncer-28710070
+      uid: 31bf3081-162a-48aa-8ab9-20478979d994
+    resourceVersion: "494825091"
+    uid: a40265d7-05bf-4a51-8782-c8de2c7d81f7
+  spec:
+    activeDeadlineSeconds: 500
+    containers:
+    - command:
+      - /bin/bash
+      - -c
+      - oc adm groups sync --whitelist=/etc/whitelist/whitelist.txt --sync-config=/etc/config/ldap-group-sync.yaml
+        --confirm
+      image: registry.redhat.io/openshift4/ose-cli:v4.7
+      imagePullPolicy: IfNotPresent
+      name: ldap-group-sync
+      resources: {}
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000560000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /etc/config
+        name: ldap-sync-volume
+      - mountPath: /etc/whitelist
+        name: ldap-sync-volume-whitelist
+      - mountPath: /etc/secrets
+        name: ldap-bind-password
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-cz6w9
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: ldap-group-syncer-dockercfg-sx4rt
+    nodeName: ocp4azu-sj2sl-worker-prod-brazilsouth1-lks8v
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Never
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000560000
+      seLinuxOptions:
+        level: s0:c24,c4
+    serviceAccount: ldap-group-syncer
+    serviceAccountName: ldap-group-syncer
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - configMap:
+        defaultMode: 420
+        name: ldap-group-syncer
+      name: ldap-sync-volume
+    - configMap:
+        defaultMode: 420
+        name: ldap-group-syncer-whitelist
+      name: ldap-sync-volume-whitelist
+    - name: ldap-bind-password
+      secret:
+        defaultMode: 420
+        secretName: v4-0-config-user-idp-1-bind-password
+    - name: kube-api-access-cz6w9
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2024-08-02T13:10:00Z"
+      reason: PodCompleted
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2024-08-02T13:10:06Z"
+      reason: PodCompleted
+      status: "False"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2024-08-02T13:10:06Z"
+      reason: PodCompleted
+      status: "False"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2024-08-02T13:10:00Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://5662c678c2738662b7a587f0b478043a5c373ee89453566c4c37454a579a6b13
+      image: registry.redhat.io/openshift4/ose-cli:v4.7
+      imageID: registry.redhat.io/openshift4/ose-cli@sha256:1a8caae40be21f23ba3cb48b75809a73333907033a6041927aa568b5c9290f3c
+      lastState: {}
+      name: ldap-group-sync
+      ready: false
+      restartCount: 0
+      started: false
+      state:
+        terminated:
+          containerID: cri-o://5662c678c2738662b7a587f0b478043a5c373ee89453566c4c37454a579a6b13
+          exitCode: 0
+          finishedAt: "2024-08-02T13:10:06Z"
+          reason: Completed
+          startedAt: "2024-08-02T13:10:02Z"
+    hostIP: 10.80.80.19
+    phase: Succeeded
+    podIP: 10.131.19.231
+    podIPs:
+    - ip: 10.131.19.231
+    qosClass: BestEffort
+    startTime: "2024-08-02T13:10:00Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.131.19.232"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.131.19.232"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/scc: restricted
+    creationTimestamp: "2024-08-02T13:15:00Z"
+    generateName: ldap-group-syncer-28710075-
+    labels:
+      app: cronjob-ldap-group-sync
+      controller-uid: 9c1ed465-c43d-4632-9796-9f9df8f55daa
+      job-name: ldap-group-syncer-28710075
+    name: ldap-group-syncer-28710075-j9rlg
+    namespace: openshift-authentication
+    ownerReferences:
+    - apiVersion: batch/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Job
+      name: ldap-group-syncer-28710075
+      uid: 9c1ed465-c43d-4632-9796-9f9df8f55daa
+    resourceVersion: "494832383"
+    uid: 7e400b37-9460-44fb-b4d8-2f298a10eb95
+  spec:
+    activeDeadlineSeconds: 500
+    containers:
+    - command:
+      - /bin/bash
+      - -c
+      - oc adm groups sync --whitelist=/etc/whitelist/whitelist.txt --sync-config=/etc/config/ldap-group-sync.yaml
+        --confirm
+      image: registry.redhat.io/openshift4/ose-cli:v4.7
+      imagePullPolicy: IfNotPresent
+      name: ldap-group-sync
+      resources: {}
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000560000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /etc/config
+        name: ldap-sync-volume
+      - mountPath: /etc/whitelist
+        name: ldap-sync-volume-whitelist
+      - mountPath: /etc/secrets
+        name: ldap-bind-password
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-kkbv4
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: ldap-group-syncer-dockercfg-sx4rt
+    nodeName: ocp4azu-sj2sl-worker-prod-brazilsouth1-lks8v
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Never
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000560000
+      seLinuxOptions:
+        level: s0:c24,c4
+    serviceAccount: ldap-group-syncer
+    serviceAccountName: ldap-group-syncer
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - configMap:
+        defaultMode: 420
+        name: ldap-group-syncer
+      name: ldap-sync-volume
+    - configMap:
+        defaultMode: 420
+        name: ldap-group-syncer-whitelist
+      name: ldap-sync-volume-whitelist
+    - name: ldap-bind-password
+      secret:
+        defaultMode: 420
+        secretName: v4-0-config-user-idp-1-bind-password
+    - name: kube-api-access-kkbv4
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2024-08-02T13:15:00Z"
+      reason: PodCompleted
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2024-08-02T13:15:06Z"
+      reason: PodCompleted
+      status: "False"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2024-08-02T13:15:06Z"
+      reason: PodCompleted
+      status: "False"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2024-08-02T13:15:00Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://a15d957d8ba96d8f1032b3e90574bef9144379e86c9196d94eda99ec0082c5de
+      image: registry.redhat.io/openshift4/ose-cli:v4.7
+      imageID: registry.redhat.io/openshift4/ose-cli@sha256:1a8caae40be21f23ba3cb48b75809a73333907033a6041927aa568b5c9290f3c
+      lastState: {}
+      name: ldap-group-sync
+      ready: false
+      restartCount: 0
+      started: false
+      state:
+        terminated:
+          containerID: cri-o://a15d957d8ba96d8f1032b3e90574bef9144379e86c9196d94eda99ec0082c5de
+          exitCode: 0
+          finishedAt: "2024-08-02T13:15:06Z"
+          reason: Completed
+          startedAt: "2024-08-02T13:15:02Z"
+    hostIP: 10.80.80.19
+    phase: Succeeded
+    podIP: 10.131.19.232
+    podIPs:
+    - ip: 10.131.19.232
+    qosClass: BestEffort
+    startTime: "2024-08-02T13:15:00Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.130.1.105"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.130.1.105"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/scc: anyuid
+      operator.openshift.io/bootstrap-user-exists: "true"
+      operator.openshift.io/rvs-hash: cIlYM-jqmGQ3FN0sH_2y3pRM33Ix5qx0FTMwVuHx4omYD5BwRDryKvUPeKeDj4QUb0OpslS2PnN3MFSJoWIOLA
+    creationTimestamp: "2024-07-30T16:23:33Z"
+    generateName: oauth-openshift-7b89d7f967-
+    labels:
+      app: oauth-openshift
+      oauth-openshift-anti-affinity: "true"
+      pod-template-hash: 7b89d7f967
+    name: oauth-openshift-7b89d7f967-f97qm
+    namespace: openshift-authentication
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: oauth-openshift-7b89d7f967
+      uid: 7f998676-ced3-42ab-982a-969acf2be2c7
+    resourceVersion: "488842492"
+    uid: 62a78050-f74a-4888-b807-79603b48acdf
+  spec:
+    affinity:
+      podAntiAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchLabels:
+              app: oauth-openshift
+              oauth-openshift-anti-affinity: "true"
+          topologyKey: kubernetes.io/hostname
+    containers:
+    - args:
+      - |
+        if [ -s /var/config/system/configmaps/v4-0-config-system-trusted-ca-bundle/ca-bundle.crt ]; then
+            echo "Copying system trust bundle"
+            cp -f /var/config/system/configmaps/v4-0-config-system-trusted-ca-bundle/ca-bundle.crt /etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem
+        fi
+        exec oauth-server osinserver \
+        --config=/var/config/system/configmaps/v4-0-config-system-cliconfig/v4-0-config-system-cliconfig \
+        --v=2
+      command:
+      - /bin/bash
+      - -ec
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:73db334e251ce085c1bdac76a793cf244d340ef6ba7058f7ca5ba77566c058df
+      imagePullPolicy: IfNotPresent
+      lifecycle:
+        preStop:
+          exec:
+            command:
+            - sleep
+            - "25"
+      livenessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /healthz
+          port: 6443
+          scheme: HTTPS
+        initialDelaySeconds: 30
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 1
+      name: oauth-openshift
+      ports:
+      - containerPort: 6443
+        name: https
+        protocol: TCP
+      readinessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /healthz
+          port: 6443
+          scheme: HTTPS
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 1
+      resources:
+        requests:
+          cpu: 10m
+          memory: 50Mi
+      securityContext:
+        capabilities:
+          drop:
+          - MKNOD
+        readOnlyRootFilesystem: false
+        runAsUser: 0
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: FallbackToLogsOnError
+      volumeMounts:
+      - mountPath: /var/config/system/secrets/v4-0-config-system-session
+        name: v4-0-config-system-session
+        readOnly: true
+      - mountPath: /var/config/system/configmaps/v4-0-config-system-cliconfig
+        name: v4-0-config-system-cliconfig
+        readOnly: true
+      - mountPath: /var/config/system/secrets/v4-0-config-system-serving-cert
+        name: v4-0-config-system-serving-cert
+        readOnly: true
+      - mountPath: /var/config/system/configmaps/v4-0-config-system-service-ca
+        name: v4-0-config-system-service-ca
+        readOnly: true
+      - mountPath: /var/config/system/secrets/v4-0-config-system-router-certs
+        name: v4-0-config-system-router-certs
+        readOnly: true
+      - mountPath: /var/config/system/secrets/v4-0-config-system-ocp-branding-template
+        name: v4-0-config-system-ocp-branding-template
+        readOnly: true
+      - mountPath: /var/config/user/template/secret/v4-0-config-user-template-login
+        name: v4-0-config-user-template-login
+        readOnly: true
+      - mountPath: /var/config/user/template/secret/v4-0-config-user-template-provider-selection
+        name: v4-0-config-user-template-provider-selection
+        readOnly: true
+      - mountPath: /var/config/user/template/secret/v4-0-config-user-template-error
+        name: v4-0-config-user-template-error
+        readOnly: true
+      - mountPath: /var/config/system/configmaps/v4-0-config-system-trusted-ca-bundle
+        name: v4-0-config-system-trusted-ca-bundle
+        readOnly: true
+      - mountPath: /var/config/user/idp/0/secret/v4-0-config-user-idp-0-file-data
+        name: v4-0-config-user-idp-0-file-data
+        readOnly: true
+      - mountPath: /var/config/user/idp/1/secret/v4-0-config-user-idp-1-bind-password
+        name: v4-0-config-user-idp-1-bind-password
+        readOnly: true
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-kd72z
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: oauth-openshift-dockercfg-m8cpt
+    nodeName: ocp4azu-sj2sl-master-1
+    nodeSelector:
+      node-role.kubernetes.io/master: ""
+    preemptionPolicy: PreemptLowerPriority
+    priority: 2000000000
+    priorityClassName: system-cluster-critical
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      seLinuxOptions:
+        level: s0:c24,c4
+    serviceAccount: oauth-openshift
+    serviceAccountName: oauth-openshift
+    terminationGracePeriodSeconds: 40
+    tolerations:
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/master
+      operator: Exists
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 120
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 120
+    - effect: NoSchedule
+      key: node.kubernetes.io/memory-pressure
+      operator: Exists
+    volumes:
+    - name: v4-0-config-system-session
+      secret:
+        defaultMode: 420
+        secretName: v4-0-config-system-session
+    - configMap:
+        defaultMode: 420
+        name: v4-0-config-system-cliconfig
+      name: v4-0-config-system-cliconfig
+    - name: v4-0-config-system-serving-cert
+      secret:
+        defaultMode: 420
+        secretName: v4-0-config-system-serving-cert
+    - configMap:
+        defaultMode: 420
+        name: v4-0-config-system-service-ca
+      name: v4-0-config-system-service-ca
+    - name: v4-0-config-system-router-certs
+      secret:
+        defaultMode: 420
+        secretName: v4-0-config-system-router-certs
+    - name: v4-0-config-system-ocp-branding-template
+      secret:
+        defaultMode: 420
+        secretName: v4-0-config-system-ocp-branding-template
+    - name: v4-0-config-user-template-login
+      secret:
+        defaultMode: 420
+        optional: true
+        secretName: v4-0-config-user-template-login
+    - name: v4-0-config-user-template-provider-selection
+      secret:
+        defaultMode: 420
+        optional: true
+        secretName: v4-0-config-user-template-provider-selection
+    - name: v4-0-config-user-template-error
+      secret:
+        defaultMode: 420
+        optional: true
+        secretName: v4-0-config-user-template-error
+    - configMap:
+        defaultMode: 420
+        name: v4-0-config-system-trusted-ca-bundle
+        optional: true
+      name: v4-0-config-system-trusted-ca-bundle
+    - name: v4-0-config-user-idp-0-file-data
+      secret:
+        defaultMode: 420
+        items:
+        - key: htpasswd
+          path: htpasswd
+        secretName: v4-0-config-user-idp-0-file-data
+    - name: v4-0-config-user-idp-1-bind-password
+      secret:
+        defaultMode: 420
+        items:
+        - key: bindPassword
+          path: bindPassword
+        secretName: v4-0-config-user-idp-1-bind-password
+    - name: kube-api-access-kd72z
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-30T16:23:59Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-30T16:24:02Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-30T16:24:02Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-30T16:23:59Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://c14f704f2aa6d9ef82b610bcb7505b56d7f9fbdf9329af1c4ab2c18432fdbe6b
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:73db334e251ce085c1bdac76a793cf244d340ef6ba7058f7ca5ba77566c058df
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:73db334e251ce085c1bdac76a793cf244d340ef6ba7058f7ca5ba77566c058df
+      lastState: {}
+      name: oauth-openshift
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2024-07-30T16:24:02Z"
+    hostIP: 10.80.80.8
+    phase: Running
+    podIP: 10.130.1.105
+    podIPs:
+    - ip: 10.130.1.105
+    qosClass: Burstable
+    startTime: "2024-07-30T16:23:59Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.129.0.65"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.129.0.65"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/scc: anyuid
+      operator.openshift.io/bootstrap-user-exists: "true"
+      operator.openshift.io/rvs-hash: cIlYM-jqmGQ3FN0sH_2y3pRM33Ix5qx0FTMwVuHx4omYD5BwRDryKvUPeKeDj4QUb0OpslS2PnN3MFSJoWIOLA
+    creationTimestamp: "2024-07-30T16:24:32Z"
+    generateName: oauth-openshift-7b89d7f967-
+    labels:
+      app: oauth-openshift
+      oauth-openshift-anti-affinity: "true"
+      pod-template-hash: 7b89d7f967
+    name: oauth-openshift-7b89d7f967-jppvm
+    namespace: openshift-authentication
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: oauth-openshift-7b89d7f967
+      uid: 7f998676-ced3-42ab-982a-969acf2be2c7
+    resourceVersion: "488844055"
+    uid: 81bdb1a1-f8ad-4791-a311-b65f72c76af0
+  spec:
+    affinity:
+      podAntiAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchLabels:
+              app: oauth-openshift
+              oauth-openshift-anti-affinity: "true"
+          topologyKey: kubernetes.io/hostname
+    containers:
+    - args:
+      - |
+        if [ -s /var/config/system/configmaps/v4-0-config-system-trusted-ca-bundle/ca-bundle.crt ]; then
+            echo "Copying system trust bundle"
+            cp -f /var/config/system/configmaps/v4-0-config-system-trusted-ca-bundle/ca-bundle.crt /etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem
+        fi
+        exec oauth-server osinserver \
+        --config=/var/config/system/configmaps/v4-0-config-system-cliconfig/v4-0-config-system-cliconfig \
+        --v=2
+      command:
+      - /bin/bash
+      - -ec
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:73db334e251ce085c1bdac76a793cf244d340ef6ba7058f7ca5ba77566c058df
+      imagePullPolicy: IfNotPresent
+      lifecycle:
+        preStop:
+          exec:
+            command:
+            - sleep
+            - "25"
+      livenessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /healthz
+          port: 6443
+          scheme: HTTPS
+        initialDelaySeconds: 30
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 1
+      name: oauth-openshift
+      ports:
+      - containerPort: 6443
+        name: https
+        protocol: TCP
+      readinessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /healthz
+          port: 6443
+          scheme: HTTPS
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 1
+      resources:
+        requests:
+          cpu: 10m
+          memory: 50Mi
+      securityContext:
+        capabilities:
+          drop:
+          - MKNOD
+        readOnlyRootFilesystem: false
+        runAsUser: 0
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: FallbackToLogsOnError
+      volumeMounts:
+      - mountPath: /var/config/system/secrets/v4-0-config-system-session
+        name: v4-0-config-system-session
+        readOnly: true
+      - mountPath: /var/config/system/configmaps/v4-0-config-system-cliconfig
+        name: v4-0-config-system-cliconfig
+        readOnly: true
+      - mountPath: /var/config/system/secrets/v4-0-config-system-serving-cert
+        name: v4-0-config-system-serving-cert
+        readOnly: true
+      - mountPath: /var/config/system/configmaps/v4-0-config-system-service-ca
+        name: v4-0-config-system-service-ca
+        readOnly: true
+      - mountPath: /var/config/system/secrets/v4-0-config-system-router-certs
+        name: v4-0-config-system-router-certs
+        readOnly: true
+      - mountPath: /var/config/system/secrets/v4-0-config-system-ocp-branding-template
+        name: v4-0-config-system-ocp-branding-template
+        readOnly: true
+      - mountPath: /var/config/user/template/secret/v4-0-config-user-template-login
+        name: v4-0-config-user-template-login
+        readOnly: true
+      - mountPath: /var/config/user/template/secret/v4-0-config-user-template-provider-selection
+        name: v4-0-config-user-template-provider-selection
+        readOnly: true
+      - mountPath: /var/config/user/template/secret/v4-0-config-user-template-error
+        name: v4-0-config-user-template-error
+        readOnly: true
+      - mountPath: /var/config/system/configmaps/v4-0-config-system-trusted-ca-bundle
+        name: v4-0-config-system-trusted-ca-bundle
+        readOnly: true
+      - mountPath: /var/config/user/idp/0/secret/v4-0-config-user-idp-0-file-data
+        name: v4-0-config-user-idp-0-file-data
+        readOnly: true
+      - mountPath: /var/config/user/idp/1/secret/v4-0-config-user-idp-1-bind-password
+        name: v4-0-config-user-idp-1-bind-password
+        readOnly: true
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-q9qzt
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: oauth-openshift-dockercfg-m8cpt
+    nodeName: ocp4azu-sj2sl-master-0
+    nodeSelector:
+      node-role.kubernetes.io/master: ""
+    preemptionPolicy: PreemptLowerPriority
+    priority: 2000000000
+    priorityClassName: system-cluster-critical
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      seLinuxOptions:
+        level: s0:c24,c4
+    serviceAccount: oauth-openshift
+    serviceAccountName: oauth-openshift
+    terminationGracePeriodSeconds: 40
+    tolerations:
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/master
+      operator: Exists
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 120
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 120
+    - effect: NoSchedule
+      key: node.kubernetes.io/memory-pressure
+      operator: Exists
+    volumes:
+    - name: v4-0-config-system-session
+      secret:
+        defaultMode: 420
+        secretName: v4-0-config-system-session
+    - configMap:
+        defaultMode: 420
+        name: v4-0-config-system-cliconfig
+      name: v4-0-config-system-cliconfig
+    - name: v4-0-config-system-serving-cert
+      secret:
+        defaultMode: 420
+        secretName: v4-0-config-system-serving-cert
+    - configMap:
+        defaultMode: 420
+        name: v4-0-config-system-service-ca
+      name: v4-0-config-system-service-ca
+    - name: v4-0-config-system-router-certs
+      secret:
+        defaultMode: 420
+        secretName: v4-0-config-system-router-certs
+    - name: v4-0-config-system-ocp-branding-template
+      secret:
+        defaultMode: 420
+        secretName: v4-0-config-system-ocp-branding-template
+    - name: v4-0-config-user-template-login
+      secret:
+        defaultMode: 420
+        optional: true
+        secretName: v4-0-config-user-template-login
+    - name: v4-0-config-user-template-provider-selection
+      secret:
+        defaultMode: 420
+        optional: true
+        secretName: v4-0-config-user-template-provider-selection
+    - name: v4-0-config-user-template-error
+      secret:
+        defaultMode: 420
+        optional: true
+        secretName: v4-0-config-user-template-error
+    - configMap:
+        defaultMode: 420
+        name: v4-0-config-system-trusted-ca-bundle
+        optional: true
+      name: v4-0-config-system-trusted-ca-bundle
+    - name: v4-0-config-user-idp-0-file-data
+      secret:
+        defaultMode: 420
+        items:
+        - key: htpasswd
+          path: htpasswd
+        secretName: v4-0-config-user-idp-0-file-data
+    - name: v4-0-config-user-idp-1-bind-password
+      secret:
+        defaultMode: 420
+        items:
+        - key: bindPassword
+          path: bindPassword
+        secretName: v4-0-config-user-idp-1-bind-password
+    - name: kube-api-access-q9qzt
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-30T16:24:58Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-30T16:25:02Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-30T16:25:02Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-30T16:24:58Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://2b0fb38ef56cbf9662fc08761fc7d6026b7fd8e1740193cec538c13403db1ac9
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:73db334e251ce085c1bdac76a793cf244d340ef6ba7058f7ca5ba77566c058df
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:73db334e251ce085c1bdac76a793cf244d340ef6ba7058f7ca5ba77566c058df
+      lastState: {}
+      name: oauth-openshift
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2024-07-30T16:25:01Z"
+    hostIP: 10.80.80.6
+    phase: Running
+    podIP: 10.129.0.65
+    podIPs:
+    - ip: 10.129.0.65
+    qosClass: Burstable
+    startTime: "2024-07-30T16:24:58Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.128.0.123"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.128.0.123"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/scc: anyuid
+      operator.openshift.io/bootstrap-user-exists: "true"
+      operator.openshift.io/rvs-hash: cIlYM-jqmGQ3FN0sH_2y3pRM33Ix5qx0FTMwVuHx4omYD5BwRDryKvUPeKeDj4QUb0OpslS2PnN3MFSJoWIOLA
+    creationTimestamp: "2024-07-30T16:24:03Z"
+    generateName: oauth-openshift-7b89d7f967-
+    labels:
+      app: oauth-openshift
+      oauth-openshift-anti-affinity: "true"
+      pod-template-hash: 7b89d7f967
+    name: oauth-openshift-7b89d7f967-ld9bb
+    namespace: openshift-authentication
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: oauth-openshift-7b89d7f967
+      uid: 7f998676-ced3-42ab-982a-969acf2be2c7
+    resourceVersion: "488843265"
+    uid: 3746b5b3-ed4d-4acc-b263-bbad7b3de386
+  spec:
+    affinity:
+      podAntiAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchLabels:
+              app: oauth-openshift
+              oauth-openshift-anti-affinity: "true"
+          topologyKey: kubernetes.io/hostname
+    containers:
+    - args:
+      - |
+        if [ -s /var/config/system/configmaps/v4-0-config-system-trusted-ca-bundle/ca-bundle.crt ]; then
+            echo "Copying system trust bundle"
+            cp -f /var/config/system/configmaps/v4-0-config-system-trusted-ca-bundle/ca-bundle.crt /etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem
+        fi
+        exec oauth-server osinserver \
+        --config=/var/config/system/configmaps/v4-0-config-system-cliconfig/v4-0-config-system-cliconfig \
+        --v=2
+      command:
+      - /bin/bash
+      - -ec
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:73db334e251ce085c1bdac76a793cf244d340ef6ba7058f7ca5ba77566c058df
+      imagePullPolicy: IfNotPresent
+      lifecycle:
+        preStop:
+          exec:
+            command:
+            - sleep
+            - "25"
+      livenessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /healthz
+          port: 6443
+          scheme: HTTPS
+        initialDelaySeconds: 30
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 1
+      name: oauth-openshift
+      ports:
+      - containerPort: 6443
+        name: https
+        protocol: TCP
+      readinessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /healthz
+          port: 6443
+          scheme: HTTPS
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 1
+      resources:
+        requests:
+          cpu: 10m
+          memory: 50Mi
+      securityContext:
+        capabilities:
+          drop:
+          - MKNOD
+        readOnlyRootFilesystem: false
+        runAsUser: 0
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: FallbackToLogsOnError
+      volumeMounts:
+      - mountPath: /var/config/system/secrets/v4-0-config-system-session
+        name: v4-0-config-system-session
+        readOnly: true
+      - mountPath: /var/config/system/configmaps/v4-0-config-system-cliconfig
+        name: v4-0-config-system-cliconfig
+        readOnly: true
+      - mountPath: /var/config/system/secrets/v4-0-config-system-serving-cert
+        name: v4-0-config-system-serving-cert
+        readOnly: true
+      - mountPath: /var/config/system/configmaps/v4-0-config-system-service-ca
+        name: v4-0-config-system-service-ca
+        readOnly: true
+      - mountPath: /var/config/system/secrets/v4-0-config-system-router-certs
+        name: v4-0-config-system-router-certs
+        readOnly: true
+      - mountPath: /var/config/system/secrets/v4-0-config-system-ocp-branding-template
+        name: v4-0-config-system-ocp-branding-template
+        readOnly: true
+      - mountPath: /var/config/user/template/secret/v4-0-config-user-template-login
+        name: v4-0-config-user-template-login
+        readOnly: true
+      - mountPath: /var/config/user/template/secret/v4-0-config-user-template-provider-selection
+        name: v4-0-config-user-template-provider-selection
+        readOnly: true
+      - mountPath: /var/config/user/template/secret/v4-0-config-user-template-error
+        name: v4-0-config-user-template-error
+        readOnly: true
+      - mountPath: /var/config/system/configmaps/v4-0-config-system-trusted-ca-bundle
+        name: v4-0-config-system-trusted-ca-bundle
+        readOnly: true
+      - mountPath: /var/config/user/idp/0/secret/v4-0-config-user-idp-0-file-data
+        name: v4-0-config-user-idp-0-file-data
+        readOnly: true
+      - mountPath: /var/config/user/idp/1/secret/v4-0-config-user-idp-1-bind-password
+        name: v4-0-config-user-idp-1-bind-password
+        readOnly: true
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-rvssb
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: oauth-openshift-dockercfg-m8cpt
+    nodeName: ocp4azu-sj2sl-master-2
+    nodeSelector:
+      node-role.kubernetes.io/master: ""
+    preemptionPolicy: PreemptLowerPriority
+    priority: 2000000000
+    priorityClassName: system-cluster-critical
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      seLinuxOptions:
+        level: s0:c24,c4
+    serviceAccount: oauth-openshift
+    serviceAccountName: oauth-openshift
+    terminationGracePeriodSeconds: 40
+    tolerations:
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/master
+      operator: Exists
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 120
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 120
+    - effect: NoSchedule
+      key: node.kubernetes.io/memory-pressure
+      operator: Exists
+    volumes:
+    - name: v4-0-config-system-session
+      secret:
+        defaultMode: 420
+        secretName: v4-0-config-system-session
+    - configMap:
+        defaultMode: 420
+        name: v4-0-config-system-cliconfig
+      name: v4-0-config-system-cliconfig
+    - name: v4-0-config-system-serving-cert
+      secret:
+        defaultMode: 420
+        secretName: v4-0-config-system-serving-cert
+    - configMap:
+        defaultMode: 420
+        name: v4-0-config-system-service-ca
+      name: v4-0-config-system-service-ca
+    - name: v4-0-config-system-router-certs
+      secret:
+        defaultMode: 420
+        secretName: v4-0-config-system-router-certs
+    - name: v4-0-config-system-ocp-branding-template
+      secret:
+        defaultMode: 420
+        secretName: v4-0-config-system-ocp-branding-template
+    - name: v4-0-config-user-template-login
+      secret:
+        defaultMode: 420
+        optional: true
+        secretName: v4-0-config-user-template-login
+    - name: v4-0-config-user-template-provider-selection
+      secret:
+        defaultMode: 420
+        optional: true
+        secretName: v4-0-config-user-template-provider-selection
+    - name: v4-0-config-user-template-error
+      secret:
+        defaultMode: 420
+        optional: true
+        secretName: v4-0-config-user-template-error
+    - configMap:
+        defaultMode: 420
+        name: v4-0-config-system-trusted-ca-bundle
+        optional: true
+      name: v4-0-config-system-trusted-ca-bundle
+    - name: v4-0-config-user-idp-0-file-data
+      secret:
+        defaultMode: 420
+        items:
+        - key: htpasswd
+          path: htpasswd
+        secretName: v4-0-config-user-idp-0-file-data
+    - name: v4-0-config-user-idp-1-bind-password
+      secret:
+        defaultMode: 420
+        items:
+        - key: bindPassword
+          path: bindPassword
+        secretName: v4-0-config-user-idp-1-bind-password
+    - name: kube-api-access-rvssb
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-30T16:24:29Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-30T16:24:32Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-30T16:24:32Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-30T16:24:29Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://14cb61516636736afa156b9b3fe2ddcedeab4e84ccda4bbd8249af9e21f078e5
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:73db334e251ce085c1bdac76a793cf244d340ef6ba7058f7ca5ba77566c058df
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:73db334e251ce085c1bdac76a793cf244d340ef6ba7058f7ca5ba77566c058df
+      lastState: {}
+      name: oauth-openshift
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2024-07-30T16:24:31Z"
+    hostIP: 10.80.80.7
+    phase: Running
+    podIP: 10.128.0.123
+    podIPs:
+    - ip: 10.128.0.123
+    qosClass: Burstable
+    startTime: "2024-07-30T16:24:29Z"
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

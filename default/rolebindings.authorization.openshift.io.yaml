@@ -1,0 +1,124 @@
+apiVersion: v1
+items:
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    creationTimestamp: "2023-05-04T21:41:10Z"
+    name: machine-config-controller-events
+    namespace: default
+    resourceVersion: "7043"
+    uid: b944eae8-6b69-4846-88ae-e4d369902290
+  roleRef:
+    name: machine-config-controller-events
+  subjects:
+  - kind: ServiceAccount
+    name: machine-config-controller
+    namespace: openshift-machine-config-operator
+  userNames:
+  - system:serviceaccount:openshift-machine-config-operator:machine-config-controller
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    creationTimestamp: "2023-05-04T21:40:28Z"
+    name: machine-config-daemon-events
+    namespace: default
+    resourceVersion: "4549"
+    uid: 50b83843-da4c-4345-91c5-a88b192526d5
+  roleRef:
+    name: machine-config-daemon-events
+  subjects:
+  - kind: ServiceAccount
+    name: machine-config-daemon
+    namespace: openshift-machine-config-operator
+  userNames:
+  - system:serviceaccount:openshift-machine-config-operator:machine-config-daemon
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    creationTimestamp: "2023-05-04T21:49:26Z"
+    labels:
+      app.kubernetes.io/component: prometheus
+      app.kubernetes.io/instance: k8s
+      app.kubernetes.io/name: prometheus
+      app.kubernetes.io/part-of: openshift-monitoring
+      app.kubernetes.io/version: 2.32.1
+    name: prometheus-k8s
+    namespace: default
+    resourceVersion: "21589"
+    uid: f591ee45-5c55-469b-8f56-cef8894dc586
+  roleRef:
+    name: prometheus-k8s
+    namespace: default
+  subjects:
+  - kind: ServiceAccount
+    name: prometheus-k8s
+    namespace: openshift-monitoring
+  userNames:
+  - system:serviceaccount:openshift-monitoring:prometheus-k8s
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/description: Allows deploymentconfigs in this namespace to rollout
+        pods in this namespace.  It is auto-managed by a controller; remove subjects
+        to disable.
+    creationTimestamp: "2023-05-04T21:45:22Z"
+    name: system:deployers
+    namespace: default
+    resourceVersion: "14595"
+    uid: 4d4673d4-5be2-41eb-bc84-b7ac8e9893a7
+  roleRef:
+    name: system:deployer
+  subjects:
+  - kind: ServiceAccount
+    name: deployer
+    namespace: default
+  userNames:
+  - system:serviceaccount:default:deployer
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/description: Allows builds in this namespace to push images to
+        this namespace.  It is auto-managed by a controller; remove subjects to disable.
+    creationTimestamp: "2023-05-04T21:45:22Z"
+    name: system:image-builders
+    namespace: default
+    resourceVersion: "14520"
+    uid: 5040dcbd-9271-46f6-bf9d-d8a8521bada4
+  roleRef:
+    name: system:image-builder
+  subjects:
+  - kind: ServiceAccount
+    name: builder
+    namespace: default
+  userNames:
+  - system:serviceaccount:default:builder
+- apiVersion: authorization.openshift.io/v1
+  groupNames:
+  - system:serviceaccounts:default
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/description: Allows all pods in this namespace to pull images from
+        this namespace.  It is auto-managed by a controller; remove subjects to disable.
+    creationTimestamp: "2023-05-04T21:45:21Z"
+    name: system:image-pullers
+    namespace: default
+    resourceVersion: "14388"
+    uid: 29f6fc43-efbe-4456-beab-4664040ec687
+  roleRef:
+    name: system:image-puller
+  subjects:
+  - kind: SystemGroup
+    name: system:serviceaccounts:default
+  userNames: null
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

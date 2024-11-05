@@ -1,0 +1,804 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.128.23.10"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.128.23.10"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/deployment-config.latest-version: "1"
+      openshift.io/deployment-config.name: publico-dev
+      openshift.io/deployment.name: publico-dev-1
+      openshift.io/scc: restricted
+    creationTimestamp: "2024-07-12T03:51:23Z"
+    generateName: publico-dev-1-
+    labels:
+      app: publico-dev
+      deployment: publico-dev-1
+      deploymentconfig: publico-dev
+    name: publico-dev-1-vc47z
+    namespace: utilities-dev
+    ownerReferences:
+    - apiVersion: v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicationController
+      name: publico-dev-1
+      uid: 1e66f7cf-8550-403b-a6c3-a52c60bf24cd
+    resourceVersion: "476624673"
+    uid: f7c4b82a-4637-45d1-a874-90656ce459bf
+  spec:
+    containers:
+    - image: image-registry.openshift-image-registry.svc:5000/utilities-dev/publico-dev@sha256:becbab33d4fdc56d0a7d81c108e50390c9d0b34df5189243957c7f48c36ae5f3
+      imagePullPolicy: Always
+      name: publico-dev
+      ports:
+      - containerPort: 8080
+        protocol: TCP
+      resources:
+        limits:
+          cpu: 100m
+          memory: 200Mi
+        requests:
+          cpu: 10m
+          memory: 50Mi
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000210000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-rfzqc
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: default-dockercfg-rpkx8
+    - name: docker-pull-secret
+    - name: dockerhub-dt-test
+    - name: dt-dockerhub-default
+    - name: dt-dockerhub
+    nodeName: ocp4azu-sj2sl-worker-noprod-dev-brazilsouth2-4dm6s
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000210000
+      seLinuxOptions:
+        level: s0:c15,c0
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoSchedule
+      key: node.kubernetes.io/memory-pressure
+      operator: Exists
+    volumes:
+    - name: kube-api-access-rfzqc
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-12T03:51:23Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-12T03:51:58Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-12T03:51:58Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-12T03:51:23Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://52ef4b26a291c471412f78e24daf293081af55edad5f59db4e825d2ead0fdf4d
+      image: image-registry.openshift-image-registry.svc:5000/utilities-dev/publico-dev@sha256:becbab33d4fdc56d0a7d81c108e50390c9d0b34df5189243957c7f48c36ae5f3
+      imageID: image-registry.openshift-image-registry.svc:5000/utilities-dev/publico-dev@sha256:becbab33d4fdc56d0a7d81c108e50390c9d0b34df5189243957c7f48c36ae5f3
+      lastState: {}
+      name: publico-dev
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2024-07-12T03:51:57Z"
+    hostIP: 10.80.80.9
+    phase: Running
+    podIP: 10.128.23.10
+    podIPs:
+    - ip: 10.128.23.10
+    qosClass: Burstable
+    startTime: "2024-07-12T03:51:23Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.128.20.17"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.128.20.17"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/deployment-config.latest-version: "1"
+      openshift.io/deployment-config.name: test-nestjs-ab
+      openshift.io/deployment.name: test-nestjs-ab-1
+      openshift.io/generated-by: OpenShiftWebConsole
+      openshift.io/scc: restricted
+    creationTimestamp: "2023-05-25T14:36:48Z"
+    generateName: test-nestjs-ab-1-
+    labels:
+      app: test-nestjs-ab
+      deployment: test-nestjs-ab-1
+      deploymentconfig: test-nestjs-ab
+    name: test-nestjs-ab-1-p59kt
+    namespace: utilities-dev
+    ownerReferences:
+    - apiVersion: v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicationController
+      name: test-nestjs-ab-1
+      uid: 7a2d5ea3-a9b3-4964-8410-42901b3e0a74
+    resourceVersion: "472847155"
+    uid: 2033a788-d05e-4ef1-8a50-731afc713667
+  spec:
+    containers:
+    - image: docker.io/fgonzalezdt/test-nestjs@sha256:b2be139a4546376613b37514e0fcfb1408e519a8eadcaaece33e0eace98ae37b
+      imagePullPolicy: Always
+      name: test-nestjs-ab
+      ports:
+      - containerPort: 8080
+        protocol: TCP
+      resources: {}
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000210000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-nm6wf
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: default-dockercfg-rpkx8
+    - name: docker-pull-secret
+    - name: dockerhub-dt-test
+    - name: dt-dockerhub-default
+    - name: dt-dockerhub
+    nodeName: ocp4azu-sj2sl-worker-prod-brazilsouth2-xbz5z
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000210000
+      seLinuxOptions:
+        level: s0:c15,c0
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - name: kube-api-access-nm6wf
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-25T14:36:48Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-25T14:37:08Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-25T14:37:08Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-25T14:36:48Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://d22810edc1904b42843542a9a24b4cbfc126abf7dfb2068536dae18931d0dd10
+      image: docker.io/fgonzalezdt/test-nestjs@sha256:b2be139a4546376613b37514e0fcfb1408e519a8eadcaaece33e0eace98ae37b
+      imageID: docker.io/fgonzalezdt/test-nestjs@sha256:b2be139a4546376613b37514e0fcfb1408e519a8eadcaaece33e0eace98ae37b
+      lastState: {}
+      name: test-nestjs-ab
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2023-05-25T14:37:08Z"
+    hostIP: 10.80.80.23
+    phase: Running
+    podIP: 10.128.20.17
+    podIPs:
+    - ip: 10.128.20.17
+    qosClass: BestEffort
+    startTime: "2023-05-25T14:36:48Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.130.20.112"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.130.20.112"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/deployment-config.latest-version: "1"
+      openshift.io/deployment-config.name: test-nestjs-private
+      openshift.io/deployment.name: test-nestjs-private-1
+      openshift.io/generated-by: OpenShiftWebConsole
+      openshift.io/scc: restricted
+    creationTimestamp: "2024-07-12T03:51:23Z"
+    generateName: test-nestjs-private-1-
+    labels:
+      app: test-nestjs-private
+      deployment: test-nestjs-private-1
+      deploymentconfig: test-nestjs-private
+    name: test-nestjs-private-1-q9dzl
+    namespace: utilities-dev
+    ownerReferences:
+    - apiVersion: v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicationController
+      name: test-nestjs-private-1
+      uid: bdead208-e2ca-4963-9c1f-45d996e6ca99
+    resourceVersion: "476625009"
+    uid: 5fff86d3-ec0f-433d-a71c-63e0352e4673
+  spec:
+    containers:
+    - image: docker.io/fgonzalezdt/test-nestjs@sha256:9808e16060e85bf11e3e2b388018c2750baf3c3be86ee0dd00c060d324c7fc38
+      imagePullPolicy: Always
+      name: test-nestjs-private
+      ports:
+      - containerPort: 8080
+        protocol: TCP
+      resources: {}
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000210000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-zpz7m
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: dt-docker-hub
+    nodeName: ocp4azu-sj2sl-worker-noprod-dev-brazilsouth1-vlxcp
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000210000
+      seLinuxOptions:
+        level: s0:c15,c0
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - name: kube-api-access-zpz7m
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-12T03:51:23Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-12T03:51:42Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-12T03:51:42Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-12T03:51:23Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://9d367a8c9cf0e48f8723ba9234f66be17c3fd7d59d8769eaf580fc46a7a3cd65
+      image: docker.io/fgonzalezdt/test-nestjs@sha256:9808e16060e85bf11e3e2b388018c2750baf3c3be86ee0dd00c060d324c7fc38
+      imageID: docker.io/fgonzalezdt/test-nestjs@sha256:9808e16060e85bf11e3e2b388018c2750baf3c3be86ee0dd00c060d324c7fc38
+      lastState: {}
+      name: test-nestjs-private
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2024-07-12T03:51:42Z"
+    hostIP: 10.80.80.5
+    phase: Running
+    podIP: 10.130.20.112
+    podIPs:
+    - ip: 10.130.20.112
+    qosClass: BestEffort
+    startTime: "2024-07-12T03:51:23Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.128.23.9"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.128.23.9"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/deployment-config.latest-version: "1"
+      openshift.io/deployment-config.name: test-nestjs-x
+      openshift.io/deployment.name: test-nestjs-x-1
+      openshift.io/generated-by: OpenShiftWebConsole
+      openshift.io/scc: restricted
+    creationTimestamp: "2024-07-12T03:51:23Z"
+    generateName: test-nestjs-x-1-
+    labels:
+      app: test-nestjs-x
+      deployment: test-nestjs-x-1
+      deploymentconfig: test-nestjs-x
+    name: test-nestjs-x-1-s7t9g
+    namespace: utilities-dev
+    ownerReferences:
+    - apiVersion: v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicationController
+      name: test-nestjs-x-1
+      uid: a62d54e6-f20f-44b8-bb72-978b9412f8c6
+    resourceVersion: "476624645"
+    uid: f2e05e2e-7201-48a9-a718-356aab8cb989
+  spec:
+    containers:
+    - image: docker.io/fgonzalezdt/test-nestjs@sha256:b2be139a4546376613b37514e0fcfb1408e519a8eadcaaece33e0eace98ae37b
+      imagePullPolicy: Always
+      name: test-nestjs-x
+      ports:
+      - containerPort: 8080
+        protocol: TCP
+      resources: {}
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000210000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-l8x45
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: default-dockercfg-rpkx8
+    - name: docker-pull-secret
+    - name: dockerhub-dt-test
+    - name: dt-dockerhub-default
+    - name: dt-dockerhub
+    nodeName: ocp4azu-sj2sl-worker-noprod-dev-brazilsouth2-4dm6s
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000210000
+      seLinuxOptions:
+        level: s0:c15,c0
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - name: kube-api-access-l8x45
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-12T03:51:23Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-12T03:51:58Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-12T03:51:58Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2024-07-12T03:51:23Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://a1841ee10949b17c04bed47cd8ea5830b3efaa732a3e2dbdb640456bd82d7c43
+      image: docker.io/fgonzalezdt/test-nestjs@sha256:b2be139a4546376613b37514e0fcfb1408e519a8eadcaaece33e0eace98ae37b
+      imageID: docker.io/fgonzalezdt/test-nestjs@sha256:b2be139a4546376613b37514e0fcfb1408e519a8eadcaaece33e0eace98ae37b
+      lastState: {}
+      name: test-nestjs-x
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2024-07-12T03:51:57Z"
+    hostIP: 10.80.80.9
+    phase: Running
+    podIP: 10.128.23.9
+    podIPs:
+    - ip: 10.128.23.9
+    qosClass: BestEffort
+    startTime: "2024-07-12T03:51:23Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.128.20.15"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.128.20.15"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/deployment-config.latest-version: "1"
+      openshift.io/deployment-config.name: test-reg-civil
+      openshift.io/deployment.name: test-reg-civil-1
+      openshift.io/scc: restricted
+    creationTimestamp: "2023-05-25T14:13:56Z"
+    generateName: test-reg-civil-1-
+    labels:
+      app: test-reg-civil
+      deployment: test-reg-civil-1
+      deploymentconfig: test-reg-civil
+    name: test-reg-civil-1-65cps
+    namespace: utilities-dev
+    ownerReferences:
+    - apiVersion: v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicationController
+      name: test-reg-civil-1
+      uid: eee3a84a-5406-41d4-9f0d-2b842e1b86da
+    resourceVersion: "472847017"
+    uid: df8761a7-bd2e-4b09-873b-522268d43df3
+  spec:
+    containers:
+    - image: image-registry.openshift-image-registry.svc:5000/utilities-dev/test-reg-civil@sha256:445ddac2db5d0fb97505827957b3544c36cd66bf4e242bd5752ba10201fc5df5
+      imagePullPolicy: Always
+      name: test-reg-civil
+      ports:
+      - containerPort: 8080
+        protocol: TCP
+      resources: {}
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000210000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-pd2sg
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: default-dockercfg-rpkx8
+    - name: docker-pull-secret
+    - name: dockerhub-dt-test
+    - name: dt-dockerhub-default
+    - name: dt-dockerhub
+    nodeName: ocp4azu-sj2sl-worker-prod-brazilsouth2-xbz5z
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000210000
+      seLinuxOptions:
+        level: s0:c15,c0
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - name: kube-api-access-pd2sg
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-25T14:13:56Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-25T14:14:30Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-25T14:14:30Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-05-25T14:13:56Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://0abd0d51dca5b4e511ad1ad27c53ac665d96984f6aab521e805de226b262b264
+      image: image-registry.openshift-image-registry.svc:5000/utilities-dev/test-reg-civil@sha256:445ddac2db5d0fb97505827957b3544c36cd66bf4e242bd5752ba10201fc5df5
+      imageID: image-registry.openshift-image-registry.svc:5000/utilities-dev/test-reg-civil@sha256:445ddac2db5d0fb97505827957b3544c36cd66bf4e242bd5752ba10201fc5df5
+      lastState: {}
+      name: test-reg-civil
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2023-05-25T14:14:29Z"
+    hostIP: 10.80.80.23
+    phase: Running
+    podIP: 10.128.20.15
+    podIPs:
+    - ip: 10.128.20.15
+    qosClass: BestEffort
+    startTime: "2023-05-25T14:13:56Z"
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

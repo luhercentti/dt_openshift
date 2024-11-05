@@ -1,0 +1,4330 @@
+apiVersion: v1
+items:
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: MigPlan
+  metadata:
+    annotations:
+      migration.openshift.io/selected-migplan-type: full
+      openshift.io/touch: dc8c6b05-50de-11ef-976b-0a580a8016d6
+    creationTimestamp: "2023-05-23T15:38:03Z"
+    generation: 3251302
+    name: 3scale
+    namespace: openshift-migration
+    resourceVersion: "494973548"
+    uid: 49357516-407e-4d22-8a38-498daa6ef155
+  spec:
+    destMigClusterRef:
+      name: host
+      namespace: openshift-migration
+    indirectImageMigration: true
+    migStorageRef:
+      name: azure
+      namespace: openshift-migration
+    namespaces:
+    - 3scale
+    persistentVolumes:
+    - capacity: 5Gi
+      name: pvc-338d4a9b-867f-11ea-a1bf-000d3ac05376
+      proposedCapacity: 5369M
+      pvc:
+        accessModes:
+        - ReadWriteMany
+        hasReference: true
+        name: system-storage
+        namespace: 3scale
+      selection:
+        action: copy
+        copyMethod: filesystem
+        storageClass: managed-premium
+      storageClass: azure-file-workaround-3scale
+      supported:
+        actions:
+        - skip
+        - copy
+        copyMethods:
+        - filesystem
+        - snapshot
+    - capacity: 5Gi
+      name: pvc-4a528aa3-8676-11ea-a1bf-000d3ac05376
+      proposedCapacity: "0"
+      pvc:
+        accessModes:
+        - ReadWriteMany
+        hasReference: true
+        name: system-storage-workaround
+        namespace: 3scale
+      selection:
+        action: copy
+        copyMethod: filesystem
+        storageClass: managed-premium
+      storageClass: azure-file-workaround-3scale
+      supported:
+        actions:
+        - skip
+        - copy
+        copyMethods:
+        - filesystem
+        - snapshot
+    - capacity: 10Gi
+      name: pvc-d7e6e38e-708d-11ea-bff7-000d3ac052bc
+      proposedCapacity: 10Gi
+      pvc:
+        accessModes:
+        - ReadWriteOnce
+        hasReference: true
+        name: backend-redis-storage
+        namespace: 3scale
+      selection:
+        action: copy
+        copyMethod: filesystem
+        storageClass: managed-premium
+      storageClass: azure-storage
+      supported:
+        actions:
+        - skip
+        - copy
+        copyMethods:
+        - filesystem
+        - snapshot
+    - capacity: 30Gi
+      name: pvc-d7e979b6-708d-11ea-bff7-000d3ac052bc
+      proposedCapacity: 30Gi
+      pvc:
+        accessModes:
+        - ReadWriteOnce
+        hasReference: true
+        name: mysql-storage
+        namespace: 3scale
+      selection:
+        action: copy
+        copyMethod: filesystem
+        storageClass: managed-premium
+      storageClass: azure-storage
+      supported:
+        actions:
+        - skip
+        - copy
+        copyMethods:
+        - filesystem
+        - snapshot
+    - capacity: 10Gi
+      name: pvc-d7f0f700-708d-11ea-bff7-000d3ac052bc
+      proposedCapacity: 10Gi
+      pvc:
+        accessModes:
+        - ReadWriteOnce
+        hasReference: true
+        name: system-redis-storage
+        namespace: 3scale
+      selection:
+        action: copy
+        copyMethod: filesystem
+        storageClass: managed-premium
+      storageClass: azure-storage
+      supported:
+        actions:
+        - skip
+        - copy
+        copyMethods:
+        - filesystem
+        - snapshot
+    srcMigClusterRef:
+      name: ocp3cloud
+      namespace: openshift-migration
+  status:
+    conditions:
+    - category: Advisory
+      lastTransitionTime: "2023-05-23T15:38:03Z"
+      message: Indirect migration modes can only be used for full namespace migrations.
+      reason: NamespaceMigrationPlan
+      status: "True"
+      type: MigrationTypeIdentified
+    - category: Warn
+      durable: true
+      lastTransitionTime: "2023-06-04T07:40:18Z"
+      message: 'Found Pods with non-default `Spec.NodeSelector` set in namespaces:
+        [3scale]. This field will be cleared on Pods restored into the target cluster.'
+      reason: NodeSelectorsDetected
+      status: "True"
+      type: NamespacesHaveNodeSelectors
+    - category: Required
+      lastTransitionTime: "2023-05-23T15:38:16Z"
+      message: The `persistentVolumes` list has been updated with discovered PVs.
+      reason: Done
+      status: "True"
+      type: PvsDiscovered
+    - category: Warn
+      lastTransitionTime: "2023-05-23T15:38:16Z"
+      message: AccessMode for PVC in `persistentVolumes` [pvc-338d4a9b-867f-11ea-a1bf-000d3ac05376,pvc-4a528aa3-8676-11ea-a1bf-000d3ac05376]
+        unavailable in chosen storage class.
+      status: "True"
+      type: PvWarnAccessModeUnavailable
+    - category: Required
+      lastTransitionTime: "2023-05-23T15:38:16Z"
+      message: The storage resources have been created.
+      reason: Done
+      status: "True"
+      type: StorageEnsured
+    - category: Warn
+      durable: true
+      lastTransitionTime: "2024-08-02T14:52:38Z"
+      message: 'Migrating data of following volumes may result in a failure either
+        due to mismatch in their requested and actual capacities or disk usage being
+        close to 100%:  [system-storage,system-storage]'
+      reason: NotDone
+      status: "True"
+      type: PvCapacityAdjustmentRequired
+    - category: Warn
+      lastTransitionTime: "2024-08-02T14:52:38Z"
+      message: 'Failed to compute PV resizing data for the following volumes. PV resizing
+        will be disabled for these volumes and the migration may fail if the volumes
+        are full or their requested and actual capacities differ in the source cluster.
+        Please ensure that the volumes are attached to one or more running Pods for
+        PV resizing to work correctly: [system-storage-workaround]'
+      reason: NotDone
+      status: "True"
+      type: PvUsageAnalysisFailed
+    - category: Advisory
+      lastTransitionTime: "2023-06-04T07:40:30Z"
+      message: The migrations plan is in suspended state; Limited validation enforced;
+        PV discovery and resource reconciliation suspended.
+      status: "True"
+      type: Suspended
+    - category: Error
+      lastTransitionTime: "2023-07-14T19:52:54Z"
+      message: The migration plan is in conflict with [prueba].
+      reason: Conflict
+      status: "True"
+      type: PlanConflict
+    - category: Critical
+      lastTransitionTime: "2023-11-27T22:06:51Z"
+      message: 'The referenced `srcMigClusterRef` does not have a `Ready` condition,
+        subject: openshift-migration/ocp3cloud'
+      status: "True"
+      type: SourceClusterNotReady
+    - category: Critical
+      lastTransitionTime: "2024-05-17T22:30:41Z"
+      message: 'The referenced `migStorageRef` does not have a `Ready` condition,
+        subject: openshift-migration/azure.'
+      status: "True"
+      type: StorageNotReady
+    destStorageClasses:
+    - accessModes:
+      - ReadWriteOnce
+      name: managed-csi
+      provisioner: disk.csi.azure.com
+    - accessModes:
+      - ReadWriteOnce
+      default: true
+      name: managed-premium
+      provisioner: kubernetes.io/azure-disk
+    excludedResources:
+    - imagetags
+    - templateinstances
+    - clusterserviceversions
+    - packagemanifests
+    - subscriptions
+    - servicebrokers
+    - servicebindings
+    - serviceclasses
+    - serviceinstances
+    - serviceplans
+    - operatorgroups
+    - events
+    - events.events.k8s.io
+    - rolebindings.authorization.openshift.io
+    observedDigest: b9367a2ad87a39da58e3cc105511027e5e3cf086bebd331b0da2bfa8bdf0664e
+    srcStorageClasses:
+    - accessModes:
+      - ReadWriteOnce
+      - ReadOnlyMany
+      - ReadWriteMany
+      name: azure-file-storage
+      provisioner: kubernetes.io/azure-file
+    - accessModes:
+      - ReadWriteOnce
+      - ReadOnlyMany
+      - ReadWriteMany
+      name: azure-file-workaround-3scale
+      provisioner: kubernetes.io/azure-file
+    - accessModes:
+      - ReadWriteOnce
+      default: true
+      name: azure-storage
+      provisioner: kubernetes.io/azure-disk
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: MigPlan
+  metadata:
+    annotations:
+      migration.openshift.io/selected-migplan-type: full
+      openshift.io/touch: a73c89b4-50a8-11ef-976b-0a580a8016d6
+    creationTimestamp: "2023-05-23T15:19:59Z"
+    generation: 17106
+    name: api-fiscalizacion-prod
+    namespace: openshift-migration
+    resourceVersion: "494408308"
+    uid: 939c18ea-060c-41cf-8cf0-870f4b31a246
+  spec:
+    destMigClusterRef:
+      name: host
+      namespace: openshift-migration
+    indirectImageMigration: true
+    migStorageRef:
+      name: azure
+      namespace: openshift-migration
+    namespaces:
+    - api-fiscalizacion-prod
+    persistentVolumes:
+    - capacity: 1Gi
+      name: pvc-0ab9f272-7bfb-11ea-bffa-000d3ac05650
+      proposedCapacity: "0"
+      pvc:
+        accessModes:
+        - ReadWriteOnce
+        name: srv-data-cache-service-1
+        namespace: api-fiscalizacion-prod
+      selection:
+        action: copy
+        copyMethod: filesystem
+        storageClass: managed-premium
+      storageClass: azure-storage
+      supported:
+        actions:
+        - skip
+        - copy
+        copyMethods:
+        - filesystem
+        - snapshot
+    - capacity: 1Gi
+      name: pvc-4dcb178a-7bfa-11ea-bffa-000d3ac05650
+      proposedCapacity: 1Gi
+      pvc:
+        accessModes:
+        - ReadWriteOnce
+        hasReference: true
+        name: srv-data-cache-service-0
+        namespace: api-fiscalizacion-prod
+      selection:
+        action: copy
+        copyMethod: filesystem
+        storageClass: managed-premium
+      storageClass: azure-storage
+      supported:
+        actions:
+        - skip
+        - copy
+        copyMethods:
+        - filesystem
+        - snapshot
+    srcMigClusterRef:
+      name: ocp3cloud
+      namespace: openshift-migration
+  status:
+    conditions:
+    - category: Advisory
+      lastTransitionTime: "2023-05-23T15:19:59Z"
+      message: Indirect migration modes can only be used for full namespace migrations.
+      reason: NamespaceMigrationPlan
+      status: "True"
+      type: MigrationTypeIdentified
+    - category: Warn
+      durable: true
+      lastTransitionTime: "2023-05-24T18:02:38Z"
+      message: 'Found Pods with non-default `Spec.NodeSelector` set in namespaces:
+        [api-fiscalizacion-prod]. This field will be cleared on Pods restored into
+        the target cluster.'
+      reason: NodeSelectorsDetected
+      status: "True"
+      type: NamespacesHaveNodeSelectors
+    - category: Required
+      lastTransitionTime: "2023-05-23T15:20:12Z"
+      message: The `persistentVolumes` list has been updated with discovered PVs.
+      reason: Done
+      status: "True"
+      type: PvsDiscovered
+    - category: Required
+      lastTransitionTime: "2023-05-23T15:20:12Z"
+      message: The storage resources have been created.
+      reason: Done
+      status: "True"
+      type: StorageEnsured
+    - category: Warn
+      lastTransitionTime: "2024-08-02T08:24:36Z"
+      message: 'Failed to compute PV resizing data for the following volumes. PV resizing
+        will be disabled for these volumes and the migration may fail if the volumes
+        are full or their requested and actual capacities differ in the source cluster.
+        Please ensure that the volumes are attached to one or more running Pods for
+        PV resizing to work correctly: [srv-data-cache-service-1]'
+      reason: NotDone
+      status: "True"
+      type: PvUsageAnalysisFailed
+    - category: Advisory
+      lastTransitionTime: "2023-05-24T18:02:49Z"
+      message: The migrations plan is in suspended state; Limited validation enforced;
+        PV discovery and resource reconciliation suspended.
+      status: "True"
+      type: Suspended
+    - category: Critical
+      lastTransitionTime: "2023-11-27T22:06:50Z"
+      message: 'The referenced `srcMigClusterRef` does not have a `Ready` condition,
+        subject: openshift-migration/ocp3cloud'
+      status: "True"
+      type: SourceClusterNotReady
+    - category: Critical
+      lastTransitionTime: "2024-05-17T22:30:42Z"
+      message: 'The referenced `migStorageRef` does not have a `Ready` condition,
+        subject: openshift-migration/azure.'
+      status: "True"
+      type: StorageNotReady
+    destStorageClasses:
+    - accessModes:
+      - ReadWriteOnce
+      name: managed-csi
+      provisioner: disk.csi.azure.com
+    - accessModes:
+      - ReadWriteOnce
+      default: true
+      name: managed-premium
+      provisioner: kubernetes.io/azure-disk
+    excludedResources:
+    - imagetags
+    - templateinstances
+    - clusterserviceversions
+    - packagemanifests
+    - subscriptions
+    - servicebrokers
+    - servicebindings
+    - serviceclasses
+    - serviceinstances
+    - serviceplans
+    - operatorgroups
+    - events
+    - events.events.k8s.io
+    - rolebindings.authorization.openshift.io
+    observedDigest: 7a6ff4b3f5cf71a7b7135faed5bff65857ff74221ce1a28d905acaf961656194
+    srcStorageClasses:
+    - accessModes:
+      - ReadWriteOnce
+      - ReadOnlyMany
+      - ReadWriteMany
+      name: azure-file-storage
+      provisioner: kubernetes.io/azure-file
+    - accessModes:
+      - ReadWriteOnce
+      - ReadOnlyMany
+      - ReadWriteMany
+      name: azure-file-workaround-3scale
+      provisioner: kubernetes.io/azure-file
+    - accessModes:
+      - ReadWriteOnce
+      default: true
+      name: azure-storage
+      provisioner: kubernetes.io/azure-disk
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: MigPlan
+  metadata:
+    annotations:
+      migration.openshift.io/selected-migplan-type: full
+      openshift.io/touch: a7237016-50a8-11ef-976b-0a580a8016d6
+    creationTimestamp: "2023-05-23T21:08:38Z"
+    generation: 17159
+    name: api-fiscalizacion-qa
+    namespace: openshift-migration
+    resourceVersion: "494408297"
+    uid: 2a8299ac-1423-4ceb-93a5-de572a0f44a9
+  spec:
+    destMigClusterRef:
+      name: host
+      namespace: openshift-migration
+    indirectImageMigration: true
+    migStorageRef:
+      name: azure
+      namespace: openshift-migration
+    namespaces:
+    - api-fiscalizacion-qa
+    persistentVolumes:
+    - capacity: 1Gi
+      name: pvc-6bb3926d-7c0b-11ea-bffa-000d3ac05650
+      proposedCapacity: "0"
+      pvc:
+        accessModes:
+        - ReadWriteOnce
+        hasReference: true
+        name: srv-data-cache-service-1
+        namespace: api-fiscalizacion-qa
+      selection:
+        action: copy
+        copyMethod: filesystem
+        storageClass: managed-premium
+      storageClass: azure-storage
+      supported:
+        actions:
+        - skip
+        - copy
+        copyMethods:
+        - filesystem
+        - snapshot
+    - capacity: 1Gi
+      name: pvc-969da40d-57c1-11ea-bffa-000d3ac05650
+      proposedCapacity: 1Gi
+      pvc:
+        accessModes:
+        - ReadWriteOnce
+        hasReference: true
+        name: srv-data-cache-service-0
+        namespace: api-fiscalizacion-qa
+      selection:
+        action: copy
+        copyMethod: filesystem
+        storageClass: managed-premium
+      storageClass: azure-storage
+      supported:
+        actions:
+        - skip
+        - copy
+        copyMethods:
+        - filesystem
+        - snapshot
+    srcMigClusterRef:
+      name: ocp3cloud
+      namespace: openshift-migration
+  status:
+    conditions:
+    - category: Advisory
+      lastTransitionTime: "2023-05-23T21:08:38Z"
+      message: Indirect migration modes can only be used for full namespace migrations.
+      reason: NamespaceMigrationPlan
+      status: "True"
+      type: MigrationTypeIdentified
+    - category: Warn
+      durable: true
+      lastTransitionTime: "2023-05-25T14:22:23Z"
+      message: 'Found Pods with non-default `Spec.NodeSelector` set in namespaces:
+        [api-fiscalizacion-qa]. This field will be cleared on Pods restored into the
+        target cluster.'
+      reason: NodeSelectorsDetected
+      status: "True"
+      type: NamespacesHaveNodeSelectors
+    - category: Required
+      lastTransitionTime: "2023-05-23T21:08:50Z"
+      message: The `persistentVolumes` list has been updated with discovered PVs.
+      reason: Done
+      status: "True"
+      type: PvsDiscovered
+    - category: Required
+      lastTransitionTime: "2023-05-23T21:08:50Z"
+      message: The storage resources have been created.
+      reason: Done
+      status: "True"
+      type: StorageEnsured
+    - category: Warn
+      lastTransitionTime: "2024-08-02T08:24:36Z"
+      message: 'Failed to compute PV resizing data for the following volumes. PV resizing
+        will be disabled for these volumes and the migration may fail if the volumes
+        are full or their requested and actual capacities differ in the source cluster.
+        Please ensure that the volumes are attached to one or more running Pods for
+        PV resizing to work correctly: [srv-data-cache-service-1]'
+      reason: NotDone
+      status: "True"
+      type: PvUsageAnalysisFailed
+    - category: Warn
+      lastTransitionTime: "2023-05-25T14:22:23Z"
+      message: 'Source namespace(s) contain unhealthy pods. See: `Status.namespaces`
+        for details.'
+      reason: NotHealthy
+      status: "True"
+      type: SourcePodsNotHealthy
+    - category: Advisory
+      lastTransitionTime: "2023-05-25T14:22:36Z"
+      message: The migrations plan is in suspended state; Limited validation enforced;
+        PV discovery and resource reconciliation suspended.
+      status: "True"
+      type: Suspended
+    - category: Critical
+      lastTransitionTime: "2023-11-27T22:06:51Z"
+      message: 'The referenced `srcMigClusterRef` does not have a `Ready` condition,
+        subject: openshift-migration/ocp3cloud'
+      status: "True"
+      type: SourceClusterNotReady
+    - category: Critical
+      lastTransitionTime: "2024-05-17T22:30:41Z"
+      message: 'The referenced `migStorageRef` does not have a `Ready` condition,
+        subject: openshift-migration/azure.'
+      status: "True"
+      type: StorageNotReady
+    destStorageClasses:
+    - accessModes:
+      - ReadWriteOnce
+      name: managed-csi
+      provisioner: disk.csi.azure.com
+    - accessModes:
+      - ReadWriteOnce
+      default: true
+      name: managed-premium
+      provisioner: kubernetes.io/azure-disk
+    excludedResources:
+    - imagetags
+    - templateinstances
+    - clusterserviceversions
+    - packagemanifests
+    - subscriptions
+    - servicebrokers
+    - servicebindings
+    - serviceclasses
+    - serviceinstances
+    - serviceplans
+    - operatorgroups
+    - events
+    - events.events.k8s.io
+    - rolebindings.authorization.openshift.io
+    namespaces:
+    - name: api-fiscalizacion-qa
+      workloads:
+      - name: Pods
+        resources:
+        - rsync-wvp65
+    observedDigest: 63c9256f29898790586e62edcacf22117e8a03fe2ad74b73413d2329e0e38fa5
+    srcStorageClasses:
+    - accessModes:
+      - ReadWriteOnce
+      - ReadOnlyMany
+      - ReadWriteMany
+      name: azure-file-storage
+      provisioner: kubernetes.io/azure-file
+    - accessModes:
+      - ReadWriteOnce
+      - ReadOnlyMany
+      - ReadWriteMany
+      name: azure-file-workaround-3scale
+      provisioner: kubernetes.io/azure-file
+    - accessModes:
+      - ReadWriteOnce
+      default: true
+      name: azure-storage
+      provisioner: kubernetes.io/azure-disk
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: MigPlan
+  metadata:
+    annotations:
+      migration.openshift.io/selected-migplan-type: full
+      openshift.io/touch: a6d8c527-50a8-11ef-976b-0a580a8016d6
+    creationTimestamp: "2023-05-25T14:44:22Z"
+    generation: 68
+    name: apicast-dev
+    namespace: openshift-migration
+    resourceVersion: "494408259"
+    uid: f921392c-1b4c-4dd1-9fd7-bfec352bc628
+  spec:
+    destMigClusterRef:
+      name: host
+      namespace: openshift-migration
+    indirectImageMigration: true
+    indirectVolumeMigration: true
+    migStorageRef:
+      name: azure
+      namespace: openshift-migration
+    namespaces:
+    - apicast-dev
+    srcMigClusterRef:
+      name: ocp3cloud
+      namespace: openshift-migration
+  status:
+    conditions:
+    - category: Advisory
+      lastTransitionTime: "2023-05-25T14:44:22Z"
+      message: Indirect migration modes can only be used for full namespace migrations.
+      reason: NamespaceMigrationPlan
+      status: "True"
+      type: MigrationTypeIdentified
+    - category: Required
+      lastTransitionTime: "2023-05-25T14:44:33Z"
+      message: The `persistentVolumes` list has been updated with discovered PVs.
+      reason: Done
+      status: "True"
+      type: PvsDiscovered
+    - category: Required
+      lastTransitionTime: "2023-05-25T14:44:34Z"
+      message: The storage resources have been created.
+      reason: Done
+      status: "True"
+      type: StorageEnsured
+    - category: Advisory
+      lastTransitionTime: "2023-05-25T14:44:52Z"
+      message: The migrations plan is in suspended state; Limited validation enforced;
+        PV discovery and resource reconciliation suspended.
+      status: "True"
+      type: Suspended
+    - category: Critical
+      lastTransitionTime: "2023-11-27T22:06:50Z"
+      message: 'The referenced `srcMigClusterRef` does not have a `Ready` condition,
+        subject: openshift-migration/ocp3cloud'
+      status: "True"
+      type: SourceClusterNotReady
+    - category: Critical
+      lastTransitionTime: "2024-05-17T22:30:42Z"
+      message: 'The referenced `migStorageRef` does not have a `Ready` condition,
+        subject: openshift-migration/azure.'
+      status: "True"
+      type: StorageNotReady
+    destStorageClasses:
+    - accessModes:
+      - ReadWriteOnce
+      name: managed-csi
+      provisioner: disk.csi.azure.com
+    - accessModes:
+      - ReadWriteOnce
+      default: true
+      name: managed-premium
+      provisioner: kubernetes.io/azure-disk
+    excludedResources:
+    - imagetags
+    - templateinstances
+    - clusterserviceversions
+    - packagemanifests
+    - subscriptions
+    - servicebrokers
+    - servicebindings
+    - serviceclasses
+    - serviceinstances
+    - serviceplans
+    - operatorgroups
+    - events
+    - events.events.k8s.io
+    - rolebindings.authorization.openshift.io
+    observedDigest: 717e073a6b3a1fcb3a74f2a598825b34aa163e9d20495c70f735433e1c36bf1f
+    srcStorageClasses:
+    - accessModes:
+      - ReadWriteOnce
+      - ReadOnlyMany
+      - ReadWriteMany
+      name: azure-file-storage
+      provisioner: kubernetes.io/azure-file
+    - accessModes:
+      - ReadWriteOnce
+      - ReadOnlyMany
+      - ReadWriteMany
+      name: azure-file-workaround-3scale
+      provisioner: kubernetes.io/azure-file
+    - accessModes:
+      - ReadWriteOnce
+      default: true
+      name: azure-storage
+      provisioner: kubernetes.io/azure-disk
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: MigPlan
+  metadata:
+    annotations:
+      migration.openshift.io/selected-migplan-type: full
+      openshift.io/touch: a7b772b4-50a8-11ef-976b-0a580a8016d6
+    creationTimestamp: "2023-05-23T15:23:32Z"
+    generation: 71
+    name: apicast-prod
+    namespace: openshift-migration
+    resourceVersion: "494408355"
+    uid: 1981d423-880a-454f-b775-1c317fd4855d
+  spec:
+    destMigClusterRef:
+      name: host
+      namespace: openshift-migration
+    indirectImageMigration: true
+    indirectVolumeMigration: true
+    migStorageRef:
+      name: azure
+      namespace: openshift-migration
+    namespaces:
+    - apicast-prod
+    srcMigClusterRef:
+      name: ocp3cloud
+      namespace: openshift-migration
+  status:
+    conditions:
+    - category: Advisory
+      lastTransitionTime: "2023-05-23T15:23:32Z"
+      message: Indirect migration modes can only be used for full namespace migrations.
+      reason: NamespaceMigrationPlan
+      status: "True"
+      type: MigrationTypeIdentified
+    - category: Required
+      lastTransitionTime: "2023-05-23T15:23:44Z"
+      message: The `persistentVolumes` list has been updated with discovered PVs.
+      reason: Done
+      status: "True"
+      type: PvsDiscovered
+    - category: Required
+      lastTransitionTime: "2023-05-23T15:23:44Z"
+      message: The storage resources have been created.
+      reason: Done
+      status: "True"
+      type: StorageEnsured
+    - category: Advisory
+      lastTransitionTime: "2023-05-23T15:42:34Z"
+      message: The migrations plan is in suspended state; Limited validation enforced;
+        PV discovery and resource reconciliation suspended.
+      status: "True"
+      type: Suspended
+    - category: Critical
+      lastTransitionTime: "2023-11-27T22:06:51Z"
+      message: 'The referenced `srcMigClusterRef` does not have a `Ready` condition,
+        subject: openshift-migration/ocp3cloud'
+      status: "True"
+      type: SourceClusterNotReady
+    - category: Critical
+      lastTransitionTime: "2024-05-17T22:30:42Z"
+      message: 'The referenced `migStorageRef` does not have a `Ready` condition,
+        subject: openshift-migration/azure.'
+      status: "True"
+      type: StorageNotReady
+    destStorageClasses:
+    - accessModes:
+      - ReadWriteOnce
+      name: managed-csi
+      provisioner: disk.csi.azure.com
+    - accessModes:
+      - ReadWriteOnce
+      default: true
+      name: managed-premium
+      provisioner: kubernetes.io/azure-disk
+    excludedResources:
+    - imagetags
+    - templateinstances
+    - clusterserviceversions
+    - packagemanifests
+    - subscriptions
+    - servicebrokers
+    - servicebindings
+    - serviceclasses
+    - serviceinstances
+    - serviceplans
+    - operatorgroups
+    - events
+    - events.events.k8s.io
+    - rolebindings.authorization.openshift.io
+    observedDigest: c4cee7ed7cca8327e7bd6f165e90f2ed386e004f48299940e25cbba6beda9300
+    srcStorageClasses:
+    - accessModes:
+      - ReadWriteOnce
+      - ReadOnlyMany
+      - ReadWriteMany
+      name: azure-file-storage
+      provisioner: kubernetes.io/azure-file
+    - accessModes:
+      - ReadWriteOnce
+      - ReadOnlyMany
+      - ReadWriteMany
+      name: azure-file-workaround-3scale
+      provisioner: kubernetes.io/azure-file
+    - accessModes:
+      - ReadWriteOnce
+      default: true
+      name: azure-storage
+      provisioner: kubernetes.io/azure-disk
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: MigPlan
+  metadata:
+    annotations:
+      migration.openshift.io/selected-migplan-type: full
+      openshift.io/touch: a7779185-50a8-11ef-976b-0a580a8016d6
+    creationTimestamp: "2023-05-18T17:01:00Z"
+    generation: 71
+    name: apicast-qa
+    namespace: openshift-migration
+    resourceVersion: "494408331"
+    uid: 49805066-245d-4e4f-b6c5-23226a4d9ae4
+  spec:
+    destMigClusterRef:
+      name: host
+      namespace: openshift-migration
+    indirectImageMigration: true
+    indirectVolumeMigration: true
+    migStorageRef:
+      name: azure
+      namespace: openshift-migration
+    namespaces:
+    - apicast-qa
+    srcMigClusterRef:
+      name: ocp3cloud
+      namespace: openshift-migration
+  status:
+    conditions:
+    - category: Advisory
+      lastTransitionTime: "2023-05-18T17:01:00Z"
+      message: Indirect migration modes can only be used for full namespace migrations.
+      reason: NamespaceMigrationPlan
+      status: "True"
+      type: MigrationTypeIdentified
+    - category: Required
+      lastTransitionTime: "2023-05-18T17:01:12Z"
+      message: The `persistentVolumes` list has been updated with discovered PVs.
+      reason: Done
+      status: "True"
+      type: PvsDiscovered
+    - category: Required
+      lastTransitionTime: "2023-05-18T17:01:12Z"
+      message: The storage resources have been created.
+      reason: Done
+      status: "True"
+      type: StorageEnsured
+    - category: Advisory
+      lastTransitionTime: "2023-05-22T19:33:54Z"
+      message: The migrations plan is in suspended state; Limited validation enforced;
+        PV discovery and resource reconciliation suspended.
+      status: "True"
+      type: Suspended
+    - category: Critical
+      lastTransitionTime: "2023-11-27T22:06:51Z"
+      message: 'The referenced `srcMigClusterRef` does not have a `Ready` condition,
+        subject: openshift-migration/ocp3cloud'
+      status: "True"
+      type: SourceClusterNotReady
+    - category: Critical
+      lastTransitionTime: "2024-05-17T22:30:41Z"
+      message: 'The referenced `migStorageRef` does not have a `Ready` condition,
+        subject: openshift-migration/azure.'
+      status: "True"
+      type: StorageNotReady
+    destStorageClasses:
+    - accessModes:
+      - ReadWriteOnce
+      name: managed-csi
+      provisioner: disk.csi.azure.com
+    - accessModes:
+      - ReadWriteOnce
+      default: true
+      name: managed-premium
+      provisioner: kubernetes.io/azure-disk
+    excludedResources:
+    - imagetags
+    - templateinstances
+    - clusterserviceversions
+    - packagemanifests
+    - subscriptions
+    - servicebrokers
+    - servicebindings
+    - serviceclasses
+    - serviceinstances
+    - serviceplans
+    - operatorgroups
+    - events
+    - events.events.k8s.io
+    - rolebindings.authorization.openshift.io
+    observedDigest: 1d9a4c606ebdfd80822ede9d6aa207c9ef862cf8cd76ecf1bac072205c40dfbc
+    srcStorageClasses:
+    - accessModes:
+      - ReadWriteOnce
+      - ReadOnlyMany
+      - ReadWriteMany
+      name: azure-file-storage
+      provisioner: kubernetes.io/azure-file
+    - accessModes:
+      - ReadWriteOnce
+      - ReadOnlyMany
+      - ReadWriteMany
+      name: azure-file-workaround-3scale
+      provisioner: kubernetes.io/azure-file
+    - accessModes:
+      - ReadWriteOnce
+      default: true
+      name: azure-storage
+      provisioner: kubernetes.io/azure-disk
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: MigPlan
+  metadata:
+    annotations:
+      migration.openshift.io/selected-migplan-type: full
+      openshift.io/touch: a7c0823b-50a8-11ef-976b-0a580a8016d6
+    creationTimestamp: "2023-05-18T16:15:22Z"
+    generation: 71
+    name: certificados-dev
+    namespace: openshift-migration
+    resourceVersion: "494408358"
+    uid: 58fc7209-f833-4046-ab0e-edad201bf2f4
+  spec:
+    destMigClusterRef:
+      name: host
+      namespace: openshift-migration
+    indirectImageMigration: true
+    indirectVolumeMigration: true
+    migStorageRef:
+      name: azure
+      namespace: openshift-migration
+    namespaces:
+    - certificados-dev
+    srcMigClusterRef:
+      name: ocp3cloud
+      namespace: openshift-migration
+  status:
+    conditions:
+    - category: Advisory
+      lastTransitionTime: "2023-05-18T16:15:22Z"
+      message: Indirect migration modes can only be used for full namespace migrations.
+      reason: NamespaceMigrationPlan
+      status: "True"
+      type: MigrationTypeIdentified
+    - category: Required
+      lastTransitionTime: "2023-05-18T16:15:34Z"
+      message: The `persistentVolumes` list has been updated with discovered PVs.
+      reason: Done
+      status: "True"
+      type: PvsDiscovered
+    - category: Required
+      lastTransitionTime: "2023-05-18T16:15:35Z"
+      message: The storage resources have been created.
+      reason: Done
+      status: "True"
+      type: StorageEnsured
+    - category: Advisory
+      lastTransitionTime: "2023-05-18T19:18:43Z"
+      message: The migrations plan is in suspended state; Limited validation enforced;
+        PV discovery and resource reconciliation suspended.
+      status: "True"
+      type: Suspended
+    - category: Critical
+      lastTransitionTime: "2023-11-27T22:06:50Z"
+      message: 'The referenced `srcMigClusterRef` does not have a `Ready` condition,
+        subject: openshift-migration/ocp3cloud'
+      status: "True"
+      type: SourceClusterNotReady
+    - category: Critical
+      lastTransitionTime: "2024-05-17T22:30:41Z"
+      message: 'The referenced `migStorageRef` does not have a `Ready` condition,
+        subject: openshift-migration/azure.'
+      status: "True"
+      type: StorageNotReady
+    destStorageClasses:
+    - accessModes:
+      - ReadWriteOnce
+      name: managed-csi
+      provisioner: disk.csi.azure.com
+    - accessModes:
+      - ReadWriteOnce
+      default: true
+      name: managed-premium
+      provisioner: kubernetes.io/azure-disk
+    excludedResources:
+    - imagetags
+    - templateinstances
+    - clusterserviceversions
+    - packagemanifests
+    - subscriptions
+    - servicebrokers
+    - servicebindings
+    - serviceclasses
+    - serviceinstances
+    - serviceplans
+    - operatorgroups
+    - events
+    - events.events.k8s.io
+    - rolebindings.authorization.openshift.io
+    observedDigest: 4e4f58db95b8d571e699b92dc433126e0dd1403a8ab9a713a8139f87102533ea
+    srcStorageClasses:
+    - accessModes:
+      - ReadWriteOnce
+      - ReadOnlyMany
+      - ReadWriteMany
+      name: azure-file-storage
+      provisioner: kubernetes.io/azure-file
+    - accessModes:
+      - ReadWriteOnce
+      - ReadOnlyMany
+      - ReadWriteMany
+      name: azure-file-workaround-3scale
+      provisioner: kubernetes.io/azure-file
+    - accessModes:
+      - ReadWriteOnce
+      default: true
+      name: azure-storage
+      provisioner: kubernetes.io/azure-disk
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: MigPlan
+  metadata:
+    annotations:
+      migration.openshift.io/selected-migplan-type: full
+      openshift.io/touch: a7a66ad6-50a8-11ef-976b-0a580a8016d6
+    creationTimestamp: "2023-05-23T15:24:38Z"
+    generation: 71
+    name: certificados-prod
+    namespace: openshift-migration
+    resourceVersion: "494408348"
+    uid: 0b551d56-62e0-48ce-b8cd-dd5044d46944
+  spec:
+    destMigClusterRef:
+      name: host
+      namespace: openshift-migration
+    indirectImageMigration: true
+    indirectVolumeMigration: true
+    migStorageRef:
+      name: azure
+      namespace: openshift-migration
+    namespaces:
+    - certificados-prod
+    srcMigClusterRef:
+      name: ocp3cloud
+      namespace: openshift-migration
+  status:
+    conditions:
+    - category: Advisory
+      lastTransitionTime: "2023-05-23T15:24:38Z"
+      message: Indirect migration modes can only be used for full namespace migrations.
+      reason: NamespaceMigrationPlan
+      status: "True"
+      type: MigrationTypeIdentified
+    - category: Required
+      lastTransitionTime: "2023-05-23T15:24:49Z"
+      message: The `persistentVolumes` list has been updated with discovered PVs.
+      reason: Done
+      status: "True"
+      type: PvsDiscovered
+    - category: Required
+      lastTransitionTime: "2023-05-23T15:24:50Z"
+      message: The storage resources have been created.
+      reason: Done
+      status: "True"
+      type: StorageEnsured
+    - category: Advisory
+      lastTransitionTime: "2023-05-23T15:42:49Z"
+      message: The migrations plan is in suspended state; Limited validation enforced;
+        PV discovery and resource reconciliation suspended.
+      status: "True"
+      type: Suspended
+    - category: Critical
+      lastTransitionTime: "2023-11-27T22:06:50Z"
+      message: 'The referenced `srcMigClusterRef` does not have a `Ready` condition,
+        subject: openshift-migration/ocp3cloud'
+      status: "True"
+      type: SourceClusterNotReady
+    - category: Critical
+      lastTransitionTime: "2024-05-17T22:30:41Z"
+      message: 'The referenced `migStorageRef` does not have a `Ready` condition,
+        subject: openshift-migration/azure.'
+      status: "True"
+      type: StorageNotReady
+    destStorageClasses:
+    - accessModes:
+      - ReadWriteOnce
+      name: managed-csi
+      provisioner: disk.csi.azure.com
+    - accessModes:
+      - ReadWriteOnce
+      default: true
+      name: managed-premium
+      provisioner: kubernetes.io/azure-disk
+    excludedResources:
+    - imagetags
+    - templateinstances
+    - clusterserviceversions
+    - packagemanifests
+    - subscriptions
+    - servicebrokers
+    - servicebindings
+    - serviceclasses
+    - serviceinstances
+    - serviceplans
+    - operatorgroups
+    - events
+    - events.events.k8s.io
+    - rolebindings.authorization.openshift.io
+    observedDigest: e7144958ce6976163b83c3632c558bee598489dae4bc208938eb07709aff4776
+    srcStorageClasses:
+    - accessModes:
+      - ReadWriteOnce
+      - ReadOnlyMany
+      - ReadWriteMany
+      name: azure-file-storage
+      provisioner: kubernetes.io/azure-file
+    - accessModes:
+      - ReadWriteOnce
+      - ReadOnlyMany
+      - ReadWriteMany
+      name: azure-file-workaround-3scale
+      provisioner: kubernetes.io/azure-file
+    - accessModes:
+      - ReadWriteOnce
+      default: true
+      name: azure-storage
+      provisioner: kubernetes.io/azure-disk
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: MigPlan
+  metadata:
+    annotations:
+      migration.openshift.io/selected-migplan-type: full
+      openshift.io/touch: a6fa3e3e-50a8-11ef-976b-0a580a8016d6
+    creationTimestamp: "2023-05-18T17:01:58Z"
+    generation: 71
+    name: certificados-qa
+    namespace: openshift-migration
+    resourceVersion: "494408280"
+    uid: 881339f9-aa14-468d-b0e2-14a90cead01a
+  spec:
+    destMigClusterRef:
+      name: host
+      namespace: openshift-migration
+    indirectImageMigration: true
+    indirectVolumeMigration: true
+    migStorageRef:
+      name: azure
+      namespace: openshift-migration
+    namespaces:
+    - certificados-qa
+    srcMigClusterRef:
+      name: ocp3cloud
+      namespace: openshift-migration
+  status:
+    conditions:
+    - category: Advisory
+      lastTransitionTime: "2023-05-18T17:01:58Z"
+      message: Indirect migration modes can only be used for full namespace migrations.
+      reason: NamespaceMigrationPlan
+      status: "True"
+      type: MigrationTypeIdentified
+    - category: Required
+      lastTransitionTime: "2023-05-18T17:02:10Z"
+      message: The `persistentVolumes` list has been updated with discovered PVs.
+      reason: Done
+      status: "True"
+      type: PvsDiscovered
+    - category: Required
+      lastTransitionTime: "2023-05-18T17:02:10Z"
+      message: The storage resources have been created.
+      reason: Done
+      status: "True"
+      type: StorageEnsured
+    - category: Advisory
+      lastTransitionTime: "2023-05-22T19:50:53Z"
+      message: The migrations plan is in suspended state; Limited validation enforced;
+        PV discovery and resource reconciliation suspended.
+      status: "True"
+      type: Suspended
+    - category: Critical
+      lastTransitionTime: "2023-11-27T22:06:51Z"
+      message: 'The referenced `srcMigClusterRef` does not have a `Ready` condition,
+        subject: openshift-migration/ocp3cloud'
+      status: "True"
+      type: SourceClusterNotReady
+    - category: Critical
+      lastTransitionTime: "2024-05-17T22:30:41Z"
+      message: 'The referenced `migStorageRef` does not have a `Ready` condition,
+        subject: openshift-migration/azure.'
+      status: "True"
+      type: StorageNotReady
+    destStorageClasses:
+    - accessModes:
+      - ReadWriteOnce
+      name: managed-csi
+      provisioner: disk.csi.azure.com
+    - accessModes:
+      - ReadWriteOnce
+      default: true
+      name: managed-premium
+      provisioner: kubernetes.io/azure-disk
+    excludedResources:
+    - imagetags
+    - templateinstances
+    - clusterserviceversions
+    - packagemanifests
+    - subscriptions
+    - servicebrokers
+    - servicebindings
+    - serviceclasses
+    - serviceinstances
+    - serviceplans
+    - operatorgroups
+    - events
+    - events.events.k8s.io
+    - rolebindings.authorization.openshift.io
+    observedDigest: 3d526a712102623bac902f6f3644b3a8f70f8ef1a44422482d71352b149a9fe5
+    srcStorageClasses:
+    - accessModes:
+      - ReadWriteOnce
+      - ReadOnlyMany
+      - ReadWriteMany
+      name: azure-file-storage
+      provisioner: kubernetes.io/azure-file
+    - accessModes:
+      - ReadWriteOnce
+      - ReadOnlyMany
+      - ReadWriteMany
+      name: azure-file-workaround-3scale
+      provisioner: kubernetes.io/azure-file
+    - accessModes:
+      - ReadWriteOnce
+      default: true
+      name: azure-storage
+      provisioner: kubernetes.io/azure-disk
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: MigPlan
+  metadata:
+    annotations:
+      migration.openshift.io/selected-migplan-type: full
+      openshift.io/touch: a794e39d-50a8-11ef-976b-0a580a8016d6
+    creationTimestamp: "2023-05-23T15:40:04Z"
+    generation: 17138
+    name: cicd
+    namespace: openshift-migration
+    resourceVersion: "494408341"
+    uid: adcc6565-a1ee-4eee-a8d6-19a7e8841033
+  spec:
+    destMigClusterRef:
+      name: host
+      namespace: openshift-migration
+    indirectImageMigration: true
+    migStorageRef:
+      name: azure
+      namespace: openshift-migration
+    namespaces:
+    - cicd
+    persistentVolumes:
+    - capacity: 10Gi
+      name: pvc-2744fc82-57d7-11ea-bff7-000d3ac052bc
+      proposedCapacity: "0"
+      pvc:
+        accessModes:
+        - ReadWriteOnce
+        name: nexus3-pv
+        namespace: cicd
+      selection:
+        action: copy
+        copyMethod: filesystem
+        storageClass: managed-premium
+      storageClass: azure-storage
+      supported:
+        actions:
+        - skip
+        - copy
+        copyMethods:
+        - filesystem
+        - snapshot
+    - capacity: 10Gi
+      name: pvc-8d3dda98-624d-11ea-bff7-000d3ac052bc
+      proposedCapacity: 10Gi
+      pvc:
+        accessModes:
+        - ReadWriteOnce
+        hasReference: true
+        name: sonarqube-sonarqube
+        namespace: cicd
+      selection:
+        action: copy
+        copyMethod: filesystem
+        storageClass: managed-premium
+      storageClass: azure-storage
+      supported:
+        actions:
+        - skip
+        - copy
+        copyMethods:
+        - filesystem
+        - snapshot
+    - capacity: 8Gi
+      name: pvc-d4ce3e57-624b-11ea-bffa-000d3ac05650
+      proposedCapacity: 8Gi
+      pvc:
+        accessModes:
+        - ReadWriteOnce
+        hasReference: true
+        name: data-sonarqube-postgresql-0
+        namespace: cicd
+      selection:
+        action: copy
+        copyMethod: filesystem
+        storageClass: managed-premium
+      storageClass: azure-storage
+      supported:
+        actions:
+        - skip
+        - copy
+        copyMethods:
+        - filesystem
+        - snapshot
+    - capacity: 5Gi
+      name: pvc-f8c86568-5894-11ea-bff7-000d3ac052bc
+      proposedCapacity: 5Gi
+      pvc:
+        accessModes:
+        - ReadWriteOnce
+        hasReference: true
+        name: jenkins
+        namespace: cicd
+      selection:
+        action: copy
+        copyMethod: filesystem
+        storageClass: managed-premium
+      storageClass: azure-storage
+      supported:
+        actions:
+        - skip
+        - copy
+        copyMethods:
+        - filesystem
+        - snapshot
+    srcMigClusterRef:
+      name: ocp3cloud
+      namespace: openshift-migration
+  status:
+    conditions:
+    - category: Advisory
+      lastTransitionTime: "2023-05-23T15:40:29Z"
+      message: Indirect migration modes can only be used for full namespace migrations.
+      reason: NamespaceMigrationPlan
+      status: "True"
+      type: MigrationTypeIdentified
+    - category: Warn
+      lastTransitionTime: "2024-08-02T08:24:36Z"
+      message: 'Failed to compute PV resizing data for the following volumes. PV resizing
+        will be disabled for these volumes and the migration may fail if the volumes
+        are full or their requested and actual capacities differ in the source cluster.
+        Please ensure that the volumes are attached to one or more running Pods for
+        PV resizing to work correctly: [nexus3-pv]'
+      reason: NotDone
+      status: "True"
+      type: PvUsageAnalysisFailed
+    - category: Required
+      lastTransitionTime: "2023-07-17T15:01:12Z"
+      message: The storage resources have been created.
+      reason: Done
+      status: "True"
+      type: StorageEnsured
+    - category: Critical
+      lastTransitionTime: "2023-11-27T22:06:51Z"
+      message: 'The referenced `srcMigClusterRef` does not have a `Ready` condition,
+        subject: openshift-migration/ocp3cloud'
+      status: "True"
+      type: SourceClusterNotReady
+    - category: Critical
+      lastTransitionTime: "2024-05-17T22:30:42Z"
+      message: 'The referenced `migStorageRef` does not have a `Ready` condition,
+        subject: openshift-migration/azure.'
+      status: "True"
+      type: StorageNotReady
+    destStorageClasses:
+    - accessModes:
+      - ReadWriteOnce
+      - ReadOnlyMany
+      - ReadWriteMany
+      name: azure-file
+      provisioner: kubernetes.io/azure-file
+    - accessModes:
+      - ReadWriteOnce
+      name: managed-csi
+      provisioner: disk.csi.azure.com
+    - accessModes:
+      - ReadWriteOnce
+      default: true
+      name: managed-premium
+      provisioner: kubernetes.io/azure-disk
+    excludedResources:
+    - imagetags
+    - templateinstances
+    - clusterserviceversions
+    - packagemanifests
+    - subscriptions
+    - servicebrokers
+    - servicebindings
+    - serviceclasses
+    - serviceinstances
+    - serviceplans
+    - operatorgroups
+    - events
+    - events.events.k8s.io
+    - rolebindings.authorization.openshift.io
+    observedDigest: 98c8811ce9e9c701981cee812ff4bfde87d4a7aa02197bd251ff14b5fa2e5d55
+    srcStorageClasses:
+    - accessModes:
+      - ReadWriteOnce
+      - ReadOnlyMany
+      - ReadWriteMany
+      name: azure-file-storage
+      provisioner: kubernetes.io/azure-file
+    - accessModes:
+      - ReadWriteOnce
+      - ReadOnlyMany
+      - ReadWriteMany
+      name: azure-file-workaround-3scale
+      provisioner: kubernetes.io/azure-file
+    - accessModes:
+      - ReadWriteOnce
+      default: true
+      name: azure-storage
+      provisioner: kubernetes.io/azure-disk
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: MigPlan
+  metadata:
+    annotations:
+      migration.openshift.io/selected-migplan-type: full
+      openshift.io/touch: a79dc4c0-50a8-11ef-976b-0a580a8016d6
+    creationTimestamp: "2023-05-18T16:49:33Z"
+    generation: 73
+    name: denuncias-dev
+    namespace: openshift-migration
+    resourceVersion: "494408345"
+    uid: 00366fb0-8e8e-4301-948a-980b177c294d
+  spec:
+    destMigClusterRef:
+      name: host
+      namespace: openshift-migration
+    indirectImageMigration: true
+    indirectVolumeMigration: true
+    migStorageRef:
+      name: azure
+      namespace: openshift-migration
+    namespaces:
+    - denuncias-dev
+    srcMigClusterRef:
+      name: ocp3cloud
+      namespace: openshift-migration
+  status:
+    conditions:
+    - category: Advisory
+      lastTransitionTime: "2023-05-18T16:49:33Z"
+      message: Indirect migration modes can only be used for full namespace migrations.
+      reason: NamespaceMigrationPlan
+      status: "True"
+      type: MigrationTypeIdentified
+    - category: Warn
+      durable: true
+      lastTransitionTime: "2023-05-18T20:27:34Z"
+      message: 'Found Pods with non-default `Spec.NodeSelector` set in namespaces:
+        [denuncias-dev]. This field will be cleared on Pods restored into the target
+        cluster.'
+      reason: NodeSelectorsDetected
+      status: "True"
+      type: NamespacesHaveNodeSelectors
+    - category: Required
+      lastTransitionTime: "2023-05-18T16:49:46Z"
+      message: The `persistentVolumes` list has been updated with discovered PVs.
+      reason: Done
+      status: "True"
+      type: PvsDiscovered
+    - category: Required
+      lastTransitionTime: "2023-05-18T16:49:46Z"
+      message: The storage resources have been created.
+      reason: Done
+      status: "True"
+      type: StorageEnsured
+    - category: Advisory
+      lastTransitionTime: "2023-05-18T20:27:46Z"
+      message: The migrations plan is in suspended state; Limited validation enforced;
+        PV discovery and resource reconciliation suspended.
+      status: "True"
+      type: Suspended
+    - category: Critical
+      lastTransitionTime: "2023-11-27T22:06:50Z"
+      message: 'The referenced `srcMigClusterRef` does not have a `Ready` condition,
+        subject: openshift-migration/ocp3cloud'
+      status: "True"
+      type: SourceClusterNotReady
+    - category: Critical
+      lastTransitionTime: "2024-05-17T22:30:42Z"
+      message: 'The referenced `migStorageRef` does not have a `Ready` condition,
+        subject: openshift-migration/azure.'
+      status: "True"
+      type: StorageNotReady
+    destStorageClasses:
+    - accessModes:
+      - ReadWriteOnce
+      name: managed-csi
+      provisioner: disk.csi.azure.com
+    - accessModes:
+      - ReadWriteOnce
+      default: true
+      name: managed-premium
+      provisioner: kubernetes.io/azure-disk
+    excludedResources:
+    - imagetags
+    - templateinstances
+    - clusterserviceversions
+    - packagemanifests
+    - subscriptions
+    - servicebrokers
+    - servicebindings
+    - serviceclasses
+    - serviceinstances
+    - serviceplans
+    - operatorgroups
+    - events
+    - events.events.k8s.io
+    - rolebindings.authorization.openshift.io
+    observedDigest: 45d04338b43585aa7481744db7aae7e5d76128e9e474a677a5e373c5a111e9a7
+    srcStorageClasses:
+    - accessModes:
+      - ReadWriteOnce
+      - ReadOnlyMany
+      - ReadWriteMany
+      name: azure-file-storage
+      provisioner: kubernetes.io/azure-file
+    - accessModes:
+      - ReadWriteOnce
+      - ReadOnlyMany
+      - ReadWriteMany
+      name: azure-file-workaround-3scale
+      provisioner: kubernetes.io/azure-file
+    - accessModes:
+      - ReadWriteOnce
+      default: true
+      name: azure-storage
+      provisioner: kubernetes.io/azure-disk
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: MigPlan
+  metadata:
+    annotations:
+      migration.openshift.io/selected-migplan-type: full
+      openshift.io/touch: a6e0af2f-50a8-11ef-976b-0a580a8016d6
+    creationTimestamp: "2023-05-23T15:26:02Z"
+    generation: 71
+    name: denuncias-prod
+    namespace: openshift-migration
+    resourceVersion: "494408265"
+    uid: 19adcece-7178-4e54-99cc-22dd4003dc83
+  spec:
+    destMigClusterRef:
+      name: host
+      namespace: openshift-migration
+    indirectImageMigration: true
+    indirectVolumeMigration: true
+    migStorageRef:
+      name: azure
+      namespace: openshift-migration
+    namespaces:
+    - denuncias-prod
+    srcMigClusterRef:
+      name: ocp3cloud
+      namespace: openshift-migration
+  status:
+    conditions:
+    - category: Advisory
+      lastTransitionTime: "2023-05-23T15:26:02Z"
+      message: Indirect migration modes can only be used for full namespace migrations.
+      reason: NamespaceMigrationPlan
+      status: "True"
+      type: MigrationTypeIdentified
+    - category: Required
+      lastTransitionTime: "2023-05-23T15:26:13Z"
+      message: The `persistentVolumes` list has been updated with discovered PVs.
+      reason: Done
+      status: "True"
+      type: PvsDiscovered
+    - category: Required
+      lastTransitionTime: "2023-05-23T15:26:14Z"
+      message: The storage resources have been created.
+      reason: Done
+      status: "True"
+      type: StorageEnsured
+    - category: Advisory
+      lastTransitionTime: "2023-05-23T15:44:16Z"
+      message: The migrations plan is in suspended state; Limited validation enforced;
+        PV discovery and resource reconciliation suspended.
+      status: "True"
+      type: Suspended
+    - category: Critical
+      lastTransitionTime: "2023-11-27T22:06:51Z"
+      message: 'The referenced `srcMigClusterRef` does not have a `Ready` condition,
+        subject: openshift-migration/ocp3cloud'
+      status: "True"
+      type: SourceClusterNotReady
+    - category: Critical
+      lastTransitionTime: "2024-05-17T22:30:41Z"
+      message: 'The referenced `migStorageRef` does not have a `Ready` condition,
+        subject: openshift-migration/azure.'
+      status: "True"
+      type: StorageNotReady
+    destStorageClasses:
+    - accessModes:
+      - ReadWriteOnce
+      name: managed-csi
+      provisioner: disk.csi.azure.com
+    - accessModes:
+      - ReadWriteOnce
+      default: true
+      name: managed-premium
+      provisioner: kubernetes.io/azure-disk
+    excludedResources:
+    - imagetags
+    - templateinstances
+    - clusterserviceversions
+    - packagemanifests
+    - subscriptions
+    - servicebrokers
+    - servicebindings
+    - serviceclasses
+    - serviceinstances
+    - serviceplans
+    - operatorgroups
+    - events
+    - events.events.k8s.io
+    - rolebindings.authorization.openshift.io
+    observedDigest: 92f7002d01f3ae4a33065ec59b6915fa01816016ce2f6613cb5514786e196045
+    srcStorageClasses:
+    - accessModes:
+      - ReadWriteOnce
+      - ReadOnlyMany
+      - ReadWriteMany
+      name: azure-file-storage
+      provisioner: kubernetes.io/azure-file
+    - accessModes:
+      - ReadWriteOnce
+      - ReadOnlyMany
+      - ReadWriteMany
+      name: azure-file-workaround-3scale
+      provisioner: kubernetes.io/azure-file
+    - accessModes:
+      - ReadWriteOnce
+      default: true
+      name: azure-storage
+      provisioner: kubernetes.io/azure-disk
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: MigPlan
+  metadata:
+    annotations:
+      migration.openshift.io/selected-migplan-type: full
+      openshift.io/touch: a6a16e4a-50a8-11ef-976b-0a580a8016d6
+    creationTimestamp: "2023-05-18T17:03:17Z"
+    generation: 71
+    name: denuncias-qa
+    namespace: openshift-migration
+    resourceVersion: "494408210"
+    uid: 4744b907-f899-4d99-9c40-21dc5fe59e15
+  spec:
+    destMigClusterRef:
+      name: host
+      namespace: openshift-migration
+    indirectImageMigration: true
+    indirectVolumeMigration: true
+    migStorageRef:
+      name: azure
+      namespace: openshift-migration
+    namespaces:
+    - denuncias-qa
+    srcMigClusterRef:
+      name: ocp3cloud
+      namespace: openshift-migration
+  status:
+    conditions:
+    - category: Advisory
+      lastTransitionTime: "2023-05-18T17:03:17Z"
+      message: Indirect migration modes can only be used for full namespace migrations.
+      reason: NamespaceMigrationPlan
+      status: "True"
+      type: MigrationTypeIdentified
+    - category: Required
+      lastTransitionTime: "2023-05-18T17:03:29Z"
+      message: The `persistentVolumes` list has been updated with discovered PVs.
+      reason: Done
+      status: "True"
+      type: PvsDiscovered
+    - category: Required
+      lastTransitionTime: "2023-05-18T17:03:29Z"
+      message: The storage resources have been created.
+      reason: Done
+      status: "True"
+      type: StorageEnsured
+    - category: Advisory
+      lastTransitionTime: "2023-05-22T19:35:58Z"
+      message: The migrations plan is in suspended state; Limited validation enforced;
+        PV discovery and resource reconciliation suspended.
+      status: "True"
+      type: Suspended
+    - category: Critical
+      lastTransitionTime: "2023-11-27T22:06:51Z"
+      message: 'The referenced `srcMigClusterRef` does not have a `Ready` condition,
+        subject: openshift-migration/ocp3cloud'
+      status: "True"
+      type: SourceClusterNotReady
+    - category: Critical
+      lastTransitionTime: "2024-05-17T22:30:41Z"
+      message: 'The referenced `migStorageRef` does not have a `Ready` condition,
+        subject: openshift-migration/azure.'
+      status: "True"
+      type: StorageNotReady
+    destStorageClasses:
+    - accessModes:
+      - ReadWriteOnce
+      name: managed-csi
+      provisioner: disk.csi.azure.com
+    - accessModes:
+      - ReadWriteOnce
+      default: true
+      name: managed-premium
+      provisioner: kubernetes.io/azure-disk
+    excludedResources:
+    - imagetags
+    - templateinstances
+    - clusterserviceversions
+    - packagemanifests
+    - subscriptions
+    - servicebrokers
+    - servicebindings
+    - serviceclasses
+    - serviceinstances
+    - serviceplans
+    - operatorgroups
+    - events
+    - events.events.k8s.io
+    - rolebindings.authorization.openshift.io
+    observedDigest: a01942cb5ffba972f5bd6235a96ba2704fdb8c5cb7dc0da12a651a401d88e21a
+    srcStorageClasses:
+    - accessModes:
+      - ReadWriteOnce
+      - ReadOnlyMany
+      - ReadWriteMany
+      name: azure-file-storage
+      provisioner: kubernetes.io/azure-file
+    - accessModes:
+      - ReadWriteOnce
+      - ReadOnlyMany
+      - ReadWriteMany
+      name: azure-file-workaround-3scale
+      provisioner: kubernetes.io/azure-file
+    - accessModes:
+      - ReadWriteOnce
+      default: true
+      name: azure-storage
+      provisioner: kubernetes.io/azure-disk
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: MigPlan
+  metadata:
+    annotations:
+      migration.openshift.io/selected-migplan-type: full
+      openshift.io/touch: a77eeb04-50a8-11ef-976b-0a580a8016d6
+    creationTimestamp: "2023-05-18T16:50:54Z"
+    generation: 72
+    name: dev
+    namespace: openshift-migration
+    resourceVersion: "494408333"
+    uid: 9af31f99-5a88-4bb6-b11a-4d02605932d6
+  spec:
+    destMigClusterRef:
+      name: host
+      namespace: openshift-migration
+    indirectImageMigration: true
+    indirectVolumeMigration: true
+    migStorageRef:
+      name: azure
+      namespace: openshift-migration
+    namespaces:
+    - dev
+    srcMigClusterRef:
+      name: ocp3cloud
+      namespace: openshift-migration
+  status:
+    conditions:
+    - category: Advisory
+      lastTransitionTime: "2023-05-18T16:50:54Z"
+      message: Indirect migration modes can only be used for full namespace migrations.
+      reason: NamespaceMigrationPlan
+      status: "True"
+      type: MigrationTypeIdentified
+    - category: Advisory
+      lastTransitionTime: "2023-05-18T20:43:32Z"
+      message: The migrations plan is in suspended state; Limited validation enforced;
+        PV discovery and resource reconciliation suspended.
+      status: "True"
+      type: Suspended
+    - category: Critical
+      lastTransitionTime: "2023-11-27T22:06:50Z"
+      message: 'The referenced `srcMigClusterRef` does not have a `Ready` condition,
+        subject: openshift-migration/ocp3cloud'
+      status: "True"
+      type: SourceClusterNotReady
+    - category: Critical
+      lastTransitionTime: "2024-05-17T22:30:41Z"
+      message: 'The referenced `migStorageRef` does not have a `Ready` condition,
+        subject: openshift-migration/azure.'
+      status: "True"
+      type: StorageNotReady
+    destStorageClasses:
+    - accessModes:
+      - ReadWriteOnce
+      name: managed-csi
+      provisioner: disk.csi.azure.com
+    - accessModes:
+      - ReadWriteOnce
+      default: true
+      name: managed-premium
+      provisioner: kubernetes.io/azure-disk
+    excludedResources:
+    - imagetags
+    - templateinstances
+    - clusterserviceversions
+    - packagemanifests
+    - subscriptions
+    - servicebrokers
+    - servicebindings
+    - serviceclasses
+    - serviceinstances
+    - serviceplans
+    - operatorgroups
+    - events
+    - events.events.k8s.io
+    - rolebindings.authorization.openshift.io
+    observedDigest: f379e849123bbd7cbb8d5f30e4f0fe8264aa4bc37b9cad062c951281fec084ef
+    srcStorageClasses:
+    - accessModes:
+      - ReadWriteOnce
+      - ReadOnlyMany
+      - ReadWriteMany
+      name: azure-file-storage
+      provisioner: kubernetes.io/azure-file
+    - accessModes:
+      - ReadWriteOnce
+      - ReadOnlyMany
+      - ReadWriteMany
+      name: azure-file-workaround-3scale
+      provisioner: kubernetes.io/azure-file
+    - accessModes:
+      - ReadWriteOnce
+      default: true
+      name: azure-storage
+      provisioner: kubernetes.io/azure-disk
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: MigPlan
+  metadata:
+    annotations:
+      migration.openshift.io/selected-migplan-type: full
+      openshift.io/touch: a6aa752d-50a8-11ef-976b-0a580a8016d6
+    creationTimestamp: "2023-05-18T16:52:17Z"
+    generation: 71
+    name: hangfire-dev
+    namespace: openshift-migration
+    resourceVersion: "494408216"
+    uid: f79bedcd-e55e-4136-becf-d2363cdcf3d2
+  spec:
+    destMigClusterRef:
+      name: host
+      namespace: openshift-migration
+    indirectImageMigration: true
+    indirectVolumeMigration: true
+    migStorageRef:
+      name: azure
+      namespace: openshift-migration
+    namespaces:
+    - hangfire-dev
+    srcMigClusterRef:
+      name: ocp3cloud
+      namespace: openshift-migration
+  status:
+    conditions:
+    - category: Advisory
+      lastTransitionTime: "2023-05-18T16:52:17Z"
+      message: Indirect migration modes can only be used for full namespace migrations.
+      reason: NamespaceMigrationPlan
+      status: "True"
+      type: MigrationTypeIdentified
+    - category: Required
+      lastTransitionTime: "2023-05-18T16:52:29Z"
+      message: The `persistentVolumes` list has been updated with discovered PVs.
+      reason: Done
+      status: "True"
+      type: PvsDiscovered
+    - category: Required
+      lastTransitionTime: "2023-05-18T16:52:29Z"
+      message: The storage resources have been created.
+      reason: Done
+      status: "True"
+      type: StorageEnsured
+    - category: Advisory
+      lastTransitionTime: "2023-05-18T20:44:41Z"
+      message: The migrations plan is in suspended state; Limited validation enforced;
+        PV discovery and resource reconciliation suspended.
+      status: "True"
+      type: Suspended
+    - category: Critical
+      lastTransitionTime: "2023-11-27T22:06:51Z"
+      message: 'The referenced `srcMigClusterRef` does not have a `Ready` condition,
+        subject: openshift-migration/ocp3cloud'
+      status: "True"
+      type: SourceClusterNotReady
+    - category: Critical
+      lastTransitionTime: "2024-05-17T22:30:41Z"
+      message: 'The referenced `migStorageRef` does not have a `Ready` condition,
+        subject: openshift-migration/azure.'
+      status: "True"
+      type: StorageNotReady
+    destStorageClasses:
+    - accessModes:
+      - ReadWriteOnce
+      name: managed-csi
+      provisioner: disk.csi.azure.com
+    - accessModes:
+      - ReadWriteOnce
+      default: true
+      name: managed-premium
+      provisioner: kubernetes.io/azure-disk
+    excludedResources:
+    - imagetags
+    - templateinstances
+    - clusterserviceversions
+    - packagemanifests
+    - subscriptions
+    - servicebrokers
+    - servicebindings
+    - serviceclasses
+    - serviceinstances
+    - serviceplans
+    - operatorgroups
+    - events
+    - events.events.k8s.io
+    - rolebindings.authorization.openshift.io
+    observedDigest: 26e1b1efc54b51568bebfd661b2267bbb542e290547f365f7e97363ec9bf9e9a
+    srcStorageClasses:
+    - accessModes:
+      - ReadWriteOnce
+      - ReadOnlyMany
+      - ReadWriteMany
+      name: azure-file-storage
+      provisioner: kubernetes.io/azure-file
+    - accessModes:
+      - ReadWriteOnce
+      - ReadOnlyMany
+      - ReadWriteMany
+      name: azure-file-workaround-3scale
+      provisioner: kubernetes.io/azure-file
+    - accessModes:
+      - ReadWriteOnce
+      default: true
+      name: azure-storage
+      provisioner: kubernetes.io/azure-disk
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: MigPlan
+  metadata:
+    annotations:
+      migration.openshift.io/selected-migplan-type: full
+      openshift.io/touch: a745cca5-50a8-11ef-976b-0a580a8016d6
+    creationTimestamp: "2023-05-23T15:27:13Z"
+    generation: 68
+    name: hangfire-prod
+    namespace: openshift-migration
+    resourceVersion: "494408310"
+    uid: b85a3f5d-045f-4a08-bdc7-fc7b6e2f678a
+  spec:
+    destMigClusterRef:
+      name: host
+      namespace: openshift-migration
+    indirectImageMigration: true
+    indirectVolumeMigration: true
+    migStorageRef:
+      name: azure
+      namespace: openshift-migration
+    namespaces:
+    - hangfire-prod
+    srcMigClusterRef:
+      name: ocp3cloud
+      namespace: openshift-migration
+  status:
+    conditions:
+    - category: Advisory
+      lastTransitionTime: "2023-05-23T15:27:13Z"
+      message: Indirect migration modes can only be used for full namespace migrations.
+      reason: NamespaceMigrationPlan
+      status: "True"
+      type: MigrationTypeIdentified
+    - category: Required
+      lastTransitionTime: "2023-05-23T15:27:24Z"
+      message: The `persistentVolumes` list has been updated with discovered PVs.
+      reason: Done
+      status: "True"
+      type: PvsDiscovered
+    - category: Required
+      lastTransitionTime: "2023-05-23T15:27:24Z"
+      message: The storage resources have been created.
+      reason: Done
+      status: "True"
+      type: StorageEnsured
+    - category: Advisory
+      lastTransitionTime: "2023-05-23T15:44:16Z"
+      message: The migrations plan is in suspended state; Limited validation enforced;
+        PV discovery and resource reconciliation suspended.
+      status: "True"
+      type: Suspended
+    - category: Critical
+      lastTransitionTime: "2023-11-27T22:06:50Z"
+      message: 'The referenced `srcMigClusterRef` does not have a `Ready` condition,
+        subject: openshift-migration/ocp3cloud'
+      status: "True"
+      type: SourceClusterNotReady
+    - category: Critical
+      lastTransitionTime: "2024-05-17T22:30:41Z"
+      message: 'The referenced `migStorageRef` does not have a `Ready` condition,
+        subject: openshift-migration/azure.'
+      status: "True"
+      type: StorageNotReady
+    destStorageClasses:
+    - accessModes:
+      - ReadWriteOnce
+      name: managed-csi
+      provisioner: disk.csi.azure.com
+    - accessModes:
+      - ReadWriteOnce
+      default: true
+      name: managed-premium
+      provisioner: kubernetes.io/azure-disk
+    excludedResources:
+    - imagetags
+    - templateinstances
+    - clusterserviceversions
+    - packagemanifests
+    - subscriptions
+    - servicebrokers
+    - servicebindings
+    - serviceclasses
+    - serviceinstances
+    - serviceplans
+    - operatorgroups
+    - events
+    - events.events.k8s.io
+    - rolebindings.authorization.openshift.io
+    observedDigest: 52f457fe8be621ddba4375a54d127cffe0b37491638b35888f8c9ef6c306b6fd
+    srcStorageClasses:
+    - accessModes:
+      - ReadWriteOnce
+      - ReadOnlyMany
+      - ReadWriteMany
+      name: azure-file-storage
+      provisioner: kubernetes.io/azure-file
+    - accessModes:
+      - ReadWriteOnce
+      - ReadOnlyMany
+      - ReadWriteMany
+      name: azure-file-workaround-3scale
+      provisioner: kubernetes.io/azure-file
+    - accessModes:
+      - ReadWriteOnce
+      default: true
+      name: azure-storage
+      provisioner: kubernetes.io/azure-disk
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: MigPlan
+  metadata:
+    annotations:
+      migration.openshift.io/selected-migplan-type: full
+      openshift.io/touch: a72b1d3f-50a8-11ef-976b-0a580a8016d6
+    creationTimestamp: "2023-05-18T17:04:00Z"
+    generation: 71
+    name: hangfire-qa
+    namespace: openshift-migration
+    resourceVersion: "494408299"
+    uid: 2c784d31-0365-438b-9399-3a4442eff086
+  spec:
+    destMigClusterRef:
+      name: host
+      namespace: openshift-migration
+    indirectImageMigration: true
+    indirectVolumeMigration: true
+    migStorageRef:
+      name: azure
+      namespace: openshift-migration
+    namespaces:
+    - hangfire-qa
+    srcMigClusterRef:
+      name: ocp3cloud
+      namespace: openshift-migration
+  status:
+    conditions:
+    - category: Advisory
+      lastTransitionTime: "2023-05-18T17:04:00Z"
+      message: Indirect migration modes can only be used for full namespace migrations.
+      reason: NamespaceMigrationPlan
+      status: "True"
+      type: MigrationTypeIdentified
+    - category: Required
+      lastTransitionTime: "2023-05-18T17:04:12Z"
+      message: The `persistentVolumes` list has been updated with discovered PVs.
+      reason: Done
+      status: "True"
+      type: PvsDiscovered
+    - category: Required
+      lastTransitionTime: "2023-05-18T17:04:12Z"
+      message: The storage resources have been created.
+      reason: Done
+      status: "True"
+      type: StorageEnsured
+    - category: Advisory
+      lastTransitionTime: "2023-05-22T19:51:17Z"
+      message: The migrations plan is in suspended state; Limited validation enforced;
+        PV discovery and resource reconciliation suspended.
+      status: "True"
+      type: Suspended
+    - category: Critical
+      lastTransitionTime: "2023-11-27T22:06:51Z"
+      message: 'The referenced `srcMigClusterRef` does not have a `Ready` condition,
+        subject: openshift-migration/ocp3cloud'
+      status: "True"
+      type: SourceClusterNotReady
+    - category: Critical
+      lastTransitionTime: "2024-05-17T22:30:41Z"
+      message: 'The referenced `migStorageRef` does not have a `Ready` condition,
+        subject: openshift-migration/azure.'
+      status: "True"
+      type: StorageNotReady
+    destStorageClasses:
+    - accessModes:
+      - ReadWriteOnce
+      name: managed-csi
+      provisioner: disk.csi.azure.com
+    - accessModes:
+      - ReadWriteOnce
+      default: true
+      name: managed-premium
+      provisioner: kubernetes.io/azure-disk
+    excludedResources:
+    - imagetags
+    - templateinstances
+    - clusterserviceversions
+    - packagemanifests
+    - subscriptions
+    - servicebrokers
+    - servicebindings
+    - serviceclasses
+    - serviceinstances
+    - serviceplans
+    - operatorgroups
+    - events
+    - events.events.k8s.io
+    - rolebindings.authorization.openshift.io
+    observedDigest: ed5b420b0f2c3a73cf246c43a7ad84792df69fc94517744f23efd6dc5de5822f
+    srcStorageClasses:
+    - accessModes:
+      - ReadWriteOnce
+      - ReadOnlyMany
+      - ReadWriteMany
+      name: azure-file-storage
+      provisioner: kubernetes.io/azure-file
+    - accessModes:
+      - ReadWriteOnce
+      - ReadOnlyMany
+      - ReadWriteMany
+      name: azure-file-workaround-3scale
+      provisioner: kubernetes.io/azure-file
+    - accessModes:
+      - ReadWriteOnce
+      default: true
+      name: azure-storage
+      provisioner: kubernetes.io/azure-disk
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: MigPlan
+  metadata:
+    annotations:
+      migration.openshift.io/selected-migplan-type: full
+      openshift.io/touch: a789ebc7-50a8-11ef-976b-0a580a8016d6
+    creationTimestamp: "2023-05-18T16:53:11Z"
+    generation: 17204
+    name: lre-dev
+    namespace: openshift-migration
+    resourceVersion: "494408337"
+    uid: 09dc99a3-20c0-4d89-88a2-c81cce3ef81b
+  spec:
+    destMigClusterRef:
+      name: host
+      namespace: openshift-migration
+    indirectImageMigration: true
+    migStorageRef:
+      name: azure
+      namespace: openshift-migration
+    namespaces:
+    - lre-dev
+    persistentVolumes:
+    - capacity: 5Gi
+      name: pvc-399c3bfc-e0ef-11ec-8af9-000d3ac05650
+      proposedCapacity: "0"
+      pvc:
+        accessModes:
+        - ReadWriteOnce
+        hasReference: true
+        name: lre-broker-lre-broker-ss-0
+        namespace: lre-dev
+      selection:
+        action: copy
+        copyMethod: filesystem
+        storageClass: managed-premium
+      storageClass: azure-storage
+      supported:
+        actions:
+        - skip
+        - copy
+        copyMethods:
+        - filesystem
+        - snapshot
+    - capacity: 5Gi
+      name: pvc-b6f79266-e0f5-11ec-8af9-000d3ac05650
+      proposedCapacity: "0"
+      pvc:
+        accessModes:
+        - ReadWriteOnce
+        hasReference: true
+        name: lre-broker-lre-broker-ss-1
+        namespace: lre-dev
+      selection:
+        action: copy
+        copyMethod: filesystem
+        storageClass: managed-premium
+      storageClass: azure-storage
+      supported:
+        actions:
+        - skip
+        - copy
+        copyMethods:
+        - filesystem
+        - snapshot
+    srcMigClusterRef:
+      name: ocp3cloud
+      namespace: openshift-migration
+  status:
+    conditions:
+    - category: Advisory
+      lastTransitionTime: "2023-05-18T16:53:12Z"
+      message: Indirect migration modes can only be used for full namespace migrations.
+      reason: NamespaceMigrationPlan
+      status: "True"
+      type: MigrationTypeIdentified
+    - category: Warn
+      durable: true
+      lastTransitionTime: "2023-11-27T17:17:41Z"
+      message: 'Found Pods with non-default `Spec.NodeSelector` set in namespaces:
+        [lre-dev]. This field will be cleared on Pods restored into the target cluster.'
+      reason: NodeSelectorsDetected
+      status: "True"
+      type: NamespacesHaveNodeSelectors
+    - category: Warn
+      lastTransitionTime: "2024-08-02T08:24:36Z"
+      message: 'Failed to compute PV resizing data for the following volumes. PV resizing
+        will be disabled for these volumes and the migration may fail if the volumes
+        are full or their requested and actual capacities differ in the source cluster.
+        Please ensure that the volumes are attached to one or more running Pods for
+        PV resizing to work correctly: [lre-broker-lre-broker-ss-0,lre-broker-lre-broker-ss-1]'
+      reason: NotDone
+      status: "True"
+      type: PvUsageAnalysisFailed
+    - category: Required
+      lastTransitionTime: "2023-07-16T09:56:35Z"
+      message: The storage resources have been created.
+      reason: Done
+      status: "True"
+      type: StorageEnsured
+    - category: Critical
+      lastTransitionTime: "2023-11-27T22:06:51Z"
+      message: 'The referenced `srcMigClusterRef` does not have a `Ready` condition,
+        subject: openshift-migration/ocp3cloud'
+      status: "True"
+      type: SourceClusterNotReady
+    - category: Critical
+      lastTransitionTime: "2024-05-17T22:30:41Z"
+      message: 'The referenced `migStorageRef` does not have a `Ready` condition,
+        subject: openshift-migration/azure.'
+      status: "True"
+      type: StorageNotReady
+    destStorageClasses:
+    - accessModes:
+      - ReadWriteOnce
+      - ReadOnlyMany
+      - ReadWriteMany
+      name: azure-file
+      provisioner: kubernetes.io/azure-file
+    - accessModes:
+      - ReadWriteOnce
+      name: managed-csi
+      provisioner: disk.csi.azure.com
+    - accessModes:
+      - ReadWriteOnce
+      default: true
+      name: managed-premium
+      provisioner: kubernetes.io/azure-disk
+    excludedResources:
+    - imagetags
+    - templateinstances
+    - clusterserviceversions
+    - packagemanifests
+    - subscriptions
+    - servicebrokers
+    - servicebindings
+    - serviceclasses
+    - serviceinstances
+    - serviceplans
+    - operatorgroups
+    - events
+    - events.events.k8s.io
+    - rolebindings.authorization.openshift.io
+    incompatibleNamespaces:
+    - gvks:
+      - group: broker.amq.io
+        kind: activemqartemises
+        version: v2alpha4
+      - group: broker.amq.io
+        kind: activemqartemisscaledowns
+        version: v2alpha1
+      name: lre-dev
+    observedDigest: fafeb2d5c8b1ffe34300fa68fb69b6192d0a1a56d8f1f39d1034c3cb1ef69234
+    srcStorageClasses:
+    - accessModes:
+      - ReadWriteOnce
+      - ReadOnlyMany
+      - ReadWriteMany
+      name: azure-file-storage
+      provisioner: kubernetes.io/azure-file
+    - accessModes:
+      - ReadWriteOnce
+      - ReadOnlyMany
+      - ReadWriteMany
+      name: azure-file-workaround-3scale
+      provisioner: kubernetes.io/azure-file
+    - accessModes:
+      - ReadWriteOnce
+      default: true
+      name: azure-storage
+      provisioner: kubernetes.io/azure-disk
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: MigPlan
+  metadata:
+    annotations:
+      migration.openshift.io/selected-migplan-type: full
+      openshift.io/touch: a750fe46-50a8-11ef-976b-0a580a8016d6
+    creationTimestamp: "2023-05-23T15:29:26Z"
+    generation: 566
+    name: lre-prod
+    namespace: openshift-migration
+    resourceVersion: "494408314"
+    uid: 650c7753-846f-4da6-a5a7-eff123c536a8
+  spec:
+    destMigClusterRef:
+      name: host
+      namespace: openshift-migration
+    indirectImageMigration: true
+    migStorageRef:
+      name: azure
+      namespace: openshift-migration
+    namespaces:
+    - lre-prod
+    persistentVolumes:
+    - capacity: 20Gi
+      name: pvc-4f265623-e1c2-11ec-8af9-000d3ac05650
+      proposedCapacity: 20Gi
+      pvc:
+        accessModes:
+        - ReadWriteOnce
+        name: lre-broker-lre-broker-ss-1
+        namespace: lre-prod
+      selection:
+        action: copy
+        copyMethod: filesystem
+        storageClass: managed-premium
+      storageClass: azure-storage
+      supported:
+        actions:
+        - skip
+        - copy
+        copyMethods:
+        - filesystem
+        - snapshot
+    - capacity: 20Gi
+      name: pvc-e895aeee-e1c1-11ec-8af9-000d3ac05650
+      proposedCapacity: 20Gi
+      pvc:
+        accessModes:
+        - ReadWriteOnce
+        name: lre-broker-lre-broker-ss-0
+        namespace: lre-prod
+      selection:
+        action: copy
+        copyMethod: filesystem
+        storageClass: managed-premium
+      storageClass: azure-storage
+      supported:
+        actions:
+        - skip
+        - copy
+        copyMethods:
+        - filesystem
+        - snapshot
+    srcMigClusterRef:
+      name: ocp3cloud
+      namespace: openshift-migration
+  status:
+    conditions:
+    - category: Advisory
+      lastTransitionTime: "2023-05-23T15:29:26Z"
+      message: Indirect migration modes can only be used for full namespace migrations.
+      reason: NamespaceMigrationPlan
+      status: "True"
+      type: MigrationTypeIdentified
+    - category: Warn
+      lastTransitionTime: "2023-05-23T15:29:38Z"
+      message: 'Some namespaces contain GVKs incompatible with destination cluster.
+        See: `incompatibleNamespaces` for details.'
+      status: "True"
+      type: GVKsIncompatible
+    - category: Required
+      lastTransitionTime: "2023-05-23T15:29:39Z"
+      message: The storage resources have been created.
+      reason: Done
+      status: "True"
+      type: StorageEnsured
+    - category: Critical
+      lastTransitionTime: "2023-11-27T22:06:51Z"
+      message: 'The referenced `srcMigClusterRef` does not have a `Ready` condition,
+        subject: openshift-migration/ocp3cloud'
+      status: "True"
+      type: SourceClusterNotReady
+    - category: Critical
+      lastTransitionTime: "2024-05-17T22:30:42Z"
+      message: 'The referenced `migStorageRef` does not have a `Ready` condition,
+        subject: openshift-migration/azure.'
+      status: "True"
+      type: StorageNotReady
+    destStorageClasses:
+    - accessModes:
+      - ReadWriteOnce
+      - ReadOnlyMany
+      - ReadWriteMany
+      name: azure-file
+      provisioner: kubernetes.io/azure-file
+    - accessModes:
+      - ReadWriteOnce
+      name: managed-csi
+      provisioner: disk.csi.azure.com
+    - accessModes:
+      - ReadWriteOnce
+      default: true
+      name: managed-premium
+      provisioner: kubernetes.io/azure-disk
+    excludedResources:
+    - imagetags
+    - templateinstances
+    - clusterserviceversions
+    - packagemanifests
+    - subscriptions
+    - servicebrokers
+    - servicebindings
+    - serviceclasses
+    - serviceinstances
+    - serviceplans
+    - operatorgroups
+    - events
+    - events.events.k8s.io
+    - rolebindings.authorization.openshift.io
+    incompatibleNamespaces:
+    - gvks:
+      - group: broker.amq.io
+        kind: activemqartemises
+        version: v2alpha4
+      - group: broker.amq.io
+        kind: activemqartemisscaledowns
+        version: v2alpha1
+      name: lre-prod
+    observedDigest: 183ae01fde1db5f1fe91b32728682194e5ceb69a7b03196209d8c6bff6a6aa4e
+    srcStorageClasses:
+    - accessModes:
+      - ReadWriteOnce
+      - ReadOnlyMany
+      - ReadWriteMany
+      name: azure-file-storage
+      provisioner: kubernetes.io/azure-file
+    - accessModes:
+      - ReadWriteOnce
+      - ReadOnlyMany
+      - ReadWriteMany
+      name: azure-file-workaround-3scale
+      provisioner: kubernetes.io/azure-file
+    - accessModes:
+      - ReadWriteOnce
+      default: true
+      name: azure-storage
+      provisioner: kubernetes.io/azure-disk
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: MigPlan
+  metadata:
+    annotations:
+      migration.openshift.io/selected-migplan-type: full
+      openshift.io/touch: a6b54c87-50a8-11ef-976b-0a580a8016d6
+    creationTimestamp: "2023-05-18T17:04:45Z"
+    generation: 1118
+    name: lre-qa
+    namespace: openshift-migration
+    resourceVersion: "494408224"
+    uid: ec0923fa-4d06-4a8b-a67a-a32b23d75ede
+  spec:
+    destMigClusterRef:
+      name: host
+      namespace: openshift-migration
+    indirectImageMigration: true
+    migStorageRef:
+      name: azure
+      namespace: openshift-migration
+    namespaces:
+    - lre-qa
+    persistentVolumes:
+    - capacity: 5Gi
+      name: pvc-c1c0943c-e1bc-11ec-8af9-000d3ac05650
+      proposedCapacity: 5Gi
+      pvc:
+        accessModes:
+        - ReadWriteOnce
+        hasReference: true
+        name: lre-broker-lre-broker-ss-0
+        namespace: lre-qa
+      selection:
+        action: copy
+        copyMethod: filesystem
+        storageClass: managed-premium
+      storageClass: azure-storage
+      supported:
+        actions:
+        - skip
+        - copy
+        copyMethods:
+        - filesystem
+        - snapshot
+    - capacity: 5Gi
+      name: pvc-ee9d4131-e1bc-11ec-8af9-000d3ac05650
+      proposedCapacity: 5Gi
+      pvc:
+        accessModes:
+        - ReadWriteOnce
+        hasReference: true
+        name: lre-broker-lre-broker-ss-1
+        namespace: lre-qa
+      selection:
+        action: copy
+        copyMethod: filesystem
+        storageClass: managed-premium
+      storageClass: azure-storage
+      supported:
+        actions:
+        - skip
+        - copy
+        copyMethods:
+        - filesystem
+        - snapshot
+    srcMigClusterRef:
+      name: ocp3cloud
+      namespace: openshift-migration
+  status:
+    conditions:
+    - category: Advisory
+      lastTransitionTime: "2023-05-18T17:04:57Z"
+      message: Indirect migration modes can only be used for full namespace migrations.
+      reason: NamespaceMigrationPlan
+      status: "True"
+      type: MigrationTypeIdentified
+    - category: Warn
+      durable: true
+      lastTransitionTime: "2023-11-27T17:17:38Z"
+      message: 'Found Pods with non-default `Spec.NodeSelector` set in namespaces:
+        [lre-qa]. This field will be cleared on Pods restored into the target cluster.'
+      reason: NodeSelectorsDetected
+      status: "True"
+      type: NamespacesHaveNodeSelectors
+    - category: Warn
+      lastTransitionTime: "2023-05-18T17:05:09Z"
+      message: 'Some namespaces contain GVKs incompatible with destination cluster.
+        See: `incompatibleNamespaces` for details.'
+      status: "True"
+      type: GVKsIncompatible
+    - category: Required
+      lastTransitionTime: "2023-05-18T17:05:10Z"
+      message: The storage resources have been created.
+      reason: Done
+      status: "True"
+      type: StorageEnsured
+    - category: Critical
+      lastTransitionTime: "2023-11-27T22:06:50Z"
+      message: 'The referenced `srcMigClusterRef` does not have a `Ready` condition,
+        subject: openshift-migration/ocp3cloud'
+      status: "True"
+      type: SourceClusterNotReady
+    - category: Critical
+      lastTransitionTime: "2024-05-17T22:30:41Z"
+      message: 'The referenced `migStorageRef` does not have a `Ready` condition,
+        subject: openshift-migration/azure.'
+      status: "True"
+      type: StorageNotReady
+    destStorageClasses:
+    - accessModes:
+      - ReadWriteOnce
+      - ReadOnlyMany
+      - ReadWriteMany
+      name: azure-file
+      provisioner: kubernetes.io/azure-file
+    - accessModes:
+      - ReadWriteOnce
+      name: managed-csi
+      provisioner: disk.csi.azure.com
+    - accessModes:
+      - ReadWriteOnce
+      default: true
+      name: managed-premium
+      provisioner: kubernetes.io/azure-disk
+    excludedResources:
+    - imagetags
+    - templateinstances
+    - clusterserviceversions
+    - packagemanifests
+    - subscriptions
+    - servicebrokers
+    - servicebindings
+    - serviceclasses
+    - serviceinstances
+    - serviceplans
+    - operatorgroups
+    - events
+    - events.events.k8s.io
+    - rolebindings.authorization.openshift.io
+    incompatibleNamespaces:
+    - gvks:
+      - group: broker.amq.io
+        kind: activemqartemises
+        version: v2alpha4
+      - group: broker.amq.io
+        kind: activemqartemisscaledowns
+        version: v2alpha1
+      name: lre-qa
+    observedDigest: da45e2603cd04ad2e7553f49c1f54e738d1a0fecedab8fdd9908a82bd918c4c2
+    srcStorageClasses:
+    - accessModes:
+      - ReadWriteOnce
+      - ReadOnlyMany
+      - ReadWriteMany
+      name: azure-file-storage
+      provisioner: kubernetes.io/azure-file
+    - accessModes:
+      - ReadWriteOnce
+      - ReadOnlyMany
+      - ReadWriteMany
+      name: azure-file-workaround-3scale
+      provisioner: kubernetes.io/azure-file
+    - accessModes:
+      - ReadWriteOnce
+      default: true
+      name: azure-storage
+      provisioner: kubernetes.io/azure-disk
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: MigPlan
+  metadata:
+    annotations:
+      migration.openshift.io/selected-migplan-type: full
+      openshift.io/touch: a6bd791b-50a8-11ef-976b-0a580a8016d6
+    creationTimestamp: "2023-05-18T16:54:47Z"
+    generation: 69
+    name: mensajeria-dev
+    namespace: openshift-migration
+    resourceVersion: "494408232"
+    uid: 14f4ea15-0112-44f6-b444-b2d822f4eda7
+  spec:
+    destMigClusterRef:
+      name: host
+      namespace: openshift-migration
+    indirectImageMigration: true
+    indirectVolumeMigration: true
+    migStorageRef:
+      name: azure
+      namespace: openshift-migration
+    namespaces:
+    - mensajeria-dev
+    srcMigClusterRef:
+      name: ocp3cloud
+      namespace: openshift-migration
+  status:
+    conditions:
+    - category: Advisory
+      lastTransitionTime: "2023-05-18T16:54:47Z"
+      message: Indirect migration modes can only be used for full namespace migrations.
+      reason: NamespaceMigrationPlan
+      status: "True"
+      type: MigrationTypeIdentified
+    - category: Required
+      lastTransitionTime: "2023-05-18T16:54:59Z"
+      message: The `persistentVolumes` list has been updated with discovered PVs.
+      reason: Done
+      status: "True"
+      type: PvsDiscovered
+    - category: Required
+      lastTransitionTime: "2023-05-18T16:54:59Z"
+      message: The storage resources have been created.
+      reason: Done
+      status: "True"
+      type: StorageEnsured
+    - category: Advisory
+      lastTransitionTime: "2023-05-18T20:47:07Z"
+      message: The migrations plan is in suspended state; Limited validation enforced;
+        PV discovery and resource reconciliation suspended.
+      status: "True"
+      type: Suspended
+    - category: Critical
+      lastTransitionTime: "2023-11-27T22:06:51Z"
+      message: 'The referenced `srcMigClusterRef` does not have a `Ready` condition,
+        subject: openshift-migration/ocp3cloud'
+      status: "True"
+      type: SourceClusterNotReady
+    - category: Critical
+      lastTransitionTime: "2024-05-17T22:30:42Z"
+      message: 'The referenced `migStorageRef` does not have a `Ready` condition,
+        subject: openshift-migration/azure.'
+      status: "True"
+      type: StorageNotReady
+    destStorageClasses:
+    - accessModes:
+      - ReadWriteOnce
+      name: managed-csi
+      provisioner: disk.csi.azure.com
+    - accessModes:
+      - ReadWriteOnce
+      default: true
+      name: managed-premium
+      provisioner: kubernetes.io/azure-disk
+    excludedResources:
+    - imagetags
+    - templateinstances
+    - clusterserviceversions
+    - packagemanifests
+    - subscriptions
+    - servicebrokers
+    - servicebindings
+    - serviceclasses
+    - serviceinstances
+    - serviceplans
+    - operatorgroups
+    - events
+    - events.events.k8s.io
+    - rolebindings.authorization.openshift.io
+    observedDigest: be006d7b5bb218f88a782779f653c466b2bad791c60201d84becd8ee6a4d75a0
+    srcStorageClasses:
+    - accessModes:
+      - ReadWriteOnce
+      - ReadOnlyMany
+      - ReadWriteMany
+      name: azure-file-storage
+      provisioner: kubernetes.io/azure-file
+    - accessModes:
+      - ReadWriteOnce
+      - ReadOnlyMany
+      - ReadWriteMany
+      name: azure-file-workaround-3scale
+      provisioner: kubernetes.io/azure-file
+    - accessModes:
+      - ReadWriteOnce
+      default: true
+      name: azure-storage
+      provisioner: kubernetes.io/azure-disk
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: MigPlan
+  metadata:
+    annotations:
+      migration.openshift.io/selected-migplan-type: full
+      openshift.io/touch: a70b2b20-50a8-11ef-976b-0a580a8016d6
+    creationTimestamp: "2023-05-23T15:33:23Z"
+    generation: 71
+    name: mensajeria-prod
+    namespace: openshift-migration
+    resourceVersion: "494408285"
+    uid: d9c8016c-9c78-481c-be0f-fceb5e1fcf62
+  spec:
+    destMigClusterRef:
+      name: host
+      namespace: openshift-migration
+    indirectImageMigration: true
+    indirectVolumeMigration: true
+    migStorageRef:
+      name: azure
+      namespace: openshift-migration
+    namespaces:
+    - mensajeria-prod
+    srcMigClusterRef:
+      name: ocp3cloud
+      namespace: openshift-migration
+  status:
+    conditions:
+    - category: Advisory
+      lastTransitionTime: "2023-05-23T15:33:23Z"
+      message: Indirect migration modes can only be used for full namespace migrations.
+      reason: NamespaceMigrationPlan
+      status: "True"
+      type: MigrationTypeIdentified
+    - category: Required
+      lastTransitionTime: "2023-05-23T15:33:35Z"
+      message: The `persistentVolumes` list has been updated with discovered PVs.
+      reason: Done
+      status: "True"
+      type: PvsDiscovered
+    - category: Required
+      lastTransitionTime: "2023-05-23T15:33:35Z"
+      message: The storage resources have been created.
+      reason: Done
+      status: "True"
+      type: StorageEnsured
+    - category: Advisory
+      lastTransitionTime: "2023-05-23T15:45:26Z"
+      message: The migrations plan is in suspended state; Limited validation enforced;
+        PV discovery and resource reconciliation suspended.
+      status: "True"
+      type: Suspended
+    - category: Critical
+      lastTransitionTime: "2023-11-27T22:06:51Z"
+      message: 'The referenced `srcMigClusterRef` does not have a `Ready` condition,
+        subject: openshift-migration/ocp3cloud'
+      status: "True"
+      type: SourceClusterNotReady
+    - category: Critical
+      lastTransitionTime: "2024-05-17T22:30:40Z"
+      message: 'The referenced `migStorageRef` does not have a `Ready` condition,
+        subject: openshift-migration/azure.'
+      status: "True"
+      type: StorageNotReady
+    destStorageClasses:
+    - accessModes:
+      - ReadWriteOnce
+      name: managed-csi
+      provisioner: disk.csi.azure.com
+    - accessModes:
+      - ReadWriteOnce
+      default: true
+      name: managed-premium
+      provisioner: kubernetes.io/azure-disk
+    excludedResources:
+    - imagetags
+    - templateinstances
+    - clusterserviceversions
+    - packagemanifests
+    - subscriptions
+    - servicebrokers
+    - servicebindings
+    - serviceclasses
+    - serviceinstances
+    - serviceplans
+    - operatorgroups
+    - events
+    - events.events.k8s.io
+    - rolebindings.authorization.openshift.io
+    observedDigest: 4b658b9eb5400083277b3946a5f4c694e92f17e12957c0038bb09221f4e7ea89
+    srcStorageClasses:
+    - accessModes:
+      - ReadWriteOnce
+      - ReadOnlyMany
+      - ReadWriteMany
+      name: azure-file-storage
+      provisioner: kubernetes.io/azure-file
+    - accessModes:
+      - ReadWriteOnce
+      - ReadOnlyMany
+      - ReadWriteMany
+      name: azure-file-workaround-3scale
+      provisioner: kubernetes.io/azure-file
+    - accessModes:
+      - ReadWriteOnce
+      default: true
+      name: azure-storage
+      provisioner: kubernetes.io/azure-disk
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: MigPlan
+  metadata:
+    annotations:
+      migration.openshift.io/selected-migplan-type: full
+      openshift.io/touch: a702758a-50a8-11ef-976b-0a580a8016d6
+    creationTimestamp: "2023-05-18T17:06:25Z"
+    generation: 71
+    name: mensajeria-qa
+    namespace: openshift-migration
+    resourceVersion: "494408282"
+    uid: 1ab7d19c-1b63-4fd8-8e50-983c4958473a
+  spec:
+    destMigClusterRef:
+      name: host
+      namespace: openshift-migration
+    indirectImageMigration: true
+    indirectVolumeMigration: true
+    migStorageRef:
+      name: azure
+      namespace: openshift-migration
+    namespaces:
+    - mensajeria-qa
+    srcMigClusterRef:
+      name: ocp3cloud
+      namespace: openshift-migration
+  status:
+    conditions:
+    - category: Advisory
+      lastTransitionTime: "2023-05-18T17:06:25Z"
+      message: Indirect migration modes can only be used for full namespace migrations.
+      reason: NamespaceMigrationPlan
+      status: "True"
+      type: MigrationTypeIdentified
+    - category: Required
+      lastTransitionTime: "2023-05-18T17:06:37Z"
+      message: The `persistentVolumes` list has been updated with discovered PVs.
+      reason: Done
+      status: "True"
+      type: PvsDiscovered
+    - category: Required
+      lastTransitionTime: "2023-05-18T17:06:37Z"
+      message: The storage resources have been created.
+      reason: Done
+      status: "True"
+      type: StorageEnsured
+    - category: Advisory
+      lastTransitionTime: "2023-05-22T19:38:54Z"
+      message: The migrations plan is in suspended state; Limited validation enforced;
+        PV discovery and resource reconciliation suspended.
+      status: "True"
+      type: Suspended
+    - category: Critical
+      lastTransitionTime: "2023-11-27T22:06:50Z"
+      message: 'The referenced `srcMigClusterRef` does not have a `Ready` condition,
+        subject: openshift-migration/ocp3cloud'
+      status: "True"
+      type: SourceClusterNotReady
+    - category: Critical
+      lastTransitionTime: "2024-05-17T22:30:42Z"
+      message: 'The referenced `migStorageRef` does not have a `Ready` condition,
+        subject: openshift-migration/azure.'
+      status: "True"
+      type: StorageNotReady
+    destStorageClasses:
+    - accessModes:
+      - ReadWriteOnce
+      name: managed-csi
+      provisioner: disk.csi.azure.com
+    - accessModes:
+      - ReadWriteOnce
+      default: true
+      name: managed-premium
+      provisioner: kubernetes.io/azure-disk
+    excludedResources:
+    - imagetags
+    - templateinstances
+    - clusterserviceversions
+    - packagemanifests
+    - subscriptions
+    - servicebrokers
+    - servicebindings
+    - serviceclasses
+    - serviceinstances
+    - serviceplans
+    - operatorgroups
+    - events
+    - events.events.k8s.io
+    - rolebindings.authorization.openshift.io
+    observedDigest: 17e0299b2227426fce95a1e42af3f46199591e434f1f5d83b62b6518a60ec141
+    srcStorageClasses:
+    - accessModes:
+      - ReadWriteOnce
+      - ReadOnlyMany
+      - ReadWriteMany
+      name: azure-file-storage
+      provisioner: kubernetes.io/azure-file
+    - accessModes:
+      - ReadWriteOnce
+      - ReadOnlyMany
+      - ReadWriteMany
+      name: azure-file-workaround-3scale
+      provisioner: kubernetes.io/azure-file
+    - accessModes:
+      - ReadWriteOnce
+      default: true
+      name: azure-storage
+      provisioner: kubernetes.io/azure-disk
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: MigPlan
+  metadata:
+    annotations:
+      migration.openshift.io/selected-migplan-type: full
+      openshift.io/touch: a6c5d31e-50a8-11ef-976b-0a580a8016d6
+    creationTimestamp: "2023-05-18T16:55:44Z"
+    generation: 71
+    name: ministrosdefe-dev
+    namespace: openshift-migration
+    resourceVersion: "494408242"
+    uid: f912fe17-8056-491d-8703-6b82312d78ec
+  spec:
+    destMigClusterRef:
+      name: host
+      namespace: openshift-migration
+    indirectImageMigration: true
+    indirectVolumeMigration: true
+    migStorageRef:
+      name: azure
+      namespace: openshift-migration
+    namespaces:
+    - ministrosdefe-dev
+    srcMigClusterRef:
+      name: ocp3cloud
+      namespace: openshift-migration
+  status:
+    conditions:
+    - category: Advisory
+      lastTransitionTime: "2023-05-18T16:55:45Z"
+      message: Indirect migration modes can only be used for full namespace migrations.
+      reason: NamespaceMigrationPlan
+      status: "True"
+      type: MigrationTypeIdentified
+    - category: Required
+      lastTransitionTime: "2023-05-18T16:55:56Z"
+      message: The `persistentVolumes` list has been updated with discovered PVs.
+      reason: Done
+      status: "True"
+      type: PvsDiscovered
+    - category: Required
+      lastTransitionTime: "2023-05-18T16:55:56Z"
+      message: The storage resources have been created.
+      reason: Done
+      status: "True"
+      type: StorageEnsured
+    - category: Advisory
+      lastTransitionTime: "2023-05-18T20:52:23Z"
+      message: The migrations plan is in suspended state; Limited validation enforced;
+        PV discovery and resource reconciliation suspended.
+      status: "True"
+      type: Suspended
+    - category: Critical
+      lastTransitionTime: "2023-11-27T22:06:50Z"
+      message: 'The referenced `srcMigClusterRef` does not have a `Ready` condition,
+        subject: openshift-migration/ocp3cloud'
+      status: "True"
+      type: SourceClusterNotReady
+    - category: Critical
+      lastTransitionTime: "2024-05-17T22:30:41Z"
+      message: 'The referenced `migStorageRef` does not have a `Ready` condition,
+        subject: openshift-migration/azure.'
+      status: "True"
+      type: StorageNotReady
+    destStorageClasses:
+    - accessModes:
+      - ReadWriteOnce
+      name: managed-csi
+      provisioner: disk.csi.azure.com
+    - accessModes:
+      - ReadWriteOnce
+      default: true
+      name: managed-premium
+      provisioner: kubernetes.io/azure-disk
+    excludedResources:
+    - imagetags
+    - templateinstances
+    - clusterserviceversions
+    - packagemanifests
+    - subscriptions
+    - servicebrokers
+    - servicebindings
+    - serviceclasses
+    - serviceinstances
+    - serviceplans
+    - operatorgroups
+    - events
+    - events.events.k8s.io
+    - rolebindings.authorization.openshift.io
+    observedDigest: a67aa6ead957a122e67484e8936ccf07f024d5940f5ac75c83e148c454ab6b21
+    srcStorageClasses:
+    - accessModes:
+      - ReadWriteOnce
+      - ReadOnlyMany
+      - ReadWriteMany
+      name: azure-file-storage
+      provisioner: kubernetes.io/azure-file
+    - accessModes:
+      - ReadWriteOnce
+      - ReadOnlyMany
+      - ReadWriteMany
+      name: azure-file-workaround-3scale
+      provisioner: kubernetes.io/azure-file
+    - accessModes:
+      - ReadWriteOnce
+      default: true
+      name: azure-storage
+      provisioner: kubernetes.io/azure-disk
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: MigPlan
+  metadata:
+    annotations:
+      migration.openshift.io/selected-migplan-type: full
+      openshift.io/touch: a7ae8199-50a8-11ef-976b-0a580a8016d6
+    creationTimestamp: "2023-05-23T15:34:18Z"
+    generation: 70
+    name: ministrosdefe-prod
+    namespace: openshift-migration
+    resourceVersion: "494408352"
+    uid: c120e743-badd-47d6-8ed5-7968caba84f0
+  spec:
+    destMigClusterRef:
+      name: host
+      namespace: openshift-migration
+    indirectImageMigration: true
+    indirectVolumeMigration: true
+    migStorageRef:
+      name: azure
+      namespace: openshift-migration
+    namespaces:
+    - ministrosdefe-prod
+    srcMigClusterRef:
+      name: ocp3cloud
+      namespace: openshift-migration
+  status:
+    conditions:
+    - category: Advisory
+      lastTransitionTime: "2023-05-23T15:34:18Z"
+      message: Indirect migration modes can only be used for full namespace migrations.
+      reason: NamespaceMigrationPlan
+      status: "True"
+      type: MigrationTypeIdentified
+    - category: Required
+      lastTransitionTime: "2023-05-23T15:34:30Z"
+      message: The `persistentVolumes` list has been updated with discovered PVs.
+      reason: Done
+      status: "True"
+      type: PvsDiscovered
+    - category: Required
+      lastTransitionTime: "2023-05-23T15:34:30Z"
+      message: The storage resources have been created.
+      reason: Done
+      status: "True"
+      type: StorageEnsured
+    - category: Advisory
+      lastTransitionTime: "2023-05-23T15:45:26Z"
+      message: The migrations plan is in suspended state; Limited validation enforced;
+        PV discovery and resource reconciliation suspended.
+      status: "True"
+      type: Suspended
+    - category: Critical
+      lastTransitionTime: "2023-11-27T22:06:50Z"
+      message: 'The referenced `srcMigClusterRef` does not have a `Ready` condition,
+        subject: openshift-migration/ocp3cloud'
+      status: "True"
+      type: SourceClusterNotReady
+    - category: Critical
+      lastTransitionTime: "2024-05-17T22:30:41Z"
+      message: 'The referenced `migStorageRef` does not have a `Ready` condition,
+        subject: openshift-migration/azure.'
+      status: "True"
+      type: StorageNotReady
+    destStorageClasses:
+    - accessModes:
+      - ReadWriteOnce
+      name: managed-csi
+      provisioner: disk.csi.azure.com
+    - accessModes:
+      - ReadWriteOnce
+      default: true
+      name: managed-premium
+      provisioner: kubernetes.io/azure-disk
+    excludedResources:
+    - imagetags
+    - templateinstances
+    - clusterserviceversions
+    - packagemanifests
+    - subscriptions
+    - servicebrokers
+    - servicebindings
+    - serviceclasses
+    - serviceinstances
+    - serviceplans
+    - operatorgroups
+    - events
+    - events.events.k8s.io
+    - rolebindings.authorization.openshift.io
+    observedDigest: c06ff7c2edf3441728eeb73e6e90eadff2c80616b4621a0ff788183646ad73e7
+    srcStorageClasses:
+    - accessModes:
+      - ReadWriteOnce
+      - ReadOnlyMany
+      - ReadWriteMany
+      name: azure-file-storage
+      provisioner: kubernetes.io/azure-file
+    - accessModes:
+      - ReadWriteOnce
+      - ReadOnlyMany
+      - ReadWriteMany
+      name: azure-file-workaround-3scale
+      provisioner: kubernetes.io/azure-file
+    - accessModes:
+      - ReadWriteOnce
+      default: true
+      name: azure-storage
+      provisioner: kubernetes.io/azure-disk
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: MigPlan
+  metadata:
+    annotations:
+      migration.openshift.io/selected-migplan-type: full
+      openshift.io/touch: a6f2112c-50a8-11ef-976b-0a580a8016d6
+    creationTimestamp: "2023-05-18T17:08:37Z"
+    generation: 71
+    name: ministrosdefe-qa
+    namespace: openshift-migration
+    resourceVersion: "494408275"
+    uid: 5ae88ccd-2300-4fae-80eb-6d8c6ca3cb33
+  spec:
+    destMigClusterRef:
+      name: host
+      namespace: openshift-migration
+    indirectImageMigration: true
+    indirectVolumeMigration: true
+    migStorageRef:
+      name: azure
+      namespace: openshift-migration
+    namespaces:
+    - ministrosdefe-qa
+    srcMigClusterRef:
+      name: ocp3cloud
+      namespace: openshift-migration
+  status:
+    conditions:
+    - category: Advisory
+      lastTransitionTime: "2023-05-18T17:08:37Z"
+      message: Indirect migration modes can only be used for full namespace migrations.
+      reason: NamespaceMigrationPlan
+      status: "True"
+      type: MigrationTypeIdentified
+    - category: Required
+      lastTransitionTime: "2023-05-18T17:08:49Z"
+      message: The `persistentVolumes` list has been updated with discovered PVs.
+      reason: Done
+      status: "True"
+      type: PvsDiscovered
+    - category: Required
+      lastTransitionTime: "2023-05-18T17:08:49Z"
+      message: The storage resources have been created.
+      reason: Done
+      status: "True"
+      type: StorageEnsured
+    - category: Advisory
+      lastTransitionTime: "2023-05-22T19:40:14Z"
+      message: The migrations plan is in suspended state; Limited validation enforced;
+        PV discovery and resource reconciliation suspended.
+      status: "True"
+      type: Suspended
+    - category: Critical
+      lastTransitionTime: "2023-11-27T22:06:50Z"
+      message: 'The referenced `srcMigClusterRef` does not have a `Ready` condition,
+        subject: openshift-migration/ocp3cloud'
+      status: "True"
+      type: SourceClusterNotReady
+    - category: Critical
+      lastTransitionTime: "2024-05-17T22:30:42Z"
+      message: 'The referenced `migStorageRef` does not have a `Ready` condition,
+        subject: openshift-migration/azure.'
+      status: "True"
+      type: StorageNotReady
+    destStorageClasses:
+    - accessModes:
+      - ReadWriteOnce
+      name: managed-csi
+      provisioner: disk.csi.azure.com
+    - accessModes:
+      - ReadWriteOnce
+      default: true
+      name: managed-premium
+      provisioner: kubernetes.io/azure-disk
+    excludedResources:
+    - imagetags
+    - templateinstances
+    - clusterserviceversions
+    - packagemanifests
+    - subscriptions
+    - servicebrokers
+    - servicebindings
+    - serviceclasses
+    - serviceinstances
+    - serviceplans
+    - operatorgroups
+    - events
+    - events.events.k8s.io
+    - rolebindings.authorization.openshift.io
+    observedDigest: 0cabffbceb767f37e169168434f453e95f2b0390c952dc1c7fe4a4eabd14068b
+    srcStorageClasses:
+    - accessModes:
+      - ReadWriteOnce
+      - ReadOnlyMany
+      - ReadWriteMany
+      name: azure-file-storage
+      provisioner: kubernetes.io/azure-file
+    - accessModes:
+      - ReadWriteOnce
+      - ReadOnlyMany
+      - ReadWriteMany
+      name: azure-file-workaround-3scale
+      provisioner: kubernetes.io/azure-file
+    - accessModes:
+      - ReadWriteOnce
+      default: true
+      name: azure-storage
+      provisioner: kubernetes.io/azure-disk
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: MigPlan
+  metadata:
+    annotations:
+      migration.openshift.io/selected-migplan-type: full
+      openshift.io/touch: a6ce418f-50a8-11ef-976b-0a580a8016d6
+    creationTimestamp: "2023-05-23T15:13:07Z"
+    generation: 68
+    name: pipelines-dev
+    namespace: openshift-migration
+    resourceVersion: "494408250"
+    uid: a3ccd4bb-657f-47a9-a0e5-d29a23a06ca1
+  spec:
+    destMigClusterRef:
+      name: host
+      namespace: openshift-migration
+    indirectImageMigration: true
+    indirectVolumeMigration: true
+    migStorageRef:
+      name: azure
+      namespace: openshift-migration
+    namespaces:
+    - pipelines-dev
+    srcMigClusterRef:
+      name: ocp3cloud
+      namespace: openshift-migration
+  status:
+    conditions:
+    - category: Advisory
+      lastTransitionTime: "2023-05-23T15:13:07Z"
+      message: Indirect migration modes can only be used for full namespace migrations.
+      reason: NamespaceMigrationPlan
+      status: "True"
+      type: MigrationTypeIdentified
+    - category: Required
+      lastTransitionTime: "2023-05-23T15:13:19Z"
+      message: The `persistentVolumes` list has been updated with discovered PVs.
+      reason: Done
+      status: "True"
+      type: PvsDiscovered
+    - category: Required
+      lastTransitionTime: "2023-05-23T15:13:19Z"
+      message: The storage resources have been created.
+      reason: Done
+      status: "True"
+      type: StorageEnsured
+    - category: Advisory
+      lastTransitionTime: "2023-05-23T15:15:01Z"
+      message: The migrations plan is in suspended state; Limited validation enforced;
+        PV discovery and resource reconciliation suspended.
+      status: "True"
+      type: Suspended
+    - category: Critical
+      lastTransitionTime: "2023-11-27T22:06:50Z"
+      message: 'The referenced `srcMigClusterRef` does not have a `Ready` condition,
+        subject: openshift-migration/ocp3cloud'
+      status: "True"
+      type: SourceClusterNotReady
+    - category: Critical
+      lastTransitionTime: "2024-05-17T22:30:42Z"
+      message: 'The referenced `migStorageRef` does not have a `Ready` condition,
+        subject: openshift-migration/azure.'
+      status: "True"
+      type: StorageNotReady
+    destStorageClasses:
+    - accessModes:
+      - ReadWriteOnce
+      name: managed-csi
+      provisioner: disk.csi.azure.com
+    - accessModes:
+      - ReadWriteOnce
+      default: true
+      name: managed-premium
+      provisioner: kubernetes.io/azure-disk
+    excludedResources:
+    - imagetags
+    - templateinstances
+    - clusterserviceversions
+    - packagemanifests
+    - subscriptions
+    - servicebrokers
+    - servicebindings
+    - serviceclasses
+    - serviceinstances
+    - serviceplans
+    - operatorgroups
+    - events
+    - events.events.k8s.io
+    - rolebindings.authorization.openshift.io
+    observedDigest: 0bc9ccc5c3e3877fbacb5c87a743d576309e2002869989008d82ce745e9ff9d5
+    srcStorageClasses:
+    - accessModes:
+      - ReadWriteOnce
+      - ReadOnlyMany
+      - ReadWriteMany
+      name: azure-file-storage
+      provisioner: kubernetes.io/azure-file
+    - accessModes:
+      - ReadWriteOnce
+      - ReadOnlyMany
+      - ReadWriteMany
+      name: azure-file-workaround-3scale
+      provisioner: kubernetes.io/azure-file
+    - accessModes:
+      - ReadWriteOnce
+      default: true
+      name: azure-storage
+      provisioner: kubernetes.io/azure-disk
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: MigPlan
+  metadata:
+    annotations:
+      migration.openshift.io/selected-migplan-type: full
+      openshift.io/touch: a758f5df-50a8-11ef-976b-0a580a8016d6
+    creationTimestamp: "2023-05-23T15:35:08Z"
+    generation: 71
+    name: pipelines-prod
+    namespace: openshift-migration
+    resourceVersion: "494408317"
+    uid: cc640fb7-e663-45df-b691-0008663d0ae9
+  spec:
+    destMigClusterRef:
+      name: host
+      namespace: openshift-migration
+    indirectImageMigration: true
+    indirectVolumeMigration: true
+    migStorageRef:
+      name: azure
+      namespace: openshift-migration
+    namespaces:
+    - pipelines-prod
+    srcMigClusterRef:
+      name: ocp3cloud
+      namespace: openshift-migration
+  status:
+    conditions:
+    - category: Advisory
+      lastTransitionTime: "2023-05-23T15:35:08Z"
+      message: Indirect migration modes can only be used for full namespace migrations.
+      reason: NamespaceMigrationPlan
+      status: "True"
+      type: MigrationTypeIdentified
+    - category: Required
+      lastTransitionTime: "2023-05-23T15:35:20Z"
+      message: The `persistentVolumes` list has been updated with discovered PVs.
+      reason: Done
+      status: "True"
+      type: PvsDiscovered
+    - category: Required
+      lastTransitionTime: "2023-05-23T15:35:20Z"
+      message: The storage resources have been created.
+      reason: Done
+      status: "True"
+      type: StorageEnsured
+    - category: Advisory
+      lastTransitionTime: "2023-05-23T15:47:37Z"
+      message: The migrations plan is in suspended state; Limited validation enforced;
+        PV discovery and resource reconciliation suspended.
+      status: "True"
+      type: Suspended
+    - category: Critical
+      lastTransitionTime: "2023-11-27T22:06:50Z"
+      message: 'The referenced `srcMigClusterRef` does not have a `Ready` condition,
+        subject: openshift-migration/ocp3cloud'
+      status: "True"
+      type: SourceClusterNotReady
+    - category: Critical
+      lastTransitionTime: "2024-05-17T22:30:42Z"
+      message: 'The referenced `migStorageRef` does not have a `Ready` condition,
+        subject: openshift-migration/azure.'
+      status: "True"
+      type: StorageNotReady
+    destStorageClasses:
+    - accessModes:
+      - ReadWriteOnce
+      name: managed-csi
+      provisioner: disk.csi.azure.com
+    - accessModes:
+      - ReadWriteOnce
+      default: true
+      name: managed-premium
+      provisioner: kubernetes.io/azure-disk
+    excludedResources:
+    - imagetags
+    - templateinstances
+    - clusterserviceversions
+    - packagemanifests
+    - subscriptions
+    - servicebrokers
+    - servicebindings
+    - serviceclasses
+    - serviceinstances
+    - serviceplans
+    - operatorgroups
+    - events
+    - events.events.k8s.io
+    - rolebindings.authorization.openshift.io
+    observedDigest: 167d9a0cbfe87196778f0bbc478004e3fd8060a46d11a3b576313d8da80c9d06
+    srcStorageClasses:
+    - accessModes:
+      - ReadWriteOnce
+      - ReadOnlyMany
+      - ReadWriteMany
+      name: azure-file-storage
+      provisioner: kubernetes.io/azure-file
+    - accessModes:
+      - ReadWriteOnce
+      - ReadOnlyMany
+      - ReadWriteMany
+      name: azure-file-workaround-3scale
+      provisioner: kubernetes.io/azure-file
+    - accessModes:
+      - ReadWriteOnce
+      default: true
+      name: azure-storage
+      provisioner: kubernetes.io/azure-disk
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: MigPlan
+  metadata:
+    annotations:
+      migration.openshift.io/selected-migplan-type: full
+      openshift.io/touch: a760ac9b-50a8-11ef-976b-0a580a8016d6
+    creationTimestamp: "2023-05-18T17:11:12Z"
+    generation: 69
+    name: pipelines-qa
+    namespace: openshift-migration
+    resourceVersion: "494408319"
+    uid: 6b6402c2-9258-443b-83f4-8bb51f1d90f8
+  spec:
+    destMigClusterRef:
+      name: host
+      namespace: openshift-migration
+    indirectImageMigration: true
+    indirectVolumeMigration: true
+    migStorageRef:
+      name: azure
+      namespace: openshift-migration
+    namespaces:
+    - pipelines-qa
+    srcMigClusterRef:
+      name: ocp3cloud
+      namespace: openshift-migration
+  status:
+    conditions:
+    - category: Advisory
+      lastTransitionTime: "2023-05-18T17:11:12Z"
+      message: Indirect migration modes can only be used for full namespace migrations.
+      reason: NamespaceMigrationPlan
+      status: "True"
+      type: MigrationTypeIdentified
+    - category: Required
+      lastTransitionTime: "2023-05-18T17:11:24Z"
+      message: The `persistentVolumes` list has been updated with discovered PVs.
+      reason: Done
+      status: "True"
+      type: PvsDiscovered
+    - category: Required
+      lastTransitionTime: "2023-05-18T17:11:24Z"
+      message: The storage resources have been created.
+      reason: Done
+      status: "True"
+      type: StorageEnsured
+    - category: Advisory
+      lastTransitionTime: "2023-05-22T20:02:28Z"
+      message: The migrations plan is in suspended state; Limited validation enforced;
+        PV discovery and resource reconciliation suspended.
+      status: "True"
+      type: Suspended
+    - category: Critical
+      lastTransitionTime: "2023-11-27T22:06:51Z"
+      message: 'The referenced `srcMigClusterRef` does not have a `Ready` condition,
+        subject: openshift-migration/ocp3cloud'
+      status: "True"
+      type: SourceClusterNotReady
+    - category: Critical
+      lastTransitionTime: "2024-05-17T22:30:40Z"
+      message: 'The referenced `migStorageRef` does not have a `Ready` condition,
+        subject: openshift-migration/azure.'
+      status: "True"
+      type: StorageNotReady
+    destStorageClasses:
+    - accessModes:
+      - ReadWriteOnce
+      name: managed-csi
+      provisioner: disk.csi.azure.com
+    - accessModes:
+      - ReadWriteOnce
+      default: true
+      name: managed-premium
+      provisioner: kubernetes.io/azure-disk
+    excludedResources:
+    - imagetags
+    - templateinstances
+    - clusterserviceversions
+    - packagemanifests
+    - subscriptions
+    - servicebrokers
+    - servicebindings
+    - serviceclasses
+    - serviceinstances
+    - serviceplans
+    - operatorgroups
+    - events
+    - events.events.k8s.io
+    - rolebindings.authorization.openshift.io
+    observedDigest: bfa5b37f8e45e2c70cdc9af385bfd2e6a04be70442e905781fb50d0659800c11
+    srcStorageClasses:
+    - accessModes:
+      - ReadWriteOnce
+      - ReadOnlyMany
+      - ReadWriteMany
+      name: azure-file-storage
+      provisioner: kubernetes.io/azure-file
+    - accessModes:
+      - ReadWriteOnce
+      - ReadOnlyMany
+      - ReadWriteMany
+      name: azure-file-workaround-3scale
+      provisioner: kubernetes.io/azure-file
+    - accessModes:
+      - ReadWriteOnce
+      default: true
+      name: azure-storage
+      provisioner: kubernetes.io/azure-disk
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: MigPlan
+  metadata:
+    annotations:
+      migration.openshift.io/selected-migplan-type: full
+      openshift.io/touch: a734ac59-50a8-11ef-976b-0a580a8016d6
+    creationTimestamp: "2023-05-18T16:56:59Z"
+    generation: 71
+    name: portalinstitucional-dev-cloud
+    namespace: openshift-migration
+    resourceVersion: "494408304"
+    uid: 115bf39f-32dd-46ac-8d1e-ac95f44b53ed
+  spec:
+    destMigClusterRef:
+      name: host
+      namespace: openshift-migration
+    indirectImageMigration: true
+    indirectVolumeMigration: true
+    migStorageRef:
+      name: azure
+      namespace: openshift-migration
+    namespaces:
+    - portalinstitucional-dev-cloud
+    srcMigClusterRef:
+      name: ocp3cloud
+      namespace: openshift-migration
+  status:
+    conditions:
+    - category: Advisory
+      lastTransitionTime: "2023-05-18T16:56:59Z"
+      message: Indirect migration modes can only be used for full namespace migrations.
+      reason: NamespaceMigrationPlan
+      status: "True"
+      type: MigrationTypeIdentified
+    - category: Required
+      lastTransitionTime: "2023-05-18T16:57:11Z"
+      message: The `persistentVolumes` list has been updated with discovered PVs.
+      reason: Done
+      status: "True"
+      type: PvsDiscovered
+    - category: Required
+      lastTransitionTime: "2023-05-18T16:57:11Z"
+      message: The storage resources have been created.
+      reason: Done
+      status: "True"
+      type: StorageEnsured
+    - category: Advisory
+      lastTransitionTime: "2023-05-18T22:12:47Z"
+      message: The migrations plan is in suspended state; Limited validation enforced;
+        PV discovery and resource reconciliation suspended.
+      status: "True"
+      type: Suspended
+    - category: Critical
+      lastTransitionTime: "2023-11-27T22:06:51Z"
+      message: 'The referenced `srcMigClusterRef` does not have a `Ready` condition,
+        subject: openshift-migration/ocp3cloud'
+      status: "True"
+      type: SourceClusterNotReady
+    - category: Critical
+      lastTransitionTime: "2024-05-17T22:30:41Z"
+      message: 'The referenced `migStorageRef` does not have a `Ready` condition,
+        subject: openshift-migration/azure.'
+      status: "True"
+      type: StorageNotReady
+    destStorageClasses:
+    - accessModes:
+      - ReadWriteOnce
+      name: managed-csi
+      provisioner: disk.csi.azure.com
+    - accessModes:
+      - ReadWriteOnce
+      default: true
+      name: managed-premium
+      provisioner: kubernetes.io/azure-disk
+    excludedResources:
+    - imagetags
+    - templateinstances
+    - clusterserviceversions
+    - packagemanifests
+    - subscriptions
+    - servicebrokers
+    - servicebindings
+    - serviceclasses
+    - serviceinstances
+    - serviceplans
+    - operatorgroups
+    - events
+    - events.events.k8s.io
+    - rolebindings.authorization.openshift.io
+    observedDigest: 17c05c12aa75fd199599fded98311a5194affb76f6592835fe3cb35a522ed2d3
+    srcStorageClasses:
+    - accessModes:
+      - ReadWriteOnce
+      - ReadOnlyMany
+      - ReadWriteMany
+      name: azure-file-storage
+      provisioner: kubernetes.io/azure-file
+    - accessModes:
+      - ReadWriteOnce
+      - ReadOnlyMany
+      - ReadWriteMany
+      name: azure-file-workaround-3scale
+      provisioner: kubernetes.io/azure-file
+    - accessModes:
+      - ReadWriteOnce
+      default: true
+      name: azure-storage
+      provisioner: kubernetes.io/azure-disk
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: MigPlan
+  metadata:
+    annotations:
+      migration.openshift.io/selected-migplan-type: full
+      openshift.io/touch: dc83a0f0-50de-11ef-976b-0a580a8016d6
+    creationTimestamp: "2023-07-14T19:39:43Z"
+    generation: 3249649
+    name: prueba
+    namespace: openshift-migration
+    resourceVersion: "494973545"
+    uid: 1f11fcad-f6c9-4447-a7c0-65843ee8a6da
+  spec:
+    destMigClusterRef:
+      name: host
+      namespace: openshift-migration
+    indirectImageMigration: true
+    indirectVolumeMigration: true
+    migStorageRef:
+      name: azure
+      namespace: openshift-migration
+    namespaces:
+    - 3scale
+    persistentVolumes:
+    - capacity: 5Gi
+      name: pvc-338d4a9b-867f-11ea-a1bf-000d3ac05376
+      proposedCapacity: 5369M
+      pvc:
+        accessModes:
+        - ReadWriteMany
+        hasReference: true
+        name: system-storage
+        namespace: 3scale
+      selection:
+        action: copy
+        copyMethod: filesystem
+        storageClass: azure-file
+      storageClass: azure-file-workaround-3scale
+      supported:
+        actions:
+        - skip
+        - copy
+        copyMethods:
+        - filesystem
+        - snapshot
+    - capacity: 5Gi
+      name: pvc-4a528aa3-8676-11ea-a1bf-000d3ac05376
+      proposedCapacity: "0"
+      pvc:
+        accessModes:
+        - ReadWriteMany
+        hasReference: true
+        name: system-storage-workaround
+        namespace: 3scale
+      selection:
+        action: copy
+        copyMethod: filesystem
+        storageClass: azure-file
+      storageClass: azure-file-workaround-3scale
+      supported:
+        actions:
+        - skip
+        - copy
+        copyMethods:
+        - filesystem
+        - snapshot
+    - capacity: 10Gi
+      name: pvc-d7e6e38e-708d-11ea-bff7-000d3ac052bc
+      proposedCapacity: 10Gi
+      pvc:
+        accessModes:
+        - ReadWriteOnce
+        hasReference: true
+        name: backend-redis-storage
+        namespace: 3scale
+      selection:
+        action: copy
+        copyMethod: filesystem
+        storageClass: managed-premium
+      storageClass: azure-storage
+      supported:
+        actions:
+        - skip
+        - copy
+        copyMethods:
+        - filesystem
+        - snapshot
+    - capacity: 30Gi
+      name: pvc-d7e979b6-708d-11ea-bff7-000d3ac052bc
+      proposedCapacity: 30Gi
+      pvc:
+        accessModes:
+        - ReadWriteOnce
+        hasReference: true
+        name: mysql-storage
+        namespace: 3scale
+      selection:
+        action: copy
+        copyMethod: filesystem
+        storageClass: managed-premium
+      storageClass: azure-storage
+      supported:
+        actions:
+        - skip
+        - copy
+        copyMethods:
+        - filesystem
+        - snapshot
+    - capacity: 10Gi
+      name: pvc-d7f0f700-708d-11ea-bff7-000d3ac052bc
+      proposedCapacity: 10Gi
+      pvc:
+        accessModes:
+        - ReadWriteOnce
+        hasReference: true
+        name: system-redis-storage
+        namespace: 3scale
+      selection:
+        action: copy
+        copyMethod: filesystem
+        storageClass: managed-premium
+      storageClass: azure-storage
+      supported:
+        actions:
+        - skip
+        - copy
+        copyMethods:
+        - filesystem
+        - snapshot
+    srcMigClusterRef:
+      name: ocp3cloud
+      namespace: openshift-migration
+  status:
+    conditions:
+    - category: Advisory
+      lastTransitionTime: "2023-07-14T19:41:28Z"
+      message: Indirect migration modes can only be used for full namespace migrations.
+      reason: NamespaceMigrationPlan
+      status: "True"
+      type: MigrationTypeIdentified
+    - category: Warn
+      durable: true
+      lastTransitionTime: "2024-08-02T14:52:38Z"
+      message: 'Migrating data of following volumes may result in a failure either
+        due to mismatch in their requested and actual capacities or disk usage being
+        close to 100%:  [system-storage,system-storage]'
+      reason: NotDone
+      status: "True"
+      type: PvCapacityAdjustmentRequired
+    - category: Critical
+      lastTransitionTime: "2023-11-27T22:06:49Z"
+      message: 'The referenced `srcMigClusterRef` does not have a `Ready` condition,
+        subject: openshift-migration/ocp3cloud'
+      status: "True"
+      type: SourceClusterNotReady
+    - category: Error
+      lastTransitionTime: "2023-11-27T22:06:49Z"
+      message: The migration plan is in conflict with [3scale].
+      reason: Conflict
+      status: "True"
+      type: PlanConflict
+    - category: Warn
+      lastTransitionTime: "2024-08-02T14:52:38Z"
+      message: 'Failed to compute PV resizing data for the following volumes. PV resizing
+        will be disabled for these volumes and the migration may fail if the volumes
+        are full or their requested and actual capacities differ in the source cluster.
+        Please ensure that the volumes are attached to one or more running Pods for
+        PV resizing to work correctly: [system-storage-workaround]'
+      reason: NotDone
+      status: "True"
+      type: PvUsageAnalysisFailed
+    - category: Critical
+      lastTransitionTime: "2024-05-17T22:30:42Z"
+      message: 'The referenced `migStorageRef` does not have a `Ready` condition,
+        subject: openshift-migration/azure.'
+      status: "True"
+      type: StorageNotReady
+    destStorageClasses:
+    - accessModes:
+      - ReadWriteOnce
+      - ReadOnlyMany
+      - ReadWriteMany
+      name: azure-file
+      provisioner: kubernetes.io/azure-file
+    - accessModes:
+      - ReadWriteOnce
+      name: managed-csi
+      provisioner: disk.csi.azure.com
+    - accessModes:
+      - ReadWriteOnce
+      default: true
+      name: managed-premium
+      provisioner: kubernetes.io/azure-disk
+    excludedResources:
+    - imagetags
+    - templateinstances
+    - clusterserviceversions
+    - packagemanifests
+    - subscriptions
+    - servicebrokers
+    - servicebindings
+    - serviceclasses
+    - serviceinstances
+    - serviceplans
+    - operatorgroups
+    - events
+    - events.events.k8s.io
+    - rolebindings.authorization.openshift.io
+    observedDigest: 7cb69098946987b85b4a05043295f512dcb077b96bf48f34e2309ca867677ef9
+    srcStorageClasses:
+    - accessModes:
+      - ReadWriteOnce
+      - ReadOnlyMany
+      - ReadWriteMany
+      name: azure-file-storage
+      provisioner: kubernetes.io/azure-file
+    - accessModes:
+      - ReadWriteOnce
+      - ReadOnlyMany
+      - ReadWriteMany
+      name: azure-file-workaround-3scale
+      provisioner: kubernetes.io/azure-file
+    - accessModes:
+      - ReadWriteOnce
+      default: true
+      name: azure-storage
+      provisioner: kubernetes.io/azure-disk
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: MigPlan
+  metadata:
+    annotations:
+      migration.openshift.io/selected-migplan-type: full
+      openshift.io/touch: a7686221-50a8-11ef-976b-0a580a8016d6
+    creationTimestamp: "2023-05-18T18:44:48Z"
+    generation: 69
+    name: utilities-dev
+    namespace: openshift-migration
+    resourceVersion: "494408323"
+    uid: fc39346c-f9d4-4b3a-8404-0437309f995a
+  spec:
+    destMigClusterRef:
+      name: host
+      namespace: openshift-migration
+    indirectImageMigration: true
+    indirectVolumeMigration: true
+    migStorageRef:
+      name: azure
+      namespace: openshift-migration
+    namespaces:
+    - utilities-dev
+    srcMigClusterRef:
+      name: ocp3cloud
+      namespace: openshift-migration
+  status:
+    conditions:
+    - category: Advisory
+      lastTransitionTime: "2023-05-18T18:44:48Z"
+      message: Indirect migration modes can only be used for full namespace migrations.
+      reason: NamespaceMigrationPlan
+      status: "True"
+      type: MigrationTypeIdentified
+    - category: Required
+      lastTransitionTime: "2023-05-18T18:45:00Z"
+      message: The `persistentVolumes` list has been updated with discovered PVs.
+      reason: Done
+      status: "True"
+      type: PvsDiscovered
+    - category: Required
+      lastTransitionTime: "2023-05-18T18:45:00Z"
+      message: The storage resources have been created.
+      reason: Done
+      status: "True"
+      type: StorageEnsured
+    - category: Advisory
+      lastTransitionTime: "2023-05-18T22:15:42Z"
+      message: The migrations plan is in suspended state; Limited validation enforced;
+        PV discovery and resource reconciliation suspended.
+      status: "True"
+      type: Suspended
+    - category: Critical
+      lastTransitionTime: "2023-11-27T22:06:50Z"
+      message: 'The referenced `srcMigClusterRef` does not have a `Ready` condition,
+        subject: openshift-migration/ocp3cloud'
+      status: "True"
+      type: SourceClusterNotReady
+    - category: Critical
+      lastTransitionTime: "2024-05-17T22:30:42Z"
+      message: 'The referenced `migStorageRef` does not have a `Ready` condition,
+        subject: openshift-migration/azure.'
+      status: "True"
+      type: StorageNotReady
+    destStorageClasses:
+    - accessModes:
+      - ReadWriteOnce
+      name: managed-csi
+      provisioner: disk.csi.azure.com
+    - accessModes:
+      - ReadWriteOnce
+      default: true
+      name: managed-premium
+      provisioner: kubernetes.io/azure-disk
+    excludedResources:
+    - imagetags
+    - templateinstances
+    - clusterserviceversions
+    - packagemanifests
+    - subscriptions
+    - servicebrokers
+    - servicebindings
+    - serviceclasses
+    - serviceinstances
+    - serviceplans
+    - operatorgroups
+    - events
+    - events.events.k8s.io
+    - rolebindings.authorization.openshift.io
+    observedDigest: 900919d324e54d82508b6e6ef69f7f59cb48dfa5b8f38f90821de53053d35cea
+    srcStorageClasses:
+    - accessModes:
+      - ReadWriteOnce
+      - ReadOnlyMany
+      - ReadWriteMany
+      name: azure-file-storage
+      provisioner: kubernetes.io/azure-file
+    - accessModes:
+      - ReadWriteOnce
+      - ReadOnlyMany
+      - ReadWriteMany
+      name: azure-file-workaround-3scale
+      provisioner: kubernetes.io/azure-file
+    - accessModes:
+      - ReadWriteOnce
+      default: true
+      name: azure-storage
+      provisioner: kubernetes.io/azure-disk
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: MigPlan
+  metadata:
+    annotations:
+      migration.openshift.io/selected-migplan-type: full
+      openshift.io/touch: a7129d9b-50a8-11ef-976b-0a580a8016d6
+    creationTimestamp: "2023-05-23T15:36:27Z"
+    generation: 70
+    name: utilities-prod
+    namespace: openshift-migration
+    resourceVersion: "494408289"
+    uid: fb88196e-a0b1-4afb-9b57-e6c52fa304de
+  spec:
+    destMigClusterRef:
+      name: host
+      namespace: openshift-migration
+    indirectImageMigration: true
+    indirectVolumeMigration: true
+    migStorageRef:
+      name: azure
+      namespace: openshift-migration
+    namespaces:
+    - utilities-prod
+    srcMigClusterRef:
+      name: ocp3cloud
+      namespace: openshift-migration
+  status:
+    conditions:
+    - category: Advisory
+      lastTransitionTime: "2023-05-23T15:36:27Z"
+      message: Indirect migration modes can only be used for full namespace migrations.
+      reason: NamespaceMigrationPlan
+      status: "True"
+      type: MigrationTypeIdentified
+    - category: Required
+      lastTransitionTime: "2023-05-23T15:36:39Z"
+      message: The `persistentVolumes` list has been updated with discovered PVs.
+      reason: Done
+      status: "True"
+      type: PvsDiscovered
+    - category: Required
+      lastTransitionTime: "2023-05-23T15:36:39Z"
+      message: The storage resources have been created.
+      reason: Done
+      status: "True"
+      type: StorageEnsured
+    - category: Advisory
+      lastTransitionTime: "2023-05-23T15:47:37Z"
+      message: The migrations plan is in suspended state; Limited validation enforced;
+        PV discovery and resource reconciliation suspended.
+      status: "True"
+      type: Suspended
+    - category: Critical
+      lastTransitionTime: "2023-11-27T22:06:50Z"
+      message: 'The referenced `srcMigClusterRef` does not have a `Ready` condition,
+        subject: openshift-migration/ocp3cloud'
+      status: "True"
+      type: SourceClusterNotReady
+    - category: Critical
+      lastTransitionTime: "2024-05-17T22:30:41Z"
+      message: 'The referenced `migStorageRef` does not have a `Ready` condition,
+        subject: openshift-migration/azure.'
+      status: "True"
+      type: StorageNotReady
+    destStorageClasses:
+    - accessModes:
+      - ReadWriteOnce
+      name: managed-csi
+      provisioner: disk.csi.azure.com
+    - accessModes:
+      - ReadWriteOnce
+      default: true
+      name: managed-premium
+      provisioner: kubernetes.io/azure-disk
+    excludedResources:
+    - imagetags
+    - templateinstances
+    - clusterserviceversions
+    - packagemanifests
+    - subscriptions
+    - servicebrokers
+    - servicebindings
+    - serviceclasses
+    - serviceinstances
+    - serviceplans
+    - operatorgroups
+    - events
+    - events.events.k8s.io
+    - rolebindings.authorization.openshift.io
+    observedDigest: 7d4d9f9591d62fd6178c9f2caf59509e1c0f62ece209ad1cc5af1b6cc1c95e56
+    srcStorageClasses:
+    - accessModes:
+      - ReadWriteOnce
+      - ReadOnlyMany
+      - ReadWriteMany
+      name: azure-file-storage
+      provisioner: kubernetes.io/azure-file
+    - accessModes:
+      - ReadWriteOnce
+      - ReadOnlyMany
+      - ReadWriteMany
+      name: azure-file-workaround-3scale
+      provisioner: kubernetes.io/azure-file
+    - accessModes:
+      - ReadWriteOnce
+      default: true
+      name: azure-storage
+      provisioner: kubernetes.io/azure-disk
+- apiVersion: migration.openshift.io/v1alpha1
+  kind: MigPlan
+  metadata:
+    annotations:
+      migration.openshift.io/selected-migplan-type: full
+      openshift.io/touch: a76fd8ae-50a8-11ef-976b-0a580a8016d6
+    creationTimestamp: "2023-05-18T17:16:15Z"
+    generation: 71
+    name: utilities-qa
+    namespace: openshift-migration
+    resourceVersion: "494408329"
+    uid: 914f1c50-0174-49a2-ad41-7bd559223270
+  spec:
+    destMigClusterRef:
+      name: host
+      namespace: openshift-migration
+    indirectImageMigration: true
+    indirectVolumeMigration: true
+    migStorageRef:
+      name: azure
+      namespace: openshift-migration
+    namespaces:
+    - utilities-qa
+    srcMigClusterRef:
+      name: ocp3cloud
+      namespace: openshift-migration
+  status:
+    conditions:
+    - category: Advisory
+      lastTransitionTime: "2023-05-18T17:16:16Z"
+      message: Indirect migration modes can only be used for full namespace migrations.
+      reason: NamespaceMigrationPlan
+      status: "True"
+      type: MigrationTypeIdentified
+    - category: Required
+      lastTransitionTime: "2023-05-18T17:16:27Z"
+      message: The `persistentVolumes` list has been updated with discovered PVs.
+      reason: Done
+      status: "True"
+      type: PvsDiscovered
+    - category: Required
+      lastTransitionTime: "2023-05-18T17:16:28Z"
+      message: The storage resources have been created.
+      reason: Done
+      status: "True"
+      type: StorageEnsured
+    - category: Advisory
+      lastTransitionTime: "2023-05-22T19:49:39Z"
+      message: The migrations plan is in suspended state; Limited validation enforced;
+        PV discovery and resource reconciliation suspended.
+      status: "True"
+      type: Suspended
+    - category: Critical
+      lastTransitionTime: "2023-11-27T22:06:50Z"
+      message: 'The referenced `srcMigClusterRef` does not have a `Ready` condition,
+        subject: openshift-migration/ocp3cloud'
+      status: "True"
+      type: SourceClusterNotReady
+    - category: Critical
+      lastTransitionTime: "2024-05-17T22:30:42Z"
+      message: 'The referenced `migStorageRef` does not have a `Ready` condition,
+        subject: openshift-migration/azure.'
+      status: "True"
+      type: StorageNotReady
+    destStorageClasses:
+    - accessModes:
+      - ReadWriteOnce
+      name: managed-csi
+      provisioner: disk.csi.azure.com
+    - accessModes:
+      - ReadWriteOnce
+      default: true
+      name: managed-premium
+      provisioner: kubernetes.io/azure-disk
+    excludedResources:
+    - imagetags
+    - templateinstances
+    - clusterserviceversions
+    - packagemanifests
+    - subscriptions
+    - servicebrokers
+    - servicebindings
+    - serviceclasses
+    - serviceinstances
+    - serviceplans
+    - operatorgroups
+    - events
+    - events.events.k8s.io
+    - rolebindings.authorization.openshift.io
+    observedDigest: f51fbba7adfcfcd5c9408086027478e378329ee5462ced29ec3751623102c206
+    srcStorageClasses:
+    - accessModes:
+      - ReadWriteOnce
+      - ReadOnlyMany
+      - ReadWriteMany
+      name: azure-file-storage
+      provisioner: kubernetes.io/azure-file
+    - accessModes:
+      - ReadWriteOnce
+      - ReadOnlyMany
+      - ReadWriteMany
+      name: azure-file-workaround-3scale
+      provisioner: kubernetes.io/azure-file
+    - accessModes:
+      - ReadWriteOnce
+      default: true
+      name: azure-storage
+      provisioner: kubernetes.io/azure-disk
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

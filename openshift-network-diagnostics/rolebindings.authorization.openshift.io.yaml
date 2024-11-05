@@ -1,0 +1,116 @@
+apiVersion: v1
+items:
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    creationTimestamp: "2023-05-04T21:39:44Z"
+    name: network-diagnostics
+    namespace: openshift-network-diagnostics
+    ownerReferences:
+    - apiVersion: operator.openshift.io/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Network
+      name: cluster
+      uid: 5513ebe5-e5fd-4f40-8857-5fcd3d31efca
+    resourceVersion: "3315"
+    uid: 1d4b8c9d-000d-43c4-b899-10419bf59449
+  roleRef:
+    name: network-diagnostics
+    namespace: openshift-network-diagnostics
+  subjects:
+  - kind: ServiceAccount
+    name: network-diagnostics
+    namespace: openshift-network-diagnostics
+  userNames:
+  - system:serviceaccount:openshift-network-diagnostics:network-diagnostics
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    creationTimestamp: "2023-05-04T21:39:44Z"
+    name: prometheus-k8s
+    namespace: openshift-network-diagnostics
+    ownerReferences:
+    - apiVersion: operator.openshift.io/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Network
+      name: cluster
+      uid: 5513ebe5-e5fd-4f40-8857-5fcd3d31efca
+    resourceVersion: "3345"
+    uid: fe8efe0b-e86d-4295-b87e-b9e73442f3aa
+  roleRef:
+    name: prometheus-k8s
+    namespace: openshift-network-diagnostics
+  subjects:
+  - kind: ServiceAccount
+    name: prometheus-k8s
+    namespace: openshift-monitoring
+  userNames:
+  - system:serviceaccount:openshift-monitoring:prometheus-k8s
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/description: Allows deploymentconfigs in this namespace to rollout
+        pods in this namespace.  It is auto-managed by a controller; remove subjects
+        to disable.
+    creationTimestamp: "2023-05-04T21:45:27Z"
+    name: system:deployers
+    namespace: openshift-network-diagnostics
+    resourceVersion: "15590"
+    uid: fd04d274-7b6c-4d6c-900e-cd0a596ade6c
+  roleRef:
+    name: system:deployer
+  subjects:
+  - kind: ServiceAccount
+    name: deployer
+    namespace: openshift-network-diagnostics
+  userNames:
+  - system:serviceaccount:openshift-network-diagnostics:deployer
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/description: Allows builds in this namespace to push images to
+        this namespace.  It is auto-managed by a controller; remove subjects to disable.
+    creationTimestamp: "2023-05-04T21:45:27Z"
+    name: system:image-builders
+    namespace: openshift-network-diagnostics
+    resourceVersion: "15509"
+    uid: 10e21319-283b-44a0-a552-49ef2202b136
+  roleRef:
+    name: system:image-builder
+  subjects:
+  - kind: ServiceAccount
+    name: builder
+    namespace: openshift-network-diagnostics
+  userNames:
+  - system:serviceaccount:openshift-network-diagnostics:builder
+- apiVersion: authorization.openshift.io/v1
+  groupNames:
+  - system:serviceaccounts:openshift-network-diagnostics
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/description: Allows all pods in this namespace to pull images from
+        this namespace.  It is auto-managed by a controller; remove subjects to disable.
+    creationTimestamp: "2023-05-04T21:45:26Z"
+    name: system:image-pullers
+    namespace: openshift-network-diagnostics
+    resourceVersion: "15425"
+    uid: 01d9de51-da1b-4f18-8b06-7eadf9e4c918
+  roleRef:
+    name: system:image-puller
+  subjects:
+  - kind: SystemGroup
+    name: system:serviceaccounts:openshift-network-diagnostics
+  userNames: null
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

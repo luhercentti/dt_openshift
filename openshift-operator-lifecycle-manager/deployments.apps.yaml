@@ -1,0 +1,607 @@
+apiVersion: v1
+items:
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "1"
+      include.release.openshift.io/self-managed-high-availability: "true"
+    creationTimestamp: "2023-05-04T21:36:18Z"
+    generation: 1
+    labels:
+      app: catalog-operator
+    name: catalog-operator
+    namespace: openshift-operator-lifecycle-manager
+    ownerReferences:
+    - apiVersion: config.openshift.io/v1
+      kind: ClusterVersion
+      name: version
+      uid: 5d92b52f-9fff-4a6e-b815-398b934115ad
+    resourceVersion: "114617769"
+    uid: ffb7252e-5d4f-43ef-bf0a-3ccedf5d5621
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: catalog-operator
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        annotations:
+          target.workload.openshift.io/management: '{"effect": "PreferredDuringScheduling"}'
+        creationTimestamp: null
+        labels:
+          app: catalog-operator
+      spec:
+        containers:
+        - args:
+          - -namespace
+          - openshift-marketplace
+          - -configmapServerImage=quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:a85fbe0aecf2203c347074c95cae8ef611897c5c614e2ea8ad3a612b32ab355b
+          - -opmImage=quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:a85fbe0aecf2203c347074c95cae8ef611897c5c614e2ea8ad3a612b32ab355b
+          - -util-image
+          - quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:58d171c685b8bba98ed0a0497b23ddc9703fe975ce93e04182a283ac17f31410
+          - -writeStatusName
+          - operator-lifecycle-manager-catalog
+          - --tls-cert
+          - /srv-cert/tls.crt
+          - --tls-key
+          - /srv-cert/tls.key
+          - --client-ca
+          - /profile-collector-cert/tls.crt
+          command:
+          - /bin/catalog
+          env:
+          - name: RELEASE_VERSION
+            value: 4.10.53
+          image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:58d171c685b8bba98ed0a0497b23ddc9703fe975ce93e04182a283ac17f31410
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /healthz
+              port: 8443
+              scheme: HTTPS
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          name: catalog-operator
+          ports:
+          - containerPort: 8443
+            name: metrics
+            protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /healthz
+              port: 8443
+              scheme: HTTPS
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources:
+            requests:
+              cpu: 10m
+              memory: 80Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: FallbackToLogsOnError
+          volumeMounts:
+          - mountPath: /srv-cert
+            name: srv-cert
+            readOnly: true
+          - mountPath: /profile-collector-cert
+            name: profile-collector-cert
+            readOnly: true
+        dnsPolicy: ClusterFirst
+        nodeSelector:
+          kubernetes.io/os: linux
+          node-role.kubernetes.io/master: ""
+        priorityClassName: system-cluster-critical
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: olm-operator-serviceaccount
+        serviceAccountName: olm-operator-serviceaccount
+        terminationGracePeriodSeconds: 30
+        tolerations:
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/master
+          operator: Exists
+        - effect: NoExecute
+          key: node.kubernetes.io/unreachable
+          operator: Exists
+          tolerationSeconds: 120
+        - effect: NoExecute
+          key: node.kubernetes.io/not-ready
+          operator: Exists
+          tolerationSeconds: 120
+        volumes:
+        - name: srv-cert
+          secret:
+            defaultMode: 420
+            secretName: catalog-operator-serving-cert
+        - name: profile-collector-cert
+          secret:
+            defaultMode: 420
+            secretName: pprof-cert
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2023-05-04T21:36:18Z"
+      lastUpdateTime: "2023-05-04T21:41:12Z"
+      message: ReplicaSet "catalog-operator-589bff8496" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: "2023-09-22T11:12:26Z"
+      lastUpdateTime: "2023-09-22T11:12:26Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "1"
+      include.release.openshift.io/self-managed-high-availability: "true"
+    creationTimestamp: "2023-05-04T21:36:18Z"
+    generation: 1
+    labels:
+      app: olm-operator
+    name: olm-operator
+    namespace: openshift-operator-lifecycle-manager
+    ownerReferences:
+    - apiVersion: config.openshift.io/v1
+      kind: ClusterVersion
+      name: version
+      uid: 5d92b52f-9fff-4a6e-b815-398b934115ad
+    resourceVersion: "114617724"
+    uid: 493efebc-82de-4bed-bf97-ad527a05d3fe
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: olm-operator
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        annotations:
+          target.workload.openshift.io/management: '{"effect": "PreferredDuringScheduling"}'
+        creationTimestamp: null
+        labels:
+          app: olm-operator
+      spec:
+        containers:
+        - args:
+          - --namespace
+          - $(OPERATOR_NAMESPACE)
+          - --writeStatusName
+          - operator-lifecycle-manager
+          - --writePackageServerStatusName
+          - operator-lifecycle-manager-packageserver
+          - --tls-cert
+          - /srv-cert/tls.crt
+          - --tls-key
+          - /srv-cert/tls.key
+          - --client-ca
+          - /profile-collector-cert/tls.crt
+          command:
+          - /bin/olm
+          env:
+          - name: OPERATOR_NAMESPACE
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+          - name: OPERATOR_NAME
+            value: olm-operator
+          - name: RELEASE_VERSION
+            value: 4.10.53
+          image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:58d171c685b8bba98ed0a0497b23ddc9703fe975ce93e04182a283ac17f31410
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /healthz
+              port: 8443
+              scheme: HTTPS
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          name: olm-operator
+          ports:
+          - containerPort: 8443
+            name: metrics
+            protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /healthz
+              port: 8443
+              scheme: HTTPS
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources:
+            requests:
+              cpu: 10m
+              memory: 160Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: FallbackToLogsOnError
+          volumeMounts:
+          - mountPath: /srv-cert
+            name: srv-cert
+            readOnly: true
+          - mountPath: /profile-collector-cert
+            name: profile-collector-cert
+            readOnly: true
+        dnsPolicy: ClusterFirst
+        nodeSelector:
+          kubernetes.io/os: linux
+          node-role.kubernetes.io/master: ""
+        priorityClassName: system-cluster-critical
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: olm-operator-serviceaccount
+        serviceAccountName: olm-operator-serviceaccount
+        terminationGracePeriodSeconds: 30
+        tolerations:
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/master
+          operator: Exists
+        - effect: NoExecute
+          key: node.kubernetes.io/unreachable
+          operator: Exists
+          tolerationSeconds: 120
+        - effect: NoExecute
+          key: node.kubernetes.io/not-ready
+          operator: Exists
+          tolerationSeconds: 120
+        volumes:
+        - name: srv-cert
+          secret:
+            defaultMode: 420
+            secretName: olm-operator-serving-cert
+        - name: profile-collector-cert
+          secret:
+            defaultMode: 420
+            secretName: pprof-cert
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2023-05-04T21:36:18Z"
+      lastUpdateTime: "2023-05-04T21:41:12Z"
+      message: ReplicaSet "olm-operator-db78df589" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: "2023-09-22T11:12:26Z"
+      lastUpdateTime: "2023-09-22T11:12:26Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "1"
+      include.release.openshift.io/self-managed-high-availability: "true"
+    creationTimestamp: "2023-05-04T21:36:17Z"
+    generation: 1
+    labels:
+      app: package-server-manager
+    name: package-server-manager
+    namespace: openshift-operator-lifecycle-manager
+    ownerReferences:
+    - apiVersion: config.openshift.io/v1
+      kind: ClusterVersion
+      name: version
+      uid: 5d92b52f-9fff-4a6e-b815-398b934115ad
+    resourceVersion: "114617763"
+    uid: 4921b15d-2c7c-4128-9078-3b2e323b9416
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: package-server-manager
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        annotations:
+          target.workload.openshift.io/management: '{"effect": "PreferredDuringScheduling"}'
+        creationTimestamp: null
+        labels:
+          app: package-server-manager
+      spec:
+        containers:
+        - args:
+          - --name
+          - $(PACKAGESERVER_NAME)
+          - --namespace
+          - $(PACKAGESERVER_NAMESPACE)
+          command:
+          - /bin/psm
+          - start
+          env:
+          - name: PACKAGESERVER_NAME
+            value: packageserver
+          - name: PACKAGESERVER_IMAGE
+            value: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:58d171c685b8bba98ed0a0497b23ddc9703fe975ce93e04182a283ac17f31410
+          - name: PACKAGESERVER_NAMESPACE
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+          - name: RELEASE_VERSION
+            value: 4.10.53
+          image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:58d171c685b8bba98ed0a0497b23ddc9703fe975ce93e04182a283ac17f31410
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /healthz
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          name: package-server-manager
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /healthz
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources:
+            requests:
+              cpu: 10m
+              memory: 50Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: FallbackToLogsOnError
+        dnsPolicy: ClusterFirst
+        nodeSelector:
+          kubernetes.io/os: linux
+          node-role.kubernetes.io/master: ""
+        priorityClassName: system-cluster-critical
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: olm-operator-serviceaccount
+        serviceAccountName: olm-operator-serviceaccount
+        terminationGracePeriodSeconds: 30
+        tolerations:
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/master
+          operator: Exists
+        - effect: NoExecute
+          key: node.kubernetes.io/unreachable
+          operator: Exists
+          tolerationSeconds: 120
+        - effect: NoExecute
+          key: node.kubernetes.io/not-ready
+          operator: Exists
+          tolerationSeconds: 120
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2023-05-04T21:36:17Z"
+      lastUpdateTime: "2023-05-04T21:40:55Z"
+      message: ReplicaSet "package-server-manager-744986cf4d" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: "2023-09-22T11:12:26Z"
+      lastUpdateTime: "2023-09-22T11:12:26Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "1"
+    creationTimestamp: "2023-05-04T21:41:14Z"
+    generation: 1
+    labels:
+      olm.deployment-spec-hash: c78c474c9
+      olm.owner: packageserver
+      olm.owner.kind: ClusterServiceVersion
+      olm.owner.namespace: openshift-operator-lifecycle-manager
+    name: packageserver
+    namespace: openshift-operator-lifecycle-manager
+    ownerReferences:
+    - apiVersion: operators.coreos.com/v1alpha1
+      blockOwnerDeletion: false
+      controller: false
+      kind: ClusterServiceVersion
+      name: packageserver
+      uid: eefb24cd-0237-4dfe-82d0-bc3090d4cbcc
+    resourceVersion: "114617641"
+    uid: 87f4a099-d6d2-45d9-a681-d68525007927
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 2
+    revisionHistoryLimit: 1
+    selector:
+      matchLabels:
+        app: packageserver
+    strategy:
+      rollingUpdate:
+        maxSurge: 1
+        maxUnavailable: 1
+      type: RollingUpdate
+    template:
+      metadata:
+        annotations:
+          include.release.openshift.io/ibm-cloud-managed: "true"
+          include.release.openshift.io/self-managed-high-availability: "true"
+          olm.operatorGroup: olm-operators
+          olm.operatorNamespace: openshift-operator-lifecycle-manager
+          olm.targetNamespaces: openshift-operator-lifecycle-manager
+          olmcahash: 42480c9eeb420793c69a6d811ac7bcf88844496fcacb606f1beb985aa0066526
+          target.workload.openshift.io/management: '{"effect": "PreferredDuringScheduling"}'
+        creationTimestamp: null
+        labels:
+          app: packageserver
+      spec:
+        affinity:
+          podAntiAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchLabels:
+                  app: packageserver
+              topologyKey: kubernetes.io/hostname
+        containers:
+        - command:
+          - /bin/package-server
+          - -v=4
+          - --secure-port
+          - "5443"
+          - --global-namespace
+          - openshift-marketplace
+          env:
+          - name: OPERATOR_CONDITION_NAME
+            value: packageserver
+          image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:58d171c685b8bba98ed0a0497b23ddc9703fe975ce93e04182a283ac17f31410
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /healthz
+              port: 5443
+              scheme: HTTPS
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          name: packageserver
+          ports:
+          - containerPort: 5443
+            protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /healthz
+              port: 5443
+              scheme: HTTPS
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources:
+            requests:
+              cpu: 10m
+              memory: 50Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: FallbackToLogsOnError
+          volumeMounts:
+          - mountPath: /tmp
+            name: tmpfs
+          - mountPath: /apiserver.local.config/certificates
+            name: apiservice-cert
+          - mountPath: /tmp/k8s-webhook-server/serving-certs
+            name: webhook-cert
+        dnsPolicy: ClusterFirst
+        nodeSelector:
+          kubernetes.io/os: linux
+          node-role.kubernetes.io/master: ""
+        priorityClassName: system-cluster-critical
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: olm-operator-serviceaccount
+        serviceAccountName: olm-operator-serviceaccount
+        terminationGracePeriodSeconds: 30
+        tolerations:
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/master
+          operator: Exists
+        - effect: NoExecute
+          key: node.kubernetes.io/unreachable
+          operator: Exists
+          tolerationSeconds: 120
+        - effect: NoExecute
+          key: node.kubernetes.io/not-ready
+          operator: Exists
+          tolerationSeconds: 120
+        volumes:
+        - emptyDir: {}
+          name: tmpfs
+        - name: apiservice-cert
+          secret:
+            defaultMode: 420
+            items:
+            - key: tls.crt
+              path: apiserver.crt
+            - key: tls.key
+              path: apiserver.key
+            secretName: packageserver-service-cert
+        - name: webhook-cert
+          secret:
+            defaultMode: 420
+            items:
+            - key: tls.crt
+              path: tls.crt
+            - key: tls.key
+              path: tls.key
+            secretName: packageserver-service-cert
+  status:
+    availableReplicas: 2
+    conditions:
+    - lastTransitionTime: "2023-05-04T21:41:14Z"
+      lastUpdateTime: "2023-05-04T21:41:30Z"
+      message: ReplicaSet "packageserver-564cf75d77" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: "2023-05-11T18:26:32Z"
+      lastUpdateTime: "2023-05-11T18:26:32Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    observedGeneration: 1
+    readyReplicas: 2
+    replicas: 2
+    updatedReplicas: 2
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

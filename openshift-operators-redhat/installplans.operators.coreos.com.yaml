@@ -1,0 +1,209 @@
+apiVersion: v1
+items:
+- apiVersion: operators.coreos.com/v1alpha1
+  kind: InstallPlan
+  metadata:
+    creationTimestamp: "2023-05-11T19:13:29Z"
+    generateName: install-
+    generation: 1
+    labels:
+      operators.coreos.com/elasticsearch-operator.openshift-operators-redhat: ""
+    name: install-4dh47
+    namespace: openshift-operators-redhat
+    ownerReferences:
+    - apiVersion: operators.coreos.com/v1alpha1
+      blockOwnerDeletion: false
+      controller: false
+      kind: Subscription
+      name: elasticsearch-operator
+      uid: d7388859-c706-4e6b-887a-73b6854a97e4
+    resourceVersion: "1630526"
+    uid: a655138b-a833-4203-9932-2f5645bfaf2e
+  spec:
+    approval: Automatic
+    approved: true
+    clusterServiceVersionNames:
+    - elasticsearch-operator.v5.6.5
+    generation: 1
+  status:
+    bundleLookups:
+    - catalogSourceRef:
+        name: redhat-operators
+        namespace: openshift-marketplace
+      identifier: elasticsearch-operator.v5.6.5
+      path: registry.redhat.io/openshift-logging/elasticsearch-operator-bundle@sha256:afea2897dd74235fa62bf34821441819ed8edbee121a053e6001c046482b4573
+      properties: '{"properties":[{"type":"olm.maxOpenShiftVersion","value":4.14},{"type":"olm.package","value":{"packageName":"elasticsearch-operator","version":"5.6.5"}},{"type":"olm.gvk","value":{"group":"logging.openshift.io","kind":"Elasticsearch","version":"v1"}},{"type":"olm.gvk","value":{"group":"logging.openshift.io","kind":"Kibana","version":"v1"}}]}'
+      replaces: elasticsearch-operator.v5.6.4
+    catalogSources: []
+    conditions:
+    - lastTransitionTime: "2023-05-11T19:14:13Z"
+      lastUpdateTime: "2023-05-11T19:14:13Z"
+      status: "True"
+      type: Installed
+    phase: Complete
+    plan:
+    - resolving: elasticsearch-operator.v5.6.5
+      resource:
+        group: operators.coreos.com
+        kind: ClusterServiceVersion
+        manifest: '{"kind":"ConfigMap","name":"0494d0e391941ef522b2e7d8acc69d42deb3843307feb89b56fe133437cb5a6","namespace":"openshift-marketplace","catalogSourceName":"redhat-operators","catalogSourceNamespace":"openshift-marketplace","replaces":"elasticsearch-operator.v5.6.4","properties":"{\"properties\":[{\"type\":\"olm.maxOpenShiftVersion\",\"value\":4.14},{\"type\":\"olm.package\",\"value\":{\"packageName\":\"elasticsearch-operator\",\"version\":\"5.6.5\"}},{\"type\":\"olm.gvk\",\"value\":{\"group\":\"logging.openshift.io\",\"kind\":\"Elasticsearch\",\"version\":\"v1\"}},{\"type\":\"olm.gvk\",\"value\":{\"group\":\"logging.openshift.io\",\"kind\":\"Kibana\",\"version\":\"v1\"}}]}"}'
+        name: elasticsearch-operator.v5.6.5
+        sourceName: redhat-operators
+        sourceNamespace: openshift-marketplace
+        version: v1alpha1
+      status: Created
+    - resolving: elasticsearch-operator.v5.6.5
+      resource:
+        group: rbac.authorization.k8s.io
+        kind: RoleBinding
+        manifest: '{"kind":"ConfigMap","name":"0494d0e391941ef522b2e7d8acc69d42deb3843307feb89b56fe133437cb5a6","namespace":"openshift-marketplace","catalogSourceName":"redhat-operators","catalogSourceNamespace":"openshift-marketplace","replaces":"elasticsearch-operator.v5.6.4","properties":"{\"properties\":[{\"type\":\"olm.maxOpenShiftVersion\",\"value\":4.14},{\"type\":\"olm.package\",\"value\":{\"packageName\":\"elasticsearch-operator\",\"version\":\"5.6.5\"}},{\"type\":\"olm.gvk\",\"value\":{\"group\":\"logging.openshift.io\",\"kind\":\"Elasticsearch\",\"version\":\"v1\"}},{\"type\":\"olm.gvk\",\"value\":{\"group\":\"logging.openshift.io\",\"kind\":\"Kibana\",\"version\":\"v1\"}}]}"}'
+        name: prometheus
+        sourceName: redhat-operators
+        sourceNamespace: openshift-marketplace
+        version: v1
+      status: Created
+    - resolving: elasticsearch-operator.v5.6.5
+      resource:
+        group: rbac.authorization.k8s.io
+        kind: Role
+        manifest: '{"kind":"ConfigMap","name":"0494d0e391941ef522b2e7d8acc69d42deb3843307feb89b56fe133437cb5a6","namespace":"openshift-marketplace","catalogSourceName":"redhat-operators","catalogSourceNamespace":"openshift-marketplace","replaces":"elasticsearch-operator.v5.6.4","properties":"{\"properties\":[{\"type\":\"olm.maxOpenShiftVersion\",\"value\":4.14},{\"type\":\"olm.package\",\"value\":{\"packageName\":\"elasticsearch-operator\",\"version\":\"5.6.5\"}},{\"type\":\"olm.gvk\",\"value\":{\"group\":\"logging.openshift.io\",\"kind\":\"Elasticsearch\",\"version\":\"v1\"}},{\"type\":\"olm.gvk\",\"value\":{\"group\":\"logging.openshift.io\",\"kind\":\"Kibana\",\"version\":\"v1\"}}]}"}'
+        name: leader-election-role
+        sourceName: redhat-operators
+        sourceNamespace: openshift-marketplace
+        version: v1
+      status: Created
+    - resolving: elasticsearch-operator.v5.6.5
+      resource:
+        group: apiextensions.k8s.io
+        kind: CustomResourceDefinition
+        manifest: '{"kind":"ConfigMap","name":"0494d0e391941ef522b2e7d8acc69d42deb3843307feb89b56fe133437cb5a6","namespace":"openshift-marketplace","catalogSourceName":"redhat-operators","catalogSourceNamespace":"openshift-marketplace","replaces":"elasticsearch-operator.v5.6.4","properties":"{\"properties\":[{\"type\":\"olm.maxOpenShiftVersion\",\"value\":4.14},{\"type\":\"olm.package\",\"value\":{\"packageName\":\"elasticsearch-operator\",\"version\":\"5.6.5\"}},{\"type\":\"olm.gvk\",\"value\":{\"group\":\"logging.openshift.io\",\"kind\":\"Elasticsearch\",\"version\":\"v1\"}},{\"type\":\"olm.gvk\",\"value\":{\"group\":\"logging.openshift.io\",\"kind\":\"Kibana\",\"version\":\"v1\"}}]}"}'
+        name: elasticsearches.logging.openshift.io
+        sourceName: redhat-operators
+        sourceNamespace: openshift-marketplace
+        version: v1
+      status: Created
+    - resolving: elasticsearch-operator.v5.6.5
+      resource:
+        group: apiextensions.k8s.io
+        kind: CustomResourceDefinition
+        manifest: '{"kind":"ConfigMap","name":"0494d0e391941ef522b2e7d8acc69d42deb3843307feb89b56fe133437cb5a6","namespace":"openshift-marketplace","catalogSourceName":"redhat-operators","catalogSourceNamespace":"openshift-marketplace","replaces":"elasticsearch-operator.v5.6.4","properties":"{\"properties\":[{\"type\":\"olm.maxOpenShiftVersion\",\"value\":4.14},{\"type\":\"olm.package\",\"value\":{\"packageName\":\"elasticsearch-operator\",\"version\":\"5.6.5\"}},{\"type\":\"olm.gvk\",\"value\":{\"group\":\"logging.openshift.io\",\"kind\":\"Elasticsearch\",\"version\":\"v1\"}},{\"type\":\"olm.gvk\",\"value\":{\"group\":\"logging.openshift.io\",\"kind\":\"Kibana\",\"version\":\"v1\"}}]}"}'
+        name: kibanas.logging.openshift.io
+        sourceName: redhat-operators
+        sourceNamespace: openshift-marketplace
+        version: v1
+      status: Created
+    - resolving: elasticsearch-operator.v5.6.5
+      resource:
+        group: rbac.authorization.k8s.io
+        kind: ClusterRole
+        manifest: '{"kind":"ConfigMap","name":"0494d0e391941ef522b2e7d8acc69d42deb3843307feb89b56fe133437cb5a6","namespace":"openshift-marketplace","catalogSourceName":"redhat-operators","catalogSourceNamespace":"openshift-marketplace","replaces":"elasticsearch-operator.v5.6.4","properties":"{\"properties\":[{\"type\":\"olm.maxOpenShiftVersion\",\"value\":4.14},{\"type\":\"olm.package\",\"value\":{\"packageName\":\"elasticsearch-operator\",\"version\":\"5.6.5\"}},{\"type\":\"olm.gvk\",\"value\":{\"group\":\"logging.openshift.io\",\"kind\":\"Elasticsearch\",\"version\":\"v1\"}},{\"type\":\"olm.gvk\",\"value\":{\"group\":\"logging.openshift.io\",\"kind\":\"Kibana\",\"version\":\"v1\"}}]}"}'
+        name: metrics-reader
+        sourceName: redhat-operators
+        sourceNamespace: openshift-marketplace
+        version: v1
+      status: Created
+    - resolving: elasticsearch-operator.v5.6.5
+      resource:
+        group: rbac.authorization.k8s.io
+        kind: ClusterRole
+        manifest: '{"kind":"ConfigMap","name":"0494d0e391941ef522b2e7d8acc69d42deb3843307feb89b56fe133437cb5a6","namespace":"openshift-marketplace","catalogSourceName":"redhat-operators","catalogSourceNamespace":"openshift-marketplace","replaces":"elasticsearch-operator.v5.6.4","properties":"{\"properties\":[{\"type\":\"olm.maxOpenShiftVersion\",\"value\":4.14},{\"type\":\"olm.package\",\"value\":{\"packageName\":\"elasticsearch-operator\",\"version\":\"5.6.5\"}},{\"type\":\"olm.gvk\",\"value\":{\"group\":\"logging.openshift.io\",\"kind\":\"Elasticsearch\",\"version\":\"v1\"}},{\"type\":\"olm.gvk\",\"value\":{\"group\":\"logging.openshift.io\",\"kind\":\"Kibana\",\"version\":\"v1\"}}]}"}'
+        name: metrics-reader
+        sourceName: redhat-operators
+        sourceNamespace: openshift-marketplace
+        version: v1
+      status: Present
+    - resolving: elasticsearch-operator.v5.6.5
+      resource:
+        group: rbac.authorization.k8s.io
+        kind: Role
+        manifest: '{"kind":"ConfigMap","name":"0494d0e391941ef522b2e7d8acc69d42deb3843307feb89b56fe133437cb5a6","namespace":"openshift-marketplace","catalogSourceName":"redhat-operators","catalogSourceNamespace":"openshift-marketplace","replaces":"elasticsearch-operator.v5.6.4","properties":"{\"properties\":[{\"type\":\"olm.maxOpenShiftVersion\",\"value\":4.14},{\"type\":\"olm.package\",\"value\":{\"packageName\":\"elasticsearch-operator\",\"version\":\"5.6.5\"}},{\"type\":\"olm.gvk\",\"value\":{\"group\":\"logging.openshift.io\",\"kind\":\"Elasticsearch\",\"version\":\"v1\"}},{\"type\":\"olm.gvk\",\"value\":{\"group\":\"logging.openshift.io\",\"kind\":\"Kibana\",\"version\":\"v1\"}}]}"}'
+        name: prometheus
+        sourceName: redhat-operators
+        sourceNamespace: openshift-marketplace
+        version: v1
+      status: Created
+    - resolving: elasticsearch-operator.v5.6.5
+      resource:
+        group: rbac.authorization.k8s.io
+        kind: ClusterRole
+        manifest: '{"kind":"ConfigMap","name":"0494d0e391941ef522b2e7d8acc69d42deb3843307feb89b56fe133437cb5a6","namespace":"openshift-marketplace","catalogSourceName":"redhat-operators","catalogSourceNamespace":"openshift-marketplace","replaces":"elasticsearch-operator.v5.6.4","properties":"{\"properties\":[{\"type\":\"olm.maxOpenShiftVersion\",\"value\":4.14},{\"type\":\"olm.package\",\"value\":{\"packageName\":\"elasticsearch-operator\",\"version\":\"5.6.5\"}},{\"type\":\"olm.gvk\",\"value\":{\"group\":\"logging.openshift.io\",\"kind\":\"Elasticsearch\",\"version\":\"v1\"}},{\"type\":\"olm.gvk\",\"value\":{\"group\":\"logging.openshift.io\",\"kind\":\"Kibana\",\"version\":\"v1\"}}]}"}'
+        name: proxy-role
+        sourceName: redhat-operators
+        sourceNamespace: openshift-marketplace
+        version: v1
+      status: Created
+    - resolving: elasticsearch-operator.v5.6.5
+      resource:
+        group: rbac.authorization.k8s.io
+        kind: ClusterRoleBinding
+        manifest: '{"kind":"ConfigMap","name":"0494d0e391941ef522b2e7d8acc69d42deb3843307feb89b56fe133437cb5a6","namespace":"openshift-marketplace","catalogSourceName":"redhat-operators","catalogSourceNamespace":"openshift-marketplace","replaces":"elasticsearch-operator.v5.6.4","properties":"{\"properties\":[{\"type\":\"olm.maxOpenShiftVersion\",\"value\":4.14},{\"type\":\"olm.package\",\"value\":{\"packageName\":\"elasticsearch-operator\",\"version\":\"5.6.5\"}},{\"type\":\"olm.gvk\",\"value\":{\"group\":\"logging.openshift.io\",\"kind\":\"Elasticsearch\",\"version\":\"v1\"}},{\"type\":\"olm.gvk\",\"value\":{\"group\":\"logging.openshift.io\",\"kind\":\"Kibana\",\"version\":\"v1\"}}]}"}'
+        name: proxy-rolebinding
+        sourceName: redhat-operators
+        sourceNamespace: openshift-marketplace
+        version: v1
+      status: Created
+    - resolving: elasticsearch-operator.v5.6.5
+      resource:
+        group: ""
+        kind: Service
+        manifest: '{"kind":"ConfigMap","name":"0494d0e391941ef522b2e7d8acc69d42deb3843307feb89b56fe133437cb5a6","namespace":"openshift-marketplace","catalogSourceName":"redhat-operators","catalogSourceNamespace":"openshift-marketplace","replaces":"elasticsearch-operator.v5.6.4","properties":"{\"properties\":[{\"type\":\"olm.maxOpenShiftVersion\",\"value\":4.14},{\"type\":\"olm.package\",\"value\":{\"packageName\":\"elasticsearch-operator\",\"version\":\"5.6.5\"}},{\"type\":\"olm.gvk\",\"value\":{\"group\":\"logging.openshift.io\",\"kind\":\"Elasticsearch\",\"version\":\"v1\"}},{\"type\":\"olm.gvk\",\"value\":{\"group\":\"logging.openshift.io\",\"kind\":\"Kibana\",\"version\":\"v1\"}}]}"}'
+        name: elasticsearch-operator-metrics
+        sourceName: redhat-operators
+        sourceNamespace: openshift-marketplace
+        version: v1
+      status: Created
+    - resolving: elasticsearch-operator.v5.6.5
+      resource:
+        group: monitoring.coreos.com
+        kind: ServiceMonitor
+        manifest: '{"kind":"ConfigMap","name":"0494d0e391941ef522b2e7d8acc69d42deb3843307feb89b56fe133437cb5a6","namespace":"openshift-marketplace","catalogSourceName":"redhat-operators","catalogSourceNamespace":"openshift-marketplace","replaces":"elasticsearch-operator.v5.6.4","properties":"{\"properties\":[{\"type\":\"olm.maxOpenShiftVersion\",\"value\":4.14},{\"type\":\"olm.package\",\"value\":{\"packageName\":\"elasticsearch-operator\",\"version\":\"5.6.5\"}},{\"type\":\"olm.gvk\",\"value\":{\"group\":\"logging.openshift.io\",\"kind\":\"Elasticsearch\",\"version\":\"v1\"}},{\"type\":\"olm.gvk\",\"value\":{\"group\":\"logging.openshift.io\",\"kind\":\"Kibana\",\"version\":\"v1\"}}]}"}'
+        name: elasticsearch-operator-metrics-monitor
+        sourceName: redhat-operators
+        sourceNamespace: openshift-marketplace
+        version: v1
+      status: Created
+    - resolving: elasticsearch-operator.v5.6.5
+      resource:
+        group: rbac.authorization.k8s.io
+        kind: RoleBinding
+        manifest: '{"kind":"ConfigMap","name":"0494d0e391941ef522b2e7d8acc69d42deb3843307feb89b56fe133437cb5a6","namespace":"openshift-marketplace","catalogSourceName":"redhat-operators","catalogSourceNamespace":"openshift-marketplace","replaces":"elasticsearch-operator.v5.6.4","properties":"{\"properties\":[{\"type\":\"olm.maxOpenShiftVersion\",\"value\":4.14},{\"type\":\"olm.package\",\"value\":{\"packageName\":\"elasticsearch-operator\",\"version\":\"5.6.5\"}},{\"type\":\"olm.gvk\",\"value\":{\"group\":\"logging.openshift.io\",\"kind\":\"Elasticsearch\",\"version\":\"v1\"}},{\"type\":\"olm.gvk\",\"value\":{\"group\":\"logging.openshift.io\",\"kind\":\"Kibana\",\"version\":\"v1\"}}]}"}'
+        name: leader-election-rolebinding
+        sourceName: redhat-operators
+        sourceNamespace: openshift-marketplace
+        version: v1
+      status: Created
+    - resolving: elasticsearch-operator.v5.6.5
+      resource:
+        group: ""
+        kind: ServiceAccount
+        manifest: '{"kind":"ConfigMap","name":"0494d0e391941ef522b2e7d8acc69d42deb3843307feb89b56fe133437cb5a6","namespace":"openshift-marketplace","catalogSourceName":"redhat-operators","catalogSourceNamespace":"openshift-marketplace","replaces":"elasticsearch-operator.v5.6.4","properties":"{\"properties\":[{\"type\":\"olm.maxOpenShiftVersion\",\"value\":4.14},{\"type\":\"olm.package\",\"value\":{\"packageName\":\"elasticsearch-operator\",\"version\":\"5.6.5\"}},{\"type\":\"olm.gvk\",\"value\":{\"group\":\"logging.openshift.io\",\"kind\":\"Elasticsearch\",\"version\":\"v1\"}},{\"type\":\"olm.gvk\",\"value\":{\"group\":\"logging.openshift.io\",\"kind\":\"Kibana\",\"version\":\"v1\"}}]}"}'
+        name: elasticsearch-operator
+        sourceName: redhat-operators
+        sourceNamespace: openshift-marketplace
+        version: v1
+      status: Created
+    - resolving: elasticsearch-operator.v5.6.5
+      resource:
+        group: rbac.authorization.k8s.io
+        kind: ClusterRole
+        manifest: '{"kind":"ConfigMap","name":"0494d0e391941ef522b2e7d8acc69d42deb3843307feb89b56fe133437cb5a6","namespace":"openshift-marketplace","catalogSourceName":"redhat-operators","catalogSourceNamespace":"openshift-marketplace","replaces":"elasticsearch-operator.v5.6.4","properties":"{\"properties\":[{\"type\":\"olm.maxOpenShiftVersion\",\"value\":4.14},{\"type\":\"olm.package\",\"value\":{\"packageName\":\"elasticsearch-operator\",\"version\":\"5.6.5\"}},{\"type\":\"olm.gvk\",\"value\":{\"group\":\"logging.openshift.io\",\"kind\":\"Elasticsearch\",\"version\":\"v1\"}},{\"type\":\"olm.gvk\",\"value\":{\"group\":\"logging.openshift.io\",\"kind\":\"Kibana\",\"version\":\"v1\"}}]}"}'
+        name: elasticsearch-operator.v5.6.5-75dd85fbcb
+        sourceName: redhat-operators
+        sourceNamespace: openshift-marketplace
+        version: v1
+      status: Created
+    - resolving: elasticsearch-operator.v5.6.5
+      resource:
+        group: rbac.authorization.k8s.io
+        kind: ClusterRoleBinding
+        manifest: '{"kind":"ConfigMap","name":"0494d0e391941ef522b2e7d8acc69d42deb3843307feb89b56fe133437cb5a6","namespace":"openshift-marketplace","catalogSourceName":"redhat-operators","catalogSourceNamespace":"openshift-marketplace","replaces":"elasticsearch-operator.v5.6.4","properties":"{\"properties\":[{\"type\":\"olm.maxOpenShiftVersion\",\"value\":4.14},{\"type\":\"olm.package\",\"value\":{\"packageName\":\"elasticsearch-operator\",\"version\":\"5.6.5\"}},{\"type\":\"olm.gvk\",\"value\":{\"group\":\"logging.openshift.io\",\"kind\":\"Elasticsearch\",\"version\":\"v1\"}},{\"type\":\"olm.gvk\",\"value\":{\"group\":\"logging.openshift.io\",\"kind\":\"Kibana\",\"version\":\"v1\"}}]}"}'
+        name: elasticsearch-operator.v5.6.5-75dd85fbcb
+        sourceName: redhat-operators
+        sourceNamespace: openshift-marketplace
+        version: v1
+      status: Created
+    startTime: "2023-05-11T19:14:12Z"
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

@@ -1,0 +1,121 @@
+apiVersion: v1
+items:
+- apiVersion: authorization.openshift.io/v1
+  kind: Role
+  metadata:
+    annotations:
+      include.release.openshift.io/ibm-cloud-managed: "true"
+      include.release.openshift.io/self-managed-high-availability: "true"
+    creationTimestamp: "2023-05-04T21:36:01Z"
+    name: collect-profiles
+    namespace: openshift-operator-lifecycle-manager
+    ownerReferences:
+    - apiVersion: config.openshift.io/v1
+      kind: ClusterVersion
+      name: version
+      uid: 5d92b52f-9fff-4a6e-b815-398b934115ad
+    resourceVersion: "1755"
+    uid: 25335eee-16e2-4986-9309-6eb81874737d
+  rules:
+  - apiGroups:
+    - ""
+    attributeRestrictions: null
+    resources:
+    - configmaps
+    verbs:
+    - create
+    - delete
+    - get
+    - list
+  - apiGroups:
+    - ""
+    attributeRestrictions: null
+    resources:
+    - secrets
+    verbs:
+    - get
+    - update
+- apiVersion: authorization.openshift.io/v1
+  kind: Role
+  metadata:
+    annotations:
+      include.release.openshift.io/ibm-cloud-managed: "true"
+      include.release.openshift.io/self-managed-high-availability: "true"
+    creationTimestamp: "2023-05-04T21:35:44Z"
+    name: operator-lifecycle-manager-metrics
+    namespace: openshift-operator-lifecycle-manager
+    ownerReferences:
+    - apiVersion: config.openshift.io/v1
+      kind: ClusterVersion
+      name: version
+      uid: 5d92b52f-9fff-4a6e-b815-398b934115ad
+    resourceVersion: "1313"
+    uid: 65bc6bcd-ea6a-4579-9318-51083d791f87
+  rules:
+  - apiGroups:
+    - ""
+    attributeRestrictions: null
+    resources:
+    - endpoints
+    - pods
+    - services
+    verbs:
+    - get
+    - list
+    - watch
+- apiVersion: authorization.openshift.io/v1
+  kind: Role
+  metadata:
+    creationTimestamp: "2023-05-04T21:41:13Z"
+    name: packageserver
+    namespace: openshift-operator-lifecycle-manager
+    ownerReferences:
+    - apiVersion: operators.coreos.com/v2
+      blockOwnerDeletion: false
+      controller: true
+      kind: OperatorCondition
+      name: packageserver
+      uid: 8052c9f8-98f0-4dfa-8850-82201352fd22
+    resourceVersion: "7226"
+    uid: 67040071-adbf-44b5-91d7-523bc0fd310d
+  rules:
+  - apiGroups:
+    - operators.coreos.com
+    attributeRestrictions: null
+    resourceNames:
+    - packageserver
+    resources:
+    - operatorconditions
+    verbs:
+    - get
+    - patch
+    - update
+- apiVersion: authorization.openshift.io/v1
+  kind: Role
+  metadata:
+    creationTimestamp: "2023-05-04T21:41:14Z"
+    name: packageserver-service-cert
+    namespace: openshift-operator-lifecycle-manager
+    ownerReferences:
+    - apiVersion: operators.coreos.com/v1alpha1
+      blockOwnerDeletion: false
+      controller: false
+      kind: ClusterServiceVersion
+      name: packageserver
+      uid: eefb24cd-0237-4dfe-82d0-bc3090d4cbcc
+    resourceVersion: "7260"
+    uid: 0979e525-758c-4eb3-82ab-5e22a720041a
+  rules:
+  - apiGroups:
+    - ""
+    attributeRestrictions: null
+    resourceNames:
+    - packageserver-service-cert
+    resources:
+    - secrets
+    verbs:
+    - get
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

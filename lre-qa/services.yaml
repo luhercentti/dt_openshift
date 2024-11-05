@@ -1,0 +1,333 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Service
+  metadata:
+    creationTimestamp: "2023-05-26T02:42:54Z"
+    labels:
+      migration.openshift.io/migrated-by-migmigration: e38d34ca-b64b-4f51-8661-6ba7d05484a6
+      migration.openshift.io/migrated-by-migplan: ec0923fa-4d06-4a8b-a67a-a32b23d75ede
+      name: amq-broker-operator
+      velero.io/backup-name: migration-fc7c1-initial-wskdq
+      velero.io/restore-name: migration-fc7c1-final-6g8n2
+    name: amq-broker-operator
+    namespace: lre-qa
+    resourceVersion: "11895869"
+    uid: 7a2f8177-476f-4f48-b2d9-0f24509855a0
+  spec:
+    clusterIP: 172.30.109.241
+    clusterIPs:
+    - 172.30.109.241
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: metrics
+      port: 8383
+      protocol: TCP
+      targetPort: 8383
+    selector:
+      name: amq-broker-operator
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftWebConsole
+    creationTimestamp: "2023-05-26T02:42:54Z"
+    labels:
+      app: front-lre
+      migration.openshift.io/migrated-by-migmigration: e38d34ca-b64b-4f51-8661-6ba7d05484a6
+      migration.openshift.io/migrated-by-migplan: ec0923fa-4d06-4a8b-a67a-a32b23d75ede
+      velero.io/backup-name: migration-fc7c1-initial-wskdq
+      velero.io/restore-name: migration-fc7c1-final-6g8n2
+    name: front-lre
+    namespace: lre-qa
+    resourceVersion: "11895875"
+    uid: 8f453136-fe50-45ef-bbcb-1a2359e6e099
+  spec:
+    clusterIP: 172.30.13.41
+    clusterIPs:
+    - 172.30.13.41
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: 3000-tcp
+      port: 3000
+      protocol: TCP
+      targetPort: 3000
+    selector:
+      deploymentconfig: front-lre
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    creationTimestamp: "2023-05-26T02:42:54Z"
+    labels:
+      ActiveMQArtemis: lre-broker
+      application: lre-broker-app
+      migration.openshift.io/migrated-by-migmigration: e38d34ca-b64b-4f51-8661-6ba7d05484a6
+      migration.openshift.io/migrated-by-migplan: ec0923fa-4d06-4a8b-a67a-a32b23d75ede
+      velero.io/backup-name: migration-fc7c1-initial-wskdq
+      velero.io/restore-name: migration-fc7c1-final-6g8n2
+    name: lre-broker-amqp-0-svc
+    namespace: lre-qa
+    resourceVersion: "11895881"
+    uid: 03034bbe-b74c-4829-9a2e-0fe8f9c2eaa3
+  spec:
+    clusterIP: 172.30.90.203
+    clusterIPs:
+    - 172.30.90.203
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: amqp-0
+      port: 5672
+      protocol: TCP
+      targetPort: 5672
+    publishNotReadyAddresses: true
+    selector:
+      ActiveMQArtemis: lre-broker
+      application: lre-broker-app
+      statefulset.kubernetes.io/pod-name: lre-broker-ss-0
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    creationTimestamp: "2023-05-26T02:42:54Z"
+    labels:
+      ActiveMQArtemis: lre-broker
+      application: lre-broker-app
+      migration.openshift.io/migrated-by-migmigration: e38d34ca-b64b-4f51-8661-6ba7d05484a6
+      migration.openshift.io/migrated-by-migplan: ec0923fa-4d06-4a8b-a67a-a32b23d75ede
+      velero.io/backup-name: migration-fc7c1-initial-wskdq
+      velero.io/restore-name: migration-fc7c1-final-6g8n2
+    name: lre-broker-amqp-1-svc
+    namespace: lre-qa
+    resourceVersion: "11895885"
+    uid: b5f743db-3645-4b83-bd17-3ba0b5952eca
+  spec:
+    clusterIP: 172.30.111.180
+    clusterIPs:
+    - 172.30.111.180
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: amqp-1
+      port: 5672
+      protocol: TCP
+      targetPort: 5672
+    publishNotReadyAddresses: true
+    selector:
+      ActiveMQArtemis: lre-broker
+      application: lre-broker-app
+      statefulset.kubernetes.io/pod-name: lre-broker-ss-1
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    creationTimestamp: "2023-05-26T02:42:54Z"
+    labels:
+      ActiveMQArtemis: lre-broker
+      application: lre-broker-app
+      migration.openshift.io/migrated-by-migmigration: e38d34ca-b64b-4f51-8661-6ba7d05484a6
+      migration.openshift.io/migrated-by-migplan: ec0923fa-4d06-4a8b-a67a-a32b23d75ede
+      velero.io/backup-name: migration-fc7c1-initial-wskdq
+      velero.io/restore-name: migration-fc7c1-final-6g8n2
+    name: lre-broker-hdls-svc
+    namespace: lre-qa
+    resourceVersion: "11895889"
+    uid: 1fcdf4fa-1610-424a-b494-81651ab294d4
+  spec:
+    clusterIP: None
+    clusterIPs:
+    - None
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: console-jolokia
+      port: 8161
+      protocol: TCP
+      targetPort: 8161
+    - name: all
+      port: 61616
+      protocol: TCP
+      targetPort: 61616
+    publishNotReadyAddresses: true
+    selector:
+      ActiveMQArtemis: lre-broker
+      application: lre-broker-app
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    creationTimestamp: "2023-05-26T02:42:54Z"
+    labels:
+      ActiveMQArtemis: lre-broker
+      application: lre-broker-app
+      migration.openshift.io/migrated-by-migmigration: e38d34ca-b64b-4f51-8661-6ba7d05484a6
+      migration.openshift.io/migrated-by-migplan: ec0923fa-4d06-4a8b-a67a-a32b23d75ede
+      velero.io/backup-name: migration-fc7c1-initial-wskdq
+      velero.io/restore-name: migration-fc7c1-final-6g8n2
+    name: lre-broker-ping-svc
+    namespace: lre-qa
+    resourceVersion: "11895893"
+    uid: 03bbea80-bbdd-4a6e-b259-2e8ade997092
+  spec:
+    clusterIP: None
+    clusterIPs:
+    - None
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - port: 8888
+      protocol: TCP
+      targetPort: 8888
+    publishNotReadyAddresses: true
+    selector:
+      ActiveMQArtemis: lre-broker
+      application: lre-broker-app
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    creationTimestamp: "2023-05-26T02:42:54Z"
+    labels:
+      ActiveMQArtemis: lre-broker
+      application: lre-broker-app
+      migration.openshift.io/migrated-by-migmigration: e38d34ca-b64b-4f51-8661-6ba7d05484a6
+      migration.openshift.io/migrated-by-migplan: ec0923fa-4d06-4a8b-a67a-a32b23d75ede
+      velero.io/backup-name: migration-fc7c1-initial-wskdq
+      velero.io/restore-name: migration-fc7c1-final-6g8n2
+    name: lre-broker-wconsj-0-svc
+    namespace: lre-qa
+    resourceVersion: "11895899"
+    uid: a366edf1-5d1a-40fb-8519-b4fac14f3f59
+  spec:
+    clusterIP: 172.30.136.145
+    clusterIPs:
+    - 172.30.136.145
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: wconsj-0
+      port: 8161
+      protocol: TCP
+      targetPort: 8161
+    publishNotReadyAddresses: true
+    selector:
+      ActiveMQArtemis: lre-broker
+      application: lre-broker-app
+      statefulset.kubernetes.io/pod-name: lre-broker-ss-0
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    creationTimestamp: "2023-05-26T02:42:55Z"
+    labels:
+      ActiveMQArtemis: lre-broker
+      application: lre-broker-app
+      migration.openshift.io/migrated-by-migmigration: e38d34ca-b64b-4f51-8661-6ba7d05484a6
+      migration.openshift.io/migrated-by-migplan: ec0923fa-4d06-4a8b-a67a-a32b23d75ede
+      velero.io/backup-name: migration-fc7c1-initial-wskdq
+      velero.io/restore-name: migration-fc7c1-final-6g8n2
+    name: lre-broker-wconsj-1-svc
+    namespace: lre-qa
+    resourceVersion: "11895903"
+    uid: f7bd5fab-29f3-4fcd-a095-5ea0649e9e28
+  spec:
+    clusterIP: 172.30.195.7
+    clusterIPs:
+    - 172.30.195.7
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: wconsj-1
+      port: 8161
+      protocol: TCP
+      targetPort: 8161
+    publishNotReadyAddresses: true
+    selector:
+      ActiveMQArtemis: lre-broker
+      application: lre-broker-app
+      statefulset.kubernetes.io/pod-name: lre-broker-ss-1
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: "2023-05-26T02:42:55Z"
+    labels:
+      app: product-lre
+      migration.openshift.io/migrated-by-migmigration: e38d34ca-b64b-4f51-8661-6ba7d05484a6
+      migration.openshift.io/migrated-by-migplan: ec0923fa-4d06-4a8b-a67a-a32b23d75ede
+      velero.io/backup-name: migration-fc7c1-initial-wskdq
+      velero.io/restore-name: migration-fc7c1-final-6g8n2
+    name: product-lre
+    namespace: lre-qa
+    resourceVersion: "11895908"
+    uid: 2c671447-de85-4a19-8c38-6062471d2c21
+  spec:
+    clusterIP: 172.30.6.47
+    clusterIPs:
+    - 172.30.6.47
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: 3000-tcp
+      port: 3000
+      protocol: TCP
+      targetPort: 3000
+    selector:
+      app: product-lre
+      deploymentconfig: product-lre
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

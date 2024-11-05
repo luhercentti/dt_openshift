@@ -1,0 +1,706 @@
+apiVersion: v1
+items:
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftWebConsole
+      openshift.io/migration-registry: 172.30.93.27:5000
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-18T20:57:08Z"
+    generation: 1
+    labels:
+      app: api-integracion
+      migration.openshift.io/migrated-by-migmigration: bf3b53a0-3a30-4f32-905a-b3647ad7c520
+      migration.openshift.io/migrated-by-migplan: f912fe17-8056-491d-8703-6b82312d78ec
+      velero.io/backup-name: migration-d9b4c-initial-qhlk8
+      velero.io/restore-name: migration-d9b4c-final-gc9lr
+    name: api-integracion
+    namespace: ministrosdefe-dev
+    resourceVersion: "6268146"
+    uid: 9a5817fe-2339-4764-ba0d-33b522f46b7a
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: api-integracion:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      git:
+        ref: develop
+        uri: https://dirtrab.visualstudio.com/Ministros%20De%20Fe/_git/api-integracion-ministros-de-fe
+      sourceSecret:
+        name: vsts
+      type: Git
+    strategy:
+      sourceStrategy:
+        env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: Development
+        - name: DOTNET_STARTUP_PROJECT
+          value: Dt.MinistrosDeFe.ApiDeIntegracion/Dt.MinistrosDeFe.ApiDeIntegracion.csproj
+        from:
+          kind: ImageStreamTag
+          name: dotnet:2.1
+          namespace: openshift
+      type: Source
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - generic:
+        secret: 014dfa6707c457bd
+      type: Generic
+    - github:
+        secret: ea551149753059ef
+      type: GitHub
+    - imageChange:
+        lastTriggeredImageID: docker-registry.default.svc:5000/openshift/dotnet@sha256:c3aa4f3fa47b8f172a311aeebce45a091f6689dbf5aebf7e4c7ffa1c5c418a81
+      type: ImageChange
+    - type: ConfigChange
+  status:
+    lastVersion: 0
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftWebConsole
+      openshift.io/migration-registry: 172.30.93.27:5000
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-18T20:57:07Z"
+    generation: 1
+    labels:
+      app: api-integracion-qa
+      migration.openshift.io/migrated-by-migmigration: bf3b53a0-3a30-4f32-905a-b3647ad7c520
+      migration.openshift.io/migrated-by-migplan: f912fe17-8056-491d-8703-6b82312d78ec
+      velero.io/backup-name: migration-d9b4c-initial-qhlk8
+      velero.io/restore-name: migration-d9b4c-final-gc9lr
+    name: api-integracion-qa
+    namespace: ministrosdefe-dev
+    resourceVersion: "6268143"
+    uid: cfa2d5cd-6899-43d7-8c75-f765db1c191f
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: api-integracion-qa:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      git:
+        ref: develop
+        uri: https://dirtrab.visualstudio.com/Ministros%20De%20Fe/_git/api-integracion-ministros-de-fe
+      sourceSecret:
+        name: vsts
+      type: Git
+    strategy:
+      sourceStrategy:
+        env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: Qa
+        - name: DOTNET_STARTUP_PROJECT
+          value: Dt.MinistrosDeFe.ApiDeIntegracion/Dt.MinistrosDeFe.ApiDeIntegracion.csproj
+        from:
+          kind: ImageStreamTag
+          name: dotnet:2.1
+          namespace: openshift
+      type: Source
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - generic:
+        secret: 007364ec0a2b4adf
+      type: Generic
+    - github:
+        secret: 0007310f11ff556c
+      type: GitHub
+    - imageChange:
+        lastTriggeredImageID: docker-registry.default.svc:5000/openshift/dotnet@sha256:c3aa4f3fa47b8f172a311aeebce45a091f6689dbf5aebf7e4c7ffa1c5c418a81
+      type: ImageChange
+    - type: ConfigChange
+  status:
+    lastVersion: 0
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftWebConsole
+      openshift.io/migration-registry: 172.30.93.27:5000
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-18T20:57:08Z"
+    generation: 2
+    labels:
+      app: djtrl-serv001-decl
+      migration.openshift.io/migrated-by-migmigration: bf3b53a0-3a30-4f32-905a-b3647ad7c520
+      migration.openshift.io/migrated-by-migplan: f912fe17-8056-491d-8703-6b82312d78ec
+      velero.io/backup-name: migration-d9b4c-initial-qhlk8
+      velero.io/restore-name: migration-d9b4c-final-gc9lr
+    name: djtrl-serv001-decl
+    namespace: ministrosdefe-dev
+    resourceVersion: "95923146"
+    uid: 0cac8065-c72c-4ea1-9e5b-4348335dbbd1
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: djtrl-serv001-decl:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      git:
+        ref: develop
+        uri: https://dirtrab.visualstudio.com/Ministros%20De%20Fe/_git/djtrl-serv001-declaracion
+      sourceSecret:
+        name: vsts
+      type: Git
+    strategy:
+      sourceStrategy:
+        from:
+          kind: ImageStreamTag
+          name: nodejs:10
+          namespace: openshift
+      type: Source
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - generic:
+        secret: 3a0943324a4e6519
+      type: Generic
+    - github:
+        secret: 442d0791a04303ba
+      type: GitHub
+    - imageChange:
+        lastTriggeredImageID: docker-registry.default.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+      type: ImageChange
+    - type: ConfigChange
+  status:
+    imageChangeTriggers:
+    - from:
+        name: nodejs:10
+        namespace: openshift
+      lastTriggerTime: "2023-09-01T01:10:32Z"
+      lastTriggeredImageID: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+    lastVersion: 1
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftWebConsole
+      openshift.io/migration-registry: 172.30.93.27:5000
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-18T20:57:08Z"
+    generation: 2
+    labels:
+      app: djtrl-serv001-decl-qa
+      migration.openshift.io/migrated-by-migmigration: bf3b53a0-3a30-4f32-905a-b3647ad7c520
+      migration.openshift.io/migrated-by-migplan: f912fe17-8056-491d-8703-6b82312d78ec
+      velero.io/backup-name: migration-d9b4c-initial-qhlk8
+      velero.io/restore-name: migration-d9b4c-final-gc9lr
+    name: djtrl-serv001-decl-qa
+    namespace: ministrosdefe-dev
+    resourceVersion: "95922906"
+    uid: 3cfa969f-8455-4fde-ae1b-ede9cf69fa20
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: djtrl-serv001-decl-qa:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      git:
+        ref: develop
+        uri: https://dirtrab.visualstudio.com/Ministros%20De%20Fe/_git/djtrl-serv001-declaracion
+      sourceSecret:
+        name: vsts
+      type: Git
+    strategy:
+      sourceStrategy:
+        from:
+          kind: ImageStreamTag
+          name: nodejs:10
+          namespace: openshift
+      type: Source
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - generic:
+        secret: c4b97c6596a7a305
+      type: Generic
+    - github:
+        secret: d2a15ed190aedbf7
+      type: GitHub
+    - imageChange:
+        lastTriggeredImageID: docker-registry.default.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+      type: ImageChange
+    - type: ConfigChange
+  status:
+    imageChangeTriggers:
+    - from:
+        name: nodejs:10
+        namespace: openshift
+      lastTriggerTime: "2023-09-01T01:10:32Z"
+      lastTriggeredImageID: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+    lastVersion: 1
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftWebConsole
+      openshift.io/migration-registry: 172.30.93.27:5000
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-18T20:57:08Z"
+    generation: 2
+    labels:
+      app: djtrl-serv002-bff
+      migration.openshift.io/migrated-by-migmigration: bf3b53a0-3a30-4f32-905a-b3647ad7c520
+      migration.openshift.io/migrated-by-migplan: f912fe17-8056-491d-8703-6b82312d78ec
+      velero.io/backup-name: migration-d9b4c-initial-qhlk8
+      velero.io/restore-name: migration-d9b4c-final-gc9lr
+    name: djtrl-serv002-bff
+    namespace: ministrosdefe-dev
+    resourceVersion: "95922907"
+    uid: ca170cf3-5ae6-40ef-87f8-8ac5b35fa8ca
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: djtrl-serv002-bff:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      git:
+        ref: develop
+        uri: https://dirtrab.visualstudio.com/Ministros%20De%20Fe/_git/djtrl-serv002-bff
+      sourceSecret:
+        name: vsts
+      type: Git
+    strategy:
+      sourceStrategy:
+        from:
+          kind: ImageStreamTag
+          name: nodejs:10
+          namespace: openshift
+      type: Source
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - generic:
+        secret: ec2c2d3b235e5917
+      type: Generic
+    - github:
+        secret: 1b89f7b1183fc2e5
+      type: GitHub
+    - imageChange:
+        lastTriggeredImageID: docker-registry.default.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+      type: ImageChange
+    - type: ConfigChange
+  status:
+    imageChangeTriggers:
+    - from:
+        name: nodejs:10
+        namespace: openshift
+      lastTriggerTime: "2023-09-01T01:10:32Z"
+      lastTriggeredImageID: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+    lastVersion: 1
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftWebConsole
+      openshift.io/migration-registry: 172.30.93.27:5000
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-18T20:57:08Z"
+    generation: 2
+    labels:
+      app: djtrl-serv002-bff-qa
+      migration.openshift.io/migrated-by-migmigration: bf3b53a0-3a30-4f32-905a-b3647ad7c520
+      migration.openshift.io/migrated-by-migplan: f912fe17-8056-491d-8703-6b82312d78ec
+      velero.io/backup-name: migration-d9b4c-initial-qhlk8
+      velero.io/restore-name: migration-d9b4c-final-gc9lr
+    name: djtrl-serv002-bff-qa
+    namespace: ministrosdefe-dev
+    resourceVersion: "95922912"
+    uid: d892d5b6-7972-4184-9df8-2a0b86b2161d
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: djtrl-serv002-bff-qa:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      git:
+        ref: develop
+        uri: https://dirtrab.visualstudio.com/Ministros%20De%20Fe/_git/djtrl-serv002-bff
+      sourceSecret:
+        name: vsts
+      type: Git
+    strategy:
+      sourceStrategy:
+        from:
+          kind: ImageStreamTag
+          name: nodejs:10
+          namespace: openshift
+      type: Source
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - generic:
+        secret: 54d42d77c63f1dbb
+      type: Generic
+    - github:
+        secret: ce91e5a5a18de2a7
+      type: GitHub
+    - imageChange:
+        lastTriggeredImageID: docker-registry.default.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+      type: ImageChange
+    - type: ConfigChange
+  status:
+    imageChangeTriggers:
+    - from:
+        name: nodejs:10
+        namespace: openshift
+      lastTriggerTime: "2023-09-01T01:10:32Z"
+      lastTriggeredImageID: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+    lastVersion: 1
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftWebConsole
+      openshift.io/migration-registry: 172.30.93.27:5000
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-18T20:57:08Z"
+    generation: 2
+    labels:
+      app: front001-min-de-fe-qa
+      migration.openshift.io/migrated-by-migmigration: bf3b53a0-3a30-4f32-905a-b3647ad7c520
+      migration.openshift.io/migrated-by-migplan: f912fe17-8056-491d-8703-6b82312d78ec
+      velero.io/backup-name: migration-d9b4c-initial-qhlk8
+      velero.io/restore-name: migration-d9b4c-final-gc9lr
+    name: front001-min-de-fe-qa
+    namespace: ministrosdefe-dev
+    resourceVersion: "95923049"
+    uid: bfa270d0-da90-4627-9f34-1b82d3cbe6a2
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: front001-min-de-fe-qa:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      git:
+        ref: develop
+        uri: https://dirtrab.visualstudio.com/Ministros%20De%20Fe/_git/front001-ministros-de-fe
+      sourceSecret:
+        name: vsts
+      type: Git
+    strategy:
+      sourceStrategy:
+        env:
+        - name: GENERATE_SOURCEMAP
+          value: "false"
+        - name: REACT_APP_VALIDA_TOKEN
+          value: http://proxy-portalinstitucional-dev.api.dirtrab.cl/api/Autenticacion/token/validar
+        - name: REACT_APP_REDIRECT
+          value: https://midt.dirtrab.cl/
+        - name: REACT_APP_VOLVER_REDIRECT
+          value: /trabajador/home
+        - name: REACT_APP_METADATA_GRAPHQL
+          value: http://api-integracion-ministros-de-fe-qa.api-cloud.dirtrab.cl/api/metadata/graphql
+        - name: REACT_APP_DJTRL_URL_FORMULARIO
+          value: http://api-integracion-ministros-de-fe-qa.api-cloud.dirtrab.cl/api/form/declaracion/terminoRelacionLaboral/personas/
+        - name: REACT_APP_TEXTO_AYUDA_TRAMITE_DJTRL
+          value: En esta sección podrás realizar la Declaración Jurada de Termino
+            de Relación Laboral, para ser presentada en la AFC (Seguro de Cesantía)
+            o AFP (Indemnización de Trabajador/a de Casa Particular).
+        - name: REACT_APP_TEXTO_CAMBIO_DATOS_PERFIL
+          value: El comprobante del trámite será enviado a su correo. Si necesita
+            actualizar sus datos puede hacerlo en su perfil de MiDT
+        - name: REACT_APP_URL_PERFIL_MIDT
+          value: /actualizarPerfil
+        from:
+          kind: ImageStreamTag
+          name: nodejs:10
+          namespace: openshift
+      type: Source
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - generic:
+        secret: cdc926e1ca436f11
+      type: Generic
+    - github:
+        secret: d3f643ff6bde9c9e
+      type: GitHub
+    - imageChange:
+        lastTriggeredImageID: docker-registry.default.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+      type: ImageChange
+    - type: ConfigChange
+  status:
+    imageChangeTriggers:
+    - from:
+        name: nodejs:10
+        namespace: openshift
+      lastTriggerTime: "2023-09-01T01:10:32Z"
+      lastTriggeredImageID: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+    lastVersion: 1
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftWebConsole
+      openshift.io/migration-registry: 172.30.93.27:5000
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-18T20:57:08Z"
+    generation: 2
+    labels:
+      app: front001-ministros-de-fe
+      migration.openshift.io/migrated-by-migmigration: bf3b53a0-3a30-4f32-905a-b3647ad7c520
+      migration.openshift.io/migrated-by-migplan: f912fe17-8056-491d-8703-6b82312d78ec
+      velero.io/backup-name: migration-d9b4c-initial-qhlk8
+      velero.io/restore-name: migration-d9b4c-final-gc9lr
+    name: front001-ministros-de-fe
+    namespace: ministrosdefe-dev
+    resourceVersion: "95922917"
+    uid: 8f355869-0511-4d0f-8946-f48de214c038
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: front001-ministros-de-fe:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      git:
+        ref: develop
+        uri: https://dirtrab.visualstudio.com/Ministros%20De%20Fe/_git/front001-ministros-de-fe
+      sourceSecret:
+        name: vsts
+      type: Git
+    strategy:
+      sourceStrategy:
+        env:
+        - name: GENERATE_SOURCEMAP
+          value: "false"
+        - name: REACT_APP_VALIDA_TOKEN
+          value: http://proxy-portalinstitucional-dev.api.dirtrab.cl/api/Autenticacion/token/validar
+        - name: REACT_APP_REDIRECT
+          value: https://midt.dirtrab.cl/
+        - name: REACT_APP_VOLVER_REDIRECT
+          value: /trabajador/home
+        - name: REACT_APP_METADATA_GRAPHQL
+          value: http://api-integracion-ministros-de-fe-dev.api-cloud.dirtrab.cl/api/metadata/graphql
+        - name: REACT_APP_DJTRL_URL_FORMULARIO
+          value: http://api-integracion-ministros-de-fe-dev.api-cloud.dirtrab.cl/api/form/declaracion/terminoRelacionLaboral/personas/
+        - name: REACT_APP_TEXTO_AYUDA_TRAMITE_DJTRL
+          value: En esta sección podrás realizar la Declaración Jurada de Termino
+            de Relación Laboral, para ser presentada en la AFC (Seguro de Cesantía)
+            o AFP (Indemnización de Trabajador/a de Casa Particular).
+        - name: REACT_APP_TEXTO_CAMBIO_DATOS_PERFIL
+          value: El comprobante del trámite será enviado a su correo. Si necesita
+            actualizar sus datos puede hacerlo en su perfil de MiDT
+        - name: REACT_APP_URL_PERFIL_MIDT
+          value: /actualizarPerfil
+        from:
+          kind: ImageStreamTag
+          name: nodejs:10
+          namespace: openshift
+      type: Source
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - generic:
+        secret: 7915c9344804d6a9
+      type: Generic
+    - github:
+        secret: 3411676fdd2cf0ee
+      type: GitHub
+    - imageChange:
+        lastTriggeredImageID: docker-registry.default.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+      type: ImageChange
+    - type: ConfigChange
+  status:
+    imageChangeTriggers:
+    - from:
+        name: nodejs:10
+        namespace: openshift
+      lastTriggerTime: "2023-09-01T01:10:32Z"
+      lastTriggeredImageID: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+    lastVersion: 1
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftWebConsole
+      openshift.io/migration-registry: 172.30.93.27:5000
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-18T20:57:08Z"
+    generation: 1
+    labels:
+      app: proxy001-serv-ext-qa
+      migration.openshift.io/migrated-by-migmigration: bf3b53a0-3a30-4f32-905a-b3647ad7c520
+      migration.openshift.io/migrated-by-migplan: f912fe17-8056-491d-8703-6b82312d78ec
+      velero.io/backup-name: migration-d9b4c-initial-qhlk8
+      velero.io/restore-name: migration-d9b4c-final-gc9lr
+    name: proxy001-serv-ext-qa
+    namespace: ministrosdefe-dev
+    resourceVersion: "6268193"
+    uid: 8afb63ee-35bd-49a1-a142-120e377cdf41
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: proxy001-serv-ext-qa:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      git:
+        ref: feature/ocelot-cloud-config
+        uri: https://dirtrab.visualstudio.com/Ministros%20De%20Fe/_git/proxy001-servicios-externos
+      sourceSecret:
+        name: vsts
+      type: Git
+    strategy:
+      sourceStrategy:
+        env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: Qa
+        - name: DOTNET_STARTUP_PROJECT
+          value: Dt.MinistrosDeFe.Proxy001/Dt.MinistrosDeFe.Proxy001.csproj
+        from:
+          kind: ImageStreamTag
+          name: dotnet:2.1
+          namespace: openshift
+      type: Source
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - imageChange:
+        lastTriggeredImageID: docker-registry.default.svc:5000/openshift/dotnet@sha256:c3aa4f3fa47b8f172a311aeebce45a091f6689dbf5aebf7e4c7ffa1c5c418a81
+      type: ImageChange
+    - type: ConfigChange
+    - generic:
+        secret: 1b8b1ecc1b800383
+      type: Generic
+    - github:
+        secret: 882d79b331d06e7a
+      type: GitHub
+  status:
+    lastVersion: 0
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/backup-registry-hostname: docker-registry.default.svc:5000
+      openshift.io/backup-server-version: "1.11"
+      openshift.io/generated-by: OpenShiftWebConsole
+      openshift.io/migration-registry: 172.30.93.27:5000
+      openshift.io/restore-registry-hostname: image-registry.openshift-image-registry.svc:5000
+      openshift.io/restore-server-version: "1.23"
+    creationTimestamp: "2023-05-18T20:57:08Z"
+    generation: 1
+    labels:
+      app: proxy001-serv-externos
+      migration.openshift.io/migrated-by-migmigration: bf3b53a0-3a30-4f32-905a-b3647ad7c520
+      migration.openshift.io/migrated-by-migplan: f912fe17-8056-491d-8703-6b82312d78ec
+      velero.io/backup-name: migration-d9b4c-initial-qhlk8
+      velero.io/restore-name: migration-d9b4c-final-gc9lr
+    name: proxy001-serv-externos
+    namespace: ministrosdefe-dev
+    resourceVersion: "6268197"
+    uid: 15ce5217-a1db-4a14-b1b8-d70c501e4df2
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: proxy001-serv-externos:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      git:
+        ref: feature/ocelot-cloud-config
+        uri: https://dirtrab.visualstudio.com/Ministros%20De%20Fe/_git/proxy001-servicios-externos
+      sourceSecret:
+        name: vsts
+      type: Git
+    strategy:
+      sourceStrategy:
+        env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: Development
+        - name: DOTNET_STARTUP_PROJECT
+          value: Dt.MinistrosDeFe.Proxy001/Dt.MinistrosDeFe.Proxy001.csproj
+        from:
+          kind: ImageStreamTag
+          name: dotnet:2.1
+          namespace: openshift
+      type: Source
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - imageChange:
+        lastTriggeredImageID: docker-registry.default.svc:5000/openshift/dotnet@sha256:c3aa4f3fa47b8f172a311aeebce45a091f6689dbf5aebf7e4c7ffa1c5c418a81
+      type: ImageChange
+    - type: ConfigChange
+    - generic:
+        secret: ae631fd6f65fba67
+      type: Generic
+    - github:
+        secret: 0958486bf2d501c7
+      type: GitHub
+  status:
+    lastVersion: 0
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

@@ -1,0 +1,4140 @@
+apiVersion: v1
+items:
+- apiVersion: build.openshift.io/v1
+  kind: Build
+  metadata:
+    annotations:
+      openshift.io/build-config.name: api-lre-externa
+      openshift.io/build.number: "1"
+      openshift.io/build.pod-name: api-lre-externa-1-build
+    creationTimestamp: "2023-09-01T01:10:33Z"
+    generation: 2
+    labels:
+      app: api-lre-externa
+      buildconfig: api-lre-externa
+      migration.openshift.io/migrated-by-migmigration: 7403c997-3617-4c43-a005-e473ceb26445
+      migration.openshift.io/migrated-by-migplan: 2a8299ac-1423-4ceb-93a5-de572a0f44a9
+      openshift.io/build-config.name: api-lre-externa
+      openshift.io/build.start-policy: Serial
+      velero.io/backup-name: migration-9db42-initial-5kc64
+      velero.io/restore-name: migration-9db42-final-cpc2b
+    name: api-lre-externa-1
+    namespace: api-fiscalizacion-qa
+    ownerReferences:
+    - apiVersion: build.openshift.io/v1
+      controller: true
+      kind: BuildConfig
+      name: api-lre-externa
+      uid: 9c5ae1ec-a8de-4d3c-a92b-ee8256cb8d1b
+    resourceVersion: "95923902"
+    uid: a0dcc69f-a8dd-4e39-aabe-2744bdb0ea4a
+  spec:
+    nodeSelector: null
+    output:
+      pushSecret:
+        name: builder-dockercfg-xqzdw
+      to:
+        kind: ImageStreamTag
+        name: api-lre-externa:latest
+    postCommit: {}
+    resources: {}
+    serviceAccount: builder
+    source:
+      git:
+        ref: develop
+        uri: https://dirtrab.visualstudio.com/Libro%20Remuneraciones%20Electronico/_git/API-LRE-Externa
+      sourceSecret:
+        name: azure2
+      type: Git
+    strategy:
+      sourceStrategy:
+        from:
+          kind: DockerImage
+          name: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+        pullSecret:
+          name: builder-dockercfg-xqzdw
+      type: Source
+    triggeredBy:
+    - imageChangeBuild:
+        fromRef:
+          kind: ImageStreamTag
+          name: nodejs:10
+          namespace: openshift
+        imageID: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+      message: Image change
+  status:
+    completionTimestamp: "2023-09-01T01:10:38Z"
+    conditions:
+    - lastTransitionTime: "2023-09-01T01:10:34Z"
+      lastUpdateTime: "2023-09-01T01:10:34Z"
+      status: "False"
+      type: New
+    - lastTransitionTime: "2023-09-01T01:10:37Z"
+      lastUpdateTime: "2023-09-01T01:10:37Z"
+      status: "False"
+      type: Pending
+    - lastTransitionTime: "2023-09-01T01:10:38Z"
+      lastUpdateTime: "2023-09-01T01:10:38Z"
+      status: "False"
+      type: Running
+    - lastTransitionTime: "2023-09-01T01:10:38Z"
+      lastUpdateTime: "2023-09-01T01:10:38Z"
+      message: Failed to fetch the input source.
+      reason: FetchSourceFailed
+      status: "True"
+      type: Failed
+    config:
+      kind: BuildConfig
+      name: api-lre-externa
+      namespace: api-fiscalizacion-qa
+    duration: 4000000000
+    logSnippet: |-
+      Cloning "https://dirtrab.visualstudio.com/Libro%20Remuneraciones%20Electronico/_git/API-LRE-Externa" ...
+      error: failed to fetch requested repository "https://dirtr...Electronico/_git/API-LRE-Externa" with provided credentials
+    message: Failed to fetch the input source.
+    output: {}
+    outputDockerImageReference: image-registry.openshift-image-registry.svc:5000/api-fiscalizacion-qa/api-lre-externa:latest
+    phase: Failed
+    reason: FetchSourceFailed
+    startTimestamp: "2023-09-01T01:10:34Z"
+- apiVersion: build.openshift.io/v1
+  kind: Build
+  metadata:
+    annotations:
+      openshift.io/build-config.name: cron0002-actdatostrab
+      openshift.io/build.number: "1"
+      openshift.io/build.pod-name: cron0002-actdatostrab-1-build
+    creationTimestamp: "2023-09-01T01:10:32Z"
+    generation: 2
+    labels:
+      app: cron0002-actdatostrab
+      buildconfig: cron0002-actdatostrab
+      migration.openshift.io/migrated-by-migmigration: 7403c997-3617-4c43-a005-e473ceb26445
+      migration.openshift.io/migrated-by-migplan: 2a8299ac-1423-4ceb-93a5-de572a0f44a9
+      openshift.io/build-config.name: cron0002-actdatostrab
+      openshift.io/build.start-policy: Serial
+      velero.io/backup-name: migration-9db42-initial-5kc64
+      velero.io/restore-name: migration-9db42-final-cpc2b
+    name: cron0002-actdatostrab-1
+    namespace: api-fiscalizacion-qa
+    ownerReferences:
+    - apiVersion: build.openshift.io/v1
+      controller: true
+      kind: BuildConfig
+      name: cron0002-actdatostrab
+      uid: bfad6dc2-a6f8-45ef-a758-965894bf89f2
+    resourceVersion: "95923677"
+    uid: 1cfce800-cc27-4ecf-bf0a-2feb1cfec20a
+  spec:
+    nodeSelector: null
+    output:
+      pushSecret:
+        name: builder-dockercfg-xqzdw
+      to:
+        kind: ImageStreamTag
+        name: cron0002-actdatostrab:latest
+    postCommit: {}
+    resources: {}
+    serviceAccount: builder
+    source:
+      git:
+        ref: develop
+        uri: https://dirtrab.visualstudio.com/Libro%20Remuneraciones%20Electronico/_git/CRON0002-ActualizarDatosTrabajador
+      sourceSecret:
+        name: azure2
+      type: Git
+    strategy:
+      sourceStrategy:
+        from:
+          kind: DockerImage
+          name: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+        pullSecret:
+          name: builder-dockercfg-xqzdw
+      type: Source
+    triggeredBy:
+    - imageChangeBuild:
+        fromRef:
+          kind: ImageStreamTag
+          name: nodejs:10
+          namespace: openshift
+        imageID: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+      message: Image change
+  status:
+    completionTimestamp: "2023-09-01T01:10:36Z"
+    conditions:
+    - lastTransitionTime: "2023-09-01T01:10:32Z"
+      lastUpdateTime: "2023-09-01T01:10:32Z"
+      status: "False"
+      type: New
+    - lastTransitionTime: "2023-09-01T01:10:35Z"
+      lastUpdateTime: "2023-09-01T01:10:35Z"
+      status: "False"
+      type: Pending
+    - lastTransitionTime: "2023-09-01T01:10:36Z"
+      lastUpdateTime: "2023-09-01T01:10:36Z"
+      status: "False"
+      type: Running
+    - lastTransitionTime: "2023-09-01T01:10:36Z"
+      lastUpdateTime: "2023-09-01T01:10:36Z"
+      message: Failed to fetch the input source.
+      reason: FetchSourceFailed
+      status: "True"
+      type: Failed
+    config:
+      kind: BuildConfig
+      name: cron0002-actdatostrab
+      namespace: api-fiscalizacion-qa
+    duration: 4000000000
+    logSnippet: |-
+      Cloning "https://dirtrab.visualstudio.com/Libro%20Remunera...%20Electronico/_git/CRON0002-ActualizarDatosTrabajador" ...
+      error: failed to fetch requested repository "https://dirtr...ON0002-ActualizarDatosTrabajador" with provided credentials
+    message: Failed to fetch the input source.
+    output: {}
+    outputDockerImageReference: image-registry.openshift-image-registry.svc:5000/api-fiscalizacion-qa/cron0002-actdatostrab:latest
+    phase: Failed
+    reason: FetchSourceFailed
+    startTimestamp: "2023-09-01T01:10:32Z"
+- apiVersion: build.openshift.io/v1
+  kind: Build
+  metadata:
+    annotations:
+      openshift.io/build-config.name: cron003-enviospendientes
+      openshift.io/build.number: "1"
+      openshift.io/build.pod-name: cron003-enviospendientes-1-build
+    creationTimestamp: "2023-09-01T01:10:33Z"
+    generation: 2
+    labels:
+      app: cron003-enviospendientes
+      buildconfig: cron003-enviospendientes
+      migration.openshift.io/migrated-by-migmigration: 7403c997-3617-4c43-a005-e473ceb26445
+      migration.openshift.io/migrated-by-migplan: 2a8299ac-1423-4ceb-93a5-de572a0f44a9
+      openshift.io/build-config.name: cron003-enviospendientes
+      openshift.io/build.start-policy: Serial
+      velero.io/backup-name: migration-9db42-initial-5kc64
+      velero.io/restore-name: migration-9db42-final-cpc2b
+    name: cron003-enviospendientes-1
+    namespace: api-fiscalizacion-qa
+    ownerReferences:
+    - apiVersion: build.openshift.io/v1
+      controller: true
+      kind: BuildConfig
+      name: cron003-enviospendientes
+      uid: d7052067-b0ff-47f4-97cc-1a7c82b51ed4
+    resourceVersion: "95924037"
+    uid: 274f4d50-8f10-4a0c-a63c-8c731a8db65d
+  spec:
+    nodeSelector: null
+    output:
+      pushSecret:
+        name: builder-dockercfg-xqzdw
+      to:
+        kind: ImageStreamTag
+        name: cron003-enviospendientes:latest
+    postCommit: {}
+    resources: {}
+    serviceAccount: builder
+    source:
+      git:
+        ref: feature/desarrollo_2022
+        uri: https://dirtrab.visualstudio.com/Libro%20Remuneraciones%20Electronico/_git/CRON0003-EnviosPendientesLRESII
+      sourceSecret:
+        name: lre-database-credentials
+      type: Git
+    strategy:
+      sourceStrategy:
+        from:
+          kind: DockerImage
+          name: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+        pullSecret:
+          name: builder-dockercfg-xqzdw
+      type: Source
+    triggeredBy:
+    - imageChangeBuild:
+        fromRef:
+          kind: ImageStreamTag
+          name: nodejs:10
+          namespace: openshift
+        imageID: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+      message: Image change
+  status:
+    completionTimestamp: "2023-09-01T01:10:39Z"
+    conditions:
+    - lastTransitionTime: "2023-09-01T01:10:35Z"
+      lastUpdateTime: "2023-09-01T01:10:35Z"
+      status: "False"
+      type: New
+    - lastTransitionTime: "2023-09-01T01:10:38Z"
+      lastUpdateTime: "2023-09-01T01:10:38Z"
+      status: "False"
+      type: Pending
+    - lastTransitionTime: "2023-09-01T01:10:39Z"
+      lastUpdateTime: "2023-09-01T01:10:39Z"
+      status: "False"
+      type: Running
+    - lastTransitionTime: "2023-09-01T01:10:39Z"
+      lastUpdateTime: "2023-09-01T01:10:39Z"
+      message: Failed to fetch the input source.
+      reason: FetchSourceFailed
+      status: "True"
+      type: Failed
+    config:
+      kind: BuildConfig
+      name: cron003-enviospendientes
+      namespace: api-fiscalizacion-qa
+    duration: 4000000000
+    logSnippet: |-
+      Cloning "https://dirtrab.visualstudio.com/Libro%20Remuneraciones%20Electronico/_git/CRON0003-EnviosPendientesLRESII" ...
+      error: failed to fetch requested repository "https://dirtr.../CRON0003-EnviosPendientesLRESII" with provided credentials
+    message: Failed to fetch the input source.
+    output: {}
+    outputDockerImageReference: image-registry.openshift-image-registry.svc:5000/api-fiscalizacion-qa/cron003-enviospendientes:latest
+    phase: Failed
+    reason: FetchSourceFailed
+    startTimestamp: "2023-09-01T01:10:35Z"
+- apiVersion: build.openshift.io/v1
+  kind: Build
+  metadata:
+    annotations:
+      openshift.io/build-config.name: cron003-enviospendientes
+      openshift.io/build.number: "2"
+      openshift.io/build.pod-name: cron003-enviospendientes-2-build
+    creationTimestamp: "2023-10-13T14:58:15Z"
+    generation: 2
+    labels:
+      app: cron003-enviospendientes
+      buildconfig: cron003-enviospendientes
+      migration.openshift.io/migrated-by-migmigration: 7403c997-3617-4c43-a005-e473ceb26445
+      migration.openshift.io/migrated-by-migplan: 2a8299ac-1423-4ceb-93a5-de572a0f44a9
+      openshift.io/build-config.name: cron003-enviospendientes
+      openshift.io/build.start-policy: Serial
+      velero.io/backup-name: migration-9db42-initial-5kc64
+      velero.io/restore-name: migration-9db42-final-cpc2b
+    name: cron003-enviospendientes-2
+    namespace: api-fiscalizacion-qa
+    ownerReferences:
+    - apiVersion: build.openshift.io/v1
+      controller: true
+      kind: BuildConfig
+      name: cron003-enviospendientes
+      uid: d7052067-b0ff-47f4-97cc-1a7c82b51ed4
+    resourceVersion: "133823793"
+    uid: ad43131a-2f4d-465f-bb56-25ad1695a2b1
+  spec:
+    nodeSelector: null
+    output:
+      pushSecret:
+        name: builder-dockercfg-xqzdw
+      to:
+        kind: ImageStreamTag
+        name: cron003-enviospendientes:latest
+    postCommit: {}
+    resources: {}
+    serviceAccount: builder
+    source:
+      git:
+        ref: feature/desarrollo_2022
+        uri: https://dirtrab.visualstudio.com/Libro%20Remuneraciones%20Electronico/_git/CRON0003-EnviosPendientesLRESII
+      sourceSecret:
+        name: azure2
+      type: Git
+    strategy:
+      sourceStrategy:
+        from:
+          kind: DockerImage
+          name: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+        pullSecret:
+          name: builder-dockercfg-xqzdw
+      type: Source
+    triggeredBy:
+    - message: Manually triggered
+  status:
+    completionTimestamp: "2023-10-13T14:58:20Z"
+    conditions:
+    - lastTransitionTime: "2023-10-13T14:58:15Z"
+      lastUpdateTime: "2023-10-13T14:58:15Z"
+      status: "False"
+      type: New
+    - lastTransitionTime: "2023-10-13T14:58:18Z"
+      lastUpdateTime: "2023-10-13T14:58:18Z"
+      status: "False"
+      type: Pending
+    - lastTransitionTime: "2023-10-13T14:58:20Z"
+      lastUpdateTime: "2023-10-13T14:58:20Z"
+      status: "False"
+      type: Running
+    - lastTransitionTime: "2023-10-13T14:58:20Z"
+      lastUpdateTime: "2023-10-13T14:58:20Z"
+      message: Failed to fetch the input source.
+      reason: FetchSourceFailed
+      status: "True"
+      type: Failed
+    config:
+      kind: BuildConfig
+      name: cron003-enviospendientes
+      namespace: api-fiscalizacion-qa
+    duration: 5000000000
+    logSnippet: |-
+      Cloning "https://dirtrab.visualstudio.com/Libro%20Remuneraciones%20Electronico/_git/CRON0003-EnviosPendientesLRESII" ...
+      error: failed to fetch requested repository "https://dirtr.../CRON0003-EnviosPendientesLRESII" with provided credentials
+    message: Failed to fetch the input source.
+    output: {}
+    outputDockerImageReference: image-registry.openshift-image-registry.svc:5000/api-fiscalizacion-qa/cron003-enviospendientes:latest
+    phase: Failed
+    reason: FetchSourceFailed
+    startTimestamp: "2023-10-13T14:58:15Z"
+- apiVersion: build.openshift.io/v1
+  kind: Build
+  metadata:
+    annotations:
+      openshift.io/build-config.name: cron003-enviospendientes
+      openshift.io/build.number: "3"
+      openshift.io/build.pod-name: cron003-enviospendientes-3-build
+    creationTimestamp: "2023-10-13T15:03:52Z"
+    generation: 2
+    labels:
+      app: cron003-enviospendientes
+      buildconfig: cron003-enviospendientes
+      migration.openshift.io/migrated-by-migmigration: 7403c997-3617-4c43-a005-e473ceb26445
+      migration.openshift.io/migrated-by-migplan: 2a8299ac-1423-4ceb-93a5-de572a0f44a9
+      openshift.io/build-config.name: cron003-enviospendientes
+      openshift.io/build.start-policy: Serial
+      velero.io/backup-name: migration-9db42-initial-5kc64
+      velero.io/restore-name: migration-9db42-final-cpc2b
+    name: cron003-enviospendientes-3
+    namespace: api-fiscalizacion-qa
+    ownerReferences:
+    - apiVersion: build.openshift.io/v1
+      controller: true
+      kind: BuildConfig
+      name: cron003-enviospendientes
+      uid: d7052067-b0ff-47f4-97cc-1a7c82b51ed4
+    resourceVersion: "133828849"
+    uid: 768e0d38-e9f9-44f6-8234-a981dd588905
+  spec:
+    nodeSelector: null
+    output:
+      pushSecret:
+        name: builder-dockercfg-xqzdw
+      to:
+        kind: ImageStreamTag
+        name: cron003-enviospendientes:latest
+    postCommit: {}
+    resources: {}
+    revision:
+      git:
+        author:
+          email: ffernandeza@dt.gob.cl
+          name: Fernando Fernandez Alvarez
+        commit: 5a8a9501f716d5ea5b38ef7e3274e3d16dee8df7
+        committer:
+          email: ffernandeza@dt.gob.cl
+          name: Fernando Fernandez Alvarez
+        message: se quita filtro
+      type: Git
+    serviceAccount: builder
+    source:
+      git:
+        ref: feature/desarrollo_2022
+        uri: https://dirtrab.visualstudio.com/Libro%20Remuneraciones%20Electronico/_git/CRON0003-EnviosPendientesLRESII
+      sourceSecret:
+        name: cron003
+      type: Git
+    strategy:
+      sourceStrategy:
+        from:
+          kind: DockerImage
+          name: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+        pullSecret:
+          name: builder-dockercfg-xqzdw
+      type: Source
+    triggeredBy:
+    - message: Manually triggered
+  status:
+    completionTimestamp: "2023-10-13T15:05:25Z"
+    conditions:
+    - lastTransitionTime: "2023-10-13T15:03:53Z"
+      lastUpdateTime: "2023-10-13T15:03:53Z"
+      status: "False"
+      type: New
+    - lastTransitionTime: "2023-10-13T15:03:55Z"
+      lastUpdateTime: "2023-10-13T15:03:55Z"
+      status: "False"
+      type: Pending
+    - lastTransitionTime: "2023-10-13T15:05:25Z"
+      lastUpdateTime: "2023-10-13T15:05:25Z"
+      status: "False"
+      type: Running
+    - lastTransitionTime: "2023-10-13T15:05:25Z"
+      lastUpdateTime: "2023-10-13T15:05:25Z"
+      message: Generic Build failure - check logs for details.
+      reason: GenericBuildFailed
+      status: "True"
+      type: Failed
+    config:
+      kind: BuildConfig
+      name: cron003-enviospendientes
+      namespace: api-fiscalizacion-qa
+    duration: 92000000000
+    logSnippet: |-
+      npm timing npm Completed in 12051ms
+
+      npm ERR! A complete log of this run can be found in:
+      npm ERR!     /opt/app-root/src/.npm/_logs/2023-10-13T15_05_22_623Z-debug.log
+      error: build error: error building at STEP "RUN /usr/libexec/s2i/assemble": error while running runtime: exit status 1
+    message: Generic Build failure - check logs for details.
+    output: {}
+    outputDockerImageReference: image-registry.openshift-image-registry.svc:5000/api-fiscalizacion-qa/cron003-enviospendientes:latest
+    phase: Failed
+    reason: GenericBuildFailed
+    stages:
+    - durationMilliseconds: 1045
+      name: FetchInputs
+      startTime: "2023-10-13T15:03:56Z"
+      steps:
+      - durationMilliseconds: 1045
+        name: FetchGitSource
+        startTime: "2023-10-13T15:03:56Z"
+    - durationMilliseconds: 18977
+      name: PullImages
+      startTime: "2023-10-13T15:03:59Z"
+      steps:
+      - durationMilliseconds: 18977
+        name: PullBaseImage
+        startTime: "2023-10-13T15:03:59Z"
+    - durationMilliseconds: 67686
+      name: Build
+      startTime: "2023-10-13T15:04:18Z"
+      steps:
+      - durationMilliseconds: 67686
+        name: DockerBuild
+        startTime: "2023-10-13T15:04:18Z"
+    startTimestamp: "2023-10-13T15:03:53Z"
+- apiVersion: build.openshift.io/v1
+  kind: Build
+  metadata:
+    annotations:
+      openshift.io/build-config.name: cron003-enviospendientes
+      openshift.io/build.number: "4"
+      openshift.io/build.pod-name: cron003-enviospendientes-4-build
+    creationTimestamp: "2023-10-13T15:37:09Z"
+    generation: 2
+    labels:
+      app: cron003-enviospendientes
+      buildconfig: cron003-enviospendientes
+      migration.openshift.io/migrated-by-migmigration: 7403c997-3617-4c43-a005-e473ceb26445
+      migration.openshift.io/migrated-by-migplan: 2a8299ac-1423-4ceb-93a5-de572a0f44a9
+      openshift.io/build-config.name: cron003-enviospendientes
+      openshift.io/build.start-policy: Serial
+      velero.io/backup-name: migration-9db42-initial-5kc64
+      velero.io/restore-name: migration-9db42-final-cpc2b
+    name: cron003-enviospendientes-4
+    namespace: api-fiscalizacion-qa
+    ownerReferences:
+    - apiVersion: build.openshift.io/v1
+      controller: true
+      kind: BuildConfig
+      name: cron003-enviospendientes
+      uid: d7052067-b0ff-47f4-97cc-1a7c82b51ed4
+    resourceVersion: "133849598"
+    uid: 5aac6fbf-a8ed-4855-9a4d-283c5d467bdd
+  spec:
+    nodeSelector: null
+    output:
+      pushSecret:
+        name: builder-dockercfg-xqzdw
+      to:
+        kind: ImageStreamTag
+        name: cron003-enviospendientes:latest
+    postCommit: {}
+    resources: {}
+    revision:
+      git:
+        author:
+          email: cacevedoq@dt.gob.cl
+          name: CRISTOBAL ACEVEDO
+        commit: 0a0a5ed3a9791a0335b6b968dc28e079c3955476
+        committer:
+          email: cacevedoq@dt.gob.cl
+          name: CRISTOBAL ACEVEDO
+        message: fix build
+      type: Git
+    serviceAccount: builder
+    source:
+      git:
+        ref: feature/desarrollo_2022
+        uri: https://dirtrab.visualstudio.com/Libro%20Remuneraciones%20Electronico/_git/CRON0003-EnviosPendientesLRESII
+      sourceSecret:
+        name: cron003
+      type: Git
+    strategy:
+      sourceStrategy:
+        from:
+          kind: DockerImage
+          name: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+        pullSecret:
+          name: builder-dockercfg-xqzdw
+      type: Source
+    triggeredBy:
+    - message: Manually triggered
+  status:
+    completionTimestamp: "2023-10-13T15:38:59Z"
+    conditions:
+    - lastTransitionTime: "2023-10-13T15:37:09Z"
+      lastUpdateTime: "2023-10-13T15:37:09Z"
+      status: "False"
+      type: New
+    - lastTransitionTime: "2023-10-13T15:37:12Z"
+      lastUpdateTime: "2023-10-13T15:37:12Z"
+      status: "False"
+      type: Pending
+    - lastTransitionTime: "2023-10-13T15:38:59Z"
+      lastUpdateTime: "2023-10-13T15:38:59Z"
+      status: "False"
+      type: Running
+    - lastTransitionTime: "2023-10-13T15:38:59Z"
+      lastUpdateTime: "2023-10-13T15:38:59Z"
+      status: "True"
+      type: Complete
+    config:
+      kind: BuildConfig
+      name: cron003-enviospendientes
+      namespace: api-fiscalizacion-qa
+    duration: 110000000000
+    output:
+      to:
+        imageDigest: sha256:35b9beb98746d87599a1b1a300cea98b733992d543890a49f9796ce106822f6f
+    outputDockerImageReference: image-registry.openshift-image-registry.svc:5000/api-fiscalizacion-qa/cron003-enviospendientes:latest
+    phase: Complete
+    stages:
+    - durationMilliseconds: 1472
+      name: FetchInputs
+      startTime: "2023-10-13T15:37:13Z"
+      steps:
+      - durationMilliseconds: 1472
+        name: FetchGitSource
+        startTime: "2023-10-13T15:37:13Z"
+    - durationMilliseconds: 16252
+      name: PullImages
+      startTime: "2023-10-13T15:37:16Z"
+      steps:
+      - durationMilliseconds: 16252
+        name: PullBaseImage
+        startTime: "2023-10-13T15:37:16Z"
+    - durationMilliseconds: 80987
+      name: Build
+      startTime: "2023-10-13T15:37:32Z"
+      steps:
+      - durationMilliseconds: 80987
+        name: DockerBuild
+        startTime: "2023-10-13T15:37:32Z"
+    - durationMilliseconds: 1842
+      name: PushImage
+      startTime: "2023-10-13T15:38:53Z"
+      steps:
+      - durationMilliseconds: 1842
+        name: PushImage
+        startTime: "2023-10-13T15:38:53Z"
+    startTimestamp: "2023-10-13T15:37:09Z"
+- apiVersion: build.openshift.io/v1
+  kind: Build
+  metadata:
+    annotations:
+      openshift.io/build-config.name: cron004-actestfinalizado
+      openshift.io/build.number: "1"
+      openshift.io/build.pod-name: cron004-actestfinalizado-1-build
+    creationTimestamp: "2023-09-01T01:10:32Z"
+    generation: 2
+    labels:
+      app: cron004-actestfinalizado
+      buildconfig: cron004-actestfinalizado
+      migration.openshift.io/migrated-by-migmigration: 7403c997-3617-4c43-a005-e473ceb26445
+      migration.openshift.io/migrated-by-migplan: 2a8299ac-1423-4ceb-93a5-de572a0f44a9
+      openshift.io/build-config.name: cron004-actestfinalizado
+      openshift.io/build.start-policy: Serial
+      velero.io/backup-name: migration-9db42-initial-5kc64
+      velero.io/restore-name: migration-9db42-final-cpc2b
+    name: cron004-actestfinalizado-1
+    namespace: api-fiscalizacion-qa
+    ownerReferences:
+    - apiVersion: build.openshift.io/v1
+      controller: true
+      kind: BuildConfig
+      name: cron004-actestfinalizado
+      uid: 88a88dd8-2cb8-44ad-aaf8-c498f8c7377b
+    resourceVersion: "95923888"
+    uid: c1f3c8a4-0541-4fd4-990d-0a4457e41e33
+  spec:
+    nodeSelector: null
+    output:
+      pushSecret:
+        name: builder-dockercfg-xqzdw
+      to:
+        kind: ImageStreamTag
+        name: cron004-actestfinalizado:latest
+    postCommit: {}
+    resources: {}
+    serviceAccount: builder
+    source:
+      git:
+        ref: develop
+        uri: https://dirtrab.visualstudio.com/Libro%20Remuneraciones%20Electronico/_git/CRON0004-ActualizarEstadoFinalizado
+      sourceSecret:
+        name: azure2
+      type: Git
+    strategy:
+      sourceStrategy:
+        from:
+          kind: DockerImage
+          name: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+        pullSecret:
+          name: builder-dockercfg-xqzdw
+      type: Source
+    triggeredBy:
+    - imageChangeBuild:
+        fromRef:
+          kind: ImageStreamTag
+          name: nodejs:10
+          namespace: openshift
+        imageID: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+      message: Image change
+  status:
+    completionTimestamp: "2023-09-01T01:10:38Z"
+    conditions:
+    - lastTransitionTime: "2023-09-01T01:10:34Z"
+      lastUpdateTime: "2023-09-01T01:10:34Z"
+      status: "False"
+      type: New
+    - lastTransitionTime: "2023-09-01T01:10:37Z"
+      lastUpdateTime: "2023-09-01T01:10:37Z"
+      status: "False"
+      type: Pending
+    - lastTransitionTime: "2023-09-01T01:10:38Z"
+      lastUpdateTime: "2023-09-01T01:10:38Z"
+      status: "False"
+      type: Running
+    - lastTransitionTime: "2023-09-01T01:10:38Z"
+      lastUpdateTime: "2023-09-01T01:10:38Z"
+      message: Failed to fetch the input source.
+      reason: FetchSourceFailed
+      status: "True"
+      type: Failed
+    config:
+      kind: BuildConfig
+      name: cron004-actestfinalizado
+      namespace: api-fiscalizacion-qa
+    duration: 5000000000
+    logSnippet: |-
+      Cloning "https://dirtrab.visualstudio.com/Libro%20Remunera...20Electronico/_git/CRON0004-ActualizarEstadoFinalizado" ...
+      error: failed to fetch requested repository "https://dirtr...N0004-ActualizarEstadoFinalizado" with provided credentials
+    message: Failed to fetch the input source.
+    output: {}
+    outputDockerImageReference: image-registry.openshift-image-registry.svc:5000/api-fiscalizacion-qa/cron004-actestfinalizado:latest
+    phase: Failed
+    reason: FetchSourceFailed
+    startTimestamp: "2023-09-01T01:10:33Z"
+- apiVersion: build.openshift.io/v1
+  kind: Build
+  metadata:
+    annotations:
+      openshift.io/build-config.name: csr0001-validacionesfondoextra
+      openshift.io/build.number: "1"
+      openshift.io/build.pod-name: csr0001-validacionesfondoextra-1-build
+    creationTimestamp: "2023-10-16T20:01:02Z"
+    generation: 2
+    labels:
+      build: csr0001-validacionesfondoextra
+      buildconfig: csr0001-validacionesfondoextra
+      migration.openshift.io/migrated-by-migmigration: 7403c997-3617-4c43-a005-e473ceb26445
+      migration.openshift.io/migrated-by-migplan: 2a8299ac-1423-4ceb-93a5-de572a0f44a9
+      openshift.io/build-config.name: csr0001-validacionesfondoextra
+      openshift.io/build.start-policy: Serial
+      velero.io/backup-name: migration-9db42-initial-5kc64
+      velero.io/restore-name: migration-9db42-final-cpc2b
+    name: csr0001-validacionesfondoextra-1
+    namespace: api-fiscalizacion-qa
+    ownerReferences:
+    - apiVersion: build.openshift.io/v1
+      controller: true
+      kind: BuildConfig
+      name: csr0001-validacionesfondoextra
+      uid: 30fbdbbc-e342-44e7-8038-a27053f38637
+    resourceVersion: "136550383"
+    uid: 145038e1-2332-458b-ab24-cc49dbfdaa40
+  spec:
+    nodeSelector: null
+    output:
+      pushSecret:
+        name: builder-dockercfg-xqzdw
+      to:
+        kind: ImageStreamTag
+        name: csr0001-validacionesfondoextra:latest
+    postCommit: {}
+    resources: {}
+    revision:
+      git:
+        author:
+          email: ffernandeza@dt.gob.cl
+          name: Fernando Fernandez Alvarez
+        commit: ac8379c76a8393c4fffb295af1e584906d7ca800
+        committer:
+          email: ffernandeza@dt.gob.cl
+          name: Fernando Fernandez Alvarez
+        message: Se configura la variable q informa si tiene errores la declaracion
+      type: Git
+    serviceAccount: builder
+    source:
+      binary: {}
+      type: Binary
+    strategy:
+      sourceStrategy:
+        from:
+          kind: DockerImage
+          name: image-registry.openshift-image-registry.svc:5000/openshift/redhat-openjdk18-openshift@sha256:dc84fed0f6f40975a2277c126438c8aa15c70eeac75981dbaa4b6b853eff61a6
+        pullSecret:
+          name: builder-dockercfg-xqzdw
+      type: Source
+  status:
+    completionTimestamp: "2023-10-16T20:01:47Z"
+    conditions:
+    - lastTransitionTime: "2023-10-16T20:01:02Z"
+      lastUpdateTime: "2023-10-16T20:01:02Z"
+      status: "False"
+      type: New
+    - lastTransitionTime: "2023-10-16T20:01:04Z"
+      lastUpdateTime: "2023-10-16T20:01:04Z"
+      status: "False"
+      type: Pending
+    - lastTransitionTime: "2023-10-16T20:01:47Z"
+      lastUpdateTime: "2023-10-16T20:01:47Z"
+      status: "False"
+      type: Running
+    - lastTransitionTime: "2023-10-16T20:01:47Z"
+      lastUpdateTime: "2023-10-16T20:01:47Z"
+      status: "True"
+      type: Complete
+    config:
+      kind: BuildConfig
+      name: csr0001-validacionesfondoextra
+      namespace: api-fiscalizacion-qa
+    duration: 45000000000
+    output:
+      to:
+        imageDigest: sha256:4e2c64f5fab65f0a7495a6acfc48d4993bafdbf9b4d48f4c2d7102e0fe11ab0a
+    outputDockerImageReference: image-registry.openshift-image-registry.svc:5000/api-fiscalizacion-qa/csr0001-validacionesfondoextra:latest
+    phase: Complete
+    stages:
+    - durationMilliseconds: 13629
+      name: PullImages
+      startTime: "2023-10-16T20:01:14Z"
+      steps:
+      - durationMilliseconds: 13629
+        name: PullBaseImage
+        startTime: "2023-10-16T20:01:14Z"
+    - durationMilliseconds: 12606
+      name: Build
+      startTime: "2023-10-16T20:01:27Z"
+      steps:
+      - durationMilliseconds: 12606
+        name: DockerBuild
+        startTime: "2023-10-16T20:01:27Z"
+    - durationMilliseconds: 3281
+      name: PushImage
+      startTime: "2023-10-16T20:01:40Z"
+      steps:
+      - durationMilliseconds: 3281
+        name: PushImage
+        startTime: "2023-10-16T20:01:40Z"
+    startTimestamp: "2023-10-16T20:01:02Z"
+- apiVersion: build.openshift.io/v1
+  kind: Build
+  metadata:
+    annotations:
+      openshift.io/build-config.name: csr0001-validacionesfondolarge
+      openshift.io/build.number: "1"
+      openshift.io/build.pod-name: csr0001-validacionesfondolarge-1-build
+    creationTimestamp: "2023-10-16T19:53:05Z"
+    generation: 2
+    labels:
+      build: csr0001-validacionesfondolarge
+      buildconfig: csr0001-validacionesfondolarge
+      migration.openshift.io/migrated-by-migmigration: 7403c997-3617-4c43-a005-e473ceb26445
+      migration.openshift.io/migrated-by-migplan: 2a8299ac-1423-4ceb-93a5-de572a0f44a9
+      openshift.io/build-config.name: csr0001-validacionesfondolarge
+      openshift.io/build.start-policy: Serial
+      velero.io/backup-name: migration-9db42-initial-5kc64
+      velero.io/restore-name: migration-9db42-final-cpc2b
+    name: csr0001-validacionesfondolarge-1
+    namespace: api-fiscalizacion-qa
+    ownerReferences:
+    - apiVersion: build.openshift.io/v1
+      controller: true
+      kind: BuildConfig
+      name: csr0001-validacionesfondolarge
+      uid: edfd1060-4757-4fe1-94a7-559fb42bc45c
+    resourceVersion: "136545647"
+    uid: c30c9761-b32c-4105-aa96-07519eebc47c
+  spec:
+    nodeSelector: null
+    output:
+      pushSecret:
+        name: builder-dockercfg-xqzdw
+      to:
+        kind: ImageStreamTag
+        name: csr0001-validacionesfondolarge:latest
+    postCommit: {}
+    resources: {}
+    revision:
+      git:
+        author:
+          email: ffernandeza@dt.gob.cl
+          name: Fernando Fernandez Alvarez
+        commit: ac8379c76a8393c4fffb295af1e584906d7ca800
+        committer:
+          email: ffernandeza@dt.gob.cl
+          name: Fernando Fernandez Alvarez
+        message: Se configura la variable q informa si tiene errores la declaracion
+      type: Git
+    serviceAccount: builder
+    source:
+      binary: {}
+      type: Binary
+    strategy:
+      sourceStrategy:
+        from:
+          kind: DockerImage
+          name: image-registry.openshift-image-registry.svc:5000/openshift/redhat-openjdk18-openshift@sha256:dc84fed0f6f40975a2277c126438c8aa15c70eeac75981dbaa4b6b853eff61a6
+        pullSecret:
+          name: builder-dockercfg-xqzdw
+      type: Source
+  status:
+    completionTimestamp: "2023-10-16T19:53:50Z"
+    conditions:
+    - lastTransitionTime: "2023-10-16T19:53:05Z"
+      lastUpdateTime: "2023-10-16T19:53:05Z"
+      status: "False"
+      type: New
+    - lastTransitionTime: "2023-10-16T19:53:09Z"
+      lastUpdateTime: "2023-10-16T19:53:09Z"
+      status: "False"
+      type: Pending
+    - lastTransitionTime: "2023-10-16T19:53:50Z"
+      lastUpdateTime: "2023-10-16T19:53:50Z"
+      status: "False"
+      type: Running
+    - lastTransitionTime: "2023-10-16T19:53:50Z"
+      lastUpdateTime: "2023-10-16T19:53:50Z"
+      status: "True"
+      type: Complete
+    config:
+      kind: BuildConfig
+      name: csr0001-validacionesfondolarge
+      namespace: api-fiscalizacion-qa
+    duration: 45000000000
+    output:
+      to:
+        imageDigest: sha256:27590cb7260f8d6f6a84ba2ac642b9cacec0da478d4cd94290042e743673acde
+    outputDockerImageReference: image-registry.openshift-image-registry.svc:5000/api-fiscalizacion-qa/csr0001-validacionesfondolarge:latest
+    phase: Complete
+    stages:
+    - durationMilliseconds: 11832
+      name: PullImages
+      startTime: "2023-10-16T19:53:18Z"
+      steps:
+      - durationMilliseconds: 11832
+        name: PullBaseImage
+        startTime: "2023-10-16T19:53:18Z"
+    - durationMilliseconds: 12501
+      name: Build
+      startTime: "2023-10-16T19:53:30Z"
+      steps:
+      - durationMilliseconds: 12501
+        name: DockerBuild
+        startTime: "2023-10-16T19:53:30Z"
+    - durationMilliseconds: 3236
+      name: PushImage
+      startTime: "2023-10-16T19:53:42Z"
+      steps:
+      - durationMilliseconds: 3236
+        name: PushImage
+        startTime: "2023-10-16T19:53:42Z"
+    startTimestamp: "2023-10-16T19:53:05Z"
+- apiVersion: build.openshift.io/v1
+  kind: Build
+  metadata:
+    annotations:
+      openshift.io/build-config.name: csr0001-validacionesfondomedium
+      openshift.io/build.number: "1"
+      openshift.io/build.pod-name: csr0001-validacionesfondomedium-1-build
+    creationTimestamp: "2023-10-16T19:46:18Z"
+    generation: 2
+    labels:
+      build: csr0001-validacionesfondomedium
+      buildconfig: csr0001-validacionesfondomedium
+      migration.openshift.io/migrated-by-migmigration: 7403c997-3617-4c43-a005-e473ceb26445
+      migration.openshift.io/migrated-by-migplan: 2a8299ac-1423-4ceb-93a5-de572a0f44a9
+      openshift.io/build-config.name: csr0001-validacionesfondomedium
+      openshift.io/build.start-policy: Serial
+      velero.io/backup-name: migration-9db42-initial-5kc64
+      velero.io/restore-name: migration-9db42-final-cpc2b
+    name: csr0001-validacionesfondomedium-1
+    namespace: api-fiscalizacion-qa
+    ownerReferences:
+    - apiVersion: build.openshift.io/v1
+      controller: true
+      kind: BuildConfig
+      name: csr0001-validacionesfondomedium
+      uid: 514198a0-b5c0-4074-984d-5c3fb2ed89d9
+    resourceVersion: "136541717"
+    uid: 893cd939-4df9-4b61-a148-4338138ba9ce
+  spec:
+    nodeSelector: null
+    output:
+      pushSecret:
+        name: builder-dockercfg-xqzdw
+      to:
+        kind: ImageStreamTag
+        name: csr0001-validacionesfondomedium:latest
+    postCommit: {}
+    resources: {}
+    revision:
+      git:
+        author:
+          email: ffernandeza@dt.gob.cl
+          name: Fernando Fernandez Alvarez
+        commit: ac8379c76a8393c4fffb295af1e584906d7ca800
+        committer:
+          email: ffernandeza@dt.gob.cl
+          name: Fernando Fernandez Alvarez
+        message: Se configura la variable q informa si tiene errores la declaracion
+      type: Git
+    serviceAccount: builder
+    source:
+      binary: {}
+      type: Binary
+    strategy:
+      sourceStrategy:
+        from:
+          kind: DockerImage
+          name: image-registry.openshift-image-registry.svc:5000/openshift/redhat-openjdk18-openshift@sha256:dc84fed0f6f40975a2277c126438c8aa15c70eeac75981dbaa4b6b853eff61a6
+        pullSecret:
+          name: builder-dockercfg-xqzdw
+      type: Source
+  status:
+    completionTimestamp: "2023-10-16T19:47:03Z"
+    conditions:
+    - lastTransitionTime: "2023-10-16T19:46:18Z"
+      lastUpdateTime: "2023-10-16T19:46:18Z"
+      status: "False"
+      type: New
+    - lastTransitionTime: "2023-10-16T19:46:21Z"
+      lastUpdateTime: "2023-10-16T19:46:21Z"
+      status: "False"
+      type: Pending
+    - lastTransitionTime: "2023-10-16T19:47:03Z"
+      lastUpdateTime: "2023-10-16T19:47:03Z"
+      status: "False"
+      type: Running
+    - lastTransitionTime: "2023-10-16T19:47:03Z"
+      lastUpdateTime: "2023-10-16T19:47:03Z"
+      status: "True"
+      type: Complete
+    config:
+      kind: BuildConfig
+      name: csr0001-validacionesfondomedium
+      namespace: api-fiscalizacion-qa
+    duration: 45000000000
+    output:
+      to:
+        imageDigest: sha256:669167ff90b4cb67afb1429b7176f07efb9a4fb2c7b6faf6b34a85164fc82b71
+    outputDockerImageReference: image-registry.openshift-image-registry.svc:5000/api-fiscalizacion-qa/csr0001-validacionesfondomedium:latest
+    phase: Complete
+    stages:
+    - durationMilliseconds: 16807
+      name: PullImages
+      startTime: "2023-10-16T19:46:30Z"
+      steps:
+      - durationMilliseconds: 16807
+        name: PullBaseImage
+        startTime: "2023-10-16T19:46:30Z"
+    - durationMilliseconds: 10386
+      name: Build
+      startTime: "2023-10-16T19:46:47Z"
+      steps:
+      - durationMilliseconds: 10386
+        name: DockerBuild
+        startTime: "2023-10-16T19:46:47Z"
+    - durationMilliseconds: 2811
+      name: PushImage
+      startTime: "2023-10-16T19:46:57Z"
+      steps:
+      - durationMilliseconds: 2811
+        name: PushImage
+        startTime: "2023-10-16T19:46:57Z"
+    startTimestamp: "2023-10-16T19:46:18Z"
+- apiVersion: build.openshift.io/v1
+  kind: Build
+  metadata:
+    annotations:
+      openshift.io/build-config.name: csr0001-validacionesfondosmall
+      openshift.io/build.number: "1"
+      openshift.io/build.pod-name: csr0001-validacionesfondosmall-1-build
+    creationTimestamp: "2023-10-16T18:32:31Z"
+    generation: 2
+    labels:
+      build: csr0001-validacionesfondosmall
+      buildconfig: csr0001-validacionesfondosmall
+      migration.openshift.io/migrated-by-migmigration: 7403c997-3617-4c43-a005-e473ceb26445
+      migration.openshift.io/migrated-by-migplan: 2a8299ac-1423-4ceb-93a5-de572a0f44a9
+      openshift.io/build-config.name: csr0001-validacionesfondosmall
+      openshift.io/build.start-policy: Serial
+      velero.io/backup-name: migration-9db42-initial-5kc64
+      velero.io/restore-name: migration-9db42-final-cpc2b
+    name: csr0001-validacionesfondosmall-1
+    namespace: api-fiscalizacion-qa
+    ownerReferences:
+    - apiVersion: build.openshift.io/v1
+      controller: true
+      kind: BuildConfig
+      name: csr0001-validacionesfondosmall
+      uid: fbdbbcad-5e16-4a9d-a61e-7d274b9c3d02
+    resourceVersion: "136496683"
+    uid: a7f6d639-9354-4e64-83fa-d5e99670b4fc
+  spec:
+    nodeSelector: null
+    output:
+      pushSecret:
+        name: builder-dockercfg-xqzdw
+      to:
+        kind: ImageStreamTag
+        name: csr0001-validacionesfondosmall:latest
+    postCommit: {}
+    resources: {}
+    revision:
+      git:
+        author:
+          email: ffernandeza@dt.gob.cl
+          name: Fernando Fernandez Alvarez
+        commit: f2ad8162b904f4207bb85d6df5f30a14baee3e36
+        committer:
+          email: ffernandeza@dt.gob.cl
+          name: Fernando Fernandez Alvarez
+        message: se agrega nuevo campo al json
+      type: Git
+    serviceAccount: builder
+    source:
+      binary: {}
+      type: Binary
+    strategy:
+      sourceStrategy:
+        from:
+          kind: DockerImage
+          name: image-registry.openshift-image-registry.svc:5000/openshift/redhat-openjdk18-openshift@sha256:dc84fed0f6f40975a2277c126438c8aa15c70eeac75981dbaa4b6b853eff61a6
+        pullSecret:
+          name: builder-dockercfg-xqzdw
+      type: Source
+  status:
+    completionTimestamp: "2023-10-16T18:33:16Z"
+    conditions:
+    - lastTransitionTime: "2023-10-16T18:32:31Z"
+      lastUpdateTime: "2023-10-16T18:32:31Z"
+      status: "False"
+      type: New
+    - lastTransitionTime: "2023-10-16T18:32:34Z"
+      lastUpdateTime: "2023-10-16T18:32:34Z"
+      status: "False"
+      type: Pending
+    - lastTransitionTime: "2023-10-16T18:33:16Z"
+      lastUpdateTime: "2023-10-16T18:33:16Z"
+      status: "False"
+      type: Running
+    - lastTransitionTime: "2023-10-16T18:33:16Z"
+      lastUpdateTime: "2023-10-16T18:33:16Z"
+      status: "True"
+      type: Complete
+    config:
+      kind: BuildConfig
+      name: csr0001-validacionesfondosmall
+      namespace: api-fiscalizacion-qa
+    duration: 45000000000
+    output:
+      to:
+        imageDigest: sha256:18a729bb07248c31656a041c077100190028a235e2071b7040f41b272eb5feca
+    outputDockerImageReference: image-registry.openshift-image-registry.svc:5000/api-fiscalizacion-qa/csr0001-validacionesfondosmall:latest
+    phase: Complete
+    stages:
+    - durationMilliseconds: 16394
+      name: PullImages
+      startTime: "2023-10-16T18:32:42Z"
+      steps:
+      - durationMilliseconds: 16394
+        name: PullBaseImage
+        startTime: "2023-10-16T18:32:42Z"
+    - durationMilliseconds: 9853
+      name: Build
+      startTime: "2023-10-16T18:32:59Z"
+      steps:
+      - durationMilliseconds: 9853
+        name: DockerBuild
+        startTime: "2023-10-16T18:32:59Z"
+    - durationMilliseconds: 3125
+      name: PushImage
+      startTime: "2023-10-16T18:33:09Z"
+      steps:
+      - durationMilliseconds: 3125
+        name: PushImage
+        startTime: "2023-10-16T18:33:09Z"
+    startTimestamp: "2023-10-16T18:32:31Z"
+- apiVersion: build.openshift.io/v1
+  kind: Build
+  metadata:
+    annotations:
+      openshift.io/build-config.name: csr0002-cargaarchivoextra
+      openshift.io/build.number: "1"
+      openshift.io/build.pod-name: csr0002-cargaarchivoextra-1-build
+    creationTimestamp: "2023-10-16T20:26:54Z"
+    generation: 2
+    labels:
+      build: csr0002-cargaarchivoextra
+      buildconfig: csr0002-cargaarchivoextra
+      migration.openshift.io/migrated-by-migmigration: 7403c997-3617-4c43-a005-e473ceb26445
+      migration.openshift.io/migrated-by-migplan: 2a8299ac-1423-4ceb-93a5-de572a0f44a9
+      openshift.io/build-config.name: csr0002-cargaarchivoextra
+      openshift.io/build.start-policy: Serial
+      velero.io/backup-name: migration-9db42-initial-5kc64
+      velero.io/restore-name: migration-9db42-final-cpc2b
+    name: csr0002-cargaarchivoextra-1
+    namespace: api-fiscalizacion-qa
+    ownerReferences:
+    - apiVersion: build.openshift.io/v1
+      controller: true
+      kind: BuildConfig
+      name: csr0002-cargaarchivoextra
+      uid: fb10c4db-1754-4f3d-b129-0b7806265aab
+    resourceVersion: "136565794"
+    uid: e2519ce3-0ffb-4b8f-a454-783ae4004186
+  spec:
+    nodeSelector: null
+    output:
+      pushSecret:
+        name: builder-dockercfg-xqzdw
+      to:
+        kind: ImageStreamTag
+        name: csr0002-cargaarchivoextra:latest
+    postCommit: {}
+    resources: {}
+    revision:
+      git:
+        author:
+          email: ffernandeza@dt.gob.cl
+          name: Fernando Fernandez Alvarez
+        commit: ecd7cca0dbd42e5dea92baac2ee5a5ed4338df3e
+        committer:
+          email: ffernandeza@dt.gob.cl
+          name: Fernando Fernandez Alvarez
+        message: Merge branch 'master' into develop
+      type: Git
+    serviceAccount: builder
+    source:
+      binary: {}
+      type: Binary
+    strategy:
+      sourceStrategy:
+        from:
+          kind: DockerImage
+          name: image-registry.openshift-image-registry.svc:5000/openshift/redhat-openjdk18-openshift@sha256:dc84fed0f6f40975a2277c126438c8aa15c70eeac75981dbaa4b6b853eff61a6
+        pullSecret:
+          name: builder-dockercfg-xqzdw
+      type: Source
+  status:
+    completionTimestamp: "2023-10-16T20:27:33Z"
+    conditions:
+    - lastTransitionTime: "2023-10-16T20:26:54Z"
+      lastUpdateTime: "2023-10-16T20:26:54Z"
+      status: "False"
+      type: New
+    - lastTransitionTime: "2023-10-16T20:26:58Z"
+      lastUpdateTime: "2023-10-16T20:26:58Z"
+      status: "False"
+      type: Pending
+    - lastTransitionTime: "2023-10-16T20:27:33Z"
+      lastUpdateTime: "2023-10-16T20:27:33Z"
+      status: "False"
+      type: Running
+    - lastTransitionTime: "2023-10-16T20:27:33Z"
+      lastUpdateTime: "2023-10-16T20:27:33Z"
+      status: "True"
+      type: Complete
+    config:
+      kind: BuildConfig
+      name: csr0002-cargaarchivoextra
+      namespace: api-fiscalizacion-qa
+    duration: 39000000000
+    output:
+      to:
+        imageDigest: sha256:879940fd49e90d7cf2b24c4370f7db7b49f15849e6eea1b69caebdac33f183d4
+    outputDockerImageReference: image-registry.openshift-image-registry.svc:5000/api-fiscalizacion-qa/csr0002-cargaarchivoextra:latest
+    phase: Complete
+    stages:
+    - durationMilliseconds: 16455
+      name: PullImages
+      startTime: "2023-10-16T20:27:03Z"
+      steps:
+      - durationMilliseconds: 16455
+        name: PullBaseImage
+        startTime: "2023-10-16T20:27:03Z"
+    - durationMilliseconds: 7185
+      name: Build
+      startTime: "2023-10-16T20:27:20Z"
+      steps:
+      - durationMilliseconds: 7185
+        name: DockerBuild
+        startTime: "2023-10-16T20:27:20Z"
+    - durationMilliseconds: 2617
+      name: PushImage
+      startTime: "2023-10-16T20:27:27Z"
+      steps:
+      - durationMilliseconds: 2617
+        name: PushImage
+        startTime: "2023-10-16T20:27:27Z"
+    startTimestamp: "2023-10-16T20:26:54Z"
+- apiVersion: build.openshift.io/v1
+  kind: Build
+  metadata:
+    annotations:
+      openshift.io/build-config.name: csr0002-cargaarchivolarge
+      openshift.io/build.number: "1"
+      openshift.io/build.pod-name: csr0002-cargaarchivolarge-1-build
+    creationTimestamp: "2023-10-16T20:22:07Z"
+    generation: 2
+    labels:
+      build: csr0002-cargaarchivolarge
+      buildconfig: csr0002-cargaarchivolarge
+      migration.openshift.io/migrated-by-migmigration: 7403c997-3617-4c43-a005-e473ceb26445
+      migration.openshift.io/migrated-by-migplan: 2a8299ac-1423-4ceb-93a5-de572a0f44a9
+      openshift.io/build-config.name: csr0002-cargaarchivolarge
+      openshift.io/build.start-policy: Serial
+      velero.io/backup-name: migration-9db42-initial-5kc64
+      velero.io/restore-name: migration-9db42-final-cpc2b
+    name: csr0002-cargaarchivolarge-1
+    namespace: api-fiscalizacion-qa
+    ownerReferences:
+    - apiVersion: build.openshift.io/v1
+      controller: true
+      kind: BuildConfig
+      name: csr0002-cargaarchivolarge
+      uid: 0a810f23-4c4f-4ac8-b278-6d725c453c58
+    resourceVersion: "136562900"
+    uid: 5b59c0a8-a178-4285-8419-2af2442ca3fe
+  spec:
+    nodeSelector: null
+    output:
+      pushSecret:
+        name: builder-dockercfg-xqzdw
+      to:
+        kind: ImageStreamTag
+        name: csr0002-cargaarchivolarge:latest
+    postCommit: {}
+    resources: {}
+    revision:
+      git:
+        author:
+          email: ffernandeza@dt.gob.cl
+          name: Fernando Fernandez Alvarez
+        commit: ecd7cca0dbd42e5dea92baac2ee5a5ed4338df3e
+        committer:
+          email: ffernandeza@dt.gob.cl
+          name: Fernando Fernandez Alvarez
+        message: Merge branch 'master' into develop
+      type: Git
+    serviceAccount: builder
+    source:
+      binary: {}
+      type: Binary
+    strategy:
+      sourceStrategy:
+        from:
+          kind: DockerImage
+          name: image-registry.openshift-image-registry.svc:5000/openshift/redhat-openjdk18-openshift@sha256:dc84fed0f6f40975a2277c126438c8aa15c70eeac75981dbaa4b6b853eff61a6
+        pullSecret:
+          name: builder-dockercfg-xqzdw
+      type: Source
+  status:
+    completionTimestamp: "2023-10-16T20:22:47Z"
+    conditions:
+    - lastTransitionTime: "2023-10-16T20:22:07Z"
+      lastUpdateTime: "2023-10-16T20:22:07Z"
+      status: "False"
+      type: New
+    - lastTransitionTime: "2023-10-16T20:22:11Z"
+      lastUpdateTime: "2023-10-16T20:22:11Z"
+      status: "False"
+      type: Pending
+    - lastTransitionTime: "2023-10-16T20:22:47Z"
+      lastUpdateTime: "2023-10-16T20:22:47Z"
+      status: "False"
+      type: Running
+    - lastTransitionTime: "2023-10-16T20:22:47Z"
+      lastUpdateTime: "2023-10-16T20:22:47Z"
+      status: "True"
+      type: Complete
+    config:
+      kind: BuildConfig
+      name: csr0002-cargaarchivolarge
+      namespace: api-fiscalizacion-qa
+    duration: 40000000000
+    output:
+      to:
+        imageDigest: sha256:059c46b62bedf0044beec98ab0c0dc784fd63479376f52bc2ff085ec5a5a4e45
+    outputDockerImageReference: image-registry.openshift-image-registry.svc:5000/api-fiscalizacion-qa/csr0002-cargaarchivolarge:latest
+    phase: Complete
+    stages:
+    - durationMilliseconds: 16955
+      name: PullImages
+      startTime: "2023-10-16T20:22:16Z"
+      steps:
+      - durationMilliseconds: 16955
+        name: PullBaseImage
+        startTime: "2023-10-16T20:22:16Z"
+    - durationMilliseconds: 7286
+      name: Build
+      startTime: "2023-10-16T20:22:33Z"
+      steps:
+      - durationMilliseconds: 7286
+        name: DockerBuild
+        startTime: "2023-10-16T20:22:33Z"
+    - durationMilliseconds: 2559
+      name: PushImage
+      startTime: "2023-10-16T20:22:41Z"
+      steps:
+      - durationMilliseconds: 2559
+        name: PushImage
+        startTime: "2023-10-16T20:22:41Z"
+    startTimestamp: "2023-10-16T20:22:07Z"
+- apiVersion: build.openshift.io/v1
+  kind: Build
+  metadata:
+    annotations:
+      openshift.io/build-config.name: csr0002-cargaarchivomedium
+      openshift.io/build.number: "1"
+      openshift.io/build.pod-name: csr0002-cargaarchivomedium-1-build
+    creationTimestamp: "2023-10-16T20:10:57Z"
+    generation: 2
+    labels:
+      build: csr0002-cargaarchivomedium
+      buildconfig: csr0002-cargaarchivomedium
+      migration.openshift.io/migrated-by-migmigration: 7403c997-3617-4c43-a005-e473ceb26445
+      migration.openshift.io/migrated-by-migplan: 2a8299ac-1423-4ceb-93a5-de572a0f44a9
+      openshift.io/build-config.name: csr0002-cargaarchivomedium
+      openshift.io/build.start-policy: Serial
+      velero.io/backup-name: migration-9db42-initial-5kc64
+      velero.io/restore-name: migration-9db42-final-cpc2b
+    name: csr0002-cargaarchivomedium-1
+    namespace: api-fiscalizacion-qa
+    ownerReferences:
+    - apiVersion: build.openshift.io/v1
+      controller: true
+      kind: BuildConfig
+      name: csr0002-cargaarchivomedium
+      uid: 7ce26a85-b1cc-49aa-99ec-203ab44898dc
+    resourceVersion: "136556411"
+    uid: c2bbc4c0-8d76-43bb-bf06-6bc7c06adbc3
+  spec:
+    nodeSelector: null
+    output:
+      pushSecret:
+        name: builder-dockercfg-xqzdw
+      to:
+        kind: ImageStreamTag
+        name: csr0002-cargaarchivomedium:latest
+    postCommit: {}
+    resources: {}
+    revision:
+      git:
+        author:
+          email: ffernandeza@dt.gob.cl
+          name: Fernando Fernandez Alvarez
+        commit: 28925533590a7cb00261200eade0eb2eaca142cd
+        committer:
+          email: ffernandeza@dt.gob.cl
+          name: Fernando Fernandez Alvarez
+        message: se agrega logger
+      type: Git
+    serviceAccount: builder
+    source:
+      binary: {}
+      type: Binary
+    strategy:
+      sourceStrategy:
+        from:
+          kind: DockerImage
+          name: image-registry.openshift-image-registry.svc:5000/openshift/redhat-openjdk18-openshift@sha256:dc84fed0f6f40975a2277c126438c8aa15c70eeac75981dbaa4b6b853eff61a6
+        pullSecret:
+          name: builder-dockercfg-xqzdw
+      type: Source
+  status:
+    completionTimestamp: "2023-10-16T20:11:37Z"
+    conditions:
+    - lastTransitionTime: "2023-10-16T20:10:58Z"
+      lastUpdateTime: "2023-10-16T20:10:58Z"
+      status: "False"
+      type: New
+    - lastTransitionTime: "2023-10-16T20:11:01Z"
+      lastUpdateTime: "2023-10-16T20:11:01Z"
+      status: "False"
+      type: Pending
+    - lastTransitionTime: "2023-10-16T20:11:37Z"
+      lastUpdateTime: "2023-10-16T20:11:37Z"
+      status: "False"
+      type: Running
+    - lastTransitionTime: "2023-10-16T20:11:37Z"
+      lastUpdateTime: "2023-10-16T20:11:37Z"
+      status: "True"
+      type: Complete
+    config:
+      kind: BuildConfig
+      name: csr0002-cargaarchivomedium
+      namespace: api-fiscalizacion-qa
+    duration: 39000000000
+    output:
+      to:
+        imageDigest: sha256:8b102071c3606cf3e105935831c1b9fc11620d0caff31503a7d6406153d37d22
+    outputDockerImageReference: image-registry.openshift-image-registry.svc:5000/api-fiscalizacion-qa/csr0002-cargaarchivomedium:latest
+    phase: Complete
+    stages:
+    - durationMilliseconds: 15286
+      name: PullImages
+      startTime: "2023-10-16T20:11:06Z"
+      steps:
+      - durationMilliseconds: 15286
+        name: PullBaseImage
+        startTime: "2023-10-16T20:11:06Z"
+    - durationMilliseconds: 9144
+      name: Build
+      startTime: "2023-10-16T20:11:21Z"
+      steps:
+      - durationMilliseconds: 9144
+        name: DockerBuild
+        startTime: "2023-10-16T20:11:21Z"
+    - durationMilliseconds: 2498
+      name: PushImage
+      startTime: "2023-10-16T20:11:30Z"
+      steps:
+      - durationMilliseconds: 2498
+        name: PushImage
+        startTime: "2023-10-16T20:11:30Z"
+    startTimestamp: "2023-10-16T20:10:58Z"
+- apiVersion: build.openshift.io/v1
+  kind: Build
+  metadata:
+    annotations:
+      openshift.io/build-config.name: csr0002-cargaarchivosmall
+      openshift.io/build.number: "1"
+      openshift.io/build.pod-name: csr0002-cargaarchivosmall-1-build
+    creationTimestamp: "2023-10-16T20:06:17Z"
+    generation: 2
+    labels:
+      build: csr0002-cargaarchivosmall
+      buildconfig: csr0002-cargaarchivosmall
+      migration.openshift.io/migrated-by-migmigration: 7403c997-3617-4c43-a005-e473ceb26445
+      migration.openshift.io/migrated-by-migplan: 2a8299ac-1423-4ceb-93a5-de572a0f44a9
+      openshift.io/build-config.name: csr0002-cargaarchivosmall
+      openshift.io/build.start-policy: Serial
+      velero.io/backup-name: migration-9db42-initial-5kc64
+      velero.io/restore-name: migration-9db42-final-cpc2b
+    name: csr0002-cargaarchivosmall-1
+    namespace: api-fiscalizacion-qa
+    ownerReferences:
+    - apiVersion: build.openshift.io/v1
+      controller: true
+      kind: BuildConfig
+      name: csr0002-cargaarchivosmall
+      uid: cb160003-1cbe-4d32-86ad-7eb65781fc13
+    resourceVersion: "136553658"
+    uid: 1f9bf151-d957-40c9-801b-99dc38a53f09
+  spec:
+    nodeSelector: null
+    output:
+      pushSecret:
+        name: builder-dockercfg-xqzdw
+      to:
+        kind: ImageStreamTag
+        name: csr0002-cargaarchivosmall:latest
+    postCommit: {}
+    resources: {}
+    revision:
+      git:
+        author:
+          email: ffernandeza@dt.gob.cl
+          name: Fernando Fernandez Alvarez
+        commit: 114cbc2b180fd4943f818ddd1b440a770e0c9815
+        committer:
+          email: ffernandeza@dt.gob.cl
+          name: Fernando Fernandez Alvarez
+        message: declaracion sin movimiento
+      type: Git
+    serviceAccount: builder
+    source:
+      binary: {}
+      type: Binary
+    strategy:
+      sourceStrategy:
+        from:
+          kind: DockerImage
+          name: image-registry.openshift-image-registry.svc:5000/openshift/redhat-openjdk18-openshift@sha256:dc84fed0f6f40975a2277c126438c8aa15c70eeac75981dbaa4b6b853eff61a6
+        pullSecret:
+          name: builder-dockercfg-xqzdw
+      type: Source
+  status:
+    completionTimestamp: "2023-10-16T20:06:57Z"
+    conditions:
+    - lastTransitionTime: "2023-10-16T20:06:17Z"
+      lastUpdateTime: "2023-10-16T20:06:17Z"
+      status: "False"
+      type: New
+    - lastTransitionTime: "2023-10-16T20:06:21Z"
+      lastUpdateTime: "2023-10-16T20:06:21Z"
+      status: "False"
+      type: Pending
+    - lastTransitionTime: "2023-10-16T20:06:57Z"
+      lastUpdateTime: "2023-10-16T20:06:57Z"
+      status: "False"
+      type: Running
+    - lastTransitionTime: "2023-10-16T20:06:57Z"
+      lastUpdateTime: "2023-10-16T20:06:57Z"
+      status: "True"
+      type: Complete
+    config:
+      kind: BuildConfig
+      name: csr0002-cargaarchivosmall
+      namespace: api-fiscalizacion-qa
+    duration: 40000000000
+    output:
+      to:
+        imageDigest: sha256:50434cb0176df8c7496da29f50f14753fbf46bcf9f802cf1098974b62f4c65af
+    outputDockerImageReference: image-registry.openshift-image-registry.svc:5000/api-fiscalizacion-qa/csr0002-cargaarchivosmall:latest
+    phase: Complete
+    stages:
+    - durationMilliseconds: 12635
+      name: PullImages
+      startTime: "2023-10-16T20:06:27Z"
+      steps:
+      - durationMilliseconds: 12635
+        name: PullBaseImage
+        startTime: "2023-10-16T20:06:27Z"
+    - durationMilliseconds: 11614
+      name: Build
+      startTime: "2023-10-16T20:06:40Z"
+      steps:
+      - durationMilliseconds: 11614
+        name: DockerBuild
+        startTime: "2023-10-16T20:06:40Z"
+    - durationMilliseconds: 2668
+      name: PushImage
+      startTime: "2023-10-16T20:06:51Z"
+      steps:
+      - durationMilliseconds: 2668
+        name: PushImage
+        startTime: "2023-10-16T20:06:51Z"
+    startTimestamp: "2023-10-16T20:06:17Z"
+- apiVersion: build.openshift.io/v1
+  kind: Build
+  metadata:
+    annotations:
+      openshift.io/build-config.name: csr0003-envioarchivodecl
+      openshift.io/build.number: "1"
+      openshift.io/build.pod-name: csr0003-envioarchivodecl-1-build
+    creationTimestamp: "2023-10-16T20:31:47Z"
+    generation: 2
+    labels:
+      build: csr0003-envioarchivodecl
+      buildconfig: csr0003-envioarchivodecl
+      migration.openshift.io/migrated-by-migmigration: 7403c997-3617-4c43-a005-e473ceb26445
+      migration.openshift.io/migrated-by-migplan: 2a8299ac-1423-4ceb-93a5-de572a0f44a9
+      openshift.io/build-config.name: csr0003-envioarchivodecl
+      openshift.io/build.start-policy: Serial
+      velero.io/backup-name: migration-9db42-initial-5kc64
+      velero.io/restore-name: migration-9db42-final-cpc2b
+    name: csr0003-envioarchivodecl-1
+    namespace: api-fiscalizacion-qa
+    ownerReferences:
+    - apiVersion: build.openshift.io/v1
+      controller: true
+      kind: BuildConfig
+      name: csr0003-envioarchivodecl
+      uid: 61438610-ba6c-4032-8f14-d327809fe330
+    resourceVersion: "136568799"
+    uid: 959d6879-ff27-4307-904e-531c4c8251c2
+  spec:
+    nodeSelector: null
+    output:
+      pushSecret:
+        name: builder-dockercfg-xqzdw
+      to:
+        kind: ImageStreamTag
+        name: csr0003-envioarchivodecl:latest
+    postCommit: {}
+    resources: {}
+    revision:
+      git:
+        author:
+          email: ffernandeza@dt.gob.cl
+          name: Fernando Fernandez Alvarez
+        commit: 0f23286d18e9bc84df75cd2377ec9fbc1f76d86d
+        committer:
+          email: ffernandeza@dt.gob.cl
+          name: Fernando Fernandez Alvarez
+        message: test
+      type: Git
+    serviceAccount: builder
+    source:
+      binary: {}
+      type: Binary
+    strategy:
+      sourceStrategy:
+        from:
+          kind: DockerImage
+          name: image-registry.openshift-image-registry.svc:5000/openshift/redhat-openjdk18-openshift@sha256:dc84fed0f6f40975a2277c126438c8aa15c70eeac75981dbaa4b6b853eff61a6
+        pullSecret:
+          name: builder-dockercfg-xqzdw
+      type: Source
+  status:
+    completionTimestamp: "2023-10-16T20:32:27Z"
+    conditions:
+    - lastTransitionTime: "2023-10-16T20:31:47Z"
+      lastUpdateTime: "2023-10-16T20:31:47Z"
+      status: "False"
+      type: New
+    - lastTransitionTime: "2023-10-16T20:31:50Z"
+      lastUpdateTime: "2023-10-16T20:31:50Z"
+      status: "False"
+      type: Pending
+    - lastTransitionTime: "2023-10-16T20:32:27Z"
+      lastUpdateTime: "2023-10-16T20:32:27Z"
+      status: "False"
+      type: Running
+    - lastTransitionTime: "2023-10-16T20:32:27Z"
+      lastUpdateTime: "2023-10-16T20:32:27Z"
+      status: "True"
+      type: Complete
+    config:
+      kind: BuildConfig
+      name: csr0003-envioarchivodecl
+      namespace: api-fiscalizacion-qa
+    duration: 40000000000
+    output:
+      to:
+        imageDigest: sha256:0402cc1e1f3d163f426686e9b733f062a338929b8769a3dd6e167bf898702fd4
+    outputDockerImageReference: image-registry.openshift-image-registry.svc:5000/api-fiscalizacion-qa/csr0003-envioarchivodecl:latest
+    phase: Complete
+    stages:
+    - durationMilliseconds: 15164
+      name: PullImages
+      startTime: "2023-10-16T20:31:57Z"
+      steps:
+      - durationMilliseconds: 15164
+        name: PullBaseImage
+        startTime: "2023-10-16T20:31:57Z"
+    - durationMilliseconds: 8821
+      name: Build
+      startTime: "2023-10-16T20:32:12Z"
+      steps:
+      - durationMilliseconds: 8821
+        name: DockerBuild
+        startTime: "2023-10-16T20:32:12Z"
+    - durationMilliseconds: 3020
+      name: PushImage
+      startTime: "2023-10-16T20:32:21Z"
+      steps:
+      - durationMilliseconds: 3020
+        name: PushImage
+        startTime: "2023-10-16T20:32:21Z"
+    startTimestamp: "2023-10-16T20:31:47Z"
+- apiVersion: build.openshift.io/v1
+  kind: Build
+  metadata:
+    annotations:
+      openshift.io/build-config.name: csr0004-notificacioniter
+      openshift.io/build.number: "1"
+      openshift.io/build.pod-name: csr0004-notificacioniter-1-build
+    creationTimestamp: "2023-10-16T20:46:45Z"
+    generation: 2
+    labels:
+      build: csr0004-notificacioniter
+      buildconfig: csr0004-notificacioniter
+      migration.openshift.io/migrated-by-migmigration: 7403c997-3617-4c43-a005-e473ceb26445
+      migration.openshift.io/migrated-by-migplan: 2a8299ac-1423-4ceb-93a5-de572a0f44a9
+      openshift.io/build-config.name: csr0004-notificacioniter
+      openshift.io/build.start-policy: Serial
+      velero.io/backup-name: migration-9db42-initial-5kc64
+      velero.io/restore-name: migration-9db42-final-cpc2b
+    name: csr0004-notificacioniter-1
+    namespace: api-fiscalizacion-qa
+    ownerReferences:
+    - apiVersion: build.openshift.io/v1
+      controller: true
+      kind: BuildConfig
+      name: csr0004-notificacioniter
+      uid: 7d5cb108-2a0e-4bec-abc6-35c67f78744d
+    resourceVersion: "136577715"
+    uid: 8f0ab875-043b-40a4-aa08-4bee597a81ea
+  spec:
+    nodeSelector: null
+    output:
+      pushSecret:
+        name: builder-dockercfg-xqzdw
+      to:
+        kind: ImageStreamTag
+        name: csr0004-notificacioniter:latest
+    postCommit: {}
+    resources: {}
+    revision:
+      git:
+        author:
+          email: lolivero@redhat.com
+          name: Luis Oliveros
+        commit: 1267d9f80ec05df266199856be81ebf8fa9b24f7
+        committer:
+          email: lolivero@redhat.com
+          name: Luis Oliveros
+        message: |-
+          Merged PR 9318: act time out parametrizado
+
+          act time out parametrizado
+      type: Git
+    serviceAccount: builder
+    source:
+      binary: {}
+      type: Binary
+    strategy:
+      sourceStrategy:
+        from:
+          kind: DockerImage
+          name: image-registry.openshift-image-registry.svc:5000/openshift/redhat-openjdk18-openshift@sha256:dc84fed0f6f40975a2277c126438c8aa15c70eeac75981dbaa4b6b853eff61a6
+        pullSecret:
+          name: builder-dockercfg-xqzdw
+      type: Source
+  status:
+    completionTimestamp: "2023-10-16T20:47:23Z"
+    conditions:
+    - lastTransitionTime: "2023-10-16T20:46:45Z"
+      lastUpdateTime: "2023-10-16T20:46:45Z"
+      status: "False"
+      type: New
+    - lastTransitionTime: "2023-10-16T20:46:47Z"
+      lastUpdateTime: "2023-10-16T20:46:47Z"
+      status: "False"
+      type: Pending
+    - lastTransitionTime: "2023-10-16T20:47:23Z"
+      lastUpdateTime: "2023-10-16T20:47:23Z"
+      status: "False"
+      type: Running
+    - lastTransitionTime: "2023-10-16T20:47:23Z"
+      lastUpdateTime: "2023-10-16T20:47:23Z"
+      status: "True"
+      type: Complete
+    config:
+      kind: BuildConfig
+      name: csr0004-notificacioniter
+      namespace: api-fiscalizacion-qa
+    duration: 38000000000
+    output:
+      to:
+        imageDigest: sha256:4c0c7b2e39816baf0afc26143d0e876f88c62a05f4d2f5b2069cd663839e733e
+    outputDockerImageReference: image-registry.openshift-image-registry.svc:5000/api-fiscalizacion-qa/csr0004-notificacioniter:latest
+    phase: Complete
+    stages:
+    - durationMilliseconds: 13921
+      name: PullImages
+      startTime: "2023-10-16T20:46:53Z"
+      steps:
+      - durationMilliseconds: 13921
+        name: PullBaseImage
+        startTime: "2023-10-16T20:46:53Z"
+    - durationMilliseconds: 9309
+      name: Build
+      startTime: "2023-10-16T20:47:07Z"
+      steps:
+      - durationMilliseconds: 9309
+        name: DockerBuild
+        startTime: "2023-10-16T20:47:07Z"
+    - durationMilliseconds: 2305
+      name: PushImage
+      startTime: "2023-10-16T20:47:16Z"
+      steps:
+      - durationMilliseconds: 2305
+        name: PushImage
+        startTime: "2023-10-16T20:47:16Z"
+    startTimestamp: "2023-10-16T20:46:45Z"
+- apiVersion: build.openshift.io/v1
+  kind: Build
+  metadata:
+    annotations:
+      openshift.io/build-config.name: csr0005-manager
+      openshift.io/build.number: "1"
+      openshift.io/build.pod-name: csr0005-manager-1-build
+    creationTimestamp: "2023-10-16T20:41:58Z"
+    generation: 2
+    labels:
+      build: csr0005-manager
+      buildconfig: csr0005-manager
+      migration.openshift.io/migrated-by-migmigration: 7403c997-3617-4c43-a005-e473ceb26445
+      migration.openshift.io/migrated-by-migplan: 2a8299ac-1423-4ceb-93a5-de572a0f44a9
+      openshift.io/build-config.name: csr0005-manager
+      openshift.io/build.start-policy: Serial
+      velero.io/backup-name: migration-9db42-initial-5kc64
+      velero.io/restore-name: migration-9db42-final-cpc2b
+    name: csr0005-manager-1
+    namespace: api-fiscalizacion-qa
+    ownerReferences:
+    - apiVersion: build.openshift.io/v1
+      controller: true
+      kind: BuildConfig
+      name: csr0005-manager
+      uid: 857663e3-c14c-4a85-85b2-42b1010a61af
+    resourceVersion: "136574753"
+    uid: 7a0b9bf8-8451-4b9e-a1fb-6713560b8455
+  spec:
+    nodeSelector: null
+    output:
+      pushSecret:
+        name: builder-dockercfg-xqzdw
+      to:
+        kind: ImageStreamTag
+        name: csr0005-manager:latest
+    postCommit: {}
+    resources: {}
+    revision:
+      git:
+        author:
+          email: ffernandeza@dt.gob.cl
+          name: Fernando Fernandez Alvarez
+        commit: d69773fac651c943040d4b3cf663cf00320021a6
+        committer:
+          email: ffernandeza@dt.gob.cl
+          name: Fernando Fernandez Alvarez
+        message: cierre declaracion sin documento
+      type: Git
+    serviceAccount: builder
+    source:
+      binary: {}
+      type: Binary
+    strategy:
+      sourceStrategy:
+        from:
+          kind: DockerImage
+          name: image-registry.openshift-image-registry.svc:5000/openshift/redhat-openjdk18-openshift@sha256:dc84fed0f6f40975a2277c126438c8aa15c70eeac75981dbaa4b6b853eff61a6
+        pullSecret:
+          name: builder-dockercfg-xqzdw
+      type: Source
+  status:
+    completionTimestamp: "2023-10-16T20:42:37Z"
+    conditions:
+    - lastTransitionTime: "2023-10-16T20:41:58Z"
+      lastUpdateTime: "2023-10-16T20:41:58Z"
+      status: "False"
+      type: New
+    - lastTransitionTime: "2023-10-16T20:42:01Z"
+      lastUpdateTime: "2023-10-16T20:42:01Z"
+      status: "False"
+      type: Pending
+    - lastTransitionTime: "2023-10-16T20:42:37Z"
+      lastUpdateTime: "2023-10-16T20:42:37Z"
+      status: "False"
+      type: Running
+    - lastTransitionTime: "2023-10-16T20:42:37Z"
+      lastUpdateTime: "2023-10-16T20:42:37Z"
+      status: "True"
+      type: Complete
+    config:
+      kind: BuildConfig
+      name: csr0005-manager
+      namespace: api-fiscalizacion-qa
+    duration: 38000000000
+    output:
+      to:
+        imageDigest: sha256:0b22758030b1300944589b04db89a5f4490f7db24b12ab972887095c2b8a5570
+    outputDockerImageReference: image-registry.openshift-image-registry.svc:5000/api-fiscalizacion-qa/csr0005-manager:latest
+    phase: Complete
+    stages:
+    - durationMilliseconds: 15317
+      name: PullImages
+      startTime: "2023-10-16T20:42:07Z"
+      steps:
+      - durationMilliseconds: 15317
+        name: PullBaseImage
+        startTime: "2023-10-16T20:42:07Z"
+    - durationMilliseconds: 8504
+      name: Build
+      startTime: "2023-10-16T20:42:22Z"
+      steps:
+      - durationMilliseconds: 8504
+        name: DockerBuild
+        startTime: "2023-10-16T20:42:22Z"
+    - durationMilliseconds: 2350
+      name: PushImage
+      startTime: "2023-10-16T20:42:31Z"
+      steps:
+      - durationMilliseconds: 2350
+        name: PushImage
+        startTime: "2023-10-16T20:42:31Z"
+    startTimestamp: "2023-10-16T20:41:59Z"
+- apiVersion: build.openshift.io/v1
+  kind: Build
+  metadata:
+    annotations:
+      openshift.io/build-config.name: csr0006-excepciones
+      openshift.io/build.number: "1"
+      openshift.io/build.pod-name: csr0006-excepciones-1-build
+    creationTimestamp: "2023-10-16T20:37:35Z"
+    generation: 2
+    labels:
+      build: csr0006-excepciones
+      buildconfig: csr0006-excepciones
+      migration.openshift.io/migrated-by-migmigration: 7403c997-3617-4c43-a005-e473ceb26445
+      migration.openshift.io/migrated-by-migplan: 2a8299ac-1423-4ceb-93a5-de572a0f44a9
+      openshift.io/build-config.name: csr0006-excepciones
+      openshift.io/build.start-policy: Serial
+      velero.io/backup-name: migration-9db42-initial-5kc64
+      velero.io/restore-name: migration-9db42-final-cpc2b
+    name: csr0006-excepciones-1
+    namespace: api-fiscalizacion-qa
+    ownerReferences:
+    - apiVersion: build.openshift.io/v1
+      controller: true
+      kind: BuildConfig
+      name: csr0006-excepciones
+      uid: 6fad2ab7-ac1f-448c-83e8-171595759395
+    resourceVersion: "136572180"
+    uid: 957e1eca-c256-4d2c-ae2d-0f4f1bf5f319
+  spec:
+    nodeSelector: null
+    output:
+      pushSecret:
+        name: builder-dockercfg-xqzdw
+      to:
+        kind: ImageStreamTag
+        name: csr0006-excepciones:latest
+    postCommit: {}
+    resources: {}
+    revision:
+      git:
+        author:
+          email: lolivero@redhat.com
+          name: Luis Oliveros
+        commit: 0abef509faf430907e57ff6a3a61ca9ead2ec9ae
+        committer:
+          email: lolivero@redhat.com
+          name: Luis Oliveros
+        message: |-
+          Merged PR 9320: act time out parametrizado
+
+          act time out parametrizado
+      type: Git
+    serviceAccount: builder
+    source:
+      binary: {}
+      type: Binary
+    strategy:
+      sourceStrategy:
+        from:
+          kind: DockerImage
+          name: image-registry.openshift-image-registry.svc:5000/openshift/redhat-openjdk18-openshift@sha256:dc84fed0f6f40975a2277c126438c8aa15c70eeac75981dbaa4b6b853eff61a6
+        pullSecret:
+          name: builder-dockercfg-xqzdw
+      type: Source
+  status:
+    completionTimestamp: "2023-10-16T20:38:13Z"
+    conditions:
+    - lastTransitionTime: "2023-10-16T20:37:35Z"
+      lastUpdateTime: "2023-10-16T20:37:35Z"
+      status: "False"
+      type: New
+    - lastTransitionTime: "2023-10-16T20:37:38Z"
+      lastUpdateTime: "2023-10-16T20:37:38Z"
+      status: "False"
+      type: Pending
+    - lastTransitionTime: "2023-10-16T20:38:13Z"
+      lastUpdateTime: "2023-10-16T20:38:13Z"
+      status: "False"
+      type: Running
+    - lastTransitionTime: "2023-10-16T20:38:13Z"
+      lastUpdateTime: "2023-10-16T20:38:13Z"
+      status: "True"
+      type: Complete
+    config:
+      kind: BuildConfig
+      name: csr0006-excepciones
+      namespace: api-fiscalizacion-qa
+    duration: 38000000000
+    output:
+      to:
+        imageDigest: sha256:3cdceffc9be1450d3765dc0a081f1be4fe15e97e0d82d231cf68a8b431f79655
+    outputDockerImageReference: image-registry.openshift-image-registry.svc:5000/api-fiscalizacion-qa/csr0006-excepciones:latest
+    phase: Complete
+    stages:
+    - durationMilliseconds: 14963
+      name: PullImages
+      startTime: "2023-10-16T20:37:44Z"
+      steps:
+      - durationMilliseconds: 14963
+        name: PullBaseImage
+        startTime: "2023-10-16T20:37:44Z"
+    - durationMilliseconds: 9231
+      name: Build
+      startTime: "2023-10-16T20:37:59Z"
+      steps:
+      - durationMilliseconds: 9231
+        name: DockerBuild
+        startTime: "2023-10-16T20:37:59Z"
+    - durationMilliseconds: 2596
+      name: PushImage
+      startTime: "2023-10-16T20:38:08Z"
+      steps:
+      - durationMilliseconds: 2596
+        name: PushImage
+        startTime: "2023-10-16T20:38:08Z"
+    startTimestamp: "2023-10-16T20:37:35Z"
+- apiVersion: build.openshift.io/v1
+  kind: Build
+  metadata:
+    annotations:
+      openshift.io/build-config.name: prx0002-validareglas
+      openshift.io/build.number: "1"
+      openshift.io/build.pod-name: prx0002-validareglas-1-build
+    creationTimestamp: "2023-10-16T18:48:19Z"
+    generation: 2
+    labels:
+      build: prx0002-validareglas
+      buildconfig: prx0002-validareglas
+      migration.openshift.io/migrated-by-migmigration: 7403c997-3617-4c43-a005-e473ceb26445
+      migration.openshift.io/migrated-by-migplan: 2a8299ac-1423-4ceb-93a5-de572a0f44a9
+      openshift.io/build-config.name: prx0002-validareglas
+      openshift.io/build.start-policy: Serial
+      velero.io/backup-name: migration-9db42-initial-5kc64
+      velero.io/restore-name: migration-9db42-final-cpc2b
+    name: prx0002-validareglas-1
+    namespace: api-fiscalizacion-qa
+    ownerReferences:
+    - apiVersion: build.openshift.io/v1
+      controller: true
+      kind: BuildConfig
+      name: prx0002-validareglas
+      uid: 986e77f3-72c2-4735-99b5-74b864d45250
+    resourceVersion: "136505972"
+    uid: 24451fb6-1a00-47d3-ab7d-a59646e1222d
+  spec:
+    nodeSelector: null
+    output:
+      pushSecret:
+        name: builder-dockercfg-xqzdw
+      to:
+        kind: ImageStreamTag
+        name: prx0002-validareglas:latest
+    postCommit: {}
+    resources: {}
+    revision:
+      git:
+        author:
+          email: ffernandeza@dt.gob.cl
+          name: Fernando Fernandez Alvarez
+        commit: 6bb06656c19052ee973454b7698c38efc6c2fa97
+        committer:
+          email: ffernandeza@dt.gob.cl
+          name: Fernando Fernandez Alvarez
+        message: prueba parentesis
+      type: Git
+    serviceAccount: builder
+    source:
+      binary: {}
+      type: Binary
+    strategy:
+      sourceStrategy:
+        from:
+          kind: DockerImage
+          name: image-registry.openshift-image-registry.svc:5000/openshift/fuse7-java-openshift@sha256:1d526f710f53ea2805441bbd04057242715d6fe2c91257b1ccd53c7a72c499be
+        pullSecret:
+          name: builder-dockercfg-xqzdw
+      type: Source
+  status:
+    completionTimestamp: "2023-10-16T18:48:55Z"
+    conditions:
+    - lastTransitionTime: "2023-10-16T18:48:19Z"
+      lastUpdateTime: "2023-10-16T18:48:19Z"
+      status: "False"
+      type: New
+    - lastTransitionTime: "2023-10-16T18:48:21Z"
+      lastUpdateTime: "2023-10-16T18:48:21Z"
+      status: "False"
+      type: Pending
+    - lastTransitionTime: "2023-10-16T18:48:55Z"
+      lastUpdateTime: "2023-10-16T18:48:55Z"
+      status: "False"
+      type: Running
+    - lastTransitionTime: "2023-10-16T18:48:55Z"
+      lastUpdateTime: "2023-10-16T18:48:55Z"
+      status: "True"
+      type: Complete
+    config:
+      kind: BuildConfig
+      name: prx0002-validareglas
+      namespace: api-fiscalizacion-qa
+    duration: 36000000000
+    output:
+      to:
+        imageDigest: sha256:c929b28b3aa2fbd6aed1b2c8d3287cfdf22bf03bd17e74a324ae1a1a571e9fe1
+    outputDockerImageReference: image-registry.openshift-image-registry.svc:5000/api-fiscalizacion-qa/prx0002-validareglas:latest
+    phase: Complete
+    stages:
+    - durationMilliseconds: 15216
+      name: PullImages
+      startTime: "2023-10-16T18:48:26Z"
+      steps:
+      - durationMilliseconds: 15216
+        name: PullBaseImage
+        startTime: "2023-10-16T18:48:26Z"
+    - durationMilliseconds: 8398
+      name: Build
+      startTime: "2023-10-16T18:48:42Z"
+      steps:
+      - durationMilliseconds: 8398
+        name: DockerBuild
+        startTime: "2023-10-16T18:48:42Z"
+    - durationMilliseconds: 2286
+      name: PushImage
+      startTime: "2023-10-16T18:48:50Z"
+      steps:
+      - durationMilliseconds: 2286
+        name: PushImage
+        startTime: "2023-10-16T18:48:50Z"
+    startTimestamp: "2023-10-16T18:48:19Z"
+- apiVersion: build.openshift.io/v1
+  kind: Build
+  metadata:
+    annotations:
+      openshift.io/build-config.name: prx0003-datosperson
+      openshift.io/build.number: "1"
+      openshift.io/build.pod-name: prx0003-datosperson-1-build
+    creationTimestamp: "2023-10-16T19:36:37Z"
+    generation: 2
+    labels:
+      build: prx0003-datosperson
+      buildconfig: prx0003-datosperson
+      migration.openshift.io/migrated-by-migmigration: 7403c997-3617-4c43-a005-e473ceb26445
+      migration.openshift.io/migrated-by-migplan: 2a8299ac-1423-4ceb-93a5-de572a0f44a9
+      openshift.io/build-config.name: prx0003-datosperson
+      openshift.io/build.start-policy: Serial
+      velero.io/backup-name: migration-9db42-initial-5kc64
+      velero.io/restore-name: migration-9db42-final-cpc2b
+    name: prx0003-datosperson-1
+    namespace: api-fiscalizacion-qa
+    ownerReferences:
+    - apiVersion: build.openshift.io/v1
+      controller: true
+      kind: BuildConfig
+      name: prx0003-datosperson
+      uid: a878c8c9-4273-468e-9ed0-7f0c04499498
+    resourceVersion: "136535862"
+    uid: 60739da4-be7a-4ec1-a5ef-ad7c57fb5997
+  spec:
+    nodeSelector: null
+    output:
+      pushSecret:
+        name: builder-dockercfg-xqzdw
+      to:
+        kind: ImageStreamTag
+        name: prx0003-datosperson:latest
+    postCommit: {}
+    resources: {}
+    revision:
+      git:
+        author:
+          email: ditorres@dt.gob.cl
+          name: Diego Torres Cabezas
+        commit: 4914be37d23e85163771844c519dbed749c90e6d
+        committer:
+          email: ditorres@dt.gob.cl
+          name: Diego Torres Cabezas
+        message: |-
+          Merged PR 9595: act atributo fecha en formato
+
+          act atributo fecha en formato
+      type: Git
+    serviceAccount: builder
+    source:
+      binary: {}
+      type: Binary
+    strategy:
+      sourceStrategy:
+        from:
+          kind: DockerImage
+          name: image-registry.openshift-image-registry.svc:5000/openshift/fuse7-java-openshift@sha256:1d526f710f53ea2805441bbd04057242715d6fe2c91257b1ccd53c7a72c499be
+        pullSecret:
+          name: builder-dockercfg-xqzdw
+      type: Source
+  status:
+    completionTimestamp: "2023-10-16T19:37:12Z"
+    conditions:
+    - lastTransitionTime: "2023-10-16T19:36:37Z"
+      lastUpdateTime: "2023-10-16T19:36:37Z"
+      status: "False"
+      type: New
+    - lastTransitionTime: "2023-10-16T19:36:40Z"
+      lastUpdateTime: "2023-10-16T19:36:40Z"
+      status: "False"
+      type: Pending
+    - lastTransitionTime: "2023-10-16T19:37:12Z"
+      lastUpdateTime: "2023-10-16T19:37:12Z"
+      status: "False"
+      type: Running
+    - lastTransitionTime: "2023-10-16T19:37:12Z"
+      lastUpdateTime: "2023-10-16T19:37:12Z"
+      status: "True"
+      type: Complete
+    config:
+      kind: BuildConfig
+      name: prx0003-datosperson
+      namespace: api-fiscalizacion-qa
+    duration: 35000000000
+    output:
+      to:
+        imageDigest: sha256:52a9d5ea414be5caaf0901852aef2f013d8c04b2d35f99aeeaa252c99e00eb53
+    outputDockerImageReference: image-registry.openshift-image-registry.svc:5000/api-fiscalizacion-qa/prx0003-datosperson:latest
+    phase: Complete
+    stages:
+    - durationMilliseconds: 10881
+      name: PullImages
+      startTime: "2023-10-16T19:36:47Z"
+      steps:
+      - durationMilliseconds: 10881
+        name: PullBaseImage
+        startTime: "2023-10-16T19:36:47Z"
+    - durationMilliseconds: 9874
+      name: Build
+      startTime: "2023-10-16T19:36:57Z"
+      steps:
+      - durationMilliseconds: 9874
+        name: DockerBuild
+        startTime: "2023-10-16T19:36:57Z"
+    - durationMilliseconds: 2681
+      name: PushImage
+      startTime: "2023-10-16T19:37:07Z"
+      steps:
+      - durationMilliseconds: 2681
+        name: PushImage
+        startTime: "2023-10-16T19:37:07Z"
+    startTimestamp: "2023-10-16T19:36:37Z"
+- apiVersion: build.openshift.io/v1
+  kind: Build
+  metadata:
+    annotations:
+      openshift.io/build-config.name: prx0003-datospersona-datagrid
+      openshift.io/build.number: "1"
+      openshift.io/build.pod-name: prx0003-datospersona-datagrid-1-build
+    creationTimestamp: "2023-10-16T19:31:29Z"
+    generation: 2
+    labels:
+      build: prx0003-datospersona-datagrid
+      buildconfig: prx0003-datospersona-datagrid
+      migration.openshift.io/migrated-by-migmigration: 7403c997-3617-4c43-a005-e473ceb26445
+      migration.openshift.io/migrated-by-migplan: 2a8299ac-1423-4ceb-93a5-de572a0f44a9
+      openshift.io/build-config.name: prx0003-datospersona-datagrid
+      openshift.io/build.start-policy: Serial
+      velero.io/backup-name: migration-9db42-initial-5kc64
+      velero.io/restore-name: migration-9db42-final-cpc2b
+    name: prx0003-datospersona-datagrid-1
+    namespace: api-fiscalizacion-qa
+    ownerReferences:
+    - apiVersion: build.openshift.io/v1
+      controller: true
+      kind: BuildConfig
+      name: prx0003-datospersona-datagrid
+      uid: 4a9b439b-8e7f-4221-9b03-18544121de89
+    resourceVersion: "136531988"
+    uid: 477e5ce2-8ba6-4d68-9dcb-63c6efeb3de0
+  spec:
+    nodeSelector: null
+    output:
+      pushSecret:
+        name: builder-dockercfg-xqzdw
+      to:
+        kind: ImageStreamTag
+        name: prx0003-datospersona-datagrid:latest
+    postCommit: {}
+    resources: {}
+    revision:
+      git:
+        author:
+          email: lolivero@redhat.com
+          name: Luis Oliveros
+        commit: 872fc5fc3b980ce5d178004df21683add6de4491
+        committer:
+          email: lolivero@redhat.com
+          name: Luis Oliveros
+        message: 'Merged PR 9526: Integración Datagrid'
+      type: Git
+    serviceAccount: builder
+    source:
+      binary: {}
+      type: Binary
+    strategy:
+      sourceStrategy:
+        from:
+          kind: DockerImage
+          name: image-registry.openshift-image-registry.svc:5000/openshift/fuse7-java-openshift@sha256:1d526f710f53ea2805441bbd04057242715d6fe2c91257b1ccd53c7a72c499be
+        pullSecret:
+          name: builder-dockercfg-xqzdw
+      type: Source
+  status:
+    completionTimestamp: "2023-10-16T19:32:07Z"
+    conditions:
+    - lastTransitionTime: "2023-10-16T19:31:29Z"
+      lastUpdateTime: "2023-10-16T19:31:29Z"
+      status: "False"
+      type: New
+    - lastTransitionTime: "2023-10-16T19:31:32Z"
+      lastUpdateTime: "2023-10-16T19:31:32Z"
+      status: "False"
+      type: Pending
+    - lastTransitionTime: "2023-10-16T19:32:07Z"
+      lastUpdateTime: "2023-10-16T19:32:07Z"
+      status: "False"
+      type: Running
+    - lastTransitionTime: "2023-10-16T19:32:07Z"
+      lastUpdateTime: "2023-10-16T19:32:07Z"
+      status: "True"
+      type: Complete
+    config:
+      kind: BuildConfig
+      name: prx0003-datospersona-datagrid
+      namespace: api-fiscalizacion-qa
+    duration: 38000000000
+    output:
+      to:
+        imageDigest: sha256:9850881f0315b3d634d420ecf1e0e055eb542e11be0e5755da45525420c2abac
+    outputDockerImageReference: image-registry.openshift-image-registry.svc:5000/api-fiscalizacion-qa/prx0003-datospersona-datagrid:latest
+    phase: Complete
+    stages:
+    - durationMilliseconds: 15652
+      name: PullImages
+      startTime: "2023-10-16T19:31:39Z"
+      steps:
+      - durationMilliseconds: 15652
+        name: PullBaseImage
+        startTime: "2023-10-16T19:31:39Z"
+    - durationMilliseconds: 6526
+      name: Build
+      startTime: "2023-10-16T19:31:54Z"
+      steps:
+      - durationMilliseconds: 6526
+        name: DockerBuild
+        startTime: "2023-10-16T19:31:54Z"
+    - durationMilliseconds: 2504
+      name: PushImage
+      startTime: "2023-10-16T19:32:01Z"
+      steps:
+      - durationMilliseconds: 2504
+        name: PushImage
+        startTime: "2023-10-16T19:32:01Z"
+    startTimestamp: "2023-10-16T19:31:29Z"
+- apiVersion: build.openshift.io/v1
+  kind: Build
+  metadata:
+    annotations:
+      openshift.io/build-config.name: prx0005-validartoken
+      openshift.io/build.number: "1"
+      openshift.io/build.pod-name: prx0005-validartoken-1-build
+    creationTimestamp: "2023-10-17T13:54:36Z"
+    generation: 2
+    labels:
+      build: prx0005-validartoken
+      buildconfig: prx0005-validartoken
+      migration.openshift.io/migrated-by-migmigration: 7403c997-3617-4c43-a005-e473ceb26445
+      migration.openshift.io/migrated-by-migplan: 2a8299ac-1423-4ceb-93a5-de572a0f44a9
+      openshift.io/build-config.name: prx0005-validartoken
+      openshift.io/build.start-policy: Serial
+      velero.io/backup-name: migration-9db42-initial-5kc64
+      velero.io/restore-name: migration-9db42-final-cpc2b
+    name: prx0005-validartoken-1
+    namespace: api-fiscalizacion-qa
+    ownerReferences:
+    - apiVersion: build.openshift.io/v1
+      controller: true
+      kind: BuildConfig
+      name: prx0005-validartoken
+      uid: 0b90d053-22bb-4388-8e5e-380705d9aed9
+    resourceVersion: "137178499"
+    uid: f05d15fd-f896-4c4b-ac5e-9543026749af
+  spec:
+    nodeSelector: null
+    output:
+      pushSecret:
+        name: builder-dockercfg-xqzdw
+      to:
+        kind: ImageStreamTag
+        name: prx0005-validartoken:latest
+    postCommit: {}
+    resources: {}
+    revision:
+      git:
+        author:
+          email: cquezada@redhat.com
+          name: cquezada
+        commit: e8c9fd21fb2bc46c6367f2c907bf5089381d944a
+        committer:
+          email: cquezada@redhat.com
+          name: cquezada
+        message: |-
+          Merged PR 5289: json log
+
+          json log
+      type: Git
+    serviceAccount: builder
+    source:
+      binary: {}
+      type: Binary
+    strategy:
+      sourceStrategy:
+        from:
+          kind: DockerImage
+          name: image-registry.openshift-image-registry.svc:5000/openshift/fuse7-java-openshift@sha256:1d526f710f53ea2805441bbd04057242715d6fe2c91257b1ccd53c7a72c499be
+        pullSecret:
+          name: builder-dockercfg-xqzdw
+      type: Source
+  status:
+    completionTimestamp: "2023-10-17T13:55:12Z"
+    conditions:
+    - lastTransitionTime: "2023-10-17T13:54:36Z"
+      lastUpdateTime: "2023-10-17T13:54:36Z"
+      status: "False"
+      type: New
+    - lastTransitionTime: "2023-10-17T13:54:38Z"
+      lastUpdateTime: "2023-10-17T13:54:38Z"
+      status: "False"
+      type: Pending
+    - lastTransitionTime: "2023-10-17T13:55:12Z"
+      lastUpdateTime: "2023-10-17T13:55:12Z"
+      status: "False"
+      type: Running
+    - lastTransitionTime: "2023-10-17T13:55:12Z"
+      lastUpdateTime: "2023-10-17T13:55:12Z"
+      status: "True"
+      type: Complete
+    config:
+      kind: BuildConfig
+      name: prx0005-validartoken
+      namespace: api-fiscalizacion-qa
+    duration: 36000000000
+    output:
+      to:
+        imageDigest: sha256:974a19384c87d6d62df455d5b799e718d653b76962f8dbbd96acd5264d07eb2f
+    outputDockerImageReference: image-registry.openshift-image-registry.svc:5000/api-fiscalizacion-qa/prx0005-validartoken:latest
+    phase: Complete
+    stages:
+    - durationMilliseconds: 16968
+      name: PullImages
+      startTime: "2023-10-17T13:54:44Z"
+      steps:
+      - durationMilliseconds: 16968
+        name: PullBaseImage
+        startTime: "2023-10-17T13:54:44Z"
+    - durationMilliseconds: 6398
+      name: Build
+      startTime: "2023-10-17T13:55:01Z"
+      steps:
+      - durationMilliseconds: 6398
+        name: DockerBuild
+        startTime: "2023-10-17T13:55:01Z"
+    - durationMilliseconds: 2578
+      name: PushImage
+      startTime: "2023-10-17T13:55:07Z"
+      steps:
+      - durationMilliseconds: 2578
+        name: PushImage
+        startTime: "2023-10-17T13:55:07Z"
+    startTimestamp: "2023-10-17T13:54:36Z"
+- apiVersion: build.openshift.io/v1
+  kind: Build
+  metadata:
+    annotations:
+      openshift.io/build-config.name: srv0001-v2
+      openshift.io/build.number: "1"
+      openshift.io/build.pod-name: srv0001-v2-1-build
+    creationTimestamp: "2023-10-16T18:43:35Z"
+    generation: 2
+    labels:
+      build: srv0001-v2
+      buildconfig: srv0001-v2
+      migration.openshift.io/migrated-by-migmigration: 7403c997-3617-4c43-a005-e473ceb26445
+      migration.openshift.io/migrated-by-migplan: 2a8299ac-1423-4ceb-93a5-de572a0f44a9
+      openshift.io/build-config.name: srv0001-v2
+      openshift.io/build.start-policy: Serial
+      velero.io/backup-name: migration-9db42-initial-5kc64
+      velero.io/restore-name: migration-9db42-final-cpc2b
+    name: srv0001-v2-1
+    namespace: api-fiscalizacion-qa
+    ownerReferences:
+    - apiVersion: build.openshift.io/v1
+      controller: true
+      kind: BuildConfig
+      name: srv0001-v2
+      uid: 26c61d5a-ee12-4f54-b6fd-f9ed2d933f1f
+    resourceVersion: "136503041"
+    uid: 25b806bf-09f7-4819-ba03-96453f383c23
+  spec:
+    nodeSelector: null
+    output:
+      pushSecret:
+        name: builder-dockercfg-xqzdw
+      to:
+        kind: ImageStreamTag
+        name: srv0001-v2:latest
+    postCommit: {}
+    resources: {}
+    revision:
+      git:
+        author:
+          email: ffernandeza@dt.gob.cl
+          name: Fernando Fernandez Alvarez
+        commit: 8f203c97c2eee0a255dae59df693d316247b871d
+        committer:
+          email: ffernandeza@dt.gob.cl
+          name: Fernando Fernandez Alvarez
+        message: se mantiene nombre metodo para no cambiar front
+      type: Git
+    serviceAccount: builder
+    source:
+      binary: {}
+      type: Binary
+    strategy:
+      sourceStrategy:
+        from:
+          kind: DockerImage
+          name: image-registry.openshift-image-registry.svc:5000/openshift/redhat-openjdk18-openshift@sha256:dc84fed0f6f40975a2277c126438c8aa15c70eeac75981dbaa4b6b853eff61a6
+        pullSecret:
+          name: builder-dockercfg-xqzdw
+      type: Source
+  status:
+    completionTimestamp: "2023-10-16T18:44:17Z"
+    conditions:
+    - lastTransitionTime: "2023-10-16T18:43:35Z"
+      lastUpdateTime: "2023-10-16T18:43:35Z"
+      status: "False"
+      type: New
+    - lastTransitionTime: "2023-10-16T18:43:38Z"
+      lastUpdateTime: "2023-10-16T18:43:38Z"
+      status: "False"
+      type: Pending
+    - lastTransitionTime: "2023-10-16T18:44:17Z"
+      lastUpdateTime: "2023-10-16T18:44:17Z"
+      status: "False"
+      type: Running
+    - lastTransitionTime: "2023-10-16T18:44:17Z"
+      lastUpdateTime: "2023-10-16T18:44:17Z"
+      status: "True"
+      type: Complete
+    config:
+      kind: BuildConfig
+      name: srv0001-v2
+      namespace: api-fiscalizacion-qa
+    duration: 42000000000
+    output:
+      to:
+        imageDigest: sha256:0754c043edabf3daa57c5edb4bfa60c64ba9c68abc42283cae853e53e293e047
+    outputDockerImageReference: image-registry.openshift-image-registry.svc:5000/api-fiscalizacion-qa/srv0001-v2:latest
+    phase: Complete
+    stages:
+    - durationMilliseconds: 14716
+      name: PullImages
+      startTime: "2023-10-16T18:43:45Z"
+      steps:
+      - durationMilliseconds: 14716
+        name: PullBaseImage
+        startTime: "2023-10-16T18:43:45Z"
+    - durationMilliseconds: 11366
+      name: Build
+      startTime: "2023-10-16T18:44:00Z"
+      steps:
+      - durationMilliseconds: 11366
+        name: DockerBuild
+        startTime: "2023-10-16T18:44:00Z"
+    - durationMilliseconds: 3178
+      name: PushImage
+      startTime: "2023-10-16T18:44:11Z"
+      steps:
+      - durationMilliseconds: 3178
+        name: PushImage
+        startTime: "2023-10-16T18:44:11Z"
+    startTimestamp: "2023-10-16T18:43:35Z"
+- apiVersion: build.openshift.io/v1
+  kind: Build
+  metadata:
+    annotations:
+      openshift.io/build-config.name: srv0002
+      openshift.io/build.number: "1"
+      openshift.io/build.pod-name: srv0002-1-build
+    creationTimestamp: "2023-10-16T18:55:33Z"
+    generation: 2
+    labels:
+      build: srv0002
+      buildconfig: srv0002
+      migration.openshift.io/migrated-by-migmigration: 7403c997-3617-4c43-a005-e473ceb26445
+      migration.openshift.io/migrated-by-migplan: 2a8299ac-1423-4ceb-93a5-de572a0f44a9
+      openshift.io/build-config.name: srv0002
+      openshift.io/build.start-policy: Serial
+      velero.io/backup-name: migration-9db42-initial-5kc64
+      velero.io/restore-name: migration-9db42-final-cpc2b
+    name: srv0002-1
+    namespace: api-fiscalizacion-qa
+    ownerReferences:
+    - apiVersion: build.openshift.io/v1
+      controller: true
+      kind: BuildConfig
+      name: srv0002
+      uid: a0f41989-4024-4e25-8f0f-9d320e3edbaf
+    resourceVersion: "136510330"
+    uid: d74afc67-b98f-4215-b8b9-e641b00bac5d
+  spec:
+    nodeSelector: null
+    output:
+      pushSecret:
+        name: builder-dockercfg-xqzdw
+      to:
+        kind: ImageStreamTag
+        name: srv0002:latest
+    postCommit: {}
+    resources: {}
+    revision:
+      git:
+        author:
+          email: ffernandeza@dt.gob.cl
+          name: Fernando Fernandez Alvarez
+        commit: 6d510a036c0f052d2892dcd5413a0cef4e35f24b
+        committer:
+          email: ffernandeza@dt.gob.cl
+          name: Fernando Fernandez Alvarez
+        message: Correccion lista periodo
+      type: Git
+    serviceAccount: builder
+    source:
+      binary: {}
+      type: Binary
+    strategy:
+      sourceStrategy:
+        from:
+          kind: DockerImage
+          name: image-registry.openshift-image-registry.svc:5000/openshift/redhat-openjdk18-openshift@sha256:dc84fed0f6f40975a2277c126438c8aa15c70eeac75981dbaa4b6b853eff61a6
+        pullSecret:
+          name: builder-dockercfg-xqzdw
+      type: Source
+  status:
+    completionTimestamp: "2023-10-16T18:56:14Z"
+    conditions:
+    - lastTransitionTime: "2023-10-16T18:55:33Z"
+      lastUpdateTime: "2023-10-16T18:55:33Z"
+      status: "False"
+      type: New
+    - lastTransitionTime: "2023-10-16T18:55:36Z"
+      lastUpdateTime: "2023-10-16T18:55:36Z"
+      status: "False"
+      type: Pending
+    - lastTransitionTime: "2023-10-16T18:56:14Z"
+      lastUpdateTime: "2023-10-16T18:56:14Z"
+      status: "False"
+      type: Running
+    - lastTransitionTime: "2023-10-16T18:56:14Z"
+      lastUpdateTime: "2023-10-16T18:56:14Z"
+      status: "True"
+      type: Complete
+    config:
+      kind: BuildConfig
+      name: srv0002
+      namespace: api-fiscalizacion-qa
+    duration: 41000000000
+    output:
+      to:
+        imageDigest: sha256:fc0f50a0ae05ba858b3123e4a1d3f787a871f9c02a7b3493b044b86daecbb2af
+    outputDockerImageReference: image-registry.openshift-image-registry.svc:5000/api-fiscalizacion-qa/srv0002:latest
+    phase: Complete
+    stages:
+    - durationMilliseconds: 16612
+      name: PullImages
+      startTime: "2023-10-16T18:55:41Z"
+      steps:
+      - durationMilliseconds: 16612
+        name: PullBaseImage
+        startTime: "2023-10-16T18:55:41Z"
+    - durationMilliseconds: 9730
+      name: Build
+      startTime: "2023-10-16T18:55:58Z"
+      steps:
+      - durationMilliseconds: 9730
+        name: DockerBuild
+        startTime: "2023-10-16T18:55:58Z"
+    - durationMilliseconds: 2307
+      name: PushImage
+      startTime: "2023-10-16T18:56:07Z"
+      steps:
+      - durationMilliseconds: 2307
+        name: PushImage
+        startTime: "2023-10-16T18:56:07Z"
+    startTimestamp: "2023-10-16T18:55:33Z"
+- apiVersion: build.openshift.io/v1
+  kind: Build
+  metadata:
+    annotations:
+      openshift.io/build-config.name: srv0003
+      openshift.io/build.number: "1"
+      openshift.io/build.pod-name: srv0003-1-build
+    creationTimestamp: "2023-10-16T19:01:10Z"
+    generation: 2
+    labels:
+      build: srv0003
+      buildconfig: srv0003
+      migration.openshift.io/migrated-by-migmigration: 7403c997-3617-4c43-a005-e473ceb26445
+      migration.openshift.io/migrated-by-migplan: 2a8299ac-1423-4ceb-93a5-de572a0f44a9
+      openshift.io/build-config.name: srv0003
+      openshift.io/build.start-policy: Serial
+      velero.io/backup-name: migration-9db42-initial-5kc64
+      velero.io/restore-name: migration-9db42-final-cpc2b
+    name: srv0003-1
+    namespace: api-fiscalizacion-qa
+    ownerReferences:
+    - apiVersion: build.openshift.io/v1
+      controller: true
+      kind: BuildConfig
+      name: srv0003
+      uid: b6beb4f9-c747-451b-b9f5-e035422d6662
+    resourceVersion: "136513695"
+    uid: 665d823b-7f25-4b3d-a38f-f5f5247a4b8d
+  spec:
+    nodeSelector: null
+    output:
+      pushSecret:
+        name: builder-dockercfg-xqzdw
+      to:
+        kind: ImageStreamTag
+        name: srv0003:latest
+    postCommit: {}
+    resources: {}
+    revision:
+      git:
+        author:
+          email: ffernandeza@dt.gob.cl
+          name: Fernando Antonio Fernandez Alvarez
+        commit: 4e47d8b10110043d857230b6c77f974bb2cab985
+        committer:
+          email: ffernandeza@dt.gob.cl
+          name: Fernando Antonio Fernandez Alvarez
+        message: |-
+          Merged PR 12653: se quita tipo empleador
+
+          Related work items: #37421
+      type: Git
+    serviceAccount: builder
+    source:
+      binary: {}
+      type: Binary
+    strategy:
+      sourceStrategy:
+        from:
+          kind: DockerImage
+          name: image-registry.openshift-image-registry.svc:5000/openshift/redhat-openjdk18-openshift@sha256:dc84fed0f6f40975a2277c126438c8aa15c70eeac75981dbaa4b6b853eff61a6
+        pullSecret:
+          name: builder-dockercfg-xqzdw
+      type: Source
+  status:
+    completionTimestamp: "2023-10-16T19:01:53Z"
+    conditions:
+    - lastTransitionTime: "2023-10-16T19:01:10Z"
+      lastUpdateTime: "2023-10-16T19:01:10Z"
+      status: "False"
+      type: New
+    - lastTransitionTime: "2023-10-16T19:01:13Z"
+      lastUpdateTime: "2023-10-16T19:01:13Z"
+      status: "False"
+      type: Pending
+    - lastTransitionTime: "2023-10-16T19:01:53Z"
+      lastUpdateTime: "2023-10-16T19:01:53Z"
+      status: "False"
+      type: Running
+    - lastTransitionTime: "2023-10-16T19:01:53Z"
+      lastUpdateTime: "2023-10-16T19:01:53Z"
+      status: "True"
+      type: Complete
+    config:
+      kind: BuildConfig
+      name: srv0003
+      namespace: api-fiscalizacion-qa
+    duration: 43000000000
+    output:
+      to:
+        imageDigest: sha256:94b257a2daee8d28aaa89c3c55483fb50c1747da323bb4f125e9008293af9f58
+    outputDockerImageReference: image-registry.openshift-image-registry.svc:5000/api-fiscalizacion-qa/srv0003:latest
+    phase: Complete
+    stages:
+    - durationMilliseconds: 15281
+      name: PullImages
+      startTime: "2023-10-16T19:01:19Z"
+      steps:
+      - durationMilliseconds: 15281
+        name: PullBaseImage
+        startTime: "2023-10-16T19:01:19Z"
+    - durationMilliseconds: 10690
+      name: Build
+      startTime: "2023-10-16T19:01:34Z"
+      steps:
+      - durationMilliseconds: 10690
+        name: DockerBuild
+        startTime: "2023-10-16T19:01:34Z"
+    - durationMilliseconds: 2595
+      name: PushImage
+      startTime: "2023-10-16T19:01:45Z"
+      steps:
+      - durationMilliseconds: 2595
+        name: PushImage
+        startTime: "2023-10-16T19:01:45Z"
+    startTimestamp: "2023-10-16T19:01:10Z"
+- apiVersion: build.openshift.io/v1
+  kind: Build
+  metadata:
+    annotations:
+      openshift.io/build-config.name: srv0004-declaraciontrans
+      openshift.io/build.number: "1"
+      openshift.io/build.pod-name: srv0004-declaraciontrans-1-build
+    creationTimestamp: "2023-10-16T19:06:48Z"
+    generation: 2
+    labels:
+      build: srv0004-declaraciontrans
+      buildconfig: srv0004-declaraciontrans
+      migration.openshift.io/migrated-by-migmigration: 7403c997-3617-4c43-a005-e473ceb26445
+      migration.openshift.io/migrated-by-migplan: 2a8299ac-1423-4ceb-93a5-de572a0f44a9
+      openshift.io/build-config.name: srv0004-declaraciontrans
+      openshift.io/build.start-policy: Serial
+      velero.io/backup-name: migration-9db42-initial-5kc64
+      velero.io/restore-name: migration-9db42-final-cpc2b
+    name: srv0004-declaraciontrans-1
+    namespace: api-fiscalizacion-qa
+    ownerReferences:
+    - apiVersion: build.openshift.io/v1
+      controller: true
+      kind: BuildConfig
+      name: srv0004-declaraciontrans
+      uid: c13e7239-a3a1-4c5e-853e-e27b5115b0f7
+    resourceVersion: "136517418"
+    uid: 60dddd5f-eafc-41f5-b0ae-d315e3c0b7dd
+  spec:
+    nodeSelector: null
+    output:
+      pushSecret:
+        name: builder-dockercfg-xqzdw
+      to:
+        kind: ImageStreamTag
+        name: srv0004-declaraciontrans:latest
+    postCommit: {}
+    resources: {}
+    revision:
+      git:
+        author:
+          email: jorge@moveapps.cl
+          name: Jorge Aguilera
+        commit: bea8ddfcda96204fb7429cd2fcc466a33d1bcc7e
+        committer:
+          email: jorge@moveapps.cl
+          name: Jorge Aguilera
+        message: Se realiza cambio en el mensaje al solicitar una pagina fuera de
+          rango.
+      type: Git
+    serviceAccount: builder
+    source:
+      binary: {}
+      type: Binary
+    strategy:
+      sourceStrategy:
+        from:
+          kind: DockerImage
+          name: image-registry.openshift-image-registry.svc:5000/openshift/redhat-openjdk18-openshift@sha256:dc84fed0f6f40975a2277c126438c8aa15c70eeac75981dbaa4b6b853eff61a6
+        pullSecret:
+          name: builder-dockercfg-xqzdw
+      type: Source
+  status:
+    completionTimestamp: "2023-10-16T19:07:34Z"
+    conditions:
+    - lastTransitionTime: "2023-10-16T19:06:48Z"
+      lastUpdateTime: "2023-10-16T19:06:48Z"
+      status: "False"
+      type: New
+    - lastTransitionTime: "2023-10-16T19:06:50Z"
+      lastUpdateTime: "2023-10-16T19:06:50Z"
+      status: "False"
+      type: Pending
+    - lastTransitionTime: "2023-10-16T19:07:34Z"
+      lastUpdateTime: "2023-10-16T19:07:34Z"
+      status: "False"
+      type: Running
+    - lastTransitionTime: "2023-10-16T19:07:34Z"
+      lastUpdateTime: "2023-10-16T19:07:34Z"
+      status: "True"
+      type: Complete
+    config:
+      kind: BuildConfig
+      name: srv0004-declaraciontrans
+      namespace: api-fiscalizacion-qa
+    duration: 46000000000
+    output:
+      to:
+        imageDigest: sha256:03b88c677dba06457806e4fd17cd45cd94eea060aed21a6219f04038dbcb46a2
+    outputDockerImageReference: image-registry.openshift-image-registry.svc:5000/api-fiscalizacion-qa/srv0004-declaraciontrans:latest
+    phase: Complete
+    stages:
+    - durationMilliseconds: 16359
+      name: PullImages
+      startTime: "2023-10-16T19:07:00Z"
+      steps:
+      - durationMilliseconds: 16359
+        name: PullBaseImage
+        startTime: "2023-10-16T19:07:00Z"
+    - durationMilliseconds: 10283
+      name: Build
+      startTime: "2023-10-16T19:07:16Z"
+      steps:
+      - durationMilliseconds: 10283
+        name: DockerBuild
+        startTime: "2023-10-16T19:07:16Z"
+    - durationMilliseconds: 4168
+      name: PushImage
+      startTime: "2023-10-16T19:07:26Z"
+      steps:
+      - durationMilliseconds: 4168
+        name: PushImage
+        startTime: "2023-10-16T19:07:26Z"
+    startTimestamp: "2023-10-16T19:06:48Z"
+- apiVersion: build.openshift.io/v1
+  kind: Build
+  metadata:
+    annotations:
+      openshift.io/build-config.name: srv0005-descargalre
+      openshift.io/build.number: "1"
+      openshift.io/build.pod-name: srv0005-descargalre-1-build
+    creationTimestamp: "2023-10-16T19:11:34Z"
+    generation: 2
+    labels:
+      build: srv0005-descargalre
+      buildconfig: srv0005-descargalre
+      migration.openshift.io/migrated-by-migmigration: 7403c997-3617-4c43-a005-e473ceb26445
+      migration.openshift.io/migrated-by-migplan: 2a8299ac-1423-4ceb-93a5-de572a0f44a9
+      openshift.io/build-config.name: srv0005-descargalre
+      openshift.io/build.start-policy: Serial
+      velero.io/backup-name: migration-9db42-initial-5kc64
+      velero.io/restore-name: migration-9db42-final-cpc2b
+    name: srv0005-descargalre-1
+    namespace: api-fiscalizacion-qa
+    ownerReferences:
+    - apiVersion: build.openshift.io/v1
+      controller: true
+      kind: BuildConfig
+      name: srv0005-descargalre
+      uid: a492b7ff-fb81-4dff-901f-e301bb617471
+    resourceVersion: "136520138"
+    uid: 78ad74c7-cd9d-4725-bc7a-305f540351b2
+  spec:
+    nodeSelector: null
+    output:
+      pushSecret:
+        name: builder-dockercfg-xqzdw
+      to:
+        kind: ImageStreamTag
+        name: srv0005-descargalre:latest
+    postCommit: {}
+    resources: {}
+    revision:
+      git:
+        author:
+          email: gbriceno@dt.gob.cl
+          name: Guillermo Briceño
+        commit: f9c05c336d6bb9ffde82e9f4eb2610052774fd02
+        committer:
+          email: gbriceno@dt.gob.cl
+          name: Guillermo Briceño
+        message: arreglo rut con k
+      type: Git
+    serviceAccount: builder
+    source:
+      binary: {}
+      type: Binary
+    strategy:
+      sourceStrategy:
+        from:
+          kind: DockerImage
+          name: image-registry.openshift-image-registry.svc:5000/openshift/redhat-openjdk18-openshift@sha256:dc84fed0f6f40975a2277c126438c8aa15c70eeac75981dbaa4b6b853eff61a6
+        pullSecret:
+          name: builder-dockercfg-xqzdw
+      type: Source
+  status:
+    completionTimestamp: "2023-10-16T19:12:11Z"
+    conditions:
+    - lastTransitionTime: "2023-10-16T19:11:34Z"
+      lastUpdateTime: "2023-10-16T19:11:34Z"
+      status: "False"
+      type: New
+    - lastTransitionTime: "2023-10-16T19:11:37Z"
+      lastUpdateTime: "2023-10-16T19:11:37Z"
+      status: "False"
+      type: Pending
+    - lastTransitionTime: "2023-10-16T19:12:11Z"
+      lastUpdateTime: "2023-10-16T19:12:11Z"
+      status: "False"
+      type: Running
+    - lastTransitionTime: "2023-10-16T19:12:11Z"
+      lastUpdateTime: "2023-10-16T19:12:11Z"
+      status: "True"
+      type: Complete
+    config:
+      kind: BuildConfig
+      name: srv0005-descargalre
+      namespace: api-fiscalizacion-qa
+    duration: 37000000000
+    output:
+      to:
+        imageDigest: sha256:f6f5ccaa6d6b1893b084aea5ff13623ce78d4f515357702bc83d66ab457b8e8c
+    outputDockerImageReference: image-registry.openshift-image-registry.svc:5000/api-fiscalizacion-qa/srv0005-descargalre:latest
+    phase: Complete
+    stages:
+    - durationMilliseconds: 13160
+      name: PullImages
+      startTime: "2023-10-16T19:11:43Z"
+      steps:
+      - durationMilliseconds: 13160
+        name: PullBaseImage
+        startTime: "2023-10-16T19:11:43Z"
+    - durationMilliseconds: 9104
+      name: Build
+      startTime: "2023-10-16T19:11:56Z"
+      steps:
+      - durationMilliseconds: 9104
+        name: DockerBuild
+        startTime: "2023-10-16T19:11:56Z"
+    - durationMilliseconds: 2458
+      name: PushImage
+      startTime: "2023-10-16T19:12:05Z"
+      steps:
+      - durationMilliseconds: 2458
+        name: PushImage
+        startTime: "2023-10-16T19:12:05Z"
+    startTimestamp: "2023-10-16T19:11:34Z"
+- apiVersion: build.openshift.io/v1
+  kind: Build
+  metadata:
+    annotations:
+      openshift.io/build-config.name: srv0006-apimetadata
+      openshift.io/build.number: "1"
+      openshift.io/build.pod-name: srv0006-apimetadata-1-build
+    creationTimestamp: "2023-10-16T19:16:18Z"
+    generation: 2
+    labels:
+      build: srv0006-apimetadata
+      buildconfig: srv0006-apimetadata
+      migration.openshift.io/migrated-by-migmigration: 7403c997-3617-4c43-a005-e473ceb26445
+      migration.openshift.io/migrated-by-migplan: 2a8299ac-1423-4ceb-93a5-de572a0f44a9
+      openshift.io/build-config.name: srv0006-apimetadata
+      openshift.io/build.start-policy: Serial
+      velero.io/backup-name: migration-9db42-initial-5kc64
+      velero.io/restore-name: migration-9db42-final-cpc2b
+    name: srv0006-apimetadata-1
+    namespace: api-fiscalizacion-qa
+    ownerReferences:
+    - apiVersion: build.openshift.io/v1
+      controller: true
+      kind: BuildConfig
+      name: srv0006-apimetadata
+      uid: 92e2ab52-51f0-4f94-9a96-091c3dbbac8f
+    resourceVersion: "136523149"
+    uid: 224eb7ed-f5f5-45c2-93f8-767471bc4899
+  spec:
+    nodeSelector: null
+    output:
+      pushSecret:
+        name: builder-dockercfg-xqzdw
+      to:
+        kind: ImageStreamTag
+        name: srv0006-apimetadata:latest
+    postCommit: {}
+    resources: {}
+    revision:
+      git:
+        author:
+          email: gbriceno@dt.gob.cl
+          name: Guillermo Briceño
+        commit: d2ffdd7671be2b4202fe293dff431681da640918
+        committer:
+          email: gbriceno@dt.gob.cl
+          name: Guillermo Briceño
+        message: agregar otros campos para la dj1887
+      type: Git
+    serviceAccount: builder
+    source:
+      binary: {}
+      type: Binary
+    strategy:
+      sourceStrategy:
+        from:
+          kind: DockerImage
+          name: image-registry.openshift-image-registry.svc:5000/openshift/redhat-openjdk18-openshift@sha256:dc84fed0f6f40975a2277c126438c8aa15c70eeac75981dbaa4b6b853eff61a6
+        pullSecret:
+          name: builder-dockercfg-xqzdw
+      type: Source
+  status:
+    completionTimestamp: "2023-10-16T19:17:00Z"
+    conditions:
+    - lastTransitionTime: "2023-10-16T19:16:18Z"
+      lastUpdateTime: "2023-10-16T19:16:18Z"
+      status: "False"
+      type: New
+    - lastTransitionTime: "2023-10-16T19:16:20Z"
+      lastUpdateTime: "2023-10-16T19:16:20Z"
+      status: "False"
+      type: Pending
+    - lastTransitionTime: "2023-10-16T19:17:00Z"
+      lastUpdateTime: "2023-10-16T19:17:00Z"
+      status: "False"
+      type: Running
+    - lastTransitionTime: "2023-10-16T19:17:00Z"
+      lastUpdateTime: "2023-10-16T19:17:00Z"
+      status: "True"
+      type: Complete
+    config:
+      kind: BuildConfig
+      name: srv0006-apimetadata
+      namespace: api-fiscalizacion-qa
+    duration: 42000000000
+    output:
+      to:
+        imageDigest: sha256:b439b15ca10e8da72930268a8253abaca81343f2582ccb80afd62849f7014d31
+    outputDockerImageReference: image-registry.openshift-image-registry.svc:5000/api-fiscalizacion-qa/srv0006-apimetadata:latest
+    phase: Complete
+    stages:
+    - durationMilliseconds: 17023
+      name: PullImages
+      startTime: "2023-10-16T19:16:27Z"
+      steps:
+      - durationMilliseconds: 17023
+        name: PullBaseImage
+        startTime: "2023-10-16T19:16:27Z"
+    - durationMilliseconds: 9172
+      name: Build
+      startTime: "2023-10-16T19:16:44Z"
+      steps:
+      - durationMilliseconds: 9172
+        name: DockerBuild
+        startTime: "2023-10-16T19:16:44Z"
+    - durationMilliseconds: 2567
+      name: PushImage
+      startTime: "2023-10-16T19:16:53Z"
+      steps:
+      - durationMilliseconds: 2567
+        name: PushImage
+        startTime: "2023-10-16T19:16:53Z"
+    startTimestamp: "2023-10-16T19:16:18Z"
+- apiVersion: build.openshift.io/v1
+  kind: Build
+  metadata:
+    annotations:
+      openshift.io/build-config.name: srv0007-bff
+      openshift.io/build.number: "1"
+      openshift.io/build.pod-name: srv0007-bff-1-build
+    creationTimestamp: "2023-09-01T01:10:32Z"
+    generation: 2
+    labels:
+      app: srv0007-bff
+      buildconfig: srv0007-bff
+      migration.openshift.io/migrated-by-migmigration: 7403c997-3617-4c43-a005-e473ceb26445
+      migration.openshift.io/migrated-by-migplan: 2a8299ac-1423-4ceb-93a5-de572a0f44a9
+      openshift.io/build-config.name: srv0007-bff
+      openshift.io/build.start-policy: Serial
+      velero.io/backup-name: migration-9db42-initial-5kc64
+      velero.io/restore-name: migration-9db42-final-cpc2b
+    name: srv0007-bff-1
+    namespace: api-fiscalizacion-qa
+    ownerReferences:
+    - apiVersion: build.openshift.io/v1
+      controller: true
+      kind: BuildConfig
+      name: srv0007-bff
+      uid: dffea353-831f-48cd-8079-42725ac6970b
+    resourceVersion: "95926230"
+    uid: 2608ab86-193c-453b-9871-0069c03c92a3
+  spec:
+    nodeSelector: null
+    output:
+      pushSecret:
+        name: builder-dockercfg-xqzdw
+      to:
+        kind: ImageStreamTag
+        name: srv0007-bff:latest
+    postCommit: {}
+    resources: {}
+    revision:
+      git:
+        author:
+          email: ealmuna@dt.gob.cl
+          name: Esteban Mauricio Almuna Herrrera
+        commit: e70249238d5c9d0c1ea101be51c3c332a7c0a53d
+        committer:
+          email: ealmuna@dt.gob.cl
+          name: Esteban Mauricio Almuna Herrrera
+        message: 'Merged PR 9787: Revert "Updated rut-token.guard.ts - debug"'
+      type: Git
+    serviceAccount: builder
+    source:
+      git:
+        ref: develop
+        uri: https://dirtrab.visualstudio.com/Libro%20Remuneraciones%20Electronico/_git/SRV0007-BFF
+      sourceSecret:
+        name: serv0007-bff
+      type: Git
+    strategy:
+      sourceStrategy:
+        from:
+          kind: DockerImage
+          name: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+        pullSecret:
+          name: builder-dockercfg-xqzdw
+      type: Source
+    triggeredBy:
+    - imageChangeBuild:
+        fromRef:
+          kind: ImageStreamTag
+          name: nodejs:10
+          namespace: openshift
+        imageID: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+      message: Image change
+  status:
+    completionTimestamp: "2023-09-01T01:14:11Z"
+    conditions:
+    - lastTransitionTime: "2023-09-01T01:10:32Z"
+      lastUpdateTime: "2023-09-01T01:10:32Z"
+      status: "False"
+      type: New
+    - lastTransitionTime: "2023-09-01T01:10:36Z"
+      lastUpdateTime: "2023-09-01T01:10:36Z"
+      status: "False"
+      type: Pending
+    - lastTransitionTime: "2023-09-01T01:14:11Z"
+      lastUpdateTime: "2023-09-01T01:14:11Z"
+      status: "False"
+      type: Running
+    - lastTransitionTime: "2023-09-01T01:14:11Z"
+      lastUpdateTime: "2023-09-01T01:14:11Z"
+      status: "True"
+      type: Complete
+    config:
+      kind: BuildConfig
+      name: srv0007-bff
+      namespace: api-fiscalizacion-qa
+    duration: 219000000000
+    output:
+      to:
+        imageDigest: sha256:ae0c2d1d6f81b2a2492104f93fe1c905e428b978a4746b75cb0b41d13392c4d8
+    outputDockerImageReference: image-registry.openshift-image-registry.svc:5000/api-fiscalizacion-qa/srv0007-bff:latest
+    phase: Complete
+    stages:
+    - durationMilliseconds: 1570
+      name: FetchInputs
+      startTime: "2023-09-01T01:10:37Z"
+      steps:
+      - durationMilliseconds: 1570
+        name: FetchGitSource
+        startTime: "2023-09-01T01:10:37Z"
+    - durationMilliseconds: 30941
+      name: PullImages
+      startTime: "2023-09-01T01:10:41Z"
+      steps:
+      - durationMilliseconds: 30941
+        name: PullBaseImage
+        startTime: "2023-09-01T01:10:41Z"
+    - durationMilliseconds: 169161
+      name: Build
+      startTime: "2023-09-01T01:11:12Z"
+      steps:
+      - durationMilliseconds: 169161
+        name: DockerBuild
+        startTime: "2023-09-01T01:11:12Z"
+    - durationMilliseconds: 4913
+      name: PushImage
+      startTime: "2023-09-01T01:14:01Z"
+      steps:
+      - durationMilliseconds: 4913
+        name: PushImage
+        startTime: "2023-09-01T01:14:01Z"
+    startTimestamp: "2023-09-01T01:10:32Z"
+- apiVersion: build.openshift.io/v1
+  kind: Build
+  metadata:
+    annotations:
+      openshift.io/build-config.name: srv0007-bff
+      openshift.io/build.number: "2"
+      openshift.io/build.pod-name: srv0007-bff-2-build
+    creationTimestamp: "2023-10-16T19:18:50Z"
+    generation: 2
+    labels:
+      app: srv0007-bff
+      buildconfig: srv0007-bff
+      migration.openshift.io/migrated-by-migmigration: 7403c997-3617-4c43-a005-e473ceb26445
+      migration.openshift.io/migrated-by-migplan: 2a8299ac-1423-4ceb-93a5-de572a0f44a9
+      openshift.io/build-config.name: srv0007-bff
+      openshift.io/build.start-policy: Serial
+      velero.io/backup-name: migration-9db42-initial-5kc64
+      velero.io/restore-name: migration-9db42-final-cpc2b
+    name: srv0007-bff-2
+    namespace: api-fiscalizacion-qa
+    ownerReferences:
+    - apiVersion: build.openshift.io/v1
+      controller: true
+      kind: BuildConfig
+      name: srv0007-bff
+      uid: dffea353-831f-48cd-8079-42725ac6970b
+    resourceVersion: "136525915"
+    uid: a47907e8-0607-4a82-8a80-1cd859dd2c5c
+  spec:
+    nodeSelector: null
+    output:
+      pushSecret:
+        name: builder-dockercfg-xqzdw
+      to:
+        kind: ImageStreamTag
+        name: srv0007-bff:latest
+    postCommit: {}
+    resources: {}
+    revision:
+      git:
+        author:
+          email: ealmuna@dt.gob.cl
+          name: Esteban Mauricio Almuna Herrrera
+        commit: e70249238d5c9d0c1ea101be51c3c332a7c0a53d
+        committer:
+          email: ealmuna@dt.gob.cl
+          name: Esteban Mauricio Almuna Herrrera
+        message: 'Merged PR 9787: Revert "Updated rut-token.guard.ts - debug"'
+      type: Git
+    serviceAccount: builder
+    source:
+      git:
+        ref: develop
+        uri: https://dirtrab.visualstudio.com/Libro%20Remuneraciones%20Electronico/_git/SRV0007-BFF
+      sourceSecret:
+        name: serv0007-bff
+      type: Git
+    strategy:
+      sourceStrategy:
+        from:
+          kind: DockerImage
+          name: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+        pullSecret:
+          name: builder-dockercfg-xqzdw
+      type: Source
+    triggeredBy:
+    - message: Manually triggered
+  status:
+    completionTimestamp: "2023-10-16T19:21:47Z"
+    conditions:
+    - lastTransitionTime: "2023-10-16T19:18:50Z"
+      lastUpdateTime: "2023-10-16T19:18:50Z"
+      status: "False"
+      type: New
+    - lastTransitionTime: "2023-10-16T19:18:53Z"
+      lastUpdateTime: "2023-10-16T19:18:53Z"
+      status: "False"
+      type: Pending
+    - lastTransitionTime: "2023-10-16T19:21:47Z"
+      lastUpdateTime: "2023-10-16T19:21:47Z"
+      status: "False"
+      type: Running
+    - lastTransitionTime: "2023-10-16T19:21:47Z"
+      lastUpdateTime: "2023-10-16T19:21:47Z"
+      status: "True"
+      type: Complete
+    config:
+      kind: BuildConfig
+      name: srv0007-bff
+      namespace: api-fiscalizacion-qa
+    duration: 177000000000
+    output:
+      to:
+        imageDigest: sha256:70b9adee8e371ab8520e6c725035b972d268ab86727b16267a6f782df0e11777
+    outputDockerImageReference: image-registry.openshift-image-registry.svc:5000/api-fiscalizacion-qa/srv0007-bff:latest
+    phase: Complete
+    stages:
+    - durationMilliseconds: 1776
+      name: FetchInputs
+      startTime: "2023-10-16T19:18:53Z"
+      steps:
+      - durationMilliseconds: 1776
+        name: FetchGitSource
+        startTime: "2023-10-16T19:18:53Z"
+    - durationMilliseconds: 19502
+      name: PullImages
+      startTime: "2023-10-16T19:18:57Z"
+      steps:
+      - durationMilliseconds: 19502
+        name: PullBaseImage
+        startTime: "2023-10-16T19:18:57Z"
+    - durationMilliseconds: 140205
+      name: Build
+      startTime: "2023-10-16T19:19:17Z"
+      steps:
+      - durationMilliseconds: 140205
+        name: DockerBuild
+        startTime: "2023-10-16T19:19:17Z"
+    - durationMilliseconds: 4227
+      name: PushImage
+      startTime: "2023-10-16T19:21:38Z"
+      steps:
+      - durationMilliseconds: 4227
+        name: PushImage
+        startTime: "2023-10-16T19:21:38Z"
+    startTimestamp: "2023-10-16T19:18:50Z"
+- apiVersion: build.openshift.io/v1
+  kind: Build
+  metadata:
+    annotations:
+      openshift.io/build-config.name: srv0008-validaciones
+      openshift.io/build.number: "1"
+      openshift.io/build.pod-name: srv0008-validaciones-1-build
+    creationTimestamp: "2023-09-01T01:10:32Z"
+    generation: 2
+    labels:
+      app: srv0008-validaciones
+      buildconfig: srv0008-validaciones
+      migration.openshift.io/migrated-by-migmigration: 7403c997-3617-4c43-a005-e473ceb26445
+      migration.openshift.io/migrated-by-migplan: 2a8299ac-1423-4ceb-93a5-de572a0f44a9
+      openshift.io/build-config.name: srv0008-validaciones
+      openshift.io/build.start-policy: Serial
+      velero.io/backup-name: migration-9db42-initial-5kc64
+      velero.io/restore-name: migration-9db42-final-cpc2b
+    name: srv0008-validaciones-1
+    namespace: api-fiscalizacion-qa
+    ownerReferences:
+    - apiVersion: build.openshift.io/v1
+      controller: true
+      kind: BuildConfig
+      name: srv0008-validaciones
+      uid: a03faebf-e9ce-408a-a3b5-e3b423f277d6
+    resourceVersion: "95927293"
+    uid: bd7a1fc2-d881-4f27-90b2-1ddeae38fe01
+  spec:
+    nodeSelector: null
+    output:
+      pushSecret:
+        name: builder-dockercfg-xqzdw
+      to:
+        kind: ImageStreamTag
+        name: srv0008-validaciones:latest
+    postCommit: {}
+    resources: {}
+    revision:
+      git:
+        author:
+          email: ealmuna@dt.gob.cl
+          name: Esteban Mauricio Almuna Herrrera
+        commit: e59113216709ad37d83d9c97997cc7f0cf734c7f
+        committer:
+          email: ealmuna@dt.gob.cl
+          name: Esteban Mauricio Almuna Herrrera
+        message: 'Merged PR 9858: Homologacion - 19/01/2021'
+      type: Git
+    serviceAccount: builder
+    source:
+      git:
+        ref: develop
+        uri: https://dirtrab.visualstudio.com/Libro%20Remuneraciones%20Electronico/_git/SRV0008-ValidacionesUsuario
+      sourceSecret:
+        name: serv0007-bff
+      type: Git
+    strategy:
+      sourceStrategy:
+        from:
+          kind: DockerImage
+          name: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+        pullSecret:
+          name: builder-dockercfg-xqzdw
+      type: Source
+    triggeredBy:
+    - imageChangeBuild:
+        fromRef:
+          kind: ImageStreamTag
+          name: nodejs:10
+          namespace: openshift
+        imageID: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+      message: Image change
+  status:
+    completionTimestamp: "2023-09-01T01:15:26Z"
+    conditions:
+    - lastTransitionTime: "2023-09-01T01:10:32Z"
+      lastUpdateTime: "2023-09-01T01:10:32Z"
+      status: "False"
+      type: New
+    - lastTransitionTime: "2023-09-01T01:10:35Z"
+      lastUpdateTime: "2023-09-01T01:10:35Z"
+      status: "False"
+      type: Pending
+    - lastTransitionTime: "2023-09-01T01:15:26Z"
+      lastUpdateTime: "2023-09-01T01:15:26Z"
+      status: "False"
+      type: Running
+    - lastTransitionTime: "2023-09-01T01:15:26Z"
+      lastUpdateTime: "2023-09-01T01:15:26Z"
+      status: "True"
+      type: Complete
+    config:
+      kind: BuildConfig
+      name: srv0008-validaciones
+      namespace: api-fiscalizacion-qa
+    duration: 294000000000
+    output:
+      to:
+        imageDigest: sha256:eec65d98361e21653e7293631293991907b504bab5349fde350d412d4d3cd3f0
+    outputDockerImageReference: image-registry.openshift-image-registry.svc:5000/api-fiscalizacion-qa/srv0008-validaciones:latest
+    phase: Complete
+    stages:
+    - durationMilliseconds: 1927
+      name: FetchInputs
+      startTime: "2023-09-01T01:10:36Z"
+      steps:
+      - durationMilliseconds: 1927
+        name: FetchGitSource
+        startTime: "2023-09-01T01:10:36Z"
+    - durationMilliseconds: 49082
+      name: PullImages
+      startTime: "2023-09-01T01:10:40Z"
+      steps:
+      - durationMilliseconds: 49082
+        name: PullBaseImage
+        startTime: "2023-09-01T01:10:40Z"
+    - durationMilliseconds: 227411
+      name: Build
+      startTime: "2023-09-01T01:11:29Z"
+      steps:
+      - durationMilliseconds: 227411
+        name: DockerBuild
+        startTime: "2023-09-01T01:11:29Z"
+    - durationMilliseconds: 3662
+      name: PushImage
+      startTime: "2023-09-01T01:15:16Z"
+      steps:
+      - durationMilliseconds: 3662
+        name: PushImage
+        startTime: "2023-09-01T01:15:16Z"
+    startTimestamp: "2023-09-01T01:10:32Z"
+- apiVersion: build.openshift.io/v1
+  kind: Build
+  metadata:
+    annotations:
+      openshift.io/build-config.name: srv0008-validaciones
+      openshift.io/build.number: "2"
+      openshift.io/build.pod-name: srv0008-validaciones-2-build
+    creationTimestamp: "2023-10-16T19:22:40Z"
+    generation: 2
+    labels:
+      app: srv0008-validaciones
+      buildconfig: srv0008-validaciones
+      migration.openshift.io/migrated-by-migmigration: 7403c997-3617-4c43-a005-e473ceb26445
+      migration.openshift.io/migrated-by-migplan: 2a8299ac-1423-4ceb-93a5-de572a0f44a9
+      openshift.io/build-config.name: srv0008-validaciones
+      openshift.io/build.start-policy: Serial
+      velero.io/backup-name: migration-9db42-initial-5kc64
+      velero.io/restore-name: migration-9db42-final-cpc2b
+    name: srv0008-validaciones-2
+    namespace: api-fiscalizacion-qa
+    ownerReferences:
+    - apiVersion: build.openshift.io/v1
+      controller: true
+      kind: BuildConfig
+      name: srv0008-validaciones
+      uid: a03faebf-e9ce-408a-a3b5-e3b423f277d6
+    resourceVersion: "136528048"
+    uid: 1735c24b-478b-4fff-82a2-13d0bfe1e8b4
+  spec:
+    nodeSelector: null
+    output:
+      pushSecret:
+        name: builder-dockercfg-xqzdw
+      to:
+        kind: ImageStreamTag
+        name: srv0008-validaciones:latest
+    postCommit: {}
+    resources: {}
+    revision:
+      git:
+        author:
+          email: ealmuna@dt.gob.cl
+          name: Esteban Mauricio Almuna Herrrera
+        commit: e59113216709ad37d83d9c97997cc7f0cf734c7f
+        committer:
+          email: ealmuna@dt.gob.cl
+          name: Esteban Mauricio Almuna Herrrera
+        message: 'Merged PR 9858: Homologacion - 19/01/2021'
+      type: Git
+    serviceAccount: builder
+    source:
+      git:
+        ref: develop
+        uri: https://dirtrab.visualstudio.com/Libro%20Remuneraciones%20Electronico/_git/SRV0008-ValidacionesUsuario
+      sourceSecret:
+        name: serv0007-bff
+      type: Git
+    strategy:
+      sourceStrategy:
+        from:
+          kind: DockerImage
+          name: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+        pullSecret:
+          name: builder-dockercfg-xqzdw
+      type: Source
+    triggeredBy:
+    - message: Manually triggered
+  status:
+    completionTimestamp: "2023-10-16T19:25:24Z"
+    conditions:
+    - lastTransitionTime: "2023-10-16T19:22:40Z"
+      lastUpdateTime: "2023-10-16T19:22:40Z"
+      status: "False"
+      type: New
+    - lastTransitionTime: "2023-10-16T19:22:43Z"
+      lastUpdateTime: "2023-10-16T19:22:43Z"
+      status: "False"
+      type: Pending
+    - lastTransitionTime: "2023-10-16T19:25:24Z"
+      lastUpdateTime: "2023-10-16T19:25:24Z"
+      status: "False"
+      type: Running
+    - lastTransitionTime: "2023-10-16T19:25:24Z"
+      lastUpdateTime: "2023-10-16T19:25:24Z"
+      status: "True"
+      type: Complete
+    config:
+      kind: BuildConfig
+      name: srv0008-validaciones
+      namespace: api-fiscalizacion-qa
+    duration: 164000000000
+    output:
+      to:
+        imageDigest: sha256:180c556abf45d75ea9093edce65337ee03b2f56f2dd3f0a1687c2f42fb7b60ca
+    outputDockerImageReference: image-registry.openshift-image-registry.svc:5000/api-fiscalizacion-qa/srv0008-validaciones:latest
+    phase: Complete
+    stages:
+    - durationMilliseconds: 1814
+      name: FetchInputs
+      startTime: "2023-10-16T19:22:44Z"
+      steps:
+      - durationMilliseconds: 1814
+        name: FetchGitSource
+        startTime: "2023-10-16T19:22:44Z"
+    - durationMilliseconds: 20428
+      name: PullImages
+      startTime: "2023-10-16T19:22:48Z"
+      steps:
+      - durationMilliseconds: 20428
+        name: PullBaseImage
+        startTime: "2023-10-16T19:22:48Z"
+    - durationMilliseconds: 125511
+      name: Build
+      startTime: "2023-10-16T19:23:08Z"
+      steps:
+      - durationMilliseconds: 125511
+        name: DockerBuild
+        startTime: "2023-10-16T19:23:08Z"
+    - durationMilliseconds: 4454
+      name: PushImage
+      startTime: "2023-10-16T19:25:14Z"
+      steps:
+      - durationMilliseconds: 4454
+        name: PushImage
+        startTime: "2023-10-16T19:25:14Z"
+    startTimestamp: "2023-10-16T19:22:40Z"
+- apiVersion: build.openshift.io/v1
+  kind: Build
+  metadata:
+    annotations:
+      openshift.io/build-config.name: srv0009-admnominatrabaj
+      openshift.io/build.number: "1"
+      openshift.io/build.pod-name: srv0009-admnominatrabaj-1-build
+    creationTimestamp: "2023-09-01T01:10:32Z"
+    generation: 2
+    labels:
+      app: srv0009-admnominatrabaj
+      buildconfig: srv0009-admnominatrabaj
+      migration.openshift.io/migrated-by-migmigration: 7403c997-3617-4c43-a005-e473ceb26445
+      migration.openshift.io/migrated-by-migplan: 2a8299ac-1423-4ceb-93a5-de572a0f44a9
+      openshift.io/build-config.name: srv0009-admnominatrabaj
+      openshift.io/build.start-policy: Serial
+      velero.io/backup-name: migration-9db42-initial-5kc64
+      velero.io/restore-name: migration-9db42-final-cpc2b
+    name: srv0009-admnominatrabaj-1
+    namespace: api-fiscalizacion-qa
+    ownerReferences:
+    - apiVersion: build.openshift.io/v1
+      controller: true
+      kind: BuildConfig
+      name: srv0009-admnominatrabaj
+      uid: 0290aa27-6186-48de-aa8a-1e0be13a3048
+    resourceVersion: "95923773"
+    uid: 3c8bd14b-27af-40a1-93a5-f386a954c546
+  spec:
+    nodeSelector: null
+    output:
+      pushSecret:
+        name: builder-dockercfg-xqzdw
+      to:
+        kind: ImageStreamTag
+        name: srv0009-admnominatrabaj:latest
+    postCommit: {}
+    resources: {}
+    serviceAccount: builder
+    source:
+      git:
+        ref: develop
+        uri: https://dirtrab.visualstudio.com/Libro%20Remuneraciones%20Electronico/_git/SRV0009-AdministracionNominaTrabajadores
+      sourceSecret:
+        name: azure2
+      type: Git
+    strategy:
+      sourceStrategy:
+        from:
+          kind: DockerImage
+          name: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+        pullSecret:
+          name: builder-dockercfg-xqzdw
+      type: Source
+    triggeredBy:
+    - imageChangeBuild:
+        fromRef:
+          kind: ImageStreamTag
+          name: nodejs:10
+          namespace: openshift
+        imageID: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+      message: Image change
+  status:
+    completionTimestamp: "2023-09-01T01:10:36Z"
+    conditions:
+    - lastTransitionTime: "2023-09-01T01:10:32Z"
+      lastUpdateTime: "2023-09-01T01:10:32Z"
+      status: "False"
+      type: New
+    - lastTransitionTime: "2023-09-01T01:10:36Z"
+      lastUpdateTime: "2023-09-01T01:10:36Z"
+      status: "False"
+      type: Pending
+    - lastTransitionTime: "2023-09-01T01:10:36Z"
+      lastUpdateTime: "2023-09-01T01:10:36Z"
+      status: "False"
+      type: Running
+    - lastTransitionTime: "2023-09-01T01:10:36Z"
+      lastUpdateTime: "2023-09-01T01:10:36Z"
+      message: Failed to fetch the input source.
+      reason: FetchSourceFailed
+      status: "True"
+      type: Failed
+    config:
+      kind: BuildConfig
+      name: srv0009-admnominatrabaj
+      namespace: api-fiscalizacion-qa
+    duration: 4000000000
+    logSnippet: |-
+      Cloning "https://dirtrab.visualstudio.com/Libro%20Remunera...ctronico/_git/SRV0009-AdministracionNominaTrabajadores" ...
+      error: failed to fetch requested repository "https://dirtr...AdministracionNominaTrabajadores" with provided credentials
+    message: Failed to fetch the input source.
+    output: {}
+    outputDockerImageReference: image-registry.openshift-image-registry.svc:5000/api-fiscalizacion-qa/srv0009-admnominatrabaj:latest
+    phase: Failed
+    reason: FetchSourceFailed
+    startTimestamp: "2023-09-01T01:10:32Z"
+- apiVersion: build.openshift.io/v1
+  kind: Build
+  metadata:
+    annotations:
+      openshift.io/build-config.name: srv0010-decljson
+      openshift.io/build.number: "1"
+      openshift.io/build.pod-name: srv0010-decljson-1-build
+    creationTimestamp: "2023-09-01T01:10:32Z"
+    generation: 2
+    labels:
+      app: srv0010-decljson
+      buildconfig: srv0010-decljson
+      migration.openshift.io/migrated-by-migmigration: 7403c997-3617-4c43-a005-e473ceb26445
+      migration.openshift.io/migrated-by-migplan: 2a8299ac-1423-4ceb-93a5-de572a0f44a9
+      openshift.io/build-config.name: srv0010-decljson
+      openshift.io/build.start-policy: Serial
+      velero.io/backup-name: migration-9db42-initial-5kc64
+      velero.io/restore-name: migration-9db42-final-cpc2b
+    name: srv0010-decljson-1
+    namespace: api-fiscalizacion-qa
+    ownerReferences:
+    - apiVersion: build.openshift.io/v1
+      controller: true
+      kind: BuildConfig
+      name: srv0010-decljson
+      uid: cb61e13c-8bbe-4080-921e-02f2b43b6b54
+    resourceVersion: "95923673"
+    uid: e89f3a32-23e5-4904-a4ce-8371273353ab
+  spec:
+    nodeSelector: null
+    output:
+      pushSecret:
+        name: builder-dockercfg-xqzdw
+      to:
+        kind: ImageStreamTag
+        name: srv0010-decljson:latest
+    postCommit: {}
+    resources: {}
+    serviceAccount: builder
+    source:
+      git:
+        ref: feature/cambio_monto_12_digitos
+        uri: https://dirtrab.visualstudio.com/Libro%20Remuneraciones%20Electronico/_git/SRV0010-DeclaracionesJSON
+      sourceSecret:
+        name: srv0010
+      type: Git
+    strategy:
+      sourceStrategy:
+        from:
+          kind: DockerImage
+          name: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+        pullSecret:
+          name: builder-dockercfg-xqzdw
+      type: Source
+    triggeredBy:
+    - imageChangeBuild:
+        fromRef:
+          kind: ImageStreamTag
+          name: nodejs:10
+          namespace: openshift
+        imageID: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+      message: Image change
+  status:
+    completionTimestamp: "2023-09-01T01:10:36Z"
+    conditions:
+    - lastTransitionTime: "2023-09-01T01:10:32Z"
+      lastUpdateTime: "2023-09-01T01:10:32Z"
+      status: "False"
+      type: New
+    - lastTransitionTime: "2023-09-01T01:10:35Z"
+      lastUpdateTime: "2023-09-01T01:10:35Z"
+      status: "False"
+      type: Pending
+    - lastTransitionTime: "2023-09-01T01:10:36Z"
+      lastUpdateTime: "2023-09-01T01:10:36Z"
+      status: "False"
+      type: Running
+    - lastTransitionTime: "2023-09-01T01:10:36Z"
+      lastUpdateTime: "2023-09-01T01:10:36Z"
+      message: Failed to fetch the input source.
+      reason: FetchSourceFailed
+      status: "True"
+      type: Failed
+    config:
+      kind: BuildConfig
+      name: srv0010-decljson
+      namespace: api-fiscalizacion-qa
+    duration: 4000000000
+    logSnippet: |-
+      Cloning "https://dirtrab.visualstudio.com/Libro%20Remuneraciones%20Electronico/_git/SRV0010-DeclaracionesJSON" ...
+      error: failed to fetch requested repository "https://dirtr...o/_git/SRV0010-DeclaracionesJSON" with provided credentials
+    message: Failed to fetch the input source.
+    output: {}
+    outputDockerImageReference: image-registry.openshift-image-registry.svc:5000/api-fiscalizacion-qa/srv0010-decljson:latest
+    phase: Failed
+    reason: FetchSourceFailed
+    startTimestamp: "2023-09-01T01:10:32Z"
+- apiVersion: build.openshift.io/v1
+  kind: Build
+  metadata:
+    annotations:
+      openshift.io/build-config.name: srv0012-ctrleveventos
+      openshift.io/build.number: "1"
+      openshift.io/build.pod-name: srv0012-ctrleveventos-1-build
+    creationTimestamp: "2023-09-01T01:10:33Z"
+    generation: 2
+    labels:
+      app: srv0012-ctrleveventos
+      buildconfig: srv0012-ctrleveventos
+      migration.openshift.io/migrated-by-migmigration: 7403c997-3617-4c43-a005-e473ceb26445
+      migration.openshift.io/migrated-by-migplan: 2a8299ac-1423-4ceb-93a5-de572a0f44a9
+      openshift.io/build-config.name: srv0012-ctrleveventos
+      openshift.io/build.start-policy: Serial
+      velero.io/backup-name: migration-9db42-initial-5kc64
+      velero.io/restore-name: migration-9db42-final-cpc2b
+    name: srv0012-ctrleveventos-1
+    namespace: api-fiscalizacion-qa
+    ownerReferences:
+    - apiVersion: build.openshift.io/v1
+      controller: true
+      kind: BuildConfig
+      name: srv0012-ctrleveventos
+      uid: 1c97b6fb-2fb4-42a5-b4cf-f37db642efd8
+    resourceVersion: "95923977"
+    uid: 73744806-568e-4c4f-ae19-09b5d904f5d0
+  spec:
+    nodeSelector: null
+    output:
+      pushSecret:
+        name: builder-dockercfg-xqzdw
+      to:
+        kind: ImageStreamTag
+        name: srv0012-ctrleveventos:latest
+    postCommit: {}
+    resources: {}
+    serviceAccount: builder
+    source:
+      git:
+        ref: develop
+        uri: https://dev.azure.com/dirtrab/Libro%20Remuneraciones%20Electronico/_git/SRV0012-ControlEventosLRE
+      sourceSecret:
+        name: azure2
+      type: Git
+    strategy:
+      sourceStrategy:
+        from:
+          kind: DockerImage
+          name: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+        pullSecret:
+          name: builder-dockercfg-xqzdw
+      type: Source
+    triggeredBy:
+    - imageChangeBuild:
+        fromRef:
+          kind: ImageStreamTag
+          name: nodejs:10
+          namespace: openshift
+        imageID: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+      message: Image change
+  status:
+    completionTimestamp: "2023-09-01T01:10:38Z"
+    conditions:
+    - lastTransitionTime: "2023-09-01T01:10:35Z"
+      lastUpdateTime: "2023-09-01T01:10:35Z"
+      status: "False"
+      type: New
+    - lastTransitionTime: "2023-09-01T01:10:38Z"
+      lastUpdateTime: "2023-09-01T01:10:38Z"
+      status: "False"
+      type: Pending
+    - lastTransitionTime: "2023-09-01T01:10:38Z"
+      lastUpdateTime: "2023-09-01T01:10:38Z"
+      message: Failed to fetch the input source.
+      reason: FetchSourceFailed
+      status: "True"
+      type: Failed
+    config:
+      kind: BuildConfig
+      name: srv0012-ctrleveventos
+      namespace: api-fiscalizacion-qa
+    duration: 4000000000
+    logSnippet: |-
+      Cloning "https://dev.azure.com/dirtrab/Libro%20Remuneraciones%20Electronico/_git/SRV0012-ControlEventosLRE" ...
+      error: failed to fetch requested repository "https://dev.a...o/_git/SRV0012-ControlEventosLRE" with provided credentials
+    message: Failed to fetch the input source.
+    output: {}
+    outputDockerImageReference: image-registry.openshift-image-registry.svc:5000/api-fiscalizacion-qa/srv0012-ctrleveventos:latest
+    phase: Failed
+    reason: FetchSourceFailed
+    startTimestamp: "2023-09-01T01:10:34Z"
+- apiVersion: build.openshift.io/v1
+  kind: Build
+  metadata:
+    annotations:
+      openshift.io/build-config.name: srv0013-certificados-lre
+      openshift.io/build.number: "1"
+      openshift.io/build.pod-name: srv0013-certificados-lre-1-build
+    creationTimestamp: "2023-09-01T01:10:32Z"
+    generation: 2
+    labels:
+      app: srv0013-certificados-lre
+      buildconfig: srv0013-certificados-lre
+      migration.openshift.io/migrated-by-migmigration: 7403c997-3617-4c43-a005-e473ceb26445
+      migration.openshift.io/migrated-by-migplan: 2a8299ac-1423-4ceb-93a5-de572a0f44a9
+      openshift.io/build-config.name: srv0013-certificados-lre
+      openshift.io/build.start-policy: Serial
+      velero.io/backup-name: migration-9db42-initial-5kc64
+      velero.io/restore-name: migration-9db42-final-cpc2b
+    name: srv0013-certificados-lre-1
+    namespace: api-fiscalizacion-qa
+    ownerReferences:
+    - apiVersion: build.openshift.io/v1
+      controller: true
+      kind: BuildConfig
+      name: srv0013-certificados-lre
+      uid: d623e692-cb3c-40ba-8dd1-c8c656cfc2c1
+    resourceVersion: "95923782"
+    uid: c33d1072-cd1b-456b-934c-2ad99ce4b536
+  spec:
+    nodeSelector: null
+    output:
+      pushSecret:
+        name: builder-dockercfg-xqzdw
+      to:
+        kind: ImageStreamTag
+        name: srv0013-certificados-lre:latest
+    postCommit: {}
+    resources: {}
+    serviceAccount: builder
+    source:
+      git:
+        ref: feature/desarrollo_2022
+        uri: https://dirtrab.visualstudio.com/Libro%20Remuneraciones%20Electronico/_git/SRV0013-CertificadosLRE
+      sourceSecret:
+        name: srv0013
+      type: Git
+    strategy:
+      sourceStrategy:
+        from:
+          kind: DockerImage
+          name: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+        pullSecret:
+          name: builder-dockercfg-xqzdw
+      type: Source
+    triggeredBy:
+    - imageChangeBuild:
+        fromRef:
+          kind: ImageStreamTag
+          name: nodejs:10
+          namespace: openshift
+        imageID: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:74a3ef2964efc03dfc239da3f09691b720ce54ff4bb47588864adb222133f0fc
+      message: Image change
+  status:
+    completionTimestamp: "2023-09-01T01:10:36Z"
+    conditions:
+    - lastTransitionTime: "2023-09-01T01:10:32Z"
+      lastUpdateTime: "2023-09-01T01:10:32Z"
+      status: "False"
+      type: New
+    - lastTransitionTime: "2023-09-01T01:10:36Z"
+      lastUpdateTime: "2023-09-01T01:10:36Z"
+      status: "False"
+      type: Pending
+    - lastTransitionTime: "2023-09-01T01:10:36Z"
+      lastUpdateTime: "2023-09-01T01:10:36Z"
+      status: "False"
+      type: Running
+    - lastTransitionTime: "2023-09-01T01:10:36Z"
+      lastUpdateTime: "2023-09-01T01:10:36Z"
+      message: Failed to fetch the input source.
+      reason: FetchSourceFailed
+      status: "True"
+      type: Failed
+    config:
+      kind: BuildConfig
+      name: srv0013-certificados-lre
+      namespace: api-fiscalizacion-qa
+    duration: 4000000000
+    logSnippet: |-
+      Cloning "https://dirtrab.visualstudio.com/Libro%20Remuneraciones%20Electronico/_git/SRV0013-CertificadosLRE" ...
+      error: failed to fetch requested repository "https://dirtr...ico/_git/SRV0013-CertificadosLRE" with provided credentials
+    message: Failed to fetch the input source.
+    output: {}
+    outputDockerImageReference: image-registry.openshift-image-registry.svc:5000/api-fiscalizacion-qa/srv0013-certificados-lre:latest
+    phase: Failed
+    reason: FetchSourceFailed
+    startTimestamp: "2023-09-01T01:10:32Z"
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

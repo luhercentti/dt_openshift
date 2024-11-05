@@ -1,0 +1,93 @@
+apiVersion: v1
+items:
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    annotations:
+      include.release.openshift.io/ibm-cloud-managed: "true"
+      include.release.openshift.io/self-managed-high-availability: "true"
+      include.release.openshift.io/single-node-developer: "true"
+    creationTimestamp: "2023-05-04T21:40:34Z"
+    name: prometheus-k8s
+    namespace: openshift-authentication
+    ownerReferences:
+    - apiVersion: config.openshift.io/v1
+      kind: ClusterVersion
+      name: version
+      uid: 5d92b52f-9fff-4a6e-b815-398b934115ad
+    resourceVersion: "5344"
+    uid: 9a43f7e6-a127-4095-b0e7-9be0f337bd8c
+  roleRef:
+    name: prometheus-k8s
+    namespace: openshift-authentication
+  subjects:
+  - kind: ServiceAccount
+    name: prometheus-k8s
+    namespace: openshift-monitoring
+  userNames:
+  - system:serviceaccount:openshift-monitoring:prometheus-k8s
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/description: Allows deploymentconfigs in this namespace to rollout
+        pods in this namespace.  It is auto-managed by a controller; remove subjects
+        to disable.
+    creationTimestamp: "2023-05-04T21:45:26Z"
+    name: system:deployers
+    namespace: openshift-authentication
+    resourceVersion: "15367"
+    uid: 1b3dd3cf-5fc5-4c68-994d-db9ddd707efd
+  roleRef:
+    name: system:deployer
+  subjects:
+  - kind: ServiceAccount
+    name: deployer
+    namespace: openshift-authentication
+  userNames:
+  - system:serviceaccount:openshift-authentication:deployer
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/description: Allows builds in this namespace to push images to
+        this namespace.  It is auto-managed by a controller; remove subjects to disable.
+    creationTimestamp: "2023-05-04T21:45:26Z"
+    name: system:image-builders
+    namespace: openshift-authentication
+    resourceVersion: "15309"
+    uid: ea4a1efd-ddbc-46b4-912d-b4ffb2194a88
+  roleRef:
+    name: system:image-builder
+  subjects:
+  - kind: ServiceAccount
+    name: builder
+    namespace: openshift-authentication
+  userNames:
+  - system:serviceaccount:openshift-authentication:builder
+- apiVersion: authorization.openshift.io/v1
+  groupNames:
+  - system:serviceaccounts:openshift-authentication
+  kind: RoleBinding
+  metadata:
+    annotations:
+      openshift.io/description: Allows all pods in this namespace to pull images from
+        this namespace.  It is auto-managed by a controller; remove subjects to disable.
+    creationTimestamp: "2023-05-04T21:45:25Z"
+    name: system:image-pullers
+    namespace: openshift-authentication
+    resourceVersion: "15222"
+    uid: 4d6f6fb8-c46e-4822-946e-e54d0c93e99e
+  roleRef:
+    name: system:image-puller
+  subjects:
+  - kind: SystemGroup
+    name: system:serviceaccounts:openshift-authentication
+  userNames: null
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

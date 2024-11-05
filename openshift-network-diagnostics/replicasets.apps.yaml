@@ -1,0 +1,99 @@
+apiVersion: v1
+items:
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "1"
+      deployment.kubernetes.io/revision: "1"
+      kubernetes.io/description: |
+        This deployment deploys the network-check-source pod that performs
+        pod network connectivity checks
+      networkoperator.openshift.io/non-critical: ""
+      release.openshift.io/version: 4.10.53
+    creationTimestamp: "2023-05-04T21:39:44Z"
+    generation: 1
+    labels:
+      app: network-check-source
+      kubernetes.io/os: linux
+      pod-template-hash: 7786b5887f
+    name: network-check-source-7786b5887f
+    namespace: openshift-network-diagnostics
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: network-check-source
+      uid: 33270d73-d261-4436-bf3c-fadfe48f8d83
+    resourceVersion: "472918066"
+    uid: 5dd5b966-d4f5-444f-9deb-7fd446cf414a
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: network-check-source
+        pod-template-hash: 7786b5887f
+    template:
+      metadata:
+        annotations:
+          target.workload.openshift.io/management: '{"effect": "PreferredDuringScheduling"}'
+        creationTimestamp: null
+        labels:
+          app: network-check-source
+          kubernetes.io/os: linux
+          pod-template-hash: 7786b5887f
+      spec:
+        containers:
+        - args:
+          - --listen
+          - 0.0.0.0:17698
+          - --namespace
+          - $(POD_NAMESPACE)
+          command:
+          - cluster-network-check-endpoints
+          env:
+          - name: POD_NAME
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.name
+          - name: POD_NAMESPACE
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+          image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:8bc10069f7e6e0ae3fafbef1beba94516ed91a8692de6fee7f17379687adb5cb
+          imagePullPolicy: IfNotPresent
+          name: check-endpoints
+          ports:
+          - containerPort: 17698
+            name: check-endpoints
+            protocol: TCP
+          resources:
+            requests:
+              cpu: 10m
+              memory: 40Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: FallbackToLogsOnError
+        dnsPolicy: ClusterFirst
+        nodeSelector:
+          beta.kubernetes.io/os: linux
+        priorityClassName: openshift-user-critical
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: network-diagnostics
+        serviceAccountName: network-diagnostics
+        terminationGracePeriodSeconds: 30
+  status:
+    availableReplicas: 1
+    fullyLabeledReplicas: 1
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

@@ -1,0 +1,146 @@
+apiVersion: v1
+items:
+- apiVersion: logging.openshift.io/v1
+  kind: Elasticsearch
+  metadata:
+    annotations:
+      logging.openshift.io/elasticsearch-cert-management: "true"
+      logging.openshift.io/elasticsearch-cert.collector: system.logging.fluentd
+    creationTimestamp: "2023-05-15T20:18:27Z"
+    generation: 2
+    name: elasticsearch
+    namespace: openshift-logging
+    ownerReferences:
+    - apiVersion: logging.openshift.io/v1
+      controller: true
+      kind: ClusterLogging
+      name: instance
+      uid: bb2ae1b1-01e5-4ac0-b0dd-cfd009c2ceac
+    resourceVersion: "494960709"
+    uid: 2ae98126-4c52-4543-90f0-f736c6651f74
+  spec:
+    indexManagement:
+      mappings:
+      - aliases:
+        - app
+        - logs.app
+        name: app
+        policyRef: app-policy
+      - aliases:
+        - infra
+        - logs.infra
+        name: infra
+        policyRef: infra-policy
+      - aliases:
+        - audit
+        - logs.audit
+        name: audit
+        policyRef: audit-policy
+      policies:
+      - name: app-policy
+        phases:
+          delete:
+            minAge: 1d
+            pruneNamespacesInterval: 30m
+          hot:
+            actions:
+              rollover:
+                maxAge: 1h
+        pollInterval: 15m
+      - name: infra-policy
+        phases:
+          delete:
+            minAge: 4d
+            pruneNamespacesInterval: 30m
+          hot:
+            actions:
+              rollover:
+                maxAge: 4h
+        pollInterval: 15m
+      - name: audit-policy
+        phases:
+          delete:
+            minAge: 4d
+            pruneNamespacesInterval: 30m
+          hot:
+            actions:
+              rollover:
+                maxAge: 4h
+        pollInterval: 15m
+    managementState: Managed
+    nodeSpec:
+      nodeSelector:
+        node-role.kubernetes.io/infra: ""
+      proxyResources:
+        limits:
+          memory: 256Mi
+        requests:
+          memory: 256Mi
+      resources:
+        requests:
+          memory: 4Gi
+      tolerations:
+      - effect: NoSchedule
+        key: node-role.kubernetes.io/infra
+        value: reserved
+      - effect: NoExecute
+        key: node-role.kubernetes.io/infra
+        value: reserved
+    nodes:
+    - genUUID: 07rnwmwx
+      nodeCount: 3
+      proxyResources: {}
+      resources: {}
+      roles:
+      - client
+      - data
+      - master
+      storage:
+        size: 200G
+        storageClassName: managed-premium
+    redundancyPolicy: SingleRedundancy
+  status:
+    cluster:
+      activePrimaryShards: 207
+      activeShards: 414
+      initializingShards: 0
+      numDataNodes: 3
+      numNodes: 3
+      pendingTasks: 0
+      relocatingShards: 0
+      status: green
+      unassignedShards: 0
+    nodes:
+    - deploymentName: elasticsearch-cdm-07rnwmwx-1
+      upgradeStatus: {}
+    - deploymentName: elasticsearch-cdm-07rnwmwx-2
+      upgradeStatus: {}
+    - deploymentName: elasticsearch-cdm-07rnwmwx-3
+      upgradeStatus: {}
+    pods:
+      client:
+        failed: []
+        notReady: []
+        ready:
+        - elasticsearch-cdm-07rnwmwx-2-6fbf7999d4-hs8pb
+        - elasticsearch-cdm-07rnwmwx-1-76d4647dfc-9nl7c
+        - elasticsearch-cdm-07rnwmwx-3-66994f5b9f-wcxsj
+      data:
+        failed: []
+        notReady: []
+        ready:
+        - elasticsearch-cdm-07rnwmwx-2-6fbf7999d4-hs8pb
+        - elasticsearch-cdm-07rnwmwx-3-66994f5b9f-wcxsj
+        - elasticsearch-cdm-07rnwmwx-1-76d4647dfc-9nl7c
+      master:
+        failed: []
+        notReady: []
+        ready:
+        - elasticsearch-cdm-07rnwmwx-3-66994f5b9f-wcxsj
+        - elasticsearch-cdm-07rnwmwx-1-76d4647dfc-9nl7c
+        - elasticsearch-cdm-07rnwmwx-2-6fbf7999d4-hs8pb
+    shardAllocationEnabled: all
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

@@ -1,0 +1,165 @@
+apiVersion: v1
+items:
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "1"
+      deployment.kubernetes.io/revision: "1"
+      exclude.release.openshift.io/internal-openshift-hosted: "true"
+      include.release.openshift.io/self-managed-high-availability: "true"
+      kubernetes.io/description: The cluster-version operator manages OpenShift updates
+        and reconciles core resources and cluster operators.
+    creationTimestamp: "2023-05-04T21:35:39Z"
+    generation: 1
+    labels:
+      k8s-app: cluster-version-operator
+      pod-template-hash: 58d6c78f5d
+    name: cluster-version-operator-58d6c78f5d
+    namespace: openshift-cluster-version
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: cluster-version-operator
+      uid: 356c7a7b-ab54-490d-a539-adb0629aa387
+    resourceVersion: "425754429"
+    uid: 982047b2-6df9-4c94-b87a-0fc3c6960a80
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        k8s-app: cluster-version-operator
+        pod-template-hash: 58d6c78f5d
+    template:
+      metadata:
+        annotations:
+          target.workload.openshift.io/management: '{"effect": "PreferredDuringScheduling"}'
+        creationTimestamp: null
+        labels:
+          k8s-app: cluster-version-operator
+          pod-template-hash: 58d6c78f5d
+        name: cluster-version-operator
+      spec:
+        automountServiceAccountToken: false
+        containers:
+        - args:
+          - start
+          - --release-image=quay.io/openshift-release-dev/ocp-release@sha256:0f683cf611bd6f2d3ab045b52df0fcda8adefa086e6ee80c5551275e5692cd8c
+          - --enable-auto-update=false
+          - --enable-default-cluster-version=true
+          - --listen=0.0.0.0:9099
+          - --serving-cert-file=/etc/tls/serving-cert/tls.crt
+          - --serving-key-file=/etc/tls/serving-cert/tls.key
+          - --v=2
+          env:
+          - name: KUBERNETES_SERVICE_PORT
+            value: "6443"
+          - name: KUBERNETES_SERVICE_HOST
+            value: 127.0.0.1
+          - name: NODE_NAME
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: spec.nodeName
+          - name: CLUSTER_PROFILE
+            value: self-managed-high-availability
+          image: quay.io/openshift-release-dev/ocp-release@sha256:0f683cf611bd6f2d3ab045b52df0fcda8adefa086e6ee80c5551275e5692cd8c
+          imagePullPolicy: IfNotPresent
+          name: cluster-version-operator
+          resources:
+            requests:
+              cpu: 20m
+              memory: 50Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: FallbackToLogsOnError
+          volumeMounts:
+          - mountPath: /etc/ssl/certs
+            name: etc-ssl-certs
+            readOnly: true
+          - mountPath: /etc/cvo/updatepayloads
+            name: etc-cvo-updatepayloads
+            readOnly: true
+          - mountPath: /etc/tls/serving-cert
+            name: serving-cert
+            readOnly: true
+          - mountPath: /etc/tls/service-ca
+            name: service-ca
+            readOnly: true
+          - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+            name: kube-api-access
+            readOnly: true
+        dnsPolicy: ClusterFirstWithHostNet
+        hostNetwork: true
+        nodeSelector:
+          node-role.kubernetes.io/master: ""
+        priorityClassName: system-cluster-critical
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 130
+        tolerations:
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/master
+          operator: Exists
+        - effect: NoSchedule
+          key: node.kubernetes.io/network-unavailable
+          operator: Exists
+        - effect: NoSchedule
+          key: node.kubernetes.io/not-ready
+          operator: Exists
+        - effect: NoExecute
+          key: node.kubernetes.io/unreachable
+          operator: Exists
+          tolerationSeconds: 120
+        - effect: NoExecute
+          key: node.kubernetes.io/not-ready
+          operator: Exists
+          tolerationSeconds: 120
+        volumes:
+        - hostPath:
+            path: /etc/ssl/certs
+            type: ""
+          name: etc-ssl-certs
+        - hostPath:
+            path: /etc/cvo/updatepayloads
+            type: ""
+          name: etc-cvo-updatepayloads
+        - name: serving-cert
+          secret:
+            defaultMode: 420
+            secretName: cluster-version-operator-serving-cert
+        - configMap:
+            defaultMode: 420
+            name: openshift-service-ca.crt
+          name: service-ca
+        - name: kube-api-access
+          projected:
+            defaultMode: 420
+            sources:
+            - serviceAccountToken:
+                expirationSeconds: 3600
+                path: token
+            - configMap:
+                items:
+                - key: ca.crt
+                  path: ca.crt
+                name: kube-root-ca.crt
+            - downwardAPI:
+                items:
+                - fieldRef:
+                    apiVersion: v1
+                    fieldPath: metadata.namespace
+                  path: namespace
+  status:
+    availableReplicas: 1
+    fullyLabeledReplicas: 1
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

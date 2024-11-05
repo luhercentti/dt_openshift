@@ -1,0 +1,2444 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.129.17.86"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.129.17.86"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/deployment-config.latest-version: "5"
+      openshift.io/deployment-config.name: gogs
+      openshift.io/deployment.name: gogs-5
+      openshift.io/generated-by: OpenShiftNewApp
+      openshift.io/scc: restricted
+    creationTimestamp: "2023-10-12T12:30:10Z"
+    generateName: gogs-5-
+    labels:
+      app: gogs
+      deployment: gogs-5
+      deploymentconfig: gogs
+    name: gogs-5-7msdj
+    namespace: cicd
+    ownerReferences:
+    - apiVersion: v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicationController
+      name: gogs-5
+      uid: c50e59e9-900c-4f8d-910f-dacde65d2a98
+    resourceVersion: "472917936"
+    uid: 4de949c7-5259-413a-bb96-282f3c1a1c8f
+  spec:
+    containers:
+    - image: docker.io/openshiftdemos/gogs@sha256:ca56061043c21500f587e938321d4f0ae38a74d4a9dd50ae70f8b628d19e0f32
+      imagePullPolicy: Always
+      livenessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /
+          port: 3000
+          scheme: HTTP
+        initialDelaySeconds: 3
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 1
+      name: gogs
+      ports:
+      - containerPort: 3000
+        protocol: TCP
+      - containerPort: 10022
+        protocol: TCP
+      readinessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /
+          port: 3000
+          scheme: HTTP
+        initialDelaySeconds: 3
+        periodSeconds: 20
+        successThreshold: 1
+        timeoutSeconds: 1
+      resources:
+        limits:
+          cpu: 800m
+          memory: 1400Mi
+        requests:
+          cpu: 100m
+          memory: 100Mi
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000560000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /opt/gogs/data
+        name: gogs-data
+      - mountPath: /etc/gogs/conf
+        name: gogs-config
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-q2d7d
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: gogs-dockercfg-7z6zf
+    nodeName: ocp4azu-sj2sl-worker-noprod-qa-brazilsouth1-2s77x
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000560000
+      seLinuxOptions:
+        level: s0:c24,c4
+    serviceAccount: gogs
+    serviceAccountName: gogs
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoSchedule
+      key: node.kubernetes.io/memory-pressure
+      operator: Exists
+    volumes:
+    - emptyDir: {}
+      name: gogs-data
+    - configMap:
+        defaultMode: 420
+        items:
+        - key: app.ini
+          path: app.ini
+        name: gogs-config
+      name: gogs-config
+    - name: kube-api-access-q2d7d
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-10-12T12:30:10Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2024-04-13T06:19:50Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2024-04-13T06:19:50Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-10-12T12:30:10Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://a89dc47eb840aacd74da14d6220cff12ea2559b50448d40d8675ca6e36adaa17
+      image: docker.io/openshiftdemos/gogs@sha256:ca56061043c21500f587e938321d4f0ae38a74d4a9dd50ae70f8b628d19e0f32
+      imageID: docker.io/openshiftdemos/gogs@sha256:ca56061043c21500f587e938321d4f0ae38a74d4a9dd50ae70f8b628d19e0f32
+      lastState:
+        terminated:
+          containerID: cri-o://62c7d2a8d64c66adc909f4794773b76b18c12248c0dabfe8fa036f865ce0e1a0
+          exitCode: 137
+          finishedAt: "2024-04-13T06:19:30Z"
+          reason: OOMKilled
+          startedAt: "2023-10-12T12:30:13Z"
+      name: gogs
+      ready: true
+      restartCount: 1
+      started: true
+      state:
+        running:
+          startedAt: "2024-04-13T06:19:33Z"
+    hostIP: 10.80.80.28
+    phase: Running
+    podIP: 10.129.17.86
+    podIPs:
+    - ip: 10.129.17.86
+    qosClass: Burstable
+    startTime: "2023-10-12T12:30:10Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.129.16.177"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.129.16.177"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/deployment-config.name: gogs
+      openshift.io/deployment.name: gogs-5
+      openshift.io/scc: restricted
+    creationTimestamp: "2023-10-02T17:51:10Z"
+    labels:
+      openshift.io/deployer-pod-for.name: gogs-5
+    name: gogs-5-deploy
+    namespace: cicd
+    ownerReferences:
+    - apiVersion: v1
+      kind: ReplicationController
+      name: gogs-5
+      uid: c50e59e9-900c-4f8d-910f-dacde65d2a98
+    resourceVersion: "123188944"
+    uid: fe7adff4-d2ba-427c-8b6b-bb6852f1a533
+  spec:
+    activeDeadlineSeconds: 21600
+    containers:
+    - env:
+      - name: OPENSHIFT_DEPLOYMENT_NAME
+        value: gogs-5
+      - name: OPENSHIFT_DEPLOYMENT_NAMESPACE
+        value: cicd
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:6e42aa37bf05a8d5c1409a4ec39632234e783e6c92abe659f5e611860f073039
+      imagePullPolicy: IfNotPresent
+      name: deployment
+      resources: {}
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000560000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-4pbtz
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: deployer-dockercfg-n6phb
+    nodeName: ocp4azu-sj2sl-worker-noprod-qa-brazilsouth1-2s77x
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Never
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000560000
+      seLinuxOptions:
+        level: s0:c24,c4
+    serviceAccount: deployer
+    serviceAccountName: deployer
+    shareProcessNamespace: false
+    terminationGracePeriodSeconds: 10
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - name: kube-api-access-4pbtz
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-10-02T17:51:10Z"
+      reason: PodCompleted
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2023-10-02T17:51:13Z"
+      reason: PodCompleted
+      status: "False"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2023-10-02T17:51:13Z"
+      reason: PodCompleted
+      status: "False"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-10-02T17:51:10Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://fbcfb8451f35f158fb60bab2b9b29ce4c3f662e1a641fcddb9349f2266417ca6
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:6e42aa37bf05a8d5c1409a4ec39632234e783e6c92abe659f5e611860f073039
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:6e42aa37bf05a8d5c1409a4ec39632234e783e6c92abe659f5e611860f073039
+      lastState: {}
+      name: deployment
+      ready: false
+      restartCount: 0
+      started: false
+      state:
+        terminated:
+          containerID: cri-o://fbcfb8451f35f158fb60bab2b9b29ce4c3f662e1a641fcddb9349f2266417ca6
+          exitCode: 0
+          finishedAt: "2023-10-02T17:51:12Z"
+          reason: Completed
+          startedAt: "2023-10-02T17:51:12Z"
+    hostIP: 10.80.80.28
+    phase: Succeeded
+    podIP: 10.129.16.177
+    podIPs:
+    - ip: 10.129.16.177
+    qosClass: BestEffort
+    startTime: "2023-10-02T17:51:10Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.129.16.62"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.129.16.62"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/deployment-config.name: gogs-postgresql
+      openshift.io/deployment.name: gogs-postgresql-1
+      openshift.io/scc: restricted
+    creationTimestamp: "2023-10-11T14:55:25Z"
+    labels:
+      openshift.io/deployer-pod-for.name: gogs-postgresql-1
+    name: gogs-postgresql-1-deploy
+    namespace: cicd
+    ownerReferences:
+    - apiVersion: v1
+      kind: ReplicationController
+      name: gogs-postgresql-1
+      uid: e87cdd6a-7cf9-4e7a-b350-bff34e59c1b0
+    resourceVersion: "131879713"
+    uid: 9590aab9-30d2-499a-8fb1-eb4f0b233b86
+  spec:
+    activeDeadlineSeconds: 21600
+    containers:
+    - env:
+      - name: OPENSHIFT_DEPLOYMENT_NAME
+        value: gogs-postgresql-1
+      - name: OPENSHIFT_DEPLOYMENT_NAMESPACE
+        value: cicd
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:6e42aa37bf05a8d5c1409a4ec39632234e783e6c92abe659f5e611860f073039
+      imagePullPolicy: IfNotPresent
+      name: deployment
+      resources: {}
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000560000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-n278l
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: deployer-dockercfg-n6phb
+    nodeName: ocp4azu-sj2sl-worker-noprod-qa-brazilsouth1-2s77x
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Never
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000560000
+      seLinuxOptions:
+        level: s0:c24,c4
+    serviceAccount: deployer
+    serviceAccountName: deployer
+    shareProcessNamespace: false
+    terminationGracePeriodSeconds: 10
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - name: kube-api-access-n278l
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-10-11T14:55:25Z"
+      reason: PodCompleted
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2023-10-11T14:55:25Z"
+      reason: PodCompleted
+      status: "False"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2023-10-11T14:55:25Z"
+      reason: PodCompleted
+      status: "False"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-10-11T14:55:25Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://8805b4a2d7ba66f1956b1cb58e0c45c01a8c1f6318f382527b95026dd3060b80
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:6e42aa37bf05a8d5c1409a4ec39632234e783e6c92abe659f5e611860f073039
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:6e42aa37bf05a8d5c1409a4ec39632234e783e6c92abe659f5e611860f073039
+      lastState: {}
+      name: deployment
+      ready: false
+      restartCount: 0
+      started: false
+      state:
+        terminated:
+          containerID: cri-o://8805b4a2d7ba66f1956b1cb58e0c45c01a8c1f6318f382527b95026dd3060b80
+          exitCode: 0
+          finishedAt: "2023-10-11T14:55:28Z"
+          reason: Completed
+          startedAt: "2023-10-11T14:55:28Z"
+    hostIP: 10.80.80.28
+    phase: Succeeded
+    podIP: 10.129.16.62
+    podIPs:
+    - ip: 10.129.16.62
+    qosClass: BestEffort
+    startTime: "2023-10-11T14:55:25Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.129.16.63"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.129.16.63"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/deployment-config.name: gogs-postgresql
+      openshift.io/deployment.name: gogs-postgresql-2
+      openshift.io/scc: restricted
+    creationTimestamp: "2023-10-11T14:55:37Z"
+    labels:
+      openshift.io/deployer-pod-for.name: gogs-postgresql-2
+    name: gogs-postgresql-2-deploy
+    namespace: cicd
+    ownerReferences:
+    - apiVersion: v1
+      kind: ReplicationController
+      name: gogs-postgresql-2
+      uid: 8f889c4c-f93a-4e4a-8b4e-b42ff09da05a
+    resourceVersion: "131879853"
+    uid: 8b7d7021-7a21-4a8c-b5a7-b0051aa6bbd7
+  spec:
+    activeDeadlineSeconds: 21600
+    containers:
+    - env:
+      - name: OPENSHIFT_DEPLOYMENT_NAME
+        value: gogs-postgresql-2
+      - name: OPENSHIFT_DEPLOYMENT_NAMESPACE
+        value: cicd
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:6e42aa37bf05a8d5c1409a4ec39632234e783e6c92abe659f5e611860f073039
+      imagePullPolicy: IfNotPresent
+      name: deployment
+      resources: {}
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000560000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-j2999
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: deployer-dockercfg-n6phb
+    nodeName: ocp4azu-sj2sl-worker-noprod-qa-brazilsouth1-2s77x
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Never
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000560000
+      seLinuxOptions:
+        level: s0:c24,c4
+    serviceAccount: deployer
+    serviceAccountName: deployer
+    shareProcessNamespace: false
+    terminationGracePeriodSeconds: 10
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - name: kube-api-access-j2999
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-10-11T14:55:37Z"
+      reason: PodCompleted
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2023-10-11T14:55:37Z"
+      reason: PodCompleted
+      status: "False"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2023-10-11T14:55:37Z"
+      reason: PodCompleted
+      status: "False"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-10-11T14:55:37Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://f80b067813120acdcc44df1da7250c7d542f33700826d4ab8a2f23d832195c3a
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:6e42aa37bf05a8d5c1409a4ec39632234e783e6c92abe659f5e611860f073039
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:6e42aa37bf05a8d5c1409a4ec39632234e783e6c92abe659f5e611860f073039
+      lastState: {}
+      name: deployment
+      ready: false
+      restartCount: 0
+      started: false
+      state:
+        terminated:
+          containerID: cri-o://f80b067813120acdcc44df1da7250c7d542f33700826d4ab8a2f23d832195c3a
+          exitCode: 0
+          finishedAt: "2023-10-11T14:55:39Z"
+          reason: Completed
+          startedAt: "2023-10-11T14:55:39Z"
+    hostIP: 10.80.80.28
+    phase: Succeeded
+    podIP: 10.129.16.63
+    podIPs:
+    - ip: 10.129.16.63
+    qosClass: BestEffort
+    startTime: "2023-10-11T14:55:37Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.129.16.64"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.129.16.64"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/deployment-config.latest-version: "2"
+      openshift.io/deployment-config.name: gogs-postgresql
+      openshift.io/deployment.name: gogs-postgresql-2
+      openshift.io/generated-by: OpenShiftNewApp
+      openshift.io/scc: restricted
+    creationTimestamp: "2023-10-11T14:55:53Z"
+    generateName: gogs-postgresql-2-
+    labels:
+      deployment: gogs-postgresql-2
+      deploymentconfig: gogs-postgresql
+      name: gogs-postgresql
+    name: gogs-postgresql-2-v4lhn
+    namespace: cicd
+    ownerReferences:
+    - apiVersion: v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicationController
+      name: gogs-postgresql-2
+      uid: 8f889c4c-f93a-4e4a-8b4e-b42ff09da05a
+    resourceVersion: "472917910"
+    uid: 691a40d3-b55f-4d44-a084-4fc9266b0e1c
+  spec:
+    containers:
+    - env:
+      - name: POSTGRESQL_USER
+        value: gogs
+      - name: POSTGRESQL_PASSWORD
+        value: gogs
+      - name: POSTGRESQL_DATABASE
+        value: gogs
+      - name: POSTGRESQL_MAX_CONNECTIONS
+        value: "100"
+      - name: POSTGRESQL_SHARED_BUFFERS
+        value: 12MB
+      - name: POSTGRESQL_ADMIN_PASSWORD
+        value: 8InGDmuA
+      image: image-registry.openshift-image-registry.svc:5000/openshift/postgresql@sha256:e32991664f0efc3bf63e9b429ab3f95f626265af4463321f30e50bf91d057f1c
+      imagePullPolicy: IfNotPresent
+      livenessProbe:
+        failureThreshold: 3
+        initialDelaySeconds: 30
+        periodSeconds: 10
+        successThreshold: 1
+        tcpSocket:
+          port: 5432
+        timeoutSeconds: 1
+      name: postgresql
+      ports:
+      - containerPort: 5432
+        protocol: TCP
+      readinessProbe:
+        exec:
+          command:
+          - /bin/sh
+          - -i
+          - -c
+          - psql -h 127.0.0.1 -U ${POSTGRESQL_USER} -q -d ${POSTGRESQL_DATABASE} -c
+            'SELECT 1'
+        failureThreshold: 3
+        initialDelaySeconds: 5
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 1
+      resources:
+        limits:
+          cpu: 100m
+          memory: 512Mi
+        requests:
+          cpu: 10m
+          memory: 100Mi
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000560000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/lib/pgsql/data
+        name: gogs-postgres-data
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-xbt7p
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: gogs-dockercfg-7z6zf
+    nodeName: ocp4azu-sj2sl-worker-noprod-qa-brazilsouth1-2s77x
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000560000
+      seLinuxOptions:
+        level: s0:c24,c4
+    serviceAccount: gogs
+    serviceAccountName: gogs
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoSchedule
+      key: node.kubernetes.io/memory-pressure
+      operator: Exists
+    volumes:
+    - emptyDir: {}
+      name: gogs-postgres-data
+    - name: kube-api-access-xbt7p
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-10-11T14:55:53Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2023-10-11T14:56:24Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2023-10-11T14:56:24Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-10-11T14:55:53Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://2273b50b560f120624d341b8bd9bdca31b4bc0ccb8655029bae4045e9c740e86
+      image: image-registry.openshift-image-registry.svc:5000/openshift/postgresql@sha256:e32991664f0efc3bf63e9b429ab3f95f626265af4463321f30e50bf91d057f1c
+      imageID: image-registry.openshift-image-registry.svc:5000/openshift/postgresql@sha256:e32991664f0efc3bf63e9b429ab3f95f626265af4463321f30e50bf91d057f1c
+      lastState: {}
+      name: postgresql
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2023-10-11T14:56:06Z"
+    hostIP: 10.80.80.28
+    phase: Running
+    podIP: 10.129.16.64
+    podIPs:
+    - ip: 10.129.16.64
+    qosClass: Burstable
+    startTime: "2023-10-11T14:55:53Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.129.16.69"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.129.16.69"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/deployment-config.name: jenkins
+      openshift.io/deployment.name: jenkins-3
+      openshift.io/scc: restricted
+    creationTimestamp: "2023-10-11T15:08:20Z"
+    labels:
+      openshift.io/deployer-pod-for.name: jenkins-3
+    name: jenkins-3-deploy
+    namespace: cicd
+    ownerReferences:
+    - apiVersion: v1
+      kind: ReplicationController
+      name: jenkins-3
+      uid: 2ba4691e-34bc-4d3c-b498-3bf4ffb1360b
+    resourceVersion: "131891697"
+    uid: dd683b33-353d-44e3-b275-8b384755ef85
+  spec:
+    activeDeadlineSeconds: 21600
+    containers:
+    - env:
+      - name: OPENSHIFT_DEPLOYMENT_NAME
+        value: jenkins-3
+      - name: OPENSHIFT_DEPLOYMENT_NAMESPACE
+        value: cicd
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:6e42aa37bf05a8d5c1409a4ec39632234e783e6c92abe659f5e611860f073039
+      imagePullPolicy: IfNotPresent
+      name: deployment
+      resources: {}
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000560000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-ghbch
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: deployer-dockercfg-n6phb
+    nodeName: ocp4azu-sj2sl-worker-noprod-qa-brazilsouth1-2s77x
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Never
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000560000
+      seLinuxOptions:
+        level: s0:c24,c4
+    serviceAccount: deployer
+    serviceAccountName: deployer
+    shareProcessNamespace: false
+    terminationGracePeriodSeconds: 10
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - name: kube-api-access-ghbch
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-10-11T15:08:20Z"
+      reason: PodCompleted
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2023-10-11T15:13:43Z"
+      reason: PodCompleted
+      status: "False"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2023-10-11T15:13:43Z"
+      reason: PodCompleted
+      status: "False"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-10-11T15:08:20Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://e81d498dfb2b4a7760e0d9134b9811ebfc3ec5bf857f78b2a6ca612b4a22b2a7
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:6e42aa37bf05a8d5c1409a4ec39632234e783e6c92abe659f5e611860f073039
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:6e42aa37bf05a8d5c1409a4ec39632234e783e6c92abe659f5e611860f073039
+      lastState: {}
+      name: deployment
+      ready: false
+      restartCount: 0
+      started: false
+      state:
+        terminated:
+          containerID: cri-o://e81d498dfb2b4a7760e0d9134b9811ebfc3ec5bf857f78b2a6ca612b4a22b2a7
+          exitCode: 0
+          finishedAt: "2023-10-11T15:13:42Z"
+          reason: Completed
+          startedAt: "2023-10-11T15:08:22Z"
+    hostIP: 10.80.80.28
+    phase: Succeeded
+    podIP: 10.129.16.69
+    podIPs:
+    - ip: 10.129.16.69
+    qosClass: BestEffort
+    startTime: "2023-10-11T15:08:20Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.129.22.233"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.129.22.233"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/deployment-config.name: jenkins
+      openshift.io/deployment.name: jenkins-4
+      openshift.io/scc: restricted
+    creationTimestamp: "2023-10-13T20:17:13Z"
+    labels:
+      openshift.io/deployer-pod-for.name: jenkins-4
+    name: jenkins-4-deploy
+    namespace: cicd
+    ownerReferences:
+    - apiVersion: v1
+      kind: ReplicationController
+      name: jenkins-4
+      uid: de88d383-2a88-4c80-9e88-0684ad080135
+    resourceVersion: "134029581"
+    uid: 2cafa762-e378-469c-af30-492cd5007777
+  spec:
+    activeDeadlineSeconds: 21600
+    containers:
+    - env:
+      - name: OPENSHIFT_DEPLOYMENT_NAME
+        value: jenkins-4
+      - name: OPENSHIFT_DEPLOYMENT_NAMESPACE
+        value: cicd
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:6e42aa37bf05a8d5c1409a4ec39632234e783e6c92abe659f5e611860f073039
+      imagePullPolicy: IfNotPresent
+      name: deployment
+      resources: {}
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000560000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-vgpbf
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: deployer-dockercfg-n6phb
+    nodeName: ocp4azu-sj2sl-worker-prod-brazilsouth1-mjsb5
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Never
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000560000
+      seLinuxOptions:
+        level: s0:c24,c4
+    serviceAccount: deployer
+    serviceAccountName: deployer
+    shareProcessNamespace: false
+    terminationGracePeriodSeconds: 10
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - name: kube-api-access-vgpbf
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-10-13T20:17:13Z"
+      reason: PodCompleted
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2023-10-13T20:20:28Z"
+      reason: PodCompleted
+      status: "False"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2023-10-13T20:20:28Z"
+      reason: PodCompleted
+      status: "False"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-10-13T20:17:13Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://aedb886c1334c9c93936606968d749033130be75464afa7c19a64b257387c74a
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:6e42aa37bf05a8d5c1409a4ec39632234e783e6c92abe659f5e611860f073039
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:6e42aa37bf05a8d5c1409a4ec39632234e783e6c92abe659f5e611860f073039
+      lastState: {}
+      name: deployment
+      ready: false
+      restartCount: 0
+      started: false
+      state:
+        terminated:
+          containerID: cri-o://aedb886c1334c9c93936606968d749033130be75464afa7c19a64b257387c74a
+          exitCode: 0
+          finishedAt: "2023-10-13T20:20:27Z"
+          reason: Completed
+          startedAt: "2023-10-13T20:17:15Z"
+    hostIP: 10.80.80.13
+    phase: Succeeded
+    podIP: 10.129.22.233
+    podIPs:
+    - ip: 10.129.22.233
+    qosClass: BestEffort
+    startTime: "2023-10-13T20:17:13Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.129.22.235"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.129.22.235"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/deployment-config.name: jenkins
+      openshift.io/deployment.name: jenkins-5
+      openshift.io/scc: restricted
+    creationTimestamp: "2023-10-13T20:27:22Z"
+    labels:
+      openshift.io/deployer-pod-for.name: jenkins-5
+    name: jenkins-5-deploy
+    namespace: cicd
+    ownerReferences:
+    - apiVersion: v1
+      kind: ReplicationController
+      name: jenkins-5
+      uid: 4dcfa44b-f897-4ea7-93f6-74117c49b370
+    resourceVersion: "134034990"
+    uid: 291c839f-efe0-47fa-8802-18bbe6b101cb
+  spec:
+    activeDeadlineSeconds: 21600
+    containers:
+    - env:
+      - name: OPENSHIFT_DEPLOYMENT_NAME
+        value: jenkins-5
+      - name: OPENSHIFT_DEPLOYMENT_NAMESPACE
+        value: cicd
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:6e42aa37bf05a8d5c1409a4ec39632234e783e6c92abe659f5e611860f073039
+      imagePullPolicy: IfNotPresent
+      name: deployment
+      resources: {}
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000560000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-w4lh2
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: deployer-dockercfg-n6phb
+    nodeName: ocp4azu-sj2sl-worker-prod-brazilsouth1-mjsb5
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Never
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000560000
+      seLinuxOptions:
+        level: s0:c24,c4
+    serviceAccount: deployer
+    serviceAccountName: deployer
+    shareProcessNamespace: false
+    terminationGracePeriodSeconds: 10
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - name: kube-api-access-w4lh2
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-10-13T20:27:22Z"
+      reason: PodCompleted
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2023-10-13T20:29:54Z"
+      reason: PodCompleted
+      status: "False"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2023-10-13T20:29:54Z"
+      reason: PodCompleted
+      status: "False"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-10-13T20:27:22Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://985061ac37da9cf546dec89fa0ce9ff4dd40180b18927d879a3cdca6c22636f1
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:6e42aa37bf05a8d5c1409a4ec39632234e783e6c92abe659f5e611860f073039
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:6e42aa37bf05a8d5c1409a4ec39632234e783e6c92abe659f5e611860f073039
+      lastState: {}
+      name: deployment
+      ready: false
+      restartCount: 0
+      started: false
+      state:
+        terminated:
+          containerID: cri-o://985061ac37da9cf546dec89fa0ce9ff4dd40180b18927d879a3cdca6c22636f1
+          exitCode: 0
+          finishedAt: "2023-10-13T20:29:54Z"
+          reason: Completed
+          startedAt: "2023-10-13T20:27:24Z"
+    hostIP: 10.80.80.13
+    phase: Succeeded
+    podIP: 10.129.22.235
+    podIPs:
+    - ip: 10.129.22.235
+    qosClass: BestEffort
+    startTime: "2023-10-13T20:27:22Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.129.22.239"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.129.22.239"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/deployment-config.name: jenkins
+      openshift.io/deployment.name: jenkins-6
+      openshift.io/scc: restricted
+    creationTimestamp: "2023-10-13T20:37:31Z"
+    labels:
+      openshift.io/deployer-pod-for.name: jenkins-6
+    name: jenkins-6-deploy
+    namespace: cicd
+    ownerReferences:
+    - apiVersion: v1
+      kind: ReplicationController
+      name: jenkins-6
+      uid: 92448dda-ba9b-44d4-b266-9c0c3e8afcbc
+    resourceVersion: "134040133"
+    uid: 82465736-3237-4490-989f-bdf40448b463
+  spec:
+    activeDeadlineSeconds: 21600
+    containers:
+    - env:
+      - name: OPENSHIFT_DEPLOYMENT_NAME
+        value: jenkins-6
+      - name: OPENSHIFT_DEPLOYMENT_NAMESPACE
+        value: cicd
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:6e42aa37bf05a8d5c1409a4ec39632234e783e6c92abe659f5e611860f073039
+      imagePullPolicy: IfNotPresent
+      name: deployment
+      resources: {}
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000560000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-n98pr
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: deployer-dockercfg-n6phb
+    nodeName: ocp4azu-sj2sl-worker-prod-brazilsouth1-mjsb5
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Never
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000560000
+      seLinuxOptions:
+        level: s0:c24,c4
+    serviceAccount: deployer
+    serviceAccountName: deployer
+    shareProcessNamespace: false
+    terminationGracePeriodSeconds: 10
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - name: kube-api-access-n98pr
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-10-13T20:37:31Z"
+      reason: PodCompleted
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2023-10-13T20:38:38Z"
+      reason: PodCompleted
+      status: "False"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2023-10-13T20:38:38Z"
+      reason: PodCompleted
+      status: "False"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-10-13T20:37:31Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://39a741a0594909ca1c85044ac72b59aa28720bebd8d6443f30cfaf9da2035660
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:6e42aa37bf05a8d5c1409a4ec39632234e783e6c92abe659f5e611860f073039
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:6e42aa37bf05a8d5c1409a4ec39632234e783e6c92abe659f5e611860f073039
+      lastState: {}
+      name: deployment
+      ready: false
+      restartCount: 0
+      started: false
+      state:
+        terminated:
+          containerID: cri-o://39a741a0594909ca1c85044ac72b59aa28720bebd8d6443f30cfaf9da2035660
+          exitCode: 0
+          finishedAt: "2023-10-13T20:38:38Z"
+          reason: Completed
+          startedAt: "2023-10-13T20:37:34Z"
+    hostIP: 10.80.80.13
+    phase: Succeeded
+    podIP: 10.129.22.239
+    podIPs:
+    - ip: 10.129.22.239
+    qosClass: BestEffort
+    startTime: "2023-10-13T20:37:31Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.130.17.49"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.130.17.49"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/deployment-config.latest-version: "6"
+      openshift.io/deployment-config.name: jenkins
+      openshift.io/deployment.name: jenkins-6
+      openshift.io/scc: restricted
+    creationTimestamp: "2023-10-13T20:37:48Z"
+    generateName: jenkins-6-
+    labels:
+      deployment: jenkins-6
+      deploymentconfig: jenkins
+      name: jenkins
+    name: jenkins-6-nc5fn
+    namespace: cicd
+    ownerReferences:
+    - apiVersion: v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicationController
+      name: jenkins-6
+      uid: 92448dda-ba9b-44d4-b266-9c0c3e8afcbc
+    resourceVersion: "467404282"
+    uid: df72c5cc-59e6-45da-a276-fce4b58df777
+  spec:
+    containers:
+    - env:
+      - name: OPENSHIFT_ENABLE_OAUTH
+        value: "true"
+      - name: OPENSHIFT_ENABLE_REDIRECT_PROMPT
+        value: "true"
+      - name: DISABLE_ADMINISTRATIVE_MONITORS
+        value: "false"
+      - name: KUBERNETES_MASTER
+        value: https://kubernetes.default:443
+      - name: KUBERNETES_TRUST_CERTIFICATES
+        value: "true"
+      - name: JENKINS_SERVICE_NAME
+        value: jenkins
+      - name: JNLP_SERVICE_NAME
+        value: jenkins-jnlp
+      - name: ENABLE_FATAL_ERROR_LOG_FILE
+        value: "false"
+      image: image-registry.openshift-image-registry.svc:5000/openshift/jenkins@sha256:902246da403bf7ff1f6f3cf531dce445c0289d3b2b01a26f6008926ec2068077
+      imagePullPolicy: IfNotPresent
+      livenessProbe:
+        failureThreshold: 2
+        httpGet:
+          path: /login
+          port: 8080
+          scheme: HTTP
+        initialDelaySeconds: 420
+        periodSeconds: 360
+        successThreshold: 1
+        timeoutSeconds: 240
+      name: jenkins
+      readinessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /login
+          port: 8080
+          scheme: HTTP
+        initialDelaySeconds: 3
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 240
+      resources:
+        limits:
+          cpu: "2"
+          memory: 2Gi
+        requests:
+          cpu: 500m
+          memory: 100Mi
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        privileged: false
+        runAsUser: 1000560000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/lib/jenkins
+        name: jenkins-data
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-9v956
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: jenkins-dockercfg-nvc6g
+    nodeName: ocp4azu-sj2sl-worker-noprod-qa-brazilsouth2-rglbf
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000560000
+      seLinuxOptions:
+        level: s0:c24,c4
+    serviceAccount: jenkins
+    serviceAccountName: jenkins
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoSchedule
+      key: node.kubernetes.io/memory-pressure
+      operator: Exists
+    volumes:
+    - name: jenkins-data
+      persistentVolumeClaim:
+        claimName: jenkins
+    - name: kube-api-access-9v956
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-10-13T20:37:48Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2023-10-13T20:38:38Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2023-10-13T20:38:38Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-10-13T20:37:48Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://7f4af6a1903fdae3ebfb9a4430f2f396e00fccb478e6be77d2cbd2f5ba199016
+      image: image-registry.openshift-image-registry.svc:5000/openshift/jenkins@sha256:902246da403bf7ff1f6f3cf531dce445c0289d3b2b01a26f6008926ec2068077
+      imageID: image-registry.openshift-image-registry.svc:5000/openshift/jenkins@sha256:902246da403bf7ff1f6f3cf531dce445c0289d3b2b01a26f6008926ec2068077
+      lastState: {}
+      name: jenkins
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2023-10-13T20:37:52Z"
+    hostIP: 10.80.80.22
+    phase: Running
+    podIP: 10.130.17.49
+    podIPs:
+    - ip: 10.130.17.49
+    qosClass: Burstable
+    startTime: "2023-10-13T20:37:48Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.130.16.147"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.130.16.147"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/deployment-config.latest-version: "1"
+      openshift.io/deployment-config.name: nexus
+      openshift.io/deployment.name: nexus-1
+      openshift.io/generated-by: OpenShiftNewApp
+      openshift.io/scc: restricted
+    creationTimestamp: "2023-09-25T14:28:34Z"
+    generateName: nexus-1-
+    labels:
+      app: nexus
+      deployment: nexus-1
+      deploymentconfig: nexus
+    name: nexus-1-lfvsl
+    namespace: cicd
+    ownerReferences:
+    - apiVersion: v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicationController
+      name: nexus-1
+      uid: 72db9fcf-fd51-4e73-8f70-7c2e251eb505
+    resourceVersion: "467404318"
+    uid: c1e7f5a0-b721-4f94-87ed-3a21024cec8c
+  spec:
+    containers:
+    - image: sonatype/nexus@sha256:54702b1a275b8a458ae271cfaa616ccf68b135bcc89c63bf3111ff32fad1c23b
+      imagePullPolicy: Always
+      name: nexus
+      ports:
+      - containerPort: 8081
+        protocol: TCP
+      resources: {}
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000560000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /sonatype-work
+        name: nexus-volume-1
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-qj87z
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: default-dockercfg-452nm
+    nodeName: ocp4azu-sj2sl-worker-noprod-qa-brazilsouth2-rglbf
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000560000
+      seLinuxOptions:
+        level: s0:c24,c4
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - emptyDir: {}
+      name: nexus-volume-1
+    - name: kube-api-access-qj87z
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-09-25T14:28:34Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2023-09-25T14:28:51Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2023-09-25T14:28:51Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-09-25T14:28:34Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://1a98851c6f1a20feddfe23e0f51711e5890fc6604dd0d4c3006f1f21f921b132
+      image: docker.io/sonatype/nexus@sha256:54702b1a275b8a458ae271cfaa616ccf68b135bcc89c63bf3111ff32fad1c23b
+      imageID: docker.io/sonatype/nexus@sha256:54702b1a275b8a458ae271cfaa616ccf68b135bcc89c63bf3111ff32fad1c23b
+      lastState: {}
+      name: nexus
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2023-09-25T14:28:50Z"
+    hostIP: 10.80.80.22
+    phase: Running
+    podIP: 10.130.16.147
+    podIPs:
+    - ip: 10.130.16.147
+    qosClass: BestEffort
+    startTime: "2023-09-25T14:28:34Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.130.16.227"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.130.16.227"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/scc: anyuid
+    creationTimestamp: "2023-10-12T20:56:19Z"
+    generateName: sonarqube-postgresql-
+    labels:
+      app: postgresql
+      chart: postgresql-8.2.0
+      controller-revision-hash: sonarqube-postgresql-9b57c5c4f
+      heritage: Helm
+      release: sonarqube
+      role: master
+      statefulset.kubernetes.io/pod-name: sonarqube-postgresql-0
+    name: sonarqube-postgresql-0
+    namespace: cicd
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: StatefulSet
+      name: sonarqube-postgresql
+      uid: 66d442e2-2b0d-4431-a693-794a76bb9219
+    resourceVersion: "467404397"
+    uid: 17082224-271f-45f4-90c9-3394bf91d712
+  spec:
+    containers:
+    - env:
+      - name: BITNAMI_DEBUG
+        value: "false"
+      - name: POSTGRESQL_PORT_NUMBER
+        value: "5432"
+      - name: POSTGRESQL_VOLUME_DIR
+        value: /bitnami/postgresql
+      - name: PGDATA
+        value: /bitnami/postgresql/data
+      - name: POSTGRES_USER
+        value: sonarUser
+      - name: POSTGRES_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            key: postgresql-password
+            name: sonarqube-postgresql
+      - name: POSTGRES_DB
+        value: sonarDB
+      - name: POSTGRESQL_ENABLE_LDAP
+        value: "no"
+      image: docker.io/bitnami/postgresql:11.6.0-debian-10-r0
+      imagePullPolicy: IfNotPresent
+      livenessProbe:
+        exec:
+          command:
+          - /bin/sh
+          - -c
+          - exec pg_isready -U "sonarUser" -d "sonarDB" -h 127.0.0.1 -p 5432
+        failureThreshold: 6
+        initialDelaySeconds: 30
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 5
+      name: sonarqube-postgresql
+      ports:
+      - containerPort: 5432
+        name: tcp-postgresql
+        protocol: TCP
+      readinessProbe:
+        exec:
+          command:
+          - /bin/sh
+          - -c
+          - -e
+          - |
+            exec pg_isready -U "sonarUser" -d "sonarDB" -h 127.0.0.1 -p 5432
+            [ -f /opt/bitnami/postgresql/tmp/.initialized ] || [ -f /bitnami/postgresql/.initialized ]
+        failureThreshold: 6
+        initialDelaySeconds: 5
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 5
+      resources:
+        requests:
+          cpu: 250m
+          memory: 256Mi
+      securityContext:
+        capabilities:
+          drop:
+          - MKNOD
+        runAsUser: 1001
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /dev/shm
+        name: dshm
+      - mountPath: /bitnami/postgresql
+        name: data
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-m8shn
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    hostname: sonarqube-postgresql-0
+    imagePullSecrets:
+    - name: default-dockercfg-452nm
+    initContainers:
+    - command:
+      - /bin/sh
+      - -c
+      - |
+        mkdir -p /bitnami/postgresql/data
+        chmod 700 /bitnami/postgresql/data
+        find /bitnami/postgresql -mindepth 0 -maxdepth 1 -not -name ".snapshot" -not -name "lost+found" | \
+          xargs chown -R 1001:1001
+        chmod -R 777 /dev/shm
+      image: docker.io/bitnami/minideb:stretch
+      imagePullPolicy: Always
+      name: init-chmod-data
+      resources:
+        requests:
+          cpu: 250m
+          memory: 256Mi
+      securityContext:
+        capabilities:
+          drop:
+          - MKNOD
+        runAsUser: 0
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /bitnami/postgresql
+        name: data
+      - mountPath: /dev/shm
+        name: dshm
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-m8shn
+        readOnly: true
+    nodeName: ocp4azu-sj2sl-worker-noprod-qa-brazilsouth2-rglbf
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1001
+      seLinuxOptions:
+        level: s0:c24,c4
+    serviceAccount: default
+    serviceAccountName: default
+    subdomain: sonarqube-postgresql-headless
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoSchedule
+      key: node.kubernetes.io/memory-pressure
+      operator: Exists
+    volumes:
+    - name: data
+      persistentVolumeClaim:
+        claimName: data-sonarqube-postgresql-0
+    - emptyDir:
+        medium: Memory
+      name: dshm
+    - name: kube-api-access-m8shn
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-10-12T20:56:42Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2023-10-12T20:57:03Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2023-10-12T20:57:03Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-10-12T20:56:19Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://ab861ee9cae3223efdd7c5b7427a92b0d7c8282080e836e1ed156fa868868888
+      image: docker.io/bitnami/postgresql:11.6.0-debian-10-r0
+      imageID: docker.io/bitnami/postgresql@sha256:dd82d42ceb4aa922621e1ec6784090b5747b9ffce62759b6069ca814dd32e753
+      lastState: {}
+      name: sonarqube-postgresql
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2023-10-12T20:56:53Z"
+    hostIP: 10.80.80.22
+    initContainerStatuses:
+    - containerID: cri-o://29a0da7cfa45d9481bf9a10710927b39cfd8a2d61cd7c08f44bbb7520fd6f367
+      image: docker.io/bitnami/minideb:stretch
+      imageID: docker.io/bitnami/minideb@sha256:a6f24bce85d037d47cc552635b0f0a3623472bbcf16b33711fb0fe4e6a34480f
+      lastState: {}
+      name: init-chmod-data
+      ready: true
+      restartCount: 0
+      state:
+        terminated:
+          containerID: cri-o://29a0da7cfa45d9481bf9a10710927b39cfd8a2d61cd7c08f44bbb7520fd6f367
+          exitCode: 0
+          finishedAt: "2023-10-12T20:56:41Z"
+          reason: Completed
+          startedAt: "2023-10-12T20:56:41Z"
+    phase: Running
+    podIP: 10.130.16.227
+    podIPs:
+    - ip: 10.130.16.227
+    qosClass: Burstable
+    startTime: "2023-10-12T20:56:19Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/network-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.128.20.78"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.128.20.78"
+            ],
+            "default": true,
+            "dns": {}
+        }]
+      openshift.io/scc: anyuid
+    creationTimestamp: "2024-05-02T14:16:53Z"
+    generateName: sonarqube-sonarqube-6659d87655-
+    labels:
+      app: sonarqube
+      pod-template-hash: 6659d87655
+      release: sonarqube
+    name: sonarqube-sonarqube-6659d87655-zxjwq
+    namespace: cicd
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: sonarqube-sonarqube-6659d87655
+      uid: 260be26b-1a3c-4394-9d03-0b30477c865c
+    resourceVersion: "472847097"
+    uid: 5cad1a7f-e570-4c8d-b5d7-8117ec56c7ca
+  spec:
+    containers:
+    - env:
+      - name: SONARQUBE_WEB_JVM_OPTS
+      - name: SONARQUBE_JDBC_USERNAME
+        value: sonarUser
+      - name: SONARQUBE_JDBC_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            key: postgresql-password
+            name: sonarqube-postgresql
+      - name: SONARQUBE_JDBC_URL
+        value: jdbc:postgresql://sonarqube-postgresql:5432/sonarDB
+      image: sonarqube:7.9.2-community
+      imagePullPolicy: IfNotPresent
+      livenessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /sessions/new
+          port: http
+          scheme: HTTP
+        initialDelaySeconds: 60
+        periodSeconds: 30
+        successThreshold: 1
+        timeoutSeconds: 1
+      name: sonarqube
+      ports:
+      - containerPort: 9000
+        name: http
+        protocol: TCP
+      readinessProbe:
+        failureThreshold: 6
+        httpGet:
+          path: /sessions/new
+          port: http
+          scheme: HTTP
+        initialDelaySeconds: 60
+        periodSeconds: 30
+        successThreshold: 1
+        timeoutSeconds: 1
+      resources:
+        limits:
+          cpu: 800m
+          memory: 2Gi
+        requests:
+          cpu: 100m
+          memory: 1Gi
+      securityContext:
+        capabilities:
+          drop:
+          - MKNOD
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /opt/sonarqube/conf/
+        name: config
+      - mountPath: /opt/sonarqube/data
+        name: sonarqube
+        subPath: data
+      - mountPath: /opt/sonarqube/extensions/plugins/tmp
+        name: sonarqube
+        subPath: tmp
+      - mountPath: /opt/sonarqube/extensions/downloads
+        name: sonarqube
+        subPath: downloads
+      - mountPath: /opt/sonarqube/extensions/plugins
+        name: sonarqube
+        subPath: plugins
+      - mountPath: /opt/sonarqube/temp
+        name: sonarqube
+        subPath: temp
+      - mountPath: /opt/sonarqube/logs
+        name: sonarqube
+        subPath: logs
+      - mountPath: /tmp
+        name: tmp-dir
+      - mountPath: /tmp/scripts
+        name: copy-plugins
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-mnklj
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: default-dockercfg-452nm
+    initContainers:
+    - command:
+      - sh
+      - -c
+      - mkdir -p $(printf "/opt/sonarqube/${1-%s\n}" temp logs data extensions/downloads
+        extensions/plugins/tmp extensions/plugins certs) && chown 999:999 -R $(printf
+        "/opt/sonarqube/${1-%s\n}" temp logs data extensions/downloads extensions/plugins/tmp
+        extensions/plugins certs)
+      image: busybox:1.31
+      imagePullPolicy: IfNotPresent
+      name: chmod-volume-mounts
+      resources: {}
+      securityContext:
+        capabilities:
+          drop:
+          - MKNOD
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /opt/sonarqube/temp
+        name: sonarqube
+        subPath: temp
+      - mountPath: /opt/sonarqube/logs
+        name: sonarqube
+        subPath: logs
+      - mountPath: /opt/sonarqube/data
+        name: sonarqube
+        subPath: data
+      - mountPath: /opt/sonarqube/extensions/plugins/tmp
+        name: sonarqube
+        subPath: tmp
+      - mountPath: /opt/sonarqube/extensions/downloads
+        name: sonarqube
+        subPath: downloads
+      - mountPath: /opt/sonarqube/extensions/plugins
+        name: sonarqube
+        subPath: plugins
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-mnklj
+        readOnly: true
+    nodeName: ocp4azu-sj2sl-worker-prod-brazilsouth2-xbz5z
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 5555
+      seLinuxOptions:
+        level: s0:c24,c4
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoSchedule
+      key: node.kubernetes.io/memory-pressure
+      operator: Exists
+    volumes:
+    - configMap:
+        defaultMode: 420
+        items:
+        - key: sonar.properties
+          path: sonar.properties
+        name: sonarqube-sonarqube-config
+      name: config
+    - configMap:
+        defaultMode: 420
+        items:
+        - key: install_plugins.sh
+          path: install_plugins.sh
+        name: sonarqube-sonarqube-install-plugins
+      name: install-plugins
+    - configMap:
+        defaultMode: 493
+        items:
+        - key: copy_plugins.sh
+          path: copy_plugins.sh
+        name: sonarqube-sonarqube-copy-plugins
+      name: copy-plugins
+    - name: sonarqube
+      persistentVolumeClaim:
+        claimName: sonarqube-sonarqube
+    - emptyDir: {}
+      name: tmp-dir
+    - name: kube-api-access-mnklj
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+        - configMap:
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
+            name: openshift-service-ca.crt
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2024-05-02T14:26:26Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2024-05-02T14:27:50Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2024-05-02T14:27:50Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2024-05-02T14:16:53Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://27a521974cc90e4229211a7d02a6b463caaed6f9b8307b2a6da034a09c5488fb
+      image: docker.io/library/sonarqube:7.9.2-community
+      imageID: docker.io/library/sonarqube@sha256:424190b911668686f12cf9a0ae2b7c22aca718097da4c8c16509b332580a0b83
+      lastState: {}
+      name: sonarqube
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2024-05-02T14:26:43Z"
+    hostIP: 10.80.80.23
+    initContainerStatuses:
+    - containerID: cri-o://4333f638a9e0f2b3cc665ce3194b8b14578c45ff301d3bdd177e0c02f59e8098
+      image: docker.io/library/busybox:1.31
+      imageID: docker.io/library/busybox@sha256:95cf004f559831017cdf4628aaf1bb30133677be8702a8c5f2994629f637a209
+      lastState: {}
+      name: chmod-volume-mounts
+      ready: true
+      restartCount: 0
+      state:
+        terminated:
+          containerID: cri-o://4333f638a9e0f2b3cc665ce3194b8b14578c45ff301d3bdd177e0c02f59e8098
+          exitCode: 0
+          finishedAt: "2024-05-02T14:26:26Z"
+          reason: Completed
+          startedAt: "2024-05-02T14:26:26Z"
+    phase: Running
+    podIP: 10.128.20.78
+    podIPs:
+    - ip: 10.128.20.78
+    qosClass: Burstable
+    startTime: "2024-05-02T14:16:53Z"
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

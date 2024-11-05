@@ -1,0 +1,38 @@
+apiVersion: v1
+items:
+- apiVersion: route.openshift.io/v1
+  kind: Route
+  metadata:
+    creationTimestamp: "2023-05-04T21:47:26Z"
+    labels:
+      app: oauth-openshift
+    name: oauth-openshift
+    namespace: openshift-authentication
+    resourceVersion: "21398"
+    uid: c3a28451-8a10-47b2-a70f-75e4b9b922d0
+  spec:
+    host: oauth-openshift.apps.ocp4azu.dirtrab.cl
+    port:
+      targetPort: 6443
+    tls:
+      insecureEdgeTerminationPolicy: Redirect
+      termination: passthrough
+    to:
+      kind: Service
+      name: oauth-openshift
+      weight: 100
+    wildcardPolicy: None
+  status:
+    ingress:
+    - conditions:
+      - lastTransitionTime: "2023-05-04T21:49:23Z"
+        status: "True"
+        type: Admitted
+      host: oauth-openshift.apps.ocp4azu.dirtrab.cl
+      routerCanonicalHostname: router-default.apps.ocp4azu.dirtrab.cl
+      routerName: default
+      wildcardPolicy: None
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""
